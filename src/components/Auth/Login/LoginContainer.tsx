@@ -1,25 +1,31 @@
-import React from 'react'
-import Form from '../../Common/form/form'
-import Title from '../../Common/Title/Ttle'
-import Button from '../../Common/Button'
-
+import LoginPresenter from "./LoginPresenter"
+import { FormEvent, useEffect, useState } from "react"
 
 const LoginContainer= () => {
-   
-    return (
-        <>
-         <div className='bg-sky-700 min-h-screen flex  '> 
-         <div className='items-center flex  justify-center h-auto flex-col flex-auto justify-items-start' >
-         <Title  title="GoFinance" text="The most popular............" />
-         <Button title='Read More' width="w-20"/> 
-    
-        </div> 
-     
-        <Form/>
 
-        </div>
-            
-      </>
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [error, setError] = useState<string>('')
+
+  useEffect(() => {
+    setError('')
+    
+  }, [])
+
+   const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+   }
+    return (
+      <LoginPresenter
+
+      email={email}
+      password={password}
+      error={error}
+      handleSubmit={handleSubmit}
+      setEmail={setEmail}
+      setPassword={setPassword}
+      
+      />
     )
 }
 export default LoginContainer
