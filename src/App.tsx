@@ -1,11 +1,12 @@
-import LoginContainer from './components/Auth/Login/LoginContainer'
+import {
+  RouterProvider,
+} from 'react-router-dom';
+import Router from './routes';
 
 function App() {
 
   return (
-    <>
-    <LoginContainer/>
-    </>
+    <RouterProvider router={Router}/>
   )
 }
 
