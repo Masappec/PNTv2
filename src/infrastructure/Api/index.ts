@@ -4,7 +4,11 @@ import SessionService from '../Services/SessionService';
 
 const api = axios.create({
   baseURL: URL_API,
-   
+   headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    
+    },
 });
 
 
@@ -18,6 +22,7 @@ api.interceptors.request.use(
         return config;
     },
     (error) => {
+        console.log(error);
         return Promise.reject(error);
     }
 )

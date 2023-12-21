@@ -3,14 +3,16 @@ import Title from '../../Common/Title/Title'
 import Button from '../../Common/Button'
 import Input from '../../Common/Input';
 import Contraseña from '../../Common/Contraseña/Contraseña';
+import Alert from '../../Common/Alert';
 
 interface LoginPresenterProps {
     email: string;
     password: string;
-    error: string;
+    error: string | null;
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
     setEmail: (e: string) => void;
     setPassword: (e: string) => void;        
+    setError: (e: string) => void;
 }
 
 
@@ -27,10 +29,13 @@ const LoginPresenter = ({...props}:LoginPresenterProps) => {
        <div className="bg-white flex w-2/6  text-center  items-center ">
             <form className="mb-20   mt-15 " onSubmit={props.handleSubmit}>
                 <Title title="Hello Again!" text="Welcome Back" />
+                {
+                    props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
+                }
                 <div className="flex-row justify-center">
 
                     <div className="flex-col m-2">
-                    <Input type="email" placeholder="correo" width="w-72" 
+                    <Input type="text" placeholder="Usuario" width="w-72" 
                     value={props.email}
                     onChange={(e) => props.setEmail(e.target.value)}
                     />

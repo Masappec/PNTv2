@@ -3,6 +3,7 @@
 import { AxiosInstance } from "axios";
 import AuthApi from "../Api/Auth/AuthApi";
 import SessionService from "./SessionService";
+import UserEntity from "../../domain/entities/UserEntity";
 
 class AuthService {
     api:AuthApi;
@@ -10,7 +11,7 @@ class AuthService {
       this.api = api;
     }
   
-    async authenticate(username:string, password:string) {
+    async authenticate(username:string, password:string) : Promise<UserEntity>{
       try {
         // Llama al método de autenticación en el servicio de API
         const userData = await this.api.login(username, password);
@@ -18,8 +19,9 @@ class AuthService {
 
         SessionService.setAccessToken(userData.access);
         SessionService.setRefreshToken(userData.refresh);
+        SessionService.setUserData(JSON.stringify(userData.user));
   
-        return userData;
+        return new UserEntity(userData.user.id, userData.user.username, userData.user.email, userData.user.firstName, userData.user.lastName);
       } catch (error) {
         throw new Error('Error al autenticar el usuario. Verifica tus credenciales.');
       }

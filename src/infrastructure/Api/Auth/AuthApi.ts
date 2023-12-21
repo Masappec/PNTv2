@@ -12,7 +12,7 @@ class AuthApi {
   
     async login(username:string, password:string) {
       try {
-        const response = await this.apiBaseUrl.post('/login/', {
+        const response = await this.apiBaseUrl.post('/v1/auth/login/', {
             username,
             password,
             });
@@ -37,7 +37,7 @@ class AuthApi {
         last_name:string,
     }) {
       try {
-        const response = await this.apiBaseUrl.post('/register/', userData);
+        const response = await this.apiBaseUrl.post('/v1/auth/register/', userData);
 
         if (response.status !== 201) {
           throw new Error('Error al registrar el usuario.');
