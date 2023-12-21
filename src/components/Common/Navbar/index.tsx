@@ -1,4 +1,19 @@
-const Navbar = () => {
+import { useState } from "react";
+import { FaUserCircle } from "react-icons/fa";
+
+interface NavbarProps {
+    username: string;
+}
+
+const Navbar = ({...props}:NavbarProps) => {
+
+    const [menu, setMenu] = useState(false);
+
+
+    const onMenuClick = () => {
+        setMenu(!menu);
+    }
+
     return (
         <>
             <header className="px-4 py-2 shadow">
@@ -29,7 +44,8 @@ const Navbar = () => {
                     </div>
 
                     <div className="flex items-center">
-                        <button data-messages className="p-3 mr-2 focus:outline-none hover:bg-gray-200 hover:rounded-md" type="button">
+                        <button data-messages 
+                        className="p-3 mr-2 focus:outline-none hover:bg-gray-200 hover:rounded-md" type="button">
                             <svg className="fill-current w-5" viewBox="0 0 512 512">
                                 <path d="M339.392 258.624L512 367.744V144.896zM0 144.896v222.848l172.608-109.12zM480 80H32C16.032 80 3.36 91.904.96 107.232L256 275.264l255.04-168.032C508.64 91.904 495.968 80 480 80zM310.08 277.952l-45.28 29.824a15.983 15.983 0 01-8.8 2.624c-3.072 0-6.112-.864-8.8-2.624l-45.28-29.856L1.024 404.992C3.488 420.192 16.096 432 32 432h448c15.904 0 28.512-11.808 30.976-27.008L310.08 277.952z" /></svg>
                         </button>
@@ -39,14 +55,21 @@ const Navbar = () => {
                                 <path style={{ fill: "red;" }} d="M469.344 106.668c0 58.91-47.754 106.664-106.668 106.664-58.91 0-106.664-47.754-106.664-106.664C256.012 47.758 303.766 0 362.676 0c58.914 0 106.668 47.758 106.668 106.668zm0 0" /></svg>
                         </button>
 
-                        <button data-dropdown className="flex items-center px-3 py-2 focus:outline-none hover:bg-gray-200 hover:rounded-md" type="button" >
-                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=100&h=100&q=80" alt="Profle" className="h-8 w-8 rounded-full" />
+                        <button 
+                        onClick={onMenuClick}
+                        className="flex items-center px-3 py-2 focus:outline-none hover:bg-gray-200 hover:rounded-md" 
+                        type="button" >
+                        <FaUserCircle size={35} className='text-gray-800' />
 
-                            <span className="ml-4 text-sm hidden md:inline-block">Jessica Smith</span>
+
+                            <span className="ml-4 text-sm hidden md:inline-block">
+                                {props.username}
+                            </span>
                             <svg className="fill-current w-3 ml-4" viewBox="0 0 407.437 407.437">
                                 <path d="M386.258 91.567l-182.54 181.945L21.179 91.567 0 112.815 203.718 315.87l203.719-203.055z" /></svg>
 
-                            <div className="text-sm text-left absolute top-0 right-0 mt-16 mr-4 bg-white rounded border border-gray-400 shadow"  >
+                            <div className={"text-sm text-left absolute top-0 right-0 mt-16 mr-4 "+ (menu ? "" : "hidden ") +
+                             "bg-white rounded border border-gray-400 shadow ease-out duration-300"}>
                                 <ul>
                                     <li className="px-4 py-3 border-b hover:bg-gray-200"><a href="#">My Profile</a></li>
                                     <li className="px-4 py-3 border-b hover:bg-gray-200"><a href="#">Settings</a></li>
@@ -58,8 +81,6 @@ const Navbar = () => {
                     </div>
                 </div>
             </header>
-
-            
         </>
     )
 }

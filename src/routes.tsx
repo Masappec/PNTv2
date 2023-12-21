@@ -8,12 +8,14 @@ import AuthApi from './infrastructure/Api/Auth/AuthApi';
 import api from './infrastructure/Api';
 import LayoutAdmin from './components/Common/Layout/Admin';
 import SessionService from './infrastructure/Services/SessionService';
+import menu from './utils/menu';
 
 
 const _api = api;
 const authApi = new AuthApi(_api);
 const authService = new AuthService(authApi);
 const loginUseCase = new LoginUseCase(authService);
+const userData = SessionService.getUserData();
 
 const Router = createBrowserRouter(
     [
@@ -29,7 +31,7 @@ const Router = createBrowserRouter(
             }
         },
         {
-            path: '/admin', element: <LayoutAdmin />,
+            path: '/admin', element: <LayoutAdmin menu={menu} username={userData.firstName + userData.lastName|| userData.email} />,
             loader: ()=>{
                 const isLogged = SessionService.isLogged();
                 if(!isLogged){
