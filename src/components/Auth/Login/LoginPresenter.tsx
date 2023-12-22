@@ -20,7 +20,7 @@ interface LoginPresenterProps {
 const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
     return (
         <>
-            <div className='bg-sky-700 min-h-screen flex'>
+            <div className='bg-sky-700 max-h-screen flex'>
                 <div className='items-center lg:flex xl:flex 2xl:flex justify-center h-auto flex-col flex-auto justify-items-start hidden' >
                     <Title title="Crea tu solicitud" text="Solicita información a las entidades públicas." color='white' />
                     <img src={img} alt='imagen' className='w-1/2 h-1/2' />
