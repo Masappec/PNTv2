@@ -7,9 +7,16 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "8082:80"
     volumes:
       - .:/app
 
+    networks:
+      - pnt_network
+
     environment:
-      - VITE_URL_API=http://localhost:8081
+      - VITE_URL_API= http://pnt_network:8081
+
+networks:
+  pnt_network:
+    driver: bridge
