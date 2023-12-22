@@ -13,8 +13,8 @@ class AuthApi {
     async login(username:string, password:string) {
       try {
         const response = await this.apiBaseUrl.post('/v1/auth/login/', {
-            username,
-            password,
+            "username":username, 
+            "password": password,
             });
             
         if (response.status !== 200) {

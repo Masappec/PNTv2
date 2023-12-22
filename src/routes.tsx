@@ -5,6 +5,7 @@ import SessionService from './infrastructure/Services/SessionService';
 import Login from './interfaces/web/Auth/Login';
 import Admin from './interfaces/web/Admin';
 import Register from './interfaces/web/Auth/Register';
+import menu from './utils/menu';
 
 
 
@@ -43,9 +44,13 @@ const Router = createBrowserRouter(
                 }
                 return null;
             },
-            children: [
-
-            ]
+            children: menu.map((item)=>{
+                    return {
+                        path: item.path,
+                        element: item.element
+                    }
+                })
+            
 
         }
     ]

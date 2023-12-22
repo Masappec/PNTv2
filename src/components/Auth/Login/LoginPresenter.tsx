@@ -4,6 +4,7 @@ import Button from '../../Common/Button'
 import Input from '../../Common/Input';
 import Contrasenia from '../../Common/Contrasenia/index';
 import Alert from '../../Common/Alert';
+import img from '@assets/imagen.svg'
 
 interface LoginPresenterProps {
     email: string;
@@ -22,6 +23,7 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
             <div className='bg-sky-700 min-h-screen flex'>
                 <div className='items-center lg:flex xl:flex 2xl:flex justify-center h-auto flex-col flex-auto justify-items-start hidden' >
                     <Title title="Crea tu solicitud" text="Solicita información a las entidades públicas." color='white' />
+                    <img src={img} alt='imagen' className='w-1/2 h-1/2' />
                 </div>
 
                 <div className="bg-white flex xl:w-2/6 2xl:w-2/6 lg:w-2/6 w-full  text-center  items-center ">
