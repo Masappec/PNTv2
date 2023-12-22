@@ -11,6 +11,8 @@ export default defineConfig({
       '@components': '/src/components',
       '@infrastructure': '/src/infrastructure',
       '@interfaces': '/src/interfaces',
+      '@utils': '/src/utils',
+      '@assets': '/src/assets',
     },
   },
 })

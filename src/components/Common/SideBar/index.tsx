@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { MenuItem } from "../../../utils/menu";
 
 
@@ -18,10 +19,10 @@ const Sidebar = ({menu}:{
 				
 				{
 					menu.map((item,index)=>(
-						<a className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300" href="#" key={index}>
+						<Link className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300" to={item.path} key={index}>
 							{item.icon}
 							<span className="ml-2 text-sm font-medium">{item.name}</span>
-						</a>
+						</Link>
 					))
 				}
 				

@@ -1,6 +1,5 @@
 // AuthService.js
 
-import { AxiosInstance } from "axios";
 import AuthApi from "../Api/Auth/AuthApi";
 import SessionService from "./SessionService";
 import UserEntity from "../../domain/entities/UserEntity";
@@ -27,13 +26,19 @@ class AuthService {
       }
     }
   
-    async register(userDetails) {
+    async register(userDetails:{
+      username : string,
+      password : string,
+      email : string,
+      first_name : string,
+      last_name : string,
+    }) {
       try {
         // Llama al método de registro en el servicio de API
         const newUser = await this.api.register(userDetails);
   
   
-        return newUser;
+        return new UserEntity(newUser.id, newUser.username, newUser.email, newUser.firstName, newUser.lastName);
       } catch (error) {
         throw new Error('Error al registrar el usuario.');
       }

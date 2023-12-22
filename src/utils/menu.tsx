@@ -1,5 +1,6 @@
 import { LuUsers } from "react-icons/lu";
 import { FaIdCard } from "react-icons/fa";
+import UserList from "../interfaces/web/Admin/User/List";
 
 
 export interface MenuItem {
@@ -14,13 +15,15 @@ const menu = [
         name: 'Usuarios',
         path: '/admin/users',
         permission_required: 'app.view_user',
-        icon: <LuUsers size={25}/>
+        icon: <LuUsers size={25}/>,
+        element: <UserList/>
     },
     {
         name: 'Roles',
         path: '/admin/roles',
         permission_required: 'app.view_role',
-        icon: <FaIdCard  size={25}/>
+        icon: <FaIdCard  size={25}/>,
+        element: <UserList/>
     }
 
 ]
