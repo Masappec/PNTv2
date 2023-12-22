@@ -50,7 +50,7 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
                             <Button title="login" width="w-72" />
 
                         </div>
-                        <Contrasenia text='Olvidade tu contraseña?' path='#' />
+                        <Contrasenia text='Olvidaste tu contraseña?' path='#' />
                         <Contrasenia text='Registrate' path='/register' />
 
                     </form>
