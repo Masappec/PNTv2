@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import  { FormEvent } from 'react'
 import Title from '../../Common/Title/index'
 import Button from '../../Common/Button'
 import Input from '../../Common/Input';

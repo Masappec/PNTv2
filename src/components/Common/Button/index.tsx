@@ -1,4 +1,3 @@
-import React from 'react'
 
 const Button = ({ title, width }: { title: string, width: string }) => {
   return (

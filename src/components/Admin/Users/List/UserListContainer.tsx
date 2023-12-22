@@ -25,7 +25,7 @@ const UserListContainer = ({
     return (
         <UserListPresenter 
         users={users}
-            
+            error={error}
         />
     );
 }
