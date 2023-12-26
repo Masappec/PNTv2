@@ -18,7 +18,8 @@ const Sidebar = ({menu}:{
 			<div className="flex flex-col items-center w-full mt-3 border-t border-gray-300">
 				
 				{
-					menu.map((item,index)=>(
+					menu.filter((item)=>item.visible).
+					map((item,index)=>(
 						<Link className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300" to={item.path} key={index}>
 							{item.icon}
 							<span className="ml-2 text-sm font-medium">{item.name}</span>

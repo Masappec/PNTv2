@@ -2,7 +2,7 @@
 import { FormEvent, useEffect, useState } from "react"
 import RegisterPresenter from "./RegisterPresenter"
 import RegisterUseCase from "../../../domain/useCases/Authentication/RegisterUseCase"
-import { redirect } from "react-router-dom"
+import {  useNavigate } from "react-router-dom"
 
 const RegisterContainer= ({usecase}:{
   usecase: RegisterUseCase
@@ -13,7 +13,15 @@ const RegisterContainer= ({usecase}:{
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [identification, setIdentification] = useState<string>('')
+  const [phone, setPhone] = useState<string>('')
+  const [address, setAddress] = useState<string>('')
+  const [country, setCountry] = useState<string>('')
+  const [city, setCity] = useState<string>('')
+  const [province, setProvince] = useState<string>('')
   const [error,setError] =useState<string>('')
+  const [type_person, setType_person] = useState<string>('')
+  const history = useNavigate()
 
   useEffect(() => {
     setError('')
@@ -26,9 +34,16 @@ const RegisterContainer= ({usecase}:{
       last_name: lastName,
       email: email,
       password: password,
-      username: email
+      username: email,
+      address: address,
+      city: city,
+      country: country,
+      identification: identification,
+      phone: phone,
+      province: province,
+      type_person : type_person
     }).then(() => {
-      return redirect('/')
+      return history("/")
     }
     ).catch((e) => {
       setError(e.message)
@@ -51,6 +66,21 @@ const RegisterContainer= ({usecase}:{
       setEmail={setEmail}
       setPassword={setPassword}
       setConfirmPassword={setConfirmPassword} 
+      identification={identification}
+      phone={phone}
+      address={address}
+      country={country}
+      city={city}
+      province={province}
+      setIdentification={setIdentification}
+      setPhone={setPhone}
+      setAddress={setAddress}
+      setCountry={setCountry}
+      setCity={setCity}
+      setProvince={setProvince}
+      setTypePerson={setType_person}
+      type_person={type_person}
+      
       />
     )
 }

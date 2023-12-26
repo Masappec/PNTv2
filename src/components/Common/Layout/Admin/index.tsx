@@ -6,7 +6,8 @@ import  { MenuItem } from "../../../../utils/menu";
 interface LayoutAdminProps {
     
     username: string;
-    menu: MenuItem[]
+    menu: MenuItem[],
+    onLogout: () => void;
 }
 
 
@@ -20,7 +21,7 @@ const LayoutAdmin = ({...props}:LayoutAdminProps) => {
 
             </div>
             <div className="flex-col w-full">
-                <Navbar username={props.username} />
+                <Navbar username={props.username} onLogout={props.onLogout} />
                 <div className="flex-col overflow-y-auto p-5 h-auto">
                     <div className="flex-row h-auto w-full">
                     <Outlet />

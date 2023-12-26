@@ -1,6 +1,10 @@
 import { LuUsers } from "react-icons/lu";
 import { FaIdCard } from "react-icons/fa";
+import { GoOrganization } from "react-icons/go";
 import UserList from "../interfaces/web/Admin/User/List";
+import UserCreate from "../interfaces/web/Admin/User/Create";
+import RoleList from "../interfaces/web/Admin/Role/List";
+import RoleCreate from "../interfaces/web/Admin/Role/Create";
 
 
 export interface MenuItem {
@@ -8,6 +12,7 @@ export interface MenuItem {
     path: string;
     permission_required: string;
     icon: JSX.Element;
+    visible: boolean;
 }
 
 const menu = [
@@ -15,15 +20,43 @@ const menu = [
         name: 'Usuarios',
         path: '/admin/users',
         permission_required: 'app.view_user',
+        visible: true,
         icon: <LuUsers size={25}/>,
         element: <UserList/>
     },
     {
+        name: 'Crear Usuario',
+        path: '/admin/users/create',
+        permission_required: 'app.add_user',
+        visible: false,
+        icon: <LuUsers size={25}/>,
+        element: <UserCreate/>
+    },
+    {
         name: 'Roles',
         path: '/admin/roles',
+        visible: true,
         permission_required: 'app.view_role',
         icon: <FaIdCard  size={25}/>,
-        element: <UserList/>
+        element: <RoleList/>
+    },
+    {
+        name: 'Crear Rol',
+        path: '/admin/roles/create',
+        visible: false,
+        permission_required: 'app.add_role',
+        icon: <FaIdCard  size={25}/>,
+        element: <RoleCreate/>
+    },
+    {
+        name: 'entidades',
+        path: '/admin/entities',
+        visible: true,
+        icon: <GoOrganization />,
+        permission_required: '',
+        element:<></>
+
+
     }
 
 ]

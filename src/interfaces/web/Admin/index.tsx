@@ -5,8 +5,15 @@ import menu from "../../../utils/menu"
 
 const userData = SessionService.getUserData();
 const Admin = ()=>{
+    
+    const logout = ()=>{
+        SessionService.clearSession();
+    } 
+
     return (
-        <LayoutAdmin menu={menu} username={userData.firstName + userData.lastName|| userData.email} />
+        <LayoutAdmin menu={menu} username={userData.firstName + userData.lastName|| userData.email} 
+        onLogout={logout}
+            />
     )
 }
 

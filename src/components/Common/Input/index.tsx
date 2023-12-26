@@ -6,13 +6,16 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: FC<InputProps> = ({...props }) => {
   return (
-    <>
+    <div className="flex flex-col justify-center items-center">
+      <label className=" text-gray-700 text-sm font-bold mb-2">
+        {props.placeholder}
+      </label>
       <input
 
-        className={"  border rounded-full px-5  py-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "+props.width}
+        className={" my-1 border border-blue-300 rounded-full px-5  py-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "+props.width}
         {...props}
       />
-    </>
+    </div>
   );
 };
 

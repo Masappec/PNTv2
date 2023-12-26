@@ -22,8 +22,11 @@ api.interceptors.request.use(
         return config;
     },
     (error) => {
-        console.log(error);
-        return Promise.reject(error);
+        if (error instanceof Error){
+            return Promise.reject(error);
+        }else{
+            return Promise.reject(new Error('Error de conexión'));
+        }
     }
 )
 export default api;

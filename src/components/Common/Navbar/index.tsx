@@ -3,6 +3,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 interface NavbarProps {
     username: string;
+    onLogout: () => void;
 }
 
 const Navbar = ({...props}:NavbarProps) => {
@@ -73,7 +74,11 @@ const Navbar = ({...props}:NavbarProps) => {
                                 <ul>
                                     <li className="px-4 py-3 border-b hover:bg-gray-200"><a href="#">My Profile</a></li>
                                     <li className="px-4 py-3 border-b hover:bg-gray-200"><a href="#">Settings</a></li>
-                                    <li className="px-4 py-3 hover:bg-gray-200"><a href="#">Log out</a></li>
+                                    <li className="px-4 py-3 hover:bg-gray-200">
+                                        <a href="#" onClick={props.onLogout}>
+                                        Cerrar sesión
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </button>

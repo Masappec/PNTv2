@@ -1,6 +1,8 @@
 // LoginUseCase.js
 
 import AuthService from "../../../infrastructure/Services/AuthService";
+import UserEntity from "../../entities/UserEntity";
+import AuthMapper from "../../mappers/AuthMapper";
 
 class RegisterUseCase {
     authService:AuthService;
@@ -9,16 +11,10 @@ class RegisterUseCase {
 
     }
   
-    async execute(userdata:{
-        username : string,
-        password : string,
-        email : string,
-        first_name : string,
-        last_name : string,
-    }) {
+    async execute(userdata:UserEntity) {
         // Lógica de autenticación
         const user = await this.authService.register(
-            userdata
+            AuthMapper.fromDomainToDTO(userdata)
         );
   
         return user;

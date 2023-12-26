@@ -1,4 +1,5 @@
 import UserEntity from "../../../../domain/entities/UserEntity"
+import Badge from "../../../Common/Badge"
 import Table from "../../../Common/Table"
 
 
@@ -7,6 +8,17 @@ interface Props {
     
     users: UserEntity[]
     error: string | null
+    onSearch: (search: string) => void
+    onAdd: () => void
+    onImport: () => void
+    onFilter: () => void
+    onEdit: (user: UserEntity) => void
+    search: string
+    setSeach: (search: string) => void
+    page: number
+    nextPage: number
+    previousPage: number
+    setPage: (page: number) => void
 }
 
 export const UserListPresenter = (props:Props)=>{
@@ -22,7 +34,7 @@ export const UserListPresenter = (props:Props)=>{
                     columns={[
                         {
                             render: (row: UserEntity) => (
-                                <p>{row.firstName + row.lastName}</p>
+                                <p>{row.firstName +" "+ row.lastName}</p>
                             ),
                             title: "Nombre",
                             
@@ -35,7 +47,9 @@ export const UserListPresenter = (props:Props)=>{
                         },
                         {
                             render: (row: UserEntity) => (
-                                <p>{row.email}</p>
+                                row.groups?.map((group, index) => (
+                                    <Badge key={index} text={group.name} color="primary"/>
+                                ))
                             ),
                             title: "Rol"
                         },
@@ -62,16 +76,20 @@ export const UserListPresenter = (props:Props)=>{
                         }
                     ]}
 
-                    description="No hay usuarios registrados en el sistema"
-                    length={0}
-                    onAdd={()=>{}}
+                    description={props.users.length === 0 ? "No hay usuarios" : "Consulta los usuarios registrados"}
+                    length={props.users.length}
+                    onAdd={props.onAdd}
                     onFilter={()=>{}}
                     onImport={()=>{}}
                     textAdd="Agregar usuario"
                     textImport="Importar usuarios"
                     title="Usuarios"
                     data={props.users}
-
+                    currentPage={props.page}
+                    onNext={() => props.setPage(props.nextPage)}
+                    onPrevious={() => props.setPage(props.previousPage)}
+                    onSearch={props.onSearch}
+                    search={props.search}
                 />
             </div>
             
