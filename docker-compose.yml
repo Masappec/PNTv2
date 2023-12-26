@@ -15,7 +15,8 @@ services:
       - pnt_network
 
     environment:
-      - VITE_URL_API= http://pnt_network:8081
+      - VITE_URL_API= http://pnt_network:8082
+      - VITE_PATH_AUTH= /v1/auth
 
 networks:
   pnt_network:
