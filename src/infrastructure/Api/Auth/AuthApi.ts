@@ -1,6 +1,7 @@
 // AuthApi.js
 
 import { AxiosInstance } from "axios";
+import { AUTH_PATH } from "..";
 
 
 export interface RegisterDto{
@@ -20,7 +21,6 @@ export interface RegisterDto{
 class AuthApi {
 
     apiBaseUrl:AxiosInstance;
-    path = import.meta.env.VITE_PATH_AUTH;
 
     constructor(apiBaseUrl:AxiosInstance) {
       this.apiBaseUrl = apiBaseUrl;
@@ -28,7 +28,7 @@ class AuthApi {
   
     async login(username:string, password:string) {
       try {
-        const response = await this.apiBaseUrl.post(this.path+'/login/', {
+        const response = await this.apiBaseUrl.post(AUTH_PATH+'/login/', {
             "username":username, 
             "password": password,
             });
@@ -53,7 +53,7 @@ class AuthApi {
         last_name:string,
     }) {
       try {
-        const response = await this.apiBaseUrl.post(this.path+'/register/', userData);
+        const response = await this.apiBaseUrl.post(AUTH_PATH+'/register/', userData);
 
         if (response.status !== 201) {
           throw new Error('Error al registrar el usuario.');

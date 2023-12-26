@@ -29,4 +29,8 @@ api.interceptors.request.use(
         }
     }
 )
+
+export const AUTH_PATH = import.meta.env.VITE_PATH_AUTH;
+
+
 export default api;
