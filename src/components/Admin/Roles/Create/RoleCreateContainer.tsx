@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import RoleCreatePresenter from "./RoleCreatePresenter";
 import { useNavigate } from "react-router-dom";
 import RoleUseCase from "../../../../domain/useCases/Role/RoleUseCase";
@@ -20,19 +20,26 @@ const RoleCreateContainer = ({
     const [selected, setSelected] = useState<PermissionEntity[]>([]);
 
     const navigate = useNavigate();
+
     
 
     useEffect(() => {
+        
         permissionUsecase.execute().then((data) => {
             setData(data)
-        }).catch((error) => {
+        }).catch((error:any) => {
             setError(error.message)
         })
     }, [])
 
     const handleSubmit = () => {
         
-
+        usecase.execute().then(() => {
+            setSuccess('Role created successfully')
+            navigate('/admin/roles')
+        }).catch((error:any) => {
+            setError(error.message)
+        })
     }
 
     
