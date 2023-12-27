@@ -9,7 +9,10 @@ class RoleUseCase {
     const roles = await this.roleRepository.getRoleList(text);
     return roles;
   }
-  
+  async create(role:RoleEntity): Promise<RoleEntity> {
+    const roles = await this.roleRepository.createRole(role);
+    return roles;
+  }
 }
 
 export default RoleUseCase;

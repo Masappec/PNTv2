@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { RoleListResponse } from "./interface";
+import { RoleCreateRequest, RoleListResponse } from "./interface";
 
 
 class RoleApi{
@@ -24,6 +24,24 @@ class RoleApi{
         } catch (error:any) {
             
             const error_ = error.response?.data?.message || 'Error al obtener la lista de roles.';
+
+            throw new Error(error_);
+        }
+    }
+
+    async createRole(role: RoleCreateRequest) {
+        try {
+            const response = await this.apiBaseUrl.post(this.path+'/role/create', role);
+
+            if (response.status !== 201) {
+                throw new Error('Error al crear el rol.');
+            }
+
+            return response.data;
+
+        } catch (error:any) {
+            
+            const error_ = error.response?.data?.message || 'Error al crear el rol.';
 
             throw new Error(error_);
         }

@@ -50,85 +50,127 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                 </div>
 
                 <div className="bg-white flex xl:w-2/3 2xl:w-2/3 lg:w-2/3 w-full  text-center  items-center ">
-                    
+
                     <form className="mb-20 w-full mt-15 " onSubmit={props.handleSubmit}>
                         <Title title="Crea una cuenta" text="" color='black' />
                         {
-                                props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
-                            }
+                            props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
+                        }
                         <div className="grid grid-cols-2">
-                           
+
 
                             <div className="flex-col py-5">
-                                <Input type="text" placeholder="nombre" width="w-60"
-                                    value={props.firstName}
-                                    onChange={(e) => props.setFirstName(e.target.value)}
-                                />
-                            
-                                <Input type="text" placeholder="apellido" width="w-60"
-                                    value={props.lastName}
-                                    onChange={(e) => props.setLastName(e.target.value)}
-                                /> 
+                                <div className="flex  flex-col m-2 items-center">
+                                    <Input type="text" placeholder="nombre" width="w-60"
+                                        value={props.firstName}
+                                        onChange={(e) => props.setFirstName(e.target.value)}
+                                    />
+                                </div>
+                                <div className="flex  flex-col m-2 items-center">
 
-                                <Select
-                                    placeholder="Tipo de persona"
-                                    options={[
-                                        { value: "natural", label: "Natural" },
-                                        { value: "juridica", label: "Juridica" },
-                                    ]}
-                                    onChange={(e) => props.setTypePerson(e.target.value)}
-                                    
-                                />
-                                <Input type="email" placeholder="correo" width="w-60"
-                                    value={props.email}
-                                    onChange={(e) => props.setEmail(e.target.value)}
-                                /> 
-                                <Input type="password" placeholder="Ingresar contraseña" width="w-60"
-                                    value={props.password}
-                                    onChange={(e) => props.setPassword(e.target.value)}
-                                /> 
-                                <Input type="password" placeholder="confirmar contraseña" width="w-60"
-                                    value={props.confirmPassword}
-                                    onChange={(e) => props.setConfirmPassword(e.target.value)}
-                                />
-                                
+
+                                    <Input type="text" placeholder="apellido" width="w-60"
+                                        value={props.lastName}
+                                        onChange={(e) => props.setLastName(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="flex  flex-col m-2 items-center">
+
+                                    <Select
+                                        placeholder="Tipo de persona"
+                                        options={[
+                                            { value: "natural", label: "Natural" },
+                                            { value: "juridica", label: "Juridica" },
+                                        ]}
+                                        onChange={(e) => props.setTypePerson(e.target.value)}
+
+                                    />
+                                </div>
+
+
+                                <div className="flex  flex-col m-2 items-center">
+
+                                    <Input type="email" placeholder="correo" width="w-60"
+                                        value={props.email}
+                                        onChange={(e) => props.setEmail(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="flex  flex-col m-2 items-center">
+
+                                    <Input type="password" placeholder="Ingresar contraseña" width="w-60"
+                                        value={props.password}
+                                        onChange={(e) => props.setPassword(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="flex  flex-col m-2 items-center">
+
+                                    <Input type="password" placeholder="confirmar contraseña" width="w-60"
+                                        value={props.confirmPassword}
+                                        onChange={(e) => props.setConfirmPassword(e.target.value)}
+                                    />
+                                </div>
+
                             </div>
-                            
+
                             <div className="flex-col">
-                            <Input type="text" placeholder="Identificación" width="w-60"
-                                    value={props.identification}
-                                    onChange={(e) => props.setIdentification(e.target.value)}
-                                /> 
-                                <Input type="tel" placeholder="Teléfono" width="w-60"
-                                    value={props.phone}
-                                    onChange={(e) => props.setPhone(e.target.value)}
-                                /> 
+                                <div className="flex  flex-col m-2 items-center">
 
-                                <Input type="text" placeholder="Dirección" width="w-60"
-                                    value={props.address}
-                                    onChange={(e) => props.setAddress(e.target.value)}
-                                /> 
-                                <Input type="text" placeholder="País" width="w-60"
-                                    value={props.country}
-                                    onChange={(e) => props.setCountry(e.target.value)}
-                                /> 
+                                    <Input type="text" placeholder="Identificación" width="w-60"
+                                        value={props.identification}
+                                        onChange={(e) => props.setIdentification(e.target.value)}
+                                    />
+                                </div>
 
-                                <Input type="text" placeholder="Ciudad" width="w-60"
-                                    value={props.city}
-                                    onChange={(e) => props.setCity(e.target.value)}
-                                /> 
-                                <Input type="text" placeholder="Provincia" width="w-60"
-                                    value={props.province}
-                                    onChange={(e) => props.setProvince(e.target.value)}
-                                />
+                                <div className="flex  flex-col m-2 items-center">
+
+                                    <Input type="tel" placeholder="Teléfono" width="w-60"
+                                        value={props.phone}
+                                        onChange={(e) => props.setPhone(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="flex  flex-col m-2 items-center">
+
+                                    <Input type="text" placeholder="Dirección" width="w-60"
+                                        value={props.address}
+                                        onChange={(e) => props.setAddress(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="flex  flex-col m-2 items-center">
+
+                                    <Input type="text" placeholder="País" width="w-60"
+                                        value={props.country}
+                                        onChange={(e) => props.setCountry(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="flex  flex-col m-2 items-center">
+
+                                    <Input type="text" placeholder="Ciudad" width="w-60"
+                                        value={props.city}
+                                        onChange={(e) => props.setCity(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className="flex  flex-col m-2 items-center">
+
+                                    <Input type="text" placeholder="Provincia" width="w-60"
+                                        value={props.province}
+                                        onChange={(e) => props.setProvince(e.target.value)}
+                                    />
+                                </div>
 
                             </div>
-                            
 
-                            
+
+
                         </div>
                         <Button title="Register" width="w-60" />
-                            <Contrasenia text='Ya tienes cuenta? Inicia Session' path='/' />
+                        <Contrasenia text='Ya tienes cuenta? Inicia Session' path='/' />
 
                     </form>
                 </div>

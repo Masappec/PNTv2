@@ -5,6 +5,7 @@ import Input from '../../Common/Input';
 import Contrasenia from '../../Common/Contrasenia/index';
 import Alert from '../../Common/Alert';
 import img from '@assets/imagen.svg'
+import Spinner from '../../Common/Spinner';
 
 interface LoginPresenterProps {
     email: string;
@@ -14,6 +15,7 @@ interface LoginPresenterProps {
     setEmail: (e: string) => void;
     setPassword: (e: string) => void;
     setError: (e: string) => void;
+    isloading?: boolean;
 }
 
 
@@ -32,24 +34,26 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
                         {
                             props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
                         }
-                        <div className="flex-row justify-center">
+                        <div className="flex-row justify-center items-center">
 
-                            <div className="flex-col m-2">
+                            <div className="flex flex-col m-2 items-center">
                                 <Input type="text" placeholder="Usuario" width="w-72"
                                     value={props.email}
                                     onChange={(e) => props.setEmail(e.target.value)}
                                 />
 
                             </div>
-                            <div className="flex-col  m-2 ">
+                            <div className="flex flex-col m-2 items-center">
                                 <Input type="password" placeholder="Contraseña" width="w-72"
                                     value={props.password}
                                     onChange={(e) => props.setPassword(e.target.value)}
                                 />
                             </div>
 
-
-                            <Button title="login" width="w-72" />
+                            {
+                                props.isloading ? <Spinner /> : <Button title="login" width="w-72" />
+                            }
+                            
 
                         </div>
                         <Contrasenia text='Olvidaste tu contraseña?' path='#' />

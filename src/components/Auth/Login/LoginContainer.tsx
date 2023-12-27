@@ -10,6 +10,7 @@ const LoginContainer = ({ useCase }: {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
+  const [isloading, setIsLoading] = useState<boolean>(false)
 
   const history = useNavigate()
 
@@ -20,11 +21,14 @@ const LoginContainer = ({ useCase }: {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true)
     useCase.authService.authenticate(email, password)
     .then(() => {
+      setIsLoading(false)
       return history('/admin')
     })
     .catch((e) => {
+      setIsLoading(false)
       setError(e.message)
     })
 
@@ -40,6 +44,7 @@ const LoginContainer = ({ useCase }: {
       setEmail={setEmail}
       setPassword={setPassword}
       setError={setError}
+      isloading={isloading}
 
     />
   )

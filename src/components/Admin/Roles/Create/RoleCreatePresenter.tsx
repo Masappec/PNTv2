@@ -3,6 +3,7 @@ import { LuCheck, LuX } from "react-icons/lu";
 import Alert from "../../../Common/Alert";
 import PermissionEntity from "../../../../domain/entities/PermissionEntity";
 import Checkbox from "../../../Common/Checkbox";
+import Input from "../../../Common/Input";
 
 interface RoleCreatePresenterProps {
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -14,6 +15,8 @@ interface RoleCreatePresenterProps {
     permissions: PermissionEntity[];
     onSelected: (checked: boolean, permission: PermissionEntity) => void;
     isSelected: (e: PermissionEntity) => boolean;
+    role_name: string;
+    setRoleName: (e: string) => void;
 }
 
 const RoleCreatePresenter = (props: RoleCreatePresenterProps) => {
@@ -70,15 +73,29 @@ const RoleCreatePresenter = (props: RoleCreatePresenterProps) => {
                         {
                             props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
                         }
+                        <div className="flex flex-col mb-5 w-1/2">
+                        <Input   placeholder="Nombre del rol"
+                        onChange={(e) => props.setRoleName(e.target.value)}
+                        value={props.role_name}
+
+                        />
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            <h5 className="text-gray-700 text-sm font-bold mb-2">
+                                Permisos
+                            </h5>
+                        </div>
+
+
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
                                 {
                                     props.permissions.map((permission) => (
 
                                         <Checkbox
-                                            id={permission.id}
+                                            id={permission.id+""}
                                             label={permission.name}
-                                            color="blue"
                                             checked={props.isSelected(permission)}
                                             onChange={(checked) => 
                                                 props.onSelected(checked, permission)
