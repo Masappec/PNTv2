@@ -7,7 +7,6 @@ import RoleEntity from "../../../../domain/entities/RoleEntity"
 
 interface UserCreatePresenterProps {
     
-    type_person: string
     name: string
     last_name: string
     email: string
@@ -18,7 +17,6 @@ interface UserCreatePresenterProps {
     city: string
     province: string
     role: number
-    setTypePerson: (type_person: string) => void
     setName: (name: string) => void
     setLastName: (last_name: string) => void
     setEmail: (email: string) => void
@@ -98,22 +96,7 @@ const UserCreatePresenter = (props:UserCreatePresenterProps) => {
                         }
                         <div className="flex  mt-5">
                             <div className="flex-col mx-20">
-                                <Select placeholder="Tipo de Persona" options={[
-                                    {
-                                        value: "",
-                                        label: "Seleccione un tipo de persona"
-                                    },
-                                    {
-                                        value: "natural",
-                                        label: "Natural"
-                                    },
-                                    {
-                                        value: "juridico",
-                                        label: "Juridico"
-                                    }
-                                ]}
-                                onChange={(e) => props.setTypePerson(e.target.value)}
-                                />
+                               
                                 <Input type="text" placeholder="Nombre" onChange={(e) => props.setName(e.target.value)} />
                                 <Input type="text" placeholder="Apellido" onChange={(e) => props.setLastName(e.target.value)} />
                                 <Input type="email" placeholder="Correo" onChange={(e) => props.setEmail(e.target.value)} />

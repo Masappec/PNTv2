@@ -5,7 +5,6 @@ import Input from '../../Common/Input';
 import Contrasenia from '../../Common/Contrasenia';
 import img from '@assets/login.svg'
 import Alert from '../../Common/Alert';
-import Select from '../../Common/Select';
 
 interface RegisterPresenterProps {
     firstName: string;
@@ -19,7 +18,6 @@ interface RegisterPresenterProps {
     country: string;
     city: string;
     province: string;
-    type_person: string;
 
     error: string;
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -36,7 +34,6 @@ interface RegisterPresenterProps {
     setCountry: (e: string) => void;
     setCity: (e: string) => void;
     setProvince: (e: string) => void;
-    setTypePerson: (e: string) => void;
 
 }
 
@@ -75,18 +72,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                                     />
                                 </div>
 
-                                <div className="flex  flex-col m-2 items-center">
-
-                                    <Select
-                                        placeholder="Tipo de persona"
-                                        options={[
-                                            { value: "natural", label: "Natural" },
-                                            { value: "juridica", label: "Juridica" },
-                                        ]}
-                                        onChange={(e) => props.setTypePerson(e.target.value)}
-
-                                    />
-                                </div>
+                                
 
 
                                 <div className="flex  flex-col m-2 items-center">

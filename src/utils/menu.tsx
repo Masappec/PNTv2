@@ -5,6 +5,7 @@ import UserList from "../interfaces/web/Admin/User/List";
 import UserCreate from "../interfaces/web/Admin/User/Create";
 import RoleList from "../interfaces/web/Admin/Role/List";
 import RoleCreate from "../interfaces/web/Admin/Role/Create";
+import RoleEdit from "../interfaces/web/Admin/Role/Edit";
 
 
 export interface MenuItem {
@@ -47,6 +48,14 @@ const menu = [
         permission_required: 'app.add_role',
         icon: <FaIdCard  size={25}/>,
         element: <RoleCreate/>
+    },
+    {
+        name: 'Editar Rol',
+        path: '/admin/roles/:id',
+        visible: false,
+        permission_required: 'app.change_role',
+        icon: <FaIdCard  size={25}/>,
+        element: <RoleEdit/>
     },
     {
         name: 'entidades',

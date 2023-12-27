@@ -1,3 +1,4 @@
+import { FaEdit, FaTrash } from "react-icons/fa";
 import RoleEntity from "../../../../domain/entities/RoleEntity";
 import Table from "../../../Common/Table";
 
@@ -41,13 +42,15 @@ const RoleListPresenter = (props:Props) => {
                             <div className="flex items-center">
                                 <button 
                                 onClick={() => {
-                                    console.log(row.id)
+                                    props.onEdit(row)
                                 }}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    Editar
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
+                                    <FaEdit/>
                                 </button>
-                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                    Eliminar
+                                <button 
+                                
+                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-2xl">
+                                    <FaTrash/>
                                 </button>
                             </div>
                         )

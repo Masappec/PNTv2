@@ -31,13 +31,17 @@ const RoleListContainer = ({
 
     }
 
+    const handleEdit = (role: RoleEntity) => {
+        navigate(`/admin/roles/${role.id}`)
+    }
+
     
     return (
         <RoleListPresenter
             error={error}
             nextPage={1}
             onAdd={handleAdd}
-            onEdit={() => { }}
+            onEdit={handleEdit}
             onFilter={() => { }}
             onImport={() => { }}
             onSearch={() => { }}

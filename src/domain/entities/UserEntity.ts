@@ -11,7 +11,6 @@ class UserEntity {
     country?: string;
     password?: string;
     province?: string;
-    type_person?: string;
     groups?: {
       id: number;
       name: string;

@@ -15,7 +15,6 @@ class AuthMapper{
             password: auth?.password || '',
             phone: auth.phone || '',
             province: auth.province || '',
-            type_person: auth.type_person || '',
             username: auth.username || ''
         }
     }

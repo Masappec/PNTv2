@@ -14,7 +14,6 @@ const UserCreateContainer = ({
     roleUseCase: RoleUseCase
 }) => {
 
-    const [type_person, setTypePerson] = useState<string>("natural")
     const [name, setName] = useState<string>("")
     const [last_name, setLastName] = useState<string>("")
     const [email, setEmail] = useState<string>("")
@@ -49,7 +48,6 @@ const UserCreateContainer = ({
         e.preventDefault()
         console.log(role)
         usecase.create({
-            type_person,
             firstName: name,
             lastName: last_name,
             email,
@@ -92,7 +90,6 @@ const UserCreateContainer = ({
             phone={phone}
             province={province}
             role={role}
-            type_person={type_person}
             setAddress={setAddress}
             setCity={setCity}
             setCountry={setCountry}
@@ -103,7 +100,6 @@ const UserCreateContainer = ({
             setPhone={setPhone}
             setProvince={setProvince}
             setRole={setRole}
-            setTypePerson={setTypePerson}
             handleSubmit={handleSubmit}
             error={error}
             setError={setError}

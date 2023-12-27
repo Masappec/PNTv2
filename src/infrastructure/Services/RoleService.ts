@@ -36,6 +36,33 @@ class RoleService{
 
         }
     }
+
+
+    async detailRole(id: string) {
+        try {
+            const response = await this.api.detailRole(id);
+
+            return RoleMapper.fromApiToDomainDetail(response);
+
+        } catch (error:any) {
+            
+            throw new Error(error?.message || 'Error al registrar el usuario.');
+
+        }
+    }
+
+    async updateRole(id: string, role: RoleEntity) {
+        try {
+            const response = await this.api.updateRole(id, RoleMapper.fromDomainToApi(role));
+
+            return RoleMapper.fromApiToDomain(response);
+
+        } catch (error:any) {
+            
+            throw new Error(error?.message || 'Error al registrar el usuario.');
+
+        }
+    }
 }
 
 export default RoleService;

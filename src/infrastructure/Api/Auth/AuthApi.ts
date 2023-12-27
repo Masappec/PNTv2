@@ -16,7 +16,6 @@ export interface RegisterDto{
     city:string,
     country:string,
     province:string,
-    type_person:string,
 }
 class AuthApi {
 

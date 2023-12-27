@@ -46,6 +46,42 @@ class RoleApi{
             throw new Error(error_);
         }
     }
+
+    async detailRole(id: string) {
+        try {
+            const response = await this.apiBaseUrl.get(this.path+'/role/detail/' + id);
+
+            if (response.status !== 200) {
+                throw new Error('Error al obtener el rol.');
+            }
+
+            return response.data;
+
+        } catch (error:any) {
+            
+            const error_ = error.response?.data?.message || 'Error al obtener el rol.';
+
+            throw new Error(error_);
+        }
+    }
+
+    async updateRole(id: string, role: RoleCreateRequest) {
+        try {
+            const response = await this.apiBaseUrl.put(this.path+'/role/update/' + id, role);
+
+            if (response.status !== 200) {
+                throw new Error('Error al actualizar el rol.');
+            }
+
+            return response.data;
+
+        } catch (error:any) {
+            
+            const error_ = error.response?.data?.message || 'Error al actualizar el rol.';
+
+            throw new Error(error_);
+        }
+    }
 }
 
 export default RoleApi;

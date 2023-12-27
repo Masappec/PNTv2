@@ -20,7 +20,6 @@ const RegisterContainer= ({usecase}:{
   const [city, setCity] = useState<string>('')
   const [province, setProvince] = useState<string>('')
   const [error,setError] =useState<string>('')
-  const [type_person, setType_person] = useState<string>('')
   const history = useNavigate()
 
   useEffect(() => {
@@ -41,7 +40,6 @@ const RegisterContainer= ({usecase}:{
       identification: identification,
       phone: phone,
       province: province,
-      type_person : type_person
     }).then(() => {
       return history("/")
     }
@@ -78,8 +76,6 @@ const RegisterContainer= ({usecase}:{
       setCountry={setCountry}
       setCity={setCity}
       setProvince={setProvince}
-      setTypePerson={setType_person}
-      type_person={type_person}
       
       />
     )

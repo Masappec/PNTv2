@@ -13,6 +13,16 @@ class RoleUseCase {
     const roles = await this.roleRepository.createRole(role);
     return roles;
   }
+
+  async detail(id:string): Promise<RoleEntity> {
+    const roles = await this.roleRepository.detailRole(id);
+    return roles;
+  }
+
+  async update(id:string, role:RoleEntity): Promise<RoleEntity> {
+    const roles = await this.roleRepository.updateRole(id, role);
+    return roles;
+  }
 }
 
 export default RoleUseCase;
