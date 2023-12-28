@@ -23,6 +23,11 @@ class RoleUseCase {
     const roles = await this.roleRepository.updateRole(id, role);
     return roles;
   }
+
+  async deleteRole(id:string): Promise<RoleEntity> {
+    const roles = await this.roleRepository.deleteRole(id);
+    return roles;
+  }
 }
 
 export default RoleUseCase;

@@ -15,6 +15,9 @@ const RoleListContainer = ({
     const [roles, setRoles] = useState<RoleEntity[]>([])
     const [error, setError] = useState<string | null>(null)
 
+    const [visibleModal, setVisibleModal] = useState<boolean>(false)
+
+    const [selectedRole, setSelectedRole] = useState<RoleEntity | null>(null)
 
     const navigate = useNavigate()
 
@@ -35,7 +38,27 @@ const RoleListContainer = ({
         navigate(`/admin/roles/${role.id}`)
     }
 
+
+    const handleDelete = (Role:RoleEntity) => {
+        setVisibleModal(true)
+        setSelectedRole(Role)
+    }
     
+    const handleCancelDelete = () => {
+        setVisibleModal(false)
+        setSelectedRole(null)
+    }
+
+
+    const handleConfirmDelete = () => {
+        usecase.deleteRole(selectedRole?.id+"").then(() => {
+            setVisibleModal(false)
+            setSelectedRole(null)
+            setRoles(roles.filter((role) => role.id !== selectedRole?.id))
+        }).catch((error) => {
+            setError(error.message)
+        })
+    }
     return (
         <RoleListPresenter
             error={error}
@@ -51,8 +74,12 @@ const RoleListContainer = ({
             search=""
             setPage={() => { }}
             setSeach={() => { }}
-
-
+            onCancelDelete={handleCancelDelete}
+            onConfirmDelete={handleConfirmDelete}
+            onDelete={handleDelete}
+            setVisibleModal={setVisibleModal}
+            visibleModal={visibleModal}
+            selectedRole={selectedRole}
 
         />
     );
