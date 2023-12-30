@@ -58,7 +58,7 @@ const menu = [
         element: <RoleEdit/>
     },
     {
-        name: 'entidades',
+        name: 'Entidades',
         path: '/admin/entities',
         visible: true,
         icon: <GoOrganization />,
