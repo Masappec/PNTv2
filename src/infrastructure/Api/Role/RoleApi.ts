@@ -82,6 +82,24 @@ class RoleApi{
             throw new Error(error_);
         }
     }
+
+    async deleteRole(id: string) {
+        try {
+            const response = await this.apiBaseUrl.delete(this.path+'/role/delete/' + id);
+
+            if (response.status !== 200) {
+                throw new Error('Error al eliminar el rol.');
+            }
+
+            return response.data;
+
+        } catch (error:any) {
+            
+            const error_ = error.response?.data?.message || 'Error al eliminar el rol.';
+
+            throw new Error(error_);
+        }
+    }
 }
 
 export default RoleApi;

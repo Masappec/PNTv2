@@ -6,6 +6,7 @@ import UserCreate from "../interfaces/web/Admin/User/Create";
 import RoleList from "../interfaces/web/Admin/Role/List";
 import RoleCreate from "../interfaces/web/Admin/Role/Create";
 import RoleEdit from "../interfaces/web/Admin/Role/Edit";
+import EstablishmentList from "../interfaces/web/Admin/Establishment/List";
 
 
 export interface MenuItem {
@@ -63,7 +64,7 @@ const menu = [
         visible: true,
         icon: <GoOrganization />,
         permission_required: '',
-        element:<></>
+        element:<EstablishmentList/>
 
 
     }

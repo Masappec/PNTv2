@@ -1,19 +1,20 @@
-import { FaEdit, FaTrash } from "react-icons/fa";
-import RoleEntity from "../../../../domain/entities/RoleEntity";
-import Table from "../../../Common/Table";
-import Modal from "../../../Common/Modal";
-import Title from "../../../Common/Title";
-import Alert from "../../../Common/Alert";
+import { FaEdit, FaTrash } from "react-icons/fa"
+import EstablishmentEntity from "../../../../domain/entities/Establishment"
+import Alert from "../../../Common/Alert"
+import Modal from "../../../Common/Modal"
+import Table from "../../../Common/Table"
+import Title from "../../../Common/Title"
+
 
 
 interface Props {
-    roles: RoleEntity[]
+    establishments: EstablishmentEntity[]
     error: string | null
     onSearch: (search: string) => void
     onAdd: () => void
     onImport: () => void
     onFilter: () => void
-    onEdit: (role: RoleEntity) => void
+    onEdit: (role: EstablishmentEntity) => void
     search: string
     setSeach: (search: string) => void
     page: number
@@ -24,13 +25,12 @@ interface Props {
     visibleModal: boolean
     onConfirmDelete: () => void
     onCancelDelete: () => void
-    onDelete: (RoleEntity: RoleEntity) => void
-    selectedRole: RoleEntity | null
+    onDelete: (RoleEntity: EstablishmentEntity) => void
+    selectedEstablishment: EstablishmentEntity | null
 }
-const RoleListPresenter = (props: Props) => {
 
+const EstablishmentListPresenter = (props:Props)=>{
     return (
-
         <div className="container">
             <div className="flex items-center py-5 justify-center">
 
@@ -42,7 +42,7 @@ const RoleListPresenter = (props: Props) => {
                     {
                         props.error && <Alert type="error" message={props.error} onClose={() => { }} />
                     }
-                    <Title title={`¿Desea eliminar este Rol "${props.selectedRole?.name}" ?`} color="black" text="" />
+                    <Title title={`¿Desea eliminar esta Entidad "${props.selectedEstablishment?.name}" ?`} color="black" text="" />
                     <div className="space-x-4 flex justify-center items-center mt-5">
                         <button 
                         onClick={() => {
@@ -67,13 +67,13 @@ const RoleListPresenter = (props: Props) => {
                     columns={[
                         {
                             title: "Nombre",
-                            render: (row: RoleEntity) => (
+                            render: (row: EstablishmentEntity) => (
                                 <p>{row.name}</p>
                             )
                         },
                         {
                             title: "Acciones",
-                            render: (row: RoleEntity) => (
+                            render: (row: EstablishmentEntity) => (
                                 <div className="flex items-center">
                                     <button
                                         onClick={() => {
@@ -96,18 +96,18 @@ const RoleListPresenter = (props: Props) => {
                         }
                     ]}
                     currentPage={1}
-                    data={props.roles}
-                    description="Roles"
-                    length={props.roles.length}
+                    data={props.establishments}
+                    description="aquí se muestran las instituciones registradas en el sistema"
+                    length={props.establishments.length}
                     onAdd={props.onAdd}
                     onFilter={props.onFilter}
                     onImport={props.onImport}
                     onSearch={props.onSearch}
 
                     search={props.search}
-                    textAdd="Agregar Rol"
-                    textImport="Importar Roles"
-                    title="Roles"
+                    textAdd="Agregar Institución"
+                    textImport="Importar Instituciones"
+                    title="Instituciones"
                     key={"roles-table"}
 
 
@@ -115,7 +115,6 @@ const RoleListPresenter = (props: Props) => {
                 />
             </div>
         </div>
-    );
+    )
 }
-
-export default RoleListPresenter;
+export default EstablishmentListPresenter

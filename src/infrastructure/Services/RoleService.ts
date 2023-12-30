@@ -63,6 +63,19 @@ class RoleService{
 
         }
     }
+
+    async deleteRole(id:string) {
+        try {
+            const response = await this.api.deleteRole(id);
+    
+            return response;
+    
+        } catch (error:any) {
+            
+            throw new Error(error?.message || 'Error al registrar el usuario.');
+    
+        }
+    }
 }
 
 export default RoleService;
