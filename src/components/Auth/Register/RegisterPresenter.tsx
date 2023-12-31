@@ -59,7 +59,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                                         </div> : field.type_field === 'checkbox' ? 
                                         <div className="flex  flex-col m-2 items-center">
                                             <Checkbox
-                                                checked={props.data[field.name as keyof RegisterDto]}
+                                                checked={props.data[field.name as keyof RegisterDto] as boolean}
                                                 onChange={(e) => props.setData(field.name, e)}
                                                 id={field.name}
                                                 label={field.description}

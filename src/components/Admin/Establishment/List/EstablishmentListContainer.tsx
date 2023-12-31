@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
 import EstablishmentListPresenter from "./EstablishmentListPresenter"
+import EstablishmentEntity from "../../../../domain/entities/Establishment"
 
 
 

@@ -17,7 +17,6 @@ class UserMapper {
             phone: user.phone,
             province: user.province,
             groups: user.groups,
-            type_person: user.type_person,
             
         }
     }
@@ -38,7 +37,6 @@ class UserMapper {
             identification: user.identification,
             phone: user.phone,
             province: user.province,
-            type_person: user.type_person,
             groups: [
                 ...user.groups?.map((group) => group.id) || []
             ],
