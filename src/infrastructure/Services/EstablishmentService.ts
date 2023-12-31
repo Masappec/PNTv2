@@ -26,6 +26,8 @@ class EstablishmentService {
             throw new Error(e);
         }
     }
+
+    
 }
 
 export default EstablishmentService;

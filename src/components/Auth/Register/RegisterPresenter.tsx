@@ -5,35 +5,21 @@ import Input from '../../Common/Input';
 import Contrasenia from '../../Common/Contrasenia';
 import img from '@assets/login.svg'
 import Alert from '../../Common/Alert';
+import FormFieldsEntity from '../../../domain/entities/FormFieldsEntity';
+import Select from '../../Common/Select';
+import Checkbox from '../../Common/Checkbox';
+import { RegisterDto } from '../../../infrastructure/Api/Auth/AuthApi';
 
 interface RegisterPresenterProps {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    identification: string;
-    phone: string;
-    address: string;
-    country: string;
-    city: string;
-    province: string;
+    
 
     error: string;
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
-    setFirstName: (e: string) => void;
-    setLastName: (e: string) => void;
-    setEmail: (e: string) => void;
-    setPassword: (e: string) => void;
-    setConfirmPassword: (e: string) => void;
+  
     setError: (e: string) => void;
-
-    setIdentification: (e: string) => void;
-    setPhone: (e: string) => void;
-    setAddress: (e: string) => void;
-    setCountry: (e: string) => void;
-    setCity: (e: string) => void;
-    setProvince: (e: string) => void;
+    data: RegisterDto;
+    setData: (name: string, value: string|boolean) => void;
+    fields: FormFieldsEntity[];
 
 }
 
@@ -55,102 +41,41 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                         }
                         <div className="grid grid-cols-2">
 
-
-                            <div className="flex-col py-5">
-                                <div className="flex  flex-col m-2 items-center">
-                                    <Input type="text" placeholder="nombre" width="w-60"
-                                        value={props.firstName}
-                                        onChange={(e) => props.setFirstName(e.target.value)}
-                                    />
-                                </div>
-                                <div className="flex  flex-col m-2 items-center">
-
-
-                                    <Input type="text" placeholder="apellido" width="w-60"
-                                        value={props.lastName}
-                                        onChange={(e) => props.setLastName(e.target.value)}
-                                    />
-                                </div>
-
-                                
-
-
-                                <div className="flex  flex-col m-2 items-center">
-
-                                    <Input type="email" placeholder="correo" width="w-60"
-                                        value={props.email}
-                                        onChange={(e) => props.setEmail(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="flex  flex-col m-2 items-center">
-
-                                    <Input type="password" placeholder="Ingresar contraseña" width="w-60"
-                                        value={props.password}
-                                        onChange={(e) => props.setPassword(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="flex  flex-col m-2 items-center">
-
-                                    <Input type="password" placeholder="confirmar contraseña" width="w-60"
-                                        value={props.confirmPassword}
-                                        onChange={(e) => props.setConfirmPassword(e.target.value)}
-                                    />
-                                </div>
-
-                            </div>
-
-                            <div className="flex-col">
-                                <div className="flex  flex-col m-2 items-center">
-
-                                    <Input type="text" placeholder="Identificación" width="w-60"
-                                        value={props.identification}
-                                        onChange={(e) => props.setIdentification(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="flex  flex-col m-2 items-center">
-
-                                    <Input type="tel" placeholder="Teléfono" width="w-60"
-                                        value={props.phone}
-                                        onChange={(e) => props.setPhone(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="flex  flex-col m-2 items-center">
-
-                                    <Input type="text" placeholder="Dirección" width="w-60"
-                                        value={props.address}
-                                        onChange={(e) => props.setAddress(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="flex  flex-col m-2 items-center">
-
-                                    <Input type="text" placeholder="País" width="w-60"
-                                        value={props.country}
-                                        onChange={(e) => props.setCountry(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="flex  flex-col m-2 items-center">
-
-                                    <Input type="text" placeholder="Ciudad" width="w-60"
-                                        value={props.city}
-                                        onChange={(e) => props.setCity(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="flex  flex-col m-2 items-center">
-
-                                    <Input type="text" placeholder="Provincia" width="w-60"
-                                        value={props.province}
-                                        onChange={(e) => props.setProvince(e.target.value)}
-                                    />
-                                </div>
-
-                            </div>
+                            {
+                                props.fields.map((field) => {
+                                    return (
+                                        field.type_field === 'select' ? <div className="flex  flex-col m-2 items-center">
+                                            
+                                            <Select
+                                                placeholder={field.description}
+                                                value={props.data[field.name as keyof RegisterDto] as string}
+                                                onChange={(e) => props.setData(field.name, e.target.value)}
+                                                options={[
+                                                    { value: '1', label: 'One' },
+                                                    { value: '2', label: 'Two' },
+                                                    { value: '3', label: 'Three' },
+                                                ]}
+                                            />
+                                        </div> : field.type_field === 'checkbox' ? 
+                                        <div className="flex  flex-col m-2 items-center">
+                                            <Checkbox
+                                                checked={props.data[field.name as keyof RegisterDto]}
+                                                onChange={(e) => props.setData(field.name, e)}
+                                                id={field.name}
+                                                label={field.description}
+                                                />
+                                        </div> :
+                                        <div className="flex  flex-col m-2 items-center">
+                                            <Input type={field.type_field}
+                                             placeholder={field.description} width="w-60"
+                                                value={props.data[field.name as keyof RegisterDto] as string}
+                                                onChange={(e) => props.setData(field.name, e.target.value)}
+                                            />
+                                        </div>
+                                    )
+                                })
+                            }
+                            
 
 
 
