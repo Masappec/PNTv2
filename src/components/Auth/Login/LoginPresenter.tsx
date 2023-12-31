@@ -5,6 +5,7 @@ import Input from '../../Common/Input';
 import Contrasenia from '../../Common/Contrasenia/index';
 import Alert from '../../Common/Alert';
 import img from '@assets/imagen.svg'
+import Spinner from '../../Common/Spinner';
 
 interface LoginPresenterProps {
     email: string;
@@ -49,11 +50,9 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
                                 />
                             </div>
 
-                            
-                                <Button title="login" width="w-72" />
-                                
-        
-                        
+                            {
+                                props.isloading ? <Spinner /> : <Button title="login" width="w-72" />
+                            }
                             
 
                         </div>
