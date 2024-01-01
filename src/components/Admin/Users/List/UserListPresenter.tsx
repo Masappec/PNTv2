@@ -34,7 +34,7 @@ export const UserListPresenter = (props:Props)=>{
                     columns={[
                         {
                             render: (row: UserEntity) => (
-                                <p>{row.firstName +" "+ row.lastName}</p>
+                                <p>{row.first_name +" "+ row.last_name}</p>
                             ),
                             title: "Nombre",
                             
@@ -47,7 +47,7 @@ export const UserListPresenter = (props:Props)=>{
                         },
                         {
                             render: (row: UserEntity) => (
-                                row.groups?.map((group, index) => (
+                                row.group?.map((group, index) => (
                                     <Badge key={index} text={group.name} color="primary"/>
                                 ))
                             ),

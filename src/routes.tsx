@@ -6,14 +6,23 @@ import Login from './interfaces/web/Auth/Login';
 import Admin from './interfaces/web/Admin';
 import Register from './interfaces/web/Auth/Register';
 import menu from './utils/menu';
+import Landing from './interfaces/web/Landing';
 
 
 
 
 const Router = createBrowserRouter(
+    
+    
     [
+
         {
             path: '/',
+            element: <Landing />
+            
+        },
+        {
+            path: '/login',
             element: <Login />, 
             loader: ()=>{
                 const isLogged = SessionService.isLogged();

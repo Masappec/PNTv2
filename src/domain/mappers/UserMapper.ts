@@ -7,16 +7,16 @@ class UserMapper {
         return {
             email: user.email,
             username: user.username,
-            firstName: user.first_name,
+            first_name: user.first_name,
             id: user.id || 0,
-            lastName: user.last_name,
+            last_name: user.last_name,
             address: user.address,
             city: user.city,
             country: user.country,
             identification: user.identification,
             phone: user.phone,
             province: user.province,
-            groups: user.groups,
+            group: user.group
             
         }
     }
@@ -26,20 +26,24 @@ class UserMapper {
 
     static fromDomainToApi(user: UserEntity):UserCreateInterface {
         return {
-            email: user.email,
             username: user.username,
-            first_name: user.firstName,
-            id: user.id,
-            last_name: user.lastName,
-            address: user.address,
-            city: user.city,
-            country: user.country,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            city: user.city || "",
             identification: user.identification,
-            phone: user.phone,
-            province: user.province,
+            phone: user.phone || "",
+            province: user.province || "",
             groups: [
-                ...user.groups?.map((group) => group.id) || []
+                ...user.group?.map((group) => group.id) || []
             ],
+            password: user.password || "",
+            accept_terms: user.accept_terms || true,
+            age_range: user.age_range || "",
+            establishment_id: user.establishment_id||0,
+            job: user.job || "",
+            race: user.race || "",
+            
+            
         }
     }
 }

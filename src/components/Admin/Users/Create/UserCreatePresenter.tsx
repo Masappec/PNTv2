@@ -115,11 +115,17 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                                 placeholder={field.description}
                                                 value={props.data[field.name as keyof UserEntity] as string}
                                                 onChange={(e) => props.setData(field.name, e.target.value)}
-                                                options={[
-                                                    { value: '1', label: 'One' },
-                                                    { value: '2', label: 'Two' },
-                                                    { value: '3', label: 'Three' },
-                                                ]}
+                                                options={
+                                                    [{
+                                                        value: "",
+                                                        label: "Seleccione una opción"
+                                                    }].concat(field.options?.map((option) => {
+                                                        return {
+                                                            value: option.id + "",
+                                                            label: option.name
+                                                        }
+                                                    })||[])
+                                                }
                                             />
                                         </div> :
                                         <div className="flex  flex-col m-2">

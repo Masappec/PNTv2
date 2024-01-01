@@ -28,7 +28,7 @@ class UserService{
 
             return response;
         } catch (error:any) {
-            const _error = error?.response?.data?.message || 'Error al registrar el usuario.';
+            const _error = error?.message || 'Error al registrar el usuario.';
             throw new Error(_error);
         }
     }

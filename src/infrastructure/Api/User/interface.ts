@@ -12,7 +12,7 @@ export interface User {
     country?: string;
     province?: string;
     type_person?: string;
-    groups?: {
+    group?: {
         id: number;
         name: string;
     }[];
@@ -31,6 +31,8 @@ export interface UserListResponse {
 
 export interface UserCreateInterface {
 
+
+    groups: number[];
     first_name: string;
     last_name: string;
     username: string;
@@ -41,8 +43,10 @@ export interface UserCreateInterface {
     province?: string;
     job?: string;
     establishment_id?: number;
-    race ?: string;
-    age_range ?: string;
-    accept_terms ?: boolean;
+    race?: string;
+    age_range?: string;
+    accept_terms?: boolean;
+
+
 
 }

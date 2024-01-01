@@ -50,6 +50,8 @@ const UserCreateContainer = ({
 
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+
+        data.group = [{id: roleSelected?.id || 0, name: roleSelected?.name || ""}]
         e.preventDefault()
         usecase.create(data).then(() => {
             setSuccess("Usuario creado con éxito")
@@ -62,6 +64,7 @@ const UserCreateContainer = ({
     }
     
     const handleChange = (name: string, value: string | boolean) => {
+        console.log(name, value)
         setData({ ...data, [name]: value })
     }
 

@@ -47,8 +47,10 @@ class UserApi {
 
             return response.data;
 
-        } catch (error) {
-            throw new Error('Error al conectar con el servidor de autenticación.');
+        } catch (error:any) {
+            const error_ = error.response?.data?.message || 'Error al crear el usuario.';
+
+            throw  new Error(error_);
         }
     }
 }
