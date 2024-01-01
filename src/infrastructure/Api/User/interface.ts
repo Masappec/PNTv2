@@ -31,18 +31,18 @@ export interface UserListResponse {
 
 export interface UserCreateInterface {
 
-    id?: number ;
-
     first_name: string;
     last_name: string;
     username: string;
-    email: string;
+    password: string;
     identification?: string;
     phone?: string;
-    address?: string;
     city?: string;
-    country?: string;
     province?: string;
-    type_person?: string;
-    groups: number[];
+    job?: string;
+    establishment_id?: number;
+    race ?: string;
+    age_range ?: string;
+    accept_terms ?: boolean;
+
 }

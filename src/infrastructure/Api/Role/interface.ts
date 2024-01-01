@@ -19,3 +19,9 @@ export interface RoleDetailResponse {
         content_type: number;
     }[]
 }
+
+export interface RoleListAvailableResponse {
+    id: number;
+    name: string;
+    permission_required: string;
+}

@@ -4,38 +4,43 @@ import UserUseCase from "../../../../domain/useCases/Users/UserUseCase"
 import RoleUseCase from "../../../../domain/useCases/Role/RoleUseCase"
 import RoleEntity from "../../../../domain/entities/RoleEntity"
 import { useNavigate } from "react-router-dom"
+import UserEntity from "../../../../domain/entities/UserEntity"
+import ConfigurationUseCase from "../../../../domain/useCases/Configuration/ConfigurationUseCase"
+import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
 
 
 const UserCreateContainer = ({
     usecase,
-    roleUseCase
+    roleUseCase,
+    configUseCase
 }:{
     usecase: UserUseCase,
-    roleUseCase: RoleUseCase
+    roleUseCase: RoleUseCase,
+    configUseCase: ConfigurationUseCase
 }) => {
 
-    const [name, setName] = useState<string>("")
-    const [last_name, setLastName] = useState<string>("")
-    const [email, setEmail] = useState<string>("")
-    const [identification, setIdentification] = useState<string>("")
-    const [phone, setPhone] = useState<string>("")
-    const [address, setAddress] = useState<string>("")
-    const [country, setCountry] = useState<string>("")
-    const [city, setCity] = useState<string>("")
-    const [province, setProvince] = useState<string>("")
-    const [role, setRole] = useState<number>(0)
-
+    const [data, setData] = useState<UserEntity>({} as UserEntity)
     const [error, setError] = useState<string>("")
     const [success, setSuccess] = useState<string>("")
 
     const [roleList, setRoleList] = useState<RoleEntity[]>([])
+    const [roleSelected, setRoleSelected] = useState<RoleEntity | null>(null)
+    const [config, setConfig] = useState<FormFieldsEntity[]>([])
+
+    const [loading, setLoading] = useState<boolean>(false)
 
     const navigate = useNavigate()
 
 
     useEffect(() => {
-        roleUseCase.execute().then((roles) => {
+        roleUseCase.listAvailable().then((roles) => {
             setRoleList(roles)
+            if (roles.length==1){
+                handleConfigFields(roles[0].name)
+            }
+            if (roles.length==0){
+                navigate("/admin/users")
+            }
         }).catch((error) => {
             setError(error.message)
         })
@@ -46,25 +51,7 @@ const UserCreateContainer = ({
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(role)
-        usecase.create({
-            firstName: name,
-            lastName: last_name,
-            email,
-            identification,
-            phone,
-            address,
-            country,
-            city,
-            province,
-            username: email,
-            groups: [{
-                id: role,
-                name: "Rol"
-            
-            }],
-            id: 0
-        }).then(() => {
+        usecase.create(data).then(() => {
             setSuccess("Usuario creado con éxito")
             const target = e.target as HTMLFormElement
             target.reset()
@@ -74,32 +61,39 @@ const UserCreateContainer = ({
         })
     }
     
+    const handleChange = (name: string, value: string | boolean) => {
+        setData({ ...data, [name]: value })
+    }
+
+
+    const handleConfigFields = (role: string) => {
+        setLoading(true)
+        configUseCase.execute(role,"Usuario").then((res) => {
+            setConfig(res)
+            setLoading(false)
+        }).catch((e) => {
+            setError(e.message)
+            setLoading(false)
+        })
+    }
+
+    const handleChangeRole = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const role = roleList.find((role) => role.id === parseInt(e.target.value))
+        setRoleSelected(role || null)
+        if (role){
+            handleConfigFields(role.name)
+        }
+        
+    }
+
     const onCancel = () => {
         navigate("/admin/users")
     }
 
     return (
         <UserCreatePresenter 
-            address={address}
-            city={city}
-            country={country}
-            email={email}
-            identification={identification}
-            last_name={last_name}
-            name={name}
-            phone={phone}
-            province={province}
-            role={role}
-            setAddress={setAddress}
-            setCity={setCity}
-            setCountry={setCountry}
-            setEmail={setEmail}
-            setIdentification={setIdentification}
-            setLastName={setLastName}
-            setName={setName}
-            setPhone={setPhone}
-            setProvince={setProvince}
-            setRole={setRole}
+           data={data as UserEntity}
+            setData={handleChange}
             handleSubmit={handleSubmit}
             error={error}
             setError={setError}
@@ -107,6 +101,9 @@ const UserCreateContainer = ({
             success={success}
             roles_list={roleList}
             onCancel={onCancel}
+            fields={config}
+            onChangeRole={handleChangeRole}
+            loading={loading}
         />
     )
 }
