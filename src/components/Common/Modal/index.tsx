@@ -16,7 +16,7 @@ const Modal = (props:ModalProps) => {
     }, [props.isvisible])
 
 
-    if (!isvisible) {
+    if (!props.isvisible) {
         return null
     }
     return (
