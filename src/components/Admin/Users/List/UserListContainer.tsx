@@ -43,7 +43,7 @@ const UserListContainer = ({
 
 
     const handleEdit = (user: UserEntity) => {
-        navigate("/admin/users/edit/"+user.id)
+        navigate("/admin/users/"+user.id)
     }
 
     const handlePage = (page: number) => {
