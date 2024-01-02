@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../../Navbar";
 import Sidebar from "../../SideBar";
 import  { MenuItem } from "../../../../utils/menu";
+import { useEffect, useState } from "react";
 
 interface LayoutAdminProps {
     
@@ -13,6 +14,11 @@ interface LayoutAdminProps {
 
 const LayoutAdmin = ({...props}:LayoutAdminProps) => {
 
+    const [user, setUser] = useState("")
+    useEffect(() => {
+        setUser(props.username)
+    }, [props.username])
+
     return (<div className="layout-admin h-screen flex flex-col">
         <div className="flex w-full ">
 
@@ -21,7 +27,7 @@ const LayoutAdmin = ({...props}:LayoutAdminProps) => {
 
             </div>
             <div className="flex-col w-full">
-                <Navbar username={props.username} onLogout={props.onLogout} />
+                <Navbar username={user} onLogout={props.onLogout} />
                 <div className="flex-col overflow-y-auto p-5 h-auto">
                     <div className="flex-row h-auto w-full">
                     <Outlet />
