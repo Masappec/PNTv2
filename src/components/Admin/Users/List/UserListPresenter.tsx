@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import UserEntity from "../../../../domain/entities/UserEntity"
 import Badge from "../../../Common/Badge"
 import Table from "../../../Common/Table"

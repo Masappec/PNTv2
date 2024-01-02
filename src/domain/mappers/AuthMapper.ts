@@ -6,9 +6,9 @@ class AuthMapper{
     static fromDomainToDTO(auth: UserEntity): RegisterDto{
         return {
             city: auth.city||'',
-            first_name: auth.firstName,
+            first_name: auth.first_name,
             identification: auth.identification || '',
-            last_name: auth.lastName,
+            last_name: auth.last_name || '',
             password: auth?.password || '',
             phone: auth.phone || '',
             province: auth.province || '',

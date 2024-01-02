@@ -11,7 +11,7 @@ const Admin = ()=>{
     } 
 
     return (
-        <LayoutAdmin menu={menu} username={userData.firstName + userData.lastName|| userData.email} 
+        <LayoutAdmin menu={menu} username={userData.first_name + userData.last_name|| userData.email} 
         onLogout={logout}
             />
     )

@@ -1,4 +1,3 @@
-import Footer from "../Common/Footer";
 import FooterInfo from "../Common/FooterInfo";
 import Header from "../Common/Header"
 import Hero from "../Common/Hero";
