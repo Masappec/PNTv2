@@ -7,6 +7,7 @@ import RoleList from "../interfaces/web/Admin/Role/List";
 import RoleCreate from "../interfaces/web/Admin/Role/Create";
 import RoleEdit from "../interfaces/web/Admin/Role/Edit";
 import EstablishmentList from "../interfaces/web/Admin/Establishment/List";
+import UserEdit from "../interfaces/web/Admin/User/Edit";
 
 
 export interface MenuItem {
@@ -21,7 +22,7 @@ const menu = [
     {
         name: 'Usuarios',
         path: '/admin/users',
-        permission_required: 'app.view_user',
+        permission_required: 'auth.view_user',
         visible: true,
         icon: <LuUsers size={25}/>,
         element: <UserList/>
@@ -29,16 +30,24 @@ const menu = [
     {
         name: 'Crear Usuario',
         path: '/admin/users/create',
-        permission_required: 'app.add_user',
+        permission_required: 'auth.add_user',
         visible: false,
         icon: <LuUsers size={25}/>,
         element: <UserCreate/>
     },
     {
+        name: 'Editar Usuario',
+        path: '/admin/users/:id',
+        visible: false,
+        permission_required: 'auth.change_user',
+        icon: <LuUsers size={25}/>,
+        element: <UserEdit/>
+    },
+    {
         name: 'Roles',
         path: '/admin/roles',
         visible: true,
-        permission_required: 'app.view_role',
+        permission_required: 'auth.view_role',
         icon: <FaIdCard  size={25}/>,
         element: <RoleList/>
     },
@@ -46,7 +55,7 @@ const menu = [
         name: 'Crear Rol',
         path: '/admin/roles/create',
         visible: false,
-        permission_required: 'app.add_role',
+        permission_required: 'auth.add_role',
         icon: <FaIdCard  size={25}/>,
         element: <RoleCreate/>
     },
@@ -54,7 +63,7 @@ const menu = [
         name: 'Editar Rol',
         path: '/admin/roles/:id',
         visible: false,
-        permission_required: 'app.change_role',
+        permission_required: 'auth.change_role',
         icon: <FaIdCard  size={25}/>,
         element: <RoleEdit/>
     },

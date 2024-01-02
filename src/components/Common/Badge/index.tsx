@@ -7,11 +7,11 @@ const Badge = (props: BadgeProps) => {
 
     const colors = {
         primary: "bg-blue-400",
-        secondary: "bg-green-100",
-        danger: "bg-red-100",
-        warning: "bg-yellow-100",
-        success: "bg-green-100",
-        info: "bg-blue-100"
+        secondary: "bg-green-400",
+        danger: "bg-red-400",
+        warning: "bg-yellow-400",
+        success: "bg-green-400",
+        info: "bg-blue-400"
     }
 
     return (

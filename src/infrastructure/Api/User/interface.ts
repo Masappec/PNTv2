@@ -17,6 +17,7 @@ export interface User {
         name: string;
     }[];
 
+    is_active?: boolean;
 
 }
 

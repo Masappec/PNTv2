@@ -23,6 +23,8 @@ class UserEntity {
   age_range?: string;
   accept_terms?: boolean;
 
+  is_active?: boolean;
+
 
   constructor(id: number, username: string, email: string, firstName: string, lastName: string,
     identification?: string, phone?: string, address?: string, city?: string, country?: string, password?: string,
@@ -35,7 +37,8 @@ class UserEntity {
     race?: string,
     age_range?: string,
     accept_terms?: boolean,
-    job?: string
+    job?: string,
+    is_active?: boolean
   ) {
     this.id = id;
     this.username = username;
@@ -55,6 +58,7 @@ class UserEntity {
     this.age_range = age_range;
     this.accept_terms = accept_terms;
     this.job = job;
+    this.is_active = is_active;
   }
 
 

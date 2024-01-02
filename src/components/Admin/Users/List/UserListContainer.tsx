@@ -18,6 +18,10 @@ const UserListContainer = ({
     const [nextPage, setNextPage] = useState<number>(0)
     const [previousPage, setPreviousPage] = useState<number>(0)
 
+    const [selectedUser, setSelectedUser] = useState<UserEntity | null>(null)
+    const [visibleModal, setVisibleModal] = useState<boolean>(false)
+    const [type_alert, setTypeAlert] = useState<"success" | "warning" | "info" | "error" >("success")
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -27,7 +31,7 @@ const UserListContainer = ({
             setPreviousPage(users.previous||0)
             setNextPage(users.next||0)
         }).catch((error) => { 
-            setError(error)
+            setError(error.message)
         })
     }, [usecase]);
 
@@ -39,7 +43,7 @@ const UserListContainer = ({
 
 
     const handleEdit = (user: UserEntity) => {
-            navigate("/admin/users/edit/"+user.id)
+        navigate("/admin/users/edit/"+user.id)
     }
 
     const handlePage = (page: number) => {
@@ -49,7 +53,7 @@ const UserListContainer = ({
             setPreviousPage(users.previous||0)
             setNextPage(users.next||0)
         }).catch((error) => {
-            setError(error)
+            setError(error.message)
         })
     }
 
@@ -61,7 +65,38 @@ const UserListContainer = ({
         usecase.execute(text).then((users) => {
             setUsers(users.results)
         }).catch((error) => {
-            setError(error)
+            setError(error.message)
+        })
+    }
+
+    
+
+    const handleDelete = (user:UserEntity) => {
+        setVisibleModal(true)
+        setSelectedUser(user)
+    }
+    
+    const handleCancelDelete = () => {
+        setVisibleModal(false)
+        setSelectedUser(null)
+    }
+
+
+    const handleConfirmDelete = () => {
+        usecase.delete(selectedUser?.id||0).then((status) => {
+            setVisibleModal(false)
+            setSelectedUser(null)
+            setTypeAlert(status==202?"success":"error")
+            usecase.execute().then((users) => {
+                setUsers(users.results)
+                setCurrentPage(users.current)
+                setPreviousPage(users.previous||0)
+                setNextPage(users.next||0)
+            }).catch((error) => {
+                setError(error.message)
+            })
+        }).catch((error) => {
+            setError(error.message)
         })
     }
  
@@ -82,6 +117,13 @@ const UserListContainer = ({
             page={currentPage}
             previousPage={previousPage}
             setPage={handlePage}
+            onCancelDelete={handleCancelDelete}
+            onConfirmDelete={handleConfirmDelete}
+            onDelete={handleDelete}
+            selectedUser={selectedUser}
+            setVisibleModal={setVisibleModal}
+            visibleModal={visibleModal}
+            type_alert={type_alert}
         />
     );
 }

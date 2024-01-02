@@ -16,7 +16,8 @@ class UserMapper {
             identification: user.identification,
             phone: user.phone,
             province: user.province,
-            group: user.group
+            group: user.group,
+            is_active: user.is_active,
             
         }
     }
