@@ -8,6 +8,8 @@ import RoleCreate from "../interfaces/web/Admin/Role/Create";
 import RoleEdit from "../interfaces/web/Admin/Role/Edit";
 import EstablishmentList from "../interfaces/web/Admin/Establishment/List";
 import UserEdit from "../interfaces/web/Admin/User/Edit";
+import EstablishmentCreate from "../interfaces/web/Admin/Establishment/Create";
+import EstablishmentEdit from "../interfaces/web/Admin/Establishment/Edit";
 
 
 export interface MenuItem {
@@ -68,14 +70,28 @@ const menu = [
         element: <RoleEdit/>
     },
     {
-        name: 'Entidades',
+        name: 'Instituciones',
         path: '/admin/entities',
         visible: true,
-        icon: <GoOrganization />,
+        icon: <GoOrganization size={25} />,
         permission_required: '',
         element:<EstablishmentList/>
-
-
+    },
+    {
+        name: 'Crear Institución',
+        path: '/admin/entities/create',
+        visible: false,
+        icon: <GoOrganization size={25} />,
+        permission_required: '',
+        element:<EstablishmentCreate/>
+    },
+    {
+        name: 'Editar Institución',
+        path: '/admin/entities/:id',
+        visible: false,
+        icon: <GoOrganization size={25} />,
+        permission_required: '',
+        element:<EstablishmentEdit/>
     }
 
 ]

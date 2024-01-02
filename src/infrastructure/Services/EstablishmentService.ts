@@ -10,9 +10,9 @@ class EstablishmentService {
     constructor(establishmentApi:EstablishmentApi) {
         this.api = establishmentApi;
     }
-    async getEstablishments():Promise<Pagination<EstablishmentEntity>>{
+    async getEstablishments(search?: string,page?: number):Promise<Pagination<EstablishmentEntity>>{
         try{
-            const response = await this.api.getEstablishments();
+            const response = await this.api.getEstablishments(search,page);
             return {
                 current: response.current,
                 limit: response.limit,
@@ -27,6 +27,51 @@ class EstablishmentService {
         }
     }
 
+
+    async Create(data:EstablishmentEntity)
+    {   
+        try{
+            const response = await this.api.Create(EstablishmentMapper.domainToApi(data));
+            return response;
+        }catch(error:any){
+            const e:string = error.response?.data?.message || 'Error al crear el establecimiento.';
+            throw new Error(e);
+        }
+
+    }
+
+    async detail(id:string){
+        try{
+            const response = await this.api.detail(id);
+            return EstablishmentMapper.apiToDomainDetail(response);
+        }catch(error:any){
+            const e:string = error.response?.data?.message || 'Error al obtener el establecimiento.';
+            throw new Error(e);
+        }
+    }
+
+
+    async update(data:EstablishmentEntity,id:string)
+    {   
+        try{
+            const response = await this.api.update(EstablishmentMapper.domainToApi(data),id);
+            return response;
+        }catch(error:any){
+            const e:string = error.response?.data?.message || 'Error al actualizar el establecimiento.';
+            throw new Error(e);
+        }
+
+    }
+
+    async delete(id:string){
+        try{
+            const response = await this.api.delete(id);
+            return response;
+        }catch(error:any){
+            const e:string = error.response?.data?.message || 'Error al eliminar el establecimiento.';
+            throw new Error(e);
+        }
+    }
     
 }
 

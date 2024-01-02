@@ -5,6 +5,7 @@ import PermissionEntity from "../../../../domain/entities/PermissionEntity";
 import Checkbox from "../../../Common/Checkbox";
 import Input from "../../../Common/Input";
 import RoleEntity from "../../../../domain/entities/RoleEntity";
+import Spinner from "../../../Common/Spinner";
 
 interface RoleEditPresenterProps {
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -21,6 +22,9 @@ interface RoleEditPresenterProps {
 }
 
 const RoleEditPresenter = (props: RoleEditPresenterProps) => {
+    if (!props.role.id) return (<div className="flex items-center py-5 justify-center">
+        <Spinner /> 
+    </div>)
     return (
         <div className="container">
             <div className="flex items-center py-5 justify-center">

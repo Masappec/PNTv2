@@ -1,9 +1,11 @@
-import { FaEdit, FaTrash } from "react-icons/fa"
+import { FaCheckCircle, FaEdit } from "react-icons/fa"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import Alert from "../../../Common/Alert"
 import Modal from "../../../Common/Modal"
 import Table from "../../../Common/Table"
 import Title from "../../../Common/Title"
+import { IoCloseCircleOutline } from "react-icons/io5"
+import Badge from "../../../Common/Badge"
 
 
 
@@ -42,7 +44,9 @@ const EstablishmentListPresenter = (props:Props)=>{
                     {
                         props.error && <Alert type="error" message={props.error} onClose={() => { }} />
                     }
-                    <Title title={`¿Desea eliminar esta Entidad "${props.selectedEstablishment?.name}" ?`} color="black" text="" />
+                    <Title title={`¿Desea ${
+                        props.selectedEstablishment?.is_active ? "desactivar" : "activar"
+                    } esta Entidad "${props.selectedEstablishment?.name}" ?`} color="black" text="" />
                     <div className="space-x-4 flex justify-center items-center mt-5">
                         <button 
                         onClick={() => {
@@ -72,6 +76,27 @@ const EstablishmentListPresenter = (props:Props)=>{
                             )
                         },
                         {
+                            title: "Abreviatura",
+                            render: (row: EstablishmentEntity) => (
+                                <p>{row.abbreviation}</p>
+                            )
+                        },
+                        {
+                            title: "Maxima autoridad",
+                            render: (row: EstablishmentEntity) => (
+                                <p>{row.highest_authority +" " +row.first_name_authority +" "+ row.last_name_authority}</p>
+                            )
+                        },
+                        {
+                            title: "Estado",
+                            render: (row: EstablishmentEntity) => (
+                                <Badge
+                                    color={row.is_active ? "success" : "danger"}
+                                    text={row.is_active ? "Activo" : "Inactivo"}
+                                />
+                            )
+                        },
+                        {
                             title: "Acciones",
                             render: (row: EstablishmentEntity) => (
                                 <div className="flex items-center">
@@ -83,13 +108,17 @@ const EstablishmentListPresenter = (props:Props)=>{
                                         <FaEdit />
                                     </button>
                                     <button
+                                    
+                                        //add alt
                                         onClick={() => {
                                             props.onDelete(row)
 
                                         }
                                         }
-                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-2xl">
-                                        <FaTrash />
+                                        className={" text-white font-bold py-2 px-4 rounded-2xl" + (row.is_active ? " bg-red-500 hover:bg-red-700" : " bg-green-500 hover:bg-green-700")}>
+                                        {
+                                            row.is_active ? <IoCloseCircleOutline /> : <FaCheckCircle />
+                                        }
                                     </button>
                                 </div>
                             )
