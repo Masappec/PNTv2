@@ -14,6 +14,11 @@ const Modal = (props:ModalProps) => {
     useEffect(() => {
         setIsvisible(props.isvisible)
     }, [props.isvisible])
+
+
+    if (!isvisible) {
+        return null
+    }
     return (
         <div className={`fixed left-0 top-0 ${isvisible?'flex':'hidden'} h-full w-full items-center justify-center bg-black bg-opacity-50 `}>
 
