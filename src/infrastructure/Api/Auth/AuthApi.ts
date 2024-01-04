@@ -5,17 +5,20 @@ import { AUTH_PATH } from "..";
 
 
 export interface RegisterDto{
-    username:string,
-    password:string,
-    email:string,
-    first_name:string,
-    last_name:string,
-    identification:string,
-    phone:string,
-    address:string,
-    city:string,
-    country:string,
-    province:string,
+
+  first_name: string,
+  last_name: string,
+  username: string,
+  password: string,
+  identification: string,
+  phone: string,
+  province: string,
+  gender: string,
+  age_range: string,
+  city: string,
+  race: string,
+  accept_terms: boolean
+
 }
 class AuthApi {
 
@@ -44,13 +47,7 @@ class AuthApi {
     }
     
     //TODO: agregar el tipo de dato de userData
-    async register(userData:{
-        username:string,
-        password:string,
-        email:string,
-        first_name:string,
-        last_name:string,
-    }) {
+    async register(userData:RegisterDto) {
       try {
         const response = await this.apiBaseUrl.post(AUTH_PATH+'/register/', userData);
 

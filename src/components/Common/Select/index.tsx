@@ -12,7 +12,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 const Select = (props:SelectProps) => {
 
     return (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col ">
       <label className=" text-gray-700 text-sm font-bold mb-2">
         {props.placeholder}
       </label>

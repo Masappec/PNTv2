@@ -14,6 +14,11 @@
     role: string;
     type_field: string;
 
+    options?: {
+      id: number;
+      name: string;
+    }[] | null;
+
     constructor(
       id: number,
       created_at: string,
@@ -27,6 +32,10 @@
       is_active: boolean,
       role: string,
       type_field: string,
+      options?: {
+        id: number;
+        name: string;
+      }[] | null
     ) {
       this.id = id;
       this.created_at = created_at;
@@ -40,6 +49,7 @@
       this.is_active = is_active;
       this.role = role;
       this.type_field = type_field;
+      this.options = options;
     }
   }
 

@@ -34,7 +34,7 @@ const RegisterContainer= ({usecase,configUseCase}:{
    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     usecase.authService.register(data as RegisterDto).then(() => {
-      return history("/")
+      return history("/login")
     }
     ).catch((e) => {
       setError(e.message)

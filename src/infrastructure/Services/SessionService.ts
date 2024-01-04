@@ -42,7 +42,7 @@ class SessionService {
         
         const json = JSON.parse(data);
 
-        return new UserEntity(json.id, json.username, json.email, json.firstName, json.lastName);
+        return new UserEntity(json.id, json.username, json.email, json.first_name, json.last_name);
     }
 
     static removeUserData() {

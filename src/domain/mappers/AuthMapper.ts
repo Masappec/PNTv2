@@ -5,17 +5,18 @@ import UserEntity from "../entities/UserEntity";
 class AuthMapper{
     static fromDomainToDTO(auth: UserEntity): RegisterDto{
         return {
-            address: auth.address||'',
             city: auth.city||'',
-            country: auth.country||'',
-            email: auth.email,
-            first_name: auth.firstName,
+            first_name: auth.first_name,
             identification: auth.identification || '',
-            last_name: auth.lastName,
+            last_name: auth.last_name || '',
             password: auth?.password || '',
             phone: auth.phone || '',
             province: auth.province || '',
-            username: auth.username || ''
+            username: auth.username || '',
+            accept_terms: true,
+            age_range: '',
+            gender:'',
+            race:''
         }
     }
 }

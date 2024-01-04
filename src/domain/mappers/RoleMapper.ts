@@ -1,4 +1,4 @@
-import { RoleCreateRequest, RoleDetailResponse, RoleListResponse } from "../../infrastructure/Api/Role/interface";
+import { RoleCreateRequest, RoleDetailResponse, RoleListAvailableResponse, RoleListResponse } from "../../infrastructure/Api/Role/interface";
 import RoleEntity from "../entities/RoleEntity";
 
 
@@ -24,6 +24,14 @@ class RoleMapper{
             name: role.name,
             permission: role.permissions
             
+        }
+    }
+
+    static fromApiToDomainAvailable(role: RoleListAvailableResponse): RoleEntity{
+        return {
+            id: role.id,
+            name: role.name,
+            permission_required: role.permission_required
         }
     }
 }

@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { RoleCreateRequest, RoleListResponse } from "./interface";
+import { RoleCreateRequest, RoleListAvailableResponse, RoleListResponse } from "./interface";
 
 
 class RoleApi{
@@ -96,6 +96,25 @@ class RoleApi{
         } catch (error:any) {
             
             const error_ = error.response?.data?.message || 'Error al eliminar el rol.';
+
+            throw new Error(error_);
+        }
+    }
+
+
+    async getRoleListAvailable(){
+        try {
+            const response = await this.apiBaseUrl.get<RoleListAvailableResponse[]>(this.path+'/role/list/avaliable')
+
+            if (response.status !== 200) {
+                throw new Error('Error al obtener la lista de roles disponibles.');
+            }
+
+            return response.data;
+
+        } catch (error:any) {
+            
+            const error_ = error.response?.data?.message || 'Error al obtener la lista de roles disponibles.';
 
             throw new Error(error_);
         }

@@ -76,6 +76,19 @@ class RoleService{
     
         }
     }
+
+    async listAvailable(){
+        try {
+            const response = await this.api.getRoleListAvailable();
+    
+            return response.map((role) => RoleMapper.fromApiToDomainAvailable(role));
+    
+        } catch (error:any) {
+            
+            throw new Error(error?.message || 'Error al registrar el usuario.');
+    
+        }
+    }
 }
 
 export default RoleService;
