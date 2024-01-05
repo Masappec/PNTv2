@@ -7,6 +7,8 @@ import Admin from './interfaces/web/Admin';
 import Register from './interfaces/web/Auth/Register';
 import menu from './utils/menu';
 import Landing from './interfaces/web/Landing';
+import ForgotPassword from './interfaces/web/Auth/ForgotPassword';
+import ConfirmPassword from './interfaces/web/Auth/ConfirmPassword';
 
 
 
@@ -35,6 +37,28 @@ const Router = createBrowserRouter(
         {
             path: '/register',
             element: <Register />,
+            loader: ()=>{
+                const isLogged = SessionService.isLogged();
+                if(isLogged){
+                    return redirect('/admin');
+                }
+                return null;
+            }
+        },
+        {
+            path: '/forgot-password',
+            element:<ForgotPassword />,
+            loader: ()=>{
+                const isLogged = SessionService.isLogged();
+                if(isLogged){
+                    return redirect('/admin');
+                }
+                return null;
+            }
+        },
+        {
+            path: '/reset-password',
+            element: <ConfirmPassword/>,
             loader: ()=>{
                 const isLogged = SessionService.isLogged();
                 if(isLogged){

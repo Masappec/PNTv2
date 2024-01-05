@@ -29,48 +29,48 @@ const menu = [
         path: '/admin/users',
         permission_required: 'auth.view_user',
         visible: true,
-        icon: <LuUsers size={25}/>,
-        element: <UserList/>
+        icon: <LuUsers size={25} />,
+        element: <UserList />
     },
     {
         name: 'Crear Usuario',
         path: '/admin/users/create',
         permission_required: 'auth.add_user',
         visible: false,
-        icon: <LuUsers size={25}/>,
-        element: <UserCreate/>
+        icon: <LuUsers size={25} />,
+        element: <UserCreate />
     },
     {
         name: 'Editar Usuario',
         path: '/admin/users/:id',
         visible: false,
         permission_required: 'auth.change_user',
-        icon: <LuUsers size={25}/>,
-        element: <UserEdit/>
+        icon: <LuUsers size={25} />,
+        element: <UserEdit />
     },
     {
         name: 'Roles',
         path: '/admin/roles',
         visible: true,
         permission_required: 'auth.view_role',
-        icon: <FaIdCard  size={25}/>,
-        element: <RoleList/>
+        icon: <FaIdCard size={25} />,
+        element: <RoleList />
     },
     {
         name: 'Crear Rol',
         path: '/admin/roles/create',
         visible: false,
         permission_required: 'auth.add_role',
-        icon: <FaIdCard  size={25}/>,
-        element: <RoleCreate/>
+        icon: <FaIdCard size={25} />,
+        element: <RoleCreate />
     },
     {
         name: 'Editar Rol',
         path: '/admin/roles/:id',
         visible: false,
         permission_required: 'auth.change_role',
-        icon: <FaIdCard  size={25}/>,
-        element: <RoleEdit/>
+        icon: <FaIdCard size={25} />,
+        element: <RoleEdit />
     },
     {
         name: 'Instituciones',
@@ -78,7 +78,7 @@ const menu = [
         visible: true,
         icon: <GoOrganization size={25} />,
         permission_required: '',
-        element:<EstablishmentList/>
+        element: <EstablishmentList />
     },
     {
         name: 'Crear Institución',
@@ -86,7 +86,7 @@ const menu = [
         visible: false,
         icon: <GoOrganization size={25} />,
         permission_required: '',
-        element:<EstablishmentCreate/>
+        element: <EstablishmentCreate />
     },
     {
         name: 'Editar Institución',
@@ -94,16 +94,16 @@ const menu = [
         visible: false,
         icon: <GoOrganization size={25} />,
         permission_required: '',
-        element:<EstablishmentEdit/>
+        element: <EstablishmentEdit />
     },
     {
         name: 'Configuración SMTP',
         path: '/admin/smtp',
         visible: true,
-        icon: <DiAptana  size={25} />,
+        icon: <DiAptana size={25} />,
         permission_required: '',
-        element: <SmtpCreate/>
-}
+        element: <SmtpCreate />
+    }
 
 ]
 

@@ -81,7 +81,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
 
                         </div>
                         <Button title="Register" width="w-60" />
-                        <Contrasenia text='Ya tienes cuenta? Inicia Session' path='/' />
+                        <Contrasenia text='Ya tienes cuenta? Inicia Session' path='/login' />
 
                     </form>
                 </div>
