@@ -10,6 +10,9 @@ import EstablishmentList from "../interfaces/web/Admin/Establishment/List";
 import UserEdit from "../interfaces/web/Admin/User/Edit";
 import EstablishmentCreate from "../interfaces/web/Admin/Establishment/Create";
 import EstablishmentEdit from "../interfaces/web/Admin/Establishment/Edit";
+import SmtpCreate from "../interfaces/web/Admin/Smtp/Create";
+import { DiAptana } from "react-icons/di";
+
 
 
 export interface MenuItem {
@@ -92,7 +95,15 @@ const menu = [
         icon: <GoOrganization size={25} />,
         permission_required: '',
         element:<EstablishmentEdit/>
-    }
+    },
+    {
+        name: 'Configuración SMTP',
+        path: '/admin/smtp',
+        visible: true,
+        icon: <DiAptana  size={25} />,
+        permission_required: '',
+        element: <SmtpCreate/>
+}
 
 ]
 
