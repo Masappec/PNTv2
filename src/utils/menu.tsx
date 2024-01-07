@@ -12,6 +12,7 @@ import EstablishmentCreate from "../interfaces/web/Admin/Establishment/Create";
 import EstablishmentEdit from "../interfaces/web/Admin/Establishment/Edit";
 import SmtpCreate from "../interfaces/web/Admin/Smtp/Create";
 import { DiAptana } from "react-icons/di";
+import UserImport from "../interfaces/web/Admin/User/Import";
 
 
 
@@ -35,11 +36,12 @@ const menu = [
     {
         name: 'Crear Usuario',
         path: '/admin/users/create',
-        permission_required: 'auth.add_user',
+        permission_required: '',
         visible: false,
         icon: <LuUsers size={25}/>,
-        element: <UserCreate/>
+        element:<UserCreate/>
     },
+   
     {
         name: 'Editar Usuario',
         path: '/admin/users/:id',
@@ -48,6 +50,15 @@ const menu = [
         icon: <LuUsers size={25}/>,
         element: <UserEdit/>
     },
+    
+    {
+        name: 'Importar archivos scv',
+        path: '/admin/users/import',
+        permission_required: '',
+        visible: false,
+        icon: <LuUsers size={25}/>,
+        element:  <UserImport/>
+     },
     {
         name: 'Roles',
         path: '/admin/roles',

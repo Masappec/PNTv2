@@ -39,6 +39,16 @@ const UserListContainer = ({
     const handleAdd = () => {
             
         navigate("/admin/users/create")
+       
+        
+
+    }
+      const handleClick = () => {
+            
+        navigate("/admin/users/import")
+       
+        
+
     }
 
 
@@ -106,6 +116,7 @@ const UserListContainer = ({
         users={users}
             error={error}
             onAdd={handleAdd}
+            add={handleClick}
             onEdit={handleEdit}
             onFilter={() => {}}
             onImport={() => {}}

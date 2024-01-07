@@ -15,6 +15,7 @@ interface Props {
     error: string | null
     onSearch: (search: string) => void
     onAdd: () => void
+    add: () => void
     onImport: () => void
     onFilter: () => void
     onEdit: (user: UserEntity) => void
@@ -140,9 +141,11 @@ export const UserListPresenter = (props: Props) => {
                     description={props.users.length === 0 ? "No hay usuarios" : "Consulta los usuarios registrados"}
                     length={props.users.length}
                     onAdd={props.onAdd}
+                    add={props.add}
                     onFilter={() => { }}
                     onImport={() => { }}
                     textAdd="Agregar usuario"
+                    text="Importar archivos csv"
                     textImport="Importar usuarios"
                     title="Usuarios"
                     data={props.users}
