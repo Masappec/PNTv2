@@ -1,5 +1,4 @@
-import { RegisterDto } from "../../infrastructure/Api/Auth/AuthApi";
-import { LoginResponseDto } from "../../infrastructure/Api/Auth/interface";
+import { LoginResponseDto, RegisterDto } from "../../infrastructure/Api/Auth/interface";
 import UserEntity from "../entities/UserEntity";
 
 
