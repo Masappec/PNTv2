@@ -6,7 +6,7 @@ import {  useNavigate } from "react-router-dom"
 import ConfigurationUseCase from "../../../domain/useCases/Configuration/ConfigurationUseCase"
 import FormFieldsEntity from "../../../domain/entities/FormFieldsEntity"
 import { ROLE_CIUDADANO } from "../../../utils/constans"
-import { RegisterDto } from "../../../infrastructure/Api/Auth/AuthApi"
+import { RegisterDto } from "../../../infrastructure/Api/Auth/interface"
 
 const RegisterContainer= ({usecase,configUseCase}:{
   usecase: RegisterUseCase,
@@ -34,7 +34,7 @@ const RegisterContainer= ({usecase,configUseCase}:{
    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     usecase.authService.register(data as RegisterDto).then(() => {
-      return history("/login")
+      return history("/auth/login")
     }
     ).catch((e) => {
       setError(e.message)

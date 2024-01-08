@@ -9,8 +9,35 @@ import menu from './utils/menu';
 import Landing from './interfaces/web/Landing';
 import ForgotPassword from './interfaces/web/Auth/ForgotPassword';
 import ConfirmPassword from './interfaces/web/Auth/ConfirmPassword';
+import ActivateAccount from './interfaces/web/Auth/ActivateAccount';
 
 
+
+const handleLoadeAuth = ()=>{
+    const isLogged = SessionService.isLogged();
+    if(!isLogged){
+        return redirect('/');
+    }
+    return null;
+}
+
+const handleLoade = ()=>{
+    const isLogged = SessionService.isLogged();
+    if(isLogged){
+        return redirect('/admin');
+    }
+    return null;
+}
+
+const handleLoadeAdmin = (permissions: string)=>{
+
+    const user= SessionService.getUserData();
+    if (!user.user_permissions?.map((item)=>item.codename).includes(permissions)){
+        return redirect('/');
+    }
+    return null;
+
+}   
 
 
 const Router = createBrowserRouter(
@@ -24,63 +51,43 @@ const Router = createBrowserRouter(
             
         },
         {
-            path: '/login',
+            path: '/auth/login',
             element: <Login />, 
-            loader: ()=>{
-                const isLogged = SessionService.isLogged();
-                if(isLogged){
-                    return redirect('/admin');
-                }
-                return null;
-            }
+            loader:()=>handleLoade(),
         },
         {
-            path: '/register',
+            path: '/auth/register',
             element: <Register />,
-            loader: ()=>{
-                const isLogged = SessionService.isLogged();
-                if(isLogged){
-                    return redirect('/admin');
-                }
-                return null;
-            }
+            loader:()=>handleLoade(),
+
         },
         {
-            path: '/forgot-password',
+            path: '/auth/forgot-password',
             element:<ForgotPassword />,
-            loader: ()=>{
-                const isLogged = SessionService.isLogged();
-                if(isLogged){
-                    return redirect('/admin');
-                }
-                return null;
-            }
+            loader:()=>handleLoade(),
+
         },
         {
-            path: '/reset-password',
+            path: '/auth/reset-password/:token',
             element: <ConfirmPassword/>,
-            loader: ()=>{
-                const isLogged = SessionService.isLogged();
-                if(isLogged){
-                    return redirect('/admin');
-                }
-                return null;
-            }
+            loader:()=>handleLoade(),
+
+        },
+        {
+            path: '/auth/activate-account/:uid/:token',
+            element: <ActivateAccount />,
+            loader:()=>handleLoade(),
         },
         {
             path: '/admin', 
             element: <Admin />,
-            loader: ()=>{
-                const isLogged = SessionService.isLogged();
-                if(!isLogged){
-                    return redirect('/');
-                }
-                return null;
-            },
+            loader:()=>handleLoadeAuth(),
+
             children: menu.map((item)=>{
                     return {
                         path: item.path,
-                        element: item.element
+                        element: item.element,
+                        loader: ()=>handleLoadeAdmin(item.permission_required),
                     }
                 })
             

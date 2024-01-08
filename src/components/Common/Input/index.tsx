@@ -12,7 +12,10 @@ const Input: FC<InputProps> = ({...props }) => {
       </label>
       <input
 
-        className={" my-1 border border-blue-300 rounded-full px-5  py-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "+props.width}
+        className={` my-1 border border-blue-300 rounded-full px-5  py-4 text-gray-700 leading-tight
+         focus:outline-none focus:shadow-outline ${props.width}
+         ${props.disabled ? "bg-gray-200" : ""}
+         `}
         {...props}
       />
     </>

@@ -9,21 +9,24 @@ interface LayoutAdminProps {
     username: string;
     menu: MenuItem[],
     onLogout: () => void;
+    permissions: string[]
 }
 
 
 const LayoutAdmin = ({...props}:LayoutAdminProps) => {
 
     const [user, setUser] = useState("")
+    const [permissions, setPermissions] = useState<string[]>([])
     useEffect(() => {
         setUser(props.username)
+        setPermissions(props.permissions)
     }, [props.username])
 
     return (<div className="layout-admin h-screen flex flex-col">
         <div className="flex w-full ">
 
             <div className="flex-col">
-                <Sidebar menu={props.menu} />
+                <Sidebar menu={props.menu} permissions={permissions} />
 
             </div>
             <div className="flex-col w-full">

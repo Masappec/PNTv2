@@ -8,7 +8,7 @@ import Alert from '../../Common/Alert';
 import FormFieldsEntity from '../../../domain/entities/FormFieldsEntity';
 import Select from '../../Common/Select';
 import Checkbox from '../../Common/Checkbox';
-import { RegisterDto } from '../../../infrastructure/Api/Auth/AuthApi';
+import { RegisterDto } from '../../../infrastructure/Api/Auth/interface';
 
 interface RegisterPresenterProps {
     
@@ -81,7 +81,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
 
                         </div>
                         <Button title="Register" width="w-60" />
-                        <Contrasenia text='Ya tienes cuenta? Inicia Session' path='/login' />
+                        <Contrasenia text='Ya tienes cuenta? Inicia Session' path='/auth/login' />
 
                     </form>
                 </div>

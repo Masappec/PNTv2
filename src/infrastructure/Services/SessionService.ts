@@ -37,12 +37,12 @@ class SessionService {
         localStorage.setItem(this.USER_DATA_KEY, userData);
     }
 
-    static getUserData() {
+    static getUserData():UserEntity {
         const data =  localStorage.getItem(this.USER_DATA_KEY) || '{}';
         
         const json = JSON.parse(data);
 
-        return new UserEntity(json.id, json.username, json.email, json.first_name, json.last_name);
+        return  json;
     }
 
     static removeUserData() {

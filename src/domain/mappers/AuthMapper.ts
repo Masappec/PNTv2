@@ -1,4 +1,5 @@
 import { RegisterDto } from "../../infrastructure/Api/Auth/AuthApi";
+import { LoginResponseDto } from "../../infrastructure/Api/Auth/interface";
 import UserEntity from "../entities/UserEntity";
 
 
@@ -16,7 +17,33 @@ class AuthMapper{
             accept_terms: true,
             age_range: '',
             gender:'',
-            race:''
+            race:'',
+        }
+    }
+
+
+    static fromApiToDomain(auth: LoginResponseDto): UserEntity{
+        return {
+            email: auth.user.email,
+            first_name: auth.user.first_name,
+            id: auth.user.id,
+            last_name: auth.user.last_name,
+            username: auth.user.username,
+            accept_terms: true,
+            address: '',
+            age_range: '',
+            city: '',
+            country: '',
+            establishment_id: 0,
+            group: auth.user.group,
+            identification: '',
+            is_active: true,
+            job: '',
+            password: '',
+            phone: '',
+            province: '',
+            race: '',
+            user_permissions: auth.user.user_permissions,
         }
     }
 }

@@ -56,8 +56,8 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
                             
 
                         </div>
-                        <Contrasenia text='Olvidaste tu contraseña?' path='/forgot-password' />
-                        <Contrasenia text='Registrate' path='/register' />
+                        <Contrasenia text='Olvidaste tu contraseña?' path='/auth/forgot-password' />
+                        <Contrasenia text='Registrate' path='/auth/register' />
 
                     </form>
                 </div>

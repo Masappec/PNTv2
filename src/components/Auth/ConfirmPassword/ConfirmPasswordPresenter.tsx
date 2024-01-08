@@ -5,6 +5,8 @@ import Input from "../../Common/Input";
 import Alert from "../../Common/Alert";
 import Spinner from "../../Common/Spinner";
 import Button from "../../Common/Button";
+import { Link } from "react-router-dom";
+import PasswordMeter from "../../Common/PasswordMeter";
 
 
 interface ConfirmPasswordPresenterProps {
@@ -16,9 +18,38 @@ interface ConfirmPasswordPresenterProps {
     setPassword: (e: string) => void;
     confirmPassword: string;
     setConfirmPassword: (e: string) => void;
+    success: string | null;
+    setSuccess: (e: string) => void;
 
 }
 const ConfirmPasswordPresenter = (props:ConfirmPasswordPresenterProps) => {
+    
+    if (props.success) {
+        return (
+            <div className='bg-sky-700 h-screen flex'>
+                <div className='items-center lg:flex xl:flex 2xl:flex justify-center h-auto flex-col flex-auto justify-items-start hidden' >
+                    <Title title="Recupera tu cuenta" text="Para ingresar tus solicitudes necesitas acceder a tu cuenta" color='white' />
+                    <img src={img} alt='imagen' className='w-1/2 h-1/2' />
+                </div>
+
+                <div className="bg-white flex xl:w-2/6 2xl:w-2/6 lg:w-2/6 w-full  text-center  items-center justify-center">
+
+                    <div className="mb-20 mt-15 column justify-center items-center">
+                        <div className="bg-white p-6 rounded-lg  max-w-md">
+                            <p className="text-base text-gray-50 bg-green-500 p-3 rounded-lg text-center font-bold">
+                                {props.success}
+                            </p>
+                        </div>
+                        <Link to='/auth/login' className="text-lg text-slate-50 bg-primary-400 hover:bg-cyan-300 p-3 rounded-lg text-center">
+                            Inicia sesión
+                        </Link>
+
+                    </div>
+
+                </div>
+            </div>
+        )
+    }
     return (
         <>
         <div className='bg-sky-700 h-screen flex'>
@@ -40,6 +71,7 @@ const ConfirmPasswordPresenter = (props:ConfirmPasswordPresenterProps) => {
                                     value={props.password}
                                     onChange={(e) => props.setPassword(e.target.value)}
                                 />
+                                <PasswordMeter  password={props.password} />
 
                             </div>
                             <div className="flex flex-col m-2 items-center">
@@ -47,6 +79,7 @@ const ConfirmPasswordPresenter = (props:ConfirmPasswordPresenterProps) => {
                                     value={props.confirmPassword}
                                     onChange={(e) => props.setConfirmPassword(e.target.value)}
                                 />
+                                <PasswordMeter password={props.confirmPassword} />
 
                             </div>
 

@@ -20,6 +20,12 @@ class RegisterUseCase {
         return user;
       
     }
+
+    async activate(uid:string, token:string) {
+      
+      const response = await this.authService.activateAccount(uid, token);
+      return response;
+    }
   }
   
   export default RegisterUseCase;

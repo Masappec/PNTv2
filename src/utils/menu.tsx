@@ -27,7 +27,7 @@ const menu = [
     {
         name: 'Usuarios',
         path: '/admin/users',
-        permission_required: 'auth.view_user',
+        permission_required: 'view_user',
         visible: true,
         icon: <LuUsers size={25} />,
         element: <UserList />
@@ -35,7 +35,7 @@ const menu = [
     {
         name: 'Crear Usuario',
         path: '/admin/users/create',
-        permission_required: 'auth.add_user',
+        permission_required: 'add_user',
         visible: false,
         icon: <LuUsers size={25} />,
         element: <UserCreate />
@@ -44,7 +44,7 @@ const menu = [
         name: 'Editar Usuario',
         path: '/admin/users/:id',
         visible: false,
-        permission_required: 'auth.change_user',
+        permission_required: 'change_user',
         icon: <LuUsers size={25} />,
         element: <UserEdit />
     },
@@ -52,7 +52,7 @@ const menu = [
         name: 'Roles',
         path: '/admin/roles',
         visible: true,
-        permission_required: 'auth.view_role',
+        permission_required: 'view_role',
         icon: <FaIdCard size={25} />,
         element: <RoleList />
     },
@@ -60,7 +60,7 @@ const menu = [
         name: 'Crear Rol',
         path: '/admin/roles/create',
         visible: false,
-        permission_required: 'auth.add_role',
+        permission_required: 'add_role',
         icon: <FaIdCard size={25} />,
         element: <RoleCreate />
     },
@@ -68,7 +68,7 @@ const menu = [
         name: 'Editar Rol',
         path: '/admin/roles/:id',
         visible: false,
-        permission_required: 'auth.change_role',
+        permission_required: 'change_role',
         icon: <FaIdCard size={25} />,
         element: <RoleEdit />
     },
@@ -77,7 +77,7 @@ const menu = [
         path: '/admin/entities',
         visible: true,
         icon: <GoOrganization size={25} />,
-        permission_required: '',
+        permission_required: "view_establishment",
         element: <EstablishmentList />
     },
     {
@@ -85,7 +85,7 @@ const menu = [
         path: '/admin/entities/create',
         visible: false,
         icon: <GoOrganization size={25} />,
-        permission_required: '',
+        permission_required: "add_establishment",
         element: <EstablishmentCreate />
     },
     {
@@ -93,7 +93,7 @@ const menu = [
         path: '/admin/entities/:id',
         visible: false,
         icon: <GoOrganization size={25} />,
-        permission_required: '',
+        permission_required: 'change_establishment',
         element: <EstablishmentEdit />
     },
     {
@@ -101,7 +101,7 @@ const menu = [
         path: '/admin/smtp',
         visible: true,
         icon: <DiAptana size={25} />,
-        permission_required: '',
+        permission_required: "view_configuration",
         element: <SmtpCreate />
     }
 

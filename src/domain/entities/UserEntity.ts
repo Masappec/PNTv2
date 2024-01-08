@@ -17,13 +17,14 @@ class UserEntity {
 
   }[];
   job?: string;
-
   establishment_id?: number;
   race?: string;
   age_range?: string;
   accept_terms?: boolean;
-
   is_active?: boolean;
+  user_permissions?: {
+    codename: string;
+  }[]
 
 
   constructor(id: number, username: string, email: string, firstName: string, lastName: string,
@@ -38,7 +39,10 @@ class UserEntity {
     age_range?: string,
     accept_terms?: boolean,
     job?: string,
-    is_active?: boolean
+    is_active?: boolean,
+    user_permissions?: {
+      codename: string;
+    }[]
   ) {
     this.id = id;
     this.username = username;
@@ -59,6 +63,7 @@ class UserEntity {
     this.accept_terms = accept_terms;
     this.job = job;
     this.is_active = is_active;
+    this.user_permissions = user_permissions;
   }
 
 
