@@ -56,7 +56,7 @@ const menu = [
     {
         name: 'Importar archivos scv',
         path: '/admin/users/import',
-        permission_required: '',
+        permission_required: 'add_user',
         visible: false,
         icon: <LuUsers size={25}/>,
         element:  <UserImport/>

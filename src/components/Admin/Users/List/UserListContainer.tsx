@@ -43,13 +43,6 @@ const UserListContainer = ({
         
 
     }
-      const handleClick = () => {
-            
-        navigate("/admin/users/import")
-       
-        
-
-    }
 
 
     const handleEdit = (user: UserEntity) => {
@@ -109,6 +102,11 @@ const UserListContainer = ({
             setError(error.message)
         })
     }
+
+    const handleImport = ()=>{
+        
+        navigate('/admin/users/import')
+    }
  
 
     return (
@@ -116,10 +114,9 @@ const UserListContainer = ({
         users={users}
             error={error}
             onAdd={handleAdd}
-            add={handleClick}
             onEdit={handleEdit}
             onFilter={() => {}}
-            onImport={() => {}}
+            onImport={handleImport}
             onSearch={handleSearch}
             key={users.length}
             search={seach}
