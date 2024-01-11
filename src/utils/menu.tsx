@@ -14,6 +14,7 @@ import SmtpCreate from "../interfaces/web/Admin/Smtp/Create";
 import { DiAptana } from "react-icons/di";
 import PedagodyAreaCreate from "../interfaces/web/Admin/PedagogyArea/Create";
 import { IoFootsteps } from "react-icons/io5";
+import UserImport from "../interfaces/web/Admin/User/Import";
 
 
 
@@ -42,6 +43,7 @@ const menu = [
         icon: <LuUsers size={25} />,
         element: <UserCreate />
     },
+   
     {
         name: 'Editar Usuario',
         path: '/admin/users/:id',
@@ -50,6 +52,15 @@ const menu = [
         icon: <LuUsers size={25} />,
         element: <UserEdit />
     },
+    
+    {
+        name: 'Importar archivos scv',
+        path: '/admin/users/import',
+        permission_required: '',
+        visible: false,
+        icon: <LuUsers size={25}/>,
+        element:  <UserImport/>
+     },
     {
         name: 'Roles',
         path: '/admin/roles',
