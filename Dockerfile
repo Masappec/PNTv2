@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Path: Dockerfile
-FROM nginx:1.21.3-alpine
+FROM nginx:latest
 
 
 RUN apt-get update \
@@ -25,7 +25,7 @@ RUN apt-get update \
         openssl \
     && rm -rf /var/lib/apt/lists/*
 
-    
+
 COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
