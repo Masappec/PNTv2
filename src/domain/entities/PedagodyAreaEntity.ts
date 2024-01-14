@@ -1,55 +1,108 @@
 
+import BaseEntity from "./BaseEntity";
 
-class PedagogyAreaEntity {
-     frequencyAsked: {
-        id?: number,
-        question: string,
-        answer: string
-    }[];
-    
-     tutorialVideo: {
-        id?: number,
-        title: string,
-        url: string
-        description: string
-    }[];
+export class FrequencyAsked extends BaseEntity {
 
-     normative:{
-        id?: number,
-        title: string,
-        url: string
-        description: string
-    }[]
-
-     id?: number;
-    
+    question: string;
+    answer: string;
+    isActive: boolean;
 
     constructor(
-        frequencyAsked: {
-            id?: number,
-            question: string,
-            answer: string
-        }[],
-        tutorialVideo: {
-            id?: number,
-            title: string,
-            url: string
-            description: string
-        }[],
-        normative:{
-            id?: number,
-            title: string,
-            url: string
-            description: string
-        }[],
-        id: number
+        question: string,
+        answer: string,
+        isActive: boolean,
+        createdAt: Date,
+        updatedAt: Date,
+        deleted: boolean,
+        deletedAt: Date,
+        ip: string,
+        userCreated: string,
+        userUpdated: string,
+        userDeleted: string,
     ) {
-        this.frequencyAsked = frequencyAsked;
-        this.tutorialVideo = tutorialVideo;
-        this.normative = normative;
-        this.id = id;
+        super(createdAt, updatedAt, deleted, deletedAt, ip, userCreated, userUpdated, userDeleted);
+        this.question = question;
+        this.answer = answer;
+        this.isActive = isActive;
     }
+}
 
+
+export class Tutorial extends BaseEntity {
+
+    title: string;
+    description: string;
+    isActive: boolean;
+    url: string;
+
+    constructor(
+        title: string,
+        description: string,
+        isActive: boolean,
+        url: string,
+        createdAt: Date,
+        updatedAt: Date,
+        deleted: boolean,
+        deletedAt: Date,
+        ip: string,
+        userCreated: string,
+        userUpdated: string,
+        userDeleted: string,
+    ) {
+        super(createdAt, updatedAt, deleted, deletedAt, ip, userCreated, userUpdated, userDeleted);
+        this.title = title;
+        this.description = description;
+        this.isActive = isActive;
+        this.url = url;
+    }
+}
+
+
+export class Normative extends BaseEntity {
+
+    title: string;
+    description: string;
+    isActive: boolean;
+    url: string;
+
+    constructor(
+        title: string,
+        description: string,
+        isActive: boolean,
+        url: string,
+        createdAt: Date,
+        updatedAt: Date,
+        deleted: boolean,
+        deletedAt: Date,
+        ip: string,
+        userCreated: string,
+        userUpdated: string,
+        userDeleted: string,
+    ) {
+        super(createdAt, updatedAt, deleted, deletedAt, ip, userCreated, userUpdated, userDeleted);
+        this.title = title;
+        this.description = description;
+        this.isActive = isActive;
+        this.url = url;
+    }
+}
+
+
+
+class PedagogyAreaEntity {
+    faq: FrequencyAsked[];
+    tutorials: Tutorial[];
+    normatives: Normative[];
+
+    constructor(
+        faq: FrequencyAsked[],
+        tutorials: Tutorial[],
+        normatives: Normative[]
+    ) {
+        this.faq = faq;
+        this.tutorials = tutorials;
+        this.normatives = normatives;
+    }
 }
 
 export default PedagogyAreaEntity;
