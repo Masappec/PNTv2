@@ -10,6 +10,8 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt/live/transparencia.ec/fullchain.pem:/etc/letsencrypt/live/transparencia.ec/fullchain.pem
+      - /etc/letsencrypt/live/transparencia.ec/privkey.pem:/etc/letsencrypt/live/transparencia.ec/privkey.pem
 
     networks:
       - pnt_network
