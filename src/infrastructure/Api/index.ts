@@ -42,4 +42,17 @@ export interface Pagination<T> {
     current: number;
     results: T[];
 }
+
+
+export interface BaseObject {
+    created_at?: string;
+    updated_at?: string;
+    deleted?: boolean;
+    deleted_at?: string;
+    ip?: string;
+    user_created?: number;
+    user_updated?: number;
+    user_deleted?: number;
+    
+}
 export default api;

@@ -39,6 +39,9 @@ const UserListContainer = ({
     const handleAdd = () => {
             
         navigate("/admin/users/create")
+       
+        
+
     }
 
 
@@ -99,6 +102,11 @@ const UserListContainer = ({
             setError(error.message)
         })
     }
+
+    const handleImport = ()=>{
+        
+        navigate('/admin/users/import')
+    }
  
 
     return (
@@ -108,7 +116,7 @@ const UserListContainer = ({
             onAdd={handleAdd}
             onEdit={handleEdit}
             onFilter={() => {}}
-            onImport={() => {}}
+            onImport={handleImport}
             onSearch={handleSearch}
             key={users.length}
             search={seach}

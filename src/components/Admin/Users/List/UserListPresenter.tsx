@@ -141,7 +141,8 @@ export const UserListPresenter = (props: Props) => {
                     length={props.users.length}
                     onAdd={props.onAdd}
                     onFilter={() => { }}
-                    onImport={() => { }}
+                    isImport={true}
+                    onImport={props.onImport}
                     textAdd="Agregar usuario"
                     textImport="Importar usuarios"
                     title="Usuarios"
