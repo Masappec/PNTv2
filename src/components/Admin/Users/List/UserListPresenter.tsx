@@ -1,11 +1,12 @@
 import UserEntity from "../../../../domain/entities/UserEntity"
 import Badge from "../../../Common/Badge"
-import Table from "../../../Common/Table"
+import Table from "../../../Common/Table/index"
 import Modal from "../../../Common/Modal"
 import Alert from "../../../Common/Alert"
-import Title from "../../../Common/Title"
 import { FaCheckCircle, FaEdit } from "react-icons/fa"
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { Button } from "flowbite-react"
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 
 
@@ -30,7 +31,7 @@ interface Props {
     onConfirmDelete: () => void
     onCancelDelete: () => void
     onDelete: (user: UserEntity) => void,
-    type_alert:"success" | "warning" | "info" | "error" 
+    type_alert: "success" | "warning" | "info" | "error"
 }
 
 export const UserListPresenter = (props: Props) => {
@@ -42,31 +43,25 @@ export const UserListPresenter = (props: Props) => {
                 <Modal
                     isvisible={props.visibleModal}
                     onClose={() => { }}
-                    width="w-[500px]"
                 >
                     {
                         props.error && <Alert type={props.type_alert} message={props.error} onClose={() => { }} />
                     }
-                    <Title title={`¿Desea ${
-                        props.selectedUser?.is_active ? "inactivar" : "activar"
-                    
-                    } este Usuario "${props.selectedUser?.first_name} ${props.selectedUser?.last_name}" ?`} color="black" text="" />
-                    <div className="space-x-4 flex justify-center items-center mt-5">
-                        <button
-                            onClick={() => {
-                                props.onConfirmDelete()
-                            }
-                            }
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
-                            Si
-                        </button>
-                        <button
-                            onClick={() => {
-                                props.onCancelDelete()
-                            }}
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-2xl">
-                            No
-                        </button>
+
+
+                    <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                    <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                        {`¿Desea ${props.selectedUser?.is_active ? "inactivar" : "activar"
+
+                            } este Usuario "${props.selectedUser?.first_name} ${props.selectedUser?.last_name}" ?`}
+                    </h3>
+                    <div className="flex justify-center gap-4">
+                        <Button color="failure" onClick={() => props.onConfirmDelete()}>
+                            {"Si, Estoy seguro"}
+                        </Button>
+                        <Button color="gray" onClick={() => props.onCancelDelete()}>
+                            No, Cancelar
+                        </Button>
                     </div>
                 </Modal>
             </div>
@@ -119,7 +114,7 @@ export const UserListPresenter = (props: Props) => {
                                         <FaEdit />
                                     </button>
                                     <button
-                                    
+
                                         //add alt
                                         onClick={() => {
                                             props.onDelete(row)

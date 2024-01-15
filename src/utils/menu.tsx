@@ -110,7 +110,7 @@ const menu = [
         element: <EstablishmentEdit />
     },
     {
-        name: 'Area Pedagogica',
+        name: 'Área pedagógica',
         path: '/admin/pedagogy-area',
         visible: true,
         icon: <IoFootsteps  size={25} />,

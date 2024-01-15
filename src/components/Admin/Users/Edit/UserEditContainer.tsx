@@ -44,8 +44,11 @@ const UserEditContainer = ({
             if (user.group?.[0]){
                 handleConfigFields(user.group?.[0].name)
             }
+            setLoading(false)
         }).catch((error) => {
             setError(error.message)
+            setLoading(false)
+
         })
         roleUseCase.listAvailable().then((roles) => {
             setRoleList(roles)
@@ -55,7 +58,11 @@ const UserEditContainer = ({
             if (roles.length==0){
                 navigate("/admin/users")
             }
+            setLoading(false)
+
         }).catch((error) => {
+            setLoading(false)
+
             setError(error.message)
         })
     }, [])
@@ -84,7 +91,6 @@ const UserEditContainer = ({
 
 
     const handleConfigFields = (role: string) => {
-        setLoading(true)
         configUseCase.execute(role,"Usuario").then((res) => {
             setConfig(res)
             setLoading(false)

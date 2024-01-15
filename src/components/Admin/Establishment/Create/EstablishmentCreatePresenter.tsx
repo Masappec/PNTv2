@@ -5,6 +5,7 @@ import Input from "../../../Common/Input";
 import Dropzone from "../../../Common/Dropzone";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
+import { Button } from 'flowbite-react';
 
 
 
@@ -48,26 +49,26 @@ const EstablishmentCreatePresenter = (props: Props) => {
                         </div>
                         <div className="flex items-center mt-4 gap-x-3">
                           
-                            <button
+                            <Button
                                 type="button"
                                 onClick={props.onCancel}
-                                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
+                                className="flex items-center justify-center w-1/2 text-sm tracking-wide
                                 text-white transition-colors duration-200 bg-red-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-red-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                                 <LuX className="w-5 h-5" />
                                 <span>
                                     Cancelar
                                 </span>
-                            </button>
+                            </Button>
                             {
-                                props.loading ? <Spinner /> : <button
+                                props.loading ? <Spinner /> : <Button
                                 type="submit"
-                                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
+                                className="flex items-center justify-center w-1/2 text-sm tracking-wide
                                 text-white transition-colors duration-200 bg-green-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                                 <LuCheck className="w-5 h-5" />
                                 <span>
                                     Crear
                                 </span>
-                            </button>
+                            </Button>
                             }
                             
                         </div>

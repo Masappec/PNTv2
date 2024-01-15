@@ -3,26 +3,23 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    'node_modules/flowbite-react/lib/esm/**/*.js',
+
   ],
   theme: {
     extend: {
       colors:{
         
-        "primary": {
-          100:  "#b2e5f9",
-          200:  "#7fd3f5",
-          300: "#4dc2f1",
-          400: "#24b5ef",
-          500: "#00a8ed",
-          600: "#009ade",
-          700: "#0087cb",
-          800: "#0076b7",
-          900: "#005796"
-        }
+        primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a","950":"#172554"}
+
 
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin'),
+
+
+  ],
 }
 

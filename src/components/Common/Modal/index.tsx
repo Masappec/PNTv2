@@ -1,3 +1,4 @@
+import { Modal } from "flowbite-react"
 import { useEffect, useState } from "react"
 
 
@@ -8,7 +9,7 @@ interface ModalProps {
     onClose: () => void
 
 }
-const Modal = (props:ModalProps) => {
+const Modal_ = (props: ModalProps) => {
     const [isvisible, setIsvisible] = useState(true)
 
     useEffect(() => {
@@ -20,20 +21,18 @@ const Modal = (props:ModalProps) => {
         return null
     }
     return (
-        <div className={`fixed left-0 top-0 ${isvisible?'flex':'hidden'} h-full w-full items-center justify-center bg-black bg-opacity-50 `}>
 
-            <div className={`h-auto  ${props.width} overflow-y-auto sm:rounded-2xl bg-white`}>
-                <div className="w-full">
-                    <div className=" my-10 w-full mx-auto">
-                        {
-                            props.children
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Modal show={isvisible} size="md" onClose={() => setIsvisible(false)} popup>
+            <Modal.Header />
+            <Modal.Body>
+
+                {
+                    props.children
+                }
+            </Modal.Body>
+        </Modal>
 
     )
 }
 
-export default Modal;
+export default Modal_;

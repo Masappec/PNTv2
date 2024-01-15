@@ -37,7 +37,7 @@ const RegisterContainer= ({usecase,configUseCase}:{
       data.disability = false
     }
     usecase.authService.register(data as RegisterDto).then(() => {
-      return history("/auth/login")
+      return history("/ingreso")
     }
     ).catch((e) => {
       setError(e.message)

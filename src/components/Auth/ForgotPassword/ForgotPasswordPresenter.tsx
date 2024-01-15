@@ -4,10 +4,9 @@ import Input from "../../Common/Input";
 import Title from "../../Common/Title";
 import img from '../../../assets/forgot_password.svg'
 import Spinner from "../../Common/Spinner";
-import Button from "../../Common/Button";
 import Contrasenia from "../../Common/Contrasenia";
 import { Link } from "react-router-dom";
-
+import { Button } from "flowbite-react";
 interface ForgotPasswordPresenterProps {
     email: string;
     error: string | null;
@@ -36,7 +35,7 @@ const ForgotPasswordPresenter = (props: ForgotPasswordPresenterProps) => {
                                 {props.success}
                             </p>
                         </div>
-                        <Link to='/auth/login' className="text-lg text-slate-50 bg-primary-400 hover:bg-cyan-300 p-3 rounded-lg text-center">
+                        <Link to='/ingreso' className="text-lg text-slate-50 bg-primary-400 hover:bg-cyan-300 p-3 rounded-lg text-center">
                             Inicia sesión
                         </Link>
 
@@ -49,7 +48,7 @@ const ForgotPasswordPresenter = (props: ForgotPasswordPresenterProps) => {
 
     return (
         <>
-            <div className='bg-sky-700 h-screen flex'>
+            <div className='bg-primary-700 h-screen flex'>
                 <div className='items-center lg:flex xl:flex 2xl:flex justify-center h-auto flex-col flex-auto justify-items-start hidden' >
                     <Title title="Recupera tu cuenta" text="Para ingresar tus solicitudes necesitas acceder a tu cuenta" color='white' />
                     <img src={img} alt='imagen' className='w-1/2 h-1/2' />
@@ -67,7 +66,7 @@ const ForgotPasswordPresenter = (props: ForgotPasswordPresenterProps) => {
                         <div className="flex-row justify-center items-center">
 
                             <div className="flex flex-col m-2 items-center">
-                                <Input type="text" placeholder="Correo" width="w-72"
+                                <Input type="text" placeholder="Correo" className="w-72"
                                     value={props.email}
                                     onChange={(e) => props.setEmail(e.target.value)}
                                 />
@@ -75,12 +74,17 @@ const ForgotPasswordPresenter = (props: ForgotPasswordPresenterProps) => {
                             </div>
 
                             {
-                                props.isloading ? <Spinner /> : <Button title="Enviar Enlace" width="w-72" />
+                                props.isloading ? <Spinner /> : 
+                                <div className="flex flex-col m-2 items-center">
+                                <Button className="w-72 justify-center flex bg-primary-600" type="submit" >
+                                    Enviar
+                                </Button>
+                                </div>
                             }
 
 
                         </div>
-                        <Contrasenia text='Inicia sesión' path='/auth/login' />
+                        <Contrasenia text='Inicia sesión' path='/ingreso' />
 
 
                     </form>
