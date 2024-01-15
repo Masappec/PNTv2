@@ -20,7 +20,7 @@ const NormativeContainer = (props:Props) => {
             setNormative(res.normatives)
             setLoading(false)
         }).catch((err)=>{
-            setError(err)
+            setError(err.message)
             setLoading(false)
         })
     }, [])
