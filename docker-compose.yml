@@ -16,7 +16,7 @@ services:
       - ./privkey.pem:/etc/letsencrypt/live/transparencia.ec/privkey.pem
       - ./dist:/usr/share/nginx/html
     networks:
-      - pnt_network
+      - fundapi-backend_pnt_network  
 
 networks:
   fundapi-backend_pnt_network:
