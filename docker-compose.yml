@@ -19,5 +19,5 @@ services:
       - pnt_network
 
 networks:
-  pnt_network:
-    driver: bridge
+  fundapi-backend_pnt_network:
+    external: true
