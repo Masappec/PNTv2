@@ -9,8 +9,8 @@ services:
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - /etc/letsencrypt/live/transparencia.ec/fullchain.pem:/etc/letsencrypt/live/transparencia.ec/fullchain.pem
-      - /etc/letsencrypt/live/transparencia.ec/privkey.pem:/etc/letsencrypt/live/transparencia.ec/privkey.pem
+      - ./fullchain.pem:/etc/letsencrypt/live/transparencia.ec/fullchain.pem
+      - ./privkey.pem:/etc/letsencrypt/live/transparencia.ec/privkey.pem
       - ./dist:/usr/share/nginx/html
 
     networks:
