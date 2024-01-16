@@ -15,8 +15,8 @@ services:
       - ./fullchain.pem:/etc/letsencrypt/live/transparencia.ec/fullchain.pem
       - ./privkey.pem:/etc/letsencrypt/live/transparencia.ec/privkey.pem
       - ./dist:/usr/share/nginx/html
-    env_file:
-      - .env
+    environment:
+      - HOST_IP=172.17.0.1
     networks:
       - pnt_network
 
