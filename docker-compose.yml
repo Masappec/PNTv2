@@ -18,6 +18,8 @@ services:
 
     networks:
       - pnt_network
+    depends_on:
+      - api_gateway
 
 networks:
   pnt_network:
