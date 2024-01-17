@@ -4,7 +4,9 @@ services:
 
   pnt_app:
     
-    image: nginx:latest
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "80:80"
       - "443:443"

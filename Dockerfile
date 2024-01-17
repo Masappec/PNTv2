@@ -25,7 +25,6 @@ RUN apt-get update \
         openssl \
     && rm -rf /var/lib/apt/lists/*
 
-RUN sed -i "s/\$HOST_IP/$HOST_IP/g" /etc/nginx/conf.d/default.conf
 
 
 COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
