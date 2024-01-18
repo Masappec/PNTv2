@@ -1,9 +1,10 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
 import RoleEntity from "../../../../domain/entities/RoleEntity";
-import Table from "../../../Common/Table";
+import Table from "../../../Common/Table/index";
 import Modal from "../../../Common/Modal";
-import Title from "../../../Common/Title";
 import Alert from "../../../Common/Alert";
+import { Button } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 
 interface Props {
@@ -37,28 +38,23 @@ const RoleListPresenter = (props: Props) => {
                 <Modal
                     isvisible={props.visibleModal}
                     onClose={() => { }}
-                    width="w-[500px]"
                 >
                     {
                         props.error && <Alert type="error" message={props.error} onClose={() => { }} />
                     }
-                    <Title title={`¿Desea eliminar este Rol "${props.selectedRole?.name}" ?`} color="black" text="" />
-                    <div className="space-x-4 flex justify-center items-center mt-5">
-                        <button 
-                        onClick={() => {
-                            props.onConfirmDelete()
-                        }
-                        }
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
-                            Si
-                        </button>
-                        <button 
-                        onClick={() => {
-                            props.onCancelDelete()
-                        }}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-2xl">
-                            No
-                        </button>
+
+
+                    <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                    <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                    {`¿Desea eliminar este Rol "${props.selectedRole?.name}" ?`} 
+                    </h3>
+                    <div className="flex justify-center gap-4">
+                        <Button color="failure" onClick={() => props.onConfirmDelete()}>
+                            {"Si, Estoy seguro"}
+                        </Button>
+                        <Button color="gray" onClick={() => props.onCancelDelete()}>
+                            No, Cancelar
+                        </Button>
                     </div>
                 </Modal>
             </div>

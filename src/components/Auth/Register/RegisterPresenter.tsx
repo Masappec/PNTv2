@@ -1,6 +1,5 @@
 import { FormEvent } from 'react'
 import Title from '../../Common/Title'
-import Button from '../../Common/Button'
 import Input from '../../Common/Input';
 import Contrasenia from '../../Common/Contrasenia';
 import img from '@assets/login.svg'
@@ -9,7 +8,7 @@ import FormFieldsEntity from '../../../domain/entities/FormFieldsEntity';
 import Select from '../../Common/Select';
 import Checkbox from '../../Common/Checkbox';
 import { RegisterDto } from '../../../infrastructure/Api/Auth/interface';
-
+import { Button } from 'flowbite-react';
 interface RegisterPresenterProps {
     
 
@@ -26,7 +25,7 @@ interface RegisterPresenterProps {
 const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
     return (
         <>
-            <div className='bg-sky-700 min-h-screen flex  '>
+            <div className='bg-primary-600 min-h-screen flex  '>
                 <div className='items-center lg:flex xl:flex 2xl:flex justify-center h-auto flex-col flex-auto justify-items-start hidden' >
                     <Title title="Solicita información a las entidades públicas." text="Es tu derecho" color='white' />
                     <img src={img} alt='imagen' className='w-1/2 h-1/2' />
@@ -67,7 +66,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                                         </div> :
                                         <div className="flex  flex-col m-2 items-center">
                                             <Input type={field.type_field}
-                                             placeholder={field.description} width="w-60"
+                                             placeholder={field.description} className="w-60"
                                                 value={props.data[field.name as keyof RegisterDto] as string}
                                                 onChange={(e) => props.setData(field.name, e.target.value)}
                                             />
@@ -80,8 +79,12 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
 
 
                         </div>
-                        <Button title="Register" width="w-60" />
-                        <Contrasenia text='Ya tienes cuenta? Inicia Session' path='/auth/login' />
+                        <div className="flex flex-col m-2 items-center">
+                            <Button className="w-72 justify-center flex bg-primary-600" type="submit" >
+                                Registrar
+                            </Button>
+                        </div>
+                        <Contrasenia text='Ya tienes cuenta? Inicia Session' path='/ingreso' />
 
                     </form>
                 </div>

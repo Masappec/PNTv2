@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { LinkPreview } from '@dhaiwat10/react-link-preview';
 
 const LinkPreviewCard = () => {
   const [link, setLink] = useState('');

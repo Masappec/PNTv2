@@ -1,8 +1,8 @@
-import LandingContainer from "../../../components/Landing/LadingContainer"
+import LayouClient from "../../../components/Common/Layout/Client";
 
 const Landing = ()=>{
     return (
-        <LandingContainer />
+        <LayouClient />
     )
     
 }

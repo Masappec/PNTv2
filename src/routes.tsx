@@ -10,6 +10,9 @@ import Landing from './interfaces/web/Landing';
 import ForgotPassword from './interfaces/web/Auth/ForgotPassword';
 import ConfirmPassword from './interfaces/web/Auth/ConfirmPassword';
 import ActivateAccount from './interfaces/web/Auth/ActivateAccount';
+import Home from './interfaces/web/Landing/Home';
+import Normative from './interfaces/web/Landing/Normative';
+import FAQ from './interfaces/web/Landing/FAQ';
 
 
 
@@ -47,36 +50,47 @@ const Router = createBrowserRouter(
 
         {
             path: '/',
-            element: <Landing />
+            element: <Landing />,
             
-        },
-        {
-            path: '/auth/login',
-            element: <Login />, 
-            loader:()=>handleLoade(),
-        },
-        {
-            path: '/auth/register',
-            element: <Register />,
-            loader:()=>handleLoade(),
-
-        },
-        {
-            path: '/auth/forgot-password',
-            element:<ForgotPassword />,
-            loader:()=>handleLoade(),
-
-        },
-        {
-            path: '/auth/reset-password/:token',
-            element: <ConfirmPassword/>,
-            loader:()=>handleLoade(),
-
-        },
-        {
-            path: '/auth/activate-account/:uid/:token',
-            element: <ActivateAccount />,
-            loader:()=>handleLoade(),
+            children:[
+                {
+                    path: '/',
+                    element: <Home />,
+                },
+                {
+                    path: '/normativa',
+                    element:<Normative />,
+                },
+                {
+                    path: '/area-pedagogica',
+                    element:<FAQ />,
+                },
+                {
+                    path: '/ingreso',
+                    element: <Login />, 
+                    loader:()=>handleLoade(),
+                },
+                {
+                    path: '/registro',
+                    element: <Register />,
+                    loader:()=>handleLoade(),
+                },
+                {
+                    path: '/auth/forgot-password',
+                    element:<ForgotPassword />,
+                    loader:()=>handleLoade(),
+                },
+                {
+                    path: '/auth/reset-password/:token',
+                    element: <ConfirmPassword/>,
+                    loader:()=>handleLoade(),
+                },
+                {
+                    path: '/auth/activate-account/:uid/:token',
+                    element: <ActivateAccount />,
+                    loader:()=>handleLoade(),
+                },
+            ]
         },
         {
             path: '/admin', 

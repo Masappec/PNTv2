@@ -11,6 +11,7 @@ export interface RegisterDto{
     age_range: string,
     city: string,
     race: string,
+    disability?:boolean,
     accept_terms: boolean
   
   }

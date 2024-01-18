@@ -40,7 +40,7 @@ const ConfirmPasswordPresenter = (props:ConfirmPasswordPresenterProps) => {
                                 {props.success}
                             </p>
                         </div>
-                        <Link to='/auth/login' className="text-lg text-slate-50 bg-primary-400 hover:bg-cyan-300 p-3 rounded-lg text-center">
+                        <Link to='/ingreso' className="text-lg text-slate-50 bg-primary-400 hover:bg-cyan-300 p-3 rounded-lg text-center">
                             Inicia sesión
                         </Link>
 

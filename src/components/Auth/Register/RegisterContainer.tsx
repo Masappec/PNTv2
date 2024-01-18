@@ -16,7 +16,7 @@ const RegisterContainer= ({usecase,configUseCase}:{
   
 
 
-  const [data,setData] = useState({})
+  const [data,setData] = useState({} as RegisterDto)
   const [error,setError] =useState<string>('')
   const history = useNavigate()
 
@@ -33,8 +33,11 @@ const RegisterContainer= ({usecase,configUseCase}:{
 
    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(data.disability === undefined){
+      data.disability = false
+    }
     usecase.authService.register(data as RegisterDto).then(() => {
-      return history("/auth/login")
+      return history("/ingreso")
     }
     ).catch((e) => {
       setError(e.message)

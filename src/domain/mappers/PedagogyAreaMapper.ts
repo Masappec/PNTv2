@@ -42,6 +42,16 @@ class PedagogyAreaMapper {
                     isActive: item.is_active,
                 }
             }),
+            data.json.tutorial.map((item)=>{
+                return {
+                    id: item.id,
+                    title: item.title,
+                    description: item.description,
+                    url: item.url,
+                    isActive: item.is_active,
+                }
+            }),
+            
             data.json.normative.map((item)=>{
                 return {
                     id: item.id,
@@ -51,15 +61,6 @@ class PedagogyAreaMapper {
                     isActive: item.is_active,
                 }
             }),
-            data.json.tutorial.map((item)=>{
-                return {
-                    id: item.id,
-                    title: item.title,
-                    description: item.description,
-                    url: item.url,
-                    isActive: item.is_active,
-                }
-            })
         )
     }
 

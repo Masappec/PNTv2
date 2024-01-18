@@ -48,7 +48,7 @@ const ActivateAccountContainer = (props: IProps) => {
         if (error) {
             navigation("/")
         } else {
-            navigation("/auth/login")
+            navigation("/ingreso")
         }
     }
 

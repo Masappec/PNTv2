@@ -1,9 +1,8 @@
-import React from "react";
 import Modal from "../../../Common/Modal";
 import Title from "../../../Common/Title";
 import Alert from "../../../Common/Alert";
 import { LuCheck, LuX } from "react-icons/lu"
-import Table from "../../../Common/Table"
+import Table from "../../../Common/Table/index"
 import Dropzone from "../../../Common/Dropzone";
 import Spinner from "../../../Common/Spinner";
 
