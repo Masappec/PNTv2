@@ -1,7 +1,10 @@
 import { Alert, Card, Tabs } from "flowbite-react"
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
-import { HiAdjustments, HiClipboardList, HiInformationCircle, HiUserCircle } from "react-icons/hi";
+import { HiInformationCircle } from "react-icons/hi";
 import Spinner from "../../../Common/Spinner";
+import { FaInfoCircle } from "react-icons/fa";
+import { RxActivityLog } from "react-icons/rx";
+import { MdDataset } from "react-icons/md";
 
 interface Props {
     entity: EstablishmentEntity;
@@ -41,30 +44,40 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                 </Card>
                 <Card className="w-full box-shadow-2xl">
                     <Tabs aria-label="Default tabs" style="underline"
-                    
+
                     >
-                        <Tabs.Item active title="Publicaciones" icon={HiUserCircle}>
+                        <Tabs.Item active title="Publicaciones" icon={MdDataset}>
                             This is <span className="font-medium text-gray-800 dark:text-white">Profile tab's associated content</span>.
                             Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
                             control the content visibility and styling.
                         </Tabs.Item>
-                        <Tabs.Item title="Actividad" icon={HiAdjustments}>
+                        <Tabs.Item title="Actividad" icon={RxActivityLog}>
                             This is <span className="font-medium text-gray-800 dark:text-white">Settings tab's associated content</span>.
                             Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
                             control the content visibility and styling.
                         </Tabs.Item>
-                        <Tabs.Item title="Info" icon={HiClipboardList}>
-                            <span className="font-medium text-gray-800 dark:text-white">
-                                Correo de la autoridad: </span>{props.entity.email_authority}
-                                <br/>
+                        <Tabs.Item title="Acerca de" icon={FaInfoCircle}>
+                            <span className="text-3xl mb-5 text-gray-800 dark:text-white">
+                                {props.entity.name}
+                            </span>
+                            <br />
+                            <span className="font-medium mt-10 text-gray-800 dark:text-white">
+                                </span>{props.entity.abbreviation}
+                            <br />
 
-                                <span className="font-medium text-gray-800 dark:text-white">
+
+                            <span className="font-medium text-gray-800 dark:text-white">
                                 Autoridad: </span>{props.entity.first_name_authority + " " + props.entity.last_name_authority}
 
-                                <br/>
+                            <br />
+                            <span className="font-medium text-gray-800 dark:text-white">
+                                Correo de la autoridad: </span>{props.entity.email_authority}
+                            <br />
 
-                                
-                                
+
+
+
+
                         </Tabs.Item>
                     </Tabs>
                 </Card>
