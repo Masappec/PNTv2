@@ -1,15 +1,23 @@
 import { Outlet } from "react-router-dom"
 import FooterInfo from "../../FooterInfo"
 import Header from "../../Header"
+import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase"
 
-
-const LayouClient = ()=>{
+interface Props {
+    usecase: PublicUseCase
+}
+const LayouClient = (props: Props) => {
     return (
         <>
-         <Header />
+            <Header />
 
-         <Outlet/>
-         <FooterInfo />
+            <Outlet
+                context={{
+                    usecase: props.usecase
+
+                }}
+            />
+            <FooterInfo />
         </>
     )
 }

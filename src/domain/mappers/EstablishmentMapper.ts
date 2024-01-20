@@ -16,7 +16,7 @@ class EstablishmentMapper{
             job_authority: data.job_authority,
             last_name_authority: data.last_name_authority,
             logo: data.logo,
-            is_active: data.is_active
+            is_active: data.is_active,
             
         }
     }

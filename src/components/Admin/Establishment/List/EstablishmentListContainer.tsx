@@ -18,8 +18,11 @@ const EstablishmentListContainer = ({
     const [selectedEstablishment, setSelectedEstablishment] = useState<EstablishmentEntity | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [currentPage, setCurrentPage] = useState(1)
-    const [nextPage, setNextPage] = useState<number>(0)
-    const [previousPage, setPreviousPage] = useState<number>(0)
+    const [total, setTotal] = useState(0)
+    const [totalPage, setTotalPage] = useState(0)
+    const [from, setFrom] = useState(0)
+    const [to, setTo] = useState(0)
+    
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -27,12 +30,14 @@ const EstablishmentListContainer = ({
             .then((response) => {
                 setEstablishments(response.results)
                 setCurrentPage(response.current)
-                setPreviousPage(response.previous || 0)
-                setNextPage(response.next || 0)
+                setFrom(response.from || 1)
+                setTo(response.to || 1)
+                setTotal(response.total)
+                setTotalPage(response.total_pages || 0)
 
             })
             .catch((error) => {
-                console.log(error)
+                setError(error.message)
             })
     }, [])
 
@@ -64,6 +69,11 @@ const EstablishmentListContainer = ({
                     setSelectedEstablishment(null)
                     usecase.getEstablishments().then((response) => {
                         setEstablishments(response.results)
+                        setCurrentPage(response.current)
+                        setFrom(response.from || 1)
+                        setTo(response.to || 1)
+                        setTotal(response.total)
+                        setTotalPage(response.total_pages || 0)
                     }).catch((error) => {
                         setError(error.message)
                     })
@@ -78,8 +88,25 @@ const EstablishmentListContainer = ({
         usecase.getEstablishments("", page).then((response) => {
             setEstablishments(response.results)
             setCurrentPage(response.current)
-            setPreviousPage(response.previous || 0)
-            setNextPage(response.next || 0)
+            setFrom(response.from || 1)
+            setTo(response.to || 1)
+            setTotal(response.total)
+            setTotalPage(response.total_pages || 0)
+
+        }).catch((error) => {
+            setError(error.message)
+        })
+    }
+    
+    const handleSearch = (search: string) => {
+        usecase.getEstablishments(search).then((response) => {
+            setEstablishments(response.results)
+            setCurrentPage(response.current)
+            setFrom(response.from || 1)
+            setTo(response.to || 1)
+            setTotal(response.total)
+            setTotalPage(response.total_pages || 0)
+
         }).catch((error) => {
             setError(error.message)
         })
@@ -89,7 +116,6 @@ const EstablishmentListContainer = ({
 
             error={error}
             establishments={establishments}
-            nextPage={nextPage}
             onAdd={handleAdd}
             onCancelDelete={handleCancelDelete}
             onConfirmDelete={handleConfirmDelete}
@@ -97,15 +123,18 @@ const EstablishmentListContainer = ({
             onEdit={handleEdit}
             onFilter={() => { }}
             onImport={() => { }}
-            onSearch={() => { }}
+            onSearch={handleSearch}
             page={currentPage}
-            previousPage={previousPage}
             search=""
             selectedEstablishment={selectedEstablishment}
             setPage={handlePage}
             setSeach={() => { }}
             setVisibleModal={setVisibleModal}
             visibleModal={visibleModal}
+            from={from}
+            to={to}
+            total={total}
+            totalPage={totalPage}
         />
     )
 

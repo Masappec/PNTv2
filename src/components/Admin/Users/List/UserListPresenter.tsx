@@ -22,8 +22,6 @@ interface Props {
     search: string
     setSeach: (search: string) => void
     page: number
-    nextPage: number
-    previousPage: number
     setPage: (page: number) => void
     visibleModal: boolean
     selectedUser: UserEntity | null,
@@ -32,6 +30,10 @@ interface Props {
     onCancelDelete: () => void
     onDelete: (user: UserEntity) => void,
     type_alert: "success" | "warning" | "info" | "error"
+    totalPage: number
+    from: number
+    to: number
+    total: number
 }
 
 export const UserListPresenter = (props: Props) => {
@@ -143,10 +145,13 @@ export const UserListPresenter = (props: Props) => {
                     title="Usuarios"
                     data={props.users}
                     currentPage={props.page}
-                    onNext={() => props.setPage(props.nextPage)}
-                    onPrevious={() => props.setPage(props.previousPage)}
                     onSearch={props.onSearch}
                     search={props.search}
+                    onChangePage={props.setPage}
+                    totalPages={props.totalPage}
+                    from={props.from}
+                    to={props.to}
+                    total={props.total}
                 />
             </div>
 

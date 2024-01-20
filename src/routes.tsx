@@ -13,6 +13,8 @@ import ActivateAccount from './interfaces/web/Auth/ActivateAccount';
 import Home from './interfaces/web/Landing/Home';
 import Normative from './interfaces/web/Landing/Normative';
 import FAQ from './interfaces/web/Landing/FAQ';
+import PublicEstablishment from './interfaces/web/Landing/Establishment/List/PublicEstablshment';
+import PublicEstablishmentDetail from './interfaces/web/Landing/Establishment/Detail/PublicEstablishmentDetail';
 
 
 
@@ -64,6 +66,14 @@ const Router = createBrowserRouter(
                 {
                     path: '/area-pedagogica',
                     element:<FAQ />,
+                },
+                {
+                    path: '/entidades',
+                    element:<PublicEstablishment />,
+                },
+                {
+                    path: '/entidades/:name',
+                    element:<PublicEstablishmentDetail />,
                 },
                 {
                     path: '/ingreso',

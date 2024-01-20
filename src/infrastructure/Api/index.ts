@@ -41,6 +41,9 @@ export interface Pagination<T> {
     previous: number | null;
     current: number;
     results: T[];
+    total_pages?: number;
+    from?: number;
+    to: number;
 }
 
 
