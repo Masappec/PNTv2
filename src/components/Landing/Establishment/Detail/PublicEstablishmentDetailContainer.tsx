@@ -3,9 +3,12 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase"
 import PublicEstablishmentDetailPresenter from "./PublicEstablishmentDetailPresenter"
 import { useLocation } from "react-router-dom";
+import TransparencyUseCase from "../../../../domain/useCases/Transparency/TransparencyUseCase";
+import PublicationEntity from "../../../../domain/entities/PublicationEntity";
 
 interface Props {
     usecase: PublicUseCase;
+    transparencyUseCase?: TransparencyUseCase
 }
 const PublicEstablishmentDetailContainer = (props: Props) => {
 
@@ -31,6 +34,12 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         last_name_committe: "",
     })
 
+    const [publications, setPublications] = useState<PublicationEntity[]>([])
+    const [from, setFrom] = useState<number>(0)
+    const [to, setTo] = useState<number>(0)
+    const [total, setTotal] = useState<number>(0)
+    const [total_pages, setTotalPages] = useState<number>(0)
+    const [current_page, setCurrentPage] = useState<number>(0)
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>("")
 
@@ -44,10 +53,36 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             }).finally(() => {
                 setLoading(false)
             })
+            props.transparencyUseCase?.getTransparencyActive(location.state.id||"").then((response) => {
+                setPublications(response.results)
+                setLoading(false)
+                setTotalPages(response.total_pages||1)
+                setTotal(response.total)
+                setFrom(response.from||0)
+                setTo(response.to||0)
+            }).catch((error) => {
+                setError(error.message) 
+            }).finally(() => {
+                setLoading(false)
+            })
         }
     }, [location.state])
 
     
+    const handlePageChange = (page: number) => {
+        props.transparencyUseCase?.getTransparencyActive(location.state.id||"", page).then((response) => {
+            setPublications(response.results)
+            setLoading(false)
+            setTotal(response.total)
+            setFrom(response.from||0)
+            setTo(response.to||0)
+            setCurrentPage(response.current)
+        }).catch((error) => {
+            setError(error.message) 
+        }).finally(() => {
+            setLoading(false)
+        })
+    }
 
 
     return (
@@ -56,6 +91,13 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             entity={entity}
             error={error}
             loading={loading}
+            total={total}
+            publications={publications}
+            current_page={current_page}
+            from={from}
+            onChangePage={handlePageChange}
+            to={to}
+            totalPages={total_pages}
             
         />
     )

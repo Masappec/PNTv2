@@ -3,13 +3,15 @@ import PublicEstablishmentDetailContainer from "../../../../../components/Landin
 import PublicUseCase from "../../../../../domain/useCases/Public/PublicUseCase"
 import { Breadcrumb } from "flowbite-react"
 import { HiHome } from "react-icons/hi"
+import TransparencyUseCase from "../../../../../domain/useCases/Transparency/TransparencyUseCase"
 
 
 
 const PublicEstablishmentDetail = () => {
 
-    const { usecase } = useOutletContext<{
-        usecase: PublicUseCase
+    const { usecase, transparencyUseCase } = useOutletContext<{
+        usecase: PublicUseCase,
+        transparencyUseCase?: TransparencyUseCase
     }>()
 
 
@@ -24,6 +26,7 @@ const PublicEstablishmentDetail = () => {
             </Breadcrumb>
             <PublicEstablishmentDetailContainer
                 usecase={usecase}
+                transparencyUseCase={transparencyUseCase}
             />
         </div>
     )
