@@ -4,8 +4,9 @@ import Input from "../../../Common/Input";
 import Dropzone from "../../../Common/Dropzone";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
-import { Button, Select } from 'flowbite-react';
+import { Button, Select, } from 'flowbite-react';
 import Checkbox from "../../../Common/Checkbox";
+import { Label } from 'flowbite-react';
 
 
 
@@ -102,12 +103,19 @@ const PublicationEditPresenter =(props: Props) =>{
                                     onChange={(e) => props.setData(e)}
                                 />
                                 </div>
-                                <div className="flex  flex-col m-2">
-                                    <Select
-                                    aria-placeholder="Etiquetas"
-                                   
-                                     />
+                              
+                                <div>
+                               
                                 </div>
+                                <div className=" flex  flex-col m-2">
+                               <div className="mb-2 block">
+                               <Label htmlFor="" value="Etiquetas" />
+                               </div>
+                               <Select id="" required >
+                               <option selected></option>
+                               <option>opcion1</option>
+                               <option>opcion2</option> </Select>  
+                               </div>    
                 
                             <div className="flex  flex-col m-2">
                                 <Dropzone 
