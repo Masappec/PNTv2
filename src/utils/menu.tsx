@@ -1,6 +1,7 @@
 import { LuUsers } from "react-icons/lu";
 import { FaIdCard } from "react-icons/fa";
 import { GoOrganization } from "react-icons/go";
+import { AiOutlineFileSync } from "react-icons/ai";
 import UserList from "../interfaces/web/Admin/User/List";
 import UserCreate from "../interfaces/web/Admin/User/Create";
 import RoleList from "../interfaces/web/Admin/Role/List";
@@ -15,6 +16,9 @@ import { DiAptana } from "react-icons/di";
 import PedagodyAreaCreate from "../interfaces/web/Admin/PedagogyArea/Create";
 import { IoFootsteps } from "react-icons/io5";
 import UserImport from "../interfaces/web/Admin/User/Import";
+import PublicationList from "../interfaces/web/Transparency/Publication/List";
+import PublicationCreate from "../interfaces/web/Transparency/Publication/Create";
+import PublicationEdit from "../interfaces/web/Transparency/Publication/Edit";
 
 
 
@@ -124,7 +128,33 @@ const menu = [
         icon: <DiAptana size={25} />,
         permission_required: "view_configuration",
         element: <SmtpCreate />
+    },
+    {
+        name: 'Transparencia',
+        path: '/admin/transparency',
+        visible: true,
+        icon: <AiOutlineFileSync  size={25} />,
+        permission_required: "view_configuration",
+        element: <PublicationList />
+    },
+    {
+        name: 'Transparencia',
+        path: '/admin/transparency/create',
+        visible: false,
+        icon: <AiOutlineFileSync  size={25} />,
+        permission_required: "view_configuration",
+        element: <PublicationCreate/>
+    },
+    {
+    name: 'Transparencia',
+    path: '/admin/transparency/edit',
+    visible: false,
+    icon: <AiOutlineFileSync  size={25} />,
+    permission_required: "view_configuration",
+    element: <PublicationEdit/>
     }
+
+
 
 ]
 

@@ -4,8 +4,9 @@ import Input from "../../../Common/Input";
 import Dropzone from "../../../Common/Dropzone";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
-import { Button } from 'flowbite-react';
+import { Button, Select } from 'flowbite-react';
 import Checkbox from "../../../Common/Checkbox";
+
 
 
 
@@ -22,7 +23,10 @@ interface Props {
     setSuccess: (e: string) => void;
 }
 
-const PublicationCreatePresenter =(props: Props) =>{
+const PublicationEditPresenter =(props: Props) =>{
+    if (!props) return (<div className="flex items-center py-5 justify-center">
+    <Spinner /> 
+</div>)
 
     return (
 
@@ -98,6 +102,12 @@ const PublicationCreatePresenter =(props: Props) =>{
                                     onChange={(e) => props.setData(e)}
                                 />
                                 </div>
+                                <div className="flex  flex-col m-2">
+                                    <Select
+                                    aria-placeholder="Etiquetas"
+                                   
+                                     />
+                                </div>
                 
                             <div className="flex  flex-col m-2">
                                 <Dropzone 
@@ -147,4 +157,4 @@ const PublicationCreatePresenter =(props: Props) =>{
  )
  }
 
- export default PublicationCreatePresenter
+ export default PublicationEditPresenter
