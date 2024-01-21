@@ -6,11 +6,12 @@ import { IoCloseCircleOutline } from "react-icons/io5"
 import Badge from "../../../Common/Badge"
 import { Button } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
+import PublicationEntity from "../../../../domain/entities/PublicationEntity"
 
 
 
 interface Props {
-
+    data: PublicationEntity[]
     error: string | null
     onSearch: (search: string) => void
     onAdd: () => void
@@ -65,26 +66,26 @@ const PublicationListPresenter = (props:Props)=>{
                     columns={[
                         {
                             title: "Titulo",
-                            render: () => (
-                                <p>{}</p>
+                            render: (publicacion:PublicationEntity) => (
+                                <p>{publicacion.name }</p>
                             )
                         },
                         {
                             title: "Descripción",
-                            render: () => (
-                                <p>{}</p>
+                            render: (publicacion:PublicationEntity) => (
+                                <p>{publicacion.description}</p>
                             )
                         },
                         {
                             title: "Creado por",
-                            render: () => (
-                                <p>{}</p>
+                            render: (publicacion:PublicationEntity) => (
+                                <p>{publicacion.userCreated}</p>
                             )
                         },
                        
                         {
                             title: "Acciones",
-                            render: () => (
+                            render: (publicacion:PublicationEntity) => (
                                 <div className="flex items-center">
                                     <button
                                         onClick={() => {

@@ -4,9 +4,8 @@ import PublicationEditContainer from "../../../../../components/Transparency/Pub
 const PublicationEdit= ()=>{
 
     return(
-       < PublicationEditContainer/>
-
-    )
+       <PublicationEditContainer/>
+    )      
 }
 
 export default PublicationEdit

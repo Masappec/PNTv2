@@ -33,6 +33,19 @@ class TransparencyService{
             return PublicationMapper.toDomain(res);
             
         }
+
+        async getListTransparency(){
+
+            const res = await this._service.getListTransparency();
+           return{
+            ...res,
+            results: res.results.map((publication)=>{
+                return PublicationMapper.toDomain(publication);         
+              })
+
+        
+           }
+        }
 }
 
 export default TransparencyService;

@@ -14,6 +14,11 @@ class TransparencyUseCase{
         const transparency = await this.transparencyRepository.getDetailTransparency(id);
         return transparency;
     }
+
+    async getListTransparency(){
+        const transparency = await this.transparencyRepository.getListTransparency();
+        return transparency;
+    }
 }
 
 export default TransparencyUseCase;
