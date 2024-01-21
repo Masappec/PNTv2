@@ -15,6 +15,7 @@ import Normative from './interfaces/web/Landing/Normative';
 import FAQ from './interfaces/web/Landing/FAQ';
 import PublicEstablishment from './interfaces/web/Landing/Establishment/List/PublicEstablshment';
 import PublicEstablishmentDetail from './interfaces/web/Landing/Establishment/Detail/PublicEstablishmentDetail';
+import PublicationDetail from './interfaces/web/Landing/Publication/Detail';
 
 
 
@@ -74,6 +75,10 @@ const Router = createBrowserRouter(
                 {
                     path: '/entidades/:name',
                     element:<PublicEstablishmentDetail />,
+                },
+                {
+                    path: '/publicaciones/:slug',
+                    element:<PublicationDetail />,
                 },
                 {
                     path: '/ingreso',

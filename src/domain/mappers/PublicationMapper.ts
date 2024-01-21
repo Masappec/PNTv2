@@ -33,6 +33,7 @@ class PublicationMapper {
             userCreated: raw.user_created?.toString(),
             userDeleted: raw.user_deleted?.toString(),
             userUpdated: raw.user_updated?.toString(),
+            email_created: raw.email_created,
         }
     }
 

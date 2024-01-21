@@ -49,6 +49,7 @@ class PublicationEntity extends BaseEntity{
     tag?: TagEntity[];
     type_format?: TypeFormatEntity[];
     file_publication?: FilePublicationEntity[];
+    email_created?: string;
 
 }
 
