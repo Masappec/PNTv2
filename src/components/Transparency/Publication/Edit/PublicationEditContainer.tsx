@@ -1,10 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react"
-import PublicationCreatePresenter from "./PublicationCreatePresenter";
+import PublicationEditPresenter from "./PublicationEditPresenter"
 import { useNavigate } from "react-router-dom"
 
 
 
-const PublicationCreateContainer= ()=>{
+const PublicationEditContainer= ()=>{
     const navigation = useNavigate()
 
     const [error, setError] = useState<string>("")
@@ -13,7 +13,7 @@ const PublicationCreateContainer= ()=>{
 
     return (
         <>
-        <PublicationCreatePresenter
+        <PublicationEditPresenter
             handleSubmit={()=>{}}
             onCancel={()=>{}}
             data={[]}
@@ -32,4 +32,4 @@ const PublicationCreateContainer= ()=>{
 }
 
 
-export default PublicationCreateContainer
+export default PublicationEditContainer
