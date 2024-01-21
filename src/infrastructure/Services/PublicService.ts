@@ -7,6 +7,7 @@ import PublicApi from "../Api/Public/PublicApi";
 class PublicService{
 
     private api: PublicApi;
+    
 
     constructor(api: PublicApi) {
         this.api = api;
