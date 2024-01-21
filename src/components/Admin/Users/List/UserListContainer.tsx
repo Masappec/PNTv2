@@ -14,22 +14,27 @@ const UserListContainer = ({
     const [users, setUsers] = useState<UserEntity[]>([])
     const [error, setError] = useState(null)
     const [seach, setSearch] = useState("")
-    const [currentPage, setCurrentPage] = useState(1)
-    const [nextPage, setNextPage] = useState<number>(0)
-    const [previousPage, setPreviousPage] = useState<number>(0)
 
     const [selectedUser, setSelectedUser] = useState<UserEntity | null>(null)
     const [visibleModal, setVisibleModal] = useState<boolean>(false)
     const [type_alert, setTypeAlert] = useState<"success" | "warning" | "info" | "error" >("success")
 
+
+    const [totalPage, setTotalPage] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const [from, setFrom] = useState<number>(0)
+    const [to, setTo] = useState<number>(0)
+    const [total, setTotal] = useState<number>(0)
     const navigate = useNavigate()
 
     useEffect(() => {
         usecase.execute().then((users) => {
             setUsers(users.results)
             setCurrentPage(users.current)
-            setPreviousPage(users.previous||0)
-            setNextPage(users.next||0)
+            setFrom(users.from || 1)
+            setTo(users.to || 1)
+            setTotal(users.total)
+            setTotalPage(users.total_pages || 0)
         }).catch((error) => { 
             setError(error.message)
         })
@@ -52,9 +57,9 @@ const UserListContainer = ({
     const handlePage = (page: number) => {
         usecase.execute("", page).then((users) => {
             setUsers(users.results)
+            setTotalPage(users.total_pages || 0)
             setCurrentPage(users.current)
-            setPreviousPage(users.previous||0)
-            setNextPage(users.next||0)
+            setFrom(users.from || 1)
         }).catch((error) => {
             setError(error.message)
         })
@@ -67,6 +72,11 @@ const UserListContainer = ({
         setSearch(text)
         usecase.execute(text).then((users) => {
             setUsers(users.results)
+            setTotalPage(users.total_pages || 0)
+            setCurrentPage(users.current)
+            setFrom(users.from || 1)
+            setTo(users.to || 1)
+            setTotal(users.total)
         }).catch((error) => {
             setError(error.message)
         })
@@ -92,9 +102,7 @@ const UserListContainer = ({
             setTypeAlert(status==202?"success":"error")
             usecase.execute().then((users) => {
                 setUsers(users.results)
-                setCurrentPage(users.current)
-                setPreviousPage(users.previous||0)
-                setNextPage(users.next||0)
+                setTotalPage(users.total_pages || 0)
             }).catch((error) => {
                 setError(error.message)
             })
@@ -121,9 +129,7 @@ const UserListContainer = ({
             key={users.length}
             search={seach}
             setSeach={setSearch}
-            nextPage={nextPage}
             page={currentPage}
-            previousPage={previousPage}
             setPage={handlePage}
             onCancelDelete={handleCancelDelete}
             onConfirmDelete={handleConfirmDelete}
@@ -132,6 +138,10 @@ const UserListContainer = ({
             setVisibleModal={setVisibleModal}
             visibleModal={visibleModal}
             type_alert={type_alert}
+            totalPage={totalPage}
+            from={from}
+            to={to}
+            total={total}
         />
     );
 }

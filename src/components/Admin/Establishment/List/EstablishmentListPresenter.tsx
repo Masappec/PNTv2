@@ -21,8 +21,6 @@ interface Props {
     search: string
     setSeach: (search: string) => void
     page: number
-    nextPage: number
-    previousPage: number
     setPage: (page: number) => void
     setVisibleModal: (visible: boolean) => void
     visibleModal: boolean
@@ -30,6 +28,10 @@ interface Props {
     onCancelDelete: () => void
     onDelete: (RoleEntity: EstablishmentEntity) => void
     selectedEstablishment: EstablishmentEntity | null
+    from: number
+    to: number
+    total: number
+    totalPage: number
 }
 
 const EstablishmentListPresenter = (props:Props)=>{
@@ -135,9 +137,11 @@ const EstablishmentListPresenter = (props:Props)=>{
                     textImport="Importar Instituciones"
                     title="Instituciones"
                     key={"roles-table"}
-                    onNext={() => { props.setPage(props.nextPage) }}
-                    onPrevious={() => { props.setPage(props.previousPage) }}
-
+                    onChangePage={props.setPage}
+                    from={props.from}
+                    to={props.to}
+                    total={props.total}
+                    totalPages={props.totalPage}
 
 
                 />

@@ -3,6 +3,7 @@ import { User, UserListResponse } from "./interface";
 import { MessageTranslation } from "../../../utils/data";
 import UserEntity from "../../../domain/entities/UserEntity";
 import UserMapper from "../../../domain/mappers/UserMapper";
+import { Pagination } from "..";
 
 
 
@@ -19,7 +20,7 @@ class UserApi {
 
     async getUserList(search?: string,page?: number) {
         try {
-            const response = await this.apiBaseUrl.get<UserListResponse>(this.path+'/user/list' + 
+            const response = await this.apiBaseUrl.get<Pagination<User>>(this.path+'/user/list' + 
             (search || page ? '?' : '') +
             (search ? 'search=' + search : '') +
             (search && page ? '&' : '') +

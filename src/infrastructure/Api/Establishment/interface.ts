@@ -1,6 +1,7 @@
+import { BaseObject } from "..";
 
 
-export interface EstablishmentListDto {
+export interface EstablishmentListDto extends BaseObject{
     
     id: number;
     name: string;

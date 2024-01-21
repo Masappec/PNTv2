@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import PedagogyAreaUseCase from "../../../domain/useCases/PedagogyArea/PedagogyAreaUseCase";
 import NormativePresenter from "./NormativePresenter"
 import { Normative } from "../../../domain/entities/PedagodyAreaEntity";
+import PublicUseCase from "../../../domain/useCases/Public/PublicUseCase";
 
 interface Props {
-    usecase: PedagogyAreaUseCase
+    usecase: PublicUseCase
 }
 
 
