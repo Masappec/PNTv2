@@ -77,7 +77,7 @@ const PublicationDetailPresenter = (props: Props) => {
                                         <div className="flex items-center space-x-4">
                                             <div className="shrink-0">
                                                 <FaFileCsv
-                                                    className="h-8 w-8 text-gray-400 dark:text-gray-300"
+                                                    className="h-8 w-8 text-green-400 dark:text-gray-300"
                                                 size={30}
                                                 />
                                             </div>
@@ -90,8 +90,8 @@ const PublicationDetailPresenter = (props: Props) => {
                                                 </p>
                                             </div>
                                             <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                               <a href={file.url_download} target="_blank" rel="noreferrer"> 
-                                               <FaDownload size={20} className="mr-2 text-primary-600"/></a> 
+                                               <a href={file.url_download as string} target="_blank" rel="noreferrer"> 
+                                               <FaDownload size={20} className="mr-2 text-green-600"/></a> 
                                                 
                                             </div>
                                         </div>
