@@ -35,4 +35,6 @@ export interface PublicationResponse extends BaseObject{
     type_format: TypeFormatResponse[];
     file_publication: FilePublicationResponse[];
     email_created: string;
+    slug: string;
+    establishment_name: string;
 }

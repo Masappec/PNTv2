@@ -118,7 +118,7 @@ const menu = [
         path: '/admin/pedagogy-area',
         visible: true,
         icon: <IoFootsteps  size={25} />,
-        permission_required: "view_pedagogyarea",
+        permission_required: "view_pedagogyarea" ,
         element: <PedagodyAreaCreate />
     },
     {
@@ -134,7 +134,7 @@ const menu = [
         path: '/admin/transparency',
         visible: true,
         icon: <AiOutlineFileSync  size={25} />,
-        permission_required: "view_configuration",
+        permission_required: "view_publication",
         element: <PublicationList />
     },
     {
@@ -142,7 +142,7 @@ const menu = [
         path: '/admin/transparency/create',
         visible: false,
         icon: <AiOutlineFileSync  size={25} />,
-        permission_required: "view_configuration",
+        permission_required: "add_publication",
         element: <PublicationCreate/>
     },
     {

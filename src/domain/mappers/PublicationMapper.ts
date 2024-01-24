@@ -1,5 +1,7 @@
+import { PublicationRequest } from "../../infrastructure/Api/Publication/interface";
 import { PublicationResponse } from "../../infrastructure/Api/Transparency/interface";
-import PublicationEntity, { TagEntity, TypeFormatEntity } from "../entities/PublicationEntity";
+import PublicationEntity,{ TypeFormatEntity } from "../entities/PublicationEntity";
+import { TagEntity } from "../entities/TagEntity";
 
 
 class PublicationMapper {
@@ -34,6 +36,20 @@ class PublicationMapper {
             userDeleted: raw.user_deleted?.toString(),
             userUpdated: raw.user_updated?.toString(),
             email_created: raw.email_created,
+            slug: raw.slug,
+            establishment_name: raw.establishment_name,
+        }
+    }
+
+
+    static fromDomainToApi(data: PublicationEntity): PublicationRequest {
+        return {
+            name: data.name || "",
+            description: data.description || "",
+            file_publication: data.file_publication?.map((file) => file.id) || [],
+            group_dataset: data.tag?.map((tag) => tag.id) || [],
+            notes: data.notes || "",
+            type_publication: data.type_publication || "",
         }
     }
 

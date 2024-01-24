@@ -30,6 +30,18 @@ api.interceptors.request.use(
     }
 )
 
+api.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        if (error.response?.status === 401) {
+            SessionService.clearSession();
+        }
+        return Promise.reject(error);
+    }
+)
+
 export const AUTH_PATH = import.meta.env.VITE_PATH_AUTH;
 export const ADMIN_PATH = import.meta.env.VITE_PATH_ADMIN;
 export const TRANSPARENCY_PATH = import.meta.env.VITE_PATH_TRANSPARENCY;

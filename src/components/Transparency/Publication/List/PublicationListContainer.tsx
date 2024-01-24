@@ -1,5 +1,4 @@
 
-import { useEffect, useState } from "react"
 
 import PublicationListPresenter from "./PublicationListPresenter"
 import { useNavigate } from "react-router-dom"

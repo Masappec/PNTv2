@@ -1,18 +1,8 @@
 import BaseEntity from "./BaseEntity";
+import { TagEntity } from "./TagEntity";
 
 
 
-export class TagEntity{
-    id: number;
-    name: string;
-    is_active: boolean;
-
-    constructor(id: number, name: string, is_active: boolean){
-        this.id = id;
-        this.name = name;
-        this.is_active = is_active;
-    }
-}
 
 export class TypeFormatEntity{
     id: number;
@@ -28,9 +18,9 @@ export class FilePublicationEntity{
     id: number;
     name: string;
     description: string;
-    url_download: string;
+    url_download: string | File;
 
-    constructor(id: number, name: string, description: string, url_download: string){
+    constructor(id: number, name: string, description: string, url_download: string|File){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -50,6 +40,9 @@ class PublicationEntity extends BaseEntity{
     type_format?: TypeFormatEntity[];
     file_publication?: FilePublicationEntity[];
     email_created?: string;
+    slug?: string;
+    establishment_name?: string;
+    notes?: string;
 
 }
 

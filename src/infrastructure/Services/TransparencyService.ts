@@ -26,9 +26,9 @@ class TransparencyService{
         
     }
 
-    async getDetailTransparency(id: number) {
+    async getDetailTransparency(slug: string) {
             
-            const res = await this._service.getDetailTransparency(id);
+            const res = await this._service.getDetailTransparency(slug);
     
             return PublicationMapper.toDomain(res);
             

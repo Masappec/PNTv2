@@ -19,12 +19,14 @@ class EstablishmentEntity{
     email_committe?:string;
     email_accesstoinformation?:string;
     is_active?:boolean;
+    slug?:string;
 
     
     constructor(name:string, code:string, abbreviation:string, 
         logo:string, highest_authority:string, first_name_authority:string,
          last_name_authority:string, job_authority:string, email_authority:string,
          is_active?:boolean, highest_committe?:string, first_name_committe?:string,
+         slug?:string
          ){
         this.name = name;
         this.code = code;
@@ -38,6 +40,7 @@ class EstablishmentEntity{
         this.is_active = is_active;
         this.highest_committe = highest_committe;
         this.first_name_committe = first_name_committe;
+        this.slug = slug;
     }
     
 }

@@ -20,6 +20,7 @@ interface Props {
     to: number;
     current_page: number;
     onChangePage: (page: number) => void;
+    onItemPublicationClick: (slug: string) => void;
 }
 
 const PublicEstablishmentDetailPresenter = (props: Props) => {
@@ -29,14 +30,16 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
         )
     }
 
+    if (props.error) {
+        return (
+            <Alert color="failure" icon={HiInformationCircle}>
+                <span className="font-medium">Error!</span> {props.error}
+            </Alert>
+        )
+    }
+
     return (
         <>
-            {
-                props.error &&
-                <Alert color="failure" icon={HiInformationCircle}>
-                    <span className="font-medium">Error!</span> {props.error}
-                </Alert>
-            }
 
             <div className="flex w-full h-full p-32">
 
@@ -84,6 +87,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                                     tags={publication.tag?.map((tag) => (tag.name || "No hay etiqueta")) || []}
                                     date={publication.createdAt}
                                     author={publication.userCreated || "No hay autor"}
+                                    onClick={() => props.onItemPublicationClick(publication.slug || "")}
                                     />
                                 ))
                             }

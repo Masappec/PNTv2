@@ -73,7 +73,7 @@ const Router = createBrowserRouter(
                     element:<PublicEstablishment />,
                 },
                 {
-                    path: '/entidades/:name',
+                    path: '/entidades/:slug',
                     element:<PublicEstablishmentDetail />,
                 },
                 {

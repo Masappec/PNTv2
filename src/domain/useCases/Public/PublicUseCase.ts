@@ -17,8 +17,8 @@ class PublicUseCase {
     async getPedagogyArea(){
         return await this.service.getPedagogyArea();
     }
-    async getEstablishment(id: string){
-        return await this.service.getEstablishment(id);
+    async getEstablishment(slug: string){
+        return await this.service.getEstablishment(slug);
     }
 
 }

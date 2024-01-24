@@ -53,7 +53,7 @@ const Dropzone = (props:DropzoneProps) => {
                 url ? <img src={url} alt="" 
                 className="w-full h-full object-cover"
                 /> : <>
-                <IoCloudUploadOutline className="text-4xl text-grey" /><span className="block text-grey">Drop your files here</span>
+                <IoCloudUploadOutline className="text-4xl text-grey" /><span className="block text-grey">Agrega tus archivos aquí</span>
                 </>
             }
 

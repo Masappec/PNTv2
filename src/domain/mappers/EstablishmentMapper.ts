@@ -17,7 +17,7 @@ class EstablishmentMapper{
             last_name_authority: data.last_name_authority,
             logo: data.logo,
             is_active: data.is_active,
-            
+            slug: data.slug,
         }
     }
 

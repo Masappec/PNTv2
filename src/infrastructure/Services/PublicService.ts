@@ -34,8 +34,8 @@ class PublicService{
         return PedagogyAreaMapper.fromApiToDomain(response);
     }
 
-    async getEstablishment(id: string){
-        const response = await this.api.getEstablishment(id);
+    async getEstablishment(slug: string){
+        const response = await this.api.getEstablishment(slug);
         return EstablishmentMapper.apiToDomain(response as EstablishmentListDto);
     }
 }

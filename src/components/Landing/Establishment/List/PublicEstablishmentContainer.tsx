@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { useNavigate } from "react-router-dom"
-import { url_build } from "../../../../utils/functions"
 import PublicEstablishmentPresenter from "./PublicEstablishmentPresenter"
 
 
@@ -41,16 +40,11 @@ const PublicEstablishmentContainer = (props: Props) => {
         })
     }
 
-    const onItemClicked = (id: number, name: string) => {
-
-        const url = url_build(name)
+    const onItemClicked = ( slug: string) => {
 
 
-        navigate(`/entidades/${url}`, {
-            state: {
-                id: id
-            }
-        })
+        console.log("slug", slug)
+        navigate(`/entidades/${slug}`)
     }
 
 

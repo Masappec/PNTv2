@@ -47,9 +47,9 @@ class PublicApi {
         }
     }
 
-    async getEstablishment(id: string){
+    async getEstablishment(slug: string){
         try{
-            const response = await this.api.get<EstablishmentPublicListDto>(ADMIN_PATH+"/public/establishment/"+id);
+            const response = await this.api.get<EstablishmentPublicListDto>(ADMIN_PATH+"/public/establishment/"+slug);
             return {
                 ...response.data,
                 logo:response.data.logo ? URL_API+ ADMIN_PATH+response.data.logo : undefined
