@@ -19,7 +19,7 @@ const PublicationDetail = () => {
                 <Breadcrumb.Item href="/" icon={HiHome}>
                     Inicio
                 </Breadcrumb.Item>
-                <Breadcrumb.Item href="/publicaciones">Publicaciones</Breadcrumb.Item>
+                <Breadcrumb.Item href="/entidades">Entidades</Breadcrumb.Item>
                 <Breadcrumb.Item href={"/publicaciones/" + slug}>
                     {slug}
                 </Breadcrumb.Item>

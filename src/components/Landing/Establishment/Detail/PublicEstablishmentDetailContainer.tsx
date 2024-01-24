@@ -53,20 +53,25 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             }).finally(() => {
                 setLoading(false)
             })
-            props.transparencyUseCase?.getTransparencyActive(entity.id||0,1).then((response) => {
-                setPublications(response.results)
-                setLoading(false)
-                setTotalPages(response.total_pages||1)
-                setTotal(response.total)
-                setFrom(response.from||0)
-                setTo(response.to||0)
-            }).catch((error) => {
-                setError(error.message) 
-            }).finally(() => {
-                setLoading(false)
-            })
+            
         
-    }, [entity, props, slug])
+    }, [])
+
+
+    useEffect(() => {
+        props.transparencyUseCase?.getTransparencyActive(entity.id||0,1).then((response) => {
+            setPublications(response.results)
+            setLoading(false)
+            setTotalPages(response.total_pages||1)
+            setTotal(response.total)
+            setFrom(response.from||0)
+            setTo(response.to||0)
+        }).catch((error) => {
+            setError(error.message) 
+        }).finally(() => {
+            setLoading(false)
+        })
+    }, [entity.id])
 
     
     const handlePageChange = (page: number) => {

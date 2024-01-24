@@ -4,6 +4,7 @@ import PublicationListPresenter from "./PublicationListPresenter"
 import { useNavigate } from "react-router-dom"
 import TransparencyUseCase from "../../../../domain/useCases/Transparency/TransparencyUseCase"
 import PublicationEntity from "../../../../domain/entities/PublicationEntity"
+import { useEffect, useState } from "react"
 
 interface Props {
     usecase: TransparencyUseCase
@@ -26,7 +27,7 @@ const PublicationListContainer = ( props: Props
         navigate('/admin/transparency/create')
     }
     const handleEdit = () => {
-        navigate(`/admin/transparecncy/edit`)
+        navigate(`/admin/transparency/edit`)
     }
 
     useEffect (

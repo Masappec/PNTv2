@@ -102,9 +102,9 @@ const PublicationListPresenter = (props:Props)=>{
 
                                         }
                                         }
-                                        className={" text-white font-bold py-2 px-4 rounded-2xl" + ("" ? " bg-red-500 hover:bg-red-700" : " bg-green-500 hover:bg-green-700")}>
+                                        className={" text-white font-bold py-2 px-4 rounded-2xl" + (publicacion.is_active ? " bg-red-500 hover:bg-red-700" : " bg-green-500 hover:bg-green-700")}>
                                         {
-                                            "" ? <IoCloseCircleOutline /> : <FaCheckCircle />
+                                            publicacion.is_active ? <IoCloseCircleOutline /> : <FaCheckCircle />
                                         }
                                     </button>
                                 </div>
@@ -112,7 +112,7 @@ const PublicationListPresenter = (props:Props)=>{
                         }
                     ]}
                     currentPage={1}
-                    data={ []}
+                    data={props.data}
                     description="aquí se muestran las instituciones registradas en el sistema"
                     length={0}
                     onAdd={props.onAdd}

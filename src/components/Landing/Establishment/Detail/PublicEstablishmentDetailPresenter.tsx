@@ -3,7 +3,6 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { HiInformationCircle } from "react-icons/hi";
 import Spinner from "../../../Common/Spinner";
 import { FaInfoCircle } from "react-icons/fa";
-import { RxActivityLog } from "react-icons/rx";
 import { MdDataset } from "react-icons/md";
 import PublicationEntity from "../../../../domain/entities/PublicationEntity";
 import CardPublication from "../../../Common/CardPublication";
@@ -48,8 +47,8 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
 
                     imgSrc={props.entity.logo ? props.entity.logo as string : default_logo}
                     imgAlt="Imagen Logo"
-                    className="w-1/3 box-shadow-2xl">
-
+                    className="w-1/3 h-1/5">
+                    <div className="flex flex-col justify-between">
                     <p className="font-bold text-2xl text-gray-700 dark:text-gray-400">
                         {props.entity.name}
                     </p>
@@ -63,6 +62,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                         {props.total}
                         </span>
                     </p>
+                    </div>
 
 
                 </Card>
@@ -99,27 +99,26 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                                 onPageChange={(page) => props.onChangePage(page)}
                             />
                         </Tabs.Item>
-                        <Tabs.Item title="Actividad" icon={RxActivityLog}>
-                            This is <span className="font-medium text-gray-800 dark:text-white">Settings tab's associated content</span>.
-                            Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to
-                            control the content visibility and styling.
-                        </Tabs.Item>
+                        
                         <Tabs.Item title="Acerca de" icon={FaInfoCircle}>
-                            <span className="text-3xl mb-5 text-gray-800 dark:text-white">
+                            <span className="text-3xl m-5 text-gray-800 dark:text-white font-semibold">
                                 {props.entity.name}
                             </span>
                             <br />
-                            <span className="font-medium mt-10 text-gray-800 dark:text-white">
-                                </span>{props.entity.abbreviation}
+                            <span className="font-medium m-5 text-gray-800 dark:text-white">
+                            {props.entity.abbreviation}
+                                </span>
                             <br />
 
 
-                            <span className="font-medium text-gray-800 dark:text-white">
-                                Autoridad: </span>{props.entity.first_name_authority + " " + props.entity.last_name_authority}
+                            <span className="font-medium text-gray-800 m-5 dark:text-white">
+                                Autoridad: 
+                            </span>{props.entity.first_name_authority + " " + props.entity.last_name_authority}
 
                             <br />
-                            <span className="font-medium text-gray-800 dark:text-white">
-                                Correo de la autoridad: </span>{props.entity.email_authority}
+                            <span className="font-medium m-5 text-gray-800 dark:text-white">
+                                Correo de la autoridad: 
+                            </span>{props.entity.email_authority}
                             <br />
 
 
