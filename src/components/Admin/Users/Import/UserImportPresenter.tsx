@@ -161,6 +161,13 @@ const UserImportPresenter = (props: Props) => {
 
                 title="Archivos"
                 key={""}
+                from={0}
+                onChangePage={() => { }}
+                to={0}
+                total={0}
+                totalPages={0}
+                textAdd="Agregar"
+                textImport="Importar"
 
 
             />

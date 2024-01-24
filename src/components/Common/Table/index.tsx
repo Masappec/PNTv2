@@ -20,12 +20,12 @@ interface TableProps<T> {
     data: T[];
     onSearch: (search: string) => void;
     search: string;
-    onChangePage: (page: number) => void;
-    currentPage: number;
-    totalPages: number;
-    from: number;
-    to: number;
-    total: number;
+    onChangePage?: (page: number) => void;
+    currentPage?: number;
+    totalPages?: number;
+    from?: number;
+    to?: number;
+    total?: number;
 }
 
 function Table<T>(props: TableProps<T>) {
@@ -91,7 +91,8 @@ function Table<T>(props: TableProps<T>) {
                     {
                         props.totalPages && (
                             <div className="flex overflow-x-auto sm:justify-center">
-                                <Pagination currentPage={props.currentPage} totalPages={props.totalPages} onPageChange={props.onChangePage} />
+                                <Pagination currentPage={props.currentPage || 1
+                                } totalPages={props.totalPages} onPageChange={props.onChangePage || (() => { })} />
                             </div>
                         )
                     }

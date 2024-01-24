@@ -140,15 +140,15 @@ const PublicationEditPresenter =(props: Props) =>{
                             <div className="grid grid-cols-2 ">
                             <div className="flex start-4 mt-4  ">
                                <Checkbox label="Activo" id=""
-                                onChange={(e) => {}}
-                                checked={undefined}
+                                onChange={() => {}}
+                                checked={false}
 
                                 />
                                 </div>
                                 <div className="flex start-4 mt-4 space-y-2">
                                <Checkbox label="Colaborativa" id=""
-                                onChange={(e) => {}}
-                                checked={undefined}
+                                onChange={() => {}}
+                                checked={false}
 
                                 />
                                 </div>

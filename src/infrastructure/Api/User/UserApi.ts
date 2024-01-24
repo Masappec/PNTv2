@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { User, UserListResponse } from "./interface";
+import { User } from "./interface";
 import { MessageTranslation } from "../../../utils/data";
 import UserEntity from "../../../domain/entities/UserEntity";
 import UserMapper from "../../../domain/mappers/UserMapper";

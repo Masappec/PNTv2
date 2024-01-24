@@ -10,7 +10,7 @@ const PublicationEditContainer= ()=>{
 
     const [error, setError] = useState<string>("")
     const [success, setSuccess] = useState<string>("")
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading] = useState<boolean>(false)
 
 
     const handleCancel = () => {
@@ -28,8 +28,8 @@ const PublicationEditContainer= ()=>{
             error={error}
             loading={loading}
             success={success}
-            setError={()=>{}}
-            setSuccess={()=>{}}
+            setError={setError}
+            setSuccess={setSuccess}
 
         />
         </>
