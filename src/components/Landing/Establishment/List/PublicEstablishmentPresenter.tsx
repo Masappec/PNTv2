@@ -10,7 +10,7 @@ interface Props {
     onPageChange: (page: number) => void;
     totalPages: number;
     total: number;
-    onItemClicked: (id: number,name:string) => void;
+    onItemClicked: (slug:string) => void;
 }
 
 const PublicEstablishmentPresenter = (props: Props) => {
@@ -34,7 +34,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                     gestionar y publicar sus conjuntos de datos. Estas pueden ser tanto públicas como privadas.
                 </p>
             </Card>
-            <Card href="#" className="w-10/12 box-shadow-2xl m-10">
+            <Card  className="w-10/12 box-shadow-2xl m-10">
                 <div>
                     <TextInput id="search" type="search" placeholder="Buscar..." required />
                 </div>
@@ -47,7 +47,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                         props.entities.map((entity) => {
                             return (
                                 <Card
-                                    onClick={() => props.onItemClicked(entity.id||0,entity.name)}
+                                    onClick={() => props.onItemClicked(entity.slug||"")}
                                     className="w-72 m-2"
                                     imgAlt={entity.name}
                                     imgSrc={entity.logo ? entity.logo as string : "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"}

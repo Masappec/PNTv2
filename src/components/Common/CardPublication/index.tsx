@@ -6,10 +6,11 @@ interface Props {
   tags: string[];
   date?: Date;
   author?: string;
+  onClick?: () => void;
 }
 const CardPublication = (props: Props) => {
   return (
-    <Card href="#" className="w-full border-0">
+    <Card href="#" className="w-full border-0" onClick={props.onClick}>
       <div className="flex items-center justify-between">
 
         <h5 className="text-2xl font-bold tracking-tight text-primary-900 dark:text-white">

@@ -12,7 +12,7 @@ const LayouClient = (props: Props) => {
     return (
         <>
             <Header />
-
+            <div className="bg-[#fbf9f8]">
             <Outlet
                 context={{
                     usecase: props.usecase,
@@ -20,6 +20,7 @@ const LayouClient = (props: Props) => {
 
                 }}
             />
+            </div>
             <FooterInfo />
         </>
     )

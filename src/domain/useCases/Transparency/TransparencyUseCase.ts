@@ -10,8 +10,8 @@ class TransparencyUseCase{
         return transparency;
     }
 
-    async getDetailTransparency(id: number) {
-        const transparency = await this.transparencyRepository.getDetailTransparency(id);
+    async getDetailTransparency(slug: string) {
+        const transparency = await this.transparencyRepository.getDetailTransparency(slug);
         return transparency;
     }
 }

@@ -22,7 +22,7 @@ const LayoutAdmin = ({...props}:LayoutAdminProps) => {
         setPermissions(props.permissions)
     }, [props.username])
 
-    return (<div className="layout-admin h-screen flex flex-col">
+    return (<div className="layout-admin h-full flex flex-col bg-slate-200">
         <div className="flex w-full ">
 
             <div className="flex-col">

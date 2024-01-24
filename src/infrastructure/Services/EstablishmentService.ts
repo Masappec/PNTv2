@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import EstablishmentEntity from "../../domain/entities/Establishment";
 import EstablishmentMapper from "../../domain/mappers/EstablishmentMapper";
 import { Pagination } from "../Api";
@@ -19,11 +20,19 @@ class EstablishmentService {
                 next: response.next,
                 previous: response.previous,
                 results: response.results.map((establishment:EstablishmentListDto) => EstablishmentMapper.apiToDomain(establishment)),
-                total: response.total
+                total: response.total,
+                to: response.to,
+                from: response.from,
+                total_pages: response.total_pages
             }
-        }catch(error:any){
-            const e:string = error.response?.data?.message || 'Error al obtener los establecimientos.';
-            throw new Error(e);
+        }catch(error){
+            if (error instanceof AxiosError){
+                const e:string = error.response?.data?.message || 'Error al obtener los establecimientos.';
+                throw new Error(e);
+            }else{
+                throw new Error('Error al obtener los establecimientos.');
+            }
+
         }
     }
 
@@ -33,9 +42,13 @@ class EstablishmentService {
         try{
             const response = await this.api.Create(EstablishmentMapper.domainToApi(data));
             return response;
-        }catch(error:any){
-            const e:string = error.response?.data?.message || 'Error al crear el establecimiento.';
-            throw new Error(e);
+        }catch(error){
+            if (error instanceof AxiosError) {
+                const e:string = error.response?.data?.message || 'Error al crear el establecimiento.';
+                throw new Error(e);
+            }else {
+                throw new Error('Error al crear el establecimiento.');
+            }
         }
 
     }
@@ -44,9 +57,13 @@ class EstablishmentService {
         try{
             const response = await this.api.detail(id);
             return EstablishmentMapper.apiToDomainDetail(response);
-        }catch(error:any){
-            const e:string = error.response?.data?.message || 'Error al obtener el establecimiento.';
-            throw new Error(e);
+        }catch(error){
+            if (error instanceof AxiosError) {
+                const e:string = error.response?.data?.message || 'Error al obtener el establecimiento.';
+                throw new Error(e);
+            } else {
+                throw new Error('Error al obtener el establecimiento.');
+            }
         }
     }
 
@@ -56,9 +73,13 @@ class EstablishmentService {
         try{
             const response = await this.api.update(EstablishmentMapper.domainToApi(data),id);
             return response;
-        }catch(error:any){
-            const e:string = error.response?.data?.message || 'Error al actualizar el establecimiento.';
-            throw new Error(e);
+        }catch(error){
+            if (error instanceof AxiosError) {
+                const e:string = error.response?.data?.message || 'Error al actualizar el establecimiento.';
+                throw new Error(e);
+            }else{
+                throw new Error('Error al actualizar el establecimiento.');
+            }
         }
 
     }
@@ -67,9 +88,13 @@ class EstablishmentService {
         try{
             const response = await this.api.delete(id);
             return response;
-        }catch(error:any){
-            const e:string = error.response?.data?.message || 'Error al eliminar el establecimiento.';
-            throw new Error(e);
+        }catch(error){
+            if (error instanceof AxiosError) {
+                const e:string = error.response?.data?.message || 'Error al eliminar el establecimiento.';
+                throw new Error(e);
+            }else{
+                throw new Error('Error al eliminar el establecimiento.');
+            }
         }
     }
     
