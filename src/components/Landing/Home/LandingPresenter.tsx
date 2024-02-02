@@ -1,8 +1,5 @@
 
 import Hero from "../../Common/Hero";
-import { Banner } from "flowbite-react";
-import { HiArrowRight } from "react-icons/hi";
-import { Link } from "react-router-dom";
 import CardQuestion from "../../Common/CardQuestion";
 import { FormattedMessage } from "react-intl";
 

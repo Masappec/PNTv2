@@ -8,11 +8,10 @@ import { HiInformationCircle } from "react-icons/hi";
 import CreatableSelect from "react-select/creatable";
 import { TagEntity } from "../../../../domain/entities/TagEntity";
 import { OnChangeValue } from "react-select";
-import { FaFileCsv, FaPlusCircle } from "react-icons/fa";
+import {  FaPlusCircle } from "react-icons/fa";
 import { Row } from "../../../../utils/interface";
 import FileUrlPartial from "../../Partial/CreateFilePublication/FileUrl";
 import DataTablePartial from "../../Partial/CreateFilePublication/DataTable";
-import { FaTrash } from "react-icons/fa6";
 
 
 interface Props {
@@ -178,13 +177,13 @@ const SolicityResponsePresenter = (props: Props) => {
                                 </h3>
 
                                 <div className="flex flex-row m-2">
-                                {
+                                {/*
                                 props.solicity?.map((file,index) => {
                                     return (
                                         <div className="flex flex-col m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
                                             <FaFileCsv className=" text-green-600" size={30} />
                                             <span className=" text-gray-500 dark:text-gray-300">
-                                                {}
+                                                {file}
                                             </span>
                                             <span className=" text-gray-500 text-sm dark:text-gray-300">
                                                 {}
@@ -196,7 +195,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                     )
 
                                 })
-                            }
+                            */}
                             </div>
                         </div>
 
@@ -282,7 +281,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                         onDownloadFile={props.onDownloadFile}
                                         onSaveDateUrl={props.onSaveDateUrl}
                                         key={index}
-                                        onSaveFile={(file, name, description) => props.onSaveFile(file, name, description, index)}
+                                        onSaveFile={(file, name, description) => props.onSaveFile(file as File, name, description, index)}
                                         onRemoveFile={(index) => props.onRemoveFile(index)}
                                         isSaved={file != null}
                                     />

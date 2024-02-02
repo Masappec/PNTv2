@@ -11,6 +11,7 @@ const SolicityDetailContainer= ()=>{
 
 
     const handleCancel = () => {
+        navigation('/transparency/solicity')
     }
 
     return (

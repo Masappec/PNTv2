@@ -25,13 +25,17 @@ const SolicityCreateContainer= ()=>{
 
 
 
+    const handleCancel = ()=>{
+        setLoading(false)
+        navigation('/transparency/solicity')
+    }
 
 
     return (
         <>
         <SolicityCreatePresenter
          handleSubmit={()=>{}}
-         onCancel={()=>{}}
+         onCancel={handleCancel}
          data={[]}
          error={error}
          loading={loading}

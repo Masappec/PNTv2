@@ -1,4 +1,4 @@
-import {  FormEvent, useState } from "react"
+import {  useState } from "react"
 import SolicityEditPresenter from "./SolicityEditPresesnter"
 import { useNavigate } from "react-router-dom"
 
@@ -24,6 +24,10 @@ const SolicityEditContainer= ()=>{
     
 
 
+    const handleCancel = ()=>{
+        setLoading(false)
+        navigation('/transparency/solicity')
+    }
 
 
 
@@ -31,7 +35,7 @@ const SolicityEditContainer= ()=>{
         <>
         <SolicityEditPresenter
          handleSubmit={()=>{}}
-         onCancel={()=>{}}
+         onCancel={handleCancel}
          data={[]}
          error={error}
          loading={loading}

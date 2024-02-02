@@ -10,9 +10,7 @@ const SolicityOnHoldContainer= ()=>{
 
     const [loading, setLoading] = useState<boolean>(false)
 
-    const handleCancel = () => {
-    }
-
+    
 
     const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -21,6 +19,11 @@ const SolicityOnHoldContainer= ()=>{
         setLoading(true)
         console.log("")
         
+    }
+
+    const handleCancel = ()=>{
+        setLoading(false)
+        navigation('/transparency/solicity')
     }
 
 

@@ -1,7 +1,7 @@
 
 import SolicityListPresenter from "./SoicityListPresenter"
 import { useNavigate } from "react-router-dom"
-import {  useState } from "react"
+import {  useEffect, useState } from "react"
 
 
 const SolicityListContainer = () => {
@@ -16,6 +16,17 @@ const SolicityListContainer = () => {
     const [from, setFrom] = useState<number>(0)
     const [to, setTo] = useState<number>(0)
     const [total, setTotal] = useState<number>(0)
+
+
+    useEffect(() => {
+        SetSolicitudes([])
+        setTotalPage(0)
+        setCurrentPage(1)
+        setFrom(0)
+        setTo(0)
+        setTotal(0)
+        SetError("")
+    }, [])
     
     const handleAdd = () => {
         navigate('/admin/solicity/create')
