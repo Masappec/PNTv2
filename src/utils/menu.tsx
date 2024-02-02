@@ -19,15 +19,21 @@ import UserImport from "../interfaces/web/Admin/User/Import";
 import PublicationList from "../interfaces/web/Transparency/Publication/List";
 import PublicationCreate from "../interfaces/web/Transparency/Publication/Create";
 import PublicationEdit from "../interfaces/web/Transparency/Publication/Edit";
-
+import { AiOutlineFileDone } from "react-icons/ai";
+import SolicityList from "../interfaces/web/Transparency/Solicity/List";
+import SolicityCreate from "../interfaces/web/Transparency/Solicity/Create";
+import SolicityEdit from "../interfaces/web/Transparency/Solicity/Edit";
+import SolicityResponse from "../interfaces/web/Transparency/Solicity/Response";
+import SolicityOnHold from "../interfaces/web/Transparency/Solicity/OnHold";
+import SolicityDetail from "../interfaces/web/Transparency/Solicity/Detail";
 
 
 export interface MenuItem {
-    name: string;
-    path: string;
-    permission_required: string;
-    icon: JSX.Element;
-    visible: boolean;
+  name: string;
+  path: string;
+  permission_required: string;
+  icon: JSX.Element;
+  visible: boolean;
 }
 
 const menu = [
@@ -152,10 +158,55 @@ const menu = [
         icon: <AiOutlineFileSync  size={25} />,
         permission_required: "change_publication",
         element: <PublicationEdit/>
-    }
-
-
-
-]
+    },
+  {
+    name: "Solicitudes",
+    path: "/admin/solicity",
+    visible: true,
+    icon: <AiOutlineFileDone size={25} />,
+    permission_required: "view_configuration",
+    element: <SolicityList />,
+  },
+  {
+    name: " Crear Solicitudes",
+    path: "/admin/solicity/create",
+    visible: false,
+    icon: <AiOutlineFileDone size={25} />,
+    permission_required: "view_configuration",
+    element: <SolicityCreate/>,
+  },
+  {
+    name: " Editar Solicitudes",
+    path: "/admin/solicity/edit",
+    visible: false,
+    icon: <AiOutlineFileDone size={25} />,
+    permission_required: "view_configuration",
+    element: <SolicityEdit/>,
+  },
+  {
+    name: " Responder Solicitudes",
+    path: "/admin/solicity/response",
+    visible: false,
+    icon: <AiOutlineFileDone size={25} />,
+    permission_required: "view_configuration",
+    element: <SolicityResponse/>,
+  },
+  {
+    name: " Prórroga",
+    path: "/admin/solicity/onhold",
+    visible: false,
+    icon: <AiOutlineFileDone size={25} />,
+    permission_required: "view_configuration",
+    element: <SolicityOnHold/>,
+  },
+  {
+    name: " Detalles de Solicitud",
+    path: "/admin/solicity/detail",
+    visible: false,
+    icon: <AiOutlineFileDone size={25} />,
+    permission_required: "view_configuration",
+    element: <SolicityDetail/>,
+  }
+];
 
 export default menu;
