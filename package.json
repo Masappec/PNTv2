@@ -1,6 +1,7 @@
 {
   "name": "pnt_front",
   "private": true,
+  "homepage": "https://transparencia.ec/frontend-cliente-pruebas/accesso-s5675s755s/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
