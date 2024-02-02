@@ -1,40 +1,53 @@
-import { Link } from "react-router-dom";
+import { TextInput } from "flowbite-react";
+import { FaSearch } from "react-icons/fa";
+import { inputSearchTheme } from "./theme";
+import { FormattedMessage } from "react-intl";
 
-interface Props{
-    title: string;
-    subtitle: string;
-    image: string;
-    imageAlt: string;
-    ctaTextPrimary: string;
-    ctaLinkPrimary: string;
-    ctaTextSecondary: string;
-    ctaLinkSecondary: string;
-}
 
-const Hero = ({title, subtitle, image, imageAlt, ctaTextPrimary, ctaLinkPrimary,ctaTextSecondary,ctaLinkSecondary}: Props) => {
+
+const Hero = () => {
+
+
+
     return (
-        <section className="bg-white dark:bg-gray-900">
-        <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-            <div className="mr-auto place-self-center lg:col-span-7">
-                <h1 className="max-w-2xl mb-4 text-4xl font-extrabold leading-none md:text-5xl xl:text-6xl dark:text-white">
-                    {title}
-                </h1>
-                <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                    {subtitle}
-                </p>
-                <Link to={ctaLinkPrimary} className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-primary-900">
-                    {ctaTextPrimary}
-                    <svg className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </Link>
-                <Link to={ctaLinkSecondary} className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                    {ctaTextSecondary}
-                </Link> 
+        <section className=" dark:bg-gray-900 mt-28">
+            <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-10">
+                <div className="lg:col-span-2 r justify-start">
+                    <p className="text-xl font-bold text-gray-800 dark:text-white w-11/12 lg:w-28" tabIndex={6}>
+                        <FormattedMessage id="portal_nacional" />
+                    </p>
+                </div>
+                <div className="lg:col-span-8 lg:flex-row lg:justify-end lg:items-center lg:space-x-4 lg:space-y-0 lg:flex">
+                    <div className="flex flex-col items-center justify-center w-full">
+                        <p className="text-4xl font-normal text-gray-800 dark:text-white w-11/12 lg:w-[52%]" tabIndex={7}>
+                            <FormattedMessage id="title_search_entities" />
+                        </p>
+                        <div className="search mt-20 lg:mt-8 w-full justify-center flex">
+
+                            <TextInput id="buscar" type="text" icon={FaSearch}
+                                placeholder="Buscar por entidad pública"
+                                alt="Buscar por entidad pública, por ejemplo: Ministerio de Educación"
+                                className="w-2/5 h-12 mt-4 mr-[110px] "
+                                tabIndex={7}
+                                theme={inputSearchTheme}
+                            />
+
+
+                        </div>
+                        <p className="text-sm font-normal text-gray-800 dark:text-white w-11/12 lg:w-[52%] mt-4" tabIndex={8}>
+                            <FormattedMessage
+                                id="subtitle_search_entities" values={{
+                                    total: 1000,
+                                    total_files: 10000
+                                }}
+                            />
+                        </p>
+
+                    </div>
+                </div>
+
             </div>
-            <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-                <img src={image} alt={imageAlt}/>
-            </div>                
-        </div>
-    </section>
+        </section>
     )
 }
 

@@ -146,12 +146,12 @@ const menu = [
         element: <PublicationCreate/>
     },
     {
-    name: 'Transparencia',
-    path: '/admin/transparency/edit',
-    visible: false,
-    icon: <AiOutlineFileSync  size={25} />,
-    permission_required: "view_configuration",
-    element: <PublicationEdit/>
+        name: 'Transparencia',
+        path: '/admin/transparency/:id',
+        visible: false,
+        icon: <AiOutlineFileSync  size={25} />,
+        permission_required: "change_publication",
+        element: <PublicationEdit/>
     }
 
 

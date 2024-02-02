@@ -3,6 +3,7 @@ import LayoutAdmin from "../../../components/Common/Layout/Admin"
 import SessionService from "../../../infrastructure/Services/SessionService";
 import menu from "../../../utils/menu"
 import UserEntity from "../../../domain/entities/UserEntity";
+import { IntlProvider } from "react-intl";
 
 
 const Admin = () => {
@@ -17,10 +18,12 @@ const Admin = () => {
     }
 
     return (
+        <IntlProvider locale="es">
         <LayoutAdmin menu={menu} username={user.first_name + " " + user.last_name || user.email}
             onLogout={logout}
             permissions={user.user_permissions?.map((item) => item.codename) || []}
         />
+        </IntlProvider>
     )
 }
 

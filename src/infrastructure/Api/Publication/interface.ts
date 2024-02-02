@@ -6,4 +6,5 @@ export interface PublicationRequest{
     file_publication: number[];
     type_publication: string;
     notes: string;
+    attachment: number[];
 }

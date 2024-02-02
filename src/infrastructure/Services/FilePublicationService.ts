@@ -7,7 +7,6 @@ import FilePublicationMapper from "../../domain/mappers/FilePublicationMapper";
 
 
 
-
 /**
  * @class FilePublicationService
  * @name FilePublicationService
@@ -60,23 +59,21 @@ class FilePublicationService{
      * @returns {Blob} - blob
      */
 
-    async downloadFileFromUrl(url:string){
+    async downloadFileFromUrl(url:string): Promise<Blob|string>{
 
         try{
             const res = await axios.get(url, {responseType: 'blob'});
 
-            //validar que res.data sea un csv ya sea separado por comas o por punto y coma
+            if (res.data !instanceof Blob){
+               
+               return url;
 
-            if (res.headers["content-type"] !== "text/csv" && res.headers["content-type"] !== "application/vnd.ms-excel"
-            && res.headers["content-type"] !== "text/plain"
-            ){
-                throw new Error("El archivo no es un csv");
             }
-
-            const blob = new Blob([res.data], { type: 'text/csv' });
-            //validar que sea un archivo csv
-
+           
+            const blob = new Blob([res.data], { type: res.headers['content-type'] });
             return blob;
+            
+
         }catch(e){
             console.log(e);
             if (e instanceof AxiosError){

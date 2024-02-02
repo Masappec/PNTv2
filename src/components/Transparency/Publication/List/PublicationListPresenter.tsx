@@ -16,7 +16,7 @@ interface Props {
     onAdd: () => void
     onImport: () => void
     onFilter: () => void
-    onEdit: () => void
+    onEdit: (id: number) => void
     search: string
     setSeach: (search: string) => void
     page: number
@@ -25,23 +25,25 @@ interface Props {
     visibleModal: boolean
     onConfirmDelete: () => void
     onCancelDelete: () => void
-    onDelete: () => void
-    
+    onDelete: (id:number) => void
+
+    publicationSelected: PublicationEntity | null
+
     from: number
     to: number
     total: number
     totalPage: number
 }
 
-const PublicationListPresenter = (props:Props)=>{
+const PublicationListPresenter = (props: Props) => {
     return (
-        <div className="container">
+        <div className="container h-screen">
             <div className="flex items-center py-5 justify-center">
 
-                
+
                 <Modal
                     isvisible={props.visibleModal}
-                    onClose={() => { }}
+                    onClose={() => props.setVisibleModal(false)}
                 >
                     {
                         props.error && <Alert type="error" message={props.error} onClose={() => { }} />
@@ -49,7 +51,12 @@ const PublicationListPresenter = (props:Props)=>{
 
 
                     <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                    
+
+                    <p className="text-center text-gray-600 dark:text-gray-400 text-lg">{`
+                        ¿Está seguro de ${props.publicationSelected?.is_active ? "desactivar" : "activar"} esta publicación?
+                        
+                        `}</p>
+
                     <div className="flex justify-center gap-4">
                         <Button color="failure" onClick={() => props.onConfirmDelete()}>
                             {"Si, Estoy seguro"}
@@ -65,39 +72,39 @@ const PublicationListPresenter = (props:Props)=>{
                     columns={[
                         {
                             title: "Titulo",
-                            render: (publicacion:PublicationEntity) => (
-                                <p>{publicacion.name }</p>
+                            render: (publicacion: PublicationEntity) => (
+                                <p>{publicacion.name}</p>
                             )
                         },
                         {
                             title: "Descripción",
-                            render: (publicacion:PublicationEntity) => (
+                            render: (publicacion: PublicationEntity) => (
                                 <p>{publicacion.description}</p>
                             )
                         },
                         {
                             title: "Creado por",
-                            render: (publicacion:PublicationEntity) => (
+                            render: (publicacion: PublicationEntity) => (
                                 <p>{publicacion.userCreated}</p>
                             )
                         },
-                       
+
                         {
                             title: "Acciones",
-                            render: (publicacion:PublicationEntity) => (
+                            render: (publicacion: PublicationEntity) => (
                                 <div className="flex items-center">
                                     <button
                                         onClick={() => {
-                                            props.onEdit()
+                                            props.onEdit(publicacion.id || 0)
                                         }}
                                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
                                         <FaEdit />
                                     </button>
                                     <button
-                                    
+
                                         //add alt
                                         onClick={() => {
-                                            props.onDelete()
+                                            props.onDelete(publicacion.id || 0)
 
                                         }
                                         }

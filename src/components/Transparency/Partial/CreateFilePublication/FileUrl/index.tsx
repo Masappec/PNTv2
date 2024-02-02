@@ -6,12 +6,12 @@ import { useState } from "react"
 
 interface IFileUrlPartial {
     index: number
-    file: File | null
+    file: File |string| null
     onSaveDateUrl: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
     onDownloadFile: (file: File) => void
     loading: boolean
     error: string | null;
-    onSaveFile: (file: File, name: string, description: string, index: number) => void
+    onSaveFile: (file: File|string|null, name: string, description: string, index: number) => void
     onRemoveFile: (index: number) => void
     isSaved: boolean
 }
@@ -24,7 +24,7 @@ const FileUrlPartial = (props: IFileUrlPartial) => {
         <div className="flex flex-col m-2">
             {!props.isSaved &&
                 <div className="flex items-center justify-between">
-                    <Button className="w-1/12 text-sm tracking-wide" color="green" onClick={() => props.onSaveFile(props.file as File, name, description, props.index)}>
+                    <Button className="w-1/12 text-sm tracking-wide" color="green" onClick={() => props.onSaveFile(props.file, name, description, props.index)}>
                         <FaCheckCircle className="w-5 h-5 text-green" />
                     </Button>
                     <Button className="w-1/12 text-sm tracking-wide" color="red" onClick={() => props.onRemoveFile(props.index)} >
@@ -57,7 +57,9 @@ const FileUrlPartial = (props: IFileUrlPartial) => {
                     <div className="flex items-center  mt-4 gap-x-3 w-full">
                         <span className=" text-gray-500 dark:text-gray-300">
                             <FaFileCsv className=" text-green-600" size={30} />
-                            {props.file?.name}
+                            {
+                                props.file instanceof File ? props.file.name : name
+                            }
                         </span>
                         <span className=" text-gray-500 text-sm dark:text-gray-300">
 

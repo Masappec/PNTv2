@@ -38,6 +38,8 @@ class PublicationMapper {
             email_created: raw.email_created,
             slug: raw.slug,
             establishment_name: raw.establishment_name,
+            attachment: raw.attachment,
+            notes: raw.notes || "",
         }
     }
 
@@ -50,6 +52,7 @@ class PublicationMapper {
             group_dataset: data.tag?.map((tag) => tag.id) || [],
             notes: data.notes || "",
             type_publication: data.type_publication || "",
+            attachment: data.attachment?.map((attachment) => attachment.id) || [],
         }
     }
 

@@ -22,6 +22,9 @@ export interface FilePublicationResponse {
     url_download: string;
 }
 
+export interface AttachmentResponse extends FilePublicationResponse {
+}
+
 
 export interface PublicationResponse extends BaseObject{
 
@@ -37,4 +40,6 @@ export interface PublicationResponse extends BaseObject{
     email_created: string;
     slug: string;
     establishment_name: string;
+    notes: string;
+    attachment: AttachmentResponse[];
 }

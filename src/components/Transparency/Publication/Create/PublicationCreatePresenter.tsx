@@ -15,7 +15,7 @@ import { Row } from "../../../../utils/interface";
 import FileUrlPartial from "../../Partial/CreateFilePublication/FileUrl";
 import PublicationEntity, { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
 import DataTablePartial from "../../Partial/CreateFilePublication/DataTable";
-import { FaTrash } from "react-icons/fa6";
+import { FaLink, FaTrash } from "react-icons/fa6";
 
 /**
  * @interface Props
@@ -70,7 +70,7 @@ interface Props {
 
     onSaveTable: (data: Row[][], index: number) => void;
     files: {
-        file: File | null,
+        file: File |string| null,
         type: "table" | "file" | "url",
         error: string,
         loading: boolean,
@@ -82,7 +82,7 @@ interface Props {
     onAddDataSet: (type: "table" | "file" | "url") => void;
     onDownloadFile: (file: File) => void;
 
-    onSaveFile: (file: File, name: string, description: string, index: number) => void
+    onSaveFile: (file: File|string|null, name: string, description: string, index: number) => void
     onRemoveFile: (index: number) => void
 
     publication: PublicationEntity,
@@ -246,7 +246,7 @@ const PublicationCreatePresenter = (props: Props) => {
                             {
                                 props.publication.file_publication?.map((file,index) => {
                                     return (
-                                        <div className="flex flex-col m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
+                                        <div className="flex flex-col w-40 m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
                                             <FaFileCsv className=" text-green-600" size={30} />
                                             <span className=" text-gray-500 dark:text-gray-300">
                                                 {file.name}
@@ -263,6 +263,36 @@ const PublicationCreatePresenter = (props: Props) => {
                                 })
                             }
                             </div>
+                            <div className="flex flex-col m-2">
+
+                            <h3 className="text-lg font-medium text-gray-800 dark:text-white">
+                                    Datos de la publicación
+                                </h3>
+                            <div className="flex flex-row m-2">
+
+                                
+                           
+                            { 
+                                props.publication.attachment?.map((file,index) => {
+                                    return (
+                                        <div className="flex flex-col m-2 w-50 bg-slate-100 p-5 rounded-lg shadow-xl">
+                                            <FaLink className=" text-primary-600" size={30} />
+                                            <span className=" text-gray-500 dark:text-gray-300">
+                                                {file.url_download.slice(0,20)}...
+                                            </span>
+                                            <span className=" text-gray-500 text-sm dark:text-gray-300">
+                                                {file.description}
+                                            </span>
+                                            <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
+                                            <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromPublication(index)} />
+                                            </span>
+                                        </div>
+                                    )
+
+                                })
+                            }
+                            </div>
+                            </div>
                         </div>
 
                     </div>
@@ -272,7 +302,7 @@ const PublicationCreatePresenter = (props: Props) => {
                             {
                                 props.files.map((file, index) => {
 
-                                    if (file.type === "table") {
+                                    if (file.type === "table" && typeof file.file !== "string") {
                                         return (
                                            <DataTablePartial
                                             data={props.data}
@@ -338,7 +368,7 @@ const PublicationCreatePresenter = (props: Props) => {
                         <Tabs.Item title="URL">
                             {
                                 props.files.map((file, index) => {
-                                    if (file.type === "url"){
+                                    if (file.type === "url" ) {
                                     return <FileUrlPartial
                                         error={file.error}
                                         file={file.file}

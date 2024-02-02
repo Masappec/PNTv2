@@ -154,7 +154,7 @@ const DynamicTable = (props: Props) => {
                                             onChange={(e) => handleChanged(rowIndex, columnIndex, e.currentTarget.nodeValue || "")}
                                         >
                                             {column.value}
-                                            {isHovered  && props.isSaved ? (
+                                            {isHovered  && !props.isSaved ? (
                                                 <div className="flex flex-col">
                                                     <button type="button" className=" text-primary-700 m-2" onClick={() => handleClick(rowIndex, columnIndex, column.is_header || false)}>
                                                         <IoAddCircle size={20} />

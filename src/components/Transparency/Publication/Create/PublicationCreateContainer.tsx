@@ -1,13 +1,14 @@
 import {  FormEvent, useState } from "react"
 import PublicationCreatePresenter from "./PublicationCreatePresenter";
 import { useNavigate } from "react-router-dom"
-import PublicationEntity, { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
+import PublicationEntity, { AttachmentEntity, FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
 import TagUseCase from "../../../../domain/useCases/TagUseCase/TagUseCase";
 import { TagEntity } from "../../../../domain/entities/TagEntity";
 import { OnChangeValue } from "react-select";
 import { Row } from "../../../../utils/interface";
 import FilePublicationUseCase from "../../../../domain/useCases/FilePublicationUseCase/FilePublicationUseCase";
 import PublicationUseCase from "../../../../domain/useCases/PublicationUseCase/PublicationUseCase";
+import AttachmentUseCase from "../../../../domain/useCases/AttachmentUseCase/AttachmentUseCase";
 
 
 /**
@@ -22,6 +23,7 @@ interface Props {
   tagUseCase: TagUseCase,
   fileUseCase: FilePublicationUseCase;
   publicationUsecase: PublicationUseCase;
+  attachmentUsecase: AttachmentUseCase;
 
 }
 
@@ -90,13 +92,14 @@ const PublicationCreateContainer= (props:Props)=>{
      * 
      */
     const [files,SetFiles] = useState<{
-        file: File | null,
+        file: File |string| null,
         type: "table" | "file" | "url",
         error: string,
         loading: boolean,
         success: string,
         file_publication: FilePublicationEntity | null
     }[]>([])
+
 
 
     /**
@@ -148,7 +151,7 @@ const PublicationCreateContainer= (props:Props)=>{
      * @returns {void}
      */
     const handleCancel = () => {
-        navigation("admin/transparency/create")
+        navigation("/admin/transparency")
     }
 
 
@@ -230,14 +233,24 @@ const PublicationCreateContainer= (props:Props)=>{
         copy[index].loading = true
         SetFiles(copy)
         props.fileUseCase.downloadFileFromUrl(url).then((file)=>{
-            const copyFiles = [...files]
-            copyFiles[index].loading = false
-            copyFiles[index].error = ""
-            const file_ = new File([file], "data.csv", {
-                type: "text/csv;charset=utf-8;",
-            });
-            copyFiles[index].file = file_
-            SetFiles(copyFiles)
+
+            if(file instanceof Blob){
+                const copyFiles = [...files]
+                copyFiles[index].loading = false
+                copyFiles[index].error = ""
+                const file_ = new File([file], "data.csv", {
+                    type: "text/csv;charset=utf-8;",
+                });
+                copyFiles[index].file = file_
+                SetFiles(copyFiles)
+            }else if (typeof file === "string"){
+                const copyFiles = [...files]
+                copyFiles[index].loading = false
+                copyFiles[index].error = "El enlace no es un archivo valido, por lo que se guardará como un enlace"
+                copyFiles[index].file = file
+                SetFiles(copyFiles)
+
+            }
         }).catch((error)=>{
             const copyFiles = [...files]
 
@@ -296,10 +309,10 @@ const PublicationCreateContainer= (props:Props)=>{
      * @param index  indice del archivo
      * @returns  {void}
      */
+    const onSaveFile = (file: File|string|null, name:string,description:string,index:number): void => {
 
-    const onSaveFile = (file: File, name:string,description:string,index:number) => {
 
-
+        
         if (name === "") {
             const copyFiles = [...files]
             copyFiles[index].error = "El nombre es requerido"
@@ -319,20 +332,38 @@ const PublicationCreateContainer= (props:Props)=>{
             return
         }
         const data = new FilePublicationEntity(0,name,description,file);
-        props.fileUseCase.createFilePublication(data).then((response)=>{
-            const copyFiles = [...files]
-            copyFiles[index].file_publication = response
-            SetFiles(copyFiles)
-            SetPublication({
-                ...publication,
-                file_publication: [...publication.file_publication || [],response]
-            
+        if(file instanceof File){
+            props.fileUseCase.createFilePublication(data).then((response)=>{
+                const copyFiles = [...files]
+                copyFiles[index].file_publication = response
+                SetFiles(copyFiles)
+                SetPublication({
+                    ...publication,
+                    file_publication: [...publication.file_publication || [],response]
+                
+                })
+            }).catch((error)=>{
+                const copyFiles = [...files]
+                copyFiles[index].error = error.message
+                SetFiles(copyFiles)
             })
-        }).catch((error)=>{
-            const copyFiles = [...files]
-            copyFiles[index].error = error.message
-            SetFiles(copyFiles)
-        })
+        }else if (typeof file === "string"){
+            const data = new AttachmentEntity(0,name,description,file)
+            props.attachmentUsecase.createAttachment(data).then((response)=>{
+                const copyFiles = [...files]
+                copyFiles[index].file_publication = response
+                SetFiles(copyFiles)
+                SetPublication({
+                    ...publication,
+                    attachment: [...publication.attachment || [],response]
+                
+                })
+            }).catch((error)=>{
+                const copyFiles = [...files]
+                copyFiles[index].error = error.message
+                SetFiles(copyFiles)
+            })
+        }
 
     }
 

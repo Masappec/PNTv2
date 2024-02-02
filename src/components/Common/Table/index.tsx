@@ -54,7 +54,7 @@ function Table<T>(props: TableProps<T>) {
                             ))
                         }
                     </TableFlowbite.Head>
-                    <TableFlowbite.Body>
+                    <TableFlowbite.Body className="text-sm divide-y divide-gray-200 dark:divide-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800">
                         {
                             props.data.map(row => (
                                 <TableFlowbite.Row>

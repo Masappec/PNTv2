@@ -28,6 +28,20 @@ export class FilePublicationEntity{
     }
 }
 
+export class AttachmentEntity{
+    id: number;
+    name: string;
+    description: string;
+    url_download: string;
+
+    constructor(id: number, name: string, description: string, url_download: string){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.url_download = url_download;
+    }
+}
+
 class PublicationEntity extends BaseEntity{
 
     id?: number;
@@ -43,6 +57,7 @@ class PublicationEntity extends BaseEntity{
     slug?: string;
     establishment_name?: string;
     notes?: string;
+    attachment?: AttachmentEntity[];
 
 }
 

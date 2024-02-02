@@ -56,6 +56,7 @@ const PublicationDetailContainer = (props:Props)=>{
         date_created={post.createdAt?.toLocaleString()||"---"}
         date_modified={post.updatedAt?.toLocaleString()||"---"}
         date_publication={post.createdAt?.toLocaleString()||"---"}
+        attachments={post.attachment||[]}
 
         />
     )

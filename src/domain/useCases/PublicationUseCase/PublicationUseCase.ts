@@ -10,6 +10,17 @@ class PublicationUseCase{
     async createPublication(data: PublicationEntity){
         return await this.publicationRepository.createPublication(data);
     }
+
+    async getPublication(id:number){
+        return await this.publicationRepository.getPublication(id);
+    }
+    async updatePublication(data: PublicationEntity){
+        return await this.publicationRepository.updatePublication(data);
+    }
+
+    async updateState(id:number){
+        return await this.publicationRepository.updateState(id);
+    }
 }
 
 export default PublicationUseCase;
