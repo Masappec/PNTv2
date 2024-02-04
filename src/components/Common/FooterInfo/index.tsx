@@ -37,10 +37,10 @@ const FooterInfo = () => {
         </nav>
       </div>
       <div className="container mx-auto flex flex-col md:flex-row mt-20 ">
-        <nav className="flex space-x-16 justify-center text-sm text-justify mt-2">
+        <nav className="flex space-x-16 justify-center text-base text-justify mt-2">
           <span className="text-slate-500">
             &copy; {new Date().getFullYear()} Plataforma Nacional de
-            Transparencia | Todos los derechos reservados reservados.
+            Transparencia | Todos los derechos reservados
           </span>
           <a href="#" className="text-gray-200 hover:text-gray-200">
             Políticas de uso
