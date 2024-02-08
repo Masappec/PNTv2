@@ -125,7 +125,10 @@ const Router = createBrowserRouter(
             
 
         }
-    ]
+    ],
+    {
+        basename: import.meta.env.VITE_BASE_URL,
+    }
 );
 
 export default Router;
