@@ -19,5 +19,17 @@ export const messages = {
         search_by_tematic: 'Buscar por eje temático',
 
         //footer landing
+
+
+
+
+
+        //establishtment
+        establishments: 'Instituciones',
+        establishment: 'Institución',
+        search_by_establishment: 'Buscar por institución',
+        type_establishment: 'Tipo de institución',
+        types_establishment: 'Tipos de instituciones',
+        search_by_type_establishment: 'Buscar por tipo de institución',
     }
 }

@@ -20,8 +20,8 @@ interface TitleProps {
 
     return (
         <>
-      <div className="max-w-md mx-auto my-6 justify-start  px-20 py-4 md:ml-8  ">
-        <h1  className={typeText[color]+" text-3xl font-bold mr-4"}>{title}</h1>
+      <div className="max-w-md mx-auto my-0 mt-6  justify-start  px-20 py-0 md:ml-6   ">
+        <h1  className={typeText[color]+" text-3xl font-bold mr-4 "}>{title}</h1>
         <p  className={typeSubText[color]+" mb-2 "}>{text}</p>
       </div>
       </>

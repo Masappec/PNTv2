@@ -11,6 +11,7 @@ const LoginContainer = ({ useCase }: {
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const [isloading, setIsLoading] = useState<boolean>(false)
+  const [remenber, setRemenber] = useState<boolean>(false)
 
   const history = useNavigate()
 
@@ -45,6 +46,8 @@ const LoginContainer = ({ useCase }: {
       setPassword={setPassword}
       setError={setError}
       isloading={isloading}
+      remenber={remenber}
+      setRemenber={setRemenber}
 
     />
   )

@@ -80,11 +80,7 @@ const Router = createBrowserRouter(
                     path: '/publicaciones/:slug',
                     element:<PublicationDetail />,
                 },
-                {
-                    path: '/ingreso',
-                    element: <Login />, 
-                    loader:()=>handleLoade(),
-                },
+              
                 {
                     path: '/registro',
                     element: <Register />,
@@ -108,11 +104,18 @@ const Router = createBrowserRouter(
             ]
         },
         {
+            path: '/ingreso',
+            element: <Login />, 
+            loader:()=>handleLoade(),
+        },
+        {
             path: '/admin', 
             element: <Admin />,
             loader:()=>handleLoadeAuth(),
 
-            children: menu.map((item)=>{
+            children:
+            
+            menu.map((item)=>{
                     return {
                         path: item.path,
                         element: item.element,
@@ -122,7 +125,10 @@ const Router = createBrowserRouter(
             
 
         }
-    ]
+    ],
+    {
+        basename: import.meta.env.VITE_BASE_URL,
+    }
 );
 
 export default Router;

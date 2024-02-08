@@ -36,7 +36,7 @@ class PublicApi {
                 }),
                 total: response.data.total,
                 total_pages: response.data.total_pages
-            }
+            } as Pagination<EstablishmentPublicListDto>;
         } catch (error) {
             if (error instanceof AxiosError) {
                 const e: string = error.response?.data?.message || 'Error al obtener los establecimientos.';
