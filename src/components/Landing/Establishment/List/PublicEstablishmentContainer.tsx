@@ -18,6 +18,15 @@ const PublicEstablishmentContainer = (props: Props) => {
 
     const navigate = useNavigate()
 
+    const abecedario = [];
+    const inicio = 'A'.charCodeAt(0);
+    const fin = 'Z'.charCodeAt(0);
+
+    for (let i = inicio; i <= fin; i++) {
+        abecedario.push(String.fromCharCode(i));
+    }
+
+
     useEffect(() => {
         props.usecase.getEstablishments().then((entities) => {
             setEntities(entities.results)
@@ -57,6 +66,7 @@ return (
         totalPages={totalPages}
         total={total}
         onItemClicked={onItemClicked}
+        letters={abecedario}
         
 
     />

@@ -56,8 +56,8 @@ interface Props {
     const handleAddQuestion = () => {
         const newData = {...data};
         newData.faq.push({
-            answer: "",
-            question: "",
+            answer: "Ingrese la respuesta aquí",
+            question: "Ingrese la pregunta aquí",
             isActive: true,
         });
         set_data(newData);

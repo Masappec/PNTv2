@@ -2,9 +2,40 @@ import Hero from "../../Common/Hero";
 import CardQuestion from "../../Common/CardQuestion";
 import { FormattedMessage } from "react-intl";
 import CardConsulta from "../../Common/Card";
+import { FrequencyAsked } from "../../../domain/entities/PedagodyAreaEntity";
+import { CiCircleInfo } from "react-icons/ci";
+import { FaLayerGroup } from "react-icons/fa";
+import { BiNotification } from "react-icons/bi";
+
+interface Props{
+  faq: FrequencyAsked[];
+
+}
+const LandingPresenter = (props: Props) => {
 
 
-const LandingPresenter = () => {
+  const colors = [
+    {
+      contrast: '#F7941D',
+      bgcolor: '#F7941D0D'
+    },
+    {
+      contrast: '#A5C330',
+      bgcolor: '#A5C3300D'
+    },
+    {
+      contrast: '#D26497',
+      bgcolor: '#FFF9FC'
+    }
+  ]
+
+
+  const Icon = [
+    CiCircleInfo,
+    FaLayerGroup,
+    BiNotification 
+  ]
+
   return (
     <div className="flex flex-col w-full  bg-white pr-10">
       <div></div>
@@ -12,9 +43,18 @@ const LandingPresenter = () => {
         <Hero />
 
         <div className="flex flex-row  w-full border-b">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <CardQuestion key={i} />
-          ))}
+          {props.faq.map((item, index) => {
+            return (
+              <CardQuestion
+                key={index}
+                icon={Icon[index] || Icon[0]}
+                title={item.question}
+                content={item.answer}
+                contrast={colors[index].contrast}
+                bgcolor={colors[index].bgcolor}
+              ></CardQuestion>
+            );
+          })}
         </div>
         <div className="flex  w-full mt-28 ">
           <p
