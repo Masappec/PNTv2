@@ -3,9 +3,9 @@ import CardQuestion from "../../Common/CardQuestion";
 import { FormattedMessage } from "react-intl";
 import CardConsulta from "../../Common/Card";
 import { FrequencyAsked } from "../../../domain/entities/PedagodyAreaEntity";
-import { CiCircleInfo } from "react-icons/ci";
-import { FaLayerGroup } from "react-icons/fa";
 import { BiNotification } from "react-icons/bi";
+import { FiLayers } from "react-icons/fi";
+import { IoAlertCircleOutline } from "react-icons/io5";
 
 interface Props {
   faq: FrequencyAsked[];
@@ -26,15 +26,15 @@ const LandingPresenter = (props: Props) => {
     },
   ];
 
-  const Icon = [CiCircleInfo, FaLayerGroup, BiNotification];
+  const Icon = [IoAlertCircleOutline, FiLayers , BiNotification];
 
   return (
-    <div className="flex flex-col w-full  bg-white pr-10">
+    <div className="flex flex-col w-full  bg-white lg:pr-10">
       <div></div>
-      <div className="border-l-2 border-gray-900 ml-0 md:ml-10">
+      <div className="border-l-2 border-gray-900 ml-0 md:ml-14">
         <Hero />
 
-        <div className="flex flex-row  w-full border-b">
+        <div className="grid grid-cols-1 lg:grid-cols-3  w-full border-b">
           {props.faq.map((item, index) => {
             return (
               <CardQuestion
@@ -58,10 +58,10 @@ const LandingPresenter = (props: Props) => {
           <hr className="w-full ml-5  border-gray-900 mt-10" />
         </div>
 
-        <div className="flex  w-full justify-center space-x-10 mb-48 ">
+        <div className="grid lg:grid-cols-4 lg:ml-5  md:ml-5 gap-10 md:grid-cols-2 w-full justify-center  mb-48 ">
           <CardConsulta
             title="Personal y salarios"
-            backgroundColor="  bg-yellow-400"
+            backgroundColor="bg-yellow-400"
             content="Encontrarás el directorio de los funcionarios públicos, las leyes, reglamentos, declaraciones juradas de los funcionarios y demás disposiciones legales que rigen y emiten las entidades."
             text="CONSULTAR"
           ></CardConsulta>

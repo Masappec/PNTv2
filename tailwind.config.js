@@ -8,6 +8,12 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'sans': ['"Inter"', 'sans-serif'],
+      },
+      backgroundImage: {
+        'radial-gradient': 'radial-gradient(circle, var(--bg-radial-from), var(--bg-radial-to))',
+      },
       colors: {
 
         primary: { 
@@ -31,8 +37,8 @@ export default {
     },
   },
   plugins: [
-    require('flowbite/plugin'),
 
+    require('flowbite/plugin'),
 
   ],
 }

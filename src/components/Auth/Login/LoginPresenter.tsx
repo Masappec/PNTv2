@@ -29,10 +29,10 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
       <header className="border-b-2 border-dark-400 dark:border-primary-600">
         <nav className="bg-cyan-800 border-gray-900 px-4 lg:px-6 py-10 dark:bg-gray-800"></nav>
       </header>
-      <div className="bg-white h-screen flex ">
-        <div className="items-center lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-full w-4/12  ">
+      <div className="bg-white h-screen md:flex lg:flex xl:flex">
+        <div className="items-center hidden lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-full w-4/6  ">
           <div className=" border-l-2 border-gray-600 ml-2 md:ml-10  justify-items-start h-full "></div>
-          <div className=" pl-10 -top-56 relative">
+          <div className=" pl-10  relative">
             <img
               src={logo}
               alt="imagen"
@@ -44,10 +44,10 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
             </p>
           </div>
         </div>
-        <div className="absolute top-52 h-24 w-6 ml-7 bg-cyan-800  "></div>
-        <div className="bg-white xl:w-2/6 2xl:w-2/6 lg:w-2/6 w-auto  text-center  items-center  ml-36 flex mb-96  ">
+        <div className="absolute top-52 h-24 w-6 ml-7 bg-cyan-800  hidden lg:block"></div>
+        <div className="bg-white w-full mt-20   lg:ml-36 flex justify-center">
           <form
-            className="border  border-slate-50 shadow-lg  rounded-lg text-center  items-center py-10 mb-16 "
+            className="border  border-slate-50 shadow-lg h-2/3 md:h-2/5 lg:h-2/3  rounded-lg text-center  items-center"
             onSubmit={props.handleSubmit}
           >
             <Title title="Ingresar al Portal" text="" color="black" />
@@ -115,7 +115,7 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
               <span className="ml-24  text-slate-500  ">
                 ¿Aún no tienes cuenta?
               </span>
-              <div className="text-primary-500 text-base font-semibold -ml-7">
+              <div className="text-primary-500 text-base font-semibold lg:-ml-7 md:-ml-7">
                 <Contrasenia text="Registrate" path="/registro" />{" "}
               </div>
             </div>

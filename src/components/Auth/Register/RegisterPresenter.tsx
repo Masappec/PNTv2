@@ -38,12 +38,12 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                         {
                             props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
                         }
-                        <div className="grid grid-cols-2">
+                        <div className="grid lg:grid-cols-2 grid-cols-1 md:grid-cols-2">
 
                             {
                                 props.fields.map((field) => {
                                     return (
-                                        field.type_field === 'select' ? <div className="flex  flex-col m-2 items-center">
+                                        field.type_field === 'select' ? <div className="flex  flex-col m-2 lg:items-center">
                                             
                                             <Select
                                                 placeholder={field.description}

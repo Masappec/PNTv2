@@ -15,7 +15,7 @@ const CardConsulta = (props: Props )     => {
 
 
            
-       <div className="  flex flex-col  w-[270px] h-[350px] bg-[#F7941D0D]  mt-20 text-left">
+       <div className="  flex flex-col  w-auto h-[350px] bg-[#F7941D0D]  mt-20 text-left ">
           <h1 className=" flex text-lg font-bold tracking-tight text-gray-900 dark:text-white bg-white p-3">
             {props.title}
              </h1> 

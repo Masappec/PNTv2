@@ -20,7 +20,12 @@ export const inputSearchTheme:CustomFlowbiteTheme['textInput'] = {
             withShadow:{
                 on: "shadow-md  dark:shadow-none",
                 off: "shadow-none"
-            }
+            },
+            withIcon:{
+                on: "pl-5 pr-12",
+                off: "pl-14"
+            },
+
         },
         
     }
