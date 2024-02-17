@@ -1,4 +1,4 @@
-import { RiUser3Line ,RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiFileList3Line, RiMailCheckLine  } from "react-icons/ri";
+import { RiUser3Line ,RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine  } from "react-icons/ri";
 import UserList from "../interfaces/web/Admin/User/List";
 import UserCreate from "../interfaces/web/Admin/User/Create";
 import RoleList from "../interfaces/web/Admin/Role/List";
@@ -11,9 +11,6 @@ import EstablishmentEdit from "../interfaces/web/Admin/Establishment/Edit";
 import SmtpCreate from "../interfaces/web/Admin/Smtp/Create";
 import PedagodyAreaCreate from "../interfaces/web/Admin/PedagogyArea/Create";
 import UserImport from "../interfaces/web/Admin/User/Import";
-import PublicationList from "../interfaces/web/Transparency/Publication/List";
-import PublicationCreate from "../interfaces/web/Transparency/Publication/Create";
-import PublicationEdit from "../interfaces/web/Transparency/Publication/Edit";
 import SolicityList from "../interfaces/web/Transparency/Solicity/List";
 import SolicityCreate from "../interfaces/web/Transparency/Solicity/Create";
 import SolicityEdit from "../interfaces/web/Transparency/Solicity/Edit";
@@ -21,6 +18,8 @@ import SolicityResponse from "../interfaces/web/Transparency/Solicity/Response";
 import SolicityOnHold from "../interfaces/web/Transparency/Solicity/OnHold";
 import SolicityDetail from "../interfaces/web/Transparency/Solicity/Detail";
 import { HiOutlineChartSquareBar } from "react-icons/hi";
+import ActiveNumerals from "../interfaces/web/Transparency/Active/Numerals";
+import ActiveCreate from "../interfaces/web/Transparency/Active/Create";
 
 
 export interface MenuItem {
@@ -131,29 +130,22 @@ const menu = [
         element: <SmtpCreate />
     },
     {
-        name: 'T. Activa',
-        path: '/admin/transparency',
-        visible: true,
-        icon: <HiOutlineChartSquareBar    size={25} className="text-slate-500"/>,
-        permission_required: "view_publication",
-        element: <PublicationList />
-    },
-    {
-        name: 'Transparencia',
-        path: '/admin/transparency/create',
-        visible: false,
-        icon: <RiFileList3Line   size={25} className="text-slate-500"/>,
-        permission_required: "add_publication",
-        element: <PublicationCreate/>
-    },
-    {
-        name: 'Transparencia',
-        path: '/admin/transparency/:id',
-        visible: false,
-        icon: <RiFileList3Line   size={25} className="text-slate-500"/>,
-        permission_required: "change_publication",
-        element: <PublicationEdit/>
-    },
+      name: ' T.Activa ',
+      path: '/admin/active',
+      visible: true,
+      icon: <HiOutlineChartSquareBar  size={25} className="text-slate-500"/>,
+      permission_required: "view_publication",
+      element: <ActiveNumerals/>
+  },
+  {
+    name: 'Crear T.Activa',
+    path: '/admin/active/create',
+    visible: false,
+    icon: <HiOutlineChartSquareBar  size={25} className="text-slate-500"/>,
+    permission_required: "view_publication",
+    element: <ActiveCreate/>
+},
+    
   {
     name: "Solicitudes",
     path: "/admin/solicity",

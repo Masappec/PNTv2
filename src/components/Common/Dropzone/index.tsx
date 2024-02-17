@@ -47,13 +47,25 @@ const Dropzone = (props:DropzoneProps) => {
         <label htmlFor={props.id} className="block text-sm font-medium text-gray-700">
             {props.label}
         </label>
-         <div className="border-dashed border-2 w-64 h-32 rounded flex justify-center items-center" onClick={click}>
+         <div className="border-dashed border-slate-300 border-2 h-36 rounded flex justify-center items-center w-" onClick={click}>
             
             {
                 url ? <img src={url} alt="" 
                 className="w-full h-full object-cover"
                 /> : <>
-                <IoCloudUploadOutline className="text-4xl text-grey" /><span className="block text-grey">Agrega tus archivos aquí</span>
+
+              <div className=" bg-slate-100 rounded-lg m-10 mx-2 hover:bg-amber-200 py-2 px-2">
+        
+        
+                <IoCloudUploadOutline size={20} className="text-4xl text-slate-700 text-center" />
+
+              </div>
+              <div className="flex grid-row-cols-4">
+              <a href="#" className="text-indigo-600 font-semibold hover:underline text-sm">
+      Haga click para cargar
+    </a>
+                <span className="block text-grey"> o arrastre y suelte</span>
+            </div>
                 </>
             }
 

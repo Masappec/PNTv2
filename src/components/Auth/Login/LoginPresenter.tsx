@@ -27,27 +27,27 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
     <>
 
       <header className="border-b-2 border-dark-400 dark:border-primary-600">
-        <nav className="bg-cyan-800 border-gray-900 px-4 lg:px-6 py-7 dark:bg-gray-800"></nav>
+        <nav className="bg-cyan-800 border-gray-900 px-4 lg:px-6 py-10 dark:bg-gray-800"></nav>
       </header>
       <div className="bg-white h-screen flex ">
-        <div className="items-center lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-full w-5/12  ">
+        <div className="items-center lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-full w-4/12  ">
           <div className=" border-l-2 border-gray-600 ml-2 md:ml-10  justify-items-start h-full "></div>
-          <div className=" pl-10  ">
+          <div className=" pl-10 -top-56 relative">
             <img
               src={logo}
               alt="imagen"
-              className=" flex items-center justify-center  max-w-screen-2xl h-full "
+              className=" flex items-center justify-center w-96 max-w-screen-2xl h-auto mb-60 "
             />
-            <p className="mt-40 text-2xl text-slate-400 ">
+            <p className="mt-40 text-2xl text-slate-400  ">
               Portal <br /> Nacional <br />
               de Transparencia
             </p>
           </div>
         </div>
-        <div className="absolute top-44 h-24 w-6 ml-7 bg-cyan-800  "></div>
-        <div className="bg-white xl:w-2/6 2xl:w-2/6 lg:w-2/6 w-auto  text-center  items-center  ml-56  flex mb-16  ">
+        <div className="absolute top-52 h-24 w-6 ml-7 bg-cyan-800  "></div>
+        <div className="bg-white xl:w-2/6 2xl:w-2/6 lg:w-2/6 w-auto  text-center  items-center  ml-36 flex mb-96  ">
           <form
-            className="border  border-slate-50 shadow-lg  rounded-lg text-center  items-center   "
+            className="border  border-slate-50 shadow-lg  rounded-lg text-center  items-center py-10 mb-16 "
             onSubmit={props.handleSubmit}
           >
             <Title title="Ingresar al Portal" text="" color="black" />

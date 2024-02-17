@@ -10,7 +10,7 @@ const Hero = () => {
 
 
     return (
-        <section className=" dark:bg-gray-900 mt-28">
+        <section className=" dark:bg-gray-900 mt-2">
             <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-10">
                 <div className="lg:col-span-2 r justify-start">
                     <p className="text-xl font-bold text-gray-800 dark:text-white w-11/12 lg:w-28" tabIndex={6}>
