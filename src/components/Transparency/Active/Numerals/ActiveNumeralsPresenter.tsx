@@ -10,7 +10,7 @@ interface ActiveNumeralsPresenterProps {
 
 const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
   return (
-    <div className="container">
+    <div className="container w-full md:p-4 mx-auto mt-10">
       <div className="flex items-center  justify-center"></div>
 
       <form className="flex  mt-5">
@@ -36,7 +36,7 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
             </div>
           </div>
           <div className="mt-14">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid lg:grid-cols-2 gap-4 grid-cols-1 md:grid-cols-2">
               <Numeral title="Numero 1" text="Organización Interna"  />
               <Numeral title="Numero 2" text="Directorio de la institución " />
               <Numeral title="Numero 3" text="Remuneración" />

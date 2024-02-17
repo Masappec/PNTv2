@@ -7,8 +7,8 @@ interface Props {
 
 const Numeral = ({ title, text,  }: Props) => {
   return (
-    <div className="flex bg-stone-100  px-4  py-2.5 dark:bg-gray-800 w-5/6  h-auto rounded-lg">
-      <div className="flex flex-cols-4 gap-5 ">
+    <div className="flex bg-stone-100  px-4  py-2.5 dark:bg-gray-800  h-auto rounded-lg">
+      <div className="flex flex-cols gap-5 ">
         <div>
           <button className="bg-amber-400 hover:bg-amber-200 text-white font-bold py-2 px-2 rounded-lg">
             <FaArrowUp size={20} />

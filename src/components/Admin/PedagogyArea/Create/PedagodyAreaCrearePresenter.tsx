@@ -43,7 +43,7 @@ const PedagogyAreaCreatePresenter = (props: PedagogyAreaCreatePresenterProps) =>
     }, [props.edit])
 
     return (
-        <div className="container">
+        <div className="container max-h-max mx-auto">
             <div className="flex items-center py-5 justify-center">
 
 
