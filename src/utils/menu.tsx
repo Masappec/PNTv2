@@ -26,6 +26,8 @@ import SolicityEdit from "../interfaces/web/Transparency/Solicity/Edit";
 import SolicityResponse from "../interfaces/web/Transparency/Solicity/Response";
 import SolicityOnHold from "../interfaces/web/Transparency/Solicity/OnHold";
 import SolicityDetail from "../interfaces/web/Transparency/Solicity/Detail";
+import ActiveNumerals from "../interfaces/web/Transparency/Active/Numerals";
+import ActiveCreate from "../interfaces/web/Transparency/Active/Create";
 
 
 export interface MenuItem {
@@ -159,6 +161,23 @@ const menu = [
         permission_required: "change_publication",
         element: <PublicationEdit/>
     },
+    {
+      name: ' T.Activa ',
+      path: '/admin/active',
+      visible: true,
+      icon: <AiOutlineFileSync  size={25} />,
+      permission_required: "view_publication",
+      element: <ActiveNumerals/>
+  },
+  {
+    name: 'Crear T.Activa',
+    path: '/admin/active/create',
+    visible: false,
+    icon: <AiOutlineFileSync  size={25} />,
+    permission_required: "view_publication",
+    element: <ActiveCreate/>
+},
+    
   {
     name: "Solicitudes",
     path: "/admin/solicity",

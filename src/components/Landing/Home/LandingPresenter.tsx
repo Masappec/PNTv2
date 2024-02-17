@@ -7,34 +7,26 @@ import { CiCircleInfo } from "react-icons/ci";
 import { FaLayerGroup } from "react-icons/fa";
 import { BiNotification } from "react-icons/bi";
 
-interface Props{
+interface Props {
   faq: FrequencyAsked[];
-
 }
 const LandingPresenter = (props: Props) => {
-
-
   const colors = [
     {
-      contrast: '#F7941D',
-      bgcolor: '#F7941D0D'
+      contrast: "#F7941D",
+      bgcolor: "#F7941D0D",
     },
     {
-      contrast: '#A5C330',
-      bgcolor: '#A5C3300D'
+      contrast: "#A5C330",
+      bgcolor: "#A5C3300D",
     },
     {
-      contrast: '#D26497',
-      bgcolor: '#FFF9FC'
-    }
-  ]
+      contrast: "#D26497",
+      bgcolor: "#FFF9FC",
+    },
+  ];
 
-
-  const Icon = [
-    CiCircleInfo,
-    FaLayerGroup,
-    BiNotification 
-  ]
+  const Icon = [CiCircleInfo, FaLayerGroup, BiNotification];
 
   return (
     <div className="flex flex-col w-full  bg-white pr-10">
@@ -56,7 +48,7 @@ const LandingPresenter = (props: Props) => {
             );
           })}
         </div>
-        <div className="flex  w-full mt-28 ">
+        <div className="flex  w-full mt-16 ">
           <p
             className="text-3xl ml-5  text-gray-800 dark:text-white  w-52 "
             tabIndex={7}
