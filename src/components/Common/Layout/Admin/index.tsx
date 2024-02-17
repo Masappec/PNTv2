@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../../Navbar";
 import Sidebar from "../../SideBar";
-import  { MenuItem } from "../../../../utils/menu";
+import { MenuItem } from "../../../../utils/menu";
 import { useEffect, useState } from "react";
+import HeaderPages from "../../HeaderPages";
 
 interface LayoutAdminProps {
-    
+
     username: string;
     menu: MenuItem[],
     onLogout: () => void;
@@ -13,7 +13,7 @@ interface LayoutAdminProps {
 }
 
 
-const LayoutAdmin = ({...props}:LayoutAdminProps) => {
+const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
 
     const [user, setUser] = useState("")
     const [permissions, setPermissions] = useState<string[]>([])
@@ -22,22 +22,16 @@ const LayoutAdmin = ({...props}:LayoutAdminProps) => {
         setPermissions(props.permissions)
     }, [props.username])
 
-    return (<div className="layout-admin h-full flex flex-col bg-slate-200">
-        <div className="flex w-full ">
-
-            <div className="flex-col">
-                <Sidebar menu={props.menu} permissions={permissions} />
-
-            </div>
-            <div className="flex-col w-full">
-                <Navbar username={user} onLogout={props.onLogout} />
-                <div className="flex-col overflow-y-auto p-5 h-auto">
-                    <div className="flex-row h-auto w-full">
+    return (
+    <div className="layout-admin h-screen">
+        <div className="flex-col">
+            <HeaderPages />
+            <div className="flex">
+                <div className="w-1/6 md:w-1/6">
+                    <Sidebar menu={props.menu} permissions={permissions} />
+                </div>
+                <div className="w-auto h-screen m-5">
                     <Outlet />
-
-                    </div>
-                  
-                   
                 </div>
             </div>
 
