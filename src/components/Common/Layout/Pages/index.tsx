@@ -10,7 +10,9 @@ interface Props {
 const LayouPages = (props: Props) => {
     return (
         <>
-            <HeaderPages />
+            <HeaderPages
+            haveImage={false}
+            />
             <Outlet
                 context={{
                     usecase: props.usecase,

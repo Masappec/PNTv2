@@ -9,6 +9,9 @@ interface ActiveNumeralsPresenterProps {
 }
 
 const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
+  if (props.loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="container w-full md:p-4 mx-auto mt-10">
       <div className="flex items-center  justify-center"></div>

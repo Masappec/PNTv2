@@ -5,7 +5,8 @@ const ActiveNumeralsContainer = ()=>{
 
     return(
        <ActiveNumeralsPresenter
-
+            loading={false}
+            onAdd={()=>{}}
        />
     )
 }
