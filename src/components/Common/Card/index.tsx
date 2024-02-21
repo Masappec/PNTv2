@@ -1,5 +1,5 @@
 import { Card } from "flowbite-react";
-import { FaArrowRight } from "react-icons/fa";
+import { VscArrowRight } from "react-icons/vsc";
 
 interface Props{
     title:string; 
@@ -15,20 +15,20 @@ const CardConsulta = (props: Props )     => {
 
 
            
-       <div className="  flex flex-col  w-auto h-[350px] bg-[#F7941D0D]  mt-20 text-left ">
-          <h1 className=" flex text-lg font-bold tracking-tight text-gray-900 dark:text-white bg-white p-3">
+       <div className="  flex flex-col  w-auto h-[400px] bg-[#F7941D0D]  mt-20 text-left  ">
+          <h1 className=" flex text-xl font-extrabold tracking-tight text-gray-900 dark:text-white bg-white p-3 ">
             {props.title}
              </h1> 
-        <Card href="#" className={" rounded-none shadow-none border-transparent border-l-[1px] border-t-[1px] border-r-[1px] max-w-sm h-full flex " + props.backgroundColor}>
+        <Card href="#" className={" rounded-none shadow-none border-transparent border-l-[1px] border-t-[1px] border-r-[1px] max-w-sm w-10/12 h-full flex " + props.backgroundColor}>
           
-            <p className=" font-semibold text-slate-950 dark:text-gray-400 h-full mt-4 text-left">
+            <p className=" font-bold text-slate-950 dark:text-gray-400 h-full mt-4 text-left w-64 text-lg -mx-2  ">
            {props.content}
             </p>
-            <div className="flex container col-2 mr-8 space-x-4 ">
+            <div className="flex container col-2 mr-8 space-x-6 ">
            
            <h1 className="font-semibold"> {props.text}</h1> 
            <div className="flex items-end justify-between h-full  ">
-            <FaArrowRight size={30} className="text-gray-900 dark:text-white" />
+            <VscArrowRight size={46} className="text-gray-900 dark:text-white" />
 
             </div></div>
 

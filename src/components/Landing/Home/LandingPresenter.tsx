@@ -31,10 +31,10 @@ const LandingPresenter = (props: Props) => {
   return (
     <div className="flex flex-col w-full  bg-white lg:pr-10">
       <div></div>
-      <div className="border-l-2 border-gray-900 ml-0 md:ml-14">
+      <div className="border-l-2 border-gray-400  ml-0 md:ml-14">
         <Hero />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3  w-full border-b">
+        <div className="grid grid-cols-1 lg:grid-cols-3 pr-10 w-full border-b ">
           {props.faq.map((item, index) => {
             return (
               <CardQuestion
@@ -44,21 +44,22 @@ const LandingPresenter = (props: Props) => {
                 content={item.answer}
                 contrast={colors[index].contrast}
                 bgcolor={colors[index].bgcolor}
+
               ></CardQuestion>
             );
           })}
         </div>
         <div className="flex  w-full mt-16 ">
           <p
-            className="text-3xl ml-5  text-gray-800 dark:text-white  w-52 "
+            className="text-4xl font-medium ml-5  text-gray-900 dark:text-white  w-72 mt-10  "
             tabIndex={7}
           >
             <FormattedMessage id="search_by_tematic" />
           </p>
-          <hr className="w-full ml-5  border-gray-900 mt-10" />
+          <hr className="w-full ml-24 border-gray-900 mt-28 mr-9 " />
         </div>
 
-        <div className="grid lg:grid-cols-4 lg:ml-5  md:ml-5 gap-10 md:grid-cols-2 w-full justify-center  mb-48 ">
+        <div className="grid lg:grid-cols-4 lg:ml-5  md:ml-5 -space-x-6 md:grid-cols-2 w-full justify-center  mb-44 ">
           <CardConsulta
             title="Personal y salarios"
             backgroundColor="bg-yellow-400"

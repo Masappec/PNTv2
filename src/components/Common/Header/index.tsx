@@ -10,29 +10,29 @@ const Header = () => {
                     <a href="/" className="flex items-center">
                         <img src={logo} className="mr-3 h-20 " alt="Logo de la defensoria del pueblo" tabIndex={1} />
                     </a>
-                    <div className="flex items-center lg:order-1 w-1/3">
+                    <div className="flex items-center lg:order-1 w-1/6">
                     </div>
-                    <div className=" items-center lg:order-2 hidden lg:flex">
+                    <div className=" items-center lg:order-2 hidden lg:flex space-x-8 ">
                         <Link to="/entidades"
                         tabIndex={2}
-                        className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-8 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
+                        className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-8 py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
                             <FormattedMessage id="list_entities" />
                         </Link>
 
                         <Link to="/ingreso" 
                         tabIndex={3}
-                        className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-8 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
+                        className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-6 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
                             <FormattedMessage id="indicators" />
                         </Link>
                         <Link to="/ingreso" 
                         tabIndex={4}
-                        className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-11 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
+                        className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-11 py-2.5   dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
                             <FormattedMessage id="about" />
                         </Link>
 
                         <Link to="/ingreso" 
                         tabIndex={5}
-                        className="text-white bg-primary-600
+                        className="text-white bg-primary-500
                          hover:bg-primary-800 focus:ring-4 
                          
                          focus:ring-blue-300 font-medium rounded-3xl text-sm px-6 py-3.5 
