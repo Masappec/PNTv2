@@ -102,7 +102,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                                             props.entities.map((entity) => {
                                                 if (entity.name.charAt(0).toLowerCase() === letra.toLowerCase()) {
                                                     return (
-                                                        <a className="w-1/4 text-primary-500" onClick={() => props.onItemClicked(entity.code)}>
+                                                        <a className="w-1/4 text-primary-500" onClick={() => props.onItemClicked(entity.slug||"")}>
                                                             {entity.name}
                                                         </a>
                                                     )
