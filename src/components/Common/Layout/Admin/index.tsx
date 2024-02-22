@@ -26,7 +26,10 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
     return (
     <div className="layout-admin">
         <div className="flex-col">
-            <HeaderPages open={open} setOpen={setOpen} />
+            <HeaderPages open={open} setOpen={setOpen}
+            haveImage={true}
+            
+            />
             <div className="flex">
                 <div className={`w-1/6 md:w-1/6 lg:block xl:block  ${open ? "block" : "hidden"}
                     z-30 h-screen bg-slate-200
