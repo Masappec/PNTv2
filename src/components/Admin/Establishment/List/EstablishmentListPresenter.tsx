@@ -123,7 +123,7 @@ const EstablishmentListPresenter = (props:Props)=>{
                             )
                         }
                     ]}
-                    currentPage={1}
+                    currentPage={props.page}
                     data={props.establishments}
                     description="aquí se muestran las instituciones registradas en el sistema"
                     length={props.establishments.length}
