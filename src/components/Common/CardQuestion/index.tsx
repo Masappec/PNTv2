@@ -27,8 +27,9 @@ const CardQuestion = (props: Props) => {
         }}
         >
 
-            <Icon size={48} className={` dark:text-primary-400 h-full ml-4 `} style={{
-                color: props.contrast
+            <Icon size={100} className={` dark:text-primary-400 h-full ml-4 `}  style={{
+                color:"#FFF9FC"
+                
             
             }}></Icon>
             <h5 className="text-2xl w-8/12 font-extrabold tracking-tight text-gray-900 dark:text-white ml-4">

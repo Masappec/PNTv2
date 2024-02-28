@@ -3,9 +3,12 @@ import CardQuestion from "../../Common/CardQuestion";
 import { FormattedMessage } from "react-intl";
 import CardConsulta from "../../Common/Card";
 import { FrequencyAsked } from "../../../domain/entities/PedagodyAreaEntity";
-import { BiNotification } from "react-icons/bi";
+import { BiNotification, BiBriefcaseAlt, BiPieChartAlt2   } from "react-icons/bi";
 import { FiLayers } from "react-icons/fi";
-import { IoAlertCircleOutline } from "react-icons/io5";
+import { BsQuestionCircle } from "react-icons/bs";
+import { GoChecklist } from "react-icons/go";
+
+
 
 interface Props {
   faq: FrequencyAsked[];
@@ -13,20 +16,20 @@ interface Props {
 const LandingPresenter = (props: Props) => {
   const colors = [
     {
-      contrast: "#F7941D",
-      bgcolor: "#F7941D0D",
+      bgcolor: "#F7941D",
+      contrast: "#F7941D0D",
     },
     {
-      contrast: "#A5C330",
-      bgcolor: "#A5C3300D",
+      bgcolor: "#A5C330",
+      contrast: "#A5C3300D",
     },
     {
-      contrast: "#D26497",
-      bgcolor: "#FFF9FC",
+      bgcolor: "#D26497",
+      contrast: "#FFF9FC",
     },
   ];
 
-  const Icon = [IoAlertCircleOutline, FiLayers , BiNotification];
+  const Icon = [BsQuestionCircle, FiLayers , BiNotification];
 
   return (
     <div className="flex flex-col w-full  bg-white lg:pr-10">
@@ -42,9 +45,9 @@ const LandingPresenter = (props: Props) => {
                 icon={Icon[index] || Icon[0]}
                 title={item.question}
                 content={item.answer}
-                contrast={colors[index].contrast}
+                contrast={""}
                 bgcolor={colors[index].bgcolor}
-
+              
               ></CardQuestion>
             );
           })}
@@ -61,28 +64,28 @@ const LandingPresenter = (props: Props) => {
 
         <div className="grid lg:grid-cols-4 lg:ml-5  md:ml-5 -space-x-6 md:grid-cols-2 w-full justify-center  mb-44 ">
           <CardConsulta
-            title="Personal y salarios"
-            backgroundColor="bg-yellow-400"
-            content="Encontrarás el directorio de los funcionarios públicos, las leyes, reglamentos, declaraciones juradas de los funcionarios y demás disposiciones legales que rigen y emiten las entidades."
-            text="CONSULTAR"
+          icon={<BiBriefcaseAlt  size={85} className="text-white bg-[#FFBD71] rounded-full py-5 px-2"/>}
+            title="Personal y Remuneraciones"
+            backgroundColor="  bg-orange-100"
+            color="text-black"
           ></CardConsulta>
           <CardConsulta
-            title="Presupuestos"
-            backgroundColor=" bg-slate-200"
-            content="Encontrarás los instrumentos de gestión, planes y políticas, que regulan las actividades de la entidad."
-            text=""
+          icon={<BiPieChartAlt2 size={85} className="text-white bg-[#B4C365] rounded-full py-5 px-2" />}
+           title="Presupuestos"
+            backgroundColor=" bg-[#F1F7D1]"
+            color="text-black"
           ></CardConsulta>
           <CardConsulta
-            title="Contratos"
-            backgroundColor="bg-slate-200"
+            title=""
+            backgroundColor="bg-[#D73184]"
             content=" Encontrarás información sobre presupuesto participativo, consejo de coordinación regional, audiencias públicas, entre otros."
-            text=""
+            color="text-white"
           ></CardConsulta>
           <CardConsulta
+           icon={<GoChecklist size={85} className="text-white bg-[#70DED8] rounded-full py-5 px-2"/>}
             title="Formularios y Solicitudes"
-            backgroundColor="bg-slate-200"
-            content="Encontrarás información de los proyectos de inversión y obras públicas de la entidad y su ejecución."
-            text=""
+            backgroundColor="bg-[#E7FFFE]"
+            color="text-black"
           ></CardConsulta>
         </div>
       </div>
