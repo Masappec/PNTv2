@@ -1,12 +1,21 @@
-import { Alert, Card, Pagination, Tabs } from "flowbite-react"
+import { Button, Label } from "flowbite-react"
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
-import { HiInformationCircle } from "react-icons/hi";
-import Spinner from "../../../Common/Spinner";
-import { FaInfoCircle } from "react-icons/fa";
-import { MdDataset } from "react-icons/md";
+
 import PublicationEntity from "../../../../domain/entities/PublicationEntity";
-import CardPublication from "../../../Common/CardPublication";
-import default_logo from '../../../../assets/default_logo.svg'
+
+import CreatableSelect from "react-select/creatable";
+
+import { CiMenuBurger } from "react-icons/ci";
+
+
+
+import { FiCalendar } from "react-icons/fi";
+import TableInfo from "../../../Common/TableInfo";
+import CardQuestion from "../../../Common/CardQuestion";
+import { SiZebratechnologies } from "react-icons/si";
+
+
+
 
 interface Props {
     entity: EstablishmentEntity;
@@ -20,116 +29,184 @@ interface Props {
     current_page: number;
     onChangePage: (page: number) => void;
     onItemPublicationClick: (slug: string) => void;
+
+    onSearch: (search: string) => void
+
+ 
+
 }
 
+const colors = [
+    {
+      contrast: "#F7941D",
+      bgcolor: "#F7941D0D",
+    },
+    {
+      contrast: "#A5C330",
+      bgcolor: "#A5C3300D",
+    },
+    {
+      contrast: "#D26497",
+      bgcolor: "#FFF9FC",
+    },
+  ];
+
+
 const PublicEstablishmentDetailPresenter = (props: Props) => {
-    if (props.loading) {
-        return (
-            <Spinner />
-        )
-    }
 
-    if (props.error) {
-        return (
-            <Alert color="failure" icon={HiInformationCircle}>
-                <span className="font-medium">Error!</span> {props.error}
-            </Alert>
-        )
-    }
+   return(
+    <div  className=" flex flex-col w-full  bg-white lg:pr-10 ">
+        <div></div>
+            <div className="border-l-2 border-gray-400  ml-0 md:ml-14">
+                <div className="container  w-screen px-20">
+        <h2 className="text-3xl font-bold">Municipio de Guayaquil</h2>
 
-    return (
-        <>
+        <div className="grid grid-cols-1 lg:grid-cols-3 pr-10 w-full gap-y-32 border-b ">
 
-            <div className="flex w-full h-full p-32">
+              <CardQuestion
+                mostrarIcono= {false}
+                title="Información 
+                publicada 
+                hasta el 
+                momento"
+                content={""}
+                contrast= "#F7941D"
+                bgcolor= "#F7941D0D"
 
+              ></CardQuestion>
+    
+    
+        </div>
 
-                <Card
+    <div className="mb-2  text-gray-400 mt-14 w-[759px] ">
+        
+              
+  <CreatableSelect
+  placeholder= {"Transparencia Activa"}
+  
+    isClearable
+    options={[]}
+    isMulti={true}
+    onInputChange={() => {}}
+    onCreateOption={() => {}}
+    onChange={() => {}}
+  /></div>
 
-                    imgSrc={props.entity.logo ? props.entity.logo as string : default_logo}
-                    imgAlt="Imagen Logo"
-                    className="w-1/3 h-1/5">
-                    <div className="flex flex-col justify-between">
-                    <p className="font-bold text-2xl text-gray-700 dark:text-gray-400">
-                        {props.entity.name}
-                    </p>
-                    <p className="font-normal text-gray-700 dark:text-gray-400">
-                        <span className="font-medium text-gray-800 dark:text-white">
-                            Publicaciones
-                        </span> 
-                        <br/>
-                        <span className="text-2xl font-bold text-gray-800 dark:text-white">
-                            
-                        {props.total}
-                        </span>
-                    </p>
-                    </div>
+<p className="text-start text-lg font-medium mt-14">Transparencia activa </p>
 
+<h2 className="text-2xl font-semibold mt-4">Municipio de Guayaquil</h2>
+<p className=" text-sm w-[697px] mt-8 font-medium">La ley Orgánica de Transparencia y Acceso de la Información Pública (LOTAIP) obliga a todas las instituciones del Estado que conforman el sector público a difundir a trasvés de la página web institucional, información mínima actualizada de naturaleza obligatoria.</p>
 
-                </Card>
-                <Card className="w-full box-shadow-2xl">
-                    <Tabs aria-label="Default tabs" style="underline"
-
-                    >
-                        <Tabs.Item active title="Publicaciones" icon={MdDataset}>
-
-                            {
-                                props.publications.length === 0 &&
-                                <Alert color="info" icon={HiInformationCircle}>
-                                    <span className="font-medium">Información</span> No hay publicaciones disponibles
-                                </Alert>
-                            }
-
-                            {
-                                props.publications.map((publication) => (
-                                    <CardPublication
-                                    description={publication.description || "No hay descripción"}
-                                    title={publication.name || "No hay título"}
-                                    tags={publication.tag?.map((tag) => (tag.name || "No hay etiqueta")) || []}
-                                    date={publication.createdAt}
-                                    author={publication.userCreated || "No hay autor"}
-                                    onClick={() => props.onItemPublicationClick(publication.slug || "")}
-                                    />
-                                ))
-                            }
-
-                            <Pagination
-                                className="mt-10"
-                                totalPages={props.totalPages}
-                                currentPage={props.current_page}
-                                onPageChange={(page) => props.onChangePage(page)}
-                            />
-                        </Tabs.Item>
-                        
-                        <Tabs.Item title="Acerca de" icon={FaInfoCircle}>
-                            <span className="text-3xl m-5 text-gray-800 dark:text-white font-semibold">
-                                {props.entity.name}
-                            </span>
-                            <br />
-                            <span className="font-medium m-5 text-gray-800 dark:text-white">
-                            {props.entity.abbreviation}
+<Button
+                                type="button"
+                                onClick={()=>{}}
+                                className="flex items-center justify-center w-1/2 text-lg tracking-wide
+                                text-gray-700 font-semibold bg-gray-200 rounded-md border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 ">
+                                <span className="flex col-2 gap-6 "> 
+                                <FiCalendar className="w-5 h-5" />
+                               
+                                    Seleccionar año
                                 </span>
-                            <br />
+                            </Button>
+<div className="w-[1216px]">
+
+                         <TableInfo
+                         
+                         columns={[
+
+                          
+                            {
+                                
+                                
+                                render: () => (
+                                    <p >{""}</p>
+                                ),
+                            
+                                title: "File name",
+
+    
+                            },
+                            {
+                                render: () => (
+                                    <p>{""}</p> 
+                                ),
+                                title: "Tamaño de archivo"
+                            },
+                            {
+                                render: () => (
+                                    <p>{}</p>
+                                ),
+                                title: "Fecha de carga"
+                            },
+                            {
+                                render: () => (
+                                    <p>{""}</p>
+                                ),
+                                title: "Fecha de actualización"
+                            },
+                            {
+                                render: () => (
+                                    <p>{""}</p>
+                                ),
+                                title: "Cargado por"
+                            },
+                            {
+                                render: () => (
+                                    <p> <button
+                                    onClick={() => {
+                                    }}
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
+                                    < CiMenuBurger />
+                                </button></p>
+                                ),
+                                title: ""
+                            },
+                            
 
 
-                            <span className="font-medium text-gray-800 m-5 dark:text-white">
-                                Autoridad: 
-                            </span>{props.entity.first_name_authority + " " + props.entity.last_name_authority}
+                         ]} title={""} description={""} onFilter={function (type: string): void {
+                   throw new Error("Function not implemented.");
+               } } length={0} data={[]} onSearch={function (search: string): void {
+                   throw new Error("Function not implemented.");
+               } } search={""}      
+               
+               />
+               </div>
+                 <div className="mb-2  text-gray-400 mt-14 w-[759px] ">
+        
+    
 
-                            <br />
-                            <span className="font-medium m-5 text-gray-800 dark:text-white">
-                                Correo de la autoridad: 
-                            </span>{props.entity.email_authority}
-                            <br />
+    <CreatableSelect
+    placeholder= {"Transparencia focaalizada"}
+      isClearable
+      options={[]}
+      isMulti={true}
+      onInputChange={() => {}}
+      onCreateOption={() => {}}
+      onChange={() => {}}
+    />
+  </div>
+  <div className="mb-20 text-gray-400 mt-14 w-[759px] ">
+        
+    
 
+    <CreatableSelect
+    placeholder= {"Transparencia colaborativa"}
+      isClearable
+      options={[]}
+      isMulti={true}
+      onInputChange={() => {}}
+      onCreateOption={() => {}}
+      onChange={() => {}}
+    />
+  </div>
 
+                        
+                    
 
-
-
-                        </Tabs.Item>
-                    </Tabs>
-                </Card>
-            </div>
-        </>
+</div>
+</div>
+</div>
     )
 }
 export default PublicEstablishmentDetailPresenter

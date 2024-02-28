@@ -18,27 +18,28 @@ const CardQuestion = (props: Props) => {
     const Icon = props.icon || CiCircleAlert;
 
     return (
-        <div className={`flex  h-[557px] bg-[#F7941D0D]  border-b-8 m-b-8 lg:w-full`} style={{
+        <div className={`flex  h-[557px] bg-[#F7941D0D]  border-b-8 m-b-8 lg:w-full`}  style={{
             borderColor: props.contrast
         }}>
-        <Card href="#" className=" rounded-none shadow-none border-gray-900 border-l-[1px] border-t-[1px] border-r-[1px] "
+        <Card href="#" className=" rounded-none shadow-none border-gray-700 border-l-[1px]  border-t-[1px] border-r-[1px] border-t-gray-400 pt-6  "
         style={{
             backgroundColor: props.bgcolor,
         }}
         >
 
-            <Icon size={48} className={` dark:text-primary-400 h-full`} style={{
-                color: props.contrast
+            <Icon size={100} className={` dark:text-primary-400 h-full ml-4 `}  style={{
+                color:"#FFF9FC"
+                
             
             }}></Icon>
-            <h5 className="text-2xl w-2/4 font-bold tracking-tight text-gray-900 dark:text-white">
+            <h5 className="text-2xl w-8/12 font-extrabold tracking-tight text-gray-900 dark:text-white ml-4">
                 {props.title}
             </h5>
-            <p className="font-normal w-2/3 text-gray-700 dark:text-gray-400 h-full">
+            <p className="font-semibold w-10/12 text-black  dark:text-gray-400 h-full text-lg -mb-10 ml-4">
                 {props.content}
             </p>
-            <div className="flex items-end justify-between h-full">
-            <IoArrowForwardOutline  size={40} className="text-gray-900 dark:text-white" />
+            <div className="flex items-end justify-between h-full ">
+            <IoArrowForwardOutline  size={53} className="text-gray-900 dark:text-white" />
 
             </div>
 
