@@ -67,6 +67,7 @@ const LandingPresenter = (props: Props) => {
           icon={<BiBriefcaseAlt  size={85} className="text-white bg-[#FFBD71] rounded-full py-5 px-2"/>}
             title="Personal y Remuneraciones"
             backgroundColor="  bg-orange-100"
+            contrast="bg-[#A5C3300D]"
             color="text-black"
           ></CardConsulta>
           <CardConsulta

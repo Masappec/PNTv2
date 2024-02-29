@@ -4,7 +4,7 @@ import { CiCircleAlert } from "react-icons/ci";
 import { IoArrowForwardOutline } from "react-icons/io5";
 
 interface Props{
-    icon: IconType;
+    icon?: IconType | null;
     title: string;
     content: string;
     bgcolor: string;
@@ -21,7 +21,7 @@ const CardQuestion = (props: Props) => {
         <div className={`flex  h-[557px] bg-[#F7941D0D]  border-b-8 m-b-8 lg:w-full`}  style={{
             borderColor: props.contrast
         }}>
-        <Card href="#" className=" rounded-none shadow-none border-gray-700 border-l-[1px]  border-t-[1px] border-r-[1px] border-t-gray-400 pt-6  "
+        <Card href="#" className=" rounded-none shadow-none border-gray-700 border-l-[1px]  border-t-[1px] border-r-[1px] border-t-gray-400 pt-6 w-full h-auto "
         style={{
             backgroundColor: props.bgcolor,
         }}
