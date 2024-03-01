@@ -3,8 +3,9 @@ import { FaSearch } from "react-icons/fa";
 
 
 interface Column<T> {
-    title: string
+    title: string  | React.ReactNode
     render: (data: T) => React.ReactNode,
+    classname?: string
 
     
 }
@@ -12,17 +13,10 @@ interface Column<T> {
 interface TableProps<T> {
     columns: Column<T>[]
     title: string;
-    description: string;
+    
     onAdd?: () => void;
-    isImport?: boolean;
-    onImport?: () => void;
     onFilter: (type: string) => void;
-    length: number;
-    textAdd?: string;
-    textImport?: string;
     data: T[];
-    onSearch: (search: string) => void;
-    search: string;
     onChangePage?: (page: number) => void;
     currentPage?: number;
     totalPages?: number;
@@ -38,7 +32,7 @@ function TableInfo<T>(props: TableProps<T>) {
 
     return (
 
-        <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden w-full ">
+        <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden w-full border border-gray-200 ">
         <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-6 p-4">
             <div className="w-full md:w-auto">
                 <span className="flex items-center text-lg font-bold">
@@ -62,23 +56,15 @@ function TableInfo<T>(props: TableProps<T>) {
                      </div>
        
 
-           
             <div className="overflow-x-auto ">
                 <TableFlowbite>
-                    <TableFlowbite.Head className="text-xs text-gray-700 border-gray-600 bg-slate-500 normal-case gap-40">
+                    <TableFlowbite.Head className="text-xs text-gray-700 border bg-gray-200 normal-case gap-40">
                  
-                    <TableFlowbite.HeadCell  className="px-4 py-3  ">
-
-                                    {<Checkbox/> }
-                                   
-                                
-                                </TableFlowbite.HeadCell>
-                                 
                         {
                             props.columns.map(column => (
-                                <TableFlowbite.HeadCell key={column.title} className="px-10 p py-3">
+                                <TableFlowbite.HeadCell  className={"px-10 p py-3"+ column.classname}>
                                     
-                                    {column.title}
+                                    {column.title} 
                                 </TableFlowbite.HeadCell>
                         
                             ))
@@ -95,7 +81,7 @@ function TableInfo<T>(props: TableProps<T>) {
                                 <TableFlowbite.Row>
                                     {
                                         props.columns.map(column => (
-                                            <TableFlowbite.Cell className="px-4 py-3" key={column.title}>
+                                            <TableFlowbite.Cell className="px-4 py-3">
                                                 {column.render(row)}
                                             </TableFlowbite.Cell>
                                         ))

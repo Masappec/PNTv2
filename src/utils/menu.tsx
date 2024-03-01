@@ -20,6 +20,7 @@ import SolicityDetail from "../interfaces/web/Transparency/Solicity/Detail";
 import { HiOutlineChartSquareBar } from "react-icons/hi";
 import ActiveNumerals from "../interfaces/web/Transparency/Active/Numerals";
 import ActiveCreate from "../interfaces/web/Transparency/Active/Create";
+import ActivePreviewData from "../interfaces/web/Transparency/Active/PreviewData";
 
 
 export interface MenuItem {
@@ -145,6 +146,15 @@ const menu = [
     permission_required: "view_publication",
     element: <ActiveCreate/>
 },
+
+{
+  name: 'Vista T.Activa',
+  path: '/admin/active/previewdata',
+  visible: false,
+  icon: <HiOutlineChartSquareBar  size={25} className="text-slate-500"/>,
+  permission_required: "view_publication",
+  element: <ActivePreviewData/>
+},
     
   {
     name: "Solicitudes",
@@ -154,6 +164,7 @@ const menu = [
     permission_required: "view_configuration",
     element: <SolicityList />,
   },
+  
   {
     name: " Crear Solicitudes",
     path: "/admin/solicity/create",
