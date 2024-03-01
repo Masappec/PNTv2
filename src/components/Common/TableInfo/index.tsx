@@ -1,9 +1,11 @@
 import { Pagination, Checkbox,  Table as TableFlowbite } from "flowbite-react";
 import { FaSearch } from "react-icons/fa";
 
+
 interface Column<T> {
     title: string
     render: (data: T) => React.ReactNode,
+
     
 }
 
@@ -27,6 +29,7 @@ interface TableProps<T> {
     from?: number;
     to?: number;
     total?: number;
+   
     
 
 }
@@ -62,13 +65,15 @@ function TableInfo<T>(props: TableProps<T>) {
            
             <div className="overflow-x-auto ">
                 <TableFlowbite>
-                    <TableFlowbite.Head className="text-xs text-gray-700 border-gray-600 bg-slate-500 normal-case space">
-                    <TableFlowbite.HeadCell  className="px-4 py-3 ">
+                    <TableFlowbite.Head className="text-xs text-gray-700 border-gray-600 bg-slate-500 normal-case gap-40">
+                 
+                    <TableFlowbite.HeadCell  className="px-4 py-3  ">
 
-                                    <Checkbox/>
+                                    {<Checkbox/> }
+                                   
                                 
                                 </TableFlowbite.HeadCell>
-
+                                 
                         {
                             props.columns.map(column => (
                                 <TableFlowbite.HeadCell key={column.title} className="px-10 p py-3">

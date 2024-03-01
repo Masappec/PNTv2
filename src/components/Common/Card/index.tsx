@@ -10,6 +10,8 @@ interface Props{
     text?:string  | null;
     icon?: ReactElement<IconType>| null;
     color: string;
+    bgcolor?: string | null;
+    
     
 
 }
