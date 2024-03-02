@@ -85,17 +85,15 @@ class EstablishmentService {
     }
 
     async delete(id:string){
-        try{
-            const response = await this.api.delete(id);
-            return response;
-        }catch(error){
-            if (error instanceof AxiosError) {
-                const e:string = error.response?.data?.message || 'Error al eliminar el establecimiento.';
-                throw new Error(e);
-            }else{
-                throw new Error('Error al eliminar el establecimiento.');
-            }
-        }
+        
+        const response = await this.api.delete(id);
+        return response;
+        
+    }
+
+    async getByUserSession(){
+        const res = await this.api.getByUserSession();
+        return  EstablishmentMapper.apiToDomainDetail(res);
     }
     
 }

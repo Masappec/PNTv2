@@ -1,11 +1,13 @@
 import Numeral from "../../../Common/Numeral";
 import { Label } from "flowbite-react";
 import CreatableSelect from "react-select/creatable";
+import NumeralEntity from "../../../../domain/entities/NumeralEntity";
 
 interface ActiveNumeralsPresenterProps {
   onAdd?: () => void;
-
+  numerals: NumeralEntity[]
   loading: boolean;
+  onClickItem: (numeral:NumeralEntity)=>void
 }
 
 const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
@@ -13,7 +15,7 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="container w-full md:p-4 mx-auto mt-10">
+    <div className="container w-full md:p-4 mx-auto mt-2 h-fit">
       <div className="flex items-center  justify-center"></div>
 
       <form className="flex  mt-5">
@@ -40,16 +42,14 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
           </div>
           <div className="mt-14">
             <div className="grid lg:grid-cols-2 gap-4 grid-cols-1 md:grid-cols-2">
-              <Numeral title="Numero 1" text="Organización Interna"  />
-              <Numeral title="Numero 2" text="Directorio de la institución " />
-              <Numeral title="Numero 3" text="Remuneración" />
-              <Numeral title="Numero 4" text="Licencias" />
-              <Numeral title="Numero 5" text="Servicios" />
-              <Numeral title="Numero 6" text="Presupuesto" />
-              <Numeral title="Numero 7" text="Auditoría" />
-              <Numeral title="Numero 8" text="Información clasificada" />
-              <Numeral title="Numero 9" text="Contratos colectivos" />
-              <Numeral title="Numero 10" text="Convenios" />
+              {
+                props.numerals.filter(x => x.parent===null).map(numeral=>(
+                  <Numeral title={numeral.name} text={numeral.description}
+                  onClick={()=>props.onClickItem(numeral)}
+                  />
+
+                ))
+              }
             </div>
           </div>
         </section>

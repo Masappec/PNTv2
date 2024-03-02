@@ -29,7 +29,7 @@ const Sidebar_ = ({ menu, permissions,user,email,onLogout }: Props) => {
 
 
 		<Sidebar aria-label="Default sidebar example"
-			className="border-r bg-slate-200 w-64 ">
+			className="border-r bg-slate-200 w-64">
 
 			<Sidebar.Items className="flex flex-col">
 				<Sidebar.ItemGroup>

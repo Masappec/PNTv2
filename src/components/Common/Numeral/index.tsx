@@ -3,16 +3,17 @@ import { FaArrowUp } from "react-icons/fa";
 interface Props {
   title: string;
   text: string;
+  onClick: ()=>void
 }
 
-const Numeral = ({ title, text,  }: Props) => {
+const Numeral = ({ title, text, onClick }: Props) => {
   return (
-    <div className="flex bg-stone-100  px-4  py-2.5 dark:bg-gray-800  h-auto rounded-lg">
+    <div className="flex bg-stone-100  px-4  py-2.5 dark:bg-gray-800  h-auto rounded-lg" onClick={()=>onClick()}>
       <div className="flex flex-cols gap-5 ">
         <div>
-          <button className="bg-amber-400 hover:bg-amber-200 text-white font-bold py-2 px-2 rounded-lg">
+          <div className="bg-amber-400 hover:bg-amber-200 text-white font-bold py-2 px-2 rounded-lg">
             <FaArrowUp size={20} />
-          </button>
+          </div>
         </div>
         <div className="text-base font-medium text-gray-500 my-2">{title}</div>
 

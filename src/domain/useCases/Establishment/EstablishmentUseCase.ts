@@ -37,5 +37,11 @@ class EstablishmentUseCase {
         const response = await this.service.delete(id);
         return response;
     }
+
+
+    async getByUserSession(){
+        const res = await this.service.getByUserSession();
+        return res
+    }
 }
 export default EstablishmentUseCase;

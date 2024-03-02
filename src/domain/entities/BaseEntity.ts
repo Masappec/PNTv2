@@ -1,4 +1,13 @@
-
+export interface BaseDTO{
+    createdAt?: Date;
+    updatedAt?: Date;
+    deleted?: boolean;
+    deletedAt?: Date;
+    ip?: string;
+    userCreated?: string;
+    userUpdated?: string;
+    userDeleted?: string;
+}
 class BaseEntity{
     createdAt?: Date;
     updatedAt?: Date;

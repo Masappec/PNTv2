@@ -6,6 +6,8 @@ import Dropzone from "../../../Common/Dropzone";
 import { Label, TextInput } from "flowbite-react";
 
 interface Props {
+
+  title: string;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
   onEdit: () => void;
 
@@ -34,7 +36,7 @@ const ActiveCreatePresenter = (props: Props) => {
               <div className="flex items-center gap-x-3 mt-20">
               </div>
              <p className="text-lg font-semibold text-gray-800 dark:text-white">
-                  Estructura Orgánica Funcional
+                  {props.title}
                 </p>
 
               <p className="mt-6 text-base text-gray-500 dark:text-gray-300 pl-96 mr-10 font-semibold ">
@@ -78,6 +80,7 @@ const ActiveCreatePresenter = (props: Props) => {
                   label="Data"
                   name="logo"
                   accept="image/*"
+                  
                 />
               </div>
               <div className=" flex flex-col m-2 ">

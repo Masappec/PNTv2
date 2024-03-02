@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios";
+import { AxiosError, AxiosInstance } from "axios";
 import { ADMIN_PATH, Pagination } from "..";
 import { EstablishmentCreateDTO, EstablishmentDetailDTO, EstablishmentListDto } from "./interface";
 import { URL_API } from "../../../utils/constans";
@@ -93,6 +93,21 @@ class EstablishmentApi{
         }catch(error:any){
             const e:string = error.response?.data?.message || 'Error al eliminar el establecimiento.';
             throw new Error(e);
+        }
+    }
+
+    async getByUserSession(){
+        try{    
+        const res = await this.api.get<EstablishmentDetailDTO>(ADMIN_PATH+'/establishment/user/session')
+        return res.data
+        }catch(error){
+            if (error instanceof AxiosError){
+
+                const e:string = error.response?.data?.message || 'Error al eliminar el establecimiento.';
+                throw new Error(e);
+            }else{
+                throw new Error("Ocurrio un error")
+            }
         }
     }
 }

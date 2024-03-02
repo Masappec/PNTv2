@@ -61,6 +61,8 @@ class EstablishmentMapper{
             highest_committe: data.highest_committe || '',
             job_committe: data.job_committe || '',
             last_name_committe: data.last_name_committe || '',
+            extra_numerals:data.extra_numerals||''
+            
         }
     }
 }

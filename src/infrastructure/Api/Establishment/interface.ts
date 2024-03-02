@@ -37,6 +37,7 @@ export interface EstablishmentCreateDTO{
     job_committe: string,
     email_committe: string,
     email_accesstoinformation: string
+    extra_numerals:string
 }
 
 export interface EstablishmentDetailDTO{
