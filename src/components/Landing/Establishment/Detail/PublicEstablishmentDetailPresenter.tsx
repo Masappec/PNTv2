@@ -1,4 +1,4 @@
-import { Button, Label, TextInput } from "flowbite-react";
+import { Button, Checkbox, TextInput } from "flowbite-react";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 
 import PublicationEntity from "../../../../domain/entities/PublicationEntity";
@@ -12,6 +12,7 @@ import TableInfo from "../../../Common/TableInfo";
 
 import { CiSearch } from "react-icons/ci";
 import CardNormative from "../../../Common/CardNormative";
+import { FaSearch } from "react-icons/fa";
 
 interface Props {
   entity: EstablishmentEntity;
@@ -28,21 +29,6 @@ interface Props {
 
   onSearch: (search: string) => void;
 }
-
-const colors = [
-  {
-    contrast: "#F7941D",
-    bgcolor: "#F7941D0D",
-  },
-  {
-    contrast: "#A5C330",
-    bgcolor: "#A5C3300D",
-  },
-  {
-    contrast: "#D26497",
-    bgcolor: "#FFF9FC",
-  },
-];
 
 const PublicEstablishmentDetailPresenter = (props: Props) => {
   return (
@@ -150,14 +136,17 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
               Seleccionar año
             </span>
           </Button>
-          <div className="w-[1216px] pr-32">
+          <div className="w-auto pr-32">
+         
+       
             <TableInfo
               columns={[
                 {
                   render: () => <p>{""}</p>,
                  
 
-                  title: "File name",
+                  title: <><Checkbox className="mr-5"/>{"filename" }</>,
+                  classname: "w-70",
                 },
                 {
                   render: () => <p>{""}</p>,
@@ -191,17 +180,15 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                 },
               ]}
               title={""}
-              description={""}
+          
               onFilter={function (type: string): void {
                 throw new Error("Function not implemented.");
               }}
-              length={0}
               data={[]}
-              onSearch={function (search: string): void {
-                throw new Error("Function not implemented.");
-              }}
-              search={""}
+             
+
             />
+             </div>
           </div>
           <div className="mb-2  text-gray-400 mt-14 w-[759px] ">
             <CreatableSelect
@@ -227,7 +214,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
           </div>
         </div>
       </div>
-    </div>
+  
   );
 };
 export default PublicEstablishmentDetailPresenter;
