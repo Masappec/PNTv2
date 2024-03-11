@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance } from "axios";
 import { EstablishmentPublicListDto } from "./interface";
-import { ADMIN_PATH, Pagination } from "..";
+import { ADMIN_PATH, PaginationLetter } from "..";
 import { PedagogyAreaResponse } from "../PedagogyArea/interface";
 import { URL_API } from "../../../utils/constans";
 
@@ -16,27 +16,27 @@ class PublicApi {
 
     async getEstablishments(search?: string, page?: number) {
         try {
-            const response = await this.api.get<Pagination<EstablishmentPublicListDto>>(ADMIN_PATH + '/public/establishment/list', {
+            const response = await this.api.get<PaginationLetter<EstablishmentPublicListDto>>(ADMIN_PATH + '/public/establishment/list', {
                 params: {
                     search,
                     page
                 }
             });
             return {
-                current: response.data.current,
-                limit: response.data.limit,
-                next: response.data.next,
-                previous: response.data.previous,
-                results: response.data.results.map((establishment: EstablishmentPublicListDto) => {
+                results: response.data.results.map((establishment) => {
                     return {
-                        ...establishment,
-                        logo:establishment.logo ? URL_API+ ADMIN_PATH+establishment.logo : undefined
+                        data: establishment.data.map((data) => {
+                            return {
+                                ...data,
+                                logo: data.logo ? URL_API + ADMIN_PATH + data.logo : undefined
+                            }
+                        }),
+                        letter: establishment.letter
 
                     }
                 }),
                 total: response.data.total,
-                total_pages: response.data.total_pages
-            } as Pagination<EstablishmentPublicListDto>;
+            } as PaginationLetter<EstablishmentPublicListDto>;
         } catch (error) {
             if (error instanceof AxiosError) {
                 const e: string = error.response?.data?.message || 'Error al obtener los establecimientos.';
@@ -47,14 +47,14 @@ class PublicApi {
         }
     }
 
-    async getEstablishment(slug: string){
-        try{
-            const response = await this.api.get<EstablishmentPublicListDto>(ADMIN_PATH+"/public/establishment/"+slug);
+    async getEstablishment(slug: string) {
+        try {
+            const response = await this.api.get<EstablishmentPublicListDto>(ADMIN_PATH + "/public/establishment/" + slug);
             return {
                 ...response.data,
-                logo:response.data.logo ? URL_API+ ADMIN_PATH+response.data.logo : undefined
+                logo: response.data.logo ? URL_API + ADMIN_PATH + response.data.logo : undefined
             }
-        }catch(error){
+        } catch (error) {
             if (error instanceof AxiosError) {
                 const e: string = error.response?.data?.message || 'Error al obtener el establecimiento.';
                 throw new Error(e);
@@ -64,12 +64,12 @@ class PublicApi {
         }
     }
 
-    async getPedagogyArea(){
-        try{
+    async getPedagogyArea() {
+        try {
 
-            const response = await this.api.get<PedagogyAreaResponse>(ADMIN_PATH+"/public/pedagogy-area/");
+            const response = await this.api.get<PedagogyAreaResponse>(ADMIN_PATH + "/public/pedagogy-area/");
             return response.data;
-        }catch(error){
+        } catch (error) {
             if (error instanceof AxiosError) {
                 const e: string = error.response?.data?.message || 'Error al obtener las áreas de pedagogía.';
                 throw new Error(e);

@@ -1,8 +1,7 @@
-import { Button, TextInput } from "flowbite-react";
+import {  TextInput } from "flowbite-react";
 import { FaSearch } from "react-icons/fa";
 import { inputSearchTheme } from "./theme";
 import { FormattedMessage } from "react-intl";
-import { FileInput, Label } from "flowbite-react";
 
 const Hero = () => {
   return (

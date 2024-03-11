@@ -4,10 +4,10 @@ import { EstablishmentListDto } from "../Api/Establishment/interface";
 import PublicApi from "../Api/Public/PublicApi";
 
 
-class PublicService{
+class PublicService {
 
     private api: PublicApi;
-    
+
 
     constructor(api: PublicApi) {
         this.api = api;
@@ -15,26 +15,28 @@ class PublicService{
 
 
     async getEstablishments(search?: string, page?: number) {
-        
-        const response = await this.api.getEstablishments(search,page);
+
+        const response = await this.api.getEstablishments(search, page);
         return {
-            current: response.current,
-            limit: response.limit,
-            next: response.next,
-            previous: response.previous,
-            results: response.results.map((establishment) => EstablishmentMapper.apiToDomain(establishment as EstablishmentListDto)),
+            results: response.results.map((establishment) => {
+                return {
+                    data: establishment.data.map((data) => {
+                        return EstablishmentMapper.apiToDomain(data as EstablishmentListDto)
+                    }),
+                    letter: establishment.letter
+                }
+            }),
             total: response.total,
-            total_pages: response.total_pages
         }
-        
+
     }
 
-    async getPedagogyArea(){
+    async getPedagogyArea() {
         const response = await this.api.getPedagogyArea();
         return PedagogyAreaMapper.fromApiToDomain(response);
     }
 
-    async getEstablishment(slug: string){
+    async getEstablishment(slug: string) {
         const response = await this.api.getEstablishment(slug);
         return EstablishmentMapper.apiToDomain(response as EstablishmentListDto);
     }

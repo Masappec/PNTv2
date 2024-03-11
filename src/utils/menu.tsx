@@ -1,4 +1,4 @@
-import { RiUser3Line ,RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine  } from "react-icons/ri";
+import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine } from "react-icons/ri";
 import UserList from "../interfaces/web/Admin/User/List";
 import UserCreate from "../interfaces/web/Admin/User/Create";
 import RoleList from "../interfaces/web/Admin/Role/List";
@@ -32,178 +32,178 @@ export interface MenuItem {
 }
 
 const menu = [
-    {
-        name: 'Usuarios',
-        path: '/admin/users',
-        permission_required: 'view_user',
-        visible: true,
-        icon: <RiUser3Line  size={25} className="text-slate-500" />,
-        element: <UserList />
-    },
-    {
-        name: 'Crear Usuario',
-        path: '/admin/users/create',
-        permission_required: 'add_user',
-        visible: false,
-        icon: <RiUser3Line  size={25}  className="text-slate-500"/>,
-        element: <UserCreate />
-    },
-   
-    {
-        name: 'Editar Usuario',
-        path: '/admin/users/:id',
-        visible: false,
-        permission_required: 'change_user',
-        icon: <RiUser3Line  size={25}  className="text-slate-500"/>,
-        element: <UserEdit />
-    },
-    
-    {
-        name: 'Importar archivos scv',
-        path: '/admin/users/import',
-        permission_required: 'add_user',
-        visible: false,
-        icon: <RiUser3Line  size={25}  className="text-slate-500"/>,
-        element:  <UserImport/>
-     },
-    {
-        name: 'Roles',
-        path: '/admin/roles',
-        visible: true,
-        permission_required: 'view_role',
-        icon: <RiShieldUserLine  size={25}  className="text-slate-500"/>,
-        element: <RoleList />
-    },
-    {
-        name: 'Crear Rol',
-        path: '/admin/roles/create',
-        visible: false,
-        permission_required: 'add_role',
-        icon: <RiShieldUserLine  size={25}  className="text-slate-500"/>,
-        element: <RoleCreate />
-    },
-    {
-        name: 'Editar Rol',
-        path: '/admin/roles/:id',
-        visible: false,
-        permission_required: 'change_role',
-        icon: <RiShieldUserLine  size={25}  className="text-slate-500"/>,
-        element: <RoleEdit />
-    },
-    {
-        name: 'Instituciones',
-        path: '/admin/entities',
-        visible: true,
-        icon: <RiBuilding4Line  size={25} className="text-slate-500"/>,
-        permission_required: "view_establishment",
-        element: <EstablishmentList />
-    },
-    {
-        name: 'Crear Institución',
-        path: '/admin/entities/create',
-        visible: false,
-        icon: <RiBuilding4Line  size={25} className="text-slate-500"/>,
-        permission_required: "add_establishment",
-        element: <EstablishmentCreate />
-    },
-    {
-        name: 'Editar Institución',
-        path: '/admin/entities/:id',
-        visible: false,
-        icon: <RiBuilding4Line  size={25} className="text-slate-500"/>,
-        permission_required: 'change_establishment',
-        element: <EstablishmentEdit />
-    },
-    {
-        name: 'Área pedagógica',
-        path: '/admin/pedagogy-area',
-        visible: true,
-        icon: <RiFileVideoLine   size={25} className="text-slate-500"/>,
-        permission_required: "view_pedagogyarea" ,
-        element: <PedagodyAreaCreate />
-    },
-    {
-        name: 'Configuración SMTP',
-        path: '/admin/smtp',
-        visible: true,
-        icon: <RiMailSettingsLine  size={25} className="text-slate-500"/>,
-        permission_required: "view_configuration",
-        element: <SmtpCreate />
-    },
-    {
-      name: ' T.Activa ',
-      path: '/admin/active',
-      visible: true,
-      icon: <HiOutlineChartSquareBar  size={25} className="text-slate-500"/>,
-      permission_required: "view_publication",
-      element: <ActiveNumerals/>
+  {
+    name: 'Usuarios',
+    path: '/admin/users',
+    permission_required: 'view_user',
+    visible: true,
+    icon: <RiUser3Line size={25} className="text-slate-500" />,
+    element: <UserList />
+  },
+  {
+    name: 'Crear Usuario',
+    path: '/admin/users/create',
+    permission_required: 'add_user',
+    visible: false,
+    icon: <RiUser3Line size={25} className="text-slate-500" />,
+    element: <UserCreate />
+  },
+
+  {
+    name: 'Editar Usuario',
+    path: '/admin/users/:id',
+    visible: false,
+    permission_required: 'change_user',
+    icon: <RiUser3Line size={25} className="text-slate-500" />,
+    element: <UserEdit />
+  },
+
+  {
+    name: 'Importar archivos scv',
+    path: '/admin/users/import',
+    permission_required: 'add_user',
+    visible: false,
+    icon: <RiUser3Line size={25} className="text-slate-500" />,
+    element: <UserImport />
+  },
+  {
+    name: 'Roles',
+    path: '/admin/roles',
+    visible: true,
+    permission_required: 'view_role',
+    icon: <RiShieldUserLine size={25} className="text-slate-500" />,
+    element: <RoleList />
+  },
+  {
+    name: 'Crear Rol',
+    path: '/admin/roles/create',
+    visible: false,
+    permission_required: 'add_role',
+    icon: <RiShieldUserLine size={25} className="text-slate-500" />,
+    element: <RoleCreate />
+  },
+  {
+    name: 'Editar Rol',
+    path: '/admin/roles/:id',
+    visible: false,
+    permission_required: 'change_role',
+    icon: <RiShieldUserLine size={25} className="text-slate-500" />,
+    element: <RoleEdit />
+  },
+  {
+    name: 'Instituciones',
+    path: '/admin/entities',
+    visible: true,
+    icon: <RiBuilding4Line size={25} className="text-slate-500" />,
+    permission_required: "view_establishment",
+    element: <EstablishmentList />
+  },
+  {
+    name: 'Crear Institución',
+    path: '/admin/entities/create',
+    visible: false,
+    icon: <RiBuilding4Line size={25} className="text-slate-500" />,
+    permission_required: "add_establishment",
+    element: <EstablishmentCreate />
+  },
+  {
+    name: 'Editar Institución',
+    path: '/admin/entities/:id',
+    visible: false,
+    icon: <RiBuilding4Line size={25} className="text-slate-500" />,
+    permission_required: 'change_establishment',
+    element: <EstablishmentEdit />
+  },
+  {
+    name: 'Área pedagógica',
+    path: '/admin/pedagogy-area',
+    visible: true,
+    icon: <RiFileVideoLine size={25} className="text-slate-500" />,
+    permission_required: "view_pedagogyarea",
+    element: <PedagodyAreaCreate />
+  },
+  {
+    name: 'Configuración SMTP',
+    path: '/admin/smtp',
+    visible: true,
+    icon: <RiMailSettingsLine size={25} className="text-slate-500" />,
+    permission_required: "view_configuration",
+    element: <SmtpCreate />
+  },
+  {
+    name: ' T.Activa ',
+    path: '/admin/transparency/active',
+    visible: true,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: "view_publication",
+    element: <ActiveNumerals />
   },
   {
     name: 'Crear T.Activa',
     path: '/admin/active/create',
     visible: false,
-    icon: <HiOutlineChartSquareBar  size={25} className="text-slate-500"/>,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "view_publication",
-    element: <ActiveCreate/>
-},
+    element: <ActiveCreate />
+  },
 
-{
-  name: 'Vista T.Activa',
-  path: '/admin/active/previewdata',
-  visible: false,
-  icon: <HiOutlineChartSquareBar  size={25} className="text-slate-500"/>,
-  permission_required: "view_publication",
-  element: <ActivePreviewData/>
-},
-    
+  {
+    name: 'Vista T.Activa',
+    path: '/admin/active/previewdata',
+    visible: false,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: "view_publication",
+    element: <ActivePreviewData />
+  },
+
   {
     name: "Solicitudes",
     path: "/admin/solicity",
     visible: true,
-    icon: <RiMailCheckLine  size={25} className="text-slate-500"/>,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_configuration",
     element: <SolicityList />,
   },
-  
+
   {
     name: " Crear Solicitudes",
     path: "/admin/solicity/create",
     visible: false,
-    icon: <RiMailCheckLine  size={25} className="text-slate-500"/>,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_configuration",
-    element: <SolicityCreate/>,
+    element: <SolicityCreate />,
   },
   {
     name: " Editar Solicitudes",
     path: "/admin/solicity/edit",
     visible: false,
-    icon: <RiMailCheckLine  size={25} className="text-slate-500"/>,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_configuration",
-    element: <SolicityEdit/>,
+    element: <SolicityEdit />,
   },
   {
     name: " Responder Solicitudes",
     path: "/admin/solicity/response",
     visible: false,
-    icon: <RiMailCheckLine  size={25} className="text-slate-500"/>,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_configuration",
-    element: <SolicityResponse/>,
+    element: <SolicityResponse />,
   },
   {
     name: " Prórroga",
     path: "/admin/solicity/onhold",
     visible: false,
-    icon: <RiMailCheckLine  size={25} className="text-slate-500"/>,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_configuration",
-    element: <SolicityOnHold/>,
+    element: <SolicityOnHold />,
   },
   {
     name: " Detalles de Solicitud",
     path: "/admin/solicity/detail",
     visible: false,
-    icon: <RiMailCheckLine  size={25} className="text-slate-500"/>,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_configuration",
-    element: <SolicityDetail/>,
+    element: <SolicityDetail />,
   }
 ];
 

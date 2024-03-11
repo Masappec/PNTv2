@@ -1,25 +1,29 @@
 
 
 import BaseEntity, { BaseDTO } from "./BaseEntity";
+import TemplateFileEntity from "./TemplateFileEntity";
 
 
-interface Dto extends BaseDTO{
+
+interface Dto extends BaseDTO {
     id: number,
-    name:string,
-    description:string,
-    isDefault:boolean,
-    parent:number|null;
-    templates:number[]
+    name: string,
+    description: string,
+    isDefault: boolean,
+    parent: number | null;
+    templates: TemplateFileEntity[]
+    published: boolean;
 }
 
-class NumeralEntity extends BaseEntity{
+class NumeralEntity extends BaseEntity {
 
-    id :number =0;
-    name:string="";
-    description:string="";
-    isDefault=false;
-    parent:number|null=0
-    templates:number[]=[]
+    id: number = 0;
+    name: string = "";
+    description: string = "";
+    isDefault = false;
+    parent: number | null = 0
+    templates: TemplateFileEntity[] = []
+    published: boolean = false;
     constructor(
         {
             id,
@@ -35,18 +39,20 @@ class NumeralEntity extends BaseEntity{
             userUpdated,
             userDeleted,
             parent,
-            templates
+            templates,
+            published
         }: Dto
-        
-    ){
-        super(createdAt||new Date(),updatedAt||new Date(),deleted||false,deletedAt||new Date(),ip||"",userCreated||'0',
-        userUpdated||'0',userDeleted||'0')
+
+    ) {
+        super(createdAt || new Date(), updatedAt || new Date(), deleted || false, deletedAt || new Date(), ip || "", userCreated || '0',
+            userUpdated || '0', userDeleted || '0')
         this.id = id;
         this.name = name;
         this.description = description;
         this.isDefault = isDefault;
         this.parent = parent;
         this.templates = templates;
+        this.published = published;
 
     }
 }

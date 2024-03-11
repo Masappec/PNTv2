@@ -3,11 +3,11 @@ import { URL_API } from '../../utils/constans';
 import SessionService from '../Services/SessionService';
 
 const api = axios.create({
-  baseURL: URL_API,
-   headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    
+    baseURL: URL_API,
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+
     },
 });
 
@@ -22,9 +22,9 @@ api.interceptors.request.use(
         return config;
     },
     (error) => {
-        if (error instanceof Error){
+        if (error instanceof Error) {
             return Promise.reject(error);
-        }else{
+        } else {
             return Promise.reject(new Error('Error de conexión'));
         }
     }
@@ -60,6 +60,16 @@ export interface Pagination<T> {
 }
 
 
+export interface PaginationLetter<T> {
+    total: number;
+    results: {
+        letter: string;
+        data: T[];
+    }[]
+
+}
+
+
 export interface BaseObject {
     created_at?: string;
     updated_at?: string;
@@ -69,6 +79,6 @@ export interface BaseObject {
     user_created?: number;
     user_updated?: number;
     user_deleted?: number;
-    
+
 }
 export default api;

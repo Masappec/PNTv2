@@ -12,7 +12,6 @@ import TableInfo from "../../../Common/TableInfo";
 
 import { CiSearch } from "react-icons/ci";
 import CardNormative from "../../../Common/CardNormative";
-import { FaSearch } from "react-icons/fa";
 
 interface Props {
   entity: EstablishmentEntity;
@@ -51,7 +50,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
         <div></div>
         <div className="container  w-screen px-20">
           <h2 className="text-4xl mb-12 mt-8 font-bold">
-            Municipio de Guayaquil
+            {props.entity.name}
           </h2>
           <div className="mb-2">
             <span className="font-bold -ml-0 text-base text-black m-1  dark:text-white ">
@@ -65,6 +64,9 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
             <span className="font-bold -ml-0 text-base text-black m-1 dark:text-white">
               Cargo de la Máxima Autoridad:
             </span>
+            {
+              props.entity.highest_authority
+            }
           </div>
           <div className="mb-2">
             <span className="font-bold -ml-0 m-1 text-gray-800 dark:text-white">
@@ -104,9 +106,9 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
               isClearable
               options={[]}
               isMulti={true}
-              onInputChange={() => {}}
-              onCreateOption={() => {}}
-              onChange={() => {}}
+              onInputChange={() => { }}
+              onCreateOption={() => { }}
+              onChange={() => { }}
             />
           </div>
 
@@ -115,19 +117,19 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
           </p>
 
           <h2 className="text-2xl font-semibold mt-4">
-            Municipio de Guayaquil
+            {props.entity.name}
           </h2>
           <p className=" text-sm w-[697px] mt-8 font-medium">
             La ley Orgánica de Transparencia y Acceso de la Información Pública
             (LOTAIP) obliga a todas las instituciones del Estado que conforman
-            el sector público a difundir a trasvés de la página web
+            el sector público a difundir a través de la página web
             institucional, información mínima actualizada de naturaleza
             obligatoria.
           </p>
 
           <Button
             type="button"
-            onClick={() => {}}
+            onClick={() => { }}
             className="flex items-center justify-center w-1/2 text-lg tracking-wide
                                 text-gray-700 font-semibold bg-gray-200 rounded-md border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
           >
@@ -137,15 +139,14 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
             </span>
           </Button>
           <div className="w-auto pr-32">
-         
-       
+
+
             <TableInfo
               columns={[
                 {
                   render: () => <p>{""}</p>,
-                 
 
-                  title: <><Checkbox className="mr-5"/>{"filename" }</>,
+                  title: <><Checkbox className="mr-5" />{"filename"}</>,
                   classname: "w-70",
                 },
                 {
@@ -153,7 +154,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                   title: "Tamaño de archivo",
                 },
                 {
-                  render: () => <p>{}</p>,
+                  render: () => <p>{ }</p>,
                   title: "Fecha de carga",
                 },
                 {
@@ -169,7 +170,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                     <p>
                       {" "}
                       <button
-                        onClick={() => {}}
+                        onClick={() => { }}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl"
                       >
                         <CiMenuBurger />
@@ -180,41 +181,41 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                 },
               ]}
               title={""}
-          
+
               onFilter={function (type: string): void {
-                throw new Error("Function not implemented.");
+                throw new Error("Function not implemented." + type);
               }}
               data={[]}
-             
 
-            />
-             </div>
-          </div>
-          <div className="mb-2  text-gray-400 mt-14 w-[759px] ">
-            <CreatableSelect
-              placeholder={"Transparencia focaalizada"}
-              isClearable
-              options={[]}
-              isMulti={true}
-              onInputChange={() => {}}
-              onCreateOption={() => {}}
-              onChange={() => {}}
-            />
-          </div>
-          <div className="mb-20 text-gray-400 mt-14 w-[759px] ">
-            <CreatableSelect
-              placeholder={"Transparencia colaborativa"}
-              isClearable
-              options={[]}
-              isMulti={true}
-              onInputChange={() => {}}
-              onCreateOption={() => {}}
-              onChange={() => {}}
+
             />
           </div>
         </div>
+        <div className="mb-2  text-gray-400 mt-14 w-[759px] ">
+          <CreatableSelect
+            placeholder={"Transparencia focaalizada"}
+            isClearable
+            options={[]}
+            isMulti={true}
+            onInputChange={() => { }}
+            onCreateOption={() => { }}
+            onChange={() => { }}
+          />
+        </div>
+        <div className="mb-20 text-gray-400 mt-14 w-[759px] ">
+          <CreatableSelect
+            placeholder={"Transparencia colaborativa"}
+            isClearable
+            options={[]}
+            isMulti={true}
+            onInputChange={() => { }}
+            onCreateOption={() => { }}
+            onChange={() => { }}
+          />
+        </div>
       </div>
-  
+    </div>
+
   );
 };
 export default PublicEstablishmentDetailPresenter;

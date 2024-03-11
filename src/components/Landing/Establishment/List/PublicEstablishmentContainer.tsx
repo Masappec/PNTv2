@@ -9,11 +9,12 @@ interface Props {
     usecase: PublicUseCase
 }
 const PublicEstablishmentContainer = (props: Props) => {
-    const [entities, setEntities] = useState<EstablishmentEntity[]>([])
+    const [entities, setEntities] = useState<{
+        letter: string,
+        data: EstablishmentEntity[]
+    }[]>([])
     const [error, setError] = useState("")
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const [totalPages, setTotalPages] = useState(1)
     const [total, setTotal] = useState(0)
 
     const navigate = useNavigate()
@@ -30,8 +31,6 @@ const PublicEstablishmentContainer = (props: Props) => {
     useEffect(() => {
         props.usecase.getEstablishments().then((entities) => {
             setEntities(entities.results)
-            setCurrentPage(entities.current)
-            setTotalPages(entities.total_pages || 1)
             setTotal(entities.total)
         }).catch((error) => {
             setError(error.message)
@@ -40,16 +39,14 @@ const PublicEstablishmentContainer = (props: Props) => {
 
 
     const onPageChange = (page: number) => {
-        props.usecase.getEstablishments(page + "").then((entities) => {
+        props.usecase.getEstablishments("", page).then((entities) => {
             setEntities(entities.results)
-            setCurrentPage(entities.current)
-            setTotalPages(entities.total_pages || 1)
         }).catch((error) => {
             setError(error.message)
         })
     }
 
-    const onItemClicked = ( slug: string) => {
+    const onItemClicked = (slug: string) => {
 
 
         console.log("slug", slug)
@@ -57,20 +54,19 @@ const PublicEstablishmentContainer = (props: Props) => {
     }
 
 
-return (
-    <PublicEstablishmentPresenter
-        error={error}
-        entities={entities}
-        currentPage={currentPage}
-        onPageChange={onPageChange}
-        totalPages={totalPages}
-        total={total}
-        onItemClicked={onItemClicked}
-        letters={abecedario}
-        
+    return (
+        <PublicEstablishmentPresenter
+            error={error}
+            entities={entities}
+            onPageChange={onPageChange}
 
-    />
-)
+            total={total}
+            onItemClicked={onItemClicked}
+            letters={abecedario}
+
+
+        />
+    )
 }
 
 export default PublicEstablishmentContainer

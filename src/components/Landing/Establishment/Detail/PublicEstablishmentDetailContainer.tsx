@@ -12,7 +12,7 @@ interface Props {
 }
 const PublicEstablishmentDetailContainer = (props: Props) => {
 
-    const {slug} = useParams<{slug: string}>()
+    const { slug } = useParams<{ slug: string }>()
     const navigate = useNavigate()
 
     const [entity, setEntity] = useState<EstablishmentEntity>({
@@ -45,50 +45,50 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     const [error, setError] = useState<string>("")
 
     useEffect(() => {
-            props.usecase.getEstablishment(slug||"").then((response) => {
-                setEntity(response)
-                setLoading(false)
-            }).catch((error) => {
-                setError(error.message) 
-            }).finally(() => {
-                setLoading(false)
-            })
-            
-        
+        props.usecase.getEstablishment(slug || "").then((response) => {
+            setEntity(response)
+            setLoading(false)
+        }).catch((error) => {
+            setError(error.message)
+        }).finally(() => {
+            setLoading(false)
+        })
+
+
     }, [])
 
 
     useEffect(() => {
-        props.transparencyUseCase?.getTransparencyActive(entity.id||0,1).then((response) => {
+        props.transparencyUseCase?.getTransparencyActive(entity.id || 0, 1).then((response) => {
             setPublications(response.results)
             setLoading(false)
-            setTotalPages(response.total_pages||1)
+            setTotalPages(response.total_pages || 1)
             setTotal(response.total)
-            setFrom(response.from||0)
-            setTo(response.to||0)
+            setFrom(response.from || 0)
+            setTo(response.to || 0)
         }).catch((error) => {
-            setError(error.message) 
+            setError(error.message)
         }).finally(() => {
             setLoading(false)
         })
     }, [entity.id])
 
-    
+
     const handlePageChange = (page: number) => {
-        props.transparencyUseCase?.getTransparencyActive(entity.id||0, page).then((response) => {
+        props.transparencyUseCase?.getTransparencyActive(entity.id || 0, page).then((response) => {
             setPublications(response.results)
             setLoading(false)
             setTotal(response.total)
-            setFrom(response.from||0)
-            setTo(response.to||0)
+            setFrom(response.from || 0)
+            setTo(response.to || 0)
             setCurrentPage(response.current)
         }).catch((error) => {
-            setError(error.message) 
+            setError(error.message)
         }).finally(() => {
             setLoading(false)
         })
     }
-    
+
     const handleClickItem = (slug: string) => {
         navigate(`/publicaciones/${slug}`)
     }
@@ -108,8 +108,11 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             to={to}
             totalPages={total_pages}
             onItemPublicationClick={handleClickItem}
+            onSearch={(type) => {
+                console.log(type)
+            }}
 
-            
+
         />
     )
 }

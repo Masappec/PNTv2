@@ -21,7 +21,7 @@ import FilePublicationMapper from "../../domain/mappers/FilePublicationMapper";
  * service.generateBlob(data);
  * service.downloadFileFromUrl(url);
  */
-class FilePublicationService{
+class FilePublicationService {
     /**
      * @constructor
      * @param api - FilePublicationApi
@@ -29,7 +29,7 @@ class FilePublicationService{
      * @example
      * const api = new FilePublicationApi(axios);
      */
-    constructor(private readonly api: FilePublicationApi){}
+    constructor(private readonly api: FilePublicationApi) { }
 
 
     /**
@@ -37,11 +37,11 @@ class FilePublicationService{
      * @param data - arreglo de arreglos de Row
      * @returns  {Blob} - blob
      */
-    generateBlob(data:Row[][]){
+    generateBlob(data: Row[][]) {
         let csvContent = "";
 
-        data.forEach(function(rowArray) {
-            const row = rowArray.map((item)=>item.value).join(",");
+        data.forEach(function (rowArray) {
+            const row = rowArray.map((item) => item.value).join(",");
             csvContent += row + "\r\n";
         })
 
@@ -59,29 +59,36 @@ class FilePublicationService{
      * @returns {Blob} - blob
      */
 
-    async downloadFileFromUrl(url:string): Promise<Blob|string>{
+    async downloadFileFromUrl(url: string): Promise<Blob | string> {
 
-        try{
-            const res = await axios.get(url, {responseType: 'blob'});
+        try {
+            const res = await axios.get(url, {
+                responseType: 'blob',
+                headers: {
+                    //cors
+                    'Access-Control-Allow-Origin': '*',
+                }
 
-            if (res.data !instanceof Blob){
-               
-               return url;
+            });
+
+            if (res.data! instanceof Blob) {
+
+                return url;
 
             }
-           
+
             const blob = new Blob([res.data], { type: res.headers['content-type'] });
             return blob;
-            
 
-        }catch(e){
+
+        } catch (e) {
             console.log(e);
-            if (e instanceof AxiosError){
-                const _error = "Error al descargar el archivo: " +( e.response?.data?.message || e.message);
+            if (e instanceof AxiosError) {
+                const _error = "Error al descargar el archivo: " + (e.response?.data?.message || e.message);
 
                 throw new Error(_error);
-            }else{
-                if (e instanceof Error){
+            } else {
+                if (e instanceof Error) {
                     throw new Error("Error al descargar el archivo: " + e.message);
                 }
                 throw new Error("No es posible descargar el archivo ");
@@ -95,13 +102,13 @@ class FilePublicationService{
      * @returns {FilePublicationEntity} - publicacion
      */
 
-    async createFilePublication(data: FilePublicationEntity){
-        
-    
+    async createFilePublication(data: FilePublicationEntity) {
+
+
         const response = await this.api.createFilePublication(FilePublicationMapper.fromDomainToApi(data, data.url_download as File));
 
         return FilePublicationMapper.fromApiToDomain(response);
-        
+
     }
 }
 

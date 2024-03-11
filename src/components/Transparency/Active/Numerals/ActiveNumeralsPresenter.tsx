@@ -7,7 +7,7 @@ interface ActiveNumeralsPresenterProps {
   onAdd?: () => void;
   numerals: NumeralEntity[]
   loading: boolean;
-  onClickItem: (numeral:NumeralEntity)=>void
+  onClickItem: (numeral: NumeralEntity) => void
 }
 
 const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
@@ -34,18 +34,19 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
                 isClearable
                 options={[]}
                 isMulti={true}
-                onInputChange={() => {}}
-                onCreateOption={() => {}}
-                onChange={() => {}}
+                onInputChange={() => { }}
+                onCreateOption={() => { }}
+                onChange={() => { }}
               />
             </div>
           </div>
           <div className="mt-14">
             <div className="grid lg:grid-cols-2 gap-4 grid-cols-1 md:grid-cols-2">
               {
-                props.numerals.filter(x => x.parent===null).map(numeral=>(
+                props.numerals.map(numeral => (
                   <Numeral title={numeral.name} text={numeral.description}
-                  onClick={()=>props.onClickItem(numeral)}
+                    onClick={() => props.onClickItem(numeral)}
+                    isPublished={numeral.published}
                   />
 
                 ))
