@@ -1,29 +1,19 @@
 import { FormEvent } from "react";
-import { LuCheck, LuX } from "react-icons/lu"
-import Input from "../../../Common/Input";
 import Spinner from "../../../Common/Spinner";
-import { Alert, Button, Textarea } from 'flowbite-react';
+import { Button, TextInput, Textarea } from 'flowbite-react';
 import { Label } from 'flowbite-react';
-import { HiInformationCircle } from "react-icons/hi";
-import CreatableSelect from "react-select/creatable";
-import { OnChangeValue } from "react-select";
+
+import Select from "../../../Common/Select";
+import { IoSaveOutline } from "react-icons/io5";
+import { FiSend } from "react-icons/fi";
 
 
 interface Props {
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
-    onCancel: () => void;
+    onSave: () => void;
+    onSend: () => void;
     data: [][];
-    loading: boolean;
-    error: string;
-    success: string;
-    setError: (e: string) => void;
-    setSuccess: (e: string) => void;
-    onCreateTag: (tag: string) => void;
-    onFilterTag: (tag: string) => void;
-    onSelectedTag: (newValue: OnChangeValue<{ label: string, value: number }, true>) => void;
-    onChangeTitle: (title: string) => void
-    onChangeDescription: (description: string) => void
-    onChangeEvent: (event: string) => void
+
 
 }
 const SolicityCreatePresenter = (props: Props) => {
@@ -32,104 +22,172 @@ const SolicityCreatePresenter = (props: Props) => {
 
     return (
 
-        <div className="container">
-            <div className="flex items-center py-5 justify-center">
-                {
-                    props.error && <Alert color="failure" icon={HiInformationCircle}>
-                        <span className="font-medium">Error!</span> {props.error}
-                    </Alert>
-                }
-
-            </div>
-            <form className="flex  mt-5" onSubmit={props.handleSubmit}>
-                <section className="container px-4 mx-auto">
-                    <div className="sm:flex sm:items-center sm:justify-between">
-                        <div>
-                            <div className="flex items-center gap-x-3">
-                                <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-                                    Crear Solicitud
-                                </h2>
-
-
-                            </div>
-
-                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
-                                Llena los campos para crear solicitud
-                            </p>
-                        </div>
-                        <div className="flex items-center mt-4 gap-x-3">
-
-                            <Button
-                                type="button"
-                                onClick={props.onCancel}
-                                className="flex items-center justify-center w-1/2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-red-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-red-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                                <LuX className="w-5 h-5" />
-                                <span>
-                                    Cancelar
-                                </span>
-                            </Button>
-                            {
-                                props.loading ? <Spinner /> : <Button
-                                    type="submit"
-                                    className="flex items-center justify-center w-1/2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-green-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                                    <LuCheck className="w-5 h-5" />
-                                    <span>
-                                        Crear
-                                    </span>
-                                </Button>
-                            }
-
-                        </div>
-                    </div>
-
-                    <div className="mt-10">
+       
+          <div>
+      <div className="border-gray-300 py-5 border-b  ">
+        <h2 className="text-2xl font-semibold text-black ml-11">
+          Solicitud de información
+        </h2>
+      </div>  
+        <form className="flex   mt-10" onSubmit={props.handleSubmit}>
+       <div className=" container flex-col sm:flex sm:items-center sm:justify-between   ">
+        
+                   
+        
+                    <div className=" flex  ml-2">
+                    <Select
+                    className="w-[720px] h-[48px] "
+                      placeholder={"Seleccionar institución pública"}
+                      value={""}
+                      onChange={() => { }}
+                      options={[
                         {
-                            props.success && <Alert color="success" icon={HiInformationCircle}>
-                                <span className="font-medium">Exitoso!</span> {props.success}
-                            </Alert>
-                        }
+                          value: "",
+                          label: "Institución seleccionada",
+                        },
+                      ]}
+                    />
+                  </div>
+                
+            
+                 
+                  
+                  <div className=" grid grid-rows-3 grid-flow-col gap-6 w-auto  gap-x-16 ">
+                
+                
+                  <div className=" flex  flex-col m-2 h-[44px]  w-[320px] gap-4 mt-5  ">
+                    <Label htmlFor="" value="Nombre" />
+                    <TextInput placeholder="" type="text" />{" "}
+                  </div>
+                 
+
+                
+
+                  <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
+                    <Label htmlFor="" value="Email" />
+                    <TextInput placeholder="" type="email" />
+                  </div> 
+                    <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px]">
+                    <Label
+                      htmlFor=""
+                      value="Dirección"
+                    />
+                    <TextInput placeholder="" type="text" />{" "}
+                  </div>
+                     <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
+                    <Label htmlFor="" value="Apellido" />
+                    <TextInput placeholder="" type="text" />
+                  </div>              
+
+          <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px]">
+                    <Label
+                      htmlFor=""
+                      value="Cédula"
+                    />
+                    <TextInput placeholder="" type="number" />{" "}
+                  </div>
+                
+                  <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
+                    <Label
+                      htmlFor=""
+                      value="Teléfono"
+                    />
+                    <TextInput placeholder="" type="number" />{" "}
+                  </div>
+                
+                 
+                  </div>
+                  <div></div>
+                
+            
+                  <div className=" grid grid-cols gap-4 w-auto  mt-16">
+                    <Label
+                      htmlFor=""
+                      value="Petición completa"
+                    />
+                   <Textarea
+                   placeholder="Escribe la petición"
+                   className="h-[66px] w-[720px]"
+                   ></Textarea>
+                  </div>
+                 
+                
+
+            
+                <div className="grid grid-flow-col grid-col-2 gap-4 gap-x-16 mt-5  ">
+                
+                <div className=" flex  flex-col m-2 h-[44px]  w-[320px] ">
+                <Select
+                   
+                      placeholder={"Forma de recepción"}
+                      value={""}
+                      onChange={() => { }}
+                      options={[
+                        {
+                          value: "",
+                          label: "Retiro en la institución ",
+                        },
+                      ]}
+                    />
+                </div>
+              
+        
+
+                <div className=" flex  flex-col m-2 h-[44px]  w-[320px] ">
+                <Select
+                  
+                      placeholder={"Formato de entrega"}
+                      value={""}
+                      onChange={() => { }}
+                      options={[
+                        {
+                          value: "",
+                          label: "Formato digital",
+                        },
+                      ]}
+                    />
+                </div>
+                </div>
+                
+                
+              
+                <div className="flex gap-x-3 mt-24 ml-80 pl-16 mb-14 text-6xl">
+
+<Button
+    type="button"
+    onClick={props.onSave}
+    className=" text-gray-900 bg-white border-gray-300 font-bold border">
+    <IoSaveOutline size={22} className=" mr-4 text-gray-900" />
+    <span>
+        Guardar
+    </span>
+</Button>
+ <Button
+        type="button"
+        onClick={props.onSend}
+        className="text-white font-bold bg-sky-800">
+        <FiSend size={23} className=" mr-4" />
+        <span>
+            Enviar solicitud
+        </span>
+    </Button>
 
 
-                                <div className="grid grid-cols ">
+</div>
 
-                                <div className="flex  flex-col m-2">
-                                        <Label htmlFor="" value="Detalle de solicitud" />
-                                        <Textarea
-                                            placeholder={"Detalle de solicitud"}
-                                            value={""}
-                                            name="abbreviation"
-                                            onChange={(e) => props.onChangeDescription(e.target.value)}
-                                        />
-                                    </div>
 
-                                    <div className=" flex  flex-col m-2">
-                                        <div className="mb-2 block">
-                                            <Label htmlFor="" value="Entidad" />
-                                        </div>
-                                        <CreatableSelect isClearable options={([])}
-                                            isMulti={true}
-                                            onInputChange={(e) => props.onFilterTag(e)}
-                                            onCreateOption={(e) => props.onCreateTag(e)}
-                                            onChange={() => {}}
 
-                                        />
-                                    </div>
-                                    <div className="flex  flex-col m-2">
-                                        <Input type={"text"}
-                                            placeholder={"Titulo de la solicitud"} width="w-60"
-                                            value={""}
-                                            name="name"
-                                            onChange={(e) => props.onChangeTitle(e.target.value)}
-                                        />
-                                    </div>
-                    
-                                    </div>
-                    </div>
+ 
+</div>
+      
+      </form>                 
+            
+       
+                       
+                       
 
-                </section>
-            </form>
+              
+           
         </div>
     )
 }
