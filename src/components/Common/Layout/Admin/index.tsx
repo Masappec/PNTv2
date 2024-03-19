@@ -29,7 +29,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                 <HeaderPages open={open} setOpen={setOpen} haveImage={true} />
                 <div className="flex">
                     <div
-                        className={`w-1/6 md:w-1/6 lg:block xl:block ${open ? "block" : "hidden"} z-30  bg-slate-200`}
+                        className={`lg:block xl:block ${open ? "block" : "hidden"} z-30  bg-slate-200`}
                     >
                         <Sidebar
                             email={user}
@@ -41,11 +41,11 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                     </div>
                     <div className="w-full overflow-hidden">
                         <div
-                            className={` ${open ? " bg-black bg-opacity-40 lg:bg-none h-screen w-screen fixed z-10" : ""
+                            className={` ${open ? " bg-black bg-opacity-40 lg:bg-none h-screen w-screen fixed z-20" : ""
                                 }`}
                             onClick={() => setOpen(false)}
                         ></div>
-                        <div className="overflow-y-auto h-fit">
+                        <div className="overflow-y-auto h-fit m-5 ">
                             <Outlet />
                         </div>
                     </div>

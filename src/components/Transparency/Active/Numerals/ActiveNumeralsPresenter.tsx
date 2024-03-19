@@ -2,6 +2,7 @@ import Numeral from "../../../Common/Numeral";
 import { Label } from "flowbite-react";
 import CreatableSelect from "react-select/creatable";
 import NumeralEntity from "../../../../domain/entities/NumeralEntity";
+import Title from "../../../Common/Title";
 
 interface ActiveNumeralsPresenterProps {
   onAdd?: () => void;
@@ -27,27 +28,33 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
                   Transparencia Activa
                 </h2>
               </div>
-              <div className="mb-2 block  text-gray-400 mt-14 w-80 ">
-                <Label htmlFor="" value="Numeral" />
-              </div>
-              <CreatableSelect
-                isClearable
-                options={[]}
-                isMulti={true}
-                onInputChange={() => { }}
-                onCreateOption={() => { }}
-                onChange={() => { }}
-              />
+
             </div>
           </div>
           <div className="mt-14">
-            <div className="grid lg:grid-cols-2 gap-4 grid-cols-1 md:grid-cols-2">
+            <div className="grid lg:grid-cols-1 gap-4 grid-cols-1 md:grid-cols-2">
               {
                 props.numerals.map(numeral => (
-                  <Numeral title={numeral.name} text={numeral.description}
-                    onClick={() => props.onClickItem(numeral)}
-                    isPublished={numeral.published}
-                  />
+
+                  numeral.parent === null ? (
+                    <>
+                      <h2 className="text-2xl font-bold  text-gray-800 dark:text-white">
+                        {numeral.name}
+                      </h2>
+                      {
+                        props.numerals.filter(n => n.parent === numeral.id).map(child => (
+                          <Numeral title={child.name} text={child.description}
+                            onClick={() => props.onClickItem(child)}
+                            isPublished={child.published}
+                          />
+                        ))
+                      }
+                    </>
+                  ) :
+                    <Numeral title={numeral.name} text={numeral.description}
+                      onClick={() => props.onClickItem(numeral)}
+                      isPublished={numeral.published}
+                    />
 
                 ))
               }
