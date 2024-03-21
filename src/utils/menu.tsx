@@ -135,7 +135,7 @@ const menu = [
     path: '/admin/transparency/active',
     visible: true,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "view_publication",
+    permission_required: "view_transparencyactive",
     element: <ActiveNumerals />
   },
   {
@@ -152,7 +152,7 @@ const menu = [
     path: '/admin/active/previewdata',
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "view_publication",
+    permission_required: "view_transparencyactive",
     element: <ActivePreviewData />
   },
 

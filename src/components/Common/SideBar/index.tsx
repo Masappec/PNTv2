@@ -13,7 +13,7 @@ interface Props {
 	onLogout: () => void
 }
 
-const Sidebar_ = ({ menu, permissions,user,email,onLogout }: Props) => {
+const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 
 
 	const [path, setPath] = React.useState("")
@@ -29,7 +29,7 @@ const Sidebar_ = ({ menu, permissions,user,email,onLogout }: Props) => {
 
 
 		<Sidebar aria-label="Default sidebar example"
-			className="border-r bg-slate-200 w-64">
+			className="border-r bg-slate-200 w-64 z-30">
 
 			<Sidebar.Items className="flex flex-col">
 				<Sidebar.ItemGroup>
@@ -67,7 +67,7 @@ const Sidebar_ = ({ menu, permissions,user,email,onLogout }: Props) => {
 							</div>
 							<a href="#" onClick={onLogout} className="ml-2 mt-3">
 								<LuLogOut size={20} className="text-slate-500" />
-								</a>
+							</a>
 						</div>
 
 					</div>
