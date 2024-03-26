@@ -1,8 +1,5 @@
 import Numeral from "../../../Common/Numeral";
-import { Label } from "flowbite-react";
-import CreatableSelect from "react-select/creatable";
 import NumeralEntity from "../../../../domain/entities/NumeralEntity";
-import Title from "../../../Common/Title";
 
 interface ActiveNumeralsPresenterProps {
   onAdd?: () => void;
@@ -16,7 +13,7 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="container w-full md:p-4 mx-auto mt-2 h-fit">
+    <div className="container w-full md:p-4 mx-auto mt-2 h-screen">
       <div className="flex items-center  justify-center"></div>
 
       <form className="flex  mt-5">
@@ -49,12 +46,16 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
                           />
                         ))
                       }
+                      {
+                        props.numerals.filter(n => n.parent === numeral.id).length === 0 ? (
+                          <Numeral title={numeral.name} text={numeral.description}
+                            onClick={() => props.onClickItem(numeral)}
+                            isPublished={numeral.published}
+                          />
+                        ) : null
+                      }
                     </>
-                  ) :
-                    <Numeral title={numeral.name} text={numeral.description}
-                      onClick={() => props.onClickItem(numeral)}
-                      isPublished={numeral.published}
-                    />
+                  ) : null
 
                 ))
               }

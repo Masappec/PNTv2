@@ -29,7 +29,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                 <HeaderPages open={open} setOpen={setOpen} haveImage={true} />
                 <div className="flex">
                     <div
-                        className={`lg:block xl:block ${open ? "block" : "hidden"} z-30  bg-slate-200`}
+                        className={`h-fit lg:block xl:block ${open ? "block" : "hidden"} z-30  bg-slate-200`}
                     >
                         <Sidebar
                             email={user}

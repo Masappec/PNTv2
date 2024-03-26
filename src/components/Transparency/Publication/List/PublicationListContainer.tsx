@@ -9,47 +9,47 @@ import PublicationUseCase from "../../../../domain/useCases/PublicationUseCase/P
 
 interface Props {
     usecase: TransparencyUseCase;
-    publicationUsecase:PublicationUseCase
+    publicationUsecase: PublicationUseCase
 
 }
 
-const PublicationListContainer = ( props: Props
+const PublicationListContainer = (props: Props
 ) => {
     const navigate = useNavigate()
 
-    const [publicaciones, SetPublicaciones]= useState<PublicationEntity[]>([])
-    const [publicationSelected, SetPublicationSelected]= useState<PublicationEntity | null>(null)
-    const [visibleModal, SetVisibleModal]= useState<boolean>(false)
-    const [error, SetError]= useState<string>("")
+    const [publicaciones, SetPublicaciones] = useState<PublicationEntity[]>([])
+    const [publicationSelected, SetPublicationSelected] = useState<PublicationEntity | null>(null)
+    const [visibleModal, SetVisibleModal] = useState<boolean>(false)
+    const [error, SetError] = useState<string>("")
 
     const [totalPage, setTotalPage] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [from, setFrom] = useState<number>(0)
     const [to, setTo] = useState<number>(0)
     const [total, setTotal] = useState<number>(0)
-    
+
     const handleAdd = () => {
-        navigate('/admin/transparency/create')
+        navigate('/admin/active/create')
     }
-    const handleEdit = (id:number) => {
+    const handleEdit = (id: number) => {
         navigate(`/admin/transparency/${id}`)
     }
 
-    useEffect (
+    useEffect(
         () => {
-            props.usecase.getListTransparency().then((res)=>{
+            props.usecase.getListTransparency().then((res) => {
                 SetPublicaciones(res.results)
                 setCurrentPage(res.current)
                 setTotalPage(res.total_pages || 1)
                 setTotal(res.total)
-                setFrom(res.from|| 1)
+                setFrom(res.from || 1)
                 setTo(res.to)
 
-            }).catch((error)=>{
+            }).catch((error) => {
                 SetError(error.message)
             })
-        
-        },[]
+
+        }, []
     )
 
 
@@ -60,23 +60,23 @@ const PublicationListContainer = ( props: Props
 
     const onConfirmDelete = () => {
         if (publicationSelected) {
-            props.publicationUsecase.updateState(publicationSelected.id||0).then((res)=>{
+            props.publicationUsecase.updateState(publicationSelected.id || 0).then((res) => {
                 const copy = [...publicaciones]
-                const index = copy.findIndex((item)=>item.id === publicationSelected.id)
+                const index = copy.findIndex((item) => item.id === publicationSelected.id)
                 if (index !== -1) {
                     copy[index] = res
                     SetPublicaciones(copy)
                 }
                 SetPublicationSelected(null)
                 SetVisibleModal(false)
-            }).catch((error)=>{
+            }).catch((error) => {
                 SetError(error.message)
             })
         }
     }
 
-    const onDelete = (id:number) => {
-        const publication = publicaciones.find((item)=>item.id === id)
+    const onDelete = (id: number) => {
+        const publication = publicaciones.find((item) => item.id === id)
         if (publication) {
             SetPublicationSelected(publication)
             SetVisibleModal(true)
@@ -87,7 +87,7 @@ const PublicationListContainer = ( props: Props
         <PublicationListPresenter
 
             error={error}
-            data= {publicaciones}
+            data={publicaciones}
 
             onAdd={handleAdd}
             onCancelDelete={onCancelDelete}
@@ -96,11 +96,11 @@ const PublicationListContainer = ( props: Props
             onEdit={handleEdit}
             onFilter={() => { }}
             onImport={() => { }}
-            onSearch={()=>{}}
+            onSearch={() => { }}
             page={currentPage}
             search=""
-    
-            setPage={()=>{}}
+
+            setPage={() => { }}
             setSeach={() => { }}
             setVisibleModal={SetVisibleModal}
             visibleModal={visibleModal}

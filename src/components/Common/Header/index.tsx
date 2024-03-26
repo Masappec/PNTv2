@@ -4,8 +4,8 @@ import { FormattedMessage } from "react-intl";
 
 const Header = () => {
   return (
-    <header className="border-b-2 border-dark-400 dark:border-primary-600">
-      <nav className="bg-white border-gray-900 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+    <header className="border-b-2 border-gray-800 dark:border-primary-600">
+      <nav className="bg-white border-gray-800 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex flex-wrap justify-between items-center mx-8 ">
           <a href="/" className="flex items-center">
             <img
@@ -15,7 +15,7 @@ const Header = () => {
               tabIndex={1}
             />
           </a>
-          <div className="flex items-center lg:order-2">
+          <div className="hidden xl:flex lg:flex md:flex items-center lg:order-2">
             <Link
               to="entidades"
               tabIndex={2}
