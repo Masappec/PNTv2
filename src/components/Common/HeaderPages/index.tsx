@@ -9,7 +9,7 @@ interface HeaderPagesProps {
 
 const HeaderPages = (props: HeaderPagesProps) => {
   return (
-    <header className="border-b-2 border-dark-400 dark:border-primary-600">
+    <header className="border-b-2 border-dark-400 dark:border-primary-500">
       <nav className="bg-primary-600 border-gray-900 px-4  py-2.5 dark:bg-gray-800">
         <div className="flex flex-wrap justify-between items-center max-w-screen-xl">
           <a href="#" className="flex items-start  lg:hidden xl:hidden" onClick={() => props.setOpen && props.setOpen(!props.open)}>

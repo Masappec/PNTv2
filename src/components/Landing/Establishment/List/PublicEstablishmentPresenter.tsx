@@ -24,7 +24,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
     return (
         <div className="flex flex-col w-full  bg-white pr-10">
             <div></div>
-            <div className="border-l-2 border-gray-900 ml-0 md:ml-10">
+            <div className="border-l-2 border-gray-900 ml-10 md:ml-10">
 
                 {
                     props.error &&
@@ -32,8 +32,8 @@ const PublicEstablishmentPresenter = (props: Props) => {
                         <span className="font-medium">Error!</span> {props.error}
                     </Alert>
                 }
-                <div className="flex flex-col m-10 p-10 justify-normal w-full h-full">
-                    <p className="text-2xl flex-col w-1/5 tracking-tight text-gray-900 dark:text-white">
+                <div className="flex flex-col ml-5 mt-9 xl:m-10 xl:p-10 justify-normal w-full h-full">
+                    <p className="text-2xl flex-col xl:w-1/5 tracking-tight font-bold xl:font-normal text-gray-900 dark:text-white">
                         Instituciones que publican en el Portal
 
                     </p>
@@ -41,15 +41,15 @@ const PublicEstablishmentPresenter = (props: Props) => {
                         {
                             props.letters.map((letter, i) => {
                                 return (
-                                    <div className="flex flex-row">
-                                        <p className="text-primary-500 hover:text-primary-600 text-xl">
-                                            {i === 0 ? "" : "-"}
+                                    <div className="flex flex-row ">
+                                        <p className="text-primary-500 mx-[3px] hover:text-primary-600 text-xl">
+                                            {i === 0 ? "" : i % 8 === 0 ? "  " : "-"}
                                         </p>
                                         <div>
 
                                             <a
                                                 onClick={() => props.onPageChange(1)}
-                                                className="text-primary-500 hover:text-primary-600 text-xl ml-2"
+                                                className="text-primary-500 hover:text-primary-600 text-xl xl:ml-2 mx-[4px]"
                                             >
 
 
@@ -62,7 +62,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                         }
 
                     </div>
-                    <div className="flex flex-row justify-start mt-10 w-full h-full gap-12">
+                    <div className="flex flex-col xl:flex-row justify-start mt-10 w-full h-full gap-12">
                         <div>
                             <Label htmlFor="search" className="text-base tracking-tight text-gray-900 dark:text-white">
                                 <FormattedMessage id="establishment"></FormattedMessage>
@@ -103,7 +103,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                                                 props.entities.filter((entity) => entity.letter === letra).map((items) => {
                                                     return items.data.map((entity) => {
                                                         return (
-                                                            <a className="w-1/4 text-primary-500" onClick={() => props.onItemClicked(entity.slug || "")}>
+                                                            <a className="xl:w-1/4 lg:w-1/4 w-fit m-5 xl:m-0 text-primary-500" onClick={() => props.onItemClicked(entity.slug || "")}>
                                                                 {entity.name}
                                                             </a>
                                                         )

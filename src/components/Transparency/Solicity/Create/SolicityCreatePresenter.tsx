@@ -1,5 +1,4 @@
 import { FormEvent } from "react";
-import Spinner from "../../../Common/Spinner";
 import { Button, TextInput, Textarea } from 'flowbite-react';
 import { Label } from 'flowbite-react';
 
@@ -9,10 +8,10 @@ import { FiSend } from "react-icons/fi";
 
 
 interface Props {
-    handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
-    onSave: () => void;
-    onSend: () => void;
-    data: [][];
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onSave: () => void;
+  onSend: () => void;
+  data: [][];
 
 
 }
@@ -20,176 +19,177 @@ const SolicityCreatePresenter = (props: Props) => {
 
 
 
-    return (
+  return (
 
-       
-          <div>
+
+    <div>
       <div className="border-gray-300 py-5 border-b  ">
         <h2 className="text-2xl font-semibold text-black ml-11">
           Solicitud de información
         </h2>
-      </div>  
-        <form className="flex   mt-10" onSubmit={props.handleSubmit}>
-       <div className=" container flex-col sm:flex sm:items-center sm:justify-between   ">
-        
-                   
-        
-                    <div className=" flex  ml-2">
-                    <Select
-                    className="w-[720px] h-[48px] "
-                      placeholder={"Seleccionar institución pública"}
-                      value={""}
-                      onChange={() => { }}
-                      options={[
-                        {
-                          value: "",
-                          label: "Institución seleccionada",
-                        },
-                      ]}
-                    />
-                  </div>
-                
-            
-                 
-                  
-                  <div className=" grid grid-rows-3 grid-flow-col gap-6 w-auto  gap-x-16 ">
-                
-                
-                  <div className=" flex  flex-col m-2 h-[44px]  w-[320px] gap-4 mt-5  ">
-                    <Label htmlFor="" value="Nombre" />
-                    <TextInput placeholder="" type="text" />{" "}
-                  </div>
-                 
-
-                
-
-                  <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
-                    <Label htmlFor="" value="Email" />
-                    <TextInput placeholder="" type="email" />
-                  </div> 
-                    <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px]">
-                    <Label
-                      htmlFor=""
-                      value="Dirección"
-                    />
-                    <TextInput placeholder="" type="text" />{" "}
-                  </div>
-                     <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
-                    <Label htmlFor="" value="Apellido" />
-                    <TextInput placeholder="" type="text" />
-                  </div>              
-
-          <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px]">
-                    <Label
-                      htmlFor=""
-                      value="Cédula"
-                    />
-                    <TextInput placeholder="" type="number" />{" "}
-                  </div>
-                
-                  <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
-                    <Label
-                      htmlFor=""
-                      value="Teléfono"
-                    />
-                    <TextInput placeholder="" type="number" />{" "}
-                  </div>
-                
-                 
-                  </div>
-                  <div></div>
-                
-            
-                  <div className=" grid grid-cols gap-4 w-auto  mt-16">
-                    <Label
-                      htmlFor=""
-                      value="Petición completa"
-                    />
-                   <Textarea
-                   placeholder="Escribe la petición"
-                   className="h-[66px] w-[720px]"
-                   ></Textarea>
-                  </div>
-                 
-                
-
-            
-                <div className="grid grid-flow-col grid-col-2 gap-4 gap-x-16 mt-5  ">
-                
-                <div className=" flex  flex-col m-2 h-[44px]  w-[320px] ">
-                <Select
-                   
-                      placeholder={"Forma de recepción"}
-                      value={""}
-                      onChange={() => { }}
-                      options={[
-                        {
-                          value: "",
-                          label: "Retiro en la institución ",
-                        },
-                      ]}
-                    />
-                </div>
-              
-        
-
-                <div className=" flex  flex-col m-2 h-[44px]  w-[320px] ">
-                <Select
-                  
-                      placeholder={"Formato de entrega"}
-                      value={""}
-                      onChange={() => { }}
-                      options={[
-                        {
-                          value: "",
-                          label: "Formato digital",
-                        },
-                      ]}
-                    />
-                </div>
-                </div>
-                
-                
-              
-                <div className="flex gap-x-3 mt-24 ml-80 pl-16 mb-14 text-6xl">
-
-<Button
-    type="button"
-    onClick={props.onSave}
-    className=" text-gray-900 bg-white border-gray-300 font-bold border">
-    <IoSaveOutline size={22} className=" mr-4 text-gray-900" />
-    <span>
-        Guardar
-    </span>
-</Button>
- <Button
-        type="button"
-        onClick={props.onSend}
-        className="text-white font-bold bg-sky-800">
-        <FiSend size={23} className=" mr-4" />
-        <span>
-            Enviar solicitud
-        </span>
-    </Button>
-
-
-</div>
+      </div>
+      <form className="flex flex-col lg:flex-row mt-10" onSubmit={props.handleSubmit}>
+        <div className="container flex-col sm:flex-col sm:items-center sm:justify-between   ">
 
 
 
- 
-</div>
-      
-      </form>                 
-            
-       
-                       
-                       
+          <div className="flex ml-2">
+            <Select
+              className="lg:w-[720px] xl:w-[720px] h-[48px] w-full "
+              placeholder={"Seleccionar institución pública"}
+              value={""}
+              onChange={() => { }}
+              options={[
+                {
+                  value: "",
+                  label: "Institución seleccionada",
+                },
+              ]}
+            />
+          </div>
 
-              
-           
+
+
+
+          <div className="grid xl:grid-rows-3  lg:grid-rows-3 
+           xl:grid-flow-col gap-6 w-auto  gap-x-16 ">
+
+
+            <div className=" flex  flex-col m-2 h-[44px]  w-[320px] gap-4 mt-5  ">
+              <Label htmlFor="" value="Nombre" />
+              <TextInput placeholder="" type="text" />{" "}
+            </div>
+
+
+
+
+            <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
+              <Label htmlFor="" value="Email" />
+              <TextInput placeholder="" type="email" />
+            </div>
+            <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px]">
+              <Label
+                htmlFor=""
+                value="Dirección"
+              />
+              <TextInput placeholder="" type="text" />{" "}
+            </div>
+            <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
+              <Label htmlFor="" value="Apellido" />
+              <TextInput placeholder="" type="text" />
+            </div>
+
+            <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px]">
+              <Label
+                htmlFor=""
+                value="Cédula"
+              />
+              <TextInput placeholder="" type="number" />{" "}
+            </div>
+
+            <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
+              <Label
+                htmlFor=""
+                value="Teléfono"
+              />
+              <TextInput placeholder="" type="number" />{" "}
+            </div>
+
+
+          </div>
+          <div></div>
+
+
+          <div className=" grid grid-cols gap-4 w-auto  mt-16">
+            <Label
+              htmlFor=""
+              value="Petición completa"
+            />
+            <Textarea
+              placeholder="Escribe la petición"
+              className="h-[66px] xl:w-[720px]"
+            ></Textarea>
+          </div>
+
+
+
+
+          <div className="grid xl:grid-flow-col xl:grid-col-2 lg:grid-cols-2 grid-cols-1 gap-4 gap-x-16 mt-5  ">
+
+            <div className=" flex  flex-col m-2 h-[44px]  xl:w-[320px] ">
+              <Select
+
+                placeholder={"Forma de recepción"}
+                value={""}
+                onChange={() => { }}
+                options={[
+                  {
+                    value: "",
+                    label: "Retiro en la institución ",
+                  },
+                ]}
+              />
+            </div>
+
+
+
+            <div className=" flex  flex-col m-2 h-[44px]  w-[320px] ">
+              <Select
+
+                placeholder={"Formato de entrega"}
+                value={""}
+                onChange={() => { }}
+                options={[
+                  {
+                    value: "",
+                    label: "Formato digital",
+                  },
+                ]}
+              />
+            </div>
+          </div>
+
+
+
+          <div className="flex gap-x-3 mt-24 xl:ml-80 xl:pl-16 mb-14 text-6xl">
+
+            <Button
+              type="button"
+              onClick={props.onSave}
+              className=" text-gray-900 bg-white border-gray-300 font-bold border">
+              <IoSaveOutline size={22} className=" mr-4 text-gray-900" />
+              <span>
+                Guardar
+              </span>
+            </Button>
+            <Button
+              type="button"
+              onClick={props.onSend}
+              className="text-white font-bold bg-sky-800">
+              <FiSend size={23} className=" mr-4" />
+              <span>
+                Enviar solicitud
+              </span>
+            </Button>
+
+
+          </div>
+
+
+
+
         </div>
-    )
+
+      </form>
+
+
+
+
+
+
+
+    </div>
+  )
 }
 
 export default SolicityCreatePresenter

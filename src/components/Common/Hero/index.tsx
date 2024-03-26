@@ -10,7 +10,7 @@ const Hero = () => {
       <div className="xl:grid lg:grid xl:max-w-screen-xl sm:w-screen ml-3 xl:ml-10 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 sm:grid-cols-1 lg:grid-cols-10 ">
         <div className="lg:col-span-2 justify-start  ">
           <p
-            className="text-3xl  font-extrabold text-black dark:text-white w-11/12 lg:w-32"
+            className="text-3xl  font-extrabold text-black dark:text-white w-11/12 lg:w-[215px]"
             tabIndex={6}
           >
             <FormattedMessage id="portal_nacional" />
@@ -32,10 +32,14 @@ const Hero = () => {
               <div></div>
             </div>
 
-
+            <div className="flex xl:hidden lg:hidden w-full h-auto flex-auto">
+              <p className="text-gray-500 text-sm mt-5">
+                Escribe aquí la entidad que deseas consultar
+              </p>
+            </div>
 
             <div className="relative search 
-            mt-20 lg:mt-8 w-full h-auto 
+            lg:mt-8 w-full h-auto 
             xl:hidden lg:hidden 
             xl:justify-center flex xl:ml-48 
              flex-auto">
@@ -101,7 +105,10 @@ const Hero = () => {
                   disabled
                   type="button"
                   onClick={() => { }}
-                  className="!absolute w-[147px] border-black top-4 right-56 flex items-center justify-center  text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-normal rounded-3xl text-xl px-4 py-5 bottom-2"
+                  className="!absolute w-[149px] h-[56px] border-black top-4 right-52 
+                  flex items-center justify-center  text-white bg-primary-700
+                   hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 
+                   font-normal rounded-full text-xl px-4 py-5 bottom-2"
                 >
 
                   Buscar

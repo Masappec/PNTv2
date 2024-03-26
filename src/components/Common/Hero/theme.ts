@@ -8,7 +8,7 @@ export const inputSearchTheme: CustomFlowbiteTheme['textInput'] = {
             sizes: {
                 'sm': 'h-8 px-3 text-xs',
                 'md': 'h-12 px-4 text-sm',
-                'lg': 'h-16 px-5 text-lg'
+                'lg': 'h-[56px] px-5 text-lg'
             },
             withAddon: {
                 on: "pr-12 pl-5",
