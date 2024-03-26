@@ -29,25 +29,25 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
       <header className="border-b-2 border-dark-400 dark:border-primary-600">
         <nav className="bg-cyan-800 border-gray-900 px-4 lg:px-6 py-10 dark:bg-gray-800"></nav>
       </header>
-      <div className="bg-white h-screen md:flex lg:flex xl:flex">
-        <div className="items-center hidden lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-full w-4/6  ">
-          <div className=" border-l-2 border-gray-600 ml-2 md:ml-10  justify-items-start h-full "></div>
+      <div className="bg-white h-screen md:flex lg:flex xl:flex ">
+        <div className="items-center hidden lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-full w-2/5  ">
+          <div className=" border-l-2 border-gray-400 ml-2 md:ml-16  justify-items-start h-full "></div>
           <div className=" pl-10  relative">
             <img
               src={logo}
               alt="imagen"
-              className=" flex items-center justify-center w-96 max-w-screen-2xl h-auto mb-60 "
+              className=" flex items-center justify-center w-96 max-w-screen-2xl h-auto mb-60 -mt-32 "
             />
-            <p className="mt-40 text-2xl text-slate-400  ">
+            <p className="mt-36 text-2xl text-slate-400  ">
               Portal <br /> Nacional <br />
               de Transparencia
             </p>
           </div>
         </div>
-        <div className="absolute top-52 h-24 w-6 ml-7 bg-cyan-800  hidden lg:block"></div>
-        <div className="bg-white w-full mt-20   lg:ml-36 flex justify-center">
+        <div className="absolute top-56 h-28 w-7 ml-12 bg-cyan-800  hidden lg:block"></div>
+        <div className="bg-white w-full mt-20   lg:ml-5 flex justify-center">
           <form
-            className="border  border-slate-50 shadow-lg h-2/3 md:h-2/5 lg:h-2/3  rounded-lg text-center  items-center"
+            className="border  border-slate-50 shadow-lg h-2/3 md:h-2/5 lg:h-2/3  rounded-lg text-center  items-center pt-8"
             onSubmit={props.handleSubmit}
           >
             <Title title="Ingresar al Portal" text="" color="black" />

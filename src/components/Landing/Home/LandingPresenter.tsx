@@ -62,17 +62,17 @@ const LandingPresenter = (props: Props) => {
           <hr className="w-full ml-24 border-gray-900 mt-28 mr-9 " />
         </div>
 
-        <div className="grid lg:grid-cols-4 lg:ml-5  md:ml-5 -space-x-6 md:grid-cols-2 w-full justify-center  mb-44 ">
+        <div className="grid lg:grid-cols-4 lg:ml-5  md:ml-5 -space-x-6 md:grid-cols-2 w-full justify-center  mb-44">
           <CardConsulta
           icon={<BiBriefcaseAlt  size={85} className="text-white bg-[#FFBD71] rounded-full py-5 px-2"/>}
             title="Personal y Remuneraciones"
-            backgroundColor="  bg-orange-100"
+            backgroundColor="  bg-orange-100 hover:bg-orange-300 transition-colors duration-300 hover:text-transparent "
             color="text-black"
           ></CardConsulta>
           <CardConsulta
           icon={<BiPieChartAlt2 size={85} className="text-white bg-[#B4C365] rounded-full py-5 px-2" />}
            title="Presupuestos"
-            backgroundColor=" bg-[#F1F7D1]"
+            backgroundColor=" bg-[#F1F7D1] hover:bg-[#e2efa7] transition-colors duration-300"
             color="text-black"
           ></CardConsulta>
           <CardConsulta
@@ -84,7 +84,7 @@ const LandingPresenter = (props: Props) => {
           <CardConsulta
            icon={<GoChecklist size={85} className="text-white bg-[#70DED8] rounded-full py-5 px-2"/>}
             title="Formularios y Solicitudes"
-            backgroundColor="bg-[#E7FFFE]"
+            backgroundColor="bg-[#E7FFFE]  hover:bg-[#67f6f9] transition-colors duration-300"
             color="text-black"
           ></CardConsulta>
         </div>

@@ -57,14 +57,15 @@ const ActivePreviewDataPresenter = (props: Props) => {
 
 
 
-          <TextInput
-            icon={CiSearch}
+          <input
+            value={searchInput}
             id="buscar"
             type="text"
             placeholder="Buscar por datos"
             className="w-[190px] mr-[px]  border-black text-center   "
             tabIndex={7}
-            sizing="base"
+            
+
           />
 
 

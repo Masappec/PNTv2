@@ -5,9 +5,9 @@ import { FormattedMessage } from "react-intl";
 const Header = () => {
   return (
     <header className="border-b-2 border-dark-400 dark:border-primary-600">
-      <nav className="bg-white border-gray-900 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+      <nav className="bg-white border-gray-900 px-4 lg:px-6 py-2.5 dark:bg-gray-800 ">
         <div className="flex flex-wrap justify-between items-center mx-8 ">
-          <a href="/" className="flex items-center">
+          <a href="/" className="flex items-center ">
             <img
               src={logo}
               className="mr-3 h-20 "
@@ -15,11 +15,11 @@ const Header = () => {
               tabIndex={1}
             />
           </a>
-          <div className="flex items-center lg:order-2">
+          <div className="flex items-center lg:order-2 pr-2 space-x-6 sm:text-transparent">
             <Link
               to="entidades"
               tabIndex={2}
-              className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-8 py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+              className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-base px-8 py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
               <FormattedMessage id="list_entities" />
             </Link>
@@ -27,14 +27,14 @@ const Header = () => {
             <Link
               to="/ingreso"
               tabIndex={3}
-              className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-6 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+              className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-base px-6 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
               <FormattedMessage id="indicators" />
             </Link>
             <Link
               to="/ingreso"
               tabIndex={4}
-              className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-11 py-2.5   dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+              className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-base px-11 py-2.5   dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
               <FormattedMessage id="about" />
             </Link>
@@ -45,7 +45,7 @@ const Header = () => {
               className="text-white bg-primary-500
                          hover:bg-primary-800 focus:ring-4 
                          
-                         focus:ring-blue-300 font-medium rounded-3xl text-sm px-6 py-3.5 
+                         focus:ring-blue-300  rounded-full text-lg font-semibold px-10 py-3.5 
                           dark:bg-primary-300 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800
                           
                           
