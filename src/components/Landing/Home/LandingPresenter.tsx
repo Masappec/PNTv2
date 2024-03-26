@@ -59,7 +59,7 @@ const LandingPresenter = (props: Props) => {
           >
             <FormattedMessage id="search_by_tematic" />
           </p>
-          <hr className="w-full ml-24 border-gray-900 mt-28 mr-9 hidden xl:block" />
+          <hr className="w-[96%] ml-24 border-gray-900 mt-28 mr-9 hidden xl:block" />
           <hr className="w-full ml-5 border-gray-500 mt-28 mr-9 xl:hidden" />
         </div>
 
