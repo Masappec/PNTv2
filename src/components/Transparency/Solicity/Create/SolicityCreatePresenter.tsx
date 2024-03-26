@@ -12,12 +12,8 @@ interface Props {
   onSave: () => void;
   onSend: () => void;
   data: [][];
-
-
 }
 const SolicityCreatePresenter = (props: Props) => {
-
-
 
   return (
 
