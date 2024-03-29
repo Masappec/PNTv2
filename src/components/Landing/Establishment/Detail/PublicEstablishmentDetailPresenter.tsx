@@ -98,11 +98,12 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
               bgcolor=""
             ></CardNormative>
           </div>
+         
 
-          <Accordion className="mt-28 ">
+          <Accordion className=" border mt-10 ">
             <Accordion.Panel>
               <Accordion.Title>
-                <p className="text-start text-black text-lg font-medium">
+                <p className="text-start text-gray-600 text-lg font-medium ">
                   Transparencia activa{" "}
                 </p>
               </Accordion.Title>
@@ -127,12 +128,12 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                     onClick={() => { }}
                     size={"lg"}
                     className="flex items-center justify-center 
-                     text-lg tracking-wide
+                     text-base tracking-wide
                      hover:text-white
                      rounded-xl
-                      text-gray-700 font-semibold bg-gray-200  border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
+                      text-gray-700 font-semibold bg-gray-50  border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
                   >
-                    <span className="flex col-2 gap-6 ">
+                    <span className="flex col-2 gap-4 ">
                       <FiCalendar className="w-5 h-5" />
                       Seleccionar año
                     </span>
@@ -195,9 +196,11 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                 </>
               </Accordion.Content>
             </Accordion.Panel>
-            <Accordion.Panel>
+            </Accordion>
+            <Accordion className="mt-10">
+            <Accordion.Panel >
               <Accordion.Title>
-                <p className="text-start  text-black text-lg font-medium">
+                <p className="text-start  text-gray-600 text-lg font-medium">
 
                   Transparencia focalizada
 
@@ -227,7 +230,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                                          rounded-xl
 
                     items-center justify-center w-1/2 text-lg tracking-wide
-                                text-gray-700 font-semibold bg-gray-200  border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
+                                text-gray-700 font-semibold bg-gray-50  border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
                   >
                     <span className="flex col-2 gap-6 ">
                       <FiCalendar className="w-5 h-5" />
@@ -289,9 +292,11 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                 </>
               </Accordion.Content>
             </Accordion.Panel>
-            <Accordion.Panel>
+            </Accordion>
+            <Accordion className="mt-10">
+            <Accordion.Panel >
               <Accordion.Title>
-                <p className="text-start text-black text-lg font-medium">
+                <p className="text-start  text-gray-600 text-lg font-medium">
 
                   Transparencia colaborativa
                 </p>
@@ -317,7 +322,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                     type="button"
                     onClick={() => { }}
                     className="flex items-center justify-center w-1/2 text-lg tracking-wide
-                                text-gray-700 font-semibold bg-gray-200 rounded-xl border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
+                                text-gray-700 font-semibold bg-gray-50 rounded-xl border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
                   >
                     <span className="flex col-2 gap-6 ">
                       <FiCalendar className="w-5 h-5" />
@@ -381,7 +386,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
             </Accordion.Panel>
           </Accordion>
 
-
+<div className="mb-36"></div>
         </div >
 
       </div >

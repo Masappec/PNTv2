@@ -60,16 +60,16 @@ const LandingPresenter = (props: Props) => {
             <FormattedMessage id="search_by_tematic" />
           </p>
           <hr className="w-[96%] ml-24 border-gray-900 mt-28 mr-9 hidden xl:block" />
-          <hr className="w-[90%] ml-5 border-gray-500 mt-28 mr-9 xl:hidden" />
+          <hr className="w-[90%] ml-5 border-blue-300 mt-5 mb-1 mr-9 xl:hidden" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 lg:ml-5   md:ml-5 xl:-space-x-6 md:grid-cols-2 w-full 
+        <div className="grid grid-cols-1 lg:grid-cols-4 lg:ml-5   md:ml-5 xl:-space-x-6 md:grid-cols-2 w-full
         justify-center  mb-44 ">
           <CardConsulta
             icon={<BiBriefcaseAlt size={85} className="text-white bg-[#FFBD71] rounded-full py-5 px-2" />}
             title="Personal y Remuneraciones"
-            backgroundColor="hover:bg-orange-400  bg-orange-100 px-5 w-full"
-            color="text-black"
+            backgroundColor="hover:bg-orange-400  bg-orange-100 px-5 w-full "
+            color="text-black "
             content=" Encontrarás información sobre presupuesto participativo, consejo de coordinación regional, audiencias públicas, entre otros."
 
             classnames={"px-5 xl:mr-0 "}

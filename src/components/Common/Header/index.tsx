@@ -1,25 +1,21 @@
 import { Link } from "react-router-dom";
 import logo from "../../../assets/Home/logo-dpe 1.png";
 import { FormattedMessage } from "react-intl";
-import { AiOutlineMenu } from "react-icons/ai";
 
-interface Props {
-  onOpen: () => void;
-}
-const Header = (props: Props) => {
+const Header = () => {
   return (
-    <header className="border-b-2 border-gray-800 dark:border-primary-600 z-0">
-      <nav className="bg-white border-gray-800 px-4 lg:px-6 py-2.5 dark:bg-gray-800 z-0">
+    <header className="border-b-2 border-dark-400 dark:border-primary-600">
+      <nav className="bg-white border-gray-900 px-4 lg:px-6 py-2.5 dark:bg-gray-800 ">
         <div className="flex flex-wrap justify-between items-center mx-8 ">
           <a href="/" className="flex items-center ">
             <img
               src={logo}
-              className="mr-3 h-20 "
+              className="mr-3 xl:h-20 lg:h-20 h-12  "
               alt="Logo de la defensoria del pueblo"
               tabIndex={1}
             />
           </a>
-          <div className="hidden xl:flex lg:flex md:flex items-center lg:order-2">
+          <div className="items-center lg:order-2 pr-2 space-x-6 hidden md:block">
             <Link
               to="entidades"
               tabIndex={2}
@@ -57,20 +53,39 @@ const Header = (props: Props) => {
             >
               <FormattedMessage id="login" />
             </Link>
-
-          </div>
-          <div>
+            
             <button
-              onClick={props.onOpen}
               data-collapse-toggle="mobile-menu-2"
               type="button"
-              className="inline-flex  items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              className="inline-flex hidden items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               aria-controls="mobile-menu-2"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
-              <AiOutlineMenu size={25} />
-
+              <svg
+                className="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <svg
+                className="hidden w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
             </button>
           </div>
         </div>

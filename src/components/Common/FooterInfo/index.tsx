@@ -8,21 +8,21 @@ const FooterInfo = () => {
       <div className="sm:flex sm:items-center sm:justify-between "></div>
       <h5 className="font-bold text-2xl mt-20 mb-6 xl:ml-0 ml-4">Listado de Entidades</h5>
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between ">
-        <nav className="grid grid-cols-1 lg:grid-cols-5 justify-center  text-base text-justify mt-10  xl:pr-24  ">
+        <nav className="grid grid-cols-1 lg:grid-cols-5 justify-center  text-base text-justify sm:gap-[40px] xl:pr-24 ">
 
-          <a href="#" className="text-gray-200 hover:text-gray-200 mt-8 xl:mt-5 lg:mt-0  ">
+          <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0  ">
             Función Ejecutiva
           </a>
-          <a href="#" className="text-gray-200 hover:text-gray-200 mt-8 xl:mt-5 lg:mt-0 ">
+          <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0 ">
             Función Legislativa
           </a>
-          <a href="#" className="text-gray-200 hover:text-gray-200 mt-8 xl:mt-5 lg:mt-0 ">
+          <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0 ">
             Función Judicial
           </a>
-          <a href="#" className="text-gray-200 hover:text-gray-200 mt-8 xl:mt-5 lg:mt-0 xl:-ml-10  ">
+          <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0 xl:-ml-10  ">
             Función de Transparencia
           </a>
-          <a href="#" className="text-gray-200 hover:text-gray-200 mt-8 xl:mt-5 lg:mt-0 w-[304px] ">
+          <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0 w-[300px] text-start   ">
             Gobiernos Autónomos Descentralizados
           </a>
 
@@ -32,16 +32,16 @@ const FooterInfo = () => {
 
       <div className="container mx-auto flex flex-col md:flex-row mt-10 ">
         <nav className="grid grid-cols-3 xl:flex xl:space-x-14 
-        xl:justify-center text-base text-justify mt-10
-        ml-5 xl:ml-0
+        xl:justify-center text-base text-justify mt-4
+        ml-8 xl:ml-0
         ">
           <span className="col-span-3">Siguenos</span>
           <div className="grid grid-cols-2 space-x-10">
 
-            <a href="#" className="text-gray-200 hover:text-gray-200 xl:mt-0 mt-5">
+            <a href="#" className="text-gray-200 hover:text-gray-200 xl:mt-0 mt-10">
               <SiFacebook size={27} />
             </a>
-            <a href="#" className="text-gray-200 hover:text-gray-200 xl:mt-0 mt-5">
+            <a href="#" className="text-gray-200 hover:text-gray-200 xl:mt-0 mt-10">
               <FaXTwitter size={27} />
             </a>
           </div>
@@ -68,18 +68,18 @@ const FooterInfo = () => {
           </div>
         </nav>
       </div>
-      <div className="container mx-auto flex flex-col  md:flex-row mt-20 mb-2">
+      <div className="container mx-auto flex flex-col  md:flex-row mt-10 mb-2">
         <nav className="flex flex-col-reverse xl:flex-row  lg:grid-cols-3 xl:space-x-60 xl:-ml-12   
-        xl:justify-center text-sm xl:text-justify -mt-6  ">
+        xl:justify-center text-sm xl:text-justify -mt-6 sm:gap-[40px] ">
           <div className="xl:space-x-20 xl:whitespace-nowrap flex justify-center xl:justify-start mt-5 xl:mt-0">
             <span className="text-slate-500 xl:whitespace-nowrap whitespace-break-spaces
-            text-center 
+            text-center
             ">
               Plataforma Nacional de Transparencia  {"\n"}&copy; Todos los derechos reservados
             </span>
           </div>
           <div className="flex flex-col xl:flex-row xl:space-x-20 xl:whitespace-nowrap 
-          text-center xl:text-left xl:justify-start xl:mt-0 mt-5">
+          text-start ml-10 xl:text-left xl:justify-start xl:mt-0 mt-5">
 
             <a href="#" className="text-gray-200 hover:text-gray-200 xl:-ml-12  
             

@@ -97,7 +97,7 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
                 />
               </div>
               <div className="flex flex-col-2  xl:mt-6   mt-5">
-                <div className="text-zinc-300 font-semibold text-sm ml-16">
+                <div className="text-zinc-300 font-semibold text-xs ml-4 ">
                   <Checkbox
                     id={""}
                     checked={props.remenber}
@@ -105,7 +105,7 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
                     label={"Recordarme por 30 días"}
                   />
                 </div>
-                <div className="text-primary-500 text-sm -ml-5 font-semibold">
+                <div className="text-primary-500 text-xs ml-6 font-semibold">
                   {" "}
                   <Contrasenia
                     text="Reiniciar Contraseña"
@@ -127,13 +127,20 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col-2  mt-6  ">
-              <span className="ml-24  text-slate-500  ">
+            <div className="flex flex-col-2  mt-6 mb-12 ">
+              <span className="xl:ml-24 ml-9   text-slate-500  ">
                 ¿Aún no tienes cuenta?
               </span>
               <div className="text-primary-500 text-base font-semibold lg:-ml-7 md:-ml-7">
                 <Contrasenia text="Registrate" path="/registro" />{" "}
               </div>
+              
+            </div>
+            <div className="flex flex-row justify-center w-full items-center visible xl:hidden md:hidden bg-[#F4FBFE] h-full">
+            <p className="mt-12 mb-16 text-base text-gray-500 font-medium   ">
+              Portal Nacional
+              de Transparencia
+            </p>
             </div>
           </form>
         </div>
