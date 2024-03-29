@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom"
 
 const EstablishmentCreateContainer = ({
     usecase
-}:{
-    usecase:EstablishmentUseCase
+}: {
+    usecase: EstablishmentUseCase
 }) => {
 
 
@@ -39,7 +39,7 @@ const EstablishmentCreateContainer = ({
 
 
 
-    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
         usecase.Create(data).then((res) => {
@@ -51,19 +51,19 @@ const EstablishmentCreateContainer = ({
             setError(err.message)
             setLoading(false)
         })
-        
-            
+
+
     }
     const handleChageLogo = (e: ChangeEvent<HTMLInputElement>) => {
-        
+
         const file = e.target.files;
         if (!file) return
         const image = file[0]
         setData({ ...data, logo: image })
-        
+
     }
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 

@@ -27,9 +27,9 @@ interface UserEditPresenterProps {
 
 const UserEditPresenter = (props: UserEditPresenterProps) => {
     if (!props.data.id && props.loading)
-    return (<div className="flex items-center py-5 justify-center">
-        <Spinner />
-    </div>)
+        return (<div className="flex items-center py-5 justify-center">
+            <Spinner />
+        </div>)
 
 
     return (
@@ -107,7 +107,7 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                 onChange={(e) => props.onChangeRole(e)}
                             />
                         }
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid xl:grid-cols-3 gap-4">
 
                             {
                                 props.fields.map((field) => {

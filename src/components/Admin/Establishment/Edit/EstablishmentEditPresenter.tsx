@@ -24,9 +24,9 @@ interface Props {
 const EstablishmentEditPresenter = (props: Props) => {
 
     if (!props.data.id) return (<div className="flex items-center py-5 justify-center">
-        <Spinner /> 
+        <Spinner />
     </div>)
-    
+
     return (
 
         <div className="container">
@@ -51,7 +51,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </p>
                         </div>
                         <div className="flex items-center mt-4 gap-x-3">
-                          
+
                             <button
                                 type="button"
                                 onClick={props.onCancel}
@@ -64,27 +64,27 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </button>
                             {
                                 props.loading ? <Spinner /> : <button
-                                type="submit"
-                                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
+                                    type="submit"
+                                    className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
                                 text-white transition-colors duration-200 bg-green-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                                <LuCheck className="w-5 h-5" />
-                                <span>
-                                    Crear
-                                </span>
-                            </button>
+                                    <LuCheck className="w-5 h-5" />
+                                    <span>
+                                        Crear
+                                    </span>
+                                </button>
                             }
-                            
+
                         </div>
                     </div>
 
                     <div className="mt-10">
-                    {
+                        {
                             props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
                         }
                         {
                             props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
                         }
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid xl:grid-cols-3 gap-4">
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Nombre"} width="w-60"
@@ -104,7 +104,7 @@ const EstablishmentEditPresenter = (props: Props) => {
 
 
                             <div className="flex  flex-col m-2">
-                                <Dropzone 
+                                <Dropzone
                                     handleChageLogo={props.onChageLogo}
                                     id="logo"
                                     multiple={false}

@@ -6,6 +6,7 @@ import Dropzone from "../../../Common/Dropzone";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
 import { Button } from 'flowbite-react';
+import Select from "../../../Common/Select";
 
 
 
@@ -13,7 +14,7 @@ interface Props {
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
     onCancel: () => void;
     data: EstablishmentEntity;
-    setData: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    setData: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
     onChageLogo: (e: React.ChangeEvent<HTMLInputElement>) => void;
     loading: boolean;
     error: string;
@@ -31,7 +32,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
 
 
             </div>
-            <form className="flex  mt-5" onSubmit={props.handleSubmit}>
+            <form className="flex xl:flex-row  flex-col mt-5" onSubmit={props.handleSubmit}>
                 <section className="container px-4 mx-auto">
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div>
@@ -48,7 +49,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                             </p>
                         </div>
                         <div className="flex items-center mt-4 gap-x-3">
-                          
+
                             <Button
                                 type="button"
                                 onClick={props.onCancel}
@@ -61,27 +62,27 @@ const EstablishmentCreatePresenter = (props: Props) => {
                             </Button>
                             {
                                 props.loading ? <Spinner /> : <Button
-                                type="submit"
-                                className="flex items-center justify-center w-1/2 text-sm tracking-wide
+                                    type="submit"
+                                    className="flex items-center justify-center w-1/2 text-sm tracking-wide
                                 text-white transition-colors duration-200 bg-green-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                                <LuCheck className="w-5 h-5" />
-                                <span>
-                                    Crear
-                                </span>
-                            </Button>
+                                    <LuCheck className="w-5 h-5" />
+                                    <span>
+                                        Crear
+                                    </span>
+                                </Button>
                             }
-                            
+
                         </div>
                     </div>
 
                     <div className="mt-10">
-                    {
+                        {
                             props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
                         }
                         {
                             props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
                         }
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid xl:grid-cols-3 gap-4">
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Nombre"} width="w-60"
@@ -90,6 +91,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>
+
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Abreviación"} width="w-60"
@@ -98,10 +100,59 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>
-
-
                             <div className="flex  flex-col m-2">
-                                <Dropzone 
+                                <label className="text-sm font-medium text-gray-800 dark:text-white">Dirección</label>
+                                <textarea
+                                    placeholder={"Dirección"}
+                                    value={props.data.address || ""}
+                                    name="address"
+                                    className="w-full h-20 p-2 border border-gray-300 rounded-lg 
+                                    focus:outline-none focus:border-blue-500"
+                                    onChange={(e) => props.setData(e)}
+                                    rows={1}
+                                />
+                            </div>
+                            <div className="flex  flex-col m-2">
+                                <Select
+                                    placeholder="Tipo de institución"
+                                    name="type_organization"
+                                    value={props.data.type_organization || ""}
+                                    onChange={(e) => props.setData(e)}
+                                    options={[
+                                        { value: "Pública", label: "Pública" },
+                                        { value: "Privada", label: "Privada" },
+                                        { value: "Mixta", label: "Mixta" }
+                                    ]}
+                                />
+                            </div>
+                            <div className="flex  flex-col m-2">
+                                <Select
+                                    placeholder="Función de la institución"
+                                    name="function_organization"
+                                    value={props.data.function_organization || ""}
+                                    onChange={(e) => props.setData(e)}
+                                    options={[
+                                        { value: "Pública", label: "Pública" },
+                                        { value: "Privada", label: "Privada" },
+                                        { value: "Mixta", label: "Mixta" }
+                                    ]}
+                                />
+                            </div>
+                            <div className="flex  flex-col m-2">
+                                <Select
+                                    placeholder="Tipo de organización"
+                                    name="type_organization"
+                                    value={props.data.type_organization || ""}
+                                    onChange={(e) => props.setData(e)}
+                                    options={[
+                                        { value: "Pública", label: "Pública" },
+                                        { value: "Privada", label: "Privada" },
+                                        { value: "Mixta", label: "Mixta" }
+                                    ]}
+                                />
+                            </div>
+                            <div className="flex  flex-col m-2">
+                                <Dropzone
                                     handleChageLogo={props.onChageLogo}
                                     id="logo"
                                     multiple={false}

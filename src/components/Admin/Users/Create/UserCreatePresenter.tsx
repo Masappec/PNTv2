@@ -104,13 +104,13 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                 onChange={(e) => props.onChangeRole(e)}
                             />
                         }
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid xl:grid-cols-3 gap-4">
 
-                        {
+                            {
                                 props.fields.map((field) => {
                                     return (
                                         field.type_field === 'select' ? <div className="flex  flex-col m-2 ">
-                                            
+
                                             <Select
                                                 placeholder={field.description}
                                                 value={props.data[field.name as keyof UserEntity] as string}
@@ -124,21 +124,21 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                                             value: option.id + "",
                                                             label: option.name
                                                         }
-                                                    })||[])
+                                                    }) || [])
                                                 }
                                             />
                                         </div> :
-                                        <div className="flex  flex-col m-2">
-                                            <Input type={field.type_field}
-                                             placeholder={field.description} width="w-60"
-                                                value={props.data[field.name as keyof UserEntity] as string}
-                                                onChange={(e) => props.setData(field.name, e.target.value)}
-                                            />
-                                        </div>
+                                            <div className="flex  flex-col m-2">
+                                                <Input type={field.type_field}
+                                                    placeholder={field.description} width="w-60"
+                                                    value={props.data[field.name as keyof UserEntity] as string}
+                                                    onChange={(e) => props.setData(field.name, e.target.value)}
+                                                />
+                                            </div>
                                     )
                                 })
                             }
-                            
+
 
 
                         </div>

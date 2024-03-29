@@ -70,7 +70,7 @@ const menu = [
     name: 'Roles',
     path: '/admin/roles',
     visible: true,
-    permission_required: 'view_role',
+    permission_required: 'view_group',
     icon: <RiShieldUserLine size={25} className="text-slate-500" />,
     element: <RoleList />
   },
@@ -78,7 +78,7 @@ const menu = [
     name: 'Crear Rol',
     path: '/admin/roles/create',
     visible: false,
-    permission_required: 'add_role',
+    permission_required: 'add_group',
     icon: <RiShieldUserLine size={25} className="text-slate-500" />,
     element: <RoleCreate />
   },
@@ -86,7 +86,7 @@ const menu = [
     name: 'Editar Rol',
     path: '/admin/roles/:id',
     visible: false,
-    permission_required: 'change_role',
+    permission_required: 'change_group',
     icon: <RiShieldUserLine size={25} className="text-slate-500" />,
     element: <RoleEdit />
   },

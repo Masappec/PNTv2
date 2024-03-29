@@ -32,7 +32,7 @@ function TableInfo<T>(props: TableProps<T>) {
 
     return (
 
-        <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden w-full border border-gray-200 ">
+        <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden xl:w-full border border-gray-200 ">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-6 p-4">
                 <div className="w-full md:w-auto">
                     <span className="flex items-center text-lg font-bold">

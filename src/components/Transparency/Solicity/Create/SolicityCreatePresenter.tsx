@@ -11,7 +11,7 @@ interface Props {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
   onSave: () => void;
   onSend: () => void;
-  data: [][];
+  data: [];
 }
 const SolicityCreatePresenter = (props: Props) => {
 

@@ -14,7 +14,7 @@ const LayouClient = (props: Props) => {
 
   const [visible, setVisible] = useState(false);
   return (
-    <div className="relative">
+    <div className="">
       <MenuMobile
         onClose={() => setVisible(false)}
         open={visible}
