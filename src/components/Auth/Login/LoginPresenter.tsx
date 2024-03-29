@@ -29,16 +29,16 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
       <header className="border-b-2 border-dark-400 dark:border-primary-600">
         <nav className="bg-primary-600 border-gray-900 px-4 lg:px-6 py-10 dark:bg-gray-800"></nav>
       </header>
-      <div className="bg-white h-screen md:flex lg:flex xl:flex">
-        <div className="items-center hidden lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-full w-4/6  ">
-          <div className=" border-l-2 border-gray-600 ml-2 md:ml-10  justify-items-start h-full "></div>
+      <div className="bg-white h-screen md:flex lg:flex xl:flex ">
+        <div className="items-center hidden lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-full w-2/5  ">
+          <div className=" border-l-2 border-gray-400 ml-2 md:ml-16  justify-items-start h-full "></div>
           <div className=" pl-10  relative">
             <img
               src={logo}
               alt="imagen"
-              className=" flex items-center justify-center w-96 max-w-screen-2xl h-auto mb-60 "
+              className=" flex items-center justify-center w-96 max-w-screen-2xl h-auto mb-60 -mt-32 "
             />
-            <p className="mt-40 text-2xl text-slate-400  ">
+            <p className="mt-36 text-2xl text-slate-400  ">
               Portal <br /> Nacional <br />
               de Transparencia
             </p>

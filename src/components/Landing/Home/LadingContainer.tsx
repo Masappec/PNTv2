@@ -10,6 +10,10 @@ interface Props {
 const LandingContainer = (props: Props) => {
     const [faq, setFaq] = useState<FrequencyAsked[]>([])
 
+    
+
+    
+
     useEffect(() => {
         props.usecase.getPedagogyArea().then((res)=>{
             setFaq(res.faq)

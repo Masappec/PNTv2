@@ -87,12 +87,12 @@ const Hero = () => {
             hidden xl:flex lg:flex
             flex-auto ">
               <div className=" relative  ">
-                <TextInput
+                <input
                   id="buscar"
                   type="text"
-                  placeholder="Buscar por entidad pública"
+                  placeholder="Escribe aquí la entidad que deseas consultar"
                   alt="Buscar por entidad pública, por ejemplo: Ministerio de Educación"
-                  className="w-[730px] h-10 mt-4 mr-[150px] pb-14  "
+                  className="w-[730px] h-[58px] mt-4 mr-[150px] border-t-2 border-gray-900  rounded-full py-3 text-lg justify-start pl-6"
                   tabIndex={7}
                   theme={inputSearchTheme}
                   sizing="lg"
