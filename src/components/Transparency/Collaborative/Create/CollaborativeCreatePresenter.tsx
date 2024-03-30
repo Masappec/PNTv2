@@ -27,7 +27,7 @@ interface Props {
 
 const CollaborativeCreatePresenter= (props:Props)=>{
 return(
-    <div className="container">
+    <div className="container -ml-20">
     <div className="flex items-center py-2 justify-center"></div>
     <form className="flex  -top-32 " >
       <section className="container px-2 mx-auto w-auto">
@@ -35,7 +35,7 @@ return(
           <div>
             <div className="flex items-center gap-x-3">
               <h2 className="text-2xl font-medium text-gray-800 dark:text-white">
-                Transparencia Activa
+                Transparencia Colaborativa
               </h2>
             </div>
             <div className="flex items-center gap-x-3 mt-20">

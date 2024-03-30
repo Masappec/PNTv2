@@ -1,4 +1,4 @@
-import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine, RiCheckFill } from "react-icons/ri";
+import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine, RiCheckFill, RiCheckboxMultipleLine } from "react-icons/ri";
 import UserList from "../interfaces/web/Admin/User/List";
 import UserCreate from "../interfaces/web/Admin/User/Create";
 import RoleList from "../interfaces/web/Admin/Role/List";
@@ -164,7 +164,7 @@ const menu = [
     name: 'T.Focalizada',
     path: '/admin/transparency/focalized',
     visible: true,
-    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    icon: <RiCheckboxMultipleLine  size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
     element: <FocalizedList />
   },
