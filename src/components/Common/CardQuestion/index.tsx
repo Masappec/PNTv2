@@ -32,7 +32,7 @@ const CardQuestion = (props: Props) => {
                 
             
             }}></Icon>
-            <h5 className="text-2xl w-8/12 font-extrabold tracking-tight text-gray-900 dark:text-white ml-4 ">
+            <h5 className="text-2xl w-8/12 sm:w- font-extrabold tracking-tight text-gray-900 dark:text-white ml-4 ">
                 {props.title}
             </h5>
             <p className="font-semibold w-10/12 text-black  dark:text-gray-400 h-full text-lg -mb-10 ml-4">

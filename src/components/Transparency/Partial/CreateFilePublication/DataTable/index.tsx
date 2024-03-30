@@ -11,7 +11,7 @@ interface IDataTablePartial {
     onCancel: () => void
     handleSave: (file: File, name: string, description: string, index: number) => void
     handleCancel: () => void
-    file: File | null
+    file?: File | null
     isSaved: boolean,
     title?: string
 
