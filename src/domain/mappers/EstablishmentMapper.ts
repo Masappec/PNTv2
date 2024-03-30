@@ -2,9 +2,9 @@ import { EstablishmentCreateDTO, EstablishmentDetailDTO, EstablishmentListDto } 
 import EstablishmentEntity from "../entities/Establishment";
 
 
-class EstablishmentMapper{
+class EstablishmentMapper {
 
-    static apiToDomain(data:EstablishmentListDto):EstablishmentEntity{
+    static apiToDomain(data: EstablishmentListDto): EstablishmentEntity {
         return {
             id: data.id,
             name: data.name,
@@ -18,11 +18,12 @@ class EstablishmentMapper{
             logo: data.logo,
             is_active: data.is_active,
             slug: data.slug,
+
         }
     }
 
 
-    static apiToDomainDetail(data:EstablishmentDetailDTO):EstablishmentEntity{
+    static apiToDomainDetail(data: EstablishmentDetailDTO): EstablishmentEntity {
         return {
             id: data.id,
             name: data.name,
@@ -40,11 +41,16 @@ class EstablishmentMapper{
             highest_committe: data.highest_committe,
             job_committe: data.job_committe,
             last_name_committe: data.last_name_committe,
+            address: data.address,
+            function_organization: data.function_organization,
+            type_institution: data.type_institution,
+            type_organization: data.type_organization,
+
         }
     }
 
 
-    static domainToApi(data:EstablishmentEntity):EstablishmentCreateDTO{
+    static domainToApi(data: EstablishmentEntity): EstablishmentCreateDTO {
         return {
             name: data.name,
             abbreviation: data.abbreviation,
@@ -61,8 +67,13 @@ class EstablishmentMapper{
             highest_committe: data.highest_committe || '',
             job_committe: data.job_committe || '',
             last_name_committe: data.last_name_committe || '',
-            extra_numerals:data.extra_numerals||''
-            
+            extra_numerals: data.extra_numerals || '',
+
+            address: data.address || '',
+            function_organization: data.function_organization || '',
+            type_institution: data.type_institution || '',
+            type_organization: data.type_organization || '',
+
         }
     }
 }

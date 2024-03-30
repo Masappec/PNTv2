@@ -129,7 +129,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                     className="flex items-center justify-center 
                      text-lg tracking-wide
                      hover:text-white
-                     rounded-xl
+                     rounded-xl 
                       text-gray-700 font-semibold bg-gray-200  border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
                   >
                     <span className="flex col-2 gap-6 ">

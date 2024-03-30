@@ -1,8 +1,8 @@
 import { BaseObject } from "..";
 
 
-export interface EstablishmentListDto extends BaseObject{
-    
+export interface EstablishmentListDto extends BaseObject {
+
     id: number;
     name: string;
     code: string;
@@ -21,7 +21,7 @@ export interface EstablishmentListDto extends BaseObject{
 
 
 
-export interface EstablishmentCreateDTO{
+export interface EstablishmentCreateDTO {
     name: string,
     code: string,
     logo: File,
@@ -37,11 +37,16 @@ export interface EstablishmentCreateDTO{
     job_committe: string,
     email_committe: string,
     email_accesstoinformation: string
-    extra_numerals:string
+    extra_numerals: string
+    address?: string;
+    type_organization?: string;
+    function_organization?: string;
+    type_institution?: string;
+
 }
 
-export interface EstablishmentDetailDTO{
-    id : number,
+export interface EstablishmentDetailDTO {
+    id: number,
     name: string,
     code: string,
     logo: File,
@@ -56,6 +61,9 @@ export interface EstablishmentDetailDTO{
     last_name_committe: string,
     job_committe: string,
     email_committe: string,
-    email_accesstoinformation: string
+    email_accesstoinformation: string,
+    address?: string;
+    type_organization?: string;
+    function_organization?: string;
+    type_institution?: string;
 }
- 
