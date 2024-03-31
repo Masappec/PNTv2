@@ -1,4 +1,5 @@
 import { BaseObject } from "..";
+import { TemplateDetail } from "../TemplateFile/inteface";
 
 interface PartialTemplateDto {
   id: number;
@@ -16,3 +17,17 @@ export interface NumeralDTO extends BaseObject {
   published: boolean;
 }
 
+
+
+
+export interface NumeralDetailDTO extends BaseObject {
+
+  id: number;
+  templates: TemplateDetail[];
+  name: string;
+  description: string;
+  is_default: boolean;
+  parent: number | null;
+
+
+}

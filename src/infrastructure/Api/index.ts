@@ -76,9 +76,9 @@ export interface BaseObject {
     deleted?: boolean;
     deleted_at?: string;
     ip?: string;
-    user_created?: number;
-    user_updated?: number;
-    user_deleted?: number;
+    user_created?: string;
+    user_updated?: string;
+    user_deleted?: string;
 
 }
 export default api;

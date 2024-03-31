@@ -70,7 +70,7 @@ interface Props {
 
     onSaveTable: (data: Row[][], index: number) => void;
     files: {
-        file: File |string| null,
+        file: File | string | null,
         type: "table" | "file" | "url",
         error: string,
         loading: boolean,
@@ -82,7 +82,7 @@ interface Props {
     onAddDataSet: (type: "table" | "file" | "url") => void;
     onDownloadFile: (file: File) => void;
 
-    onSaveFile: (file: File|string|null, name: string, description: string, index: number) => void
+    onSaveFile: (file: File | string | null, name: string, description: string, index: number) => void
     onRemoveFile: (index: number) => void
 
     publication: PublicationEntity,
@@ -165,66 +165,66 @@ const PublicationCreatePresenter = (props: Props) => {
                         }
 
 
-                                <div className="grid grid-cols-2 ">
+                        <div className="grid grid-cols-2 ">
+                            <div className="flex  flex-col m-2">
+                                <Input type={"text"}
+                                    placeholder={"Titulo de la publicación"} width="w-60"
+                                    value={props.publication.name}
+                                    name="name"
+                                    onChange={(e) => props.onChangeTitle(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex start-4 mt-4 gap-5">
+                                <Checkbox label="Transparencia Activa" id="transparenciaActiva"
+                                    onChange={() => { props.onChageTypePublication("TA") }}
+                                    checked={props.typePublication === "TA"}
+
+                                />
+                                <Checkbox label="Transparencia Colaborativa" id="transparenciaColaborativa"
+                                    onChange={() => { props.onChageTypePublication("TC") }}
+                                    checked={props.typePublication === "TC"}
+
+
+                                />
+                            </div>
+                            <div className="flex  flex-col m-2">
+                                <Label htmlFor="" value="Descripción" />
+                                <Textarea
+                                    placeholder={"Descripción"}
+                                    value={props.publication.description}
+                                    name="abbreviation"
+                                    onChange={(e) => props.onChangeDescription(e.target.value)}
+                                />
+                            </div>
+                            {
+                                props.typePublication === "TC" && (
                                     <div className="flex  flex-col m-2">
-                                        <Input type={"text"}
-                                            placeholder={"Titulo de la publicación"} width="w-60"
-                                            value={props.publication.name}
-                                            name="name"
-                                            onChange={(e) => props.onChangeTitle(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="flex start-4 mt-4 gap-5">
-                                        <Checkbox label="Transparencia Activa" id="transparenciaActiva"
-                                            onChange={() => { props.onChageTypePublication("TA") }}
-                                            checked={props.typePublication === "TA"}
-
-                                        />
-                                        <Checkbox label="Transparencia Colaborativa" id="transparenciaColaborativa"
-                                            onChange={() => { props.onChageTypePublication("TC") }}
-                                            checked={props.typePublication === "TC"}
-
-
-                                        />
-                                    </div>
-                                    <div className="flex  flex-col m-2">
-                                        <Label htmlFor="" value="Descripción" />
+                                        <Label htmlFor="" value="Evento" />
                                         <Textarea
-                                            placeholder={"Descripción"}
-                                            value={props.publication.description}
-                                            name="abbreviation"
-                                            onChange={(e) => props.onChangeDescription(e.target.value)}
+                                            placeholder={"Evento"}
+                                            value={props.publication.notes}
+                                            name=""
+                                            onChange={(e) => props.onChangeEvent(e.target.value)}
                                         />
-                                    </div>
-                                    {
-                                        props.typePublication === "TC" && (
-                                            <div className="flex  flex-col m-2">
-                                                <Label htmlFor="" value="Evento" />
-                                                <Textarea
-                                                    placeholder={"Evento"}
-                                                    value={props.publication.notes}
-                                                    name=""
-                                                    onChange={(e) => props.onChangeEvent(e.target.value)}
-                                                />
 
 
 
-                                            </div>)
-                                    }
-                                    <div className=" flex  flex-col m-2">
-                                        <div className="mb-2 block">
-                                            <Label htmlFor="" value="Etiquetas" />
-                                        </div>
-                                        <CreatableSelect isClearable options={props.tags.map((tag) => ({ value: tag.id, label: tag.name }))}
-                                            isMulti={true}
-                                            onInputChange={(e) => props.onFilterTag(e)}
-                                            onCreateOption={(e) => props.onCreateTag(e)}
-                                            onChange={(newValue) => props.onSelectedTag(newValue)}
-
-                                        />
-                                    </div>
-
+                                    </div>)
+                            }
+                            <div className=" flex  flex-col m-2">
+                                <div className="mb-2 block">
+                                    <Label htmlFor="" value="Etiquetas" />
                                 </div>
+                                <CreatableSelect isClearable options={props.tags.map((tag) => ({ value: tag.id, label: tag.name }))}
+                                    isMulti={true}
+                                    onInputChange={(e) => props.onFilterTag(e)}
+                                    onCreateOption={(e) => props.onCreateTag(e)}
+                                    onChange={(newValue) => props.onSelectedTag(newValue)}
+
+                                />
+                            </div>
+
+                        </div>
 
 
 
@@ -238,60 +238,60 @@ const PublicationCreatePresenter = (props: Props) => {
 
 
                         <div className="flex flex-col m-2">
-                                <h3 className="text-lg font-medium text-gray-800 dark:text-white">
-                                    Datos de la publicación
-                                </h3>
+                            <h3 className="text-lg font-medium text-gray-800 dark:text-white">
+                                Datos de la publicación
+                            </h3>
 
-                                <div className="flex flex-row m-2">
-                            {
-                                props.publication.file_publication?.map((file,index) => {
-                                    return (
-                                        <div className="flex flex-col w-40 m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
-                                            <FaFileCsv className=" text-green-600" size={30} />
-                                            <span className=" text-gray-500 dark:text-gray-300">
-                                                {file.name}
-                                            </span>
-                                            <span className=" text-gray-500 text-sm dark:text-gray-300">
-                                                {file.description}
-                                            </span>
-                                            <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
-                                            <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromPublication(index)} />
-                                            </span>
-                                        </div>
-                                    )
+                            <div className="flex flex-row m-2">
+                                {
+                                    props.publication.file_publication?.map((file, index) => {
+                                        return (
+                                            <div className="flex flex-col w-40 m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
+                                                <FaFileCsv className=" text-green-600" size={30} />
+                                                <span className=" text-gray-500 dark:text-gray-300">
+                                                    {file.name}
+                                                </span>
+                                                <span className=" text-gray-500 text-sm dark:text-gray-300">
+                                                    {file.description}
+                                                </span>
+                                                <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
+                                                    <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromPublication(index)} />
+                                                </span>
+                                            </div>
+                                        )
 
-                                })
-                            }
+                                    })
+                                }
                             </div>
                             <div className="flex flex-col m-2">
 
-                            <h3 className="text-lg font-medium text-gray-800 dark:text-white">
+                                <h3 className="text-lg font-medium text-gray-800 dark:text-white">
                                     Datos de la publicación
                                 </h3>
-                            <div className="flex flex-row m-2">
+                                <div className="flex flex-row m-2">
 
-                                
-                           
-                            { 
-                                props.publication.attachment?.map((file,index) => {
-                                    return (
-                                        <div className="flex flex-col m-2 w-50 bg-slate-100 p-5 rounded-lg shadow-xl">
-                                            <FaLink className=" text-primary-600" size={30} />
-                                            <span className=" text-gray-500 dark:text-gray-300">
-                                                {file.url_download.slice(0,20)}...
-                                            </span>
-                                            <span className=" text-gray-500 text-sm dark:text-gray-300">
-                                                {file.description}
-                                            </span>
-                                            <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
-                                            <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromPublication(index)} />
-                                            </span>
-                                        </div>
-                                    )
 
-                                })
-                            }
-                            </div>
+
+                                    {
+                                        props.publication.attachment?.map((file, index) => {
+                                            return (
+                                                <div className="flex flex-col m-2 w-50 bg-slate-100 p-5 rounded-lg shadow-xl">
+                                                    <FaLink className=" text-primary-600" size={30} />
+                                                    <span className=" text-gray-500 dark:text-gray-300">
+                                                        {file.url_download.slice(0, 20)}...
+                                                    </span>
+                                                    <span className=" text-gray-500 text-sm dark:text-gray-300">
+                                                        {file.description}
+                                                    </span>
+                                                    <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
+                                                        <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromPublication(index)} />
+                                                    </span>
+                                                </div>
+                                            )
+
+                                        })
+                                    }
+                                </div>
                             </div>
                         </div>
 
@@ -304,16 +304,16 @@ const PublicationCreatePresenter = (props: Props) => {
 
                                     if (file.type === "table" && typeof file.file !== "string") {
                                         return (
-                                           <DataTablePartial
-                                            data={props.data}
-                                            handleCancel={() => props.onRemoveFile(index)}
-                                            index={index}
-                                            onCancel={() => props.onRemoveFile(index)}
-                                            handleSave={(file,name,description) => props.onSaveFile(file,name,description,index)}
-                                            file={file.file}
-                                            onSaveTable={(data) => props.onSaveTable(data, index)}
-                                            key={index}
-                                            isSaved={file.file_publication != null}
+                                            <DataTablePartial
+                                                data={props.data}
+                                                handleCancel={() => props.onRemoveFile(index)}
+                                                index={index}
+                                                onCancel={() => props.onRemoveFile(index)}
+                                                handleSave={(file) => props.onSaveFile(file, "", "", index)}
+                                                file={file.file}
+                                                onSaveTable={(data) => props.onSaveTable(data, index)}
+                                                key={index}
+                                                isSaved={file.file_publication != null}
                                             />
                                         )
                                     }
@@ -368,19 +368,19 @@ const PublicationCreatePresenter = (props: Props) => {
                         <Tabs.Item title="URL">
                             {
                                 props.files.map((file, index) => {
-                                    if (file.type === "url" ) {
-                                    return <FileUrlPartial
-                                        error={file.error}
-                                        file={file.file}
-                                        index={index}
-                                        loading={file.loading}
-                                        onDownloadFile={props.onDownloadFile}
-                                        onSaveDateUrl={props.onSaveDateUrl}
-                                        key={index}
-                                        onSaveFile={(file, name, description) => props.onSaveFile(file, name, description, index)}
-                                        onRemoveFile={(index) => props.onRemoveFile(index)}
-                                        isSaved={file.file_publication != null}
-                                    />
+                                    if (file.type === "url") {
+                                        return <FileUrlPartial
+                                            error={file.error}
+                                            file={file.file}
+                                            index={index}
+                                            loading={file.loading}
+                                            onDownloadFile={props.onDownloadFile}
+                                            onSaveDateUrl={props.onSaveDateUrl}
+                                            key={index}
+                                            onSaveFile={(file, name, description) => props.onSaveFile(file, name, description, index)}
+                                            onRemoveFile={(index) => props.onRemoveFile(index)}
+                                            isSaved={file.file_publication != null}
+                                        />
                                     }
                                 })
                             }

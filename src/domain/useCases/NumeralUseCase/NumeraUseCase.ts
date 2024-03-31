@@ -3,20 +3,26 @@ import NumeralService from "../../../infrastructure/Services/NumeralService";
 
 
 
-class NumeralUseCase{
+class NumeralUseCase {
     constructor(
-        private readonly service:NumeralService,
+        private readonly service: NumeralService,
         private readonly serviceEstablishment: EstablishmentService
-    ){}
+    ) { }
 
-    async getNumeralByEstablishment(id:number){
+    async getNumeralByEstablishment(id: number) {
         return await this.service.getNumeralByEstablishment(id)
     }
 
-    async getNumeralByUserInSession(){
+    async getNumeralByUserInSession() {
         const establisment = await this.serviceEstablishment.getByUserSession()
-        return await this.service.getNumeralByEstablishment(establisment.id ||0)
+        return await this.service.getNumeralByEstablishment(establisment.id || 0)
 
+    }
+
+
+    async getNumeralById(id: number) {
+        const numeral = await this.service.getNumeralById(id)
+        return numeral
     }
 }
 

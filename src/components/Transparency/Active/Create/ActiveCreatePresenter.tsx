@@ -7,6 +7,8 @@ import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
 import { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
 import { HiInformationCircle } from "react-icons/hi";
 import DataTablePartial from "../../Partial/CreateFilePublication/DataTable";
+import { Row } from "../../../../utils/interface";
+import NumeralDetail from "../../../../domain/entities/NumeralDetail";
 
 interface Props {
 
@@ -15,6 +17,7 @@ interface Props {
   onEdit: () => void;
   setData: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChageFile: (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => void;
+  onSaveTable: (data: Row[][], template: TemplateFileEntity) => void;
   loading: boolean;
   error: string;
   success: string;
@@ -24,6 +27,9 @@ interface Props {
   templates: TemplateFileEntity[];
   filesPublication: FilePublicationEntity[];
   onChageLink: (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => void;
+  dataTable: Array<{ id: number, data: Row[][] }>;
+  numeralDetail: NumeralDetail | null;
+  onGenerateFileFromTable: (file: File, index: TemplateFileEntity) => void;
 }
 
 const ActiveCreatePresenter = (props: Props) => {
@@ -55,18 +61,7 @@ const ActiveCreatePresenter = (props: Props) => {
 
             <div className="flex items-center mt-4 +
                 w-auto gap-x-3">
-              <Button
-                type="button"
-                disabled={props.isDisabled}
-                onClick={props.onEdit}
-                className="flex items-center justify-center w-1/2 text-sm tracking-wide
-                            text-black transition-colors duration-200 bg-slate-100 rounded-lg shrink-0 sm:w-auto gap-x-2 
-                            hover:text-white hover:bg-primary-700
-                            dark:hover:bg-blue-200 border-slate-300"
-              >
-                <FaPen className="w-5 h-5 " />
-                <span>Editar</span>
-              </Button>
+
               {props.loading ? (
                 <Spinner />
               ) : (
@@ -115,7 +110,7 @@ const ActiveCreatePresenter = (props: Props) => {
                           label={template.name}
                           name="logo"
                           className={template.file != null ? template.isValid ? "bg-green-200" : "bg-red-200" : ""}
-                          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                          accept=".csv"
                         />
                       </div>
                     );
@@ -130,7 +125,7 @@ const ActiveCreatePresenter = (props: Props) => {
                   props.templates.map((template, index) => {
                     return (
                       <div key={index} className=" flex flex-col m-2 w-60 mt-4 ">
-                        <Label htmlFor="" value="Link archivo de datos" />
+                        <Label htmlFor="" value={`Link archivo de ${template.name}`} />
                         <TextInput placeholder="Ingresar link" type="url"
                           onChange={(e) => props.onChageLink(e, template)}
                           value={template.link || ""}
@@ -148,16 +143,19 @@ const ActiveCreatePresenter = (props: Props) => {
 
                   return (
                     <DataTablePartial
-                      data={[]}
+                      data={props.dataTable.find((e) => e.id == file.id)?.data || [[]]}
                       handleCancel={() => { }}
                       index={index}
                       onCancel={() => { }}
-                      handleSave={(file, name, description) => { }}
+                      handleSave={(fileDoc) => {
+                        props.onGenerateFileFromTable(fileDoc, file)
+                      }}
                       file={file.file}
-                      onSaveTable={(data) => { }}
+                      onSaveTable={(data) => { props.onSaveTable(data, file) }}
                       key={index}
                       isSaved={false}
                       title={file.name}
+                      limit={props.numeralDetail?.templates.find((e) => e.id == file.id)?.maxInserts || undefined}
                     />
                   )
 

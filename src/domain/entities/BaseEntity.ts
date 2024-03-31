@@ -1,4 +1,4 @@
-export interface BaseDTO{
+export interface BaseDTO {
     createdAt?: Date;
     updatedAt?: Date;
     deleted?: boolean;
@@ -8,26 +8,26 @@ export interface BaseDTO{
     userUpdated?: string;
     userDeleted?: string;
 }
-class BaseEntity{
+class BaseEntity {
     createdAt?: Date;
     updatedAt?: Date;
     deleted?: boolean;
-    deletedAt?: Date;
+    deletedAt?: Date | null;
     ip?: string;
-    userCreated?: string;
-    userUpdated?: string;
-    userDeleted?: string;
+    userCreated?: string | null;
+    userUpdated?: string | null;
+    userDeleted?: string | null;
 
     constructor(
         createdAt: Date,
         updatedAt: Date,
         deleted: boolean,
-        deletedAt: Date,
+        deletedAt: Date | null,
         ip: string,
-        userCreated: string,
-        userUpdated: string,
-        userDeleted: string
-    ){
+        userCreated: string | null,
+        userUpdated: string | null,
+        userDeleted: string | null
+    ) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deleted = deleted;

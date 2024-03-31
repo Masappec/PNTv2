@@ -1,7 +1,5 @@
-import { useState } from "react"
 import { Row } from "../../../../../utils/interface"
 import DynamicTable from "../../../../Common/DynamicTable"
-import Input from "../../../../Common/Input"
 
 
 interface IDataTablePartial {
@@ -9,17 +7,17 @@ interface IDataTablePartial {
     data: Row[][]
     onSaveTable: (data: Row[][], index: number) => void
     onCancel: () => void
-    handleSave: (file: File, name: string, description: string, index: number) => void
+    handleSave: (file: File) => void
     handleCancel: () => void
     file: File | null
     isSaved: boolean,
-    title?: string
+    title?: string,
+    limit?: number
 
 }
 const DataTablePartial = (props: IDataTablePartial) => {
 
-    const [title, setTitle] = useState<string>("")
-    const [description, setDescription] = useState<string>("")
+
 
 
     return <div className="grid grid-cols-1 gap-4 m-5 h-auto ">
@@ -31,7 +29,7 @@ const DataTablePartial = (props: IDataTablePartial) => {
                 !props.isSaved &&
                 <div >
                     <button className="bg-primary-600 text-white px-4 py-2 rounded-md mx-4"
-                        onClick={() => props.handleSave(props.file as File, title, description, props.index)}
+                        onClick={() => props.handleSave(props.file as File)}
                         type="button"
                     >Guardar</button>
                     <button className="bg-red-600 text-white px-4 py-2 rounded-md mx-4"
@@ -46,6 +44,7 @@ const DataTablePartial = (props: IDataTablePartial) => {
             isSaved={props.isSaved}
             data={props.data}
             onSaveTable={(data) => props.onSaveTable(data, props.index)}
+            limitRows={props.limit}
         />
 
 
