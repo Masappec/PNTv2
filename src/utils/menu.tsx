@@ -25,6 +25,7 @@ import FocalizedList from "../interfaces/web/Transparency/Focalized/List";
 import FocalizedCreate from "../interfaces/web/Transparency/Focalized/Create";
 import CollaborativeList from "../interfaces/web/Transparency/Collaborative/List";
 import CollaborativeCreate from "../interfaces/web/Transparency/Collaborative/Create";
+import SolicityListEstablishment from "../interfaces/web/Transparency/Solicity/ListEstablishment";
 
 
 export interface MenuItem {
@@ -199,7 +200,7 @@ const menu = [
     path: "/admin/solicity",
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_configuration",
+    permission_required: "view_solicity",
     element: <SolicityList />,
   },
 
@@ -209,7 +210,7 @@ const menu = [
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_solicityresponse",
-    element: <SolicityList />,
+    element: <SolicityListEstablishment />,
   },
   {
     name: " Crear Solicitudes",
@@ -232,7 +233,7 @@ const menu = [
     path: "/admin/solicity/response",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_configuration",
+    permission_required: "add_solicityresponse",
     element: <SolicityResponse />,
   },
   {
@@ -240,7 +241,7 @@ const menu = [
     path: "/admin/solicity/onhold",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_configuration",
+    permission_required: "add_solicityresponse",
     element: <SolicityOnHold />,
   },
   {

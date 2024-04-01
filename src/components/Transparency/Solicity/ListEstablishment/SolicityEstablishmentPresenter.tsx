@@ -2,13 +2,15 @@ import { FaTrash, FaEdit, FaArrowAltCircleRight, FaFileInvoice, FaUserClock } fr
 import Alert from "../../../Common/Alert"
 import Modal from "../../../Common/Modal"
 import Table from "../../../Common/Table/index"
-import { Button } from "flowbite-react"
+import { Badge, Button } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
+import { Solicity } from "../../../../domain/entities/Solicity"
+import { StatusSolicity } from "../../../../utils/enums"
 
 
 
 interface Props {
-    data: []
+    data: Solicity[]
     error: string | null
     onSearch: (search: string) => void
     onAdd: () => void
@@ -69,9 +71,24 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                     columns={[
                         {
                             title: "Titulo",
-                            render: () => (
-                                <p>{ }</p>
+                            render: (solicity) => (
+                                <p>{solicity.text}</p>
                             )
+                        },
+                        {
+                            title: "Estado",
+                            render: (solicity) => {
+                                const status = StatusSolicity[solicity.status as keyof StatusSolicity]
+                                const bg = status.bg
+                                return (
+
+                                    <div className="flex items-center">
+                                        <Badge color={bg} className="rounded-2xl py-3 px-3">
+                                            {status.value}
+                                        </Badge>
+                                    </div>
+                                )
+                            }
                         },
 
 

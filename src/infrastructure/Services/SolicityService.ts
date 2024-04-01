@@ -17,5 +17,16 @@ class SolicityService {
         ) || [],
     };
   }
+
+  async getEstablishmentSolicity(search?: string, page?: number) {
+    const response = await this.api.getEstablishmentSolicity(search, page);
+    return {
+      ...response,
+      results:
+        response.results?.map((solicity) =>
+          SolicityMappers.apiToDomain(solicity)
+        ) || [],
+    };
+  }
 }
 export default SolicityService;
