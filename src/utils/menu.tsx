@@ -1,4 +1,4 @@
-import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine } from "react-icons/ri";
+import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine, RiCheckFill, RiCheckboxMultipleLine } from "react-icons/ri";
 import UserList from "../interfaces/web/Admin/User/List";
 import UserCreate from "../interfaces/web/Admin/User/Create";
 import RoleList from "../interfaces/web/Admin/Role/List";
@@ -21,6 +21,10 @@ import { HiOutlineChartSquareBar } from "react-icons/hi";
 import ActiveNumerals from "../interfaces/web/Transparency/Active/Numerals";
 import ActiveCreate from "../interfaces/web/Transparency/Active/Create";
 import ActivePreviewData from "../interfaces/web/Transparency/Active/PreviewData";
+import FocalizedList from "../interfaces/web/Transparency/Focalized/List";
+import FocalizedCreate from "../interfaces/web/Transparency/Focalized/Create";
+import CollaborativeList from "../interfaces/web/Transparency/Collaborative/List";
+import CollaborativeCreate from "../interfaces/web/Transparency/Collaborative/Create";
 
 
 export interface MenuItem {
@@ -155,6 +159,40 @@ const menu = [
     permission_required: "view_transparencyactive",
     element: <ActivePreviewData />
   },
+
+  {
+    name: 'T.Focalizada',
+    path: '/admin/transparency/focalized',
+    visible: true,
+    icon: <RiCheckboxMultipleLine  size={25} className="text-slate-500" />,
+    permission_required: "view_transparencyactive",
+    element: <FocalizedList />
+  },
+  {
+    name: 'T.Focalizada',
+    path: '/admin/focalized/create',
+    visible: false,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: "view_transparencyactive",
+    element: <FocalizedCreate />
+  },
+  {
+    name: 'T.Colaborativa',
+    path: '/admin/transparency/collaborative',
+    visible: true,
+    icon: <RiCheckFill size={25} className="text-slate-500" />,
+    permission_required: "view_transparencyactive",
+    element: <CollaborativeList />
+  },
+  {
+    name: 'T.Colaborativa',
+    path: '/admin/collaborative/create',
+    visible: false,
+    icon: <RiCheckFill size={25} className="text-slate-500" />,
+    permission_required: "view_transparencyactive",
+    element: <CollaborativeCreate />
+  },
+
 
   {
     name: "Solicitudes",
