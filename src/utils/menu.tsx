@@ -199,7 +199,7 @@ const menu = [
     path: "/admin/solicity",
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_configuration",
+    permission_required: "view_solicity",
     element: <SolicityList />,
   },
 

@@ -4,11 +4,12 @@ import Modal from "../../../Common/Modal"
 import Table from "../../../Common/Table/index"
 import { Button } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
+import { Solicity } from "../../../../domain/entities/Solicity"
 
 
 
 interface Props {
-    data: []
+    data: Solicity[]
     error: string | null
     onSearch: (search: string) => void
     onAdd: () => void
@@ -69,8 +70,14 @@ const SolicityListPresenter = (props:Props)=>{
                     columns={[
                         {
                             title: "Titulo",
-                            render: () => (
-                                <p>{}</p>
+                            render: (solicity ) => (
+                                <p>{ solicity.text}</p>
+                            )
+                        },
+                        {
+                            title: "Estado",
+                            render: (solicity ) => (
+                                <p>{ solicity.status}</p>
                             )
                         },
                     
