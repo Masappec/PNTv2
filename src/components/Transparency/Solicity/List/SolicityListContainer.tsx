@@ -2,12 +2,18 @@
 import SolicityListPresenter from "./SoicityListPresenter"
 import { useNavigate } from "react-router-dom"
 import {  useEffect, useState } from "react"
+import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase"
+import { Solicity } from "../../../../domain/entities/Solicity"
+
+interface Props{
+    useCase: SolicityUseCase
+}
 
 
-const SolicityListContainer = () => {
+const SolicityListContainer = (props:Props) => {
     const navigate = useNavigate()
 
-    const [solicitudes, SetSolicitudes]= useState<[]>([])
+    const [solicitudes, SetSolicitudes]= useState< Solicity[]>([])
     const [visibleModal, setVisibleModal] = useState<boolean>(false)
     const [error, SetError]= useState<string>("")
 
@@ -19,13 +25,15 @@ const SolicityListContainer = () => {
 
 
     useEffect(() => {
-        SetSolicitudes([])
-        setTotalPage(0)
-        setCurrentPage(1)
-        setFrom(0)
-        setTo(0)
-        setTotal(0)
-        SetError("")
+        props.useCase.getSolicities("", currentPage).then(response=>{
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from ||0)
+            setTo(response.to)
+            setTotal(response.total)
+        }).catch((err)=>{
+            SetError (err.message)
+        })
     }, [])
     
     const handleAdd = () => {
