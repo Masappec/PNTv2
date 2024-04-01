@@ -164,7 +164,7 @@ const menu = [
     name: 'T.Focalizada',
     path: '/admin/transparency/focalized',
     visible: true,
-    icon: <RiCheckboxMultipleLine  size={25} className="text-slate-500" />,
+    icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
     element: <FocalizedList />
   },
@@ -199,10 +199,18 @@ const menu = [
     path: "/admin/solicity",
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_solicity",
+    permission_required: "view_configuration",
     element: <SolicityList />,
   },
 
+  {
+    name: "Solicitudes",
+    path: "/admin/establishment/solicity",
+    visible: true,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
+    permission_required: "view_solicityresponse",
+    element: <SolicityList />,
+  },
   {
     name: " Crear Solicitudes",
     path: "/admin/solicity/create",
