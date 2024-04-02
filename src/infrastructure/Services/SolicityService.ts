@@ -1,3 +1,4 @@
+import CreateSolicity from "../../domain/entities/CreateSolicity";
 import SolicityMappers from "../../domain/mappers/SolicityMapper";
 import SolicityApi from "../Api/Solicity/SolicityApi";
 
@@ -27,6 +28,13 @@ class SolicityService {
           SolicityMappers.apiToDomain(solicity)
         ) || [],
     };
+  }
+
+  async createSolicity(data: CreateSolicity) {
+    const response = await this.api.createSolicity(
+      SolicityMappers.domainToApi(data)
+    );
+    return SolicityMappers.apiToDomain(response);
   }
 }
 export default SolicityService;

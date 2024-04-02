@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 import { Pagination, TRANSPARENCY_PATH } from "..";
-import { SolicityResponseDto } from "./interface";
+import { SolicityRequestDto, SolicityResponseDto } from "./interface";
 
 
 class SolicityApi {
@@ -39,6 +39,17 @@ class SolicityApi {
     } catch (error: any) {
       const e: string =
         error.response?.data?.message || "Error al obtener la solicitud.";
+      throw new Error(e);
+    }
+  }
+
+  async createSolicity(data: SolicityRequestDto) {
+
+    try {
+      const response = await this.api.post<SolicityResponseDto>(TRANSPARENCY_PATH + "/solicity/create", data);
+      return response.data;
+    } catch (error: any) {
+      const e: string = error.response?.data?.message || "Error al crear la solicitud.";
       throw new Error(e);
     }
   }

@@ -9,9 +9,8 @@ import { FiSend } from "react-icons/fi";
 
 interface Props {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
-  onSave: () => void;
-  onSend: () => void;
-  data: [];
+  onCancel: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
 }
 const SolicityCreatePresenter = (props: Props) => {
 
@@ -53,7 +52,11 @@ const SolicityCreatePresenter = (props: Props) => {
 
             <div className=" flex  flex-col m-2 h-[44px]  w-[320px] gap-4 mt-5  ">
               <Label htmlFor="" value="Nombre" />
-              <TextInput placeholder="" type="text" />{" "}
+              <TextInput placeholder="" type="text"
+                name="first_name"
+                onChange={props.onChange}
+
+              />{" "}
             </div>
 
 
@@ -61,18 +64,28 @@ const SolicityCreatePresenter = (props: Props) => {
 
             <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
               <Label htmlFor="" value="Email" />
-              <TextInput placeholder="" type="email" />
+              <TextInput placeholder="" type="email"
+                name="email"
+                onChange={props.onChange}
+              />
             </div>
             <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px]">
               <Label
                 htmlFor=""
                 value="Dirección"
               />
-              <TextInput placeholder="" type="text" />{" "}
+              <TextInput placeholder="" type="text"
+                name="address"
+                onChange={props.onChange}
+              />{" "}
             </div>
             <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
               <Label htmlFor="" value="Apellido" />
-              <TextInput placeholder="" type="text" />
+              <TextInput placeholder="" type="text"
+                name="last_name"
+                onChange={props.onChange}
+
+              />
             </div>
 
             <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px]">
@@ -80,7 +93,10 @@ const SolicityCreatePresenter = (props: Props) => {
                 htmlFor=""
                 value="Cédula"
               />
-              <TextInput placeholder="" type="number" />{" "}
+              <TextInput placeholder="" type="number"
+                onChange={props.onChange}
+                name="identification"
+              />{" "}
             </div>
 
             <div className=" flex  flex-col m-2 h-[44px] gap-4 mt-5 w-[320px] ">
@@ -88,7 +104,10 @@ const SolicityCreatePresenter = (props: Props) => {
                 htmlFor=""
                 value="Teléfono"
               />
-              <TextInput placeholder="" type="number" />{" "}
+              <TextInput placeholder="" type="tel"
+                name="phone"
+                onChange={props.onChange}
+              />{" "}
             </div>
 
 
@@ -104,6 +123,8 @@ const SolicityCreatePresenter = (props: Props) => {
             <Textarea
               placeholder="Escribe la petición"
               className="h-[66px] xl:w-[720px]"
+              name="description"
+              onChange={props.onChange}
             ></Textarea>
           </div>
 
@@ -116,8 +137,8 @@ const SolicityCreatePresenter = (props: Props) => {
               <Select
 
                 placeholder={"Forma de recepción"}
-                value={""}
-                onChange={() => { }}
+                name="type_reception"
+                onChange={props.onChange}
                 options={[
                   {
                     value: "",
@@ -133,8 +154,8 @@ const SolicityCreatePresenter = (props: Props) => {
               <Select
 
                 placeholder={"Formato de entrega"}
-                value={""}
-                onChange={() => { }}
+                name="formatSolicity"
+                onChange={props.onChange}
                 options={[
                   {
                     value: "",
@@ -150,8 +171,7 @@ const SolicityCreatePresenter = (props: Props) => {
           <div className="flex gap-x-3 mt-24 xl:ml-80 xl:pl-16 mb-14 text-6xl">
 
             <Button
-              type="button"
-              onClick={props.onSave}
+              type="submit"
               className=" text-gray-900 bg-white border-gray-300 font-bold border">
               <IoSaveOutline size={22} className=" mr-4 text-gray-900" />
               <span>
@@ -160,7 +180,7 @@ const SolicityCreatePresenter = (props: Props) => {
             </Button>
             <Button
               type="button"
-              onClick={props.onSend}
+              onClick={props.onCancel}
               className="text-white font-bold bg-sky-800">
               <FiSend size={23} className=" mr-4" />
               <span>
