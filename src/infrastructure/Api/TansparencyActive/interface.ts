@@ -33,3 +33,31 @@ export interface TransparencyActivePublishResponse {
     establishment: EstablishmentDetailDTO;
     numeral: number;
 }
+
+export interface TransparencyActivePublicResponse {
+
+
+    id: number;
+    files: FilePublicationResponse[];
+    created_at: string;
+    updated_at: string;
+    deleted: boolean;
+    deleted_at: string;
+    ip: string;
+    slug: string;
+    month: number;
+    year: number;
+    status: string;
+    published: boolean;
+    published_at: string;
+    max_date_to_publish: string;
+    user_created: string;
+    user_updated: string;
+    user_deleted: string;
+    establishment: EstablishmentDetailDTO;
+    numeral: {
+        id: number;
+        name: string;
+        description: string;
+    };
+}

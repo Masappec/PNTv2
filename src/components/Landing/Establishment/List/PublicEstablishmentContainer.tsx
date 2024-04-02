@@ -9,10 +9,17 @@ interface Props {
     usecase: PublicUseCase
 }
 const PublicEstablishmentContainer = (props: Props) => {
+
+    const [load, setLoad] = useState(true)
     const [entities, setEntities] = useState<{
         letter: string,
         data: EstablishmentEntity[]
     }[]>([])
+    const [originalEntities, setOriginalEntities] = useState<{
+        letter: string,
+        data: EstablishmentEntity[]
+    }[]>([])
+    const [selectedLetter, setSelectedLetter] = useState<string>("A")
     const [error, setError] = useState("")
 
     const [total, setTotal] = useState(0)
@@ -30,20 +37,26 @@ const PublicEstablishmentContainer = (props: Props) => {
 
     useEffect(() => {
         props.usecase.getEstablishments().then((entities) => {
+            setLoad(false)
             setEntities(entities.results)
+            setOriginalEntities(entities.results)
             setTotal(entities.total)
         }).catch((error) => {
+            setLoad(false)
             setError(error.message)
         })
     }, [])
 
 
-    const onPageChange = (page: number) => {
-        props.usecase.getEstablishments("", page).then((entities) => {
-            setEntities(entities.results)
-        }).catch((error) => {
-            setError(error.message)
-        })
+    const onPageChange = (page: string) => {
+        if (page === selectedLetter) {
+            setEntities(originalEntities)
+            setSelectedLetter("")
+            return;
+        }
+        setSelectedLetter(page)
+        const data = originalEntities.filter((entity) => entity.letter.toUpperCase() === page)
+        setEntities(data)
     }
 
     const onItemClicked = (slug: string) => {
@@ -63,6 +76,7 @@ const PublicEstablishmentContainer = (props: Props) => {
             total={total}
             onItemClicked={onItemClicked}
             letters={abecedario}
+            loading={load}
 
 
         />

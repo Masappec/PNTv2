@@ -1,22 +1,21 @@
-import { Accordion, Button, Checkbox, TextInput } from "flowbite-react";
+import { Accordion, Button, Checkbox } from "flowbite-react";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 
-import PublicationEntity from "../../../../domain/entities/PublicationEntity";
 
 
 import { CiMenuBurger } from "react-icons/ci";
 
 import { FiCalendar } from "react-icons/fi";
 import TableInfo from "../../../Common/TableInfo";
-
-import { CiSearch } from "react-icons/ci";
 import CardNormative from "../../../Common/CardNormative";
+import TransparencyActive from "../../../../domain/entities/TransparencyActive";
+import TA from "../Partial/TA/TA";
 
 interface Props {
   entity: EstablishmentEntity;
   error: string;
   loading: boolean;
-  publications: PublicationEntity[];
+  publications: TransparencyActive[];
   total: number;
   totalPages: number;
   from: number;
@@ -31,23 +30,10 @@ interface Props {
 const PublicEstablishmentDetailPresenter = (props: Props) => {
   return (
     <div className="border-l-2 border-gray-800  ml-10 md:ml-14">
-      <div className=" flex flex-col w-full  bg-white lg:pr-10 relative ">
-        <div className=" relative search mt-20 lg:mt-8  h-auto justify-center flex ml-48   rounded-full border-black flex-auto  ">
-          <div className=" !absolute  -top-32 left-0 hidden xl:visible">
-            <TextInput
-              icon={CiSearch}
-              id="buscar"
-              type="text"
-              placeholder="Buscar por entidad pública"
-              alt="Buscar por entidad pública, por ejemplo: Ministerio de Educación"
-              className="w-[386px]  mt-4 mr-[150px]  border-black text-center "
-              tabIndex={7}
-              sizing="lg"
-            />
-          </div>
-        </div>
+      <div className=" flex flex-col  bg-white lg:pr-10 relative ">
+
         <div></div>
-        <div className="container xl:w-screen px-5 xl:px-20">
+        <div className="container px-5 xl:px-20">
           <h2 className="text-4xl mb-12 xl:mt-8 font-bold">
             {props.entity.name}
           </h2>
@@ -74,7 +60,8 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
             {props.entity.email_authority}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 xl:pr-60 text-sm xl:w-[1000px]  border-b h-auto mt-11  ">
+          <div className="grid grid-cols-1 lg:grid-cols-3 xl:pr-60 text-sm 
+          xl:w-wull  border-b h-auto mt-11  ">
             <CardNormative
               title="Información 
                 publicada 
@@ -99,7 +86,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
             ></CardNormative>
           </div>
 
-          <Accordion className="mt-28 ">
+          <Accordion className="mt-28 mb-24">
             <Accordion.Panel>
               <Accordion.Title>
                 <p className="text-start text-black text-lg font-medium">
@@ -115,7 +102,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                   <h2 className="text-2xl font-semibold mt-4">
                     {props.entity.name}
                   </h2>
-                  <p className=" text-sm xl:w-[697px]w-auto  mt-8 font-medium">
+                  <p className=" text-sm xl:w-full w-auto  mt-8 font-medium">
                     La ley Orgánica de Transparencia y Acceso de la Información Pública
                     (LOTAIP) obliga a todas las instituciones del Estado que conforman
                     el sector público a difundir a través de la página web
@@ -138,54 +125,11 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                     </span>
                   </Button>
                   <div className="">
-                    <TableInfo
-                      columns={[
-                        {
-                          render: () => <p>{""}</p>,
-
-                          title: <><Checkbox className="mr-5" />{"filename"}</>,
-                          classname: "w-70",
-                        },
-                        {
-                          render: () => <p>{""}</p>,
-                          title: "Tamaño de archivo",
-                        },
-                        {
-                          render: () => <p>{ }</p>,
-                          title: "Fecha de carga",
-                        },
-                        {
-                          render: () => <p>{""}</p>,
-                          title: "Fecha de actualización",
-                        },
-                        {
-                          render: () => <p>{""}</p>,
-                          title: "Cargado por",
-                        },
-                        {
-                          render: () => (
-                            <p>
-                              {" "}
-                              <button
-                                onClick={() => { }}
-                                className="bg-blue-500 hover:bg-blue-700 
-                                text-white font-bold py-2 px-4 rounded-2xl"
-                              >
-                                <CiMenuBurger />
-                              </button>
-                            </p>
-                          ),
-                          title: "",
-                        },
-                      ]}
-                      title={""}
-
-                      onFilter={function (type: string): void {
-                        throw new Error("Function not implemented." + type);
-                      }}
-                      data={[]}
-
-
+                    <TA
+                      data={props.publications}
+                      month="Enero"
+                      number_month={1}
+                      year={2021}
                     />
 
 
@@ -212,7 +156,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                   <h2 className="text-2xl font-semibold mt-4">
                     {props.entity.name}
                   </h2>
-                  <p className=" text-sm xl:w-[697px] mt-8 font-medium">
+                  <p className=" text-sm xl:w-full mt-8 font-medium">
                     La ley Orgánica de Transparencia y Acceso de la Información Pública
                     (LOTAIP) obliga a todas las instituciones del Estado que conforman
                     el sector público a difundir a través de la página web
@@ -237,12 +181,12 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                   <div>
 
 
-                    <TableInfo
+                    <TableInfo<TransparencyActive>
                       columns={[
                         {
-                          render: () => <p>{""}</p>,
+                          render: (row) => <p>{row.numeral}</p>,
 
-                          title: <><Checkbox className="mr-5" />{"filename"}</>,
+                          title: <><Checkbox className="mr-5" />{"Numeral"}</>,
                           classname: "w-70",
                         },
                         {
@@ -281,7 +225,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                       onFilter={function (type: string): void {
                         throw new Error("Function not implemented." + type);
                       }}
-                      data={[]}
+                      data={props.publications}
 
 
                     />
@@ -305,7 +249,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                   <h2 className="text-2xl font-semibold mt-4">
                     {props.entity.name}
                   </h2>
-                  <p className=" text-sm xl:w-[697px] mt-8 font-medium">
+                  <p className=" text-sm xl:w-full mt-8 font-medium">
                     La ley Orgánica de Transparencia y Acceso de la Información Pública
                     (LOTAIP) obliga a todas las instituciones del Estado que conforman
                     el sector público a difundir a través de la página web

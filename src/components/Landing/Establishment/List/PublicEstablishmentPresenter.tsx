@@ -1,4 +1,4 @@
-import { Alert, Label, TextInput } from "flowbite-react"
+import { Alert, Label, Spinner, TextInput } from "flowbite-react"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { HiInformationCircle } from "react-icons/hi"
 import { FormattedMessage, useIntl } from "react-intl";
@@ -11,10 +11,11 @@ interface Props {
         data: EstablishmentEntity[]
     }[];
     error: string;
-    onPageChange: (page: number) => void;
+    onPageChange: (letter: string) => void;
     total: number;
     onItemClicked: (slug: string) => void;
     letters: string[];
+    loading: boolean;
 }
 
 const PublicEstablishmentPresenter = (props: Props) => {
@@ -48,8 +49,10 @@ const PublicEstablishmentPresenter = (props: Props) => {
                                         <div>
 
                                             <a
-                                                onClick={() => props.onPageChange(1)}
-                                                className="text-primary-500 hover:text-primary-600 text-xl xl:ml-2 mx-[4px]"
+                                                onClick={() => props.onPageChange(letter)}
+                                                className="text-primary-500 hover:text-primary-600 text-xl xl:ml-2 mx-[4px]
+                                                hover:cursor-pointer 
+                                                "
                                             >
 
 
@@ -90,9 +93,13 @@ const PublicEstablishmentPresenter = (props: Props) => {
 
                     </div>
                     <div className="flex flex-wrap p-5">
-
                         {
-                            props.letters.map((letra) => {
+                            props.loading &&
+                            <Spinner size="large" color="primary" />
+
+                        }
+                        {
+                            !props.loading && props.letters.map((letra) => {
                                 return (
                                     <div className="flex flex-col w-full">
                                         <h3 className="text-2xl font-bold tracking-tight text-primary-500 dark:text-white mt-5 mb-5">
@@ -103,7 +110,8 @@ const PublicEstablishmentPresenter = (props: Props) => {
                                                 props.entities.filter((entity) => entity.letter === letra).map((items) => {
                                                     return items.data.map((entity) => {
                                                         return (
-                                                            <a className="xl:w-1/4 lg:w-1/4 w-fit m-5 xl:m-0 text-primary-500" onClick={() => props.onItemClicked(entity.slug || "")}>
+                                                            <a className="xl:w-1/4 
+                                                            lg:w-1/4 w-fit m-5 xl:m-0 text-primary-500 underline-offset-1	hover:cursor-pointer" onClick={() => props.onItemClicked(entity.slug || "")}>
                                                                 {entity.name}
                                                             </a>
                                                         )

@@ -3,12 +3,13 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase"
 import PublicEstablishmentDetailPresenter from "./PublicEstablishmentDetailPresenter"
 import { useNavigate, useParams } from "react-router-dom";
-import TransparencyUseCase from "../../../../domain/useCases/Transparency/TransparencyUseCase";
 import PublicationEntity from "../../../../domain/entities/PublicationEntity";
+import TransparencyActiveUseCase from "../../../../domain/useCases/TransparencyActive/TransparencyActiveUseCase";
+import TransparencyActive from "../../../../domain/entities/TransparencyActive";
 
 interface Props {
     usecase: PublicUseCase;
-    transparencyUseCase?: TransparencyUseCase
+    transparencyUseCase?: TransparencyActiveUseCase
 }
 const PublicEstablishmentDetailContainer = (props: Props) => {
 
@@ -35,7 +36,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         last_name_committe: "",
     })
 
-    const [publications, setPublications] = useState<PublicationEntity[]>([])
+    const [publications, setPublications] = useState<TransparencyActive[]>([])
     const [from, setFrom] = useState<number>(0)
     const [to, setTo] = useState<number>(0)
     const [total, setTotal] = useState<number>(0)
@@ -43,7 +44,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     const [current_page, setCurrentPage] = useState<number>(0)
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>("")
-
+    const now = new Date()
     useEffect(() => {
         props.usecase.getEstablishment(slug || "").then((response) => {
             setEntity(response)
@@ -59,13 +60,15 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
 
     useEffect(() => {
-        props.transparencyUseCase?.getTransparencyActive(entity.id || 0, 1).then((response) => {
-            setPublications(response.results)
+        props.transparencyUseCase?.getPublicationsPublics(now.getMonth(), now.getFullYear(), entity.id || 0).then((response) => {
+            setPublications(response)
+            setFrom(1)
+            setTo(response.length)
+            setTotal(response.length)
+            setTotalPages(1)
+            setCurrentPage(1)
+
             setLoading(false)
-            setTotalPages(response.total_pages || 1)
-            setTotal(response.total)
-            setFrom(response.from || 0)
-            setTo(response.to || 0)
         }).catch((error) => {
             setError(error.message)
         }).finally(() => {
@@ -75,18 +78,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
 
     const handlePageChange = (page: number) => {
-        props.transparencyUseCase?.getTransparencyActive(entity.id || 0, page).then((response) => {
-            setPublications(response.results)
-            setLoading(false)
-            setTotal(response.total)
-            setFrom(response.from || 0)
-            setTo(response.to || 0)
-            setCurrentPage(response.current)
-        }).catch((error) => {
-            setError(error.message)
-        }).finally(() => {
-            setLoading(false)
-        })
+
     }
 
     const handleClickItem = (slug: string) => {

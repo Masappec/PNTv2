@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { TransparencyActivePublish, TransparencyActivePublishResponse } from "./interface";
+import { TransparencyActivePublicResponse, TransparencyActivePublish, TransparencyActivePublishResponse } from "./interface";
 import { TRANSPARENCY_PATH } from "..";
 
 
@@ -26,6 +26,32 @@ class TransparencyActiveApi {
             }
         }
     }
+
+    async getPublicationsPublics(month: number, year: number, establishment_id: number) {
+        try {
+            const res = await this.api.get<TransparencyActivePublicResponse[]>(
+                TRANSPARENCY_PATH + `/transparency/active/public`,
+                {
+                    params: {
+                        month,
+                        year,
+                        establishment_id
+                    }
+                }
+            );
+
+            return res.data;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                const message = e.response?.data.message || e.message || 'Error desconocido';
+                throw new Error(message);
+            } else {
+                throw new Error('Error desconocido');
+            }
+        }
+    }
+
+
 }
 
 export default TransparencyActiveApi;

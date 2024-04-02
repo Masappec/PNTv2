@@ -27,6 +27,11 @@ class TransparencyActive extends BaseEntity {
         public user_deleted: string,
         public establishment: EstablishmentEntity,
         public numeral: number,
+        public numeralPartial?: {
+            id: number;
+            name: string;
+            description: string;
+        }
     ) {
         super(
             created_at,
