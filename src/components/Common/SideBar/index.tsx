@@ -29,13 +29,13 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 
 
 		<Sidebar aria-label="Default sidebar example"
-			className="border-r bg-slate-200 w-64 z-30">
+			className="border-r bg-slate-200 w-64 z-30 h-90">
 
 			<Sidebar.Items className="flex flex-col">
 				<Sidebar.ItemGroup>
 					<Input placeholder="Buscar" className="w-full" />
 				</Sidebar.ItemGroup>
-				<Sidebar.ItemGroup>
+				<Sidebar.ItemGroup className="h-[33rem] overflow-y-scroll">
 					{
 						menu.filter((item) => item.visible).
 							map((item, index) => (
@@ -52,7 +52,7 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 					}
 				</Sidebar.ItemGroup>
 
-				<Sidebar.ItemGroup className="absolute bottom-0 p-4 md:relative lg:absolute xl:absolute">
+				<Sidebar.ItemGroup className="relative bottom-0 p-4 ">
 					<div className="flex items-col">
 
 						<div className="flex flex-row">
@@ -74,7 +74,7 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 				</Sidebar.ItemGroup>
 			</Sidebar.Items>
 
-		</Sidebar>
+		</Sidebar >
 	)
 }
 

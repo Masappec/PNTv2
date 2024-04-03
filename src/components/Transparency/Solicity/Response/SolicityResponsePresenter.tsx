@@ -8,7 +8,7 @@ import { HiInformationCircle } from "react-icons/hi";
 import CreatableSelect from "react-select/creatable";
 import { TagEntity } from "../../../../domain/entities/TagEntity";
 import { OnChangeValue } from "react-select";
-import {  FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle } from "react-icons/fa";
 import { Row } from "../../../../utils/interface";
 import FileUrlPartial from "../../Partial/CreateFilePublication/FileUrl";
 import DataTablePartial from "../../Partial/CreateFilePublication/DataTable";
@@ -90,7 +90,7 @@ const SolicityResponsePresenter = (props: Props) => {
                             </div>
 
                             <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
-                                Llena los campos 
+                                Llena los campos
                             </p>
                         </div>
                         <div className="flex items-center mt-4 gap-x-3">
@@ -128,55 +128,55 @@ const SolicityResponsePresenter = (props: Props) => {
                         }
 
 
-                                <div className="grid grid-cols ">
-        
-                                    <div className="flex  flex-col m-2">
-                                        <Label htmlFor="" value="Descripción" />
-                                        <Textarea
-                                            placeholder={"Descripción"}
-                                            value={""}
-                                            name="abbreviation"
-                                            onChange={(e) => props.onChangeDescription(e.target.value)}
-                                        />
-                                    </div>
-                                
-                                    <div className=" flex  flex-col m-2">
-                                        <div className="mb-2 block">
-                                            <Label htmlFor="" value="Categoria" />
-                                        </div>
-                                        <CreatableSelect isClearable options={props.tags.map((tag) => ({ value: tag.id, label: tag.name }))}
-                                            isMulti={true}
-                                            onInputChange={(e) => props.onFilterTag(e)}
-                                            onCreateOption={(e) => props.onCreateTag(e)}
-                                            onChange={(newValue) => props.onSelectedTag(newValue)}
+                        <div className="grid grid-cols ">
 
-                                        />
-                                    </div>
-                                    {
-                                        props.typeSolicity === "TC" && (
-                                            <div className="flex  flex-col m-2">
-                                                <Label htmlFor="" value="Evento" />
-                                                <Textarea
-                                                    placeholder={"Evento"}
-                                                    value={""}
-                                                    name=""
-                                                    onChange={(e) => props.onChangeEvent(e.target.value)}
-                                                />
+                            <div className="flex  flex-col m-2">
+                                <Label htmlFor="" value="Descripción" />
+                                <Textarea
+                                    placeholder={"Descripción"}
+                                    value={""}
+                                    name="abbreviation"
+                                    onChange={(e) => props.onChangeDescription(e.target.value)}
+                                />
+                            </div>
 
-
-
-                                            </div>)
-                                    }
-
+                            <div className=" flex  flex-col m-2">
+                                <div className="mb-2 block">
+                                    <Label htmlFor="" value="Categoria" />
                                 </div>
+                                <CreatableSelect isClearable options={props.tags.map((tag) => ({ value: tag.id, label: tag.name }))}
+                                    isMulti={true}
+                                    onInputChange={(e) => props.onFilterTag(e)}
+                                    onCreateOption={(e) => props.onCreateTag(e)}
+                                    onChange={(newValue) => props.onSelectedTag(newValue)}
+
+                                />
+                            </div>
+                            {
+                                props.typeSolicity === "TC" && (
+                                    <div className="flex  flex-col m-2">
+                                        <Label htmlFor="" value="Evento" />
+                                        <Textarea
+                                            placeholder={"Evento"}
+                                            value={""}
+                                            name=""
+                                            onChange={(e) => props.onChangeEvent(e.target.value)}
+                                        />
+
+
+
+                                    </div>)
+                            }
+
+                        </div>
 
 
                         <div className="flex flex-col m-2">
-                                <h3 className="text-lg font-medium text-gray-800 dark:text-white">
-                                    Archivos Adjuntos
-                                </h3>
+                            <h3 className="text-lg font-medium text-gray-800 dark:text-white">
+                                Archivos Adjuntos
+                            </h3>
 
-                                <div className="flex flex-row m-2">
+                            <div className="flex flex-row m-2">
                                 {/*
                                 props.solicity?.map((file,index) => {
                                     return (
@@ -208,16 +208,16 @@ const SolicityResponsePresenter = (props: Props) => {
 
                                     if (file.type === "table") {
                                         return (
-                                           <DataTablePartial
-                                            data={props.data}
-                                            handleCancel={() => props.onRemoveFile(index)}
-                                            index={index}
-                                            onCancel={() => props.onRemoveFile(index)}
-                                            handleSave={(file,name,description) => props.onSaveFile(file,name,description,index)}
-                                            file={file.file}
-                                            onSaveTable={(data) => props.onSaveTable(data, index)}
-                                            key={index}
-                                            isSaved={file != null}
+                                            <DataTablePartial
+                                                data={props.data}
+                                                handleCancel={() => props.onRemoveFile(index)}
+                                                index={index}
+                                                onCancel={() => props.onRemoveFile(index)}
+                                                handleSave={(_file) => props.onSaveFile(_file, "", "", index)}
+                                                file={file.file}
+                                                onSaveTable={(data) => props.onSaveTable(data, index)}
+                                                key={index}
+                                                isSaved={file != null}
                                             />
                                         )
                                     }
@@ -272,19 +272,19 @@ const SolicityResponsePresenter = (props: Props) => {
                         <Tabs.Item title="URL">
                             {
                                 props.files.map((file, index) => {
-                                    if (file.type === "url"){
-                                    return <FileUrlPartial
-                                        error={file.error}
-                                        file={file.file}
-                                        index={index}
-                                        loading={file.loading}
-                                        onDownloadFile={props.onDownloadFile}
-                                        onSaveDateUrl={props.onSaveDateUrl}
-                                        key={index}
-                                        onSaveFile={(file, name, description) => props.onSaveFile(file as File, name, description, index)}
-                                        onRemoveFile={(index) => props.onRemoveFile(index)}
-                                        isSaved={file != null}
-                                    />
+                                    if (file.type === "url") {
+                                        return <FileUrlPartial
+                                            error={file.error}
+                                            file={file.file}
+                                            index={index}
+                                            loading={file.loading}
+                                            onDownloadFile={props.onDownloadFile}
+                                            onSaveDateUrl={props.onSaveDateUrl}
+                                            key={index}
+                                            onSaveFile={(file, name, description) => props.onSaveFile(file as File, name, description, index)}
+                                            onRemoveFile={(index) => props.onRemoveFile(index)}
+                                            isSaved={file != null}
+                                        />
                                     }
                                 })
                             }

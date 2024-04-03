@@ -1,16 +1,25 @@
 import { FormEvent } from "react";
-import { Button, TextInput, Textarea } from 'flowbite-react';
+import { Alert, Button, TextInput, Textarea } from 'flowbite-react';
 import { Label } from 'flowbite-react';
 
 import Select from "../../../Common/Select";
 import { IoSaveOutline } from "react-icons/io5";
 import { FiSend } from "react-icons/fi";
+import AsyncSelect from "react-select/async";
+import { ColourOption } from "../../../../utils/interface";
+import { HiInformationCircle } from "react-icons/hi";
 
 
 interface Props {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
   onCancel: () => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+  loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
+  success: string;
+  error: string;
+  setError: (value: string) => void;
+  setSuccess: (value: string) => void;
+  onChangeSelectEstablishment: (e: ColourOption) => void;
 }
 const SolicityCreatePresenter = (props: Props) => {
 
@@ -26,21 +35,21 @@ const SolicityCreatePresenter = (props: Props) => {
       <form className="flex flex-col lg:flex-row mt-10" onSubmit={props.handleSubmit}>
         <div className="container flex-col sm:flex-col sm:items-center sm:justify-between   ">
 
-
+          {
+            props.error && <Alert color="failure" icon={HiInformationCircle}
+            >
+              <span className="font-medium">Error!</span> {props.error}
+            </Alert>
+          }
 
           <div className="flex ml-2">
-            <Select
+
+            <AsyncSelect cacheOptions loadOptions={props.loadOptions} defaultOptions
               className="lg:w-[720px] xl:w-[720px] h-[48px] w-full "
               placeholder={"Seleccionar institución pública"}
-              value={""}
-              onChange={() => { }}
-              options={[
-                {
-                  value: "",
-                  label: "Institución seleccionada",
-                },
-              ]}
+              onChange={(value,) => props.onChangeSelectEstablishment(value as ColourOption)}
             />
+
           </div>
 
 
@@ -142,7 +151,11 @@ const SolicityCreatePresenter = (props: Props) => {
                 options={[
                   {
                     value: "",
-                    label: "Retiro en la institución ",
+                    label: "Seleccionar"
+                  },
+                  {
+                    value: "Retiro en la institución",
+                    label: "Retiro en la institución",
                   },
                 ]}
               />
@@ -159,9 +172,18 @@ const SolicityCreatePresenter = (props: Props) => {
                 options={[
                   {
                     value: "",
+                    label: "Seleccionar"
+                  },
+                  {
+                    value: "Formato físico",
+                    label: "Formato físico",
+                  },
+                  {
+                    value: "Formato digital",
                     label: "Formato digital",
                   },
                 ]}
+
               />
             </div>
           </div>

@@ -31,6 +31,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
             setFrom(response.from || 0)
             setTo(response.to)
             setTotal(response.total)
+            setCurrentPage(response.current)
         }).catch((err) => {
             SetError(err.message)
         })

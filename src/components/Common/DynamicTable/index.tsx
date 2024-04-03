@@ -22,7 +22,7 @@ const DynamicTable = (props: Props) => {
     );
     const [data, setData] = useState<Row[][]>(props.data)
     const [currentPage, setCurrentPage] = useState(1);
-    const [limit, setLimit] = useState(15);
+    const [limit,] = useState(15);
     const [totalPages, setTotalPages] = useState(0);
     const [from, setFrom] = useState(0);
     const [to, setTo] = useState(0);
@@ -40,9 +40,6 @@ const DynamicTable = (props: Props) => {
         setHovered({ row, column });
     };
 
-    const handleMouseLeave = () => {
-        setHovered(null);
-    };
 
 
 

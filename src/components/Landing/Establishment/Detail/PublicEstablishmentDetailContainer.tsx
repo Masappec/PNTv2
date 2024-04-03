@@ -3,7 +3,6 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase"
 import PublicEstablishmentDetailPresenter from "./PublicEstablishmentDetailPresenter"
 import { useNavigate, useParams } from "react-router-dom";
-import PublicationEntity from "../../../../domain/entities/PublicationEntity";
 import TransparencyActiveUseCase from "../../../../domain/useCases/TransparencyActive/TransparencyActiveUseCase";
 import TransparencyActive from "../../../../domain/entities/TransparencyActive";
 
@@ -78,7 +77,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
 
     const handlePageChange = (page: number) => {
-
+        console.log(page)
     }
 
     const handleClickItem = (slug: string) => {

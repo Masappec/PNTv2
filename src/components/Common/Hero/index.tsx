@@ -1,6 +1,6 @@
 import { TextInput } from "flowbite-react";
 import { FaSearch } from "react-icons/fa";
-import { inputSearchTheme, inputSearchThemeMobile } from "./theme";
+import { inputSearchThemeMobile } from "./theme";
 import { FormattedMessage } from "react-intl";
 
 const Hero = () => {
@@ -94,8 +94,6 @@ const Hero = () => {
                   alt="Buscar por entidad pública, por ejemplo: Ministerio de Educación"
                   className="w-[730px] h-[58px] mt-4 mr-[150px] border-t-2 border-gray-900  rounded-full py-3 text-lg justify-start pl-6"
                   tabIndex={7}
-                  theme={inputSearchTheme}
-                  sizing="lg"
 
                 />
               </div>

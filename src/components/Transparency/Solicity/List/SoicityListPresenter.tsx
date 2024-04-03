@@ -5,6 +5,7 @@ import Table from "../../../Common/Table/index"
 import { Button } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
 import { Solicity } from "../../../../domain/entities/Solicity"
+import StatusBadge from "../../../Common/StatusBadge"
 
 
 
@@ -27,21 +28,21 @@ interface Props {
     onDelete: () => void
     onResponse: () => void
     onHold: () => void
-    onDetail: ()  => void
+    onDetail: () => void
 
-    
+
     from: number
     to: number
     total: number
     totalPage: number
 }
 
-const SolicityListPresenter = (props:Props)=>{
+const SolicityListPresenter = (props: Props) => {
     return (
         <div className="container">
             <div className="flex items-center py-5 justify-center">
 
-                
+
                 <Modal
                     isvisible={props.visibleModal}
                     onClose={() => { }}
@@ -53,7 +54,7 @@ const SolicityListPresenter = (props:Props)=>{
 
                     <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
                     <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    {`¿Desea eliminar esta solicitud "" ?`} 
+                        {`¿Desea eliminar esta solicitud "" ?`}
                     </h3>
                     <div className="flex justify-center gap-4">
                         <Button color="failure" onClick={() => props.onConfirmDelete()}>
@@ -69,31 +70,37 @@ const SolicityListPresenter = (props:Props)=>{
                 <Table
                     columns={[
                         {
-                            title: "Titulo",
-                            render: (solicity ) => (
-                                <p>{ solicity.text}</p>
+                            title: "Solicitud",
+                            render: (solicity) => (
+                                <p>{
+                                    solicity.text &&
+                                        solicity?.text?.length > 50 ?
+                                        solicity.text?.substring(0, 50) + "..." : solicity.text
+                                }</p>
                             )
                         },
                         {
                             title: "Estado",
-                            render: (solicity ) => (
-                                <p>{ solicity.status}</p>
+                            render: (solicity) => (
+                                <p>
+                                    <StatusBadge status={solicity.status} />
+                                </p>
                             )
                         },
-                    
-                       
+
+
                         {
                             title: "Acciones",
                             render: () => (
                                 <div className="flex items-center">
-                                      <button
+                                    <button
                                         onClick={() => {
                                             props.onResponse()
 
                                         }
                                         }
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
-                                        <FaArrowAltCircleRight/> 
+                                        className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
+                                        <FaArrowAltCircleRight />
                                     </button>
                                     <button
                                         onClick={() => {
@@ -101,7 +108,7 @@ const SolicityListPresenter = (props:Props)=>{
 
                                         }
                                         }
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
+                                        className="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
                                         <FaUserClock />
                                     </button>
                                     <button
@@ -110,8 +117,10 @@ const SolicityListPresenter = (props:Props)=>{
 
                                         }
                                         }
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
-                                        <FaFileInvoice  />
+                                        aria-label="Ver Detalles"
+
+                                        className="bg-violet-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
+                                        <FaFileInvoice />
                                     </button>
                                     <button
                                         onClick={() => {
@@ -129,7 +138,7 @@ const SolicityListPresenter = (props:Props)=>{
                                         className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-2xl">
                                         <FaTrash />
                                     </button>
-                                  
+
                                 </div>
                             )
                         }

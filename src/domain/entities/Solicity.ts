@@ -12,7 +12,7 @@ export class Solicity {
     have_extension: boolean;
     is_manual: boolean;
 
-    constructor(id: number, text?: string, establishment: number = 0, status: string, expiry_date: string, have_extension: boolean, is_manual: boolean, is_active: boolean) {
+    constructor(id: number, establishment: number = 0, status: string, expiry_date: string, have_extension: boolean, is_manual: boolean, is_active: boolean, text?: string,) {
         this.id = id
         this.text = text
         this.establishment = establishment

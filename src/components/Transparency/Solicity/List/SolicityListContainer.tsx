@@ -1,21 +1,21 @@
 
 import SolicityListPresenter from "./SoicityListPresenter"
 import { useNavigate } from "react-router-dom"
-import {  useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase"
 import { Solicity } from "../../../../domain/entities/Solicity"
 
-interface Props{
-    useCase: SolicityUseCase
+interface Props {
+    useCase: SolicityUseCase;
 }
 
 
-const SolicityListContainer = (props:Props) => {
+const SolicityListContainer = (props: Props) => {
     const navigate = useNavigate()
 
-    const [solicitudes, SetSolicitudes]= useState< Solicity[]>([])
+    const [solicitudes, SetSolicitudes] = useState<Solicity[]>([])
     const [visibleModal, setVisibleModal] = useState<boolean>(false)
-    const [error, SetError]= useState<string>("")
+    const [error, SetError] = useState<string>("")
 
     const [totalPage, setTotalPage] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState<number>(1)
@@ -25,17 +25,18 @@ const SolicityListContainer = (props:Props) => {
 
 
     useEffect(() => {
-        props.useCase.getSolicities("", currentPage).then(response=>{
+        props.useCase.getSolicities("", currentPage).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
-            setFrom(response.from ||0)
+            setFrom(response.from || 0)
             setTo(response.to)
             setTotal(response.total)
-        }).catch((err)=>{
-            SetError (err.message)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
         })
     }, [])
-    
+
     const handleAdd = () => {
         navigate('/admin/solicity/create')
     }
@@ -63,7 +64,7 @@ const SolicityListContainer = (props:Props) => {
     }
     const handleCancelDelete = () => {
         setVisibleModal(false)
-       
+
     }
 
 
@@ -72,11 +73,11 @@ const SolicityListContainer = (props:Props) => {
         <SolicityListPresenter
 
             error={error}
-            data= {solicitudes}
+            data={solicitudes}
 
             onAdd={handleAdd}
             onCancelDelete={handleCancelDelete}
-            onConfirmDelete={()=>{}}
+            onConfirmDelete={() => { }}
             onDelete={handleDelete}
             onEdit={handleEdit}
             onHold={handleOnHold}
@@ -84,13 +85,13 @@ const SolicityListContainer = (props:Props) => {
             onDetail={handleDetail}
             onFilter={() => { }}
             onImport={() => { }}
-            onSearch={()=>{}}
+            onSearch={() => { }}
             page={currentPage}
             search=""
-    
-            setPage={()=>{}}
+
+            setPage={() => { }}
             setSeach={() => { }}
-            setVisibleModal={()=>{}}
+            setVisibleModal={() => { }}
             visibleModal={visibleModal}
             from={from}
             to={to}

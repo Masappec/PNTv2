@@ -217,7 +217,7 @@ const menu = [
     path: "/admin/solicity/create",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_configuration",
+    permission_required: "add_solicity",
     element: <SolicityCreate />,
   },
   {
@@ -225,7 +225,7 @@ const menu = [
     path: "/admin/solicity/edit",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_configuration",
+    permission_required: "change_solicity",
     element: <SolicityEdit />,
   },
   {

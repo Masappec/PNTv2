@@ -19,10 +19,11 @@ const Admin = () => {
 
     return (
         <IntlProvider locale="es">
-        <LayoutAdmin menu={menu} username={user.first_name + " " + user.last_name || user.email}
-            onLogout={logout}
-            permissions={user.user_permissions?.map((item) => item.codename) || []}
-        />
+            <LayoutAdmin menu={menu} username={user.first_name + " " + user.last_name || user.email}
+                onLogout={logout}
+                email={user.email}
+                permissions={user.user_permissions?.map((item) => item.codename) || []}
+            />
         </IntlProvider>
     )
 }

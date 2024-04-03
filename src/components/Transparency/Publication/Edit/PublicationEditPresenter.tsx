@@ -272,7 +272,7 @@ const PublicationEditPresenter = (props: Props) => {
                                                 handleCancel={() => props.onRemoveFile(index)}
                                                 index={index}
                                                 onCancel={() => props.onRemoveFile(index)}
-                                                handleSave={(file, name, description) => props.onSaveFile(file, name, description, index)}
+                                                handleSave={(_file) => props.onSaveFile(_file, "", "", index)}
                                                 file={file.file}
                                                 onSaveTable={(data) => props.onSaveTable(data, index)}
                                                 key={index}

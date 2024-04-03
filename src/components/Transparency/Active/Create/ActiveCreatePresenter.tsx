@@ -1,6 +1,6 @@
 import { Alert, Button, Tabs } from "flowbite-react";
 import Spinner from "../../../Common/Spinner";
-import { FaPen, FaArrowUp } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa";
 import Dropzone from "../../../Common/Dropzone";
 import { Label, TextInput } from "flowbite-react";
 import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";

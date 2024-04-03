@@ -12,7 +12,7 @@ import api from "../../../../../infrastructure/Api"
 const PublicEstablishmentDetail = () => {
 
 
-    const { usecase, transparencyUseCase } = useOutletContext<{
+    const { usecase, } = useOutletContext<{
         usecase: PublicUseCase,
         transparencyUseCase?: TransparencyUseCase
     }>()

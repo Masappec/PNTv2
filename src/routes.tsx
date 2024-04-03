@@ -52,14 +52,14 @@ const handleLoaderLocked = () => {
 
 const Router = createBrowserRouter(
   [
-    /*{
+    {
       path: "/locked",
       element: <Entry />,
-    },*/
+    },
     {
       path: "/",
       element: <Landing />,
-      //loader: () => handleLoaderLocked(),
+      loader: () => handleLoaderLocked(),
       children: [
         {
           path: "/",

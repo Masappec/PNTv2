@@ -78,7 +78,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         {
                             title: "Estado",
                             render: (solicity) => {
-                                const status = StatusSolicity[solicity.status as keyof StatusSolicity]
+                                const status = StatusSolicity[solicity.status as keyof typeof StatusSolicity]
                                 const bg = status.bg
                                 return (
 
