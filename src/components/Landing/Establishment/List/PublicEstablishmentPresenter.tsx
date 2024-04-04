@@ -1,8 +1,9 @@
-import { Alert, Label, Spinner, TextInput } from "flowbite-react"
+import { Alert, Label, TextInput } from "flowbite-react"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { HiInformationCircle } from "react-icons/hi"
 import { FormattedMessage, useIntl } from "react-intl";
 import { BiSearch } from "react-icons/bi";
+import Spinner from "../../../Common/Spinner";
 
 
 interface Props {
@@ -95,7 +96,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                     <div className="flex flex-wrap p-5">
                         {
                             props.loading &&
-                            <Spinner size="large" color="primary" />
+                            <Spinner />
 
                         }
                         {

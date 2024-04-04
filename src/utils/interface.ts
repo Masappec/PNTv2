@@ -10,3 +10,11 @@ export interface ColourOption {
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
 }
+
+export interface AcordionMonthYear<T> {
+    year: number;
+    month: number;
+    data: T[];
+    total: number;
+    isLoading: boolean;
+}

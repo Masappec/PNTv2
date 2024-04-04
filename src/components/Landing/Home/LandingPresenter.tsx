@@ -7,10 +7,14 @@ import { BiNotification, BiBriefcaseAlt, BiPieChartAlt2 } from "react-icons/bi";
 import { FiLayers } from "react-icons/fi";
 import { BsQuestionCircle } from "react-icons/bs";
 import { GoChecklist } from "react-icons/go";
-
-
+import { ColourOption } from "../../../utils/interface";
+import { Options } from "react-select";
 
 interface Props {
+  loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
+  countEntities: number;
+  countFiles: number;
+  onSelect: (value: Options<ColourOption>) => void;
   faq: FrequencyAsked[];
 }
 const LandingPresenter = (props: Props) => {
@@ -35,7 +39,13 @@ const LandingPresenter = (props: Props) => {
     <div className="flex flex-col w-full  bg-white lg:pr-10">
       <div></div>
       <div className="border-l-2 border-gray-800 ml-8 md:ml-14">
-        <Hero />
+        <Hero
+          countEntities={props.countEntities}
+          countFiles={props.countFiles}
+          loadOptions={props.loadOptions}
+          onSelect={props.onSelect}
+
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 pr-5 xl:pr-10 lg:pr-10 w-full border-b ">
           {props.faq.map((item, index) => {

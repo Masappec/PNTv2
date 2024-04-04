@@ -27,6 +27,8 @@ const SolicityCreateContainer = (props: Props) => {
     })
     const [success, setSuccess] = useState<string>("")
     const [error, setError] = useState<string>("")
+    const [search, setSearch] = useState<boolean>(false)
+    const [inputSearch, setInputSearch] = useState<string>("")
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         props.usecase.createSolicity(data).then(() => {
@@ -55,30 +57,37 @@ const SolicityCreateContainer = (props: Props) => {
     const loadOptions = (inputValue: string, callback: (options: ColourOption[]) => void) => {
 
         if (inputValue === "") {
+            setSearch(false)
+            setInputSearch("")
             return callback([])
         }
 
         if (inputValue.length < 3) {
+            setSearch(false)
+            setInputSearch("")
             return
         }
-        props.publicusecase.getEstablishments(inputValue).then((res) => {
+        if(!search){
+            props.publicusecase.getEstablishments(inputValue).then((res) => {
 
-            const result = res.results.map((item) => item.data)
-            const final: ColourOption[] = []
-            result.map((item) => {
-                item.map((_item) => {
-                    final.push({
-                        value: _item.id?.toString() || "",
-                        label: _item.name,
-                        color: "#00B8D9"
+                const result = res.results.map((item) => item.data)
+                const final: ColourOption[] = []
+                result.map((item) => {
+                    item.map((_item) => {
+                        final.push({
+                            value: _item.id?.toString() || "",
+                            label: _item.name,
+                            color: "#00B8D9"
+                        })
                     })
                 })
-            })
 
-            callback(final)
-        }).catch((err) => {
-            console.log(err)
-        })
+                callback(final)
+            }).catch((err) => {
+                console.log(err)
+            }) 
+        }
+        
 
 
     }

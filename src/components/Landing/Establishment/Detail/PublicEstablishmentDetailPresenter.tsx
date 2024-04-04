@@ -1,4 +1,4 @@
-import { Accordion, Button, Checkbox } from "flowbite-react";
+import { Accordion, Button, Checkbox, Dropdown } from "flowbite-react";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 
 
@@ -10,21 +10,22 @@ import TableInfo from "../../../Common/TableInfo";
 import CardNormative from "../../../Common/CardNormative";
 import TransparencyActive from "../../../../domain/entities/TransparencyActive";
 import TA from "../Partial/TA/TA";
+import { AcordionMonthYear } from "../../../../utils/interface";
 
 interface Props {
   entity: EstablishmentEntity;
   error: string;
   loading: boolean;
-  publications: TransparencyActive[];
-  total: number;
-  totalPages: number;
-  from: number;
-  to: number;
-  current_page: number;
+  publications: AcordionMonthYear<TransparencyActive>[];
   onChangePage: (page: number) => void;
   onItemPublicationClick: (slug: string) => void;
 
   onSearch: (search: string) => void;
+  meses: string[];
+  years: number[];
+  onSelectYear: (year: number) => void;
+  selectedYear: number;
+  onOpenMonth: (month: number) => void
 }
 
 const PublicEstablishmentDetailPresenter = (props: Props) => {
@@ -109,28 +110,49 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                     institucional, información mínima actualizada de naturaleza
                     obligatoria.
                   </p>
-                  <Button
-                    type="button"
-                    onClick={() => { }}
+                  <Dropdown label={
+                    <>
+                      Seleccionar año
+                      <FiCalendar className="w-5 h-5 ml-5"></FiCalendar>
+                    </>
+
+                  }
                     size={"lg"}
+                    arrowIcon={false}
+                    dismissOnClick={false}
                     className="flex items-center justify-center 
                      text-lg tracking-wide
-                     hover:text-white
                      rounded-xl 
-                      text-gray-700 font-semibold bg-gray-200  border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
+                     "
+
                   >
-                    <span className="flex col-2 gap-6 ">
-                      <FiCalendar className="w-5 h-5" />
-                      Seleccionar año
-                    </span>
-                  </Button>
+                    {
+                      props.years.map(_y => (
+                        <Dropdown.Item
+                          onClick={() => props.onSelectYear(_y)}>{_y}</Dropdown.Item>
+
+                      ))
+                    }
+                  </Dropdown>
+
+
                   <div className="">
-                    <TA
-                      data={props.publications}
-                      month="Enero"
-                      number_month={1}
-                      year={2021}
-                    />
+                    <Accordion className="mt-14" key={"TA"}>
+                      {
+                        props.meses.map((mes, index) => {
+                          return (
+                            <TA
+                              data={props.publications.find(x => x.month == index + 1 && x.year == props.selectedYear)?.data || []}
+                              month={mes}
+                              number_month={index + 1}
+                              year={2021}
+                              key={index}
+                              onOpen={(month) => props.onOpenMonth(month)}
+                            />
+                          );
+                        })
+                      }
+                    </Accordion>
 
 
                   </div>
@@ -225,7 +247,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                       onFilter={function (type: string): void {
                         throw new Error("Function not implemented." + type);
                       }}
-                      data={props.publications}
+                      data={[]}
 
 
                     />
