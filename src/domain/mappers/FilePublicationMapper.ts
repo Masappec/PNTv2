@@ -1,22 +1,24 @@
+import { TRANSPARENCY_PATH } from "../../infrastructure/Api";
 import { FilePublicationRequest, FilePublicationResponse } from "../../infrastructure/Api/FilePublication/interface";
+import { URL_API } from "../../utils/constans";
 import { FilePublicationEntity } from "../entities/PublicationEntity";
 
 
-class FilePublicationMapper{
+class FilePublicationMapper {
 
-    static fromDomainToApi(filePublication: FilePublicationEntity,file:File): FilePublicationRequest{
+    static fromDomainToApi(filePublication: FilePublicationEntity, file: File): FilePublicationRequest {
         return {
             description: filePublication.description,
             name: filePublication.name,
-            url_download:  file
+            url_download: file
         }
     }
 
-    static fromApiToDomain(filePublication: FilePublicationResponse): FilePublicationEntity{
+    static fromApiToDomain(filePublication: FilePublicationResponse): FilePublicationEntity {
         return {
             description: filePublication.description,
             name: filePublication.name,
-            url_download:  filePublication.url_download,
+            url_download: filePublication.url_download ? URL_API + TRANSPARENCY_PATH + filePublication.url_download : "",
             id: filePublication.id
         }
     }

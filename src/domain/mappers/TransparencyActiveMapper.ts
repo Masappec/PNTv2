@@ -1,5 +1,6 @@
 import { TransparencyActivePublicResponse, TransparencyActivePublish, TransparencyActivePublishResponse } from "../../infrastructure/Api/TansparencyActive/interface";
 import TransparencyActive from "../entities/TransparencyActive";
+import FilePublicationMapper from "./FilePublicationMapper";
 
 
 
@@ -45,7 +46,7 @@ class TransparencyActiveMapper {
 
         return {
             id: apiModel.id,
-            files: apiModel.files,
+            files: apiModel.files.map(f => FilePublicationMapper.fromApiToDomain(f)),
             created_at: new Date(apiModel.created_at),
             updated_at: new Date(apiModel.updated_at),
             deleted: apiModel.deleted,

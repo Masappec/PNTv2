@@ -1,4 +1,4 @@
-import { Accordion, Button, Checkbox, Dropdown } from "flowbite-react";
+import { Accordion, Badge, Button, Checkbox, Dropdown } from "flowbite-react";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 
 
@@ -114,12 +114,13 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                     <>
                       Seleccionar año
                       <FiCalendar className="w-5 h-5 ml-5"></FiCalendar>
+                      {props.selectedYear ? <Badge className="ml-3">{props.selectedYear}</Badge> : ""}
                     </>
 
                   }
                     size={"lg"}
                     arrowIcon={false}
-                    dismissOnClick={false}
+                    dismissOnClick={true}
                     className="flex items-center justify-center 
                      text-lg tracking-wide
                      rounded-xl 
