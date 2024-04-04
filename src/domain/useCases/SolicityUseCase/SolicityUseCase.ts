@@ -12,5 +12,9 @@ class SolicityUseCase {
   async createSolicity(data: CreateSolicity) {
     return await this.solicityService.createSolicity(data);
   }
+
+  async responseSolicity(data:ResponseSolicity){
+    return await  this.solicityService.responseSolicity(data);
+  }
 }
 export default SolicityUseCase;

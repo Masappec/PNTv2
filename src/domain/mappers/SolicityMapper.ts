@@ -1,4 +1,4 @@
-import { SolicityRequestDto, SolicityResponseDto } from "../../infrastructure/Api/Solicity/interface"
+import { SolicityRequestDto, SolicityResponseDto, SolicityResult } from "../../infrastructure/Api/Solicity/interface"
 import CreateSolicity from "../entities/CreateSolicity";
 import { Solicity } from "../entities/Solicity"
 
@@ -37,6 +37,18 @@ class SolicityMappers {
             phone: data.phone,
             type_reception: data.type_reception
 
+        }
+    }
+    static domainApi(    
+           data: ResponseSolicity
+
+    ): SolicityResult{
+        return {
+        id_solicitud: data.id_solicitud,
+        text: data.text,
+        files: data.files,
+        attachment: data.attachment,
+        category_id: data.category_id
         }
     }
 }

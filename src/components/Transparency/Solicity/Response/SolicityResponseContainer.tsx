@@ -3,9 +3,25 @@ import { useNavigate } from "react-router-dom"
 import { OnChangeValue } from "react-select";
 import { Row } from "../../../../utils/interface";
 import SolicityResponsePresenter from "./SolicityResponsePresenter";
+import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase";
+import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
 
 
-const SolicityResponseContainer = () => {
+interface Props {
+    usecase: SolicityUseCase;
+    publicusecase: PublicUseCase;
+}
+
+const SolicityResponseContainer = (props:Props) => {
+
+
+    const [data, setData] = useState<ResponseSolicity>({
+        id_solicitud: 0,
+        text: "",
+        files: [],
+        attachment: [],
+        category_id: 0
+    })
     const navigation = useNavigate()
 
     const [error, setError] = useState<string>("")
@@ -140,10 +156,11 @@ const SolicityResponseContainer = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
-
-        setLoading(true)
-        console.log("publication", solicity)
+        props.usecase.responseSolicity(data).then(() => {
+            setSuccess("Solicitud enviada correctamente")
+        }).catch((err) => {
+            setError(err.message)
+        })
 
     }
 

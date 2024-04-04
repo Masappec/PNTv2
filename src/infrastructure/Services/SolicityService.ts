@@ -36,5 +36,12 @@ class SolicityService {
     );
     return SolicityMappers.apiToDomain(response);
   }
+
+  async responseSolicity(data: ResponseSolicity) {
+    const response = await this.api.responseSolicity(
+      SolicityMappers.domainApi(data)
+    );
+    return SolicityMappers.apiToDomain(response)
+  }
 }
 export default SolicityService;
