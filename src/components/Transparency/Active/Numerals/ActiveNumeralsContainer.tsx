@@ -6,44 +6,45 @@ import NumeralUseCase from "../../../../domain/useCases/NumeralUseCase/NumeraUse
 import { useNavigate } from "react-router-dom";
 import { INeedProps } from "../Create/ActiveCreateContainer";
 
-interface IProps{
+interface IProps {
     usecase: NumeralUseCase,
-    
-}
-const ActiveNumeralsContainer = (props:IProps)=>{
 
-    const [numerals,setNumerals] = useState<NumeralEntity[]>([])
-    const [,setError] = useState<string>("")
+}
+const ActiveNumeralsContainer = (props: IProps) => {
+
+    const [numerals, setNumerals] = useState<NumeralEntity[]>([])
+    const [, setError] = useState<string>("")
 
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        props.usecase.getNumeralByUserInSession().then(_numerals=>{
+    useEffect(() => {
+        props.usecase.getNumeralByUserInSession().then(_numerals => {
+            console.log(_numerals.filter(x => x.published))
             setNumerals(_numerals)
-        }).catch((e)=>{
+        }).catch((e) => {
             setError(e)
         })
-    },[])
+    }, [])
 
 
-    const handleClickItem  = (numeral:NumeralEntity)=>{
-        navigate('/admin/active/create',{
-            state:{
+    const handleClickItem = (numeral: NumeralEntity) => {
+        navigate('/admin/active/create', {
+            state: {
                 numeral: numeral,
-                childs: numerals.filter(x=>x.parent==numeral.id)
+                childs: numerals.filter(x => x.parent == numeral.id)
             } as INeedProps
         })
-        
+
     }
 
-    return(
-       <ActiveNumeralsPresenter
-       numerals={numerals}
+    return (
+        <ActiveNumeralsPresenter
+            numerals={numerals}
             loading={false}
-            onAdd={()=>{}}
+            onAdd={() => { }}
             onClickItem={handleClickItem}
-       />
+        />
     )
 }
 
-export default  ActiveNumeralsContainer;
+export default ActiveNumeralsContainer;

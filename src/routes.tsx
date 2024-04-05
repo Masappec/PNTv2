@@ -15,6 +15,7 @@ import PublicEstablishment from "./interfaces/web/Landing/Establishment/List/Pub
 import PublicEstablishmentDetail from "./interfaces/web/Landing/Establishment/Detail/PublicEstablishmentDetail";
 import PublicationDetail from "./interfaces/web/Landing/Publication/Detail";
 import Entry from "./interfaces/web/Auth/Entry";
+import { IS_SERVER } from "./utils/constans";
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged();
@@ -52,14 +53,15 @@ const handleLoaderLocked = () => {
 
 const Router = createBrowserRouter(
   [
-    /*{
+
+    IS_SERVER != 'N' ? {
       path: "/locked",
       element: <Entry />,
-    },*/
+    } : {},
     {
       path: "/",
       element: <Landing />,
-      //loader: () => handleLoaderLocked(),
+      loader: () => IS_SERVER != 'N' ? handleLoaderLocked() : null,
       children: [
         {
           path: "/",

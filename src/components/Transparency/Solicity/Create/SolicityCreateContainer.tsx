@@ -67,7 +67,8 @@ const SolicityCreateContainer = (props: Props) => {
             setInputSearch("")
             return
         }
-        if(!search){
+        setInputSearch(inputValue)
+        if (!search && !inputSearch.startsWith(inputValue)) {
             props.publicusecase.getEstablishments(inputValue).then((res) => {
 
                 const result = res.results.map((item) => item.data)
@@ -85,9 +86,9 @@ const SolicityCreateContainer = (props: Props) => {
                 callback(final)
             }).catch((err) => {
                 console.log(err)
-            }) 
+            })
         }
-        
+
 
 
     }

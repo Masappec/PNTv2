@@ -17,6 +17,7 @@ interface Props {
     onItemClicked: (slug: string) => void;
     letters: string[];
     loading: boolean;
+    onSearch: (search: string) => void;
 }
 
 const PublicEstablishmentPresenter = (props: Props) => {
@@ -75,7 +76,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                                 icon={BiSearch}
                                 id="search" type="search"
                                 className="w-72"
-
+                                onChange={(e) => props.onSearch(e.target.value)}
                                 placeholder={intl.messages['search_by_establishment'] as string || ""}
 
                                 required />
@@ -100,7 +101,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
 
                         }
                         {
-                            !props.loading && props.letters.map((letra) => {
+                            !props.loading && props.letters.filter((letter) => props.entities.some((entity) => entity.letter === letter)).map((letra) => {
                                 return (
                                     <div className="flex flex-col w-full">
                                         <h3 className="text-2xl font-bold tracking-tight text-primary-500 dark:text-white mt-5 mb-5">
