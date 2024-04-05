@@ -1,5 +1,5 @@
 import React from 'react';
-import { components, ContainerProps, ControlProps, DropdownIndicatorProps, Options, ValueContainerProps } from 'react-select';
+import { components, ContainerProps, ControlProps, DropdownIndicatorProps, ValueContainerProps } from 'react-select';
 import { ColourOption } from '../../../utils/interface';
 import { FaSearch } from 'react-icons/fa';
 import AsyncSelect from 'react-select/async';
@@ -15,26 +15,21 @@ const SelectContainer = ({
     );
 };
 
-interface PropsDropdownIndicator extends DropdownIndicatorProps<ColourOption> {
-    onClick: (data: Options<ColourOption>) => void
-}
-const DropdownIndicator = ({ onClick, ...props }: PropsDropdownIndicator) => {
+const DropdownIndicator = ({ ...props }: DropdownIndicatorProps<ColourOption>) => {
+
+    const copy = props;
+
+
+
+
     return (
-        <components.DropdownIndicator {...props}
-
-
-        >
+        <components.DropdownIndicator {...copy}>
             <div className=" w-fit flex justify-end h-[56px]">
                 <button
-                    disabled
+
                     type="button"
-                    onClick={() => {
-                        onClick(props.getValue())
-                    }}
-                    className="!absolute 
-                  
-                  
-                  w-[86px] h-[56px] border-black  
+
+                    className="!absolute w-[86px] h-[56px] border-black  
                  
                   text-white bg-primary-700
                   py-5
@@ -81,22 +76,19 @@ const Control = (props: ControlProps<ColourOption>) => {
 interface Props {
     colourOptions: ColourOption[];
     loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
-    onSelect: (value: Options<ColourOption>) => void;
+    onSelect: (value: ColourOption) => void;
 }
 export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSelect }) => {
 
+    const [selectedOption, setSelectedOption] = React.useState<ColourOption | null>(null);
 
-    const _DropdownIndicator = (props: DropdownIndicatorProps<ColourOption>) =>
-        <DropdownIndicator {...props}
-            onClick={onSelect}
-        />;
 
     return <AsyncSelect
         closeMenuOnSelect={false}
         loadOptions={loadOptions}
         cacheOptions={true}
 
-        components={{ SelectContainer, Control, DropdownIndicator: _DropdownIndicator, ValueContainer }}
+        components={{ SelectContainer, Control, DropdownIndicator, ValueContainer }}
         styles={{
             container: (base) => ({
                 ...base,
@@ -119,5 +111,14 @@ export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSe
             }
         }}
         options={colourOptions}
+        onChange={(value) => {
+            setSelectedOption(value as ColourOption)
+        }}
+        onMenuOpen={() => {
+            if (selectedOption) {
+                onSelect(selectedOption || { value: "", label: "" } as ColourOption)
+            }
+        }}
+
     />
 }

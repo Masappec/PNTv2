@@ -8,13 +8,12 @@ import { FiLayers } from "react-icons/fi";
 import { BsQuestionCircle } from "react-icons/bs";
 import { GoChecklist } from "react-icons/go";
 import { ColourOption } from "../../../utils/interface";
-import { Options } from "react-select";
 
 interface Props {
   loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
   countEntities: number;
   countFiles: number;
-  onSelect: (value: Options<ColourOption>) => void;
+  onSelect: (value: ColourOption) => void;
   faq: FrequencyAsked[];
 }
 const LandingPresenter = (props: Props) => {

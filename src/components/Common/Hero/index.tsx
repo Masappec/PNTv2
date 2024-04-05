@@ -1,12 +1,11 @@
 import { FormattedMessage } from "react-intl";
 import { CustomSearch } from "../CustomSearch";
 import { ColourOption } from "../../../utils/interface";
-import { Options } from "react-select";
 interface Props {
   loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
   countEntities: number;
   countFiles: number;
-  onSelect: (value: Options<ColourOption>) => void;
+  onSelect: (value: ColourOption) => void;
 }
 const Hero = (props: Props) => {
 

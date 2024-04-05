@@ -4,7 +4,11 @@ import PublicUseCase from "../../../domain/useCases/Public/PublicUseCase";
 import { FrequencyAsked } from "../../../domain/entities/PedagodyAreaEntity";
 import { ColourOption } from "../../../utils/interface";
 import { useNavigate } from "react-router-dom";
-import { Options } from "react-select";
+import EstablishmentEntity from "../../../domain/entities/Establishment";
+import { setEstablishments } from "../../../infrastructure/Slice/EstablishmentSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../infrastructure/Store";
 
 interface Props {
     usecase: PublicUseCase;
@@ -13,7 +17,8 @@ interface Props {
 const LandingContainer = (props: Props) => {
     const [faq, setFaq] = useState<FrequencyAsked[]>([])
     const [isSearching, SetSearching] = useState<boolean>()
-
+    const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
 
@@ -24,6 +29,22 @@ const LandingContainer = (props: Props) => {
             setFaq(res.faq)
         }).catch((err) => {
             console.log(err.message)
+        })
+    }, [])
+
+    useEffect(() => {
+        props.usecase.getEstablishments().then(res => {
+            const result = res.results.map((item) => item.data)
+            const final: EstablishmentEntity[] = []
+            result.map((item) => {
+                item.map((_item) => {
+                    final.push(_item)
+                })
+            })
+            dispatch(setEstablishments(final))
+
+        }).catch(() => {
+            console.log("Error")
         })
     }, [])
 
@@ -40,32 +61,28 @@ const LandingContainer = (props: Props) => {
             return;
         }
 
-        props.usecase.getEstablishments(inputValue).then(res => {
-            const result = res.results.map((item) => item.data)
-            const final: ColourOption[] = []
-            result.map((item) => {
-                item.map((_item) => {
-                    final.push({
-                        value: _item.slug || "",
-                        label: _item.name,
-                        color: "#00B8D9"
-                    })
-                })
-            })
-            SetSearching(false)
-            callback(final)
-        }).catch(() => {
-            callback([])
+        SetSearching(true)
+        const filter = _establishments.filter((item) => {
+            return item.name.toLowerCase().includes(inputValue.toLowerCase())
         })
+        SetSearching(false)
+        callback(filter.map((item) => {
+            const data: ColourOption = {
+                value: item.slug || "",
+                label: item.name,
+                color: "#00B8D9",
+            }
+            return data;
+        }))
+
+
     }
 
-    const onSelect = (value: Options<ColourOption>) => {
+    const onSelect = (value: ColourOption) => {
         console.log("OBJETO SELECCIONADO", value)
-        if (value.length === 0) {
-            return;
-        }
 
-        navigate(`/entidades/${value[0].value}`)
+
+        navigate(`/entidades/${value.value}`)
     }
 
 

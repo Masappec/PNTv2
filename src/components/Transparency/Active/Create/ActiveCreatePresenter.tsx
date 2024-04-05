@@ -94,6 +94,15 @@ const ActiveCreatePresenter = (props: Props) => {
               </Alert>
             )
           }
+          {
+            props.templates.map((template, index) => (
+              <Button key={index} type="button" className="flex items-center justify-center w-1/2 text-sm">
+                <span className="text-gray-500 dark:text-gray-300 font-semibold">
+                  {template.name}
+                </span>
+              </Button>
+            ))
+          }
           <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800">
             <Tabs.Item title="Subir Archivos" >
               <div className="mb-36 mt-5 xl:grid-cols-3 grid-cols-1 grid gap-5">
