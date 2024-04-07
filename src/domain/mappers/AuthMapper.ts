@@ -2,10 +2,10 @@ import { LoginResponseDto, RegisterDto } from "../../infrastructure/Api/Auth/int
 import UserEntity from "../entities/UserEntity";
 
 
-class AuthMapper{
-    static fromDomainToDTO(auth: UserEntity): RegisterDto{
+class AuthMapper {
+    static fromDomainToDTO(auth: UserEntity): RegisterDto {
         return {
-            city: auth.city||'',
+            city: auth.city || '',
             first_name: auth.first_name,
             identification: auth.identification || '',
             last_name: auth.last_name || '',
@@ -15,13 +15,14 @@ class AuthMapper{
             username: auth.username || '',
             accept_terms: true,
             age_range: '',
-            gender:'',
-            race:'',
+            gender: '',
+            race: '',
+            confirm_password: ''
         }
     }
 
 
-    static fromApiToDomain(auth: LoginResponseDto): UserEntity{
+    static fromApiToDomain(auth: LoginResponseDto): UserEntity {
         return {
             email: auth.user.email,
             first_name: auth.user.first_name,

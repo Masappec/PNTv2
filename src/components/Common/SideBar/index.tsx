@@ -29,7 +29,7 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 
 
 		<Sidebar aria-label="Default sidebar example"
-			className="border-r bg-slate-200 w-64 z-30 h-90">
+			className="border-r bg-slate-200 w-64 z-30 h-50">
 
 			<Sidebar.Items className="flex flex-col">
 				<Sidebar.ItemGroup>
@@ -59,10 +59,10 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 							<img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" alt="avatar" className="w-8 h-8 rounded-full" />
 							<div className="flex-col flex ml-2">
 								<span className="text-sm font-medium text-slate-700">
-									{user}
+									{user && user.length > 15 ? user.split(" ")[0] + "..." : user}
 								</span>
 								<span className="text-xs text-slate-500">
-									{email}
+									{email && email.length > 15 ? email.substring(0, 15) + "..." : email}
 								</span>
 							</div>
 							<a href="#" onClick={onLogout} className="ml-2 mt-3">

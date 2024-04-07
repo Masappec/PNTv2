@@ -88,31 +88,32 @@ const Router = createBrowserRouter(
           element: <PublicationDetail />,
         },
 
-        {
-          path: "/registro",
-          element: <Register />,
-          loader: () => handleLoade(),
-        },
-        {
-          path: "/auth/forgot-password",
-          element: <ForgotPassword />,
-          loader: () => handleLoade(),
-        },
-        {
-          path: "/auth/reset-password/:token",
-          element: <ConfirmPassword />,
-          loader: () => handleLoade(),
-        },
-        {
-          path: "/auth/activate-account/:uid/:token",
-          element: <ActivateAccount />,
-          loader: () => handleLoade(),
-        },
+
       ],
     },
     {
       path: "/ingreso",
       element: <Login />,
+      loader: () => handleLoade(),
+    },
+    {
+      path: "/registro",
+      element: <Register />,
+      loader: () => handleLoade(),
+    },
+    {
+      path: "/auth/forgot-password",
+      element: <ForgotPassword />,
+      loader: () => handleLoade(),
+    },
+    {
+      path: "/auth/reset-password/:token",
+      element: <ConfirmPassword />,
+      loader: () => handleLoade(),
+    },
+    {
+      path: "/auth/activate-account/:uid/:token",
+      element: <ActivateAccount />,
       loader: () => handleLoade(),
     },
     {

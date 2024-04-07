@@ -4,6 +4,7 @@ class EstablishmentEntity {
     id?: number;
     name: string;
     code: string;
+    identification: string;
     abbreviation: string;
     logo: string | File | null;
     highest_authority: string;
@@ -28,9 +29,9 @@ class EstablishmentEntity {
 
     constructor(name: string, code: string, abbreviation: string,
         logo: string, highest_authority: string, first_name_authority: string,
-        last_name_authority: string, job_authority: string, email_authority: string,
+        last_name_authority: string, job_authority: string, email_authority: string, identification: string,
         is_active?: boolean, highest_committe?: string, first_name_committe?: string,
-        slug?: string, extra_numerals?: string
+        slug?: string, extra_numerals?: string,
     ) {
         this.name = name;
         this.code = code;
@@ -46,6 +47,7 @@ class EstablishmentEntity {
         this.first_name_committe = first_name_committe;
         this.slug = slug;
         this.extra_numerals = extra_numerals
+        this.identification = identification
     }
 
 }

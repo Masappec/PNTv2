@@ -222,7 +222,7 @@ const menu = [
   },
   {
     name: " Editar Solicitudes",
-    path: "/admin/solicity/edit",
+    path: "/admin/solicity/edit/:id",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "change_solicity",

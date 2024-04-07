@@ -5,8 +5,6 @@ import { FrequencyAsked } from "../../../domain/entities/PedagodyAreaEntity";
 import { ColourOption } from "../../../utils/interface";
 import { useNavigate } from "react-router-dom";
 import EstablishmentEntity from "../../../domain/entities/Establishment";
-import { setEstablishments } from "../../../infrastructure/Slice/EstablishmentSlice";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../infrastructure/Store";
 
@@ -17,11 +15,14 @@ interface Props {
 const LandingContainer = (props: Props) => {
     const [faq, setFaq] = useState<FrequencyAsked[]>([])
     const [isSearching, SetSearching] = useState<boolean>()
-    const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
-    const dispatch = useDispatch()
     const navigate = useNavigate()
+    const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
 
+    const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
 
+    useEffect(() => {
+        setListEnt(_establishments)
+    }, [_establishments])
 
 
     useEffect(() => {
@@ -32,21 +33,7 @@ const LandingContainer = (props: Props) => {
         })
     }, [])
 
-    useEffect(() => {
-        props.usecase.getEstablishments().then(res => {
-            const result = res.results.map((item) => item.data)
-            const final: EstablishmentEntity[] = []
-            result.map((item) => {
-                item.map((_item) => {
-                    final.push(_item)
-                })
-            })
-            dispatch(setEstablishments(final))
 
-        }).catch(() => {
-            console.log("Error")
-        })
-    }, [])
 
     const loadOptions = (inputValue: string, callback: (options: ColourOption[]) => void) => {
         if (!inputValue) {
@@ -62,7 +49,7 @@ const LandingContainer = (props: Props) => {
         }
 
         SetSearching(true)
-        const filter = _establishments.filter((item) => {
+        const filter = listEnt.filter((item) => {
             return item.name.toLowerCase().includes(inputValue.toLowerCase())
         })
         SetSearching(false)
@@ -89,7 +76,7 @@ const LandingContainer = (props: Props) => {
     return (
         <LandingPresenter
             faq={faq}
-            countEntities={0}
+            countEntities={listEnt.length}
             countFiles={0}
             loadOptions={loadOptions}
             onSelect={onSelect}

@@ -7,7 +7,7 @@ export interface EstablishmentListDto extends BaseObject {
     name: string;
     code: string;
     abbreviation: string;
-
+    identification: string;
     logo: string;
     highest_authority: string;
     first_name_authority: string;
@@ -42,6 +42,7 @@ export interface EstablishmentCreateDTO {
     type_organization?: string;
     function_organization?: string;
     type_institution?: string;
+    identification: string;
 
 }
 
@@ -49,7 +50,9 @@ export interface EstablishmentDetailDTO {
     id: number,
     name: string,
     code: string,
-    logo: File,
+    logo?: File | string,
+    slug: string,
+    identification: string,
     abbreviation: string,
     highest_authority: string,
     first_name_authority: string,

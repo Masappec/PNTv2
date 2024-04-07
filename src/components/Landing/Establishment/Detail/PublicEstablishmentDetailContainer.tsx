@@ -34,6 +34,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         is_active: false,
         job_committe: "",
         last_name_committe: "",
+        identification: "",
     })
 
     const [publications, setPublications] = useState<AcordionMonthYear<TransparencyActive>[]>([])

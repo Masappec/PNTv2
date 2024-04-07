@@ -1,5 +1,6 @@
 import { TransparencyActivePublicResponse, TransparencyActivePublish, TransparencyActivePublishResponse } from "../../infrastructure/Api/TansparencyActive/interface";
 import TransparencyActive from "../entities/TransparencyActive";
+import EstablishmentMapper from "./EstablishmentMapper";
 import FilePublicationMapper from "./FilePublicationMapper";
 
 
@@ -27,7 +28,7 @@ class TransparencyActiveMapper {
             user_created: apiModel.user_created,
             user_updated: apiModel.user_updated,
             user_deleted: apiModel.user_deleted,
-            establishment: apiModel.establishment,
+            establishment: EstablishmentMapper.apiToDomainDetail(apiModel.establishment),
             numeral: apiModel.numeral
         }
     }
@@ -62,7 +63,7 @@ class TransparencyActiveMapper {
             user_created: apiModel.user_created,
             user_updated: apiModel.user_updated,
             user_deleted: apiModel.user_deleted,
-            establishment: apiModel.establishment,
+            establishment: EstablishmentMapper.apiToDomainDetail(apiModel.establishment),
             numeralPartial: apiModel.numeral,
             numeral: apiModel.numeral.id,
 

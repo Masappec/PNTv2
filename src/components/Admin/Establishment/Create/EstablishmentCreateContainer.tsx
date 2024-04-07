@@ -35,6 +35,8 @@ const EstablishmentCreateContainer = ({
         highest_committe: "",
         job_committe: "",
         last_name_committe: "",
+        identification: "",
+
     })
 
 

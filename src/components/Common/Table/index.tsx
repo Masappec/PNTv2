@@ -4,6 +4,7 @@ import { Pagination, Table as TableFlowbite } from "flowbite-react";
 interface Column<T> {
     title: string
     render: (data: T) => React.ReactNode,
+    width?: number
 }
 
 interface TableProps<T> {
@@ -48,7 +49,11 @@ function Table<T>(props: TableProps<T>) {
 
                         {
                             props.columns.map(column => (
-                                <TableFlowbite.HeadCell key={column.title} className="px-4 py-3">
+
+                                <TableFlowbite.HeadCell
+                                    key={column.title} className={`px-4 py-3 `}
+
+                                >
                                     {column.title}
                                 </TableFlowbite.HeadCell>
                             ))
@@ -60,7 +65,10 @@ function Table<T>(props: TableProps<T>) {
                                 <TableFlowbite.Row>
                                     {
                                         props.columns.map(column => (
-                                            <TableFlowbite.Cell className="px-4 py-3" key={column.title}>
+                                            <TableFlowbite.Cell
+
+                                                className={`px-4 py-3 `}
+                                                key={column.title}>
                                                 {column.render(row)}
                                             </TableFlowbite.Cell>
                                         ))

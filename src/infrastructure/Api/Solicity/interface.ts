@@ -1,25 +1,80 @@
-export interface SolicityResponseDto {
+import { BaseObject } from "..";
+
+export interface TimeLine {
+  status: string;
+  created_at: string;
+}
+
+
+export interface SolicityResponseDto extends BaseObject {
+
   id: number;
-  text?: string;
-  establishment: number;
+  number_saip: string;
+  date: string;
+  city: string;
+  text: string;
   is_active: boolean;
   status: string;
-  expiry_date: string | null;
+  expiry_date: string;
   have_extension: boolean;
   is_manual: boolean;
-}
-export interface SolicityRequestDto {
-  establishment_id: number;
-  description: string;
   first_name: string;
   last_name: string;
   email: string;
-  identification: string;
+  race_identification: string;
+  gender: string;
   address: string;
   phone: string;
-  type_reception: string;
-  formatSolicity: string;
+  format_send: string;
+  format_receipt: string;
+  establishment: number;
+  estblishment_name: string;
+  time_line: TimeLine[];
 }
+
+
+
+
+export interface SolicityDraftRequestDto {
+  number_saip: string;
+  date: string;
+  city: string;
+  text: string;
+  first_name: string;
+  last_name: string;
+  email: string
+  race_identification: string;
+  gender: string;
+  address: string;
+  phone: string;
+  format_send: string;
+  format_receipt: string;
+  establishment: number;
+
+
+}
+
+
+export interface SendDraftSolicity {
+
+  id: number;
+  number_saip: string;
+  date: string;
+  city: string;
+  text: string;
+  first_name: string;
+  last_name: string;
+  email: string
+  race_identification: string;
+  gender: string;
+  address: string;
+  phone: string;
+  format_send: string;
+  format_receipt: string;
+  establishment: number;
+
+}
+
 
 export interface SolicityResult {
   id_solicitud: number;
