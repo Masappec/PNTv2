@@ -103,10 +103,13 @@ const SolicityCreateContainer = (props: Props) => {
                 setSuccess("Solicitud Guardada como borrador")
                 setSolicitySaved(res)
                 setIsSend(true)
-                setIsLoadingSend(true)
+                setIsLoadingSend(false)
                 toast("Solicitud Enviada con exito", {
                     type: "success",
                     autoClose: 2000
+                })
+                sleep(2000).then(() => {
+                    navigate('/admin/solicity')
                 })
             }).catch((err) => {
                 setError(err.message)

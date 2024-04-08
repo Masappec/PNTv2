@@ -15,7 +15,7 @@ import PublicEstablishment from "./interfaces/web/Landing/Establishment/List/Pub
 import PublicEstablishmentDetail from "./interfaces/web/Landing/Establishment/Detail/PublicEstablishmentDetail";
 import PublicationDetail from "./interfaces/web/Landing/Publication/Detail";
 import Entry from "./interfaces/web/Auth/Entry";
-import { IS_SERVER } from "./utils/constans";
+import { BASE_URL, IS_SERVER } from "./utils/constans";
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged();
@@ -131,7 +131,7 @@ const Router = createBrowserRouter(
     },
   ],
   {
-    basename: import.meta.env.VITE_BASE_URL,
+    basename: BASE_URL,
   }
 );
 
