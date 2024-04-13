@@ -148,7 +148,7 @@ const menu = [
     path: '/admin/active/create',
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "view_publication",
+    permission_required: "add_transparencyactive",
     element: <ActiveCreate />
   },
 

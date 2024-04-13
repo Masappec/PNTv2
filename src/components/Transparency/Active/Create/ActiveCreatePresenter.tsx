@@ -9,6 +9,7 @@ import { HiInformationCircle } from "react-icons/hi";
 import DataTablePartial from "../../Partial/CreateFilePublication/DataTable";
 import { Row } from "../../../../utils/interface";
 import NumeralDetail from "../../../../domain/entities/NumeralDetail";
+import { CiSaveDown1 } from "react-icons/ci";
 
 interface Props {
 
@@ -30,6 +31,7 @@ interface Props {
   dataTable: Array<{ id: number, data: Row[][] }>;
   numeralDetail: NumeralDetail | null;
   onGenerateFileFromTable: (file: File, index: TemplateFileEntity) => void;
+  downloadTemplate: (id: number) => void;
 }
 
 const ActiveCreatePresenter = (props: Props) => {
@@ -94,15 +96,7 @@ const ActiveCreatePresenter = (props: Props) => {
               </Alert>
             )
           }
-          {
-            props.templates.map((template, index) => (
-              <Button key={index} type="button" className="flex items-center justify-center w-1/2 text-sm">
-                <span className="text-gray-500 dark:text-gray-300 font-semibold">
-                  {template.name}
-                </span>
-              </Button>
-            ))
-          }
+
           <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800">
             <Tabs.Item title="Subir Archivos" >
               <div className="mb-36 mt-5 xl:grid-cols-3 grid-cols-1 grid gap-5">
@@ -121,6 +115,13 @@ const ActiveCreatePresenter = (props: Props) => {
                           className={template.file != null ? template.isValid ? "bg-green-200" : "bg-red-200" : ""}
                           accept=".csv"
                         />
+                        <Button key={index} type="button"
+                          onClick={() => props.downloadTemplate(template.id)}
+                          className="flex items-center justify-center w-12 text-sm">
+                          <span className=" dark:text-gray-300 font-semibold">
+                            <CiSaveDown1 className="w-5 h-5 font-normal" />
+                          </span>
+                        </Button>
                       </div>
                     );
                   })

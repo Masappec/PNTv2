@@ -62,7 +62,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
         <div className="layout-admin  overflow-y-hidden">
             <div className="flex-col  overflow-y-hidden">
                 <HeaderPages open={open} setOpen={setOpen} haveImage={true} />
-                <div className="flex h-[45rem]  overflow-y-hidden">
+                <div className="flex h-auto overflow-y-hidden">
                     <div
                         className={` lg:block xl:block ${open ? "block" : "hidden"} z-30  bg-slate-200`}
                     >
@@ -80,7 +80,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                                 }`}
                             onClick={() => setOpen(false)}
                         ></div>
-                        <div className="overflow-y-scroll m-8 h-[45rem]">
+                        <div className="overflow-y-scroll m-5 h-[44rem]">
                             <Outlet />
                         </div>
                     </div>

@@ -76,6 +76,15 @@ function Table<T>(props: TableProps<T>) {
                                 </TableFlowbite.Row>
                             ))
                         }
+                        {
+                            props.data.length === 0 && (
+                                <TableFlowbite.Row>
+                                    <TableFlowbite.Cell className="px-4 py-3 text-center" colSpan={props.columns.length}>
+                                        No hay datos
+                                    </TableFlowbite.Cell>
+                                </TableFlowbite.Row>
+                            )
+                        }
 
                     </TableFlowbite.Body>
                 </TableFlowbite>
