@@ -6,13 +6,31 @@ import TablePreview from "../../../Common/TablePreview";
 import { FiEdit2 } from "react-icons/fi";
 import { GrView } from "react-icons/gr";
 import { RiDeleteBinLine } from "react-icons/ri";
+import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 
 interface Props {
 
-    onAdd: () => void
-    onFilter: () => void
-    data:[]
-    showPagination: boolean
+  data: TransparencyFocusEntity[]
+  error: string | null
+  onSearch: (search: string) => void
+  onAdd: () => void
+  onImport: () => void
+  onFilter: () => void
+  onEdit: (transparency: TransparencyFocusEntity) => void
+  search: string
+  setSeach: (search: string) => void
+  page: number
+  setPage: (page: number) => void
+  setVisibleModal: (visible: boolean) => void
+  visibleModal: boolean
+  onConfirmDelete: () => void
+  onCancelDelete: () => void
+  onDelete: (TransparencyFocus: TransparencyFocusEntity) => void
+  selectedTransparencyFocus: TransparencyFocusEntity | null
+  from: number
+  to: number
+  total: number
+  totalPage: number
 
 }
 const FocalizedListPresenter =(props   :Props)=>{
@@ -78,22 +96,15 @@ onClick={props.onAdd}
           <TablePreview
             columns={[
               {
-                render: () => <p>{""}</p>,
+                render: (row: TransparencyFocusEntity) => <p>{"row.created_at"}</p>,
 
 
-                title: "Imagen",
+                title: "Fecha",
                 classname: "w-70",
               },
+             
               {
-                render: () => <p>{""}</p>,
-                title: "Título",
-              },
-              {
-                render: () => <p>{ }</p>,
-                title: "Categoría",
-              },
-              {
-                render: () => (
+                render: (row: TransparencyFocusEntity) => (
                     <p>
                         <button
                             onClick={() => {
