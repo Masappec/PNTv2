@@ -58,6 +58,14 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       setLoading(false)
       return
     }
+
+    if (data.accept_terms === false) {
+      setError('Debe aceptar los términos y condiciones')
+      setLoading(false)
+      return
+    }
+
+
     usecase.authService.register(data as RegisterDto).then(() => {
       setLoading(false)
       return history("/ingreso")
