@@ -39,7 +39,7 @@ interface Props {
 
 const SolicityListPresenter = (props: Props) => {
     return (
-        <div className="container">
+        <div className="">
             <div className="flex items-center py-5 justify-center">
 
 

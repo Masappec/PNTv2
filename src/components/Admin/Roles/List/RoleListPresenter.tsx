@@ -32,7 +32,7 @@ const RoleListPresenter = (props: Props) => {
 
     return (
 
-        <div className="container">
+        <div className=" w-full">
             <div className="flex items-center py-5 justify-center">
 
                 <Modal
@@ -46,7 +46,7 @@ const RoleListPresenter = (props: Props) => {
 
                     <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
                     <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    {`¿Desea eliminar este Rol "${props.selectedRole?.name}" ?`} 
+                        {`¿Desea eliminar este Rol "${props.selectedRole?.name}" ?`}
                     </h3>
                     <div className="flex justify-center gap-4">
                         <Button color="failure" onClick={() => props.onConfirmDelete()}>
@@ -105,7 +105,7 @@ const RoleListPresenter = (props: Props) => {
                     textImport="Importar Roles"
                     title="Roles"
                     key={"roles-table"}
-                    
+
 
 
 

@@ -1,12 +1,14 @@
+import { BiPointer } from "react-icons/bi";
 import { FaCheck, FaClock, FaEye, FaSave, FaStopCircle } from "react-icons/fa";
+import { TbPointFilled } from "react-icons/tb";
 
 
 export const StatusSolicity = {
     CREATED: {
-        value: 'Creada',
+        value: 'Pendiente',
         key: 'CREATED',
         bg: 'info',
-        icon: <FaSave />
+        icon: <BiPointer />
     },
     DRAFT: {
         value: 'Borrador',
@@ -16,10 +18,11 @@ export const StatusSolicity = {
     },
 
     SEND: {
-        value: 'Enviada',
+        value: 'Pendiente',
         key: 'SEND',
         bg: 'success',
-        icon: <FaCheck />
+        icon: <TbPointFilled />
+
     },
 
     PENDING: {

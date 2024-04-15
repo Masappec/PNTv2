@@ -19,7 +19,7 @@ interface TableProps<T> {
     textAdd?: string;
     textImport?: string;
     data: T[];
-    onSearch: (search: string) => void;
+    onSearch?: (search: string) => void;
     search: string;
     onChangePage?: (page: number) => void;
     currentPage?: number;
@@ -32,7 +32,7 @@ interface TableProps<T> {
 function Table<T>(props: TableProps<T>) {
 
     return (
-        <div className="w-full mx-5">
+        <div className="w-full">
 
             <HeaderTable
                 isImport={props.isImport}

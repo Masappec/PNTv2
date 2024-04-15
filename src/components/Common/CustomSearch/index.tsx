@@ -15,6 +15,9 @@ const SelectContainer = ({
     );
 };
 
+
+
+
 const DropdownIndicator = ({ ...props }: DropdownIndicatorProps<ColourOption>) => {
 
     const copy = props;
@@ -29,17 +32,17 @@ const DropdownIndicator = ({ ...props }: DropdownIndicatorProps<ColourOption>) =
 
                     type="button"
 
-                    className="!absolute w-[86px] h-[56px] border-black  
+                    className="!absolute w-[86px] h-[50px] border-black  
                  
                   text-white bg-primary-700
-                  py-5
+                  
                    hover:bg-primary-800 focus:ring-4
                    justify-center
                     focus:ring-primary-300 font-normal 
                     flex items-center
                     xl:w-[150px]
                     xl:space-x-5
-                    rounded-full text-xl px-5 "
+                    rounded-full text-xl mt-[1.9px] "
                 >
 
                     <p className='hidden xl:flex'>
@@ -72,6 +75,7 @@ const Control = (props: ControlProps<ColourOption>) => {
 
     );
 }
+
 
 interface Props {
     colourOptions: ColourOption[];
@@ -106,9 +110,10 @@ export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSe
         }}
         placeholder=""
         classNames={{
-            control: (state) => {
-                return state.isFocused ? 'border-none' : 'border-none'
-            }
+            control: () => {
+                return 'border-2 border-black  rounded-full'
+            },
+
         }}
         options={colourOptions}
         onChange={(value) => {

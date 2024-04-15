@@ -60,11 +60,13 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
 
     return (
         <div className="layout-admin  overflow-y-hidden">
-            <div className="flex-col  overflow-y-hidden">
+            <div className="flex-col overflow-y-hidden">
                 <HeaderPages open={open} setOpen={setOpen} haveImage={true} />
-                <div className="flex h-auto overflow-y-hidden">
+                <div className="flex  overflow-y-hidden">
                     <div
-                        className={` lg:block xl:block ${open ? "block" : "hidden"} z-30  bg-slate-200`}
+                        className={` lg:block xl:block ${open ? "block" : "hidden"} z-30  bg-slate-200
+                        mb-52
+                        `}
                     >
                         <Sidebar
                             email={email}
@@ -76,11 +78,11 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                     </div>
                     <div className="w-full overflow-y-hidden">
                         <div
-                            className={` ${open ? " bg-black bg-opacity-40 lg:bg-none h-screen w-screen fixed z-20" : ""
+                            className={` ${open ? " bg-black bg-opacity-40 lg:bg-none h-screen fixed z-20" : ""
                                 }`}
                             onClick={() => setOpen(false)}
                         ></div>
-                        <div className="overflow-y-scroll m-5 h-[44rem]">
+                        <div className="overflow-y-scroll m-5 ">
                             <Outlet />
                         </div>
                     </div>
