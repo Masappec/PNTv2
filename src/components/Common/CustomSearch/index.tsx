@@ -26,13 +26,10 @@ const DropdownIndicator = ({ ...props }: DropdownIndicatorProps<ColourOption>) =
 
 
     return (
-        <components.DropdownIndicator {...copy}>
-            <div className=" w-fit flex justify-end h-[56px]">
-                <button
+        <button
+            type="button"
 
-                    type="button"
-
-                    className="!absolute w-[86px] h-[50px] border-black  
+            className="!absolute w-[86px] h-[50px] border-black  
                  
                   text-white bg-primary-700
                   
@@ -42,16 +39,15 @@ const DropdownIndicator = ({ ...props }: DropdownIndicatorProps<ColourOption>) =
                     flex items-center
                     xl:w-[150px]
                     xl:space-x-5
-                    rounded-full text-xl mt-[1.9px] "
-                >
+                    -ml-20
+                    rounded-full text-xl  "
+        >
 
-                    <p className='hidden xl:flex'>
-                        Buscar
-                    </p>
-                    <FaSearch size="20" />
-                </button>
-            </div>
-        </components.DropdownIndicator>
+            <p className='hidden xl:flex'>
+                Buscar
+            </p>
+            <FaSearch size="20" />
+        </button>
     );
 }
 
@@ -68,9 +64,12 @@ const ValueContainer = (props: ValueContainerProps<ColourOption>) => {
 
 const Control = (props: ControlProps<ColourOption>) => {
     return (
-        <components.Control {...props} className="xl:w-[730px] h-[56px] w-full md:w-full border-2 border-black  rounded-full">
+        <div
+            ref={props.innerRef}
+            className='w-full flex'
+            {...props.innerProps}>
             {props.children}
-        </components.Control>
+        </div>
 
 
     );

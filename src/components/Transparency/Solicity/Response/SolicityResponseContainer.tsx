@@ -1,15 +1,21 @@
-import { FormEvent, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { FormEvent, useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 import { OnChangeValue } from "react-select";
 import { Row } from "../../../../utils/interface";
 import SolicityResponsePresenter from "./SolicityResponsePresenter";
 import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase";
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
+import FilePublicationUseCase from "../../../../domain/useCases/FilePublicationUseCase/FilePublicationUseCase";
+import { AttachmentEntity, FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
+import AttachmentUseCase from "../../../../domain/useCases/AttachmentUseCase/AttachmentUseCase";
+import { Solicity } from "../../../../domain/entities/Solicity";
 
 
 interface Props {
     usecase: SolicityUseCase;
     publicusecase: PublicUseCase;
+    fileUseCase: FilePublicationUseCase;
+    attachmentUsecase: AttachmentUseCase
 }
 
 const SolicityResponseContainer = (props: Props) => {
@@ -22,6 +28,12 @@ const SolicityResponseContainer = (props: Props) => {
         attachment: [],
         category_id: 0
     })
+
+    const location = useLocation()
+
+    const state = location.state as { data: Solicity }
+    const [solicityToResponse, setSolicityToResponse] = useState<Solicity>(state.data)
+
     const navigation = useNavigate()
 
     const [error, setError] = useState<string>("")
@@ -32,17 +44,22 @@ const SolicityResponseContainer = (props: Props) => {
     const [solicity, SetSolicity] = useState({})
 
     const [files, SetFiles] = useState<{
-        file: File | null,
+        file: File | string | null,
         type: "table" | "file" | "url",
         error: string,
         loading: boolean,
         success: string,
-        file_solicity: | null
+        file_solicity: FilePublicationEntity | null
     }[]>([])
 
     const [tags, SetTags] = useState<[]>([])
 
+    useEffect(() => {
+        if (state) {
+            setSolicityToResponse(state.data)
+        }
 
+    }, [state])
 
     const onCreateTag = (tag: string) => {
         console.log(tag)
@@ -94,10 +111,37 @@ const SolicityResponseContainer = (props: Props) => {
 
     const handleSaveDataUrl = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const url = e.target.value
-        console.log(url)
+
         const copy = [...files]
         copy[index].loading = true
         SetFiles(copy)
+        props.fileUseCase.downloadFileFromUrl(url).then((file) => {
+
+            if (file instanceof Blob) {
+                const copyFiles = [...files]
+                copyFiles[index].loading = false
+                copyFiles[index].error = ""
+                const file_ = new File([file], "data.csv", {
+                    type: "text/csv;charset=utf-8;",
+                });
+                copyFiles[index].file = file_
+                SetFiles(copyFiles)
+            } else if (typeof file === "string") {
+                const copyFiles = [...files]
+                copyFiles[index].loading = false
+                copyFiles[index].error = "El enlace no es un archivo valido, por lo que se guardará como un enlace"
+                copyFiles[index].file = file
+                SetFiles(copyFiles)
+
+            }
+        }).catch(() => {
+            const copyFiles = [...files]
+            copyFiles[index].loading = false
+            copyFiles[index].error = "El enlace no es un archivo valido, por lo que se guardará como un enlace"
+            copyFiles[index].file = url
+            SetFiles(copyFiles)
+        })
+
     }
 
 
@@ -149,6 +193,32 @@ const SolicityResponseContainer = (props: Props) => {
             return
         }
 
+        const data = new FilePublicationEntity(0, name, description, file);
+        if (file instanceof File) {
+            props.fileUseCase.createFilePublication(data).then((response) => {
+                const copyFiles = [...files]
+                copyFiles[index].file_solicity = response
+                SetFiles(copyFiles)
+
+            }).catch((error) => {
+                const copyFiles = [...files]
+                copyFiles[index].error = error.message
+                SetFiles(copyFiles)
+            })
+        } else if (typeof file === "string") {
+            const data = new AttachmentEntity(0, name, description, file)
+            props.attachmentUsecase.createAttachment(data).then((response) => {
+                const copyFiles = [...files]
+                copyFiles[index].file_solicity = response
+                SetFiles(copyFiles)
+
+            }).catch((error) => {
+                const copyFiles = [...files]
+                copyFiles[index].error = error.message
+                SetFiles(copyFiles)
+            })
+        }
+
     }
 
 
@@ -156,6 +226,7 @@ const SolicityResponseContainer = (props: Props) => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        data.id_solicitud = solicityToResponse.id
         props.usecase.responseSolicity(data).then(() => {
             setSuccess("Solicitud enviada correctamente")
         }).catch((err) => {
@@ -166,7 +237,9 @@ const SolicityResponseContainer = (props: Props) => {
 
 
     const onRemoveFileFromPublication = (index: number) => {
-        console.log(index)
+        const copyFiles = [...files]
+        copyFiles.splice(index, 1)
+        SetFiles(copyFiles)
     }
 
 
@@ -175,9 +248,9 @@ const SolicityResponseContainer = (props: Props) => {
             <SolicityResponsePresenter
                 handleSubmit={handleSubmit}
                 onCancel={handleCancel}
-                data={[]}
+                data={[[]]}
                 handleSaveDataFile={handleSaveDataFile}
-                files={[]}
+                files={files}
                 error={error}
                 loading={loading}
                 success={success}

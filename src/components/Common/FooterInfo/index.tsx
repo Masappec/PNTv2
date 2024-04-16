@@ -1,14 +1,53 @@
 
 import { FaXTwitter } from "react-icons/fa6";
 import { SiFacebook } from "react-icons/si";
-
+import logo from '../../../assets/gobierno_abierto.png'
+import logo_cd from '../../../assets/fundacion_ciudadani_desarrollo.png'
+import datalad from '../../../assets/datalat.png'
 const FooterInfo = () => {
   return (
     <footer className="bg-dark-400 text-white py-8 w-screen xl:w-full lg:pl-24 pl-5 ">
-      <div className="sm:flex sm:items-center sm:justify-between "></div>
+      <div>
+        <div className="flex items-start justify-start mt-10">
+          <img src={logo} alt="" className="w-20 h-20" />
+          <span className="pl-5 text-sm w-[20%]">El compromiso
+            "Portal Nacional de Transparencia"
+            forma parte del Segundo Plan de Acción de <a href="https://www.gobiernoabierto.ec"
+              target="_blank" >
+              Estado Abierto Ecuador 2022-2024.
+            </a>
+            <a href="https://www.gobiernoabierto.ec/plan-de-accion-2022-2024/"
+              target="_blank"
+              className="text-blue-500"> Conoce más.
+            </a>
+          </span>
+
+        </div>
+
+      </div>
+      <div className="col-span-3 mt-10 grid grid-cols-3 xl:flex xl:space-x-6  ">
+        <a href="#" className="block  lg:inline-block  mr-4">
+          <img src={logo_cd} alt="" className=" w-[84px] h-[84px] " />
+        </a>
+        <a href="#" className="block  lg:inline-block mr-4">
+          <img src={datalad} alt="" className=" w-32 h-14" />
+        </a>
+        <a href="#" className="block  lg:inline-block mr-4">
+          <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+        </a>
+        <a href="#" className="block  lg:inline-block  mr-4">
+          <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+        </a>
+        <a href="#" className="block  lg:inline-block  mr-4">
+          <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+        </a>
+        <a href="#" className="block  lg:inline-block  mr-4">
+          <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+        </a>
+      </div>
       <h5 className="font-bold text-2xl mt-20 mb-6 xl:ml-0 ml-4">Listado de Entidades</h5>
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between ">
-        <nav className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 justify-center  text-base text-justify sm:gap-[40px] xl:pr-24 ">
+        <nav className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-center  text-base text-justify sm:gap-[40px] xl:pr-24 ">
 
           <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0  ">
             Función Ejecutiva
@@ -46,27 +85,7 @@ const FooterInfo = () => {
             </a>
           </div>
 
-          <div className="col-span-3 grid grid-cols-3 xl:flex xl:space-x-6 
-          xl:pl-80 xl:mt-0 mt-10">
-            <a href="#" className="block mt-4 lg:inline-block lg:mt-0 mr-4">
-              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
-            </a>
-            <a href="#" className="block mt-4 lg:inline-block lg:mt-0 mr-4">
-              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
-            </a>
-            <a href="#" className="block mt-4 lg:inline-block lg:mt-0 mr-4">
-              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
-            </a>
-            <a href="#" className="block mt-4 lg:inline-block lg:mt-0 mr-4">
-              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
-            </a>
-            <a href="#" className="block mt-4 lg:inline-block lg:mt-0 mr-4">
-              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
-            </a>
-            <a href="#" className="block mt-4 lg:inline-block lg:mt-0 mr-4">
-              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
-            </a>
-          </div>
+
         </nav>
       </div>
       <div className="container mx-auto flex flex-col  md:flex-row mt-10 mb-2">
@@ -101,7 +120,7 @@ const FooterInfo = () => {
           </div>
         </nav>
       </div>
-    </footer>
+    </footer >
   );
 };
 

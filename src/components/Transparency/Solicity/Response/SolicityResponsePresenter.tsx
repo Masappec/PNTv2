@@ -11,7 +11,7 @@ import { OnChangeValue } from "react-select";
 import { FaPlusCircle } from "react-icons/fa";
 import { Row } from "../../../../utils/interface";
 import FileUrlPartial from "../../Partial/CreateFilePublication/FileUrl";
-import DataTablePartial from "../../Partial/CreateFilePublication/DataTable";
+import { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
 
 
 interface Props {
@@ -33,12 +33,12 @@ interface Props {
 
     onSaveTable: (data: Row[][], index: number) => void;
     files: {
-        file: File | null,
+        file: File | string | null,
         type: "table" | "file" | "url",
         error: string,
         loading: boolean,
         success: string,
-        file_olicity: | null
+        file_solicity: FilePublicationEntity | null
     }[]
 
     onSaveDateUrl: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
@@ -134,8 +134,8 @@ const SolicityResponsePresenter = (props: Props) => {
                                 <Label htmlFor="" value="Descripción" />
                                 <Textarea
                                     placeholder={"Descripción"}
-                                    value={""}
-                                    name="abbreviation"
+
+                                    name="text"
                                     onChange={(e) => props.onChangeDescription(e.target.value)}
                                 />
                             </div>
@@ -202,39 +202,7 @@ const SolicityResponsePresenter = (props: Props) => {
                     </div>
 
                     <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800">
-                        <Tabs.Item title="Crear Set de Datos" className="mb-36">
-                            {
-                                props.files.map((file, index) => {
 
-                                    if (file.type === "table") {
-                                        return (
-                                            <DataTablePartial
-                                                data={props.data}
-                                                handleCancel={() => props.onRemoveFile(index)}
-                                                index={index}
-                                                onCancel={() => props.onRemoveFile(index)}
-                                                handleSave={(_file) => props.onSaveFile(_file, "", "", index)}
-                                                file={file.file}
-                                                onSaveTable={(data) => props.onSaveTable(data, index)}
-                                                key={index}
-                                                isSaved={file != null}
-                                            />
-                                        )
-                                    }
-                                })
-                            }
-
-                            <div className="flex items-center justify-center mt-4 gap-x-3 w-full">
-                                <Button className="w-2/12 text-sm tracking-wide" color="success"
-                                    onClick={() => props.onAddDataSet("table")}
-                                >
-                                    <FaPlusCircle className="w-5 h-5" />
-                                    <span>
-                                        Agregar Datos
-                                    </span>
-                                </Button>
-                            </div>
-                        </Tabs.Item>
                         <Tabs.Item title="Subir Archivos">
                             <div className="flex flex-row m-2">
 
@@ -283,7 +251,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                             key={index}
                                             onSaveFile={(file, name, description) => props.onSaveFile(file as File, name, description, index)}
                                             onRemoveFile={(index) => props.onRemoveFile(index)}
-                                            isSaved={file != null}
+                                            isSaved={file.file_solicity !== null}
                                         />
                                     }
                                 })

@@ -45,9 +45,9 @@ const Hero = (props: Props) => {
             <div className="relative search 
             lg:mt-8 w-full h-auto 
             
-            xl:justify-center flex xl:ml-48  lg:m-0
+            xl:justify-center flex   lg:m-0
              flex-auto">
-              <div className="relative w-[95%]">
+              <div className="relative w-full xl:w-[730px]">
                 <CustomSearch
                   colourOptions={[]}
                   loadOptions={props.loadOptions}

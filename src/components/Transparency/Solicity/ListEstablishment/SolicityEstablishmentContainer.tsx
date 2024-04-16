@@ -47,8 +47,8 @@ const SolicityListEstablishmentContainer = (props: Props) => {
         navigate('/admin/solicity/onhold')
     }
 
-    const handleResponse = () => {
-        navigate('/admin/solicity/response')
+    const handleResponse = (item: Solicity) => {
+        navigate('/admin/solicity/response', { state: { data: item } })
     }
 
     const handleDetail = () => {

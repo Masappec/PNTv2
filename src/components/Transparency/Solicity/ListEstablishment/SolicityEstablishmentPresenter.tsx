@@ -26,7 +26,7 @@ interface Props {
     onConfirmDelete: () => void
     onCancelDelete: () => void
     onDelete: () => void
-    onResponse: () => void
+    onResponse: (item: Solicity) => void
     onHold: () => void
     onDetail: () => void
 
@@ -200,7 +200,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
                                 <button
                                     onClick={() => {
-                                        props.onResponse()
+                                        props.onResponse(item)
                                     }}
                                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
                                     <FaEdit />
