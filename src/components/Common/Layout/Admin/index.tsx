@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { RootState } from "../../../../infrastructure/Store";
 import { setEstablishments } from "../../../../infrastructure/Slice/EstablishmentSlice";
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
+import { ToastContainer } from "react-toastify";
 
 interface LayoutAdminProps {
 
@@ -83,6 +84,8 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                             onClick={() => setOpen(false)}
                         ></div>
                         <div className="overflow-y-scroll m-5 ">
+                            <ToastContainer />
+
                             <Outlet />
                         </div>
                     </div>

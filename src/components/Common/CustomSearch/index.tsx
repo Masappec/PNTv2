@@ -1,5 +1,5 @@
 import React from 'react';
-import { components, ContainerProps, ControlProps, DropdownIndicatorProps, ValueContainerProps } from 'react-select';
+import { components, ContainerProps, ControlProps, ValueContainerProps } from 'react-select';
 import { ColourOption } from '../../../utils/interface';
 import { FaSearch } from 'react-icons/fa';
 import AsyncSelect from 'react-select/async';
@@ -18,9 +18,8 @@ const SelectContainer = ({
 
 
 
-const DropdownIndicator = ({ ...props }: DropdownIndicatorProps<ColourOption>) => {
+const DropdownIndicator = () => {
 
-    const copy = props;
 
 
 

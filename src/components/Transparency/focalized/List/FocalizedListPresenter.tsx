@@ -26,7 +26,6 @@ interface Props {
   onConfirmDelete: () => void
   onCancelDelete: () => void
   onDelete: (TransparencyFocus: TransparencyFocusEntity) => void
-  selectedTransparencyFocus: TransparencyFocusEntity | null
   from: number
   to: number
   total: number
@@ -94,14 +93,14 @@ const FocalizedListPresenter = (props: Props) => {
         <Table<TransparencyFocusEntity>
           columns={[
             {
-              render: (row: TransparencyFocusEntity) => <p>{row.numeral.name}</p>,
+              render: (row: TransparencyFocusEntity) => <p>{new Date(row.published_at).toDateString()}</p>,
 
 
               title: "Fecha",
             },
 
             {
-              render: (row: TransparencyFocusEntity) => (
+              render: () => (
                 <p>
                   <button
                     onClick={() => {
@@ -130,7 +129,7 @@ const FocalizedListPresenter = (props: Props) => {
           ]}
           title={""}
           onFilter={() => { }}
-          data={[]}
+          data={props.data}
           description="No hay datos"
           length={props.data.length}
           currentPage={props.page}

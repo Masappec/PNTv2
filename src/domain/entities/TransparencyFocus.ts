@@ -1,5 +1,4 @@
-import { FilePublicationResponse } from "../../infrastructure/Api/FilePublication/interface"
-import BaseEntity from "./BaseEntity";
+import { FilePublicationEntity } from "./PublicationEntity";
 
 class TransparencyFocusEntity {
     id: number;
@@ -8,7 +7,7 @@ class TransparencyFocusEntity {
         name: string,
         description: string
     };
-    files: FilePublicationResponse[];
+    files: FilePublicationEntity[];
     slug: string;
     month: number;
     year: number;
@@ -25,7 +24,7 @@ class TransparencyFocusEntity {
             name: string,
             description: string
         },
-        files: FilePublicationResponse[],
+        files: FilePublicationEntity[],
         slug: string,
         month: number,
         year: number,

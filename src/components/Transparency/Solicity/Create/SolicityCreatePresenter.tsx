@@ -11,7 +11,6 @@ import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { Cities } from "../../../../utils/cities";
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 import { Solicity } from "../../../../domain/entities/Solicity";
 import Spinner from "../../../Common/Spinner";
 
@@ -52,7 +51,6 @@ const SolicityCreatePresenter = (props: Props) => {
 
   return (
     <div>
-      <ToastContainer />
       <div className="border-gray-300 py-5 border-b  ">
         <h2 className="text-2xl font-bold text-black ">
           Formulario de Solicitud de Acceso a la Información Pública (SAIP)
