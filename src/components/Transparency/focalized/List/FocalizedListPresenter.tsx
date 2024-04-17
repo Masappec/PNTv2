@@ -105,20 +105,20 @@ const FocalizedListPresenter = (props: Props) => {
                   <button
                     onClick={() => {
                     }}
-                    className=" hover:bg-blue-700 text-black font-bold ">
+                    className=" p-5 text-lg text-slate-400 font-bold rounded-full">
                     <FiEdit2 />
                   </button>
 
                   <button
                     onClick={() => {
                     }}
-                    className=" hover:bg-blue-700 text-black font-bold ">
+                    className=" p-5 text-slate-400font-bold ">
                     <GrView />
                   </button>
                   <button
                     onClick={() => {
                     }}
-                    className=" hover:bg-blue-700 text-black font-bold ">
+                    className=" p-5 text-slate-400 font-bold ">
                     <RiDeleteBinLine />
                   </button>
 

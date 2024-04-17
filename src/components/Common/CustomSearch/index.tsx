@@ -1,5 +1,8 @@
 import React from 'react';
-import { components, ContainerProps, ControlProps, ValueContainerProps } from 'react-select';
+import {
+    components, ContainerProps, ControlProps, ValueContainerProps, InputProps,
+
+} from 'react-select';
 import { ColourOption } from '../../../utils/interface';
 import { FaSearch } from 'react-icons/fa';
 import AsyncSelect from 'react-select/async';
@@ -16,6 +19,14 @@ const SelectContainer = ({
 };
 
 
+
+const LoadingIndicator = () => {
+    return (
+        <div>
+
+        </div>
+    );
+}
 
 
 const DropdownIndicator = () => {
@@ -34,7 +45,7 @@ const DropdownIndicator = () => {
                   
                    hover:bg-primary-800 focus:ring-4
                    justify-center
-                    focus:ring-primary-300 font-normal 
+                     font-normal 
                     flex items-center
                     xl:w-[150px]
                     xl:space-x-5
@@ -50,11 +61,35 @@ const DropdownIndicator = () => {
     );
 }
 
+const Input = (props: InputProps) => {
+    return (
+        <div>
+            <input {...props} className="
+            onfocus:outline-none
+            border-none
+            focus:border-none
+            outline-none
+            focus:outline-none
+            border-white
+            focus:shadow-none
+            w-full
+            "
+
+
+                style={({
+                    "--tw-ring-color": "transparent",
+                } as React.CSSProperties)}
+            />
+        </div>
+    );
+}
+
+
 const ValueContainer = (props: ValueContainerProps<ColourOption>) => {
     return (
         <components.ValueContainer {...props}
 
-            className="w-full border-2 border-black  rounded-full">
+            className="w-full border-[1px] border-black  rounded-full">
             {props.children}
 
         </components.ValueContainer>
@@ -90,7 +125,7 @@ export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSe
         loadOptions={loadOptions}
         cacheOptions={true}
 
-        components={{ SelectContainer, Control, DropdownIndicator, ValueContainer }}
+        components={{ SelectContainer, Control, DropdownIndicator, ValueContainer, Input: Input, LoadingIndicator }}
         styles={{
             container: (base) => ({
                 ...base,
@@ -107,10 +142,9 @@ export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSe
 
         }}
         placeholder=""
+
         classNames={{
-            control: () => {
-                return 'border-2 border-black  rounded-full'
-            },
+
 
         }}
         options={colourOptions}

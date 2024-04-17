@@ -92,35 +92,35 @@ const Router = createBrowserRouter(
           path: "/publicaciones/:slug",
           element: <PublicationDetail />,
         },
-
+        {
+          path: "/ingreso",
+          element: <Login />,
+          loader: () => handleLoade(),
+        },
+        {
+          path: "/registro",
+          element: <Register />,
+          loader: () => handleLoade(),
+        },
+        {
+          path: "/auth/forgot-password",
+          element: <ForgotPassword />,
+          loader: () => handleLoade(),
+        },
+        {
+          path: "/auth/reset-password/:token",
+          element: <ConfirmPassword />,
+          loader: () => handleLoade(),
+        },
+        {
+          path: "/auth/activate-account/:uid/:token",
+          element: <ActivateAccount />,
+          loader: () => handleLoade(),
+        },
 
       ],
     },
-    {
-      path: "/ingreso",
-      element: <Login />,
-      loader: () => handleLoade(),
-    },
-    {
-      path: "/registro",
-      element: <Register />,
-      loader: () => handleLoade(),
-    },
-    {
-      path: "/auth/forgot-password",
-      element: <ForgotPassword />,
-      loader: () => handleLoade(),
-    },
-    {
-      path: "/auth/reset-password/:token",
-      element: <ConfirmPassword />,
-      loader: () => handleLoade(),
-    },
-    {
-      path: "/auth/activate-account/:uid/:token",
-      element: <ActivateAccount />,
-      loader: () => handleLoade(),
-    },
+
     {
       path: "/admin",
       element: <Admin />,

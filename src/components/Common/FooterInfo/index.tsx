@@ -1,50 +1,13 @@
 
 import { FaXTwitter } from "react-icons/fa6";
 import { SiFacebook } from "react-icons/si";
-import logo from '../../../assets/gobierno_abierto.png'
 import logo_cd from '../../../assets/fundacion_ciudadani_desarrollo.png'
 import datalad from '../../../assets/datalat.png'
 const FooterInfo = () => {
   return (
     <footer className="bg-dark-400 text-white py-8 w-screen xl:w-full lg:pl-24 pl-5 ">
-      <div>
-        <div className="flex items-start justify-start mt-10">
-          <img src={logo} alt="" className="w-20 h-20" />
-          <span className="pl-5 text-sm w-[20%]">El compromiso
-            "Portal Nacional de Transparencia"
-            forma parte del Segundo Plan de Acción de <a href="https://www.gobiernoabierto.ec"
-              target="_blank" >
-              Estado Abierto Ecuador 2022-2024.
-            </a>
-            <a href="https://www.gobiernoabierto.ec/plan-de-accion-2022-2024/"
-              target="_blank"
-              className="text-blue-500"> Conoce más.
-            </a>
-          </span>
 
-        </div>
 
-      </div>
-      <div className="col-span-3 mt-10 grid grid-cols-3 xl:flex xl:space-x-6  ">
-        <a href="#" className="block  lg:inline-block  mr-4">
-          <img src={logo_cd} alt="" className=" w-[84px] h-[84px] " />
-        </a>
-        <a href="#" className="block  lg:inline-block mr-4">
-          <img src={datalad} alt="" className=" w-32 h-14" />
-        </a>
-        <a href="#" className="block  lg:inline-block mr-4">
-          <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
-        </a>
-        <a href="#" className="block  lg:inline-block  mr-4">
-          <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
-        </a>
-        <a href="#" className="block  lg:inline-block  mr-4">
-          <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
-        </a>
-        <a href="#" className="block  lg:inline-block  mr-4">
-          <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
-        </a>
-      </div>
       <h5 className="font-bold text-2xl mt-20 mb-6 xl:ml-0 ml-4">Listado de Entidades</h5>
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between ">
         <nav className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-center  text-base text-justify sm:gap-[40px] xl:pr-24 ">
@@ -69,29 +32,55 @@ const FooterInfo = () => {
       </div>
       <hr className="w-full  border-slate-500 mt-20 -mr-96 " />
 
-      <div className="container mx-auto flex flex-col md:flex-row mt-10 ">
-        <nav className="grid grid-cols-3 xl:flex xl:space-x-14 
-        xl:justify-center text-base text-justify mt-4
-        ml-8 xl:ml-0
+      <div className=" mx-auto flex  w-full md:flex-row mt-[80px] ">
+        <nav className="flex 
+        justify-between mt-4 w-full
+        space-x-10
         ">
-          <span className="col-span-3">Siguenos</span>
-          <div className="grid grid-cols-2 space-x-10">
+          <div className="flex">
+            <span className="col-span-3 mr-[55px]">Siguenos</span>
+            <div className="grid grid-cols-2 gap-20">
 
-            <a href="#" className="text-gray-200 hover:text-gray-200 xl:mt-0 mt-10">
-              <SiFacebook size={27} />
-            </a>
-            <a href="#" className="text-gray-200 hover:text-gray-200 xl:mt-0 mt-10">
-              <FaXTwitter size={27} />
-            </a>
+              <a href="#" className="text-gray-200 hover:text-gray-200 xl:mt-0 mt-10">
+                <SiFacebook size={27} />
+              </a>
+              <a href="#" className="text-gray-200 hover:text-gray-200 xl:mt-0 mt-10">
+                <FaXTwitter size={27} />
+              </a>
+            </div>
+          </div>
+          <div className="flex flex-col w-[35%]">
+
           </div>
 
+          <div className="flex flex-row  w-full ml-12 justify-center">
+            <a href="#" className="block  lg:inline-block  mr-4">
+              <img src={logo_cd} alt="" className=" w-[84px] h-[84px] " />
+            </a>
+            <a href="#" className="block  lg:inline-block mr-4">
+              <img src={datalad} alt="" className=" w-32 h-14" />
+            </a>
+            <a href="#" className="block  lg:inline-block mr-4">
+              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+            </a>
+            <a href="#" className="block  lg:inline-block  mr-4">
+              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+            </a>
+            <a href="#" className="block  lg:inline-block  mr-4">
+              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+            </a>
+            <a href="#" className="block  lg:inline-block  mr-4">
+              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+            </a>
+          </div>
 
         </nav>
       </div>
       <div className="container mx-auto flex flex-col  md:flex-row mt-10 mb-2">
         <nav className="flex flex-col-reverse xl:flex-row  lg:grid-cols-3 xl:space-x-60 xl:-ml-12   
         xl:justify-center text-sm xl:text-justify -mt-6 sm:gap-[40px] ">
-          <div className="xl:space-x-20 xl:whitespace-nowrap flex justify-center xl:justify-start mt-5 xl:mt-0">
+          <div className="xl:space-x-20 xl:whitespace-nowrap flex justify-center 
+          xl:justify-start mt-5 xl:mt-0 ml-12">
             <span className="text-slate-500 xl:whitespace-nowrap whitespace-break-spaces
             text-center
             ">

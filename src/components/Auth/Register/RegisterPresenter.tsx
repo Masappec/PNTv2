@@ -50,7 +50,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                         </p>
                     </div>
                 </div>
-                <div className="absolute top-52 h-24 w-6 ml-7 bg-primary-600  hidden lg:block"></div>
+                <div className="absolute top-52 h-24 w-6 ml-14 bg-primary-600  hidden lg:block"></div>
                 <div className="bg-white w-full mt-10 xl:mt-20 lg:mt-20  lg:ml-36 flex justify-center">
                     <form
                         className="border  border-slate-50 xl:shadow-lg h-2/3 md:h-2/5 xl:h-fit lg:h-2/3  rounded-lg text-center  items-center"

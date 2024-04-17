@@ -1,5 +1,6 @@
 import SolicityService from "../../../infrastructure/Services/SolicityService";
 import CreateSolicity from "../../entities/CreateSolicity";
+import ResponseSolicity from "../../entities/ResponseSolicity";
 
 class SolicityUseCase {
   constructor(private readonly solicityService: SolicityService) { }

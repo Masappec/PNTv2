@@ -1,5 +1,6 @@
 import { SolicityDraftRequestDto, SolicityResponseDto, SolicityResult } from "../../infrastructure/Api/Solicity/interface"
 import CreateSolicity from "../entities/CreateSolicity";
+import ResponseSolicity from "../entities/ResponseSolicity";
 import { Solicity } from "../entities/Solicity"
 
 class SolicityMappers {
@@ -80,7 +81,7 @@ class SolicityMappers {
             text: data.text,
             files: data.files,
             attachment: data.attachment,
-            category_id: data.category_id
+            category: data.category
         }
     }
 }

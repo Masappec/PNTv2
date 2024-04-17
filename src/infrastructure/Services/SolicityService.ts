@@ -1,4 +1,5 @@
 import CreateSolicity from "../../domain/entities/CreateSolicity";
+import ResponseSolicity from "../../domain/entities/ResponseSolicity";
 import SolicityMappers from "../../domain/mappers/SolicityMapper";
 import SolicityApi from "../Api/Solicity/SolicityApi";
 import { SolicityResponseDto } from "../Api/Solicity/interface";

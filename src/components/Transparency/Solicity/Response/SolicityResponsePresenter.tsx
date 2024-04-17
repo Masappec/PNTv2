@@ -5,7 +5,7 @@ import Spinner from "../../../Common/Spinner";
 import { Alert, Button, Tabs, Textarea } from 'flowbite-react';
 import { Label } from 'flowbite-react';
 import { HiInformationCircle } from "react-icons/hi";
-import CreatableSelect from "react-select/creatable";
+import Select from "react-select";
 import { TagEntity } from "../../../../domain/entities/TagEntity";
 import { OnChangeValue } from "react-select";
 import { FaPlusCircle } from "react-icons/fa";
@@ -144,10 +144,10 @@ const SolicityResponsePresenter = (props: Props) => {
                                 <div className="mb-2 block">
                                     <Label htmlFor="" value="Categoria" />
                                 </div>
-                                <CreatableSelect isClearable options={props.tags.map((tag) => ({ value: tag.id, label: tag.name }))}
-                                    isMulti={true}
+                                <Select
+                                    options={props.tags}
+
                                     onInputChange={(e) => props.onFilterTag(e)}
-                                    onCreateOption={(e) => props.onCreateTag(e)}
                                     onChange={(newValue) => props.onSelectedTag(newValue)}
 
                                 />
