@@ -1,11 +1,11 @@
-import { FaTrash, FaEdit, FaArrowAltCircleRight, FaFileInvoice, FaUserClock } from "react-icons/fa"
+import { FaEdit, FaClock } from "react-icons/fa"
 import Alert from "../../../Common/Alert"
 import Modal from "../../../Common/Modal"
 import Table from "../../../Common/Table/index"
 import { Badge, Button } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
 import { Solicity } from "../../../../domain/entities/Solicity"
-import { StatusSolicity } from "../../../../utils/enums"
+import { StageSolicity, StatusSolicity, StatusStageSolicity } from "../../../../utils/enums"
 
 
 
@@ -16,7 +16,7 @@ interface Props {
     onAdd: () => void
     onImport: () => void
     onFilter: () => void
-    onEdit: () => void
+    onEdit: (item: Solicity) => void
     search: string
     setSeach: (search: string) => void
     page: number
@@ -70,75 +70,143 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                 <Table
                     columns={[
                         {
-                            title: "Titulo",
+                            title: "Entidad",
                             render: (solicity) => (
-                                <p>{solicity.text}</p>
+                                <p className="text-sm font-semibold flex-nowrap col-span-10">
+                                    {
+                                        solicity.estblishment_name && solicity.estblishment_name.length > 20 ? solicity.estblishment_name.substring(0, 20) + "..." : solicity.estblishment_name
+
+                                    }
+                                </p>
+                            ),
+                            width: 2
+                        },
+                        {
+                            title: "Fecha de recepción",
+                            render: (solicity) => (
+                                <p>{
+                                    solicity.date ? new Date(solicity.date).toLocaleDateString() : ""
+                                }</p>
                             )
                         },
                         {
-                            title: "Estado",
+                            title: 'Fecha respuesta',
                             render: (solicity) => {
+
+                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE)
+                                return <p>{
+                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                }</p>
+                            }
+                        },
+                        {
+                            title: "Días transcurridos",
+                            render: (solicity) => (
+                                <p>{
+                                    solicity.date ? Math.floor((new Date().getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) : ""
+                                }</p>
+                            )
+                        },
+                        {
+                            title: "SAIP",
+                            render: (solicity) => {
+                                console.log(solicity)
                                 const status = StatusSolicity[solicity.status as keyof typeof StatusSolicity]
-                                const bg = status.bg
+                                const bg = status?.bg || "info"
                                 return (
 
                                     <div className="flex items-center">
                                         <Badge color={bg} className="rounded-2xl py-3 px-3">
+                                            {status.icon}
                                             {status.value}
                                         </Badge>
                                     </div>
                                 )
                             }
                         },
+                        {
+                            title: "Fecha insistencia/correción",
+                            render: (solicity) => {
+                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
+                                return <p>{
+                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                }</p>
+                            }
+                        },
+                        {
+                            title: "Fecha entrega",
+                            render: (solicity) => {
+                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE_INSISTENCY)
+                                return <p>{
+                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                }</p>
+                            }
+
+                        },
+                        {
+                            title: 'Días transcurridos',
+                            render: (solicity) => {
+                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE_INSISTENCY)
+                                return <p>{
+                                    element ? Math.floor((new Date().getTime() - new Date(element.created_at).getTime()) / (1000 * 60 * 60 * 24)) : ""
+                                }</p>
+                            }
+                        },
+                        {
+                            title: 'Insistencia/Correción',
+                            render: (solicity) => {
+                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
+                                const status = StatusStageSolicity[element?.status as keyof typeof StatusStageSolicity]
+
+                                return <p>{
+                                    element ? status.icon : <FaClock size={20} />
+                                }</p>
+                            }
+                        },
+                        {
+                            title: 'Fecha gestión oficiosa',
+                            render: (solicity) => {
+                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
+                                return <p>{
+                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                }</p>
+                            }
+                        },
+                        {
+                            title: 'Gestión oficiosa',
+                            render: (solicity) => {
+                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
+                                const status = StatusStageSolicity[element?.status as keyof typeof StatusStageSolicity]
+                                return <p>{
+                                    element ? status.icon : <FaClock size={20} />
+                                }</p>
+
+                            },
+                        },
+                        {
+                            title: 'No. SAIP',
+                            render: (solicity) => (
+                                <p>{
+                                    solicity.number_saip
+                                }</p>
+                            )
+                        },
 
 
                         {
                             title: "Acciones",
-                            render: () => (
+                            render: (item) => (
                                 <div className="flex items-center">
-                                    <button
-                                        onClick={() => {
-                                            props.onResponse()
 
-                                        }
-                                        }
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
-                                        <FaArrowAltCircleRight />
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            props.onHold()
 
-                                        }
-                                        }
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
-                                        <FaUserClock />
-                                    </button>
                                     <button
                                         onClick={() => {
-                                            props.onDetail()
-
-                                        }
-                                        }
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
-                                        <FaFileInvoice />
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            props.onEdit()
+                                            props.onEdit(item)
                                         }}
                                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
                                         <FaEdit />
                                     </button>
-                                    <button
-                                        onClick={() => {
-                                            props.onDelete()
 
-                                        }
-                                        }
-                                        className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-2xl">
-                                        <FaTrash />
-                                    </button>
 
                                 </div>
                             )

@@ -1,12 +1,11 @@
-
+import SolicityEstablishmentPresenter from "./SolicityEstablishmentPresenter"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase"
 import { Solicity } from "../../../../domain/entities/Solicity"
-import SolicityListEstablishmentPresenter from "./SolicityEstablishmentPresenter"
 
 interface Props {
-    useCase: SolicityUseCase
+    useCase: SolicityUseCase;
 }
 
 
@@ -40,8 +39,8 @@ const SolicityListEstablishmentContainer = (props: Props) => {
     const handleAdd = () => {
         navigate('/admin/solicity/create')
     }
-    const handleEdit = () => {
-        navigate(`/admin/solicity/edit`)
+    const handleEdit = (item: Solicity) => {
+        navigate(`/admin/solicity/edit/${item.id}`)
     }
 
     const handleOnHold = () => {
@@ -70,7 +69,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
 
 
     return (
-        <SolicityListEstablishmentPresenter
+        <SolicityEstablishmentPresenter
 
             error={error}
             data={solicitudes}

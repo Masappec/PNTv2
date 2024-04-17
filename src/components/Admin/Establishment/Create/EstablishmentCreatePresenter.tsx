@@ -101,6 +101,14 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
+                                <Input type={"text"}
+                                    placeholder={"RUC"} width="w-60"
+                                    value={props.data.identification || ""}
+                                    name="identification"
+                                    onChange={(e) => props.setData(e)}
+                                />
+                            </div>
+                            <div className="flex  flex-col m-2">
                                 <label className="text-sm font-medium text-gray-800 dark:text-white">Dirección</label>
                                 <textarea
                                     placeholder={"Dirección"}

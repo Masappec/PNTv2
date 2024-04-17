@@ -1,9 +1,7 @@
-version: '3'
+version: "3"
 
 services:
-
   pnt_app:
-    
     image: nginx:latest
     ports:
       - "80:80"
@@ -13,8 +11,9 @@ services:
       - ./fullchain.pem:/etc/letsencrypt/live/transparencia.ec/fullchain.pem
       - ./privkey.pem:/etc/letsencrypt/live/transparencia.ec/privkey.pem
       - ./dist:/etc/nginx/html
+      - ./dist:/usr/share/nginx/html
     networks:
-      - fundapi-backend_pnt_network  
+      - fundapi-backend_pnt_network
 
 networks:
   fundapi-backend_pnt_network:

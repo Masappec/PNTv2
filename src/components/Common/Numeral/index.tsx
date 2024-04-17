@@ -15,10 +15,10 @@ const Numeral = ({ title, text, onClick, isPublished }: Props) => {
       onClick={() => isPublished ? null : onClick()}>
       <div className="flex flex-cols gap-5 ">
         <div>
-          <div className={`${isPublished ? "bg-green-600" : "bg-amber-500 hover:bg-amber-300"} text-white font-bold py-2 px-2 rounded-lg`}>
+          <div className={`${isPublished == true ? "bg-green-600" : "bg-amber-500 hover:bg-amber-300"} text-white font-bold py-2 px-2 rounded-lg`}>
 
             {
-              !isPublished ? <FaArrowUp size={30} /> : <BiCheckCircle size={30} />
+              isPublished == false ? <FaArrowUp size={30} /> : <BiCheckCircle size={30} />
             }
           </div>
         </div>

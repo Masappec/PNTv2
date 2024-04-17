@@ -1,6 +1,7 @@
-import { AxiosInstance } from "axios";
+import { AxiosError, AxiosInstance } from "axios";
 import { Pagination, TRANSPARENCY_PATH } from "..";
-import { SolicityRequestDto, SolicityResponseDto, SolicityResult } from "./interface";
+import { SendDraftSolicity, SolicityDraftRequestDto, SolicityResponseDto, SolicityResult } from "./interface";
+import { MessageTranslation } from "../../../utils/data";
 
 
 class SolicityApi {
@@ -16,10 +17,14 @@ class SolicityApi {
         { params: { search, page } }
       );
       return response.data;
-    } catch (error: any) {
-      const e: string =
-        error.response?.data?.message || "Error al obtener las solicitudes.";
-      throw new Error(e);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string =
+          error.response?.data?.message || "Error al obtener las solicitudes.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al obtener las solicitudes.");
+      }
     }
   }
 
@@ -36,31 +41,125 @@ class SolicityApi {
         }
       );
       return response.data;
-    } catch (error: any) {
-      const e: string =
-        error.response?.data?.message || "Error al obtener la solicitud.";
-      throw new Error(e);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string =
+          error.response?.data?.message || "Error al obtener las solicitudes.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al obtener las solicitudes.");
+      }
     }
   }
 
-  async createSolicity(data: SolicityRequestDto) {
+  async getSolicityById(id: number) {
+    try {
+      const response = await this.api.get<MessageTranslation<SolicityResponseDto>>(
+        TRANSPARENCY_PATH + `/solicity/detail/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string =
+          error.response?.data?.message || "Error al obtener la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al obtener la solicitud.");
+      }
+    }
+  }
+
+  async updateSolicity(data: SendDraftSolicity) {
+    try {
+      const response = await this.api.put<MessageTranslation<SolicityResponseDto>>(
+        TRANSPARENCY_PATH + `/solicity/update`,
+        data
+      );
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string =
+          error.response?.data?.message || "Error al actualizar la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al actualizar la solicitud.");
+      }
+    }
+  }
+
+  async createDraftSolicity(data: SolicityDraftRequestDto) {
 
     try {
-      const response = await this.api.post<SolicityResponseDto>(TRANSPARENCY_PATH + "/solicity/create", data);
+      const response = await this.api.post<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + "/solicity/create/draft", data);
       return response.data;
-    } catch (error: any) {
-      const e: string = error.response?.data?.message || "Error al crear la solicitud.";
-      throw new Error(e);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string = error.response?.data?.message || "Error al crear la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al crear la solicitud.");
+      }
     }
   }
 
-  async responseSolicity(data:SolicityResult){
+
+  async getLastDraftSolicity() {
+    try {
+      const response = await this.api.get<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + "/solicity/get_last_draft");
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string = error.response?.data?.message || "Error al obtener la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al obtener la solicitud.");
+      }
+    }
+  }
+
+  async sendDraftSolicity(data: SendDraftSolicity) {
+    try {
+      const response = await this.api.post<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + "/solicity/draft/send", data);
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string = error.response?.data?.message || "Error al crear la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al crear la solicitud.");
+      }
+    }
+  }
+
+
+  async sendSolicityWithouDraft(data: SolicityDraftRequestDto) {
+    try {
+      const response = await this.api.post<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + "/solicity/send", data);
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string = error.response?.data?.message || "Error al crear la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al crear la solicitud.");
+      }
+    }
+  }
+
+
+
+
+  async responseSolicity(data: SolicityResult) {
     try {
       const response = await this.api.post<SolicityResponseDto>(TRANSPARENCY_PATH + "/solicity_response/create", data);
       return response.data;
-    } catch (error: any) {
-      const e: string = error.response?.data?.message || "Error al enviar la solicitud.";
-      throw new Error(e);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string = error.response?.data?.message || "Error al responder la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al responder la solicitud.");
+      }
     }
 
   }

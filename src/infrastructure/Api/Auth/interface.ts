@@ -1,9 +1,10 @@
-export interface RegisterDto{
+export interface RegisterDto {
 
     first_name: string,
     last_name: string,
     username: string,
     password: string,
+    confirm_password: string,
     identification: string,
     phone: string,
     province: string,
@@ -11,33 +12,33 @@ export interface RegisterDto{
     age_range: string,
     city: string,
     race: string,
-    disability?:boolean,
+    disability?: boolean,
     accept_terms: boolean
-  
-  }
 
-  /*{
-    "id": 1,
-    "is_superuser": true,
-    "username": "superadmin@pnt.com",
-    "first_name": "Super",
-    "last_name": "Administrador",
-    "email": "superadmin@pnt.com",
-    "group": [
-        {
-            "id": 5,
-            "name": "Superadministradora PNT DPE"
-        }
-    ],
-    "user_permissions": [
-        {
-            "codename": "add_person"
-        },
-        
-    ]
+}
+
+/*{
+  "id": 1,
+  "is_superuser": true,
+  "username": "superadmin@pnt.com",
+  "first_name": "Super",
+  "last_name": "Administrador",
+  "email": "superadmin@pnt.com",
+  "group": [
+      {
+          "id": 5,
+          "name": "Superadministradora PNT DPE"
+      }
+  ],
+  "user_permissions": [
+      {
+          "codename": "add_person"
+      },
+      
+  ]
 }*/
 
-export interface LoginUserDataResponseDto{
+export interface LoginUserDataResponseDto {
     id: number,
     is_superuser: boolean,
     username: string,
@@ -54,7 +55,7 @@ export interface LoginUserDataResponseDto{
 
 }
 
-export interface LoginResponseDto{
+export interface LoginResponseDto {
     access: string,
     refresh: string,
     user: LoginUserDataResponseDto

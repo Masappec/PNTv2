@@ -66,13 +66,18 @@ const PublicEstablishmentContainer = (props: Props) => {
         navigate(`/entidades/${slug}`)
     }
 
+    const onSearch = (search: string) => {
+        const data = originalEntities.filter((entity) => entity.data.some((item) => item.name.toLowerCase().includes(search.toLowerCase())))
+        setEntities(data)
+    }
+
 
     return (
         <PublicEstablishmentPresenter
             error={error}
             entities={entities}
             onPageChange={onPageChange}
-
+            onSearch={onSearch}
             total={total}
             onItemClicked={onItemClicked}
             letters={abecedario}

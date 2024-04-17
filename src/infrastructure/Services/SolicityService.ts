@@ -1,6 +1,7 @@
 import CreateSolicity from "../../domain/entities/CreateSolicity";
 import SolicityMappers from "../../domain/mappers/SolicityMapper";
 import SolicityApi from "../Api/Solicity/SolicityApi";
+import { SolicityResponseDto } from "../Api/Solicity/interface";
 
 class SolicityService {
   private api: SolicityApi;
@@ -30,11 +31,34 @@ class SolicityService {
     };
   }
 
-  async createSolicity(data: CreateSolicity) {
-    const response = await this.api.createSolicity(
+  async createDraftSolicity(data: CreateSolicity) {
+    const response = await this.api.createDraftSolicity(
       SolicityMappers.domainToApi(data)
     );
-    return SolicityMappers.apiToDomain(response);
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
+  }
+
+  async getLastDraftSolicity() {
+    const response = await this.api.getLastDraftSolicity();
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
+  }
+
+  async sendDraftSolicity(data: CreateSolicity, id: number) {
+    const response = await this.api.sendDraftSolicity({
+      ...SolicityMappers.domainToApi(data),
+      id,
+    });
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
+  }
+  async getSolicityById(id: number) {
+    const response = await this.api.getSolicityById(id);
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
+  }
+  async sendSolicityWithouDraft(data: CreateSolicity) {
+    const response = await this.api.sendSolicityWithouDraft(
+      SolicityMappers.domainToApi(data)
+    );
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }
 
   async responseSolicity(data: ResponseSolicity) {
@@ -43,5 +67,16 @@ class SolicityService {
     );
     return SolicityMappers.apiToDomain(response)
   }
+
+  async updateSolicity(data: CreateSolicity, id: number) {
+    const response = await this.api.updateSolicity(
+      {
+        ...SolicityMappers.domainToApi(data),
+        id,
+      }
+    );
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
+  }
+
 }
 export default SolicityService;

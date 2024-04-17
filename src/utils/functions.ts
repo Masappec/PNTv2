@@ -1,6 +1,6 @@
 
 
-export function url_build(name:string){
+export function url_build(name: string) {
         let name_ = name.replace(/ /g, "-")
         name_ = name_.toLowerCase()
         name_ = name_.replace(/,/g, "")
@@ -46,4 +46,9 @@ export function url_build(name:string){
         name_ = name_.replace(/\//g, "")
 
         return name_
+}
+
+
+export const sleep = (milliseconds: number) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
 }

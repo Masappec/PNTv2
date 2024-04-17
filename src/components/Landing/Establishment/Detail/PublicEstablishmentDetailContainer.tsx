@@ -5,6 +5,7 @@ import PublicEstablishmentDetailPresenter from "./PublicEstablishmentDetailPrese
 import { useNavigate, useParams } from "react-router-dom";
 import TransparencyActiveUseCase from "../../../../domain/useCases/TransparencyActive/TransparencyActiveUseCase";
 import TransparencyActive from "../../../../domain/entities/TransparencyActive";
+import { AcordionMonthYear } from "../../../../utils/interface";
 
 interface Props {
     usecase: PublicUseCase;
@@ -33,17 +34,15 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         is_active: false,
         job_committe: "",
         last_name_committe: "",
+        identification: "",
     })
 
-    const [publications, setPublications] = useState<TransparencyActive[]>([])
-    const [from, setFrom] = useState<number>(0)
-    const [to, setTo] = useState<number>(0)
-    const [total, setTotal] = useState<number>(0)
-    const [total_pages, setTotalPages] = useState<number>(0)
-    const [current_page, setCurrentPage] = useState<number>(0)
+    const [publications, setPublications] = useState<AcordionMonthYear<TransparencyActive>[]>([])
+
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>("")
-    const now = new Date()
+    const [year, setYear] = useState<number>(new Date().getFullYear())
+    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
     useEffect(() => {
         props.usecase.getEstablishment(slug || "").then((response) => {
             setEntity(response)
@@ -58,22 +57,10 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     }, [])
 
 
-    useEffect(() => {
-        props.transparencyUseCase?.getPublicationsPublics(now.getMonth(), now.getFullYear(), entity.id || 0).then((response) => {
-            setPublications(response)
-            setFrom(1)
-            setTo(response.length)
-            setTotal(response.length)
-            setTotalPages(1)
-            setCurrentPage(1)
 
-            setLoading(false)
-        }).catch((error) => {
-            setError(error.message)
-        }).finally(() => {
-            setLoading(false)
-        })
-    }, [entity.id])
+
+
+
 
 
     const handlePageChange = (page: number) => {
@@ -85,23 +72,57 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     }
 
 
+    const onOpenMonth = (month: number) => {
+
+
+        props.transparencyUseCase?.getPublicationsPublics(month, year, entity.id || 0).then((response) => {
+
+            const data: AcordionMonthYear<TransparencyActive> = {
+                data: response,
+                isLoading: false,
+                month: month,
+                total: response.length,
+                year: year
+            }
+
+            const searchPub = publications.find(x => x.year == year && x.month == month)
+            if (!searchPub) {
+                setPublications([...publications, data])
+            } else {
+                const index = publications.indexOf(searchPub);
+                if (index != -1) {
+                    const copy = publications;
+
+                    copy[index] = data;
+                    setPublications(copy)
+                }
+            }
+
+        }).catch((error) => {
+            setError(error.message)
+        }).finally(() => {
+            setLoading(false)
+        })
+    }
+
     return (
         <PublicEstablishmentDetailPresenter
-
+            onSelectYear={(year) => setYear(year)}
+            selectedYear={year}
+            years={Array.from({
+                length: 10
+            }).map((_, index) => 2015 + index)}
             entity={entity}
             error={error}
             loading={loading}
-            total={total}
             publications={publications}
-            current_page={current_page}
-            from={from}
             onChangePage={handlePageChange}
-            to={to}
-            totalPages={total_pages}
             onItemPublicationClick={handleClickItem}
             onSearch={(type) => {
                 console.log(type)
             }}
+            meses={meses}
+            onOpenMonth={onOpenMonth}
 
 
         />

@@ -18,6 +18,7 @@ class EstablishmentMapper {
             logo: data.logo,
             is_active: data.is_active,
             slug: data.slug,
+            identification: data.identification
 
         }
     }
@@ -34,7 +35,7 @@ class EstablishmentMapper {
             highest_authority: data.highest_authority,
             job_authority: data.job_authority,
             last_name_authority: data.last_name_authority,
-            logo: data.logo,
+            logo: data.logo as string,
             email_accesstoinformation: data.email_accesstoinformation || '',
             email_committe: data.email_committe || '',
             first_name_committe: data.first_name_committe,
@@ -45,6 +46,7 @@ class EstablishmentMapper {
             function_organization: data.function_organization,
             type_institution: data.type_institution,
             type_organization: data.type_organization,
+            identification: data.identification,
 
         }
     }
@@ -68,7 +70,7 @@ class EstablishmentMapper {
             job_committe: data.job_committe || '',
             last_name_committe: data.last_name_committe || '',
             extra_numerals: data.extra_numerals || '',
-
+            identification: data.identification,
             address: data.address || '',
             function_organization: data.function_organization || '',
             type_institution: data.type_institution || '',

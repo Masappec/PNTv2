@@ -12,10 +12,10 @@ interface Props {
     publicusecase: PublicUseCase;
 }
 
-const SolicityResponseContainer = (props:Props) => {
+const SolicityResponseContainer = (props: Props) => {
 
 
-    const [data, setData] = useState<ResponseSolicity>({
+    const [data,] = useState<ResponseSolicity>({
         id_solicitud: 0,
         text: "",
         files: [],

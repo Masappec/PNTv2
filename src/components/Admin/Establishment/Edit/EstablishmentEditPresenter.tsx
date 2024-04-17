@@ -101,7 +101,14 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>
-
+                            <div className="flex  flex-col m-2">
+                                <Input type={"text"}
+                                    placeholder={"RUC"} width="w-60"
+                                    value={props.data.identification || ""}
+                                    name="identification"
+                                    onChange={(e) => props.setData(e)}
+                                />
+                            </div>
 
                             <div className="flex  flex-col m-2">
                                 <Dropzone

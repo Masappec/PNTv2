@@ -8,7 +8,7 @@ const FooterInfo = () => {
       <div className="sm:flex sm:items-center sm:justify-between "></div>
       <h5 className="font-bold text-2xl mt-20 mb-6 xl:ml-0 ml-4">Listado de Entidades</h5>
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between ">
-        <nav className="grid grid-cols-1 lg:grid-cols-5 justify-center  text-base text-justify sm:gap-[40px] xl:pr-24 ">
+        <nav className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 justify-center  text-base text-justify sm:gap-[40px] xl:pr-24 ">
 
           <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0  ">
             Función Ejecutiva
@@ -46,7 +46,8 @@ const FooterInfo = () => {
             </a>
           </div>
 
-          <div className="col-span-3 grid grid-cols-3 xl:flex xl:space-x-6 xl:pl-80 xl:mt-0 mt-10">
+          <div className="col-span-3 grid grid-cols-3 xl:flex xl:space-x-6 
+          xl:pl-80 xl:mt-0 mt-10">
             <a href="#" className="block mt-4 lg:inline-block lg:mt-0 mr-4">
               <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
             </a>
@@ -79,7 +80,7 @@ const FooterInfo = () => {
             </span>
           </div>
           <div className="flex flex-col xl:flex-row xl:space-x-20 xl:whitespace-nowrap 
-          text-start ml-10 xl:text-left xl:justify-start xl:mt-0 mt-5">
+          text-start xl:ml-2 ml-10 xl:text-left xl:justify-start xl:mt-0 mt-5">
 
             <a href="#" className="text-gray-200 hover:text-gray-200 xl:-ml-12  
             
