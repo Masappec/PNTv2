@@ -77,8 +77,8 @@ const FooterInfo = () => {
         </nav>
       </div>
       <div className="container mx-auto flex flex-col  md:flex-row mt-10 mb-2">
-        <nav className="flex flex-col-reverse xl:flex-row  lg:grid-cols-3 xl:space-x-60 xl:-ml-12   
-        xl:justify-center text-sm xl:text-justify -mt-6 sm:gap-[40px] ">
+        <nav className="flex flex-col-reverse xl:flex-row  lg:grid-cols-3 lg:space-x-0 xl:space-x-40 xl:-ml-12   
+        xl:justify-center text-sm xl:text-justify -mt-6 sm:gap-[40px] md:ml-0">
           <div className="xl:space-x-20 xl:whitespace-nowrap flex justify-center 
           xl:justify-start mt-5 xl:mt-0 ml-12">
             <span className="text-slate-500 xl:whitespace-nowrap whitespace-break-spaces
@@ -87,10 +87,10 @@ const FooterInfo = () => {
               Plataforma Nacional de Transparencia  {"\n"}&copy; Todos los derechos reservados
             </span>
           </div>
-          <div className="flex flex-col xl:flex-row xl:space-x-20 xl:whitespace-nowrap 
-          text-start xl:ml-2 ml-10 xl:text-left xl:justify-start xl:mt-0 mt-5">
+          <div className="flex flex-col xl:flex-row space-x-0 xl:space-x-20 xl:whitespace-nowrap 
+          text-start xl:ml-2 ml-0 xl:text-left xl:justify-start xl:mt-0 mt-5">
 
-            <a href="#" className="text-gray-200 hover:text-gray-200 xl:-ml-12  
+            <a href="#" className="text-gray-200 hover:text-gray-200 ml-0 xl:-ml-12  
             
             mt-10 xl:mt-0">
 

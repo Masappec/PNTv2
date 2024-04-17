@@ -5,7 +5,7 @@ import Spinner from "../../../Common/Spinner";
 import { Alert, Button, Tabs, Textarea } from 'flowbite-react';
 import { Label } from 'flowbite-react';
 import { HiInformationCircle } from "react-icons/hi";
-import Select from "react-select";
+//import Select from "react-select";
 import { TagEntity } from "../../../../domain/entities/TagEntity";
 import { OnChangeValue } from "react-select";
 import { FaPlusCircle } from "react-icons/fa";
@@ -144,13 +144,13 @@ const SolicityResponsePresenter = (props: Props) => {
                                 <div className="mb-2 block">
                                     <Label htmlFor="" value="Categoria" />
                                 </div>
-                                <Select
+                                {/*<Select
                                     options={props.tags}
 
                                     onInputChange={(e) => props.onFilterTag(e)}
                                     onChange={(newValue) => props.onSelectedTag(newValue)}
 
-                                />
+                    />*/}
                             </div>
                             {
                                 props.typeSolicity === "TC" && (

@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { OnChangeValue } from "react-select";
-import { ColourOption, Row } from "../../../../utils/interface";
+import { Row } from "../../../../utils/interface";
 import SolicityResponsePresenter from "./SolicityResponsePresenter";
 import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase";
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
@@ -10,6 +10,7 @@ import { AttachmentEntity, FilePublicationEntity } from "../../../../domain/enti
 import AttachmentUseCase from "../../../../domain/useCases/AttachmentUseCase/AttachmentUseCase";
 import { Solicity } from "../../../../domain/entities/Solicity";
 import ResponseSolicity from "../../../../domain/entities/ResponseSolicity";
+import { TagEntity } from "../../../../domain/entities/TagEntity";
 
 
 interface Props {
@@ -53,11 +54,7 @@ const SolicityResponseContainer = (props: Props) => {
         file_solicity: FilePublicationEntity | null
     }[]>([])
 
-    const [tags, SetTags] = useState<ColourOption[]>([{
-        color: "#00B8D9",
-        label: "Tag 1",
-        value: "ta",
-    }])
+    const [tags, SetTags] = useState<TagEntity[]>([])
 
     useEffect(() => {
         if (state) {

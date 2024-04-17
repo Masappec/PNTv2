@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentType } from 'react';
 import {
     components, ContainerProps, ControlProps, ValueContainerProps, InputProps,
 
@@ -61,9 +61,10 @@ const DropdownIndicator = () => {
     );
 }
 
-const Input = (props: InputProps) => {
-    return (
-        <div>
+const Input: ComponentType<InputProps<ColourOption>>
+
+    = (props) => {
+        return (
             <input {...props} className="
             onfocus:outline-none
             border-none
@@ -80,9 +81,8 @@ const Input = (props: InputProps) => {
                     "--tw-ring-color": "transparent",
                 } as React.CSSProperties)}
             />
-        </div>
-    );
-}
+        );
+    }
 
 
 const ValueContainer = (props: ValueContainerProps<ColourOption>) => {
@@ -125,7 +125,10 @@ export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSe
         loadOptions={loadOptions}
         cacheOptions={true}
 
-        components={{ SelectContainer, Control, DropdownIndicator, ValueContainer, Input: Input, LoadingIndicator }}
+        components={{
+            SelectContainer, Control, DropdownIndicator, ValueContainer,
+            Input: Input, LoadingIndicator
+        }}
         styles={{
             container: (base) => ({
                 ...base,
