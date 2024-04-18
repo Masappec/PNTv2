@@ -125,7 +125,6 @@ const Router = createBrowserRouter(
       path: "/admin",
       element: <Admin />,
       loader: () => handleLoadeAuth(),
-
       children: menu.map((item) => {
         return {
           path: item.path,

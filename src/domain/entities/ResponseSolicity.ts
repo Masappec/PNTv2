@@ -7,7 +7,8 @@ class ResponseSolicity {
         public text: string,
         public files: number[],
         public attachment: number[],
-        public category: string
+        public category_id: number
+
 
     ) { }
 }

@@ -19,6 +19,7 @@ interface LayoutAdminProps {
     onLogout: () => void;
     permissions: string[]
     usecase: PublicUseCase;
+    isSuperadmin: boolean;
 
 }
 
@@ -29,11 +30,14 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
     const [permissions, setPermissions] = useState<string[]>([])
     const [email, setEmail] = useState("")
     const [open, setOpen] = useState(false)
+    const [isSuperadmin, setIsSuperadmin] = useState(false)
     useEffect(() => {
         setUser(props.username)
         setPermissions(props.permissions)
         setEmail(props.email)
-    }, [props.username, props.permissions, props.email])
+        console.log(props.isSuperadmin)
+        setIsSuperadmin(props.isSuperadmin)
+    }, [props.username, props.permissions, props.email, props.isSuperadmin])
 
 
     const dispatch = useDispatch()
@@ -42,6 +46,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
 
 
     useEffect(() => {
+        console.log(props.isSuperadmin)
         if (_establishments.length == 0) {
             props.usecase.getEstablishments().then(res => {
                 const result = res.results.map((item) => item.data)
@@ -73,7 +78,8 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                             email={email}
                             user={user}
                             onLogout={props.onLogout}
-                            menu={props.menu}
+                            menu={isSuperadmin == false ? props.menu :
+                                props.menu.filter((item) => item.visible_for_superadmin != false)}
                             permissions={permissions}
                         />
                     </div>

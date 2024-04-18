@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { OnChangeValue } from "react-select";
-import { Row } from "../../../../utils/interface";
+import { ColourOption, Row } from "../../../../utils/interface";
 import SolicityResponsePresenter from "./SolicityResponsePresenter";
 import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase";
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
@@ -11,6 +11,10 @@ import AttachmentUseCase from "../../../../domain/useCases/AttachmentUseCase/Att
 import { Solicity } from "../../../../domain/entities/Solicity";
 import ResponseSolicity from "../../../../domain/entities/ResponseSolicity";
 import { TagEntity } from "../../../../domain/entities/TagEntity";
+import CreateSolicity from "../../../../domain/entities/CreateSolicity";
+import EstablishmentEntity from "../../../../domain/entities/Establishment";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../infrastructure/Store";
 
 
 interface Props {
@@ -23,18 +27,34 @@ interface Props {
 const SolicityResponseContainer = (props: Props) => {
 
 
-    const [data,] = useState<ResponseSolicity>({
+    const [dataResponseSolicity, setResponseSolicity] = useState<ResponseSolicity>({
         id_solicitud: 0,
         text: "",
         files: [],
         attachment: [],
-        category: ""
+        category_id: 0
     })
 
     const location = useLocation()
 
     const state = location.state as { data: Solicity }
-    const [solicityToResponse, setSolicityToResponse] = useState<Solicity>(state.data)
+    const [solicityToResponse, setSolicityToResponse] = useState<Solicity>({} as Solicity)
+    const [_data, setData] = useState<CreateSolicity>({
+        number_saip: "",
+        city: "",
+        text: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        race_identification: "",
+        gender: "",
+        address: "",
+        phone: "",
+        format_send: "",
+        format_receipt: "",
+        establishment: 0
+    })
+    const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
 
     const navigation = useNavigate()
 
@@ -44,6 +64,7 @@ const SolicityResponseContainer = (props: Props) => {
     const [loading, setLoading] = useState<boolean>(false)
     const [typeSolicity, setTypeSolicity] = useState<"TA" | "TC">("TA")
     const [solicity, SetSolicity] = useState({})
+    const [entity, setEntity] = useState<EstablishmentEntity>({} as EstablishmentEntity)
 
     const [files, SetFiles] = useState<{
         file: File | string | null,
@@ -59,9 +80,33 @@ const SolicityResponseContainer = (props: Props) => {
     useEffect(() => {
         if (state) {
             setSolicityToResponse(state.data)
+            const data_ = {
+                number_saip: state.data.number_saip,
+                city: state.data.city,
+                text: state.data.text,
+                first_name: state.data.first_name,
+                last_name: state.data.last_name,
+                email: state.data.email,
+                establishment: state.data.establishment,
+                address: state.data.address,
+                phone: state.data.phone,
+                format_receipt: state.data.format_receipt,
+                format_send: state.data.format_send,
+                gender: state.data.gender,
+                race_identification: state.data.race_identification
+            }
+            getSelectedEntity(state.data.establishment)
+            setData(data_)
         }
 
     }, [state])
+
+
+    const getSelectedEntity = (id: number) => {
+        const entity = _establishments.find((item) => item.id === id)
+        setEntity(entity || {} as EstablishmentEntity)
+
+    }
 
     const onCreateTag = (tag: string) => {
         console.log(tag)
@@ -106,9 +151,13 @@ const SolicityResponseContainer = (props: Props) => {
 
     const handleSaveDataFile = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const file = e.target?.files?.[0] || null
-        const copyFiles = [...files]
-        copyFiles[index].file = file
-        SetFiles(copyFiles)
+
+        if (file == null) {
+            return
+        }
+        console.log(file, index)
+        onSaveFile(file, file?.name, file?.name || "", index)
+
     }
 
     const handleSaveDataUrl = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -199,6 +248,7 @@ const SolicityResponseContainer = (props: Props) => {
         if (file instanceof File) {
             props.fileUseCase.createFilePublication(data).then((response) => {
                 const copyFiles = [...files]
+                copyFiles[index].file = file
                 copyFiles[index].file_solicity = response
                 SetFiles(copyFiles)
 
@@ -228,8 +278,8 @@ const SolicityResponseContainer = (props: Props) => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        data.id_solicitud = solicityToResponse.id
-        props.usecase.responseSolicity(data).then(() => {
+        dataResponseSolicity.id_solicitud = solicityToResponse.id
+        props.usecase.responseSolicity(dataResponseSolicity).then(() => {
             setSuccess("Solicitud enviada correctamente")
         }).catch((err) => {
             setError(err.message)
@@ -243,7 +293,10 @@ const SolicityResponseContainer = (props: Props) => {
         copyFiles.splice(index, 1)
         SetFiles(copyFiles)
     }
-
+    const getSelectedItem = (value: string, options: ColourOption[]) => {
+        const item = options.find((item) => item.value === value)
+        return item || {} as ColourOption
+    }
 
     return (
         <>
@@ -270,11 +323,16 @@ const SolicityResponseContainer = (props: Props) => {
                 onDownloadFile={onDownloadFile}
                 onRemoveFile={() => { }}
                 onSaveFile={onSaveFile}
-                solicity={[]}
+                solicity={_data}
+                solicitySaved={solicityToResponse}
                 onChangeDescription={(description) => SetSolicity({ ...solicity, description: description })}
                 onChangeTitle={(title) => SetSolicity({ ...solicity, name: title })}
                 onChangeEvent={(event) => SetSolicity({ ...solicity, notes: event })}
                 onRemoveFileFromSolicity={onRemoveFileFromPublication}
+                entitySelected={entity}
+                key={0}
+                onChangeTextResponse={(text) => setResponseSolicity({ ...dataResponseSolicity, text: text })}
+                getSelectedItems={getSelectedItem}
 
             />
         </>

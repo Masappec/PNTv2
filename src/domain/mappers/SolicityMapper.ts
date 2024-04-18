@@ -81,7 +81,7 @@ class SolicityMappers {
             text: data.text,
             files: data.files,
             attachment: data.attachment,
-            category: data.category
+            category_id: data.category_id
         }
     }
 }

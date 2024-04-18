@@ -13,7 +13,7 @@ const UserCreateContainer = ({
     usecase,
     roleUseCase,
     configUseCase
-}:{
+}: {
     usecase: UserUseCase,
     roleUseCase: RoleUseCase,
     configUseCase: ConfigurationUseCase
@@ -34,11 +34,11 @@ const UserCreateContainer = ({
 
     useEffect(() => {
         roleUseCase.listAvailable().then((roles) => {
-            setRoleList(roles)
-            if (roles.length==1){
+            setRoleList(roles.filter(x => x.name != 'Ciudadano'))
+            if (roles.length == 1) {
                 handleConfigFields(roles[0].name)
             }
-            if (roles.length==0){
+            if (roles.length == 0) {
                 navigate("/admin/users")
             }
         }).catch((error) => {
@@ -46,12 +46,12 @@ const UserCreateContainer = ({
         })
     }, [])
 
-    
+
 
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 
-        data.group = [{id: roleSelected?.id || 0, name: roleSelected?.name || ""}]
+        data.group = [{ id: roleSelected?.id || 0, name: roleSelected?.name || "" }]
         e.preventDefault()
         usecase.create(data).then(() => {
             setSuccess("Usuario creado con éxito")
@@ -62,7 +62,7 @@ const UserCreateContainer = ({
             setError(error.message)
         })
     }
-    
+
     const handleChange = (name: string, value: string | boolean) => {
         console.log(name, value)
         setData({ ...data, [name]: value })
@@ -71,7 +71,7 @@ const UserCreateContainer = ({
 
     const handleConfigFields = (role: string) => {
         setLoading(true)
-        configUseCase.execute(role,"Usuario").then((res) => {
+        configUseCase.execute(role, "Usuario").then((res) => {
             setConfig(res)
             setLoading(false)
         }).catch((e) => {
@@ -83,10 +83,10 @@ const UserCreateContainer = ({
     const handleChangeRole = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const role = roleList.find((role) => role.id === parseInt(e.target.value))
         setRoleSelected(role || null)
-        if (role){
+        if (role) {
             handleConfigFields(role.name)
         }
-        
+
     }
 
     const onCancel = () => {
@@ -94,8 +94,8 @@ const UserCreateContainer = ({
     }
 
     return (
-        <UserCreatePresenter 
-           data={data as UserEntity}
+        <UserCreatePresenter
+            data={data as UserEntity}
             setData={handleChange}
             handleSubmit={handleSubmit}
             error={error}

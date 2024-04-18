@@ -34,6 +34,7 @@ export interface MenuItem {
   permission_required: string;
   icon: JSX.Element;
   visible: boolean;
+  visible_for_superadmin?: boolean;
 }
 
 const menu = [
@@ -141,7 +142,9 @@ const menu = [
     visible: true,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
-    element: <ActiveNumerals />
+    element: <ActiveNumerals />,
+    visible_for_superadmin: false
+
   },
   {
     name: 'Crear T.Activa',
@@ -149,7 +152,9 @@ const menu = [
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "add_transparencyactive",
-    element: <ActiveCreate />
+    element: <ActiveCreate />,
+    visible_for_superadmin: false
+
   },
 
   {
@@ -158,7 +163,9 @@ const menu = [
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
-    element: <ActivePreviewData />
+    element: <ActivePreviewData />,
+    visible_for_superadmin: false
+
   },
 
   {
@@ -167,7 +174,9 @@ const menu = [
     visible: true,
     icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
-    element: <FocalizedList />
+    element: <FocalizedList />,
+    visible_for_superadmin: false
+
   },
   {
     name: 'T.Focalizada',
@@ -175,7 +184,9 @@ const menu = [
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
-    element: <FocalizedCreate />
+    element: <FocalizedCreate />,
+    visible_for_superadmin: false
+
   },
   {
     name: 'T.Colaborativa',
@@ -183,7 +194,9 @@ const menu = [
     visible: true,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
-    element: <CollaborativeList />
+    element: <CollaborativeList />,
+    visible_for_superadmin: false
+
   },
   {
     name: 'T.Colaborativa',
@@ -202,6 +215,8 @@ const menu = [
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_solicity",
     element: <SolicityList />,
+    visible_for_superadmin: false
+
   },
 
   {
@@ -211,6 +226,7 @@ const menu = [
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_solicityresponse",
     element: <SolicityListEstablishment />,
+    visible_for_superadmin: false
   },
   {
     name: " Crear Solicitudes",

@@ -41,7 +41,6 @@ class SessionService {
     const data = localStorage.getItem(this.USER_DATA_KEY) || "{}";
 
     const json = JSON.parse(data);
-
     return json;
   }
 

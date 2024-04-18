@@ -81,5 +81,5 @@ export interface SolicityResult {
   text: string;
   files: number[];
   attachment: number[];
-  category: string;
+  category_id: number;
 }

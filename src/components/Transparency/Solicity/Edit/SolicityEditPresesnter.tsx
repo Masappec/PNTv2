@@ -45,6 +45,7 @@ interface Props {
     isSaved: boolean;
     isSend: boolean;
     isLoadingSend: boolean;
+    children?: React.ReactNode;
 }
 const SolicityEditPresenter = (props: Props) => {
 
@@ -378,7 +379,7 @@ const SolicityEditPresenter = (props: Props) => {
               onChange={props.onChange}
             ></Textarea>
           </div>*/}
-
+                    {props.children}
                     <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-24 ">
                         <Button
                             type="button"
