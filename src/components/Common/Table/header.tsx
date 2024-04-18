@@ -7,6 +7,7 @@ interface Props {
     onAdd?: () => void;
     onImport?: () => void;
     onSearch: (search: string) => void;
+    
 }
 const HeaderTable = (props: Props) => {
     return (

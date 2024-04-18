@@ -1,5 +1,5 @@
 import UserListContainer from "../../../../../components/Admin/Users/List/UserListContainer";
-import Breadcrumb from "../../../../../components/Common/Breadcrumb"
+
 import UserUseCase from "../../../../../domain/useCases/Users/UserUseCase";
 import api from "../../../../../infrastructure/Api";
 import UserApi from "../../../../../infrastructure/Api/User/UserApi";
@@ -15,19 +15,7 @@ const UserList = () => {
     return (
 
 
-        <>
-            <Breadcrumb
-                items={[
-                    {
-                        name: 'Usuarios',
-                        path: '/admin/users',
-                    },
-                    {
-                        name: 'Listado',
-                        path: '/admin/users',
-                    }
-                ]}
-            />
+        <>     
             <UserListContainer usecase={usecase}/>
         </>
     )

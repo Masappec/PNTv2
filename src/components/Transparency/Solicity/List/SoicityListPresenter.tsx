@@ -68,6 +68,7 @@ const SolicityListPresenter = (props: Props) => {
             </div>
             <div className="flex justify-between items-center mt-5">
                 <Table
+                show= {true}
                     columns={[
                         {
                             title: "Entidad",
