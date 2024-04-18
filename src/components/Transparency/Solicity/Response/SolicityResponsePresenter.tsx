@@ -131,120 +131,163 @@ const SolicityResponsePresenter = (props: Props) => {
 
 
 
+                            {
+                                props.solicitySaved.responses?.map((response, index) => {
+                                    return (
+                                        <>
 
-                            <div className=" grid grid-cols gap-4 w-auto mt-16">
-                                <Label
-                                    htmlFor=""
-                                    value="Respuesta de la Entidad"
-                                    className="text-xl font-bold "
-                                />
-                                <Textarea
-                                    placeholder="Escribe la petición"
-                                    className="h-[139px] xl:w-[915px]  "
-                                    name="description"
-                                    onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
-                                ></Textarea>
-                            </div>
+                                            {
+                                                response.files.map((file, index) => {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            className="flex flex-col m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
+                                                            <FaFile className=" text-primary-600" size={30} />
+                                                            <span className=" text-gray-500 dark:text-gray-300">
+                                                                {file.name || file.description}
+                                                            </span>
+                                                        </div>
+                                                    )
+
+                                                })
+                                            }
+                                            <div className=" grid grid-cols gap-4 w-auto mt-16">
+                                                <Label
+                                                    htmlFor=""
+                                                    value={`Respuesta ${index + 1}`}
+                                                    className="text-xl font-bold "
+                                                />
+                                                <Textarea
+                                                    placeholder="Escribe la petición"
+                                                    className="h-[139px] xl:w-[915px]  "
+                                                    name="description"
+                                                    value={response.text}
+                                                    disabled
+                                                    onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
+                                                ></Textarea>
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            }
 
 
-                            <div className="flex flex-col m-2">
-                                <h3 className="text-lg font-medium text-gray-800 dark:text-white">
-                                    Archivos Adjuntos
-                                </h3>
-
-                                <div className="flex flex-row m-2">
-                                    {
-                                        props.files.filter(x => x.file_solicity).map((file, index) => {
-                                            return (
-                                                <div className="flex flex-col m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
-                                                    <FaFile className=" text-primary-600" size={30} />
-                                                    <span className=" text-gray-500 dark:text-gray-300">
-                                                        {file.file_solicity?.name || file.file_solicity?.description}
-                                                    </span>
-                                                    <span className=" text-gray-500 text-sm dark:text-gray-300">
-                                                        { }
-                                                    </span>
-                                                    <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
-                                                        <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromSolicity(index)} />
-                                                    </span>
-                                                </div>
-                                            )
-
-                                        })
-                                    }
-                                </div>
-                            </div>
 
                         </div>
+                        {props.solicitySaved && props.solicitySaved.responses && props.solicitySaved.responses.length < 10 &&
+                            <>
+                                <div className=" grid grid-cols gap-4 w-auto mt-16">
+                                    <Label
+                                        htmlFor=""
+                                        value="Respuesta de la Entidad"
+                                        className="text-xl font-bold "
+                                    />
+                                    <Textarea
+                                        placeholder="Escribe la petición"
+                                        className="h-[139px] xl:w-[915px]  "
+                                        name="description"
+                                        onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
+                                    ></Textarea>
+                                </div>
 
-                        <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800">
 
-                            <Tabs.Item title="Subir Archivos">
-                                <div className="flex flex-row m-2">
+                                <div className="flex flex-col m-2">
+                                    <h3 className="text-lg font-medium text-gray-800 dark:text-white">
+                                        Archivos Adjuntos
+                                    </h3>
 
-                                    {
-                                        props.files.map((file, index) => {
-                                            if (file.type === "file") {
+                                    <div className="flex flex-row m-2">
+                                        {
+                                            props.files.filter(x => x.file_solicity).map((file, index) => {
                                                 return (
-                                                    <div className="flex flex-col m-2">
-                                                        <Dropzone
-                                                            handleChageLogo={(e) => props.handleSaveDataFile(e, index)}
-                                                            id={`file-${index}`}
-                                                            multiple={false}
-                                                            type="archive"
-                                                            label="Archivos"
-                                                            name=""
-                                                            accept="archive/*"
-                                                        />
+                                                    <div className="flex flex-col m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
+                                                        <FaFile className=" text-primary-600" size={30} />
+                                                        <span className=" text-gray-500 dark:text-gray-300">
+                                                            {file.file_solicity?.name || file.file_solicity?.description}
+                                                        </span>
+                                                        <span className=" text-gray-500 text-sm dark:text-gray-300">
+                                                            { }
+                                                        </span>
+                                                        <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
+                                                            <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromSolicity(index)} />
+                                                        </span>
                                                     </div>
                                                 )
-                                            }
-                                        })
-                                    }
 
-                                    <div className=" items-center justify-center mt-4 gap-x-3 w-full">
-                                        <Button className="w-10 h-10
-                                    rounded-full
-                                    text-sm tracking-wide" color="success"
-                                            onClick={() => props.onAddDataSet("file")}
-                                        >
-                                            <FaPlusCircle className="w-5 h-5" />
-
-                                        </Button>
+                                            })
+                                        }
                                     </div>
                                 </div>
+                                <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800">
 
-                            </Tabs.Item>
-                            <Tabs.Item title="URL">
-                                {
-                                    props.files.map((file, index) => {
-                                        if (file.type === "url") {
-                                            return <FileUrlPartial
-                                                error={file.error}
-                                                file={file.file}
-                                                index={index}
-                                                loading={file.loading}
-                                                onDownloadFile={props.onDownloadFile}
-                                                onSaveDateUrl={props.onSaveDateUrl}
-                                                key={index}
-                                                onSaveFile={(file, name, description) => props.onSaveFile(file as File, name, description, index)}
-                                                onRemoveFile={(index) => props.onRemoveFile(index)}
-                                                isSaved={file.file_solicity !== null}
-                                            />
+                                    <Tabs.Item title="Subir Archivos">
+                                        <div className="flex flex-row m-2">
+
+                                            {
+                                                props.files.map((file, index) => {
+                                                    if (file.type === "file") {
+                                                        return (
+                                                            <div className="flex flex-col m-2">
+                                                                <Dropzone
+                                                                    handleChageLogo={(e) => props.handleSaveDataFile(e, index)}
+                                                                    id={`file-${index}`}
+                                                                    multiple={false}
+                                                                    type="archive"
+                                                                    label="Archivos"
+                                                                    name=""
+                                                                    accept="archive/*"
+                                                                />
+                                                            </div>
+                                                        )
+                                                    }
+                                                })
+                                            }
+
+                                            <div className=" items-center justify-center mt-4 gap-x-3 w-full">
+                                                <Button className="w-10 h-10
+                                    rounded-full
+                                    text-sm tracking-wide" color="success"
+                                                    onClick={() => props.onAddDataSet("file")}
+                                                >
+                                                    <FaPlusCircle className="w-5 h-5" />
+
+                                                </Button>
+                                            </div>
+                                        </div>
+
+                                    </Tabs.Item>
+                                    <Tabs.Item title="URL">
+                                        {
+                                            props.files.map((file, index) => {
+                                                if (file.type === "url") {
+                                                    return <FileUrlPartial
+                                                        error={file.error}
+                                                        file={file.file}
+                                                        index={index}
+                                                        loading={file.loading}
+                                                        onDownloadFile={props.onDownloadFile}
+                                                        onSaveDateUrl={props.onSaveDateUrl}
+                                                        key={index}
+                                                        onSaveFile={(file, name, description) => props.onSaveFile(file as File, name, description, index)}
+                                                        onRemoveFile={(index) => props.onRemoveFile(index)}
+                                                        isSaved={file.file_solicity !== null}
+                                                    />
+                                                }
+                                            })
                                         }
-                                    })
-                                }
-                                <div className="flex items-center justify-center mt-4 gap-x-3 w-full">
-                                    <Button className="w-2/12 text-sm tracking-wide" color="success"
-                                        onClick={() => props.onAddDataSet("url")}>
-                                        <FaPlusCircle className="w-5 h-5" />
-                                        <span>
-                                            Agregar Datos
-                                        </span>
-                                    </Button>
-                                </div>
-                            </Tabs.Item>
-                        </Tabs>
+                                        <div className="flex items-center justify-center mt-4 gap-x-3 w-full">
+                                            <Button className="w-2/12 text-sm tracking-wide" color="success"
+                                                onClick={() => props.onAddDataSet("url")}>
+                                                <FaPlusCircle className="w-5 h-5" />
+                                                <span>
+                                                    Agregar Datos
+                                                </span>
+                                            </Button>
+                                        </div>
+                                    </Tabs.Item>
+                                </Tabs>
+                            </>
+                        }
 
                     </section>
                 </form>

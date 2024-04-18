@@ -1,10 +1,25 @@
 import { BaseObject } from "..";
+import { AttachmentResponse } from "../Attachment/interface";
+import { FilePublicationResponse } from "../FilePublication/interface";
 
 export interface TimeLine {
   status: string;
   created_at: string;
 }
 
+export interface SolicityResultDto extends BaseObject {
+
+  id_solicitud: number;
+  text: string;
+  files: FilePublicationResponse[];
+  attachments: AttachmentResponse[];
+  user: {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+  }
+}
 
 export interface SolicityResponseDto extends BaseObject {
 
@@ -30,6 +45,8 @@ export interface SolicityResponseDto extends BaseObject {
   establishment: number;
   estblishment_name: string;
   time_line: TimeLine[];
+
+  responses: SolicityResultDto[]
 }
 
 

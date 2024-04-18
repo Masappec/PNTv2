@@ -2,6 +2,7 @@ import { SolicityDraftRequestDto, SolicityResponseDto, SolicityResult } from "..
 import CreateSolicity from "../entities/CreateSolicity";
 import ResponseSolicity from "../entities/ResponseSolicity";
 import { Solicity } from "../entities/Solicity"
+import { SolicityResultMapper } from "./SolicityResultMapper";
 
 class SolicityMappers {
 
@@ -41,7 +42,7 @@ class SolicityMappers {
                 created_at: timeline.created_at
             })),
             data.estblishment_name,
-
+            data.responses.map((response) => SolicityResultMapper.apiToDomain(response))
         )
     }
 

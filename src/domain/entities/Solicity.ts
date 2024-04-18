@@ -1,4 +1,5 @@
 import BaseEntity from "./BaseEntity";
+import { SolicityResultEntity } from "./SolicityResultEntity";
 
 
 export class PartialTimelineSolicty {
@@ -44,6 +45,7 @@ export class Solicity extends BaseEntity {
         public establishment: number,
         public timeline: PartialTimelineSolicty[],
         public estblishment_name?: string,
+        public responses?: SolicityResultEntity[]
 
     ) {
         super(
