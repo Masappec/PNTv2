@@ -61,8 +61,13 @@ class SolicityUseCase {
         console.log(solicity.userCreated !== user.id);
         const lastResponse = solicity.responses[solicity.responses.length - 1];
         if (!lastResponse) {
-          return !(solicity.userCreated !== user.id)
+          if (solicity.userCreated !== user.id) {
+            return true;
+          }
+
         }
+
+
 
         //si la respuesta es del usuario que esta logueado
         if (lastResponse.user.id !== user.id) {

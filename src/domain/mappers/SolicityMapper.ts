@@ -7,7 +7,6 @@ import { SolicityResultMapper } from "./SolicityResultMapper";
 class SolicityMappers {
 
     static apiToDomain(data: SolicityResponseDto): Solicity {
-        console.log(data.time_line)
         return new Solicity(
             data.id,
             data.created_at + "",
@@ -37,12 +36,12 @@ class SolicityMappers {
             data.user_updated + "",
             data.user_deleted + "",
             data.establishment,
-            data.time_line.map((timeline) => ({
+            data.time_line?.map((timeline) => ({
                 status: timeline.status,
                 created_at: timeline.created_at
-            })),
+            })) || [],
             data.estblishment_name,
-            data.responses.map((response) => SolicityResultMapper.apiToDomain(response))
+            data.responses?.map((response) => SolicityResultMapper.apiToDomain(response))
         )
     }
 
