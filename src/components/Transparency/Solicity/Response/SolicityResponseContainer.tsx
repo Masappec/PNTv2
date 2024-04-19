@@ -15,6 +15,9 @@ import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../infrastructure/Store";
+import { toast } from "react-toastify";
+import SessionService from "../../../../infrastructure/Services/SessionService";
+import UserEntity from "../../../../domain/entities/UserEntity";
 
 
 interface Props {
@@ -65,6 +68,7 @@ const SolicityResponseContainer = (props: Props) => {
     const [typeSolicity, setTypeSolicity] = useState<"TA" | "TC">("TA")
     const [solicity, SetSolicity] = useState({})
     const [entity, setEntity] = useState<EstablishmentEntity>({} as EstablishmentEntity)
+    const [userSession, setUserSession] = useState<UserEntity>({} as UserEntity)
 
     const [files, SetFiles] = useState<{
         file: File | string | null,
@@ -77,26 +81,75 @@ const SolicityResponseContainer = (props: Props) => {
 
     const [tags, SetTags] = useState<TagEntity[]>([])
 
+
+    useEffect(() => {
+
+    }, [])
+
     useEffect(() => {
         if (state) {
-            setSolicityToResponse(state.data)
-            const data_ = {
-                number_saip: state.data.number_saip,
-                city: state.data.city,
-                text: state.data.text,
-                first_name: state.data.first_name,
-                last_name: state.data.last_name,
-                email: state.data.email,
-                establishment: state.data.establishment,
-                address: state.data.address,
-                phone: state.data.phone,
-                format_receipt: state.data.format_receipt,
-                format_send: state.data.format_send,
-                gender: state.data.gender,
-                race_identification: state.data.race_identification
+
+            const _user = SessionService.getUserData()
+            setUserSession(_user)
+
+            const is_Est = _user.user_permissions?.find(x => x.codename === 'view_solicityresponse')
+            if (is_Est) {
+                props.usecase.getSolicityBiIdEstablishment(parseInt(state?.data?.id + "" || "0")).then((res) => {
+                    setSolicityToResponse(res)
+                    const data_ = {
+                        number_saip: res.number_saip,
+                        city: res.city,
+                        text: res.text,
+                        first_name: res.first_name,
+                        last_name: res.last_name,
+                        email: res.email,
+                        establishment: res.establishment,
+                        address: res.address,
+                        phone: res.phone,
+                        format_receipt: res.format_receipt,
+                        format_send: res.format_send,
+                        gender: res.gender,
+                        race_identification: res.race_identification
+                    }
+                    getSelectedEntity(res.establishment)
+                    setData(data_)
+
+                    getSelectedEntity(res.establishment)
+                })
+
+            } else {
+                props.usecase.getSolicityById(parseInt(state?.data?.id + "" || "0")).then((res) => {
+                    console.log(res)
+                    const data_ = {
+                        number_saip: res.number_saip,
+                        city: res.city,
+                        text: res.text,
+                        first_name: res.first_name,
+                        last_name: res.last_name,
+                        email: res.email,
+                        establishment: res.establishment,
+                        address: res.address,
+                        phone: res.phone,
+                        format_receipt: res.format_receipt,
+                        format_send: res.format_send,
+                        gender: res.gender,
+                        race_identification: res.race_identification
+                    }
+                    setData(data_)
+                    setSolicityToResponse(res)
+                    getSelectedEntity(res.establishment)
+                }).catch((e) => {
+                    console.log(e + "error")
+                    const user = SessionService.getUserData()
+                    setData({
+                        ..._data,
+                        first_name: user.first_name,
+                        last_name: user.last_name,
+                        email: user.email,
+                        number_saip: props.usecase.buildSaipCode().toString()
+                    })
+                })
             }
-            getSelectedEntity(state.data.establishment)
-            setData(data_)
         }
 
     }, [state])
@@ -121,7 +174,13 @@ const SolicityResponseContainer = (props: Props) => {
     }
 
     const handleCancel = () => {
-        navigation('/transparency/solicity')
+        //return back
+        const is_Est = userSession.user_permissions?.find(x => x.codename === 'view_solicityresponse')
+        if (is_Est) {
+            navigation("/admin/establishment/solicity")
+        } else {
+            navigation("/admin/solicity")
+        }
     }
 
     const onChangeTagSelection = (newValue: OnChangeValue<{ label: string, value: number }, true>) => {
@@ -207,6 +266,32 @@ const SolicityResponseContainer = (props: Props) => {
         a.remove();
     }
 
+    const onDownloadFromUrl = (url: string, name: string) => {
+        props.fileUseCase.downloadFileFromUrl(url).then((file) => {
+            if (file instanceof Blob) {
+                const a = document.createElement("a");
+                const url = URL.createObjectURL(file);
+                a.href = url;
+                a.download = name;
+                document.body.appendChild(a);
+                a.click();
+
+                a.remove();
+            } else if (typeof file === "string") {
+                window.open(file, "_blank")
+            }
+        }).catch(() => {
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = name;
+            a.target = "_blank"
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+        })
+    }
+
     const onAddDataSet = (type: "table" | "file" | "url") => {
 
         const copyFiles = [...files]
@@ -279,10 +364,14 @@ const SolicityResponseContainer = (props: Props) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         dataResponseSolicity.id_solicitud = solicityToResponse.id
+        dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0)
+        dataResponseSolicity.attachment = []
         props.usecase.responseSolicity(dataResponseSolicity).then(() => {
             setSuccess("Solicitud enviada correctamente")
+            toast.success("Solicitud enviada correctamente")
         }).catch((err) => {
             setError(err.message)
+            toast.error(err.message)
         })
 
     }
@@ -333,6 +422,9 @@ const SolicityResponseContainer = (props: Props) => {
                 key={0}
                 onChangeTextResponse={(text) => setResponseSolicity({ ...dataResponseSolicity, text: text })}
                 getSelectedItems={getSelectedItem}
+                onDownloadFromUrl={onDownloadFromUrl}
+                userSession={userSession}
+                isAvaliableToResponse={props.usecase.availableToResponse(userSession, solicityToResponse)}
 
             />
         </>

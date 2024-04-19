@@ -69,6 +69,23 @@ class SolicityApi {
     }
   }
 
+  async getSolicityByIdEstablishment(id: number) {
+    try {
+      const response = await this.api.get<MessageTranslation<SolicityResponseDto>>(
+        TRANSPARENCY_PATH + `/solicity_response/detail/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string =
+          error.response?.data?.message || "Error al obtener la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al obtener la solicitud.");
+      }
+    }
+  }
+
   async updateSolicity(data: SendDraftSolicity) {
     try {
       const response = await this.api.put<MessageTranslation<SolicityResponseDto>>(

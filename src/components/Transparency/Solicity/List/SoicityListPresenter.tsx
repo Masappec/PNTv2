@@ -156,6 +156,7 @@ const SolicityListPresenter = (props: Props) => {
                             title: 'Insistencia/Correción',
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
+                                console.log(element)
                                 const status = StatusStageSolicity[element?.status as keyof typeof StatusStageSolicity]
 
                                 return <p>{

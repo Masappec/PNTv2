@@ -61,7 +61,11 @@ class SolicityService {
     );
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }
+  async getSolicityBiIdEstablishment(id: number) {
 
+    const response = await this.api.getSolicityByIdEstablishment(id);
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
+  }
   async responseSolicity(data: ResponseSolicity) {
     const response = await this.api.responseSolicity(
       SolicityMappers.domainApi(data)

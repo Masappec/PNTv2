@@ -15,6 +15,9 @@ import SolicityEditPresenter from "../Edit/SolicityEditPresesnter";
 import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import { formart_send, format_receipt, genders, race_indentification } from "../../../../utils/options";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
+import { FaDownload } from "react-icons/fa6";
+import { ToastContainer } from "react-toastify";
+import UserEntity from "../../../../domain/entities/UserEntity";
 
 
 interface Props {
@@ -62,7 +65,9 @@ interface Props {
     entitySelected: EstablishmentEntity;
     getSelectedItems: (value: string, items: ColourOption[]) => ColourOption;
     onChangeTextResponse: (value: string) => void;
-
+    onDownloadFromUrl: (url: string, name: string) => void;
+    userSession: UserEntity;
+    isAvaliableToResponse: boolean;
 }
 /**
  * 
@@ -76,6 +81,7 @@ const SolicityResponsePresenter = (props: Props) => {
     return (
 
         <div className="container">
+            <ToastContainer />
             <SolicityEditPresenter
                 handleSubmit={props.handleSubmit}
                 onCancel={props.onCancel}
@@ -99,7 +105,7 @@ const SolicityResponsePresenter = (props: Props) => {
                 isChanged={false}
                 isLoadingSend={false}
                 isSaved={false}
-                isSend={false}
+                isSend={!props.isAvaliableToResponse}
 
             >
                 <hr
@@ -107,20 +113,7 @@ const SolicityResponsePresenter = (props: Props) => {
                 />
                 <form className="flex  mt-5" onSubmit={props.handleSubmit}>
                     <section className="container mx-auto">
-                        <div className="sm:flex sm:items-center sm:justify-between">
-                            <div>
-                                <div className="flex items-center gap-x-3">
-                                    <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-                                        Responder Solicitud
-                                    </h2>
-                                </div>
 
-                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
-                                    Llena los campos
-                                </p>
-                            </div>
-
-                        </div>
 
                         <div className="mt-10">
                             {
@@ -135,26 +128,37 @@ const SolicityResponsePresenter = (props: Props) => {
                                 props.solicitySaved.responses?.map((response, index) => {
                                     return (
                                         <>
+                                            <div className="flex flex-row m-2" key={index}>
 
-                                            {
-                                                response.files.map((file, index) => {
-                                                    return (
-                                                        <div
-                                                            key={index}
-                                                            className="flex flex-col m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
-                                                            <FaFile className=" text-primary-600" size={30} />
-                                                            <span className=" text-gray-500 dark:text-gray-300">
-                                                                {file.name || file.description}
-                                                            </span>
-                                                        </div>
-                                                    )
+                                                {
+                                                    response.files.map((file, index) => {
+                                                        return (
+                                                            <div
+                                                                key={index}
+                                                                className="flex flex-col m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
+                                                                <FaFile className=" text-primary-600" size={30} />
+                                                                <span className=" text-gray-500 dark:text-gray-300">
+                                                                    {file.name || file.description}
+                                                                </span>
+                                                                <span className=" text-gray-500 text-sm dark:text-gray-300">
+                                                                    <FaDownload className=" text-primary-600" size={15} onClick={() => props.onDownloadFromUrl(file.url_download as string, file.name)} />
+                                                                </span>
+                                                            </div>
+                                                        )
 
-                                                })
-                                            }
+                                                    })
+                                                }
+                                            </div>
                                             <div className=" grid grid-cols gap-4 w-auto mt-16">
                                                 <Label
                                                     htmlFor=""
-                                                    value={`Respuesta ${index + 1}`}
+                                                    value={`${response.user.id == props.userSession.id &&
+                                                        props.userSession.group?.find(x => x.name === "Ciudadano")
+
+                                                        ? "Tu Respuesta" :
+                                                        "Respuesta de la Entidad"
+
+                                                        }`}
                                                     className="text-xl font-bold "
                                                 />
                                                 <Textarea
@@ -174,12 +178,28 @@ const SolicityResponsePresenter = (props: Props) => {
 
 
                         </div>
-                        {props.solicitySaved && props.solicitySaved.responses && props.solicitySaved.responses.length < 10 &&
+                        {props.isAvaliableToResponse &&
                             <>
+                                <div className="sm:flex sm:items-center sm:justify-between">
+                                    <div>
+                                        <div className="flex items-center gap-x-3">
+                                            <h2 className="text-lg font-medium text-gray-800 dark:text-white">
+                                                Responder Solicitud
+                                            </h2>
+                                        </div>
+
+                                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+                                            Llena los campos
+                                        </p>
+                                    </div>
+
+                                </div>
                                 <div className=" grid grid-cols gap-4 w-auto mt-16">
                                     <Label
                                         htmlFor=""
-                                        value="Respuesta de la Entidad"
+                                        value={
+                                            (props.userSession.id || 0) == props.solicitySaved.userCreated ? "Tu Respuesta" :
+                                                "Respuesta de la Entidad"}
                                         className="text-xl font-bold "
                                     />
                                     <Textarea
@@ -245,8 +265,8 @@ const SolicityResponsePresenter = (props: Props) => {
 
                                             <div className=" items-center justify-center mt-4 gap-x-3 w-full">
                                                 <Button className="w-10 h-10
-                                    rounded-full
-                                    text-sm tracking-wide" color="success"
+                                                        rounded-full
+                                                        text-sm tracking-wide" color="success"
                                                     onClick={() => props.onAddDataSet("file")}
                                                 >
                                                     <FaPlusCircle className="w-5 h-5" />

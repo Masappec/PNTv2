@@ -41,7 +41,11 @@ const SolicityListContainer = (props: Props) => {
         navigate('/admin/solicity/create')
     }
     const handleEdit = (item: Solicity) => {
-        navigate(`/admin/solicity/edit/${item.id}`)
+        navigate(`/admin/solicity/response/citizen`, {
+            state: {
+                data: item
+            }
+        })
     }
 
     const handleOnHold = () => {

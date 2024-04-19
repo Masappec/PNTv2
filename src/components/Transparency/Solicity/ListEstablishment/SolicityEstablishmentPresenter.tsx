@@ -215,7 +215,6 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                 data={props.data}
                 description="aquí se muestran las instituciones registradas en el sistema"
                 length={0}
-                onAdd={props.onAdd}
                 onFilter={props.onFilter}
                 onImport={props.onImport}
                 onSearch={props.onSearch}

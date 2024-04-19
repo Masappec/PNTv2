@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import { MenuItem } from "../../../utils/menu";
 import { Sidebar } from "flowbite-react";
 import React from "react";
-import Input from "../Input";
 import { LuLogOut } from "react-icons/lu";
 
 interface Props {
@@ -33,9 +32,6 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 
 			<Sidebar.Items className="flex flex-col 
 			justify-between ">
-				<Sidebar.ItemGroup>
-					<Input placeholder="Buscar" className="w-full" />
-				</Sidebar.ItemGroup>
 				<Sidebar.ItemGroup >
 					{
 						menu.filter((item) => item.visible).

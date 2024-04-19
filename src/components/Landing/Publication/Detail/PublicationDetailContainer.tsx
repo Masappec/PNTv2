@@ -7,18 +7,18 @@ import PublicationEntity from "../../../../domain/entities/PublicationEntity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 
 
-interface Props{
-    usecase:PublicUseCase;
-    transparencyUseCase?:TransparencyUseCase
+interface Props {
+    usecase: PublicUseCase;
+    transparencyUseCase?: TransparencyUseCase
 
 }
 
-const PublicationDetailContainer = (props:Props)=>{
+const PublicationDetailContainer = (props: Props) => {
 
-    const {slug} = useParams<{slug:string}>()
+    const { slug } = useParams<{ slug: string }>()
 
     const [post, setPost] = useState<PublicationEntity>({
-        
+
     })
 
     const [error, setError] = useState<string>("")
@@ -27,36 +27,36 @@ const PublicationDetailContainer = (props:Props)=>{
 
 
     useEffect(() => {
-        
-        props.transparencyUseCase?.getDetailTransparency(slug||"").then((response) => {
+
+        props.transparencyUseCase?.getDetailTransparency(slug || "").then((response) => {
             setPost(response)
-            props.usecase.getEstablishment(response.establishment+""||"").then((response)=>{
+            props.usecase.getEstablishment(response.establishment + "" || "").then((response) => {
                 setEstablishment(response)
             })
         }).catch((error) => {
 
-            setError(error.message) 
+            setError(error.message)
         }).finally(() => {
             setLoading(false)
         })
 
     }, [])
 
-    return(
+    return (
         <PublicationDetailPresenter
-        loading={loading}
-        error={error}
-        description={post.description||""}
-        title={post.name||""}
-        user_name={post.userCreated||""}
-        tags={post.tag?.map(v=>v.name)||[]}
-        files={post.file_publication||[]}
-        email_establishment={establishment.email_accesstoinformation||"---"}
-        establishment={post.establishment_name||"---"}
-        date_created={post.createdAt?.toLocaleString()||"---"}
-        date_modified={post.updatedAt?.toLocaleString()||"---"}
-        date_publication={post.createdAt?.toLocaleString()||"---"}
-        attachments={post.attachment||[]}
+            loading={loading}
+            error={error}
+            description={post.description || ""}
+            title={post.name || ""}
+            user_name={""}
+            tags={post.tag?.map(v => v.name) || []}
+            files={post.file_publication || []}
+            email_establishment={establishment.email_accesstoinformation || "---"}
+            establishment={post.establishment_name || "---"}
+            date_created={post.createdAt?.toLocaleString() || "---"}
+            date_modified={post.updatedAt?.toLocaleString() || "---"}
+            date_publication={post.createdAt?.toLocaleString() || "---"}
+            attachments={post.attachment || []}
 
         />
     )

@@ -100,7 +100,7 @@ export const StatusStageSolicity = {
         value: 'Insistencia',
         key: 'INSISTENCY',
         bg: 'info',
-        icon: <FaClock />
+        icon: <FaCheck className="text-primary-500" />
     },
     PENDING_RESPONSE_INSISTENCY: {
         value: 'Pendiente respuesta insistencia',

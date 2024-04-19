@@ -244,6 +244,15 @@ const menu = [
     permission_required: "change_solicity",
     element: <SolicityEdit />,
   },
+
+  {
+    name: " Responder Solicitudes",
+    path: "/admin/solicity/response/citizen",
+    visible: false,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
+    permission_required: "view_solicity",
+    element: <SolicityResponse />,
+  },
   {
     name: " Responder Solicitudes",
     path: "/admin/solicity/response",

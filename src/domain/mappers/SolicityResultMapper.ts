@@ -1,5 +1,7 @@
 import { SolicityResultDto } from "../../infrastructure/Api/Solicity/interface";
 import { SolicityResultEntity } from "../entities/SolicityResultEntity";
+import AttachmentMapper from "./AttachmentMapper";
+import FilePublicationMapper from "./FilePublicationMapper";
 
 
 
@@ -8,8 +10,8 @@ export class SolicityResultMapper {
     static apiToDomain(data: SolicityResultDto): SolicityResultEntity {
 
         return {
-            attachments: data.attachments,
-            files: data.files,
+            attachments: data.attachments.map((attachment) => AttachmentMapper.fromApiToDomain(attachment)),
+            files: data.files.map((file) => FilePublicationMapper.fromApiToDomain(file)),
             id_solicitud: data.id_solicitud,
             text: data.text,
             user: {

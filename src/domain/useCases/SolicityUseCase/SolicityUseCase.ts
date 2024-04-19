@@ -1,6 +1,8 @@
 import SolicityService from "../../../infrastructure/Services/SolicityService";
 import CreateSolicity from "../../entities/CreateSolicity";
 import ResponseSolicity from "../../entities/ResponseSolicity";
+import { Solicity } from "../../entities/Solicity";
+import UserEntity from "../../entities/UserEntity";
 
 class SolicityUseCase {
   constructor(private readonly solicityService: SolicityService) { }
@@ -20,6 +22,9 @@ class SolicityUseCase {
 
   async getSolicityById(id: number) {
     return await this.solicityService.getSolicityById(id);
+  }
+  async getSolicityBiIdEstablishment(id: number) {
+    return await this.solicityService.getSolicityBiIdEstablishment(id);
   }
 
   async sendSolicityWithouDraft(data: CreateSolicity) {
@@ -41,6 +46,33 @@ class SolicityUseCase {
 
   buildSaipCode() {
     return Math.floor(100000 + Math.random() * 900000);
+
+  }
+
+
+
+  availableToResponse(user: UserEntity, solicity: Solicity) {
+    //obtener el ultimo elemto de la lista de respuestas de la solicitud
+    if (solicity && user) {
+      if (solicity.responses) {
+        if (solicity.responses.length === 10) {
+          return false;
+        }
+        console.log(solicity.userCreated !== user.id);
+        const lastResponse = solicity.responses[solicity.responses.length - 1];
+        if (!lastResponse) {
+          return !(solicity.userCreated !== user.id)
+        }
+
+        //si la respuesta es del usuario que esta logueado
+        if (lastResponse.user.id !== user.id) {
+          return true;
+        }
+
+      }
+
+    }
+    return false;
 
   }
 }

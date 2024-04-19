@@ -6,7 +6,6 @@ import Alert from "../../Common/Alert";
 import Spinner from "../../Common/Spinner";
 import { Button } from "flowbite-react";
 import logo from "../../../assets/Home/logo-dpe 2.png";
-import Checkbox from "../../Common/Checkbox";
 
 
 interface LoginPresenterProps {
@@ -97,14 +96,7 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
                 />
               </div>
               <div className="flex flex-col-2  xl:mt-6   mt-5">
-                <div className="text-zinc-300 font-semibold text-xs ml-4 ">
-                  <Checkbox
-                    id={""}
-                    checked={props.remenber}
-                    onChange={() => { }}
-                    label={"Recordarme por 30 días"}
-                  />
-                </div>
+
                 <div className="text-primary-500 text-xs ml-6 font-semibold">
                   {" "}
                   <Contrasenia

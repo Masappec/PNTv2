@@ -14,7 +14,7 @@ class BaseEntity {
     deleted?: boolean;
     deletedAt?: Date | null;
     ip?: string;
-    userCreated?: string | null;
+    userCreated?: number | string | null;
     userUpdated?: string | null;
     userDeleted?: string | null;
 
