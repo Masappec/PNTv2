@@ -27,6 +27,7 @@ interface TableProps<T> {
     from?: number;
     to?: number;
     total?: number;
+    show: boolean;
 }
 
 function Table<T>(props: TableProps<T>) {
@@ -43,6 +44,7 @@ function Table<T>(props: TableProps<T>) {
                 onImport={props.onImport}
                 onSearch={props.onSearch}
             />
+
             <div className="overflow-x-auto">
                 <TableFlowbite>
                     <TableFlowbite.Head className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

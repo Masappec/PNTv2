@@ -1,12 +1,16 @@
-import { FaCheckCircle, FaEdit } from "react-icons/fa"
+import { FaCheckCircle} from "react-icons/fa"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import Alert from "../../../Common/Alert"
 import Modal from "../../../Common/Modal"
 import Table from "../../../Common/Table/index"
-import { IoCloseCircleOutline } from "react-icons/io5"
+import { FiEdit2 } from "react-icons/fi";
 import Badge from "../../../Common/Badge"
-import { Button } from "flowbite-react"
+import { Button, } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
+import { RxCardStackPlus } from "react-icons/rx"
+import { BiExport } from "react-icons/bi"
+import Select from "../../../Common/Select";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 
 
@@ -37,6 +41,89 @@ interface Props {
 const EstablishmentListPresenter = (props:Props)=>{
     return (
         <div className="container">
+              <div className="border-gray-300 py-5 border-b  ">
+          <h2 className="text-2xl font-semibold text-black ml-11">
+          Transparencia LOTAIP 
+          </h2>
+        </div>
+             <div className="grid grid-rows-1 grid-flow-col  w-auto ml-7 ">
+            
+                <h1 className="flex flex-col mt-7 text-black text-lg  font-bold pr-96">Instituciones</h1>
+              
+             <div className=" flex  flex-col mt-6 ml-36 ">
+             <button type="button"
+                            onClick={props.onAdd}
+                            className="w-[100px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
+                            <RxCardStackPlus size={25} className="mr-2 " />
+                            Nuevo
+                        </button>
+                        </div>
+             <div className=" flex  flex-col mt-6  ">
+             <button type="button"
+                            onClick={()=>{}}
+                            className="w-[115px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
+                            <BiExport size={25} className="mr-2" />
+                            Exportar
+                            {}
+                        </button>
+                        </div>
+                        <div className=" flex  flex-col mt-6 pr-32">
+                    
+                      <button   id=""
+                                onClick={props.onImport}
+                                data-dropdown-toggle="actionsDropdown"
+                                className="w-[115px] h-[40px] flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" type="button">
+                                <RxCardStackPlus size={25} className="mr-2" />
+                                {}
+                                Importar
+                            </button>
+                        </div>
+
+             </div>
+             <div className="grid grid-rows-1 grid-flow-col space-x-2 w-[750px] pl-10 mt-12">
+                 
+                 <div className=" flex  flex-col h-[44px]  mt-5 w-[177px]  gap-2">
+                        <Select
+                          placeholder={"Zona 5"}
+                          value={""}
+                          onChange={() => { }}
+                          options={[
+                            {
+                              value: "",
+                              label: "Zona 5",
+                            },
+                          ]}
+                        />
+                      </div>
+                      <div className=" flex  flex-col h-[44px]  mt-5 w-[242px]  gap-2">
+                        <Select
+                          placeholder={"Institución"}
+                          value={""}
+                          onChange={() => { }}
+                          options={[
+                            {
+                              value: "",
+                              label: "Defensoría del Pueblo",
+                            },
+                          ]}
+                        />
+                      </div>
+                      
+                      <div className=" flex  flex-col h-[44px] mt-5 w-[242px] gap-2">
+                        <Select
+                          placeholder={"Función"}
+                          value={""}
+                          onChange={() => { }}
+                          options={[
+                            {
+                              value: "",
+                              label: "Defensoría del Pueblo",
+                            },
+                          ]}
+                        />
+                      </div></div>
+         
+
             <div className="flex items-center py-5 justify-center">
 
                 
@@ -67,6 +154,7 @@ const EstablishmentListPresenter = (props:Props)=>{
             </div>
             <div className="flex justify-between items-center mt-5">
                 <Table
+                   show={false}
                     columns={[
                         {
                             title: "Nombre",
@@ -103,8 +191,8 @@ const EstablishmentListPresenter = (props:Props)=>{
                                         onClick={() => {
                                             props.onEdit(row)
                                         }}
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
-                                        <FaEdit />
+                                        className=" hover:text-blue-700  font-bold py-2 px-4 text-lg">
+                                        <FiEdit2  />
                                     </button>
                                     <button
                                     
@@ -114,9 +202,9 @@ const EstablishmentListPresenter = (props:Props)=>{
 
                                         }
                                         }
-                                        className={" text-white font-bold py-2 px-4 rounded-2xl" + (row.is_active ? " bg-red-500 hover:bg-red-700" : " bg-green-500 hover:bg-green-700")}>
+                                        className={"  font-bold py-2 px-4 text-lg" + (row.is_active ? "  hover:text-red-700" : "  hover:text-green-700")}>
                                         {
-                                            row.is_active ? <IoCloseCircleOutline /> : <FaCheckCircle />
+                                            row.is_active ? <RiDeleteBin6Line /> : <FaCheckCircle />
                                         }
                                     </button>
                                 </div>
