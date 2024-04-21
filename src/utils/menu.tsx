@@ -26,6 +26,8 @@ import FocalizedCreate from "../interfaces/web/Transparency/Focalized/Create";
 import CollaborativeList from "../interfaces/web/Transparency/Collaborative/List";
 import CollaborativeCreate from "../interfaces/web/Transparency/Collaborative/Create";
 import SolicityListEstablishment from "../interfaces/web/Transparency/Solicity/ListEstablishment";
+import IndicatorsAdmin from "../interfaces/web/Dashboard/IndicatorsAdmin";
+import { BiPieChart } from "react-icons/bi";
 
 
 export interface MenuItem {
@@ -276,7 +278,15 @@ const menu = [
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_configuration",
     element: <SolicityDetail />,
-  }
+  },
+  {
+    name: "Indicadores",
+    path: "/admin/dashboard",
+    visible: true,
+    icon: <BiPieChart size={25} className="text-slate-500" />,
+    permission_required: "view_solicity",
+    element: <IndicatorsAdmin/>,
+  },
 ];
 
 export default menu;
