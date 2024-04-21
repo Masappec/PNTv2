@@ -43,7 +43,6 @@ const SolicityCreateContainer = (props: Props) => {
 
     const [entity, setEntity] = useState<EstablishmentEntity>({} as EstablishmentEntity)
 
-
     const [success, setSuccess] = useState<string>("")
     const [error, setError] = useState<string>("")
 
@@ -82,12 +81,17 @@ const SolicityCreateContainer = (props: Props) => {
             console.log(e + "error")
             console.log(e + "error")
             const user = SessionService.getUserData()
+            const person = SessionService.getPersonData()
+            console.log(person)
             setData({
                 ...data,
                 first_name: user.first_name,
                 last_name: user.last_name,
                 email: user.email,
-                number_saip: props.usecase.buildSaipCode().toString()
+                number_saip: props.usecase.buildSaipCode().toString(),
+                phone: person.phone,
+                gender: person.gender,
+                race_identification: person.race
             })
         })
 

@@ -2,11 +2,12 @@
 import { FormEvent, useEffect, useState } from "react"
 import RegisterPresenter from "./RegisterPresenter"
 import RegisterUseCase from "../../../domain/useCases/Authentication/RegisterUseCase"
-import { useNavigate } from "react-router-dom"
 import ConfigurationUseCase from "../../../domain/useCases/Configuration/ConfigurationUseCase"
 import FormFieldsEntity from "../../../domain/entities/FormFieldsEntity"
 import { ROLE_CIUDADANO } from "../../../utils/constans"
 import { RegisterDto } from "../../../infrastructure/Api/Auth/interface"
+import ScreenMessage from "../../Common/ScreenMessage/ScreenMessage"
+import { useNavigate } from "react-router-dom"
 
 const RegisterContainer = ({ usecase, configUseCase }: {
   usecase: RegisterUseCase,
@@ -33,11 +34,10 @@ const RegisterContainer = ({ usecase, configUseCase }: {
     disability: false
   } as RegisterDto)
   const [error, setError] = useState<string>('')
-  const history = useNavigate()
   const [loading, setLoading] = useState(false)
-
+  const history = useNavigate()
   const [config, setConfig] = useState<FormFieldsEntity[]>([])
-
+  const [success, setSuccess] = useState(false)
   useEffect(() => {
     setError('')
     configUseCase.execute(ROLE_CIUDADANO, 'Usuario').then((res) => {
@@ -53,6 +53,60 @@ const RegisterContainer = ({ usecase, configUseCase }: {
     if (data.disability === undefined) {
       data.disability = false
     }
+    if (data.first_name === '') {
+      setError('Debe ingresar un nombre')
+      setLoading(false)
+      return
+    }
+
+    if (data.last_name === '') {
+      setError('Debe ingresar un apellido')
+      setLoading(false)
+      return
+    }
+
+
+    if (data.gender === '') {
+      setError('Debe seleccionar un género')
+      setLoading(false)
+      return
+    }
+
+    if (data.race === '') {
+      setError('Debe seleccionar una identidad cultural')
+      setLoading(false)
+      return
+    }
+
+    if (data.username === '') {
+      setError('Debe ingresar un correo electrónico')
+      setLoading(false)
+      return
+    }
+
+    //valid email
+    if (!data.username.includes('@')) {
+      setError('Correo electrónico inválido')
+      setLoading(false)
+      return
+    }
+
+    if (data.password === '') {
+      setError('Debe ingresar una contraseña')
+      setLoading(false)
+      return
+    }
+
+
+    if (data.confirm_password === '') {
+      setError('Debe confirmar la contraseña')
+      setLoading(false)
+      return
+    }
+
+
+
+
     if (data.confirm_password !== data.password) {
       setError('Las contraseñas no coinciden')
       setLoading(false)
@@ -68,7 +122,7 @@ const RegisterContainer = ({ usecase, configUseCase }: {
 
     usecase.authService.register(data as RegisterDto).then(() => {
       setLoading(false)
-      return history("/ingreso")
+      setSuccess(true)
     }
     ).catch((e) => {
       setError(e.message)
@@ -78,10 +132,10 @@ const RegisterContainer = ({ usecase, configUseCase }: {
   }
 
   const handleData = (name: string, value: string | boolean) => {
-
+    console.log(name, value)
     setData({ ...data, [name]: value });
   }
-  return (
+  return !success ?
     <RegisterPresenter
       data={data as RegisterDto}
       fields={config}
@@ -91,7 +145,15 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       setError={setError}
       isLoading={loading}
 
-    />
-  )
+    /> : <ScreenMessage message="Registro Existoso" type="Revisa tu correo para activar tu cuenta" >
+      <button onClick={() => {
+        history('/ingreso')
+
+      }}
+        className="bg-primary-400 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded">
+        Volver
+      </button>
+    </ScreenMessage>
+
 }
 export default RegisterContainer

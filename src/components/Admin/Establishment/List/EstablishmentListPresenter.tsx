@@ -1,4 +1,4 @@
-import { FaCheckCircle} from "react-icons/fa"
+import { FaCheckCircle } from "react-icons/fa"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import Alert from "../../../Common/Alert"
 import Modal from "../../../Common/Modal"
@@ -38,95 +38,96 @@ interface Props {
     totalPage: number
 }
 
-const EstablishmentListPresenter = (props:Props)=>{
+const EstablishmentListPresenter = (props: Props) => {
     return (
         <div className="container">
-              <div className="border-gray-300 py-5 border-b  ">
-          <h2 className="text-2xl font-semibold text-black ml-11">
-          Transparencia LOTAIP 
-          </h2>
-        </div>
-             <div className="grid grid-rows-1 grid-flow-col  w-auto ml-7 ">
-            
-                <h1 className="flex flex-col mt-7 text-black text-lg  font-bold pr-96">Instituciones</h1>
-              
-             <div className=" flex  flex-col mt-6 ml-36 ">
-             <button type="button"
-                            onClick={props.onAdd}
-                            className="w-[100px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
-                            <RxCardStackPlus size={25} className="mr-2 " />
-                            Nuevo
-                        </button>
-                        </div>
-             <div className=" flex  flex-col mt-6  ">
-             <button type="button"
-                            onClick={()=>{}}
-                            className="w-[115px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
-                            <BiExport size={25} className="mr-2" />
-                            Exportar
-                            {}
-                        </button>
-                        </div>
-                        <div className=" flex  flex-col mt-6 pr-32">
-                    
-                      <button   id=""
-                                onClick={props.onImport}
-                                data-dropdown-toggle="actionsDropdown"
-                                className="w-[115px] h-[40px] flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" type="button">
-                                <RxCardStackPlus size={25} className="mr-2" />
-                                {}
-                                Importar
-                            </button>
-                        </div>
+            <div className="border-gray-300 py-5 border-b  ">
+                <h2 className="text-2xl font-semibold text-black ml-11">
+                    Transparencia LOTAIP
+                </h2>
+            </div>
+            <div className="grid grid-rows-1 grid-flow-col  w-auto ml-7 ">
 
-             </div>
-             <div className="grid grid-rows-1 grid-flow-col space-x-2 w-[750px] pl-10 mt-12">
-                 
-                 <div className=" flex  flex-col h-[44px]  mt-5 w-[177px]  gap-2">
-                        <Select
-                          placeholder={"Zona 5"}
-                          value={""}
-                          onChange={() => { }}
-                          options={[
+                <h1 className="flex flex-col mt-7 text-black text-lg  font-bold pr-96">Instituciones</h1>
+
+                <div className=" flex  flex-col mt-6 ml-36 ">
+                    <button type="button"
+                        onClick={props.onAdd}
+                        className="w-[100px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
+                        <RxCardStackPlus size={25} className="mr-2 " />
+                        Nuevo
+                    </button>
+                </div>
+                <div className=" flex  flex-col mt-6  ">
+                    <button type="button"
+                        onClick={() => { }}
+                        className="w-[115px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
+                        <BiExport size={25} className="mr-2" />
+                        Exportar
+                        { }
+                    </button>
+                </div>
+                <div className=" flex  flex-col mt-6 pr-32">
+
+                    <button id=""
+                        onClick={props.onImport}
+                        data-dropdown-toggle="actionsDropdown"
+                        className="w-[115px] h-[40px] flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" type="button">
+                        <RxCardStackPlus size={25} className="mr-2" />
+                        { }
+                        Importar
+                    </button>
+                </div>
+
+            </div>
+            <div className="grid grid-rows-1 grid-flow-col space-x-2 w-full pl-10 mt-12">
+
+                <div className=" flex  flex-col h-[44px]  mt-5 w-[177px]  gap-2">
+                    <Select
+                        placeholder={"Zona 5"}
+                        value={""}
+                        onChange={() => { }}
+                        options={[
                             {
-                              value: "",
-                              label: "Zona 5",
+                                value: "",
+                                label: "Zona 5",
                             },
-                          ]}
-                        />
-                      </div>
-                      <div className=" flex  flex-col h-[44px]  mt-5 w-[242px]  gap-2">
-                        <Select
-                          placeholder={"Institución"}
-                          value={""}
-                          onChange={() => { }}
-                          options={[
+                        ]}
+                    />
+                </div>
+                <div className=" flex  flex-col h-[44px]  mt-5 w-[242px]  gap-2">
+                    <Select
+                        placeholder={"Institución"}
+                        value={""}
+                        onChange={() => { }}
+                        options={[
                             {
-                              value: "",
-                              label: "Defensoría del Pueblo",
+                                value: "",
+                                label: "Defensoría del Pueblo",
                             },
-                          ]}
-                        />
-                      </div>
-                      
-                      <div className=" flex  flex-col h-[44px] mt-5 w-[242px] gap-2">
-                        <Select
-                          placeholder={"Función"}
-                          value={""}
-                          onChange={() => { }}
-                          options={[
+                        ]}
+                    />
+                </div>
+
+                <div className=" flex  flex-col h-[44px] mt-5 w-[242px] gap-2">
+                    <Select
+                        placeholder={"Función"}
+                        value={""}
+                        onChange={() => { }}
+                        options={[
                             {
-                              value: "",
-                              label: "Defensoría del Pueblo",
+                                value: "",
+                                label: "Defensoría del Pueblo",
                             },
-                          ]}
-                        />
-                      </div></div>
-         
+                        ]}
+                    />
+                </div>
+            </div>
+
 
             <div className="flex items-center py-5 justify-center">
 
-                
+
                 <Modal
                     isvisible={props.visibleModal}
                     onClose={() => { }}
@@ -138,9 +139,8 @@ const EstablishmentListPresenter = (props:Props)=>{
 
                     <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
                     <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    {`¿Desea ${
-                        props.selectedEstablishment?.is_active ? "desactivar" : "activar"
-                    } esta Entidad "${props.selectedEstablishment?.name}" ?`} 
+                        {`¿Desea ${props.selectedEstablishment?.is_active ? "desactivar" : "activar"
+                            } esta Entidad "${props.selectedEstablishment?.name}" ?`}
                     </h3>
                     <div className="flex justify-center gap-4">
                         <Button color="failure" onClick={() => props.onConfirmDelete()}>
@@ -154,7 +154,7 @@ const EstablishmentListPresenter = (props:Props)=>{
             </div>
             <div className="flex justify-between items-center mt-5">
                 <Table
-                   show={false}
+                    show={false}
                     columns={[
                         {
                             title: "Nombre",
@@ -171,7 +171,7 @@ const EstablishmentListPresenter = (props:Props)=>{
                         {
                             title: "Maxima autoridad",
                             render: (row: EstablishmentEntity) => (
-                                <p>{row.highest_authority +" " +row.first_name_authority +" "+ row.last_name_authority}</p>
+                                <p>{row.highest_authority + " " + row.first_name_authority + " " + row.last_name_authority}</p>
                             )
                         },
                         {
@@ -192,10 +192,10 @@ const EstablishmentListPresenter = (props:Props)=>{
                                             props.onEdit(row)
                                         }}
                                         className=" hover:text-blue-700  font-bold py-2 px-4 text-lg">
-                                        <FiEdit2  />
+                                        <FiEdit2 />
                                     </button>
                                     <button
-                                    
+
                                         //add alt
                                         onClick={() => {
                                             props.onDelete(row)

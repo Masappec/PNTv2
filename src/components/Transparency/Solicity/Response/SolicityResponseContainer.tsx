@@ -18,6 +18,8 @@ import { RootState } from "../../../../infrastructure/Store";
 import { toast } from "react-toastify";
 import SessionService from "../../../../infrastructure/Services/SessionService";
 import UserEntity from "../../../../domain/entities/UserEntity";
+import SolicityDetailContainer from "../Detail/SolicityDetailContainer";
+import { AxiosProgressEvent } from "axios";
 
 
 interface Props {
@@ -76,6 +78,7 @@ const SolicityResponseContainer = (props: Props) => {
         error: string,
         loading: boolean,
         success: string,
+        percent: number,
         file_solicity: FilePublicationEntity | null
     }[]>([])
 
@@ -182,6 +185,9 @@ const SolicityResponseContainer = (props: Props) => {
             navigation("/admin/solicity")
         }
     }
+
+
+
 
     const onChangeTagSelection = (newValue: OnChangeValue<{ label: string, value: number }, true>) => {
 
@@ -301,45 +307,63 @@ const SolicityResponseContainer = (props: Props) => {
             error: "",
             loading: false,
             success: "",
-            file_solicity: null
+            file_solicity: null,
+            percent: 0
         })
         SetFiles(copyFiles)
     }
 
 
+    const onUploadListener = (event: AxiosProgressEvent, index: number) => {
+        const percentCompleted = Math.round((event.loaded * 100) / event.event.total)
+        console.log(percentCompleted)
+        const copyFiles = [...files]
+
+        copyFiles[index].percent = percentCompleted
+        SetFiles(copyFiles)
+
+    }
+
     const onSaveFile = (file: File, name: string, description: string, index: number) => {
+        const copyFiles = [...files]
 
 
         if (name === "") {
-            const copyFiles = [...files]
             copyFiles[index].error = "El nombre es requerido"
             SetFiles(copyFiles)
             return
         }
         if (description === "") {
-            const copyFiles = [...files]
             copyFiles[index].error = "La descripción es requerida"
             SetFiles(copyFiles)
             return
         }
         if (file === null) {
-            const copyFiles = [...files]
             copyFiles[index].error = "El archivo es requerido"
             SetFiles(copyFiles)
             return
         }
 
+        copyFiles[index].loading = true
+        SetFiles(copyFiles)
+
         const data = new FilePublicationEntity(0, name, description, file);
         if (file instanceof File) {
-            props.fileUseCase.createFilePublication(data).then((response) => {
+            props.fileUseCase.createFilePublication(data,
+                (e) => {
+                    onUploadListener(e, index)
+                }
+            ).then((response) => {
                 const copyFiles = [...files]
                 copyFiles[index].file = file
                 copyFiles[index].file_solicity = response
+                copyFiles[index].loading = false
                 SetFiles(copyFiles)
 
             }).catch((error) => {
                 const copyFiles = [...files]
                 copyFiles[index].error = error.message
+                copyFiles[index].loading = false
                 SetFiles(copyFiles)
             })
         } else if (typeof file === "string") {
@@ -363,15 +387,18 @@ const SolicityResponseContainer = (props: Props) => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setLoading(true)
         dataResponseSolicity.id_solicitud = solicityToResponse.id
         dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0)
         dataResponseSolicity.attachment = []
         props.usecase.responseSolicity(dataResponseSolicity).then(() => {
+            setLoading(false)
             setSuccess("Solicitud enviada correctamente")
             toast.success("Solicitud enviada correctamente")
         }).catch((err) => {
             setError(err.message)
             toast.error(err.message)
+            setLoading(false)
         })
 
     }
@@ -389,44 +416,54 @@ const SolicityResponseContainer = (props: Props) => {
 
     return (
         <>
-            <SolicityResponsePresenter
-                handleSubmit={handleSubmit}
-                onCancel={handleCancel}
-                data={[[]]}
-                handleSaveDataFile={handleSaveDataFile}
-                files={files}
-                error={error}
-                loading={loading}
-                success={success}
-                setError={setError}
-                setSuccess={setSuccess}
-                typeSolicity={typeSolicity}
-                onChageTypeSolicity={setTypeSolicity}
-                onCreateTag={onCreateTag}
-                onFilterTag={onFilterTag}
-                tags={tags}
-                onSelectedTag={onChangeTagSelection}
-                onSaveTable={handleSaveDataTable}
-                onAddDataSet={onAddDataSet}
-                onSaveDateUrl={handleSaveDataUrl}
-                onDownloadFile={onDownloadFile}
-                onRemoveFile={() => { }}
-                onSaveFile={onSaveFile}
-                solicity={_data}
-                solicitySaved={solicityToResponse}
-                onChangeDescription={(description) => SetSolicity({ ...solicity, description: description })}
-                onChangeTitle={(title) => SetSolicity({ ...solicity, name: title })}
-                onChangeEvent={(event) => SetSolicity({ ...solicity, notes: event })}
-                onRemoveFileFromSolicity={onRemoveFileFromPublication}
-                entitySelected={entity}
-                key={0}
-                onChangeTextResponse={(text) => setResponseSolicity({ ...dataResponseSolicity, text: text })}
-                getSelectedItems={getSelectedItem}
-                onDownloadFromUrl={onDownloadFromUrl}
-                userSession={userSession}
-                isAvaliableToResponse={props.usecase.availableToResponse(userSession, solicityToResponse)}
+            <SolicityDetailContainer
+                attachmentUsecase={props.attachmentUsecase}
+                fileUseCase={props.fileUseCase}
+                publicusecase={props.publicusecase}
+                usecase={props.usecase}
 
-            />
+
+            >
+                <SolicityResponsePresenter
+                    handleSubmit={handleSubmit}
+                    onCancel={handleCancel}
+                    data={[[]]}
+                    handleSaveDataFile={handleSaveDataFile}
+                    files={files}
+                    error={error}
+                    loading={loading}
+                    success={success}
+                    setError={setError}
+                    setSuccess={setSuccess}
+                    typeSolicity={typeSolicity}
+                    onChageTypeSolicity={setTypeSolicity}
+                    onCreateTag={onCreateTag}
+                    onFilterTag={onFilterTag}
+                    tags={tags}
+                    onSelectedTag={onChangeTagSelection}
+                    onSaveTable={handleSaveDataTable}
+                    onAddDataSet={onAddDataSet}
+                    onSaveDateUrl={handleSaveDataUrl}
+                    onDownloadFile={onDownloadFile}
+                    onRemoveFile={() => { }}
+                    onSaveFile={onSaveFile}
+                    solicity={_data}
+                    solicitySaved={solicityToResponse}
+                    onChangeDescription={(description) => SetSolicity({ ...solicity, description: description })}
+                    onChangeTitle={(title) => SetSolicity({ ...solicity, name: title })}
+                    onChangeEvent={(event) => SetSolicity({ ...solicity, notes: event })}
+                    onRemoveFileFromSolicity={onRemoveFileFromPublication}
+                    entitySelected={entity}
+                    key={0}
+                    onChangeTextResponse={(text) => setResponseSolicity({ ...dataResponseSolicity, text: text })}
+                    getSelectedItems={getSelectedItem}
+                    onDownloadFromUrl={onDownloadFromUrl}
+                    userSession={userSession}
+                    isAvaliableToResponse={props.usecase.availableToResponse(userSession, solicityToResponse)}
+                    isLoadingSend={loading}
+
+                />
+            </SolicityDetailContainer>
         </>
     )
 

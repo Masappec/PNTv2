@@ -21,7 +21,7 @@ class AuthService {
         SessionService.setAccessToken(userData.access);
         SessionService.setRefreshToken(userData.refresh);
         SessionService.setUserData(JSON.stringify(userData.user));
-  
+        SessionService.setPersonData(JSON.stringify(userData.person))
         return AuthMapper.fromApiToDomain(userData);
       } catch (error) {
         throw new Error('Error al autenticar el usuario. Verifica tus credenciales.');

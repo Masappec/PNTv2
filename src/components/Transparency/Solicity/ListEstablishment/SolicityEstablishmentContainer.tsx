@@ -67,6 +67,20 @@ const SolicityListEstablishmentContainer = (props: Props) => {
     }
 
 
+    const setPage = (page: number) => {
+        props.useCase.getEstablishmentSolicity("", page).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
+
+
 
     return (
         <SolicityEstablishmentPresenter
@@ -88,7 +102,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
             page={currentPage}
             search=""
 
-            setPage={() => { }}
+            setPage={setPage}
             setSeach={() => { }}
             setVisibleModal={() => { }}
             visibleModal={visibleModal}

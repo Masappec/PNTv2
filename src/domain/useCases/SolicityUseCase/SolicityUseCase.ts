@@ -58,21 +58,26 @@ class SolicityUseCase {
         if (solicity.responses.length === 10) {
           return false;
         }
-        console.log(solicity.userCreated !== user.id);
         const lastResponse = solicity.responses[solicity.responses.length - 1];
         if (!lastResponse) {
-          if (solicity.userCreated !== user.id) {
-            return true;
+          if (user.user_permissions) {
+            if (user.user_permissions?.find(x => x.codename === 'view_solicityresponse')) {
+              if (solicity.userCreated !== user.id) {
+                return true;
+              }
+            }
+
           }
 
         }
 
 
-
-        //si la respuesta es del usuario que esta logueado
-        if (lastResponse.user.id !== user.id) {
-          return true;
+        if (lastResponse) {
+          if (lastResponse.user.id !== user.id) {
+            return true;
+          }
         }
+
 
       }
 

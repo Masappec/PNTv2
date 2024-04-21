@@ -233,7 +233,7 @@ const SolicityCreatePresenter = (props: Props) => {
               <TextInput
                 className="w-[717px]"
                 placeholder=""
-                type="tel"
+                type="text"
                 onChange={props.onChange}
                 name="phone"
                 value={props.data.phone}
@@ -339,48 +339,7 @@ const SolicityCreatePresenter = (props: Props) => {
             </div>
           </div>
 
-          <div className=" grid grid-cols gap-4 w-auto mt-16">
-            <Label
-              htmlFor=""
-              value="Respuesta de la Entidad"
-              className="text-xl font-bold "
-            />
-            <Textarea
-              placeholder="Escribe la respuesta"
-              className="h-[139px] xl:w-[915px]  "
-              name="description"
-              disabled={true}
-              onChange={props.onChange}
-            ></Textarea>
-          </div>
-          <div className=" grid grid-cols gap-4 w-auto mt-16">
-            <Label
-              htmlFor=""
-              value="Insistencia Ciudadana"
-              className="text-xl font-bold "
-            />
-            <Textarea
-              placeholder="Escribe la petición"
-              className="h-[139px] xl:w-[915px]  "
-              name="description"
-              disabled={true}
 
-            ></Textarea>
-          </div>
-          <div className=" grid grid-cols gap-4 w-auto mt-16">
-            <Label
-              htmlFor=""
-              value="Respuesta a la Insistencia Ciudadana"
-              className="text-xl font-bold "
-            />
-            <Textarea
-              placeholder="Escribe la petición"
-              className="h-[139px] xl:w-[915px]  "
-              name="description"
-              disabled={true}
-
-            ></Textarea>
-          </div>
 
           <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-24 ">
             {

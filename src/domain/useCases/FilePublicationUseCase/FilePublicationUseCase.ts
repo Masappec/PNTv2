@@ -1,25 +1,28 @@
+import { AxiosProgressEvent } from "axios";
 import FilePublicationService from "../../../infrastructure/Services/FilePublicationService";
 import { Row } from "../../../utils/interface";
 import { FilePublicationEntity } from "../../entities/PublicationEntity";
 
 
 
-class FilePublicationUseCase{
+class FilePublicationUseCase {
 
-    constructor(private readonly filePublicationRepository: FilePublicationService){}
+    constructor(private readonly filePublicationRepository: FilePublicationService) { }
 
 
 
-    generateBlob(data:Row[][]){
+    generateBlob(data: Row[][]) {
         return this.filePublicationRepository.generateBlob(data);
     }
 
-    async downloadFileFromUrl(url:string){
+    async downloadFileFromUrl(url: string) {
         return await this.filePublicationRepository.downloadFileFromUrl(url);
     }
 
-    async createFilePublication(data: FilePublicationEntity) {
-        return await this.filePublicationRepository.createFilePublication(data);
+    async createFilePublication(data: FilePublicationEntity,
+        callbackUpload?: (e: AxiosProgressEvent) => void,
+    ) {
+        return await this.filePublicationRepository.createFilePublication(data, callbackUpload);
     }
 }
 

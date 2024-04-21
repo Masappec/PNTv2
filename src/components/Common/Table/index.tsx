@@ -3,7 +3,7 @@ import HeaderTable from "./header";
 import { Pagination, Table as TableFlowbite } from "flowbite-react";
 interface Column<T> {
     title: string
-    render: (data: T) => React.ReactNode,
+    render: (data: T, index: number) => React.ReactNode,
     width?: number
 }
 
@@ -34,17 +34,17 @@ function Table<T>(props: TableProps<T>) {
 
     return (
         <div className="w-full">
-
-            <HeaderTable
-                isImport={props.isImport}
-                textImport={props.textImport}
-                textAdd={props.textAdd}
-                onAdd={props.onAdd}
-                key={props.title}
-                onImport={props.onImport}
-                onSearch={props.onSearch}
-            />
-
+            {props.show &&
+                <HeaderTable
+                    isImport={props.isImport}
+                    textImport={props.textImport}
+                    textAdd={props.textAdd}
+                    onAdd={props.onAdd}
+                    key={props.title}
+                    onImport={props.onImport}
+                    onSearch={props.onSearch}
+                />
+            }
             <div className="overflow-x-auto">
                 <TableFlowbite>
                     <TableFlowbite.Head className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -63,15 +63,15 @@ function Table<T>(props: TableProps<T>) {
                     </TableFlowbite.Head>
                     <TableFlowbite.Body className="text-sm divide-y divide-gray-200 dark:divide-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800">
                         {
-                            props.data.map(row => (
+                            props.data.map((row, index) => (
                                 <TableFlowbite.Row>
                                     {
-                                        props.columns.map(column => (
+                                        props.columns.map((column) => (
                                             <TableFlowbite.Cell
 
                                                 className={`px-4 py-3 `}
                                                 key={column.title}>
-                                                {column.render(row)}
+                                                {column.render(row, index)}
                                             </TableFlowbite.Cell>
                                         ))
                                     }
@@ -121,7 +121,7 @@ function Table<T>(props: TableProps<T>) {
             </nav>
 
 
-        </div>
+        </div >
     )
 
 

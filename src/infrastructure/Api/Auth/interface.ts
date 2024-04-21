@@ -53,10 +53,30 @@ export interface LoginUserDataResponseDto {
         codename: string;
     }[]
 
+  
+
 }
 
 export interface LoginResponseDto {
     access: string,
     refresh: string,
-    user: LoginUserDataResponseDto
+    user: LoginUserDataResponseDto,
+      person: {
+        id: number,
+        first_name: string,
+        last_name: string,
+        identification: string,
+        phone: string,
+        address: string,
+        city: string,
+        country: string,
+        province: string,
+        job: string,
+        gender: string,
+        age_range: string,
+        race: string,
+        disability: boolean,
+        accept_terms: boolean,
+        user: number
+    }
 }

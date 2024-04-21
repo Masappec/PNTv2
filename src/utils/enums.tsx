@@ -1,8 +1,14 @@
 import { BiPointer } from "react-icons/bi";
-import { FaCheck, FaClock, FaEye, FaSave, FaStopCircle } from "react-icons/fa";
+import { FaCheck, FaClock, FaEye, FaSave } from "react-icons/fa";
 import { TbPointFilled } from "react-icons/tb";
 
-
+/*SEND = 'SEND', 'ENVIADO'
+    PENDING = 'PENDING', 'PENDIENTE'
+    RESPONSE = 'RESPONSE', 'RESPUESTA'
+    INSISTENCY = 'INSISTENCY', 'INSISTENCIA'
+    PENDING_RESPONSE_INSISTENCY = 'PENDING_RESPONSE_INSISTENCY', 'PENDIENTE RESPUESTA INSISTENCIA'
+    RESPONSE_INSISTENCY = 'RESPONSE_INSISTENCY', 'RESPUESTA INSISTENCIA'
+    INFORMAL_MANAGEMENT = 'INFORMAL_MANAGEMENT', 'GESTIÓN OFICIOSA'*/
 export const StatusSolicity = {
     CREATED: {
         value: 'Pendiente',
@@ -12,7 +18,7 @@ export const StatusSolicity = {
     },
     DRAFT: {
         value: 'Borrador',
-        key: 'SEND',
+        key: 'DRAFT',
         bg: 'info',
         icon: <FaSave />
     },
@@ -32,26 +38,38 @@ export const StatusSolicity = {
         icon: <FaClock />
     },
 
-    READING: {
-        value: 'Leída',
-        key: 'READING',
+    RESPONSE: {
+        value: 'Respondida',
+        key: 'RESPONSE',
         bg: 'info',
         icon: <FaEye />
     },
 
-    PROCESSING: {
-        value: 'En proceso',
-        key: 'PROCESSING',
+    INSISTENCY: {
+        value: 'Insistencia',
+        key: 'INSISTENCY',
         bg: 'info',
         icon: <FaClock />
     },
-
-    FINISHED: {
-        value: 'Finalizada',
-        key: 'FINISHED',
+    PENDING_RESPONSE_INSISTENCY: {
+        value: 'Pendiente respuesta insistencia',
+        key: 'PENDING_RESPONSE_INSISTENCY',
         bg: 'info',
-        icon: <FaStopCircle />
+        icon: <FaClock />
+    },
+    RESPONSE_INSISTENCY: {
+        value: 'Respuesta insistencia',
+        key: 'RESPONSE_INSISTENCY',
+        bg: 'info',
+        icon: <FaClock />
+    },
+    INFORMAL_MANAGEMENT: {
+        value: 'Gestión oficiosa',
+        key: 'INFORMAL_MANAGEMENT',
+        bg: 'info',
+        icon: <FaClock />
     }
+
 
 }
 

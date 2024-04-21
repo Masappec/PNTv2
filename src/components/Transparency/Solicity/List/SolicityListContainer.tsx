@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase"
 import { Solicity } from "../../../../domain/entities/Solicity"
+import { StatusSolicity } from "../../../../utils/enums"
 
 interface Props {
     useCase: SolicityUseCase;
@@ -41,11 +42,17 @@ const SolicityListContainer = (props: Props) => {
         navigate('/admin/solicity/create')
     }
     const handleEdit = (item: Solicity) => {
-        navigate(`/admin/solicity/response/citizen`, {
-            state: {
-                data: item
-            }
-        })
+        console.log(item)
+        if (item.status === StatusSolicity.DRAFT.key) {
+            navigate(`/admin/solicity/edit/${item.id}`)
+        } else {
+            navigate(`/admin/solicity/response/citizen`, {
+                state: {
+                    data: item
+                }
+            })
+        }
+
     }
 
     const handleOnHold = () => {
@@ -71,6 +78,19 @@ const SolicityListContainer = (props: Props) => {
 
     }
 
+    const setPage = (page: number) => {
+        props.useCase.getSolicities("", page).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
+
 
 
     return (
@@ -93,7 +113,7 @@ const SolicityListContainer = (props: Props) => {
             page={currentPage}
             search=""
 
-            setPage={() => { }}
+            setPage={setPage}
             setSeach={() => { }}
             setVisibleModal={() => { }}
             visibleModal={visibleModal}

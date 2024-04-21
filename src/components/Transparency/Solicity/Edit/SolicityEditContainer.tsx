@@ -193,6 +193,11 @@ const SolicityEditContainer = (props: Props) => {
             ...data,
             [name]: e.value
         })
+
+        setSolicitySaved({
+            ...solicitySaved,
+            [name]: e.value
+        })
     }
 
 

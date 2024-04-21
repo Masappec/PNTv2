@@ -3,16 +3,13 @@ import Badge from "../../../Common/Badge"
 import Table from "../../../Common/Table/index"
 import Modal from "../../../Common/Modal"
 import Alert from "../../../Common/Alert"
-import { FaCheckCircle  } from "react-icons/fa"
-import { CiTrash } from "react-icons/ci";
-import { Button, Label, TextInput } from "flowbite-react"
+
+import { CiCircleCheck, CiTrash } from "react-icons/ci";
+import { Button } from "flowbite-react"
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import Select from "../../../Common/Select";
-import { BiExport } from "react-icons/bi";
-import { RxCardStackPlus } from "react-icons/rx";
+//import Select from "../../../Common/Select";
+//import { BiExport } from "react-icons/bi";
 import { FiEdit2 } from "react-icons/fi";
-import { TbUsersMinus } from "react-icons/tb";
-import { TfiEmail } from "react-icons/tfi";
 
 
 
@@ -45,82 +42,79 @@ interface Props {
 export const UserListPresenter = (props: Props) => {
     return (
 
-        <div className="container">
-             <div className="border-gray-300 py-5 border-b  ">
-          <h2 className="text-2xl font-semibold text-black ml-5">
-          Transparencia LOTAIP 
-          </h2>
-        </div>
-             <div className="grid grid-rows-1 grid-flow-col  w-auto ml-7 ">
-            
+        <div className="w-full">
+            <div className="border-gray-300 py-5 border-b  ">
+                <h2 className="text-2xl font-semibold text-black ml-5">
+                    Transparencia LOTAIP
+                </h2>
+            </div>
+            <div className="grid grid-rows-1 grid-flow-col ml-7 ">
+
                 <h1 className="flex flex-col mt-7 text-black text-lg  font-bold pr-96">Usuarios</h1>
-              
-             <div className=" flex  flex-col mt-6 ml-36 ">
-             <button type="button"
-                            onClick={props.onAdd}
-                            className="w-[100px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
-                            <RxCardStackPlus size={25} className="mr-2 " />
-                            Nuevo
-                        </button>
-                        </div>
-             <div className=" flex  flex-col mt-6  ">
-             <button type="button"
-                            onClick={()=>{}}
-                            className="w-[115px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
-                            <BiExport size={25} className="mr-2" />
-                            Exportar
-                            {}
-                        </button>
-                        </div>
-                        <div className=" flex  flex-col mt-6 pr-32">
-                    
-                      <button   id=""
-                                onClick={props.onImport}
-                                data-dropdown-toggle="actionsDropdown"
-                                className="w-[115px] h-[40px] flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" type="button">
-                                <RxCardStackPlus size={25} className="mr-2" />
-                                {}
-                                Importar
-                            </button>
-                        </div>
 
-             </div>
-         
+                <div className=" flex  flex-col mt-6 ml-36 ">
+
+                </div>
+                {/*<div className=" flex  flex-col mt-6  ">
+                    <button type="button"
+                        onClick={() => { }}
+                        className="w-[115px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
+                        <BiExport size={25} className="mr-2" />
+                        Exportar
+                        { }
+                    </button>
+                </div>
+                <div className=" flex  flex-col mt-6 pr-32">
+
+                    <button id=""
+                        onClick={props.onImport}
+                        data-dropdown-toggle="actionsDropdown"
+                        className="w-[115px] h-[40px] flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" type="button">
+                        <RxCardStackPlus size={25} className="mr-2" />
+                        { }
+                        Importar
+                    </button>
+    </div>*/}
+
+            </div>
 
 
-             <div className="grid grid-rows-1 grid-flow-col  w-[1050px] pl-36 mt-12 ">
-                 
-             <div className=" flex  flex-col h-[44px]  w-[282px] mt-6 gap-2 ">
+
+            <div className="grid grid-rows-1 grid-flow-col space-x-2 w-full pl-10 mt-12">
+
+                {/* <div className=" flex  flex-col h-[44px]  w-[282px] mt-6 gap-2 ">
                     <Label htmlFor="" value="Nombre de funcionario" />
                     <TextInput placeholder="Ingresar nombre" type="text" />{" "}
-                    </div>
-                  <div className=" flex  flex-col h-[44px]  mt-5 w-[282px]  gap-2">
+                </div>
+                <div className=" flex  flex-col h-[44px]  mt-5 w-[282px]  gap-2">
                     <Select
-                      placeholder={"Nombre de la Institución"}
-                      value={""}
-                      onChange={() => { }}
-                      options={[
-                        {
-                          value: "",
-                          label: "Defensoría del Pueblo",
-                        },
-                      ]}
+                        placeholder={"Nombre de la Institución"}
+                        value={""}
+                        onChange={() => { }}
+                        options={[
+                            {
+                                value: "",
+                                label: "Defensoría del Pueblo",
+                            },
+                        ]}
                     />
-                  </div>
-                  
-                  <div className=" flex  flex-col h-[44px] mt-5 w-[282px] gap-2">
+                </div>
+
+                <div className=" flex  flex-col h-[44px] mt-5 w-[282px] gap-2">
                     <Select
-                      placeholder={"Rol"}
-                      value={""}
-                      onChange={() => { }}
-                      options={[
-                        {
-                          value: "",
-                          label: "Administrador general",
-                        },
-                      ]}
+                        placeholder={"Rol"}
+                        value={""}
+                        onChange={() => { }}
+                        options={[
+                            {
+                                value: "",
+                                label: "Administrador general",
+                            },
+                        ]}
                     />
-                  </div></div>
+                </div>
+                    */}
+            </div>
             <div className="flex items-center py-5 justify-center">
 
                 <Modal
@@ -148,9 +142,9 @@ export const UserListPresenter = (props: Props) => {
                     </div>
                 </Modal>
             </div>
-            <div className="flex justify-between items-center mt-5">
+            <div className="flex w-full justify-between items-center mt-5">
                 <Table
-                show= {false}
+                    show={true}
                     columns={[
                         {
                             render: (row: UserEntity) => (
@@ -197,20 +191,7 @@ export const UserListPresenter = (props: Props) => {
                                         className="py-2 px-2 text-lg hover:text-blue-500">
                                         <FiEdit2 />
                                     </button>
-                                    <button
-                                        onClick={() => {
-                                
-                                        }}
-                                        className="py-2 px-2  text-lg hover:text-blue-500">
-                                       <TbUsersMinus />
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            
-                                        }}
-                                        className="py-2 px-2  text-lg hover:text-blue-500">
-                                        <TfiEmail  />
-                                    </button>
+
                                     <button
 
                                         //add alt
@@ -221,7 +202,7 @@ export const UserListPresenter = (props: Props) => {
                                         }
                                         className={"  font-bold py-2 px-2 text-lg" + (row.is_active ? "  hover:text-red-700" : "text-green-500 hover:text-green-700")}>
                                         {
-                                            row.is_active ? <CiTrash /> : <FaCheckCircle />
+                                            row.is_active ? <CiTrash /> : <CiCircleCheck size={20} />
                                         }
                                     </button>
                                 </p>
@@ -234,7 +215,7 @@ export const UserListPresenter = (props: Props) => {
                     length={props.users.length}
                     onAdd={props.onAdd}
                     onFilter={() => { }}
-                    isImport={true}
+                    isImport={false}
                     onImport={props.onImport}
                     textAdd="Agregar usuario"
                     textImport="Importar usuarios"
