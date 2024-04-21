@@ -197,20 +197,7 @@ export const UserListPresenter = (props: Props) => {
                                         className="py-2 px-2 text-lg hover:text-blue-500">
                                         <FiEdit2 />
                                     </button>
-                                    <button
-                                        onClick={() => {
-                                
-                                        }}
-                                        className="py-2 px-2  text-lg hover:text-blue-500">
-                                       <TbUsersMinus />
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            
-                                        }}
-                                        className="py-2 px-2  text-lg hover:text-blue-500">
-                                        <TfiEmail  />
-                                    </button>
+                                   
                                     <button
 
                                         //add alt
