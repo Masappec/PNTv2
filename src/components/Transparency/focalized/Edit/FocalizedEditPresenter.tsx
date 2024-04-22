@@ -1,4 +1,4 @@
-import {  Tabs } from "flowbite-react";
+import {  Button, Tabs } from "flowbite-react";
 import {  FaRegSave } from "react-icons/fa";
 import Dropzone from "../../../Common/Dropzone";
 import { Label, TextInput } from "flowbite-react";
@@ -48,15 +48,15 @@ const FocalizedEditPresenter = (props: Props) => {
               className="flex items-center mt-4 +
               w-auto gap-x-3"
             >
-              <button
+              <Button
                 onClick={() => {}}
                 type="submit"
-                className="flex items-center justify-center w-2/3 h-10 px-4 text-sm tracking-wide 
-                            text-white transition-colors duration-200 bg-green-300 hover:bg-gray-300 rounded-lg sm:w-auto gap-x-2 "
+                className="flex items-center justify-center w-1/2 text-sm tracking-wide
+                text-white transition-colors duration-200  bg-primary-700  rounded-lg shrink-0 sm:w-auto gap-x-2 dark:hover:bg-blue-500 "
               >
                 <FaRegSave size={25} className=" mr-2" />
                 <span className="text-base"> Guardar </span>
-              </button>
+              </Button>
             </div>
           </div>
 
