@@ -1,3 +1,4 @@
+import { ApexOptions } from "apexcharts";
 import Select from "../../Common/Select";
 import Chart from "react-apexcharts";
 
@@ -63,7 +64,7 @@ const IndicatorsAdminPresenter = () => {
     labels: ["A", "B"],
     colors: ["#1A7290", "#7DBACF"],
   };
-  const line = {
+  const line: ApexOptions = {
     chart: {
       id: "line",
     },
@@ -86,15 +87,15 @@ const IndicatorsAdminPresenter = () => {
     },
     stroke: {
       curve: "smooth",
-    }, 
-  
+    },
+
     series: [
       {
         name: "series-1",
         data: [0, 100, 100, 200, 100, 300, 200, 100, 200, 300, 400, 400],
         color: "#337FA6",
       },
-    
+
     ],
   };
 
@@ -108,7 +109,7 @@ const IndicatorsAdminPresenter = () => {
           <Select
             placeholder={"Entidades"}
             value={""}
-            onChange={() => {}}
+            onChange={() => { }}
             options={[
               {
                 value: "",
@@ -121,7 +122,7 @@ const IndicatorsAdminPresenter = () => {
           <Select
             placeholder={"Periodo"}
             value={""}
-            onChange={() => {}}
+            onChange={() => { }}
             options={[
               {
                 value: "",
@@ -135,7 +136,7 @@ const IndicatorsAdminPresenter = () => {
           <Select
             placeholder={"Meses"}
             value={""}
-            onChange={() => {}}
+            onChange={() => { }}
             options={[
               {
                 value: "",

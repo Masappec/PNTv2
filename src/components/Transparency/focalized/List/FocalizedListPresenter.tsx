@@ -91,6 +91,7 @@ const FocalizedListPresenter = (props: Props) => {
 
       <div className="">
         <Table<TransparencyFocusEntity>
+          show={true}
           columns={[
             {
               render: (row: TransparencyFocusEntity) => <p>{new Date(row.published_at).toDateString()}</p>,

@@ -91,6 +91,7 @@ const CollaborativeListPresenter = (props: Props) => {
 
       <div className="">
         <Table<TransparencyCollab>
+          show={true}
           columns={[
             {
               render: (row: TransparencyCollab) => <p>{new Date(row.published_at).toDateString()}</p>,

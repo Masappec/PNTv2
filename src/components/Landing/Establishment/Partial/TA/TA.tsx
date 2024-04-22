@@ -35,6 +35,7 @@ const TA = (props: Props) => {
                 </Accordion.Title>
                 <Accordion.Content>
                     <Table<TransparencyActive>
+                        show={true}
                         columns={[
                             {
                                 render: (item) => {
