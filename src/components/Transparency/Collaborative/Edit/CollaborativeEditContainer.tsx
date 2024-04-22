@@ -1,10 +1,11 @@
-import CollaboartiveCreatePresenter from "./CollaborativeCreatePresenter";
+import CollaborativeEditPresenter from "./CollaborativeEditPresenter";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CollaborativeCreateContainer = () => {
+const CollaborativeEditContainer = () => {
 
   const navigate = useNavigate()
+ 
 
 
   const [error, setError] = useState<string>();
@@ -13,10 +14,10 @@ const CollaborativeCreateContainer = () => {
 
   const [isDisabled,] = useState<boolean>(true);
   const handleEdit = () => {
-    navigate("/admin/collaborative/edit");
+    navigate("");
   }
   return (
-    <CollaboartiveCreatePresenter
+    <CollaborativeEditPresenter
       title={""}
       handleSubmit={() => { }}
       error={error || ""}
@@ -35,4 +36,4 @@ const CollaborativeCreateContainer = () => {
   )
 
 }
-export default CollaborativeCreateContainer;
+export default CollaborativeEditContainer;

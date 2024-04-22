@@ -20,7 +20,7 @@ const FocalizedCreateContainer = () => {
 
 
   const handleEdit = () => {
-    navigate("")
+    navigate('/admin/focalized/edit');
   }
   return (
     <FocalizedCreatePresenter

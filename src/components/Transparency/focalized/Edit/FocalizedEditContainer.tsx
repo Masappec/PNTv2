@@ -1,8 +1,8 @@
-import CollaboartiveCreatePresenter from "./CollaborativeCreatePresenter";
+import FocalizedEditPresenter from "./FocalizedEditPresenter";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CollaborativeCreateContainer = () => {
+const FocalizedEditContainer = () => {
 
   const navigate = useNavigate()
 
@@ -13,10 +13,10 @@ const CollaborativeCreateContainer = () => {
 
   const [isDisabled,] = useState<boolean>(true);
   const handleEdit = () => {
-    navigate("/admin/collaborative/edit");
+    navigate("")
   }
   return (
-    <CollaboartiveCreatePresenter
+    <FocalizedEditPresenter
       title={""}
       handleSubmit={() => { }}
       error={error || ""}
@@ -35,4 +35,4 @@ const CollaborativeCreateContainer = () => {
   )
 
 }
-export default CollaborativeCreateContainer;
+export default FocalizedEditContainer;
