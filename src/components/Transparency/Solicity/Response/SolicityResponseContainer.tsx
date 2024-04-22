@@ -83,6 +83,14 @@ const SolicityResponseContainer = (props: Props) => {
         file_solicity: FilePublicationEntity | null
     }[]>([])
 
+    const [attachs, SetAttachs] = useState<{
+        data: AttachmentEntity,
+        error: string,
+        loading: boolean,
+        success: string,
+        entity: AttachmentEntity | null
+    }[]>([])
+
     const [tags, SetTags] = useState<TagEntity[]>([])
 
 
@@ -231,35 +239,12 @@ const SolicityResponseContainer = (props: Props) => {
     const handleSaveDataUrl = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const url = e.target.value
 
-        const copy = [...files]
-        copy[index].loading = true
-        SetFiles(copy)
-        props.fileUseCase.downloadFileFromUrl(url).then((file) => {
+        const copyFiles = [...attachs]
+        copyFiles[index].data.url_download = url
 
-            if (file instanceof Blob) {
-                const copyFiles = [...files]
-                copyFiles[index].loading = false
-                copyFiles[index].error = ""
-                const file_ = new File([file], "data.csv", {
-                    type: "text/csv;charset=utf-8;",
-                });
-                copyFiles[index].file = file_
-                SetFiles(copyFiles)
-            } else if (typeof file === "string") {
-                const copyFiles = [...files]
-                copyFiles[index].loading = false
-                copyFiles[index].error = "El enlace no es un archivo valido, por lo que se guardará como un enlace"
-                copyFiles[index].file = file
-                SetFiles(copyFiles)
 
-            }
-        }).catch(() => {
-            const copyFiles = [...files]
-            copyFiles[index].loading = false
-            copyFiles[index].error = "El enlace no es un archivo valido, por lo que se guardará como un enlace"
-            copyFiles[index].file = url
-            SetFiles(copyFiles)
-        })
+        SetAttachs(copyFiles)
+
 
     }
 
@@ -302,18 +287,31 @@ const SolicityResponseContainer = (props: Props) => {
     }
 
     const onAddDataSet = (type: "table" | "file" | "url") => {
+        if (type === "file") {
+            const copyFiles = [...files]
+            copyFiles.push({
+                file: null,
+                type: type,
+                error: "",
+                loading: false,
+                success: "",
+                file_solicity: null,
+                percent: 0
+            })
+            SetFiles(copyFiles)
+        }
 
-        const copyFiles = [...files]
-        copyFiles.push({
-            file: null,
-            type: type,
-            error: "",
-            loading: false,
-            success: "",
-            file_solicity: null,
-            percent: 0
-        })
-        SetFiles(copyFiles)
+        if (type === "url") {
+            const copyFiles = [...attachs]
+            copyFiles.push({
+                data: new AttachmentEntity(0, "", "", ""),
+                error: "",
+                loading: false,
+                success: "",
+                entity: null
+            })
+            SetAttachs(copyFiles)
+        }
     }
 
 
@@ -324,6 +322,21 @@ const SolicityResponseContainer = (props: Props) => {
 
         copyFiles[index].percent = percentCompleted
         SetFiles(copyFiles)
+
+    }
+
+    const onSaveAttachment = (url: string, name: string, description: string, index: number) => {
+
+
+        const data = new AttachmentEntity(0, name, description, url)
+        props.attachmentUsecase.createAttachment(data).then((response) => {
+            const copyFiles = [...attachs]
+            copyFiles[index].entity = response
+            SetAttachs(copyFiles)
+
+        }).catch((error) => {
+            toast.error(error.message)
+        })
 
     }
 
@@ -393,6 +406,7 @@ const SolicityResponseContainer = (props: Props) => {
         setLoading(true)
         dataResponseSolicity.id_solicitud = solicityToResponse.id
         dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0)
+        dataResponseSolicity.attachment = attachs.map((attach) => attach.entity?.id || 0)
         dataResponseSolicity.attachment = []
         props.usecase.responseSolicity(dataResponseSolicity).then(() => {
             setLoading(false)
@@ -407,10 +421,16 @@ const SolicityResponseContainer = (props: Props) => {
     }
 
 
-    const onRemoveFileFromPublication = (index: number) => {
-        const copyFiles = [...files]
-        copyFiles.splice(index, 1)
-        SetFiles(copyFiles)
+    const onRemoveFileFromPublication = (index: number, type: string) => {
+        if (type === "file") {
+            const copyFiles = [...files]
+            copyFiles.splice(index, 1)
+            SetFiles(copyFiles)
+        } else {
+            const copyFiles = [...attachs]
+            copyFiles.splice(index, 1)
+            SetAttachs(copyFiles)
+        }
     }
     const getSelectedItem = (value: string, options: ColourOption[]) => {
         const item = options.find((item) => item.value === value)
@@ -450,6 +470,7 @@ const SolicityResponseContainer = (props: Props) => {
                     onDownloadFile={onDownloadFile}
                     onRemoveFile={() => { }}
                     onSaveFile={onSaveFile}
+                    onSaveAttachment={onSaveAttachment}
                     solicity={_data}
                     solicitySaved={solicityToResponse}
                     onChangeDescription={(description) => SetSolicity({ ...solicity, description: description })}
@@ -465,6 +486,7 @@ const SolicityResponseContainer = (props: Props) => {
                     isAvaliableToResponse={props.usecase.availableToResponse(userSession, solicityToResponse)}
                     isLoadingSend={loading}
                     responseRef={responseRef}
+                    attachs={attachs}
                 />
             </SolicityDetailContainer>
         </>

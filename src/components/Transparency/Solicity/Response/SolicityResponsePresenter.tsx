@@ -5,10 +5,10 @@ import { HiInformationCircle } from "react-icons/hi";
 //import Select from "react-select";
 import { TagEntity } from "../../../../domain/entities/TagEntity";
 import { OnChangeValue } from "react-select";
-import { FaFile, FaPlusCircle, FaTrash } from "react-icons/fa";
+import { FaFile, FaLink, FaPlusCircle, FaTrash } from "react-icons/fa";
 import { ColourOption, Row } from "../../../../utils/interface";
 import FileUrlPartial from "../../Partial/CreateFilePublication/FileUrl";
-import { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
+import { AttachmentEntity, FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
 import { Solicity } from "../../../../domain/entities/Solicity";
 import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
@@ -46,6 +46,13 @@ interface Props {
         file_solicity: FilePublicationEntity | null,
         percent: number
     }[]
+    attachs: {
+        data: AttachmentEntity,
+        error: string,
+        loading: boolean,
+        success: string,
+        entity: AttachmentEntity | null
+    }[]
 
     responseRef: React.MutableRefObject<HTMLTextAreaElement | undefined>
     onSaveDateUrl: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
@@ -54,13 +61,14 @@ interface Props {
 
     onSaveFile: (file: File, name: string, description: string, index: number) => void
     onRemoveFile: (index: number) => void
+    onSaveAttachment: (url: string, name: string, description: string, index: number) => void
 
 
     onChangeTitle: (title: string) => void
     onChangeDescription: (description: string) => void
     onChangeEvent: (event: string) => void
 
-    onRemoveFileFromSolicity: (index: number) => void
+    onRemoveFileFromSolicity: (index: number, type: string) => void;
     solicity: CreateSolicity;
     solicitySaved: Solicity;
     entitySelected: EstablishmentEntity;
@@ -118,6 +126,24 @@ const SolicityResponsePresenter = (props: Props) => {
                                                             </span>
                                                             <span className=" text-gray-500 text-sm dark:text-gray-300">
                                                                 <FaDownload className=" text-primary-600" size={15} onClick={() => props.onDownloadFromUrl(file.url_download as string, file.name)} />
+                                                            </span>
+                                                        </div>
+                                                    )
+
+                                                })
+                                            }
+                                        </div>
+                                        <div className="flex flex-row m-2">
+                                            {
+                                                response.attachments.map((file, index) => {
+                                                    return (
+                                                        <div className="flex flex-col m-2 w-50 bg-slate-100 p-5 rounded-lg shadow-xl" key={index}>
+                                                            <FaLink className=" text-primary-600" size={30} />
+                                                            <span className=" text-gray-500 dark:text-gray-300">
+                                                                {file.description}
+                                                            </span>
+                                                            <span className=" text-gray-500 text-sm dark:text-gray-300">
+                                                                <FaDownload className=" text-primary-600" size={15} onClick={() => props.onDownloadFromUrl(file.url_download, file.description)} />
                                                             </span>
                                                         </div>
                                                     )
@@ -194,7 +220,28 @@ const SolicityResponsePresenter = (props: Props) => {
                                                         { }
                                                     </span>
                                                     <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
-                                                        <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromSolicity(index)} />
+                                                        <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromSolicity(index, "file")} />
+                                                    </span>
+                                                </div>
+                                            )
+
+                                        })
+                                    }
+                                </div>
+                                <div className="flex flex-row m-2">
+                                    {
+                                        props.attachs?.filter(x => x.entity).map((file, index) => {
+                                            return (
+                                                <div className="flex flex-col m-2 w-50 bg-slate-100 p-5 rounded-lg shadow-xl">
+                                                    <FaLink className=" text-primary-600" size={30} />
+                                                    <span className=" text-gray-500 dark:text-gray-300">
+                                                        {file.entity?.url_download.slice(0, 20)}...
+                                                    </span>
+                                                    <span className=" text-gray-500 text-sm dark:text-gray-300">
+                                                        {file.entity?.description}
+                                                    </span>
+                                                    <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
+                                                        <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromSolicity(index, "url")} />
                                                     </span>
                                                 </div>
                                             )
@@ -245,21 +292,20 @@ const SolicityResponsePresenter = (props: Props) => {
                                 </Tabs.Item>
                                 <Tabs.Item title="URL">
                                     {
-                                        props.files.map((file, index) => {
-                                            if (file.type === "url") {
-                                                return <FileUrlPartial
-                                                    error={file.error}
-                                                    file={file.file}
-                                                    index={index}
-                                                    loading={file.loading}
-                                                    onDownloadFile={props.onDownloadFile}
-                                                    onSaveDateUrl={props.onSaveDateUrl}
-                                                    key={index}
-                                                    onSaveFile={(file, name, description) => props.onSaveFile(file as File, name, description, index)}
-                                                    onRemoveFile={(index) => props.onRemoveFileFromSolicity(index)}
-                                                    isSaved={file.file_solicity !== null}
-                                                />
-                                            }
+                                        props.attachs.map((file, index) => {
+                                            return <FileUrlPartial
+                                                error={file.error}
+                                                file={file.data.name as string}
+                                                index={index}
+                                                loading={file.loading}
+                                                onDownloadFile={props.onDownloadFile}
+                                                onSaveDateUrl={props.onSaveDateUrl}
+                                                key={index}
+                                                onSaveFile={(file, name, description) => props.onSaveAttachment(file as string, name, description, index)}
+                                                onRemoveFile={(index) => props.onRemoveFileFromSolicity(index, "url")}
+                                                isSaved={file.entity !== null}
+                                            />
+
                                         })
                                     }
                                     <div className="flex items-center justify-center mt-4 gap-x-3 w-full">

@@ -6,14 +6,15 @@ import { useState } from "react"
 
 interface IFileUrlPartial {
     index: number
-    file: File |string| null
+    file: File | string | null
     onSaveDateUrl: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
     onDownloadFile: (file: File) => void
     loading: boolean
     error: string | null;
-    onSaveFile: (file: File|string|null, name: string, description: string, index: number) => void
+    onSaveFile: (file: File | string | null, name: string, description: string, index: number) => void
     onRemoveFile: (index: number) => void
-    isSaved: boolean
+    isSaved: boolean;
+    isDownloaded?: boolean;
 }
 
 const FileUrlPartial = (props: IFileUrlPartial) => {
@@ -53,7 +54,7 @@ const FileUrlPartial = (props: IFileUrlPartial) => {
                 disabled={props.isSaved}
             />
             {
-                props.file != null && (
+                props.file != null && props.isDownloaded && (
                     <div className="flex items-center  mt-4 gap-x-3 w-full">
                         <span className=" text-gray-500 dark:text-gray-300">
                             <FaFileCsv className=" text-green-600" size={30} />

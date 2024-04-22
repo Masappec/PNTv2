@@ -53,6 +53,19 @@ const RegisterContainer = ({ usecase, configUseCase }: {
     if (data.disability === undefined) {
       data.disability = false
     }
+
+    if (data.phone === '') {
+      setError('Debe ingresar un número de teléfono')
+      setLoading(false)
+      return
+    }
+
+    //validar que phone solo sea numeros
+    if (isNaN(Number(data.phone))) {
+      setError('Número de teléfono inválido')
+      setLoading(false)
+      return
+    }
     if (data.first_name === '') {
       setError('Debe ingresar un nombre')
       setLoading(false)

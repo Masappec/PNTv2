@@ -56,7 +56,7 @@ const SolicityCreateContainer = (props: Props) => {
 
     useEffect(() => {
 
-        props.usecase.getLastDraftSolicity().then((res) => {
+        /*props.usecase.getLastDraftSolicity().then((res) => {
             console.log(res)
             const data_ = {
                 number_saip: res.number_saip,
@@ -80,21 +80,21 @@ const SolicityCreateContainer = (props: Props) => {
         }).catch((e) => {
             console.log(e + "error")
             console.log(e + "error")
-            const user = SessionService.getUserData()
-            const person = SessionService.getPersonData()
-            console.log(person)
-            setData({
-                ...data,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.email,
-                number_saip: props.usecase.buildSaipCode().toString(),
-                phone: person.phone,
-                gender: person.gender,
-                race_identification: person.race
-            })
+            
+        })*/
+        const user = SessionService.getUserData()
+        const person = SessionService.getPersonData()
+        console.log(person)
+        setData({
+            ...data,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            number_saip: props.usecase.buildSaipCode().toString(),
+            phone: person.phone,
+            gender: person.gender,
+            race_identification: person.race
         })
-
     }, [])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -151,11 +151,11 @@ const SolicityCreateContainer = (props: Props) => {
 
     }
 
-    const getSelectedEntity = (id: number) => {
+    /*const getSelectedEntity = (id: number) => {
         const entity = _establishments.find((item) => item.id === id)
         setEntity(entity || {} as EstablishmentEntity)
 
-    }
+    }*/
 
 
     const getSelectedItem = (value: string, options: ColourOption[]) => {
