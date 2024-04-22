@@ -47,6 +47,7 @@ interface Props {
         percent: number
     }[]
 
+    responseRef: React.MutableRefObject<HTMLTextAreaElement | undefined>
     onSaveDateUrl: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
     onAddDataSet: (type: "table" | "file" | "url") => void;
     onDownloadFile: (file: File) => void;
@@ -141,8 +142,9 @@ const SolicityResponsePresenter = (props: Props) => {
                                                 className="h-[139px] xl:w-[915px]  "
                                                 name="description"
                                                 value={response.text}
+
                                                 disabled
-                                                onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
+                                                onChange={() => { }}
                                             ></Textarea>
                                         </div>
                                     </>
@@ -169,6 +171,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                     className="h-[139px] xl:w-[915px]  "
                                     name="description"
                                     onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
+                                    ref={props.responseRef as React.RefObject<HTMLTextAreaElement>}
                                 ></Textarea>
                             </div>
 

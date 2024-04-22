@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, useEffect, useRef, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { OnChangeValue } from "react-select";
 import { ColourOption, Row } from "../../../../utils/interface";
@@ -41,6 +41,7 @@ const SolicityResponseContainer = (props: Props) => {
     })
 
     const location = useLocation()
+    const responseRef = useRef<HTMLTextAreaElement>();
 
     const state = location.state as { data: Solicity }
     const [solicityToResponse, setSolicityToResponse] = useState<Solicity>({} as Solicity)
@@ -86,6 +87,8 @@ const SolicityResponseContainer = (props: Props) => {
 
 
     useEffect(() => {
+
+        responseRef.current?.focus()
 
     }, [])
 
@@ -461,7 +464,7 @@ const SolicityResponseContainer = (props: Props) => {
                     userSession={userSession}
                     isAvaliableToResponse={props.usecase.availableToResponse(userSession, solicityToResponse)}
                     isLoadingSend={loading}
-
+                    responseRef={responseRef}
                 />
             </SolicityDetailContainer>
         </>

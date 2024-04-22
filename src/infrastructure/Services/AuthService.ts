@@ -24,7 +24,7 @@ class AuthService {
         SessionService.setPersonData(JSON.stringify(userData.person))
         return AuthMapper.fromApiToDomain(userData);
       } catch (error) {
-        throw new Error('Error al autenticar el usuario. Verifica tus credenciales.');
+        throw new Error(error)
       }
     }
   

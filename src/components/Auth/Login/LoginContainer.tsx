@@ -26,7 +26,7 @@ const LoginContainer = ({ useCase }: {
     useCase.authService.authenticate(email, password)
     .then(() => {
       setIsLoading(false)
-      return history('/admin')
+      history('/admin')
     })
     .catch((e) => {
       setIsLoading(false)
