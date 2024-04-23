@@ -66,7 +66,13 @@ class SessionService {
   }
 
   static clearSession() {
-    localStorage.clear();
+
+
+    localStorage.removeItem(this.ACCESS_TOKEN_KEY);
+    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    localStorage.removeItem(this.USER_DATA_KEY);
+    localStorage.removeItem(this.PERSON_DATA_KEY);
+
   }
 
   static isLogged() {
