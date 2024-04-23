@@ -106,7 +106,11 @@ const SolicityResponsePresenter = (props: Props) => {
                             </Alert>
                         }
 
-
+                        {
+                            props.solicitySaved.responses?.length === 0 && <Alert color="warning" icon={HiInformationCircle}>
+                                <span className="font-medium">Aviso!</span> Entidad todavía no responde a esta solicitud
+                            </Alert>
+                        }
 
                         {
                             props.solicitySaved.responses?.map((response, index) => {
@@ -196,6 +200,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                     placeholder="Escribe la petición"
                                     className="h-[139px] xl:w-[915px]  "
                                     name="description"
+                                    id="description"
                                     onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
                                     ref={props.responseRef as React.RefObject<HTMLTextAreaElement>}
                                 ></Textarea>
@@ -235,7 +240,10 @@ const SolicityResponsePresenter = (props: Props) => {
                                                 <div className="flex flex-col m-2 w-50 bg-slate-100 p-5 rounded-lg shadow-xl">
                                                     <FaLink className=" text-primary-600" size={30} />
                                                     <span className=" text-gray-500 dark:text-gray-300">
-                                                        {file.entity?.url_download.slice(0, 20)}...
+                                                        <a href={file.entity?.url_download} target="_blank" rel="noreferrer"
+                                                            className=" text-primary-600">
+                                                            {file.entity?.name}
+                                                        </a>
                                                     </span>
                                                     <span className=" text-gray-500 text-sm dark:text-gray-300">
                                                         {file.entity?.description}
@@ -250,6 +258,9 @@ const SolicityResponsePresenter = (props: Props) => {
                                     }
                                 </div>
                             </div>
+                            <h4>
+                                Si desea adjuntar archivos o un enlace como parte de la respuesta, seleccione a continuación
+                            </h4>
                             <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800">
 
                                 <Tabs.Item title="Subir Archivos">
@@ -290,7 +301,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                     </div>
 
                                 </Tabs.Item>
-                                <Tabs.Item title="URL">
+                                <Tabs.Item title="Enlace (URL)">
                                     {
                                         props.attachs.map((file, index) => {
                                             return <FileUrlPartial

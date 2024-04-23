@@ -223,4 +223,4 @@ export const Cities = [
     { id: 222, value: "LAS GOLONDRINAS" },
     { id: 223, value: "MANGA DEL CURA" },
     { id: 224, value: "EL PIEDRERO" }
-];
+]

@@ -109,7 +109,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         title: "Fecha de recepción",
                         render: (solicity) => (
                             <p>{
-                                solicity.date ? new Date(solicity.date).toLocaleDateString() : ""
+                                solicity.date ? new Date(solicity.date).toLocaleString() : ""
                             }</p>
                         )
                     },
@@ -145,7 +145,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
                             const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE)
                             return <p>{
-                                element ? new Date(element.created_at).toLocaleDateString() : ""
+                                element ? new Date(element.created_at).toLocaleString() : ""
                             }</p>
                         }
                     },
@@ -154,7 +154,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         render: (solicity) => {
                             const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
                             return <p>{
-                                element ? new Date(element.created_at).toLocaleDateString() : ""
+                                element ? new Date(element.created_at).toLocaleString() : ""
                             }</p>
                         }
                     },
@@ -163,7 +163,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         render: (solicity) => {
                             const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE_INSISTENCY)
                             return <p>{
-                                element ? new Date(element.created_at).toLocaleDateString() : ""
+                                element ? new Date(element.created_at).toLocaleString() : ""
                             }</p>
                         }
                     },

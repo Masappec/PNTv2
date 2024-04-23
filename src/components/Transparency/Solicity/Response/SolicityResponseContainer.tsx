@@ -20,6 +20,7 @@ import SessionService from "../../../../infrastructure/Services/SessionService";
 import UserEntity from "../../../../domain/entities/UserEntity";
 import SolicityDetailContainer from "../Detail/SolicityDetailContainer";
 import { AxiosProgressEvent } from "axios";
+import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
 
 
 interface Props {
@@ -72,7 +73,7 @@ const SolicityResponseContainer = (props: Props) => {
     const [solicity, SetSolicity] = useState({})
     const [entity, setEntity] = useState<EstablishmentEntity>({} as EstablishmentEntity)
     const [userSession, setUserSession] = useState<UserEntity>({} as UserEntity)
-
+    const [isSaved, setIsSaved] = useState<boolean>(false)
     const [files, SetFiles] = useState<{
         file: File | string | null,
         type: "table" | "file" | "url",
@@ -408,14 +409,17 @@ const SolicityResponseContainer = (props: Props) => {
         dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0)
         dataResponseSolicity.attachment = attachs.map((attach) => attach.entity?.id || 0)
         dataResponseSolicity.attachment = []
-        props.usecase.responseSolicity(dataResponseSolicity).then(() => {
+        props.usecase.responseSolicity(dataResponseSolicity).then((_solicity) => {
             setLoading(false)
             setSuccess("Solicitud enviada correctamente")
-            toast.success("Solicitud enviada correctamente")
+            SetSolicity(_solicity)
+            setIsSaved(true)
+            //toast.success("Solicitud enviada correctamente")
         }).catch((err) => {
             setError(err.message)
             toast.error(err.message)
             setLoading(false)
+            setIsSaved(false)
         })
 
     }
@@ -437,60 +441,62 @@ const SolicityResponseContainer = (props: Props) => {
         return item || {} as ColourOption
     }
 
-    return (
-        <>
-            <SolicityDetailContainer
-                attachmentUsecase={props.attachmentUsecase}
-                fileUseCase={props.fileUseCase}
-                publicusecase={props.publicusecase}
-                usecase={props.usecase}
+    return isSaved ? <ScreenMessage message="Solicitud enviada correctamente" type="success" >
+        <button onClick={handleCancel} className="bg-primary text-white px-4 py-2 rounded-md">Volver</button>
+    </ScreenMessage>
+        :
+        <> <SolicityDetailContainer
+            attachmentUsecase={props.attachmentUsecase}
+            fileUseCase={props.fileUseCase}
+            publicusecase={props.publicusecase}
+            usecase={props.usecase}
 
 
-            >
-                <SolicityResponsePresenter
-                    handleSubmit={handleSubmit}
-                    onCancel={handleCancel}
-                    data={[[]]}
-                    handleSaveDataFile={handleSaveDataFile}
-                    files={files}
-                    error={error}
-                    loading={loading}
-                    success={success}
-                    setError={setError}
-                    setSuccess={setSuccess}
-                    typeSolicity={typeSolicity}
-                    onChageTypeSolicity={setTypeSolicity}
-                    onCreateTag={onCreateTag}
-                    onFilterTag={onFilterTag}
-                    tags={tags}
-                    onSelectedTag={onChangeTagSelection}
-                    onSaveTable={handleSaveDataTable}
-                    onAddDataSet={onAddDataSet}
-                    onSaveDateUrl={handleSaveDataUrl}
-                    onDownloadFile={onDownloadFile}
-                    onRemoveFile={() => { }}
-                    onSaveFile={onSaveFile}
-                    onSaveAttachment={onSaveAttachment}
-                    solicity={_data}
-                    solicitySaved={solicityToResponse}
-                    onChangeDescription={(description) => SetSolicity({ ...solicity, description: description })}
-                    onChangeTitle={(title) => SetSolicity({ ...solicity, name: title })}
-                    onChangeEvent={(event) => SetSolicity({ ...solicity, notes: event })}
-                    onRemoveFileFromSolicity={onRemoveFileFromPublication}
-                    entitySelected={entity}
-                    key={0}
-                    onChangeTextResponse={(text) => setResponseSolicity({ ...dataResponseSolicity, text: text })}
-                    getSelectedItems={getSelectedItem}
-                    onDownloadFromUrl={onDownloadFromUrl}
-                    userSession={userSession}
-                    isAvaliableToResponse={props.usecase.availableToResponse(userSession, solicityToResponse)}
-                    isLoadingSend={loading}
-                    responseRef={responseRef}
-                    attachs={attachs}
-                />
-            </SolicityDetailContainer>
+        >
+            <SolicityResponsePresenter
+                handleSubmit={handleSubmit}
+                onCancel={handleCancel}
+                data={[[]]}
+                handleSaveDataFile={handleSaveDataFile}
+                files={files}
+                error={error}
+                loading={loading}
+                success={success}
+                setError={setError}
+                setSuccess={setSuccess}
+                typeSolicity={typeSolicity}
+                onChageTypeSolicity={setTypeSolicity}
+                onCreateTag={onCreateTag}
+                onFilterTag={onFilterTag}
+                tags={tags}
+                onSelectedTag={onChangeTagSelection}
+                onSaveTable={handleSaveDataTable}
+                onAddDataSet={onAddDataSet}
+                onSaveDateUrl={handleSaveDataUrl}
+                onDownloadFile={onDownloadFile}
+                onRemoveFile={() => { }}
+                onSaveFile={onSaveFile}
+                onSaveAttachment={onSaveAttachment}
+                solicity={_data}
+                solicitySaved={solicityToResponse}
+                onChangeDescription={(description) => SetSolicity({ ...solicity, description: description })}
+                onChangeTitle={(title) => SetSolicity({ ...solicity, name: title })}
+                onChangeEvent={(event) => SetSolicity({ ...solicity, notes: event })}
+                onRemoveFileFromSolicity={onRemoveFileFromPublication}
+                entitySelected={entity}
+                key={0}
+                onChangeTextResponse={(text) => setResponseSolicity({ ...dataResponseSolicity, text: text })}
+                getSelectedItems={getSelectedItem}
+                onDownloadFromUrl={onDownloadFromUrl}
+                userSession={userSession}
+                isAvaliableToResponse={props.usecase.availableToResponse(userSession, solicityToResponse)}
+                isLoadingSend={loading}
+                responseRef={responseRef}
+                attachs={attachs}
+            />
+        </SolicityDetailContainer >
         </>
-    )
+
 
 }
 

@@ -37,7 +37,13 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 						menu.filter((item) => item.visible).
 							map((item, index) => (
 
-								permissions.includes(item.permission_required) &&
+								item.permission_required == "" ? <Link className={"flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-[#EAF7FC]" +
+									(path === item.path ? " bg-[#EAF7FC]" : "")}
+
+									to={item.path} key={index}>
+									{item.icon}
+									<span className="ml-2 text-sm font-medium text-slate-700">{item.name}</span>
+								</Link> : permissions.includes(item.permission_required) &&
 								<Link className={"flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-[#EAF7FC]" +
 									(path === item.path ? " bg-[#EAF7FC]" : "")}
 

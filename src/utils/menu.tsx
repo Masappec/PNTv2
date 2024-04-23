@@ -41,6 +41,14 @@ export interface MenuItem {
 
 const menu = [
   {
+    name: "Indicadores",
+    path: "/admin/dashboard",
+    visible: true,
+    icon: <BiPieChart size={25} className="text-slate-500" />,
+    permission_required: "",
+    element: <IndicatorsAdmin />,
+  },
+  {
     name: 'Usuarios',
     path: '/admin/users',
     permission_required: 'view_user',
@@ -279,14 +287,7 @@ const menu = [
     permission_required: "view_configuration",
     element: <SolicityDetail />,
   },
-  {
-    name: "Indicadores",
-    path: "/admin/dashboard",
-    visible: true,
-    icon: <BiPieChart size={25} className="text-slate-500" />,
-    permission_required: "view_solicity",
-    element: <IndicatorsAdmin/>,
-  },
+
 ];
 
 export default menu;

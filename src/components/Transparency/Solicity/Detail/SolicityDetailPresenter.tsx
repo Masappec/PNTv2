@@ -55,7 +55,7 @@ const SolicityDetailPresenter = (props: Props) => {
               className="mt-2 text-base font-semibold"
             />
 
-            <p>
+            <p className="mt-2">
               {props.data.number_saip}
             </p>
           </div>
@@ -66,9 +66,11 @@ const SolicityDetailPresenter = (props: Props) => {
               value="Nombre Entidad"
               className="mt-2 text-base font-semibold"
             />
+            <p className="mt-2">
 
-            {props.entitySelected ? props.entitySelected.name
-              : ""}
+              {props.entitySelected ? props.entitySelected.name
+                : ""}
+            </p>
 
           </div>
           <div className="flex flex-col-2 ml-2 gap-12">
@@ -78,7 +80,10 @@ const SolicityDetailPresenter = (props: Props) => {
                 value="No. RUC entidad"
                 className="mt-2 text-base font-semibold"
               />
-              {props.entitySelected.identification}
+              <p className="mt-2">
+
+                {props.entitySelected.identification}
+              </p>
 
             </div>
             <div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-3">
@@ -98,8 +103,10 @@ const SolicityDetailPresenter = (props: Props) => {
               value="Ciudad"
               className="mt-2 text-base font-semibold"
             />
+            <p className="mt-2">
 
-            {props.data.city}
+              {props.data.city}
+            </p>
           </div>
 
           <div
@@ -115,7 +122,10 @@ const SolicityDetailPresenter = (props: Props) => {
                 value="Nombre"
                 className="mt-2 text-base font-semibold"
               />
-              {props.data.first_name}
+              <p className="mt-2">
+
+                {props.data.first_name}
+              </p>
             </div>
 
             <div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-32 ">
@@ -124,7 +134,11 @@ const SolicityDetailPresenter = (props: Props) => {
                 value="Apellido"
                 className="mt-2 text-base font-semibold"
               />
-              {props.data.last_name}
+              <p className="mt-2">
+
+                {props.data.last_name}
+
+              </p>
 
             </div>
             <div className=" flex  flex-col-2 m-2 h-[44px] mt-5 gap-12">
@@ -133,7 +147,10 @@ const SolicityDetailPresenter = (props: Props) => {
                 value="Correo Electrónico"
                 className="mt-2 text-base font-semibold"
               />
-              {props.data.email}
+              <p className="mt-2">
+
+                {props.data.email}
+              </p>
             </div>
 
             <div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-12">
@@ -142,7 +159,11 @@ const SolicityDetailPresenter = (props: Props) => {
                 value="Teléfono Contacto"
                 className="mt-2 text-base font-semibold"
               />
-              {props.data.phone}
+              <p className="mt-2">
+
+                {props.data.phone}
+              </p>
+
             </div>
 
             <div className=" flex  flex-col-2 m-2 h-[50px]  mt-5 gap-32">

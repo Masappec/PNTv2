@@ -94,7 +94,12 @@ const SolicityListPresenter = (props: Props) => {
                         {
                             title: "No. SAIP",
                             render: (solicity) => (
-                                <p> {solicity.number_saip}</p>
+                                <p>
+                                    <a href="#" className="text-blue-500" onClick={() => props.onDetail()}>
+                                        {solicity.number_saip}
+                                    </a>
+                                </p>
+
                             )
                         },
                         {
@@ -103,7 +108,11 @@ const SolicityListPresenter = (props: Props) => {
                                 <p
                                     onClick={() => props.onEdit(solicity)}
 
-                                > {solicity.first_name} {solicity.last_name}</p>
+                                >
+                                    <a href="#" className="text-blue-500" onClick={() => props.onDetail()}>
+                                        {solicity.first_name} {solicity.last_name}
+                                    </a>
+                                </p>
                             )
                         },
                         {
@@ -241,8 +250,8 @@ const SolicityListPresenter = (props: Props) => {
 
 
                 />
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 

@@ -36,6 +36,9 @@ const handleLoade = () => {
 
 const handleLoadeAdmin = (permissions: string) => {
   const user = SessionService.getUserData();
+  if (permissions == '') {
+    return null;
+  }
   if (
     !user.user_permissions?.map((item) => item.codename).includes(permissions)
   ) {
