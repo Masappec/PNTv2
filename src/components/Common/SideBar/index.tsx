@@ -3,6 +3,7 @@ import { MenuItem } from "../../../utils/menu";
 import { Sidebar } from "flowbite-react";
 import React from "react";
 import { LuLogOut } from "react-icons/lu";
+import { FaUserCircle } from "react-icons/fa";
 
 interface Props {
 	menu: MenuItem[]
@@ -59,7 +60,7 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 					<div className="flex items-col">
 
 						<div className="flex flex-row">
-							<img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" alt="avatar" className="w-8 h-8 rounded-full" />
+							<FaUserCircle size={38} className="text-slate-500" />
 							<div className="flex-col flex ml-2">
 								<span className="text-sm font-medium text-slate-700">
 									{user && user.length > 15 ? user.split(" ")[0] + "..." : user}
