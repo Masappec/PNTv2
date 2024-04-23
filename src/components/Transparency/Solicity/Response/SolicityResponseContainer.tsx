@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { OnChangeValue } from "react-select";
 import { ColourOption, Row } from "../../../../utils/interface";
@@ -42,7 +42,6 @@ const SolicityResponseContainer = (props: Props) => {
     })
 
     const location = useLocation()
-    const responseRef = useRef<HTMLTextAreaElement>();
 
     const state = location.state as { data: Solicity }
     const [solicityToResponse, setSolicityToResponse] = useState<Solicity>({} as Solicity)
@@ -97,11 +96,6 @@ const SolicityResponseContainer = (props: Props) => {
 
     useEffect(() => {
 
-        responseRef.current?.focus()
-
-    }, [])
-
-    useEffect(() => {
         if (state) {
 
             const _user = SessionService.getUserData()
@@ -290,16 +284,23 @@ const SolicityResponseContainer = (props: Props) => {
     const onAddDataSet = (type: "table" | "file" | "url") => {
         if (type === "file") {
             const copyFiles = [...files]
-            copyFiles.push({
-                file: null,
-                type: type,
-                error: "",
-                loading: false,
-                success: "",
-                file_solicity: null,
-                percent: 0
-            })
-            SetFiles(copyFiles)
+            if (files.length < 3) {
+                copyFiles.push({
+                    file: null,
+                    type: type,
+                    error: "",
+                    loading: false,
+                    success: "",
+                    file_solicity: null,
+                    percent: 0
+                })
+                SetFiles(copyFiles)
+            } else {
+                setError("Solo se permiten 3 archivos")
+                setTimeout(() => {
+                    setError("")
+                }, 3000)
+            }
         }
 
         if (type === "url") {
@@ -432,7 +433,9 @@ const SolicityResponseContainer = (props: Props) => {
             SetFiles(copyFiles)
         } else {
             const copyFiles = [...attachs]
+
             copyFiles.splice(index, 1)
+
             SetAttachs(copyFiles)
         }
     }
@@ -491,7 +494,6 @@ const SolicityResponseContainer = (props: Props) => {
                 userSession={userSession}
                 isAvaliableToResponse={props.usecase.availableToResponse(userSession, solicityToResponse)}
                 isLoadingSend={loading}
-                responseRef={responseRef}
                 attachs={attachs}
             />
         </SolicityDetailContainer >

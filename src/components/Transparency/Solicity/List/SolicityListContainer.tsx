@@ -23,7 +23,7 @@ const SolicityListContainer = (props: Props) => {
     const [from, setFrom] = useState<number>(0)
     const [to, setTo] = useState<number>(0)
     const [total, setTotal] = useState<number>(0)
-
+    const [limitOptions,] = useState<number[]>([5, 10, 20, 40, 50])
 
     useEffect(() => {
         props.useCase.getSolicities("", currentPage).then(response => {
@@ -91,13 +91,39 @@ const SolicityListContainer = (props: Props) => {
         })
     }
 
+    const onSearch = (search: string) => {
+        props.useCase.getSolicities(search, currentPage).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
 
+    const onChangeLimit = (limit: number) => {
+        props.useCase.getSolicities("", currentPage, limit).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
 
     return (
         <SolicityListPresenter
 
             error={error}
             data={solicitudes}
+            limits={limitOptions}
+            onChangesLimit={onChangeLimit}
 
             onAdd={handleAdd}
             onCancelDelete={handleCancelDelete}
@@ -109,7 +135,7 @@ const SolicityListContainer = (props: Props) => {
             onDetail={handleDetail}
             onFilter={() => { }}
             onImport={() => { }}
-            onSearch={() => { }}
+            onSearch={onSearch}
             page={currentPage}
             search=""
 

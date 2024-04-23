@@ -10,8 +10,8 @@ class SolicityService {
     this.api = api;
   }
 
-  async getSolicities(search?: string, page?: number) {
-    const response = await this.api.getSolicity(search, page);
+  async getSolicities(search?: string, page?: number, limit?: number) {
+    const response = await this.api.getSolicity(search, page, limit);
     return {
       ...response,
       results:
@@ -21,8 +21,8 @@ class SolicityService {
     };
   }
 
-  async getEstablishmentSolicity(search?: string, page?: number) {
-    const response = await this.api.getEstablishmentSolicity(search, page);
+  async getEstablishmentSolicity(search?: string, page?: number, limit?: number, sort?: string[]) {
+    const response = await this.api.getEstablishmentSolicity(search, page, limit, sort);
     return {
       ...response,
       results:

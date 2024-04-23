@@ -1,8 +1,10 @@
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import HeaderTable from "./header";
 
 import { Pagination, Table as TableFlowbite } from "flowbite-react";
 interface Column<T> {
     title: string
+    key?: string
     render: (data: T, index: number) => React.ReactNode,
     width?: number
 }
@@ -28,9 +30,14 @@ interface TableProps<T> {
     to?: number;
     total?: number;
     show: boolean;
+    limits?: number[];
+    onChangesLimit?: (limit: number) => void;
+    sorteable?: boolean;
+    onSort?: (sort: string) => void;
+    columns_sort?: string[];
 }
 
-function Table<T>(props: TableProps<T>) {
+function Table<T>({ ...props }: TableProps<T>) {
 
     return (
         <div className="w-full">
@@ -43,6 +50,8 @@ function Table<T>(props: TableProps<T>) {
                     key={props.title}
                     onImport={props.onImport}
                     onSearch={props.onSearch}
+                    limits={props.limits}
+                    onChangesLimit={props.onChangesLimit}
                 />
             }
             <div className="overflow-x-auto">
@@ -53,10 +62,25 @@ function Table<T>(props: TableProps<T>) {
                             props.columns.map(column => (
 
                                 <TableFlowbite.HeadCell
-                                    key={column.title} className={`px-4 py-3 `}
+                                    key={column.title} className={`px-4 py-3 ${props.sorteable ? 'cursor-pointer' : ''}`}
+                                    onClick={() => props.onSort && props.onSort(column.key || "")}
+
 
                                 >
-                                    {column.title}
+                                    <div className="flex items-center">
+                                        <span className="mr-2">
+                                            {column.title}
+                                        </span>
+                                        {
+                                            props.sorteable ?
+                                                props.columns_sort &&
+                                                    props.columns_sort.includes(column.key || "") ?
+                                                    <FaChevronDown /> : <FaChevronUp />
+                                                : null
+                                        }
+                                    </div>
+
+
                                 </TableFlowbite.HeadCell>
                             ))
                         }

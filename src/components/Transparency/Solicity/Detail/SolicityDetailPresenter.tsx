@@ -93,7 +93,7 @@ const SolicityDetailPresenter = (props: Props) => {
                 className="mt-2 text-base font-semibold"
               />
               <p className="mt-3">
-                {props.solicitySaved.date}
+                {new Date(props.solicitySaved.date).toLocaleString()}
               </p>
             </div>
           </div>

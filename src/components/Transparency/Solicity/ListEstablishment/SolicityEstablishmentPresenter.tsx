@@ -36,6 +36,10 @@ interface Props {
     to: number
     total: number
     totalPage: number
+    limits: number[]
+    onChangesLimit: (limit: number) => void
+    onChangeSort: (sort: string) => void
+    columnsSort: string[]
 }
 
 const SolicityListEstablishmentPresenter = (props: Props) => {
@@ -69,17 +73,24 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
             </div>
             <Table<Solicity>
                 show={true}
+                limits={props.limits}
+                sorteable={true}
+                columns_sort={props.columnsSort}
+                onSort={props.onChangeSort}
+                onChangesLimit={props.onChangesLimit}
                 columns={[
                     {
                         title: "#",
+                        key: "index",
                         render: (solicity, index) => (
-                            <p
+                            <a className="text-blue-500 hover:underline cursor-pointer"
                                 onClick={() => props.onResponse(solicity)}
-                            >{index + 1}</p>
+                            >{index + 1}</a>
                         )
                     },
                     {
                         title: "Entidad",
+                        key: "estblishment_name",
                         render: (solicity) => (
                             <p className="text-sm font-semibold flex-nowrap col-span-10">
                                 {
@@ -92,21 +103,27 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                     },
                     {
                         title: "No. SAIP",
+                        key: "number_saip",
                         render: (solicity) => (
-                            <p> {solicity.number_saip}</p>
+                            <a onClick={() => props.onResponse(solicity)} className="text-blue-500
+                            hover:underline cursor-pointer">
+                                {solicity.number_saip}
+                            </a>
                         )
                     },
                     {
                         title: "Solicitante",
+                        key: "first_name",
                         render: (solicity) => (
-                            <p
+                            <a className="text-blue-500 hover:underline cursor-pointer"
                                 onClick={() => props.onResponse(solicity)}
 
-                            > {solicity.first_name} {solicity.last_name}</p>
+                            > {solicity.first_name} {solicity.last_name}</a>
                         )
                     },
                     {
                         title: "Fecha de recepción",
+                        key: "date",
                         render: (solicity) => (
                             <p>{
                                 solicity.date ? new Date(solicity.date).toLocaleString() : ""
@@ -116,6 +133,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
                     {
                         title: "Días transcurridos",
+                        key: "date",
                         render: (solicity) => (
                             <p>{
                                 solicity.date ? Math.floor((new Date().getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) : ""
@@ -125,8 +143,8 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
                     {
                         title: "Estado",
+                        key: "status",
                         render: (solicity) => {
-                            console.log(solicity)
                             const status = StatusSolicity[solicity.status as keyof typeof StatusSolicity]
                             const bg = status?.bg || "info"
                             return (
@@ -141,6 +159,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                     },
                     {
                         title: 'Fecha respuesta SAIP',
+                        key: 'date',
                         render: (solicity) => {
 
                             const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE)
@@ -151,6 +170,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                     },
                     {
                         title: "Fecha insistencia",
+                        key: "date",
                         render: (solicity) => {
                             const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
                             return <p>{
@@ -160,6 +180,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                     },
                     {
                         title: "Fecha R. Insistencia",
+                        key: "date",
                         render: (solicity) => {
                             const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE_INSISTENCY)
                             return <p>{
@@ -169,6 +190,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                     },
                     {
                         title: "Fecha gestión oficiosa",
+                        key: "date",
                         render: (solicity) => {
                             const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
                             return <p>{
@@ -189,6 +211,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                     },
                     {
                         title: 'Gestión oficiosa',
+                        key: 'date',
                         render: (solicity) => {
                             const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
                             const status = StatusStageSolicity[element?.status as keyof typeof StatusStageSolicity]

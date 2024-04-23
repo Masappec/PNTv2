@@ -6,11 +6,11 @@ import UserEntity from "../../entities/UserEntity";
 
 class SolicityUseCase {
   constructor(private readonly solicityService: SolicityService) { }
-  async getSolicities(search: string, page: number) {
-    return await this.solicityService.getSolicities(search, page);
+  async getSolicities(search: string, page: number, limit?: number) {
+    return await this.solicityService.getSolicities(search, page, limit);
   }
-  async getEstablishmentSolicity(search: string, page: number) {
-    return await this.solicityService.getEstablishmentSolicity(search, page);
+  async getEstablishmentSolicity(search: string, page: number, limit?: number, sort?: string[]) {
+    return await this.solicityService.getEstablishmentSolicity(search, page, limit, sort);
   }
   async createDraft(data: CreateSolicity) {
     return await this.solicityService.createDraftSolicity(data);

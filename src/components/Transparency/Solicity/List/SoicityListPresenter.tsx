@@ -35,7 +35,9 @@ interface Props {
     from: number
     to: number
     total: number
-    totalPage: number
+    totalPage: number;
+    limits: number[]
+    onChangesLimit: (limit: number) => void
 }
 
 const SolicityListPresenter = (props: Props) => {
@@ -70,13 +72,16 @@ const SolicityListPresenter = (props: Props) => {
             <div className="flex justify-between items-center mt-5">
                 <Table
                     show={true}
+                    limits={props.limits}
+                    onChangesLimit={props.onChangesLimit}
                     columns={[
                         {
                             title: "#",
                             render: (solicity, index) => (
-                                <p
+                                <a
+                                    className="text-blue-500 hover:courser-pointer hover:underline"
                                     onClick={() => props.onEdit(solicity)}
-                                >{index + 1}</p>
+                                >{index + 1}</a>
                             )
                         },
                         {
@@ -94,11 +99,10 @@ const SolicityListPresenter = (props: Props) => {
                         {
                             title: "No. SAIP",
                             render: (solicity) => (
-                                <p>
-                                    <a href="#" className="text-blue-500" onClick={() => props.onDetail()}>
-                                        {solicity.number_saip}
-                                    </a>
-                                </p>
+                                <a href="#" className="text-blue-500 hover:courser-pointer hover:underline"
+                                    onClick={() => props.onEdit(solicity)}>
+                                    {solicity.number_saip}
+                                </a>
 
                             )
                         },
@@ -109,7 +113,8 @@ const SolicityListPresenter = (props: Props) => {
                                     onClick={() => props.onEdit(solicity)}
 
                                 >
-                                    <a href="#" className="text-blue-500" onClick={() => props.onDetail()}>
+                                    <a href="#" className="text-blue-500 hover:courser-pointer hover:underline"
+                                        onClick={() => props.onDetail()}>
                                         {solicity.first_name} {solicity.last_name}
                                     </a>
                                 </p>
@@ -119,7 +124,7 @@ const SolicityListPresenter = (props: Props) => {
                             title: "Fecha de recepción",
                             render: (solicity) => (
                                 <p>{
-                                    solicity.date ? new Date(solicity.date).toLocaleDateString() : ""
+                                    solicity.date ? new Date(solicity.date).toLocaleString() : ""
                                 }</p>
                             )
                         },
@@ -155,7 +160,7 @@ const SolicityListPresenter = (props: Props) => {
 
                                 const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
                             }
                         },
@@ -164,7 +169,7 @@ const SolicityListPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
                             }
                         },
@@ -173,7 +178,7 @@ const SolicityListPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE_INSISTENCY)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
                             }
                         },
@@ -182,7 +187,7 @@ const SolicityListPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
                             }
                         },

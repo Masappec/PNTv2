@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useRef } from "react";
 import { Alert, Button, Tabs, Textarea } from 'flowbite-react';
 import { Label } from 'flowbite-react';
 import { HiInformationCircle } from "react-icons/hi";
@@ -54,7 +54,6 @@ interface Props {
         entity: AttachmentEntity | null
     }[]
 
-    responseRef: React.MutableRefObject<HTMLTextAreaElement | undefined>
     onSaveDateUrl: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void;
     onAddDataSet: (type: "table" | "file" | "url") => void;
     onDownloadFile: (file: File) => void;
@@ -86,7 +85,16 @@ interface Props {
  */
 const SolicityResponsePresenter = (props: Props) => {
 
+    const responseRef = useRef<HTMLTextAreaElement>();
 
+    useEffect(() => {
+        if (props.isAvaliableToResponse) {
+            //scroll to response
+
+            responseRef.current?.scrollIntoView({ behavior: "smooth" });
+            responseRef.current?.focus();
+        }
+    }, [props.isAvaliableToResponse])
 
     return (
 
@@ -192,8 +200,9 @@ const SolicityResponsePresenter = (props: Props) => {
                                 <Label
                                     htmlFor=""
                                     value={
-                                        (props.userSession.id || 0) == props.solicitySaved.userCreated ? "Tu Respuesta" :
-                                            "Respuesta de la Entidad"}
+                                        (props.userSession.id || 0) == props.solicitySaved.userCreated ?
+                                            "Solicitar explicación. Si necesitas consultar alguna aclaración sobre la respuesta recibida, ingresarla a continuación" :
+                                            "Escriba a continuación la respuesta para esta solicitud"}
                                     className="text-xl font-bold "
                                 />
                                 <Textarea
@@ -202,7 +211,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                     name="description"
                                     id="description"
                                     onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
-                                    ref={props.responseRef as React.RefObject<HTMLTextAreaElement>}
+                                    ref={responseRef as React.RefObject<HTMLTextAreaElement>}
                                 ></Textarea>
                             </div>
 
@@ -280,6 +289,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                                                 loading={file.loading}
                                                                 percent={file.percent}
                                                                 key={index}
+                                                                onCancel={() => props.onRemoveFileFromSolicity(index, "file")}
                                                             />
 
                                                         </div>
@@ -332,6 +342,13 @@ const SolicityResponsePresenter = (props: Props) => {
                             </Tabs>
                         </>
                     }
+                    <div className="flex flex-col m-2">
+                        {
+                            props.error && <Alert color="failure" icon={HiInformationCircle}>
+                                <span className="font-medium">Error!</span> {props.error}
+                            </Alert>
+                        }
+                    </div>
                     <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-24 ">
                         <Button
                             type="button"

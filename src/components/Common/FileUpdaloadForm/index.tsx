@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 interface FileUploadFormProps {
 
     onSave: (file: File, name: string, description: string) => void;
+    onCancel: () => void;
     percent: number;
     isSaved: boolean;
     loading: boolean;
@@ -95,6 +96,7 @@ const FileUploadForm = (props: FileUploadFormProps) => {
                         <Button
                             className='my-5 w-1/6'
                             color='red'
+                            onClick={props.onCancel}
                         >
                             Cancelar
                         </Button>

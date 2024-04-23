@@ -10,11 +10,11 @@ class SolicityApi {
   constructor(api: AxiosInstance) {
     this.api = api;
   }
-  async getSolicity(search?: string, page?: number) {
+  async getSolicity(search?: string, page?: number, limit?: number) {
     try {
       const response = await this.api.get<Pagination<SolicityResponseDto>>(
         TRANSPARENCY_PATH + "/solicity/list",
-        { params: { search, page } }
+        { params: { search, page, limit } }
       );
       return response.data;
     } catch (error) {
@@ -28,14 +28,16 @@ class SolicityApi {
     }
   }
 
-  async getEstablishmentSolicity(search?: string, page?: number) {
+  async getEstablishmentSolicity(search?: string, page?: number, limit?: number, sort?: string[]) {
     try {
       const response = await this.api.get<Pagination<SolicityResponseDto>>(
         TRANSPARENCY_PATH + `/solicity_response/list`,
         {
           params: {
             search: search ? search : null,
-            page: page ? page : null
+            page: page ? page : null,
+            limit: limit ? limit : null,
+            sort: sort ? sort : null
 
           }
         }

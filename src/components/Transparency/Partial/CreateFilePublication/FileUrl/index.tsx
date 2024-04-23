@@ -1,5 +1,5 @@
 import { Button, Label, Spinner, Textarea } from "flowbite-react"
-import { FaCheckCircle, FaDownload, FaFileCsv, FaTrashAlt } from "react-icons/fa"
+import { FaDownload, FaFileCsv } from "react-icons/fa"
 import Input from "../../../../Common/Input"
 import { useState } from "react"
 
@@ -23,16 +23,6 @@ const FileUrlPartial = (props: IFileUrlPartial) => {
     const [description, setDescription] = useState<string>("")
     return (
         <div className="flex flex-col m-2">
-            {!props.isSaved &&
-                <div className="flex items-center justify-between">
-                    <Button className="w-1/12 text-sm tracking-wide" color="green" onClick={() => props.onSaveFile(props.file, name, description, props.index)}>
-                        <FaCheckCircle className="w-5 h-5 text-green" />
-                    </Button>
-                    <Button className="w-1/12 text-sm tracking-wide" color="red" onClick={() => props.onRemoveFile(props.index)} >
-                        <FaTrashAlt className="w-5 h-5 text-red-600" />
-                    </Button>
-                </div>
-            }
 
             <Input type={"text"}
                 placeholder="Nombre"
@@ -93,6 +83,30 @@ const FileUrlPartial = (props: IFileUrlPartial) => {
                 )
             }
             <hr className="my-2" />
+            {!props.isSaved &&
+
+                <div className='flex flex-row justify-between'>
+
+
+                    <Button
+                        className='my-5 w-1/6'
+                        color='red'
+                        onClick={() => props.onRemoveFile(props.index)}
+
+                    >
+                        Cancelar
+                    </Button>
+                    <Button
+                        className='my-5 w-1/6'
+
+                        onClick={() => props.onSaveFile(props.file, name, description, props.index)}
+
+                    >
+                        Cargar
+                    </Button>
+                </div>
+            }
+
         </div>
     )
 }
