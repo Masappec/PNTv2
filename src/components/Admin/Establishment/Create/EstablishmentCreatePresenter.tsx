@@ -7,6 +7,7 @@ import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
 import { Button } from 'flowbite-react';
 import Select from "../../../Common/Select";
+import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface";
 
 
 
@@ -21,6 +22,7 @@ interface Props {
     success: string;
     setError: (e: string) => void;
     setSuccess: (e: string) => void;
+    options: OptionsSelectCreate;
 }
 
 const EstablishmentCreatePresenter = (props: Props) => {
@@ -127,9 +129,11 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.type_organization || ""}
                                     onChange={(e) => props.setData(e)}
                                     options={[
-                                        { value: "Pública", label: "Pública" },
-                                        { value: "Privada", label: "Privada" },
-                                        { value: "Mixta", label: "Mixta" }
+                                        { value: "", label: "Seleccione una opción" },
+                                        ...props.options.institutions.map((institution) => ({
+                                            value: institution.id + "",
+                                            label: institution.name
+                                        }))
                                     ]}
                                 />
                             </div>
@@ -140,9 +144,12 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.function_organization || ""}
                                     onChange={(e) => props.setData(e)}
                                     options={[
-                                        { value: "Pública", label: "Pública" },
-                                        { value: "Privada", label: "Privada" },
-                                        { value: "Mixta", label: "Mixta" }
+
+                                        { value: "", label: "Seleccione una opción" },
+                                        ...props.options.functions.map((func) => ({
+                                            value: func.id + "",
+                                            label: func.name
+                                        }))
                                     ]}
                                 />
                             </div>
@@ -153,9 +160,11 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.type_organization || ""}
                                     onChange={(e) => props.setData(e)}
                                     options={[
-                                        { value: "Pública", label: "Pública" },
-                                        { value: "Privada", label: "Privada" },
-                                        { value: "Mixta", label: "Mixta" }
+                                        { value: "", label: "Seleccione una opción" },
+                                        ...props.options.organizations.map((type) => ({
+                                            value: type.id + "",
+                                            label: type.name
+                                        }))
                                     ]}
                                 />
                             </div>
