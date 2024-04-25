@@ -37,7 +37,7 @@ const LandingPresenter = (props: Props) => {
   return (
     <div className="flex flex-col w-full  bg-white lg:pr-10">
       <div></div>
-      <div className="border-l-2 border-gray-800 ml-8 md:ml-14">
+      <div className="border-l-2 border-gray-500 ml-8 md:ml-14">
         <Hero
           countEntities={props.countEntities}
           countFiles={props.countFiles}

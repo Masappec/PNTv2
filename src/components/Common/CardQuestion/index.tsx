@@ -27,7 +27,7 @@ const CardQuestion = (props: Props) => {
         }}
         >
 
-            <Icon size={100} className={` dark:text-primary-400 h-full ml-4 `}  style={{
+            <Icon size={50} className={` dark:text-primary-400 h-full ml-4 `}  style={{
                 color:"#FFF9FC"
                 
             

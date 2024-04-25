@@ -76,7 +76,7 @@ const FooterInfo = () => {
             <span className="text-slate-500 xl:whitespace-nowrap whitespace-break-spaces
             text-center
             ">
-              Plataforma Nacional de Transparencia  {"\n"}&copy; Todos los derechos reservados
+              Portal Nacional de Transparencia 2024  {"\n"}&copy; 
             </span>
           </div>
           <div className="flex flex-col xl:flex-row xl:space-x-20 xl:whitespace-nowrap 
