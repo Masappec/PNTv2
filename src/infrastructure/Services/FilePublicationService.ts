@@ -116,11 +116,14 @@ class FilePublicationService {
     }
 
 
-    async getFilesPublications(type: "TA" | "TC" | "TF") {
+    async getFilesPublications(type: "TA" | "TC" | "TF", page?: number, limit?: number, search?: string) {
+        const response = await this.api.getFilesPublications(type, page, limit, search);
 
-        const response = await this.api.getFilesPublications(type);
+        return {
+            ...response,
+            results: response.results?.map((file) => FilePublicationMapper.fromApiToDomain(file)) || [],
 
-        return response.map((item) => FilePublicationMapper.fromApiToDomain(item));
+        }
     }
 }
 
