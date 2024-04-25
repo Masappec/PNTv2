@@ -6,19 +6,24 @@ import Dropzone from "../../../Common/Dropzone";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
 
+import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface";
+import Select from "../../../Common/Select";
+
 
 
 interface Props {
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
     onCancel: () => void;
     data: EstablishmentEntity;
-    setData: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    setData: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
     onChageLogo: (e: React.ChangeEvent<HTMLInputElement>) => void;
     loading: boolean;
     error: string;
     success: string;
     setError: (e: string) => void;
     setSuccess: (e: string) => void;
+    options: OptionsSelectCreate;
+
 }
 
 const EstablishmentEditPresenter = (props: Props) => {
@@ -109,7 +114,52 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>
+                            <div className="flex  flex-col m-2">
+                                <Select
+                                    placeholder="Tipo de institución"
+                                    name="type_organization"
+                                    value={props.data.type_organization || ""}
+                                    onChange={(e) => props.setData(e)}
+                                    options={[
+                                        { value: "", label: "Seleccione una opción" },
+                                        ...props.options.institutions.map((institution) => ({
+                                            value: institution.id + "",
+                                            label: institution.name
+                                        }))
+                                    ]}
+                                />
+                            </div>
+                            <div className="flex  flex-col m-2">
+                                <Select
+                                    placeholder="Función de la institución"
+                                    name="function_organization"
+                                    value={props.data.function_organization || ""}
+                                    onChange={(e) => props.setData(e)}
+                                    options={[
 
+                                        { value: "", label: "Seleccione una opción" },
+                                        ...props.options.functions.map((func) => ({
+                                            value: func.id + "",
+                                            label: func.name
+                                        }))
+                                    ]}
+                                />
+                            </div>
+                            <div className="flex  flex-col m-2">
+                                <Select
+                                    placeholder="Tipo de organización"
+                                    name="type_organization"
+                                    value={props.data.type_organization || ""}
+                                    onChange={(e) => props.setData(e)}
+                                    options={[
+                                        { value: "", label: "Seleccione una opción" },
+                                        ...props.options.organizations.map((type) => ({
+                                            value: type.id + "",
+                                            label: type.name
+                                        }))
+                                    ]}
+                                />
+                            </div>
                             <div className="flex  flex-col m-2">
                                 <Dropzone
                                     handleChageLogo={props.onChageLogo}
