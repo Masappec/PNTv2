@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance, AxiosProgressEvent } from "axios";
 import { FilePublicationRequest, FilePublicationResponse } from "./interface";
-import { TRANSPARENCY_PATH } from "..";
+import { Pagination, TRANSPARENCY_PATH } from "..";
 
 
 /**
@@ -66,9 +66,17 @@ export class FilePublicationApi {
      * @param {number} id - id de la publicacion
      * @returns {FilePublicationResponse} publicacion
      */
-    async getFilesPublications(): Promise<FilePublicationResponse> {
+    async getFilesPublications(type: "TA" | "TC" | "TF"): Promise<Pagination<
+        FilePublicationResponse>> {
         try {
-            const response = await this._api.get<FilePublicationResponse>(`${TRANSPARENCY_PATH}/publication/file/list`);
+            const response = await this._api.get<Pagination<FilePublicationResponse>>(`${TRANSPARENCY_PATH}/publications/file/list`, {
+                params: {
+                    type: type
+
+                }
+
+
+            });
 
             return response.data;
         } catch (error) {

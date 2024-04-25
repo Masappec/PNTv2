@@ -8,7 +8,7 @@ import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
 import FilePublicationUseCase from "../../../../domain/useCases/FilePublicationUseCase/FilePublicationUseCase";
 import { AttachmentEntity, FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
 import AttachmentUseCase from "../../../../domain/useCases/AttachmentUseCase/AttachmentUseCase";
-import { Solicity } from "../../../../domain/entities/Solicity";
+import { Solicity, TimeLinePresenter } from "../../../../domain/entities/Solicity";
 import ResponseSolicity from "../../../../domain/entities/ResponseSolicity";
 import { TagEntity } from "../../../../domain/entities/TagEntity";
 import CreateSolicity from "../../../../domain/entities/CreateSolicity";
@@ -73,6 +73,9 @@ const SolicityResponseContainer = (props: Props) => {
     const [entity, setEntity] = useState<EstablishmentEntity>({} as EstablishmentEntity)
     const [userSession, setUserSession] = useState<UserEntity>({} as UserEntity)
     const [isSaved, setIsSaved] = useState<boolean>(false)
+    const [isAvaliableToInsistency, setIsAvaliableToInsistency] = useState<boolean>(false)
+    const [isAvaliableToResponse, setIsAvaliableToResponse] = useState<boolean>(false)
+    const [isAvaliableToComment, setIsAvaliableToComment] = useState<boolean>(false)
     const [files, SetFiles] = useState<{
         file: File | string | null,
         type: "table" | "file" | "url",
@@ -82,6 +85,8 @@ const SolicityResponseContainer = (props: Props) => {
         percent: number,
         file_solicity: FilePublicationEntity | null
     }[]>([])
+
+    const [timeline, setTimeline] = useState<TimeLinePresenter[]>([])
 
     const [attachs, SetAttachs] = useState<{
         data: AttachmentEntity,
@@ -105,6 +110,7 @@ const SolicityResponseContainer = (props: Props) => {
             if (is_Est) {
                 props.usecase.getSolicityBiIdEstablishment(parseInt(state?.data?.id + "" || "0")).then((res) => {
                     setSolicityToResponse(res)
+                    setTimeline(Solicity.ordernReponse(res))
                     const data_ = {
                         number_saip: res.number_saip,
                         city: res.city,
@@ -122,13 +128,15 @@ const SolicityResponseContainer = (props: Props) => {
                     }
                     getSelectedEntity(res.establishment)
                     setData(data_)
-
+                    setIsAvaliableToResponse(props.usecase.availableToResponse(_user, res))
+                    setIsAvaliableToComment(props.usecase.availabletoComment(_user, res))
                     getSelectedEntity(res.establishment)
                 })
 
             } else {
                 props.usecase.getSolicityById(parseInt(state?.data?.id + "" || "0")).then((res) => {
-                    console.log(res)
+                    setTimeline(Solicity.ordernReponse(res))
+
                     const data_ = {
                         number_saip: res.number_saip,
                         city: res.city,
@@ -147,6 +155,10 @@ const SolicityResponseContainer = (props: Props) => {
                     setData(data_)
                     setSolicityToResponse(res)
                     getSelectedEntity(res.establishment)
+                    setIsAvaliableToComment(props.usecase.availabletoComment(_user, res))
+
+                    setIsAvaliableToInsistency(props.usecase.availableToInsistency(_user, res))
+
                 }).catch((e) => {
                     console.log(e + "error")
                     const user = SessionService.getUserData()
@@ -418,7 +430,6 @@ const SolicityResponseContainer = (props: Props) => {
             //toast.success("Solicitud enviada correctamente")
         }).catch((err) => {
             setError(err.message)
-            toast.error(err.message)
             setLoading(false)
             setIsSaved(false)
         })
@@ -492,9 +503,12 @@ const SolicityResponseContainer = (props: Props) => {
                 getSelectedItems={getSelectedItem}
                 onDownloadFromUrl={onDownloadFromUrl}
                 userSession={userSession}
-                isAvaliableToResponse={props.usecase.availableToResponse(userSession, solicityToResponse)}
+                isAvaliableToResponse={isAvaliableToResponse}
                 isLoadingSend={loading}
                 attachs={attachs}
+                isAvaliableToInsistency={isAvaliableToInsistency}
+                timeline={timeline}
+                isAvaliableToComment={isAvaliableToComment}
             />
         </SolicityDetailContainer >
         </>

@@ -9,7 +9,7 @@ import { FaFile, FaLink, FaPlusCircle, FaTrash } from "react-icons/fa";
 import { ColourOption, Row } from "../../../../utils/interface";
 import FileUrlPartial from "../../Partial/CreateFilePublication/FileUrl";
 import { AttachmentEntity, FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
-import { Solicity } from "../../../../domain/entities/Solicity";
+import { Solicity, TimeLinePresenter } from "../../../../domain/entities/Solicity";
 import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { FaDownload } from "react-icons/fa6";
@@ -76,7 +76,10 @@ interface Props {
     onDownloadFromUrl: (url: string, name: string) => void;
     userSession: UserEntity;
     isAvaliableToResponse: boolean;
+    isAvaliableToInsistency: boolean;
+    isAvaliableToComment: boolean;
     isLoadingSend: boolean
+    timeline: TimeLinePresenter[];
 }
 /**
  * 
@@ -115,36 +118,19 @@ const SolicityResponsePresenter = (props: Props) => {
                         }
 
                         {
-                            props.solicitySaved.responses?.length === 0 && <Alert color="warning" icon={HiInformationCircle}>
-                                <span className="font-medium">Aviso!</span> Entidad todavía no responde a esta solicitud
-                            </Alert>
+                            props.solicitySaved.responses?.length === 0 &&
+
+                                props.userSession.id === props.solicitySaved.userCreated ?
+                                <Alert color="warning" icon={HiInformationCircle}>
+                                    <span className="font-medium">Aviso!</span> Entidad todavía no responde a esta solicitud
+                                </Alert> : null
                         }
 
                         {
-                            props.solicitySaved.responses?.map((response, index) => {
+                            props.timeline.map((response, index) => {
                                 return (
                                     <>
-                                        <div className="flex flex-row m-2" key={index}>
 
-                                            {
-                                                response.files.map((file, index) => {
-                                                    return (
-                                                        <div
-                                                            key={index}
-                                                            className="flex flex-col m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
-                                                            <FaFile className=" text-primary-600" size={30} />
-                                                            <span className=" text-gray-500 dark:text-gray-300">
-                                                                {file.name || file.description}
-                                                            </span>
-                                                            <span className=" text-gray-500 text-sm dark:text-gray-300">
-                                                                <FaDownload className=" text-primary-600" size={15} onClick={() => props.onDownloadFromUrl(file.url_download as string, file.name)} />
-                                                            </span>
-                                                        </div>
-                                                    )
-
-                                                })
-                                            }
-                                        </div>
                                         <div className="flex flex-row m-2">
                                             {
                                                 response.attachments.map((file, index) => {
@@ -166,24 +152,44 @@ const SolicityResponsePresenter = (props: Props) => {
                                         <div className=" grid grid-cols gap-4 w-auto mt-16">
                                             <Label
                                                 htmlFor=""
-                                                value={`${response.user.id == props.userSession.id &&
-                                                    props.userSession.group?.find(x => x.name === "Ciudadano")
-
-                                                    ? "Tu Respuesta" :
-                                                    "Respuesta de la Entidad"
+                                                value={`${response.user_id == props.userSession.id ?
+                                                    "Tu Respuesta" :
+                                                    response.title
 
                                                     }`}
                                                 className="text-xl font-bold "
                                             />
-                                            <Textarea
-                                                placeholder="Escribe la petición"
-                                                className="h-[139px] xl:w-[915px]  "
-                                                name="description"
-                                                value={response.text}
+                                            <p className="text-gray-500 font-light">
+                                                {"("} {new Date(response.created_at).toLocaleString()}{")"}
+                                            </p>
+                                            <p className="h-auto mb-5 xl:w-[915px]  text-gray-900 dark:text-gray-300">
 
-                                                disabled
-                                                onChange={() => { }}
-                                            ></Textarea>
+                                                {response.text}
+                                            </p>
+                                        </div>
+                                        {response.files.length > 0 && <h5 className="text-black font-semibold">
+                                            Adjuntos:
+                                        </h5>}
+                                        <div className="flex flex-row m-2" key={index}>
+
+                                            {
+                                                response.files.map((file, index) => {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            className="flex flex-col m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
+                                                            <FaFile className=" text-primary-600" size={30} />
+                                                            <span className=" text-gray-500 dark:text-gray-300">
+                                                                {file.name || file.description}
+                                                            </span>
+                                                            <span className=" text-gray-500 text-sm dark:text-gray-300">
+                                                                <FaDownload className=" text-primary-600" size={15} onClick={() => props.onDownloadFromUrl(file.url_download as string, file.name)} />
+                                                            </span>
+                                                        </div>
+                                                    )
+
+                                                })
+                                            }
                                         </div>
                                     </>
                                 )
@@ -192,7 +198,56 @@ const SolicityResponsePresenter = (props: Props) => {
 
 
 
+
                     </div>
+                    {
+                        props.isAvaliableToInsistency || props.isAvaliableToComment ?
+                            <> <div className=" grid grid-cols gap-4 w-auto mt-16">
+                                <Label
+                                    htmlFor=""
+                                    value={
+                                        props.isAvaliableToComment ?
+                                            `Comentar. \n
+                                        Si necesitas comentar algo sobre la respuesta recibida, ingresarla a continuación`:
+                                            `Solicitar Insistencia. \n
+                                    Si necesitas consultar alguna aclaración sobre la respuesta recibida, ingresarla a continuación`}
+                                    className="text-xl font-bold "
+                                />
+                                <Textarea
+                                    placeholder=""
+                                    className="h-[139px] xl:w-[915px]  "
+                                    name="description"
+                                    onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
+                                    ref={responseRef as React.RefObject<HTMLTextAreaElement>}
+                                ></Textarea>
+                            </div>
+
+
+                                <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-24 ">
+                                    <Button
+                                        type="button"
+                                        color="danger"
+                                        className="text-white font-bold bg-gray-500 w-[185px] h-[48px] 
+                            hover:bg-gray-700 "
+                                        onClick={props.onCancel}
+                                    >
+                                        Cancelar
+                                    </Button>
+                                    {props.isLoadingSend ? (
+                                        <Spinner></Spinner>) : <Button
+                                            type="submit"
+                                            className="text-white font-bold bg-sky-800 w-[185px] h-[48px] "
+                                        >
+                                        <FiSend size={23} className=" mr-4" />
+                                        <span>Enviar</span>
+                                    </Button>
+
+                                    }
+
+
+                                </div></> : null
+                    }
+
                     {props.isAvaliableToResponse &&
                         <>
 
@@ -350,7 +405,7 @@ const SolicityResponsePresenter = (props: Props) => {
                         }
                     </div>
                     <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-24 ">
-                        <Button
+                        {props.isAvaliableToResponse ? <Button
                             type="button"
                             color="danger"
                             className="text-white font-bold bg-gray-500 w-[185px] h-[48px] 
@@ -358,7 +413,7 @@ const SolicityResponsePresenter = (props: Props) => {
                             onClick={props.onCancel}
                         >
                             Cancelar
-                        </Button>
+                        </Button> : null}
                         {props.isAvaliableToResponse ?
                             props.isLoadingSend ? (
                                 <Spinner></Spinner>) : <Button

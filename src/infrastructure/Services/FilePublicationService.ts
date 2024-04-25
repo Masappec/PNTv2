@@ -114,6 +114,14 @@ class FilePublicationService {
         return FilePublicationMapper.fromApiToDomain(response);
 
     }
+
+
+    async getFilesPublications(type: "TA" | "TC" | "TF") {
+
+        const response = await this.api.getFilesPublications(type);
+
+        return response.map((item) => FilePublicationMapper.fromApiToDomain(item));
+    }
 }
 
 export default FilePublicationService;

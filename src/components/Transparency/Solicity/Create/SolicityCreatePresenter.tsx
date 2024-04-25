@@ -198,6 +198,7 @@ const SolicityCreatePresenter = (props: Props) => {
                 name="first_name"
                 value={props.data.first_name}
                 onChange={props.onChange}
+                disabled={props.disabledDate}
 
               />{" "}
             </div>
@@ -214,6 +215,7 @@ const SolicityCreatePresenter = (props: Props) => {
                 type="text"
                 name="last_name"
                 onChange={props.onChange}
+                disabled={props.disabledDate}
 
                 value={props.data.last_name}
               />
@@ -230,6 +232,7 @@ const SolicityCreatePresenter = (props: Props) => {
                 type="email"
                 name="email"
                 onChange={props.onChange}
+                disabled={props.disabledDate}
 
                 value={props.data.email}
               />{" "}
@@ -248,6 +251,8 @@ const SolicityCreatePresenter = (props: Props) => {
                 onChange={props.onChange}
                 name="phone"
                 value={props.data.phone}
+                disabled={props.disabledDate}
+
               />{" "}
             </div>
 

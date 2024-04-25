@@ -151,7 +151,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
                                 <div className="flex items-center">
                                     <Badge color={bg} className="rounded-2xl py-3 px-3">
-                                        {status.value}
+                                        {status.value_2}
                                     </Badge>
                                 </div>
                             )
@@ -248,6 +248,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                 onFilter={props.onFilter}
                 onImport={props.onImport}
                 onSearch={props.onSearch}
+                onAdd={props.onAdd}
 
                 search={props.search}
                 textAdd="Crear Solicitud"

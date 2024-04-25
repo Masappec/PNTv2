@@ -24,6 +24,10 @@ class FilePublicationUseCase {
     ) {
         return await this.filePublicationRepository.createFilePublication(data, callbackUpload);
     }
+
+    async getFilesPublications(type:"TA"|"TC"|"TF"){
+        return await this.filePublicationRepository.getFilesPublications(type);
+    }
 }
 
 export default FilePublicationUseCase;

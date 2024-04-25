@@ -7,7 +7,57 @@ export interface TimeLine {
   created_at: string;
 }
 
-export interface SolicityResultDto extends BaseObject {
+export interface Insistency {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  deleted: boolean;
+  deleted_at: string;
+  ip: string;
+  status: string;
+  expiry_date: string;
+  motive: string;
+  user_created: number;
+  user_updated: number;
+  user_deleted: number;
+  solicity: number;
+  user: number;
+}
+/*{
+    "id": 1,
+    "created_at": "2024-04-25T04:02:41.964664Z",
+    "updated_at": "2024-04-25T04:02:41.964713Z",
+    "deleted": false,
+    "deleted_at": null,
+    "ip": null,
+    "is_active": true,
+    "status": "SEND",
+    "expiry_date": null,
+    "motive": "asdasdasdsad",
+    "user_created": 3,
+    "user_updated": 3,
+    "user_deleted": null,
+    "solicity": 231,
+    "user": 3,
+    "files": [],
+    "attachments": []
+}*/
+export interface CommentsDto {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  deleted: boolean;
+  deleted_at: string;
+  ip: string;
+  text: string;
+  user: number;
+  solicity: number;
+  files: number[];
+  attachments: number[];
+
+}
+
+export interface SolicityResultDto {
 
   id_solicitud: number;
   text: string;
@@ -18,7 +68,17 @@ export interface SolicityResultDto extends BaseObject {
     first_name: string;
     last_name: string;
     email: string;
-  }
+  },
+  user_created: number;
+  user_updated: number;
+  user_deleted: number;
+  solicity: number;
+  created_at: string;
+  updated_at: string;
+  deleted: boolean;
+  deleted_at: string;
+  ip: string;
+  is_active: boolean;
 }
 
 export interface SolicityResponseDto extends BaseObject {
@@ -47,6 +107,8 @@ export interface SolicityResponseDto extends BaseObject {
   time_line: TimeLine[];
 
   responses: SolicityResultDto[]
+  insistency: Insistency[]
+  comments: CommentsDto[]
 }
 
 

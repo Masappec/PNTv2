@@ -3,7 +3,8 @@ import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { useNavigate } from "react-router-dom"
 import PublicEstablishmentPresenter from "./PublicEstablishmentPresenter"
-
+import { setEstablishments as saveEstablishment } from "../../../../infrastructure/Slice/EstablishmentSlice"
+import { useDispatch } from "react-redux"
 
 interface Props {
     usecase: PublicUseCase
@@ -24,6 +25,8 @@ const PublicEstablishmentContainer = (props: Props) => {
 
     const [total, setTotal] = useState(0)
 
+    const dispatch = useDispatch()
+
     const navigate = useNavigate()
 
     const abecedario = [];
@@ -39,6 +42,14 @@ const PublicEstablishmentContainer = (props: Props) => {
         props.usecase.getEstablishments().then((entities) => {
             setLoad(false)
             setEntities(entities.results)
+            const result = entities.results.map((item) => item.data)
+            const final: EstablishmentEntity[] = []
+            result.map((item) => {
+                item.map((_item) => {
+                    final.push(_item)
+                })
+            })
+            dispatch(saveEstablishment(final))
             setOriginalEntities(entities.results)
             setTotal(entities.total)
         }).catch((error) => {

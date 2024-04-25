@@ -1,4 +1,5 @@
 import SolicityService from "../../../infrastructure/Services/SolicityService";
+import { StatusSolicity } from "../../../utils/enums";
 import CreateSolicity from "../../entities/CreateSolicity";
 import ResponseSolicity from "../../entities/ResponseSolicity";
 import { Solicity } from "../../entities/Solicity";
@@ -51,37 +52,43 @@ class SolicityUseCase {
 
 
 
-  availableToResponse(user: UserEntity, solicity: Solicity) {
-    //obtener el ultimo elemto de la lista de respuestas de la solicitud
+  availabletoComment(user: UserEntity, solicity: Solicity) {
+    const lastComment = solicity.comments ? solicity.comments[solicity.comments.length - 1] : null;
+    if (lastComment) {
+      console.log(lastComment.user, user.id)
+      if (lastComment.user !== user.id) {
+        return solicity.status == StatusSolicity.INSISTENCY_PERIOD.key ||
+          solicity.status == StatusSolicity.INSISTENCY_SEND.key ||
+          solicity.status == StatusSolicity.SEND.key ||
+          solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
+      }
+    }
+
+    return false;
+  }
+
+
+  availableToInsistency(user: UserEntity, solicity: Solicity) {
     if (solicity && user) {
-      if (solicity.responses) {
-        if (solicity.responses.length === 10) {
-          return false;
-        }
-        const lastResponse = solicity.responses[solicity.responses.length - 1];
-        if (!lastResponse) {
-          if (user.user_permissions) {
-            if (user.user_permissions?.find(x => x.codename === 'view_solicityresponse')) {
-              if (solicity.userCreated !== user.id) {
-                return true;
-              }
-            }
+      if (user.id == solicity.userCreated) {
 
-          }
-
-        }
-
-
-        if (lastResponse) {
-          if (lastResponse.user.id !== user.id) {
-            return true;
-          }
-        }
-
-
+        return solicity.status == StatusSolicity.INSISTENCY_PERIOD.key
+          || solicity.status == StatusSolicity.RESPONSED.key
+          || solicity.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
       }
 
     }
+    return false;
+  }
+
+  availableToResponse(user: UserEntity, solicity: Solicity) {
+    //obtener el ultimo elemto de la lista de respuestas de la solicitud
+    if (solicity && user) {
+      return solicity.status == StatusSolicity.INSISTENCY_SEND.key
+        || solicity.status == StatusSolicity.SEND.key
+        || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_SEND.key
+    }
+
     return false;
 
   }

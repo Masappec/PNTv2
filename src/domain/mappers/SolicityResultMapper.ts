@@ -20,7 +20,15 @@ export class SolicityResultMapper {
                 id: data.user.id,
                 last_name: data.user.last_name
 
-            }
+            },
+            created_at: data.created_at,
+            deleted: data.deleted,
+            deleted_at: data.deleted_at,
+            ip: data.ip,
+            is_active: data.is_active,
+            solicity: data.solicity,
+            updated_at: data.updated_at,
+
         }
 
     }

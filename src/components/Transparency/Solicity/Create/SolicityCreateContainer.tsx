@@ -286,6 +286,7 @@ const SolicityCreateContainer = (props: Props) => {
     }
 
     const isCitizen = () => {
+        console.log(userSession?.group?.find(x => x.name === 'Ciudadano'))
         return userSession?.group?.find(x => x.name === 'Ciudadano') ? true : false;
     }
 

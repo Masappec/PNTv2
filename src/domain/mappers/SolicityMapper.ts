@@ -1,7 +1,7 @@
 import { SolicityDraftRequestDto, SolicityResponseDto, SolicityResult } from "../../infrastructure/Api/Solicity/interface"
 import CreateSolicity from "../entities/CreateSolicity";
 import ResponseSolicity from "../entities/ResponseSolicity";
-import { Solicity } from "../entities/Solicity"
+import { Comments, Insistency, Solicity } from "../entities/Solicity"
 import { SolicityResultMapper } from "./SolicityResultMapper";
 
 class SolicityMappers {
@@ -41,8 +41,40 @@ class SolicityMappers {
                 created_at: timeline.created_at
             })) || [],
             data.estblishment_name,
-            data.responses?.map((response) => SolicityResultMapper.apiToDomain(response))
+            data.responses?.map((response) => SolicityResultMapper.apiToDomain(response)),
+            data.insistency.map(r => new Insistency(
+                r.id,
+                r.created_at,
+                r.updated_at,
+                r.deleted,
+                r.deleted_at,
+                r.ip,
+                r.status,
+                r.expiry_date,
+                r.motive,
+                r.user_created,
+                r.user_updated,
+                r.user_deleted,
+                r.solicity,
+                r.user
+            )
+            ),
+            data.comments.map(r => new Comments(
+                r.id,
+                r.created_at,
+                r.updated_at,
+                r.deleted,
+                r.deleted_at,
+                r.ip,
+                r.text,
+                r.user,
+                r.solicity,
+                r.files,
+                r.attachments
+            )
+            ),
         )
+
     }
 
 

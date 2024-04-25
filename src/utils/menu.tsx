@@ -247,6 +247,14 @@ const menu = [
     element: <SolicityCreate />,
   },
   {
+    name: " Crear Solicitudes",
+    path: "/admin/solicity/create",
+    visible: false,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
+    permission_required: "add_manual_solicity",
+    element: <SolicityCreate />,
+  },
+  {
     name: " Editar Solicitudes",
     path: "/admin/solicity/edit/:id",
     visible: false,
