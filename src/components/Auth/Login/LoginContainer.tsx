@@ -24,14 +24,15 @@ const LoginContainer = ({ useCase }: {
     e.preventDefault();
     setIsLoading(true)
     useCase.authService.authenticate(email, password)
-    .then(() => {
-      setIsLoading(false)
-      return history('/admin')
-    })
-    .catch((e) => {
-      setIsLoading(false)
-      setError(e.message)
-    })
+      .then(() => {
+        setIsLoading(false)
+
+        history('/admin/dashboard')
+      })
+      .catch((e) => {
+        setIsLoading(false)
+        setError(e.message)
+      })
 
 
   }

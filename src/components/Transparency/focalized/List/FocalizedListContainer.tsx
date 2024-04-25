@@ -12,14 +12,13 @@ const FocalizedListContainer = ({ usecase
 
     const [transparencyFocus, setTransparencyFocus] = useState<TransparencyFocusEntity[]>([])
     const [visibleModal, setVisibleModal] = useState<boolean>(false)
-    const [selectedTransparencyFocus, setSelectedTransparencyFocus] = useState<TransparencyFocusEntity | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [currentPage, setCurrentPage] = useState(1)
     const [total, setTotal] = useState(0)
     const [totalPage, setTotalPage] = useState(0)
     const [from, setFrom] = useState(0)
     const [to, setTo] = useState(0)
-    
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -40,34 +39,33 @@ const FocalizedListContainer = ({ usecase
 
 
     const handleAdd = () => {
-            
+
         navigate("/admin/focalized/create")
     }
 
-    return(
-<FocalizedListPresenter
-  error={error}
-  data={transparencyFocus}
-  onAdd={handleAdd}
-  onCancelDelete={()=>{}}
-  onConfirmDelete={()=>{}}
-  onDelete={()=>{}}
-  onEdit={()=>{}}
-  onFilter={() => { }}
-  onImport={() => { }}
-  onSearch={()=>{}}
-  page={currentPage}
-  search=""
-  selectedTransparencyFocus={selectedTransparencyFocus}
-  setPage={()=>{}}
-  setSeach={() => { }}
-  setVisibleModal={setVisibleModal}
-  visibleModal={visibleModal}
-  from={from}
-  to={to}
-  total={total}
-  totalPage={totalPage}
-/>
+    return (
+        <FocalizedListPresenter
+            error={error}
+            data={transparencyFocus}
+            onAdd={handleAdd}
+            onCancelDelete={() => { }}
+            onConfirmDelete={() => { }}
+            onDelete={() => { }}
+            onEdit={() => { }}
+            onFilter={() => { }}
+            onImport={() => { }}
+            onSearch={() => { }}
+            page={currentPage}
+            search=""
+            setPage={() => { }}
+            setSeach={() => { }}
+            setVisibleModal={setVisibleModal}
+            visibleModal={visibleModal}
+            from={from}
+            to={to}
+            total={total}
+            totalPage={totalPage}
+        />
 
     )
 }

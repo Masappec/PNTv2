@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import { Button, TextInput, Textarea } from "flowbite-react";
+import { Alert, Button, TextInput, Textarea } from "flowbite-react";
 import { Label } from "flowbite-react";
 
 import { IoCheckmarkCircle, IoSaveOutline } from "react-icons/io5";
@@ -9,9 +9,7 @@ import Select from 'react-select';
 import { ColourOption } from "../../../../utils/interface";
 import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
-import { Cities } from "../../../../utils/cities";
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 import { Solicity } from "../../../../domain/entities/Solicity";
 import Spinner from "../../../Common/Spinner";
 
@@ -47,12 +45,13 @@ interface Props {
   isSend: boolean;
   isLoadingSaved: boolean;
   isLoadingSend: boolean;
+  disabledDate: boolean;
+  disabledReceipt: boolean;
 }
 const SolicityCreatePresenter = (props: Props) => {
 
   return (
     <div>
-      <ToastContainer />
       <div className="border-gray-300 py-5 border-b  ">
         <h2 className="text-2xl font-bold text-black ">
           Formulario de Solicitud de Acceso a la Información Pública (SAIP)
@@ -104,8 +103,8 @@ const SolicityCreatePresenter = (props: Props) => {
                 : null}
             />
           </div>
-          <div className="flex flex-col-2 gap-12">
-            <div className=" flex  flex-col-2  h-[44px]  mt-5 gap-20">
+          <div className="xl:flex xl:flex-col-2 flex-col-1 gap-12">
+            <div className="flex  xl:flex-col-2 sm:flex-col-1 h-[44px]  mt-5 gap-20">
               <Label
                 htmlFor=""
                 value="No. RUC entidad"
@@ -120,7 +119,7 @@ const SolicityCreatePresenter = (props: Props) => {
                 value={props.entitySelected.identification}
               />{" "}
             </div>
-            <div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-3">
+            <div className=" flex  xl:flex-col-2  flex-col-1 m-2 h-[44px]  mt-5 gap-3">
               <Label
                 htmlFor=""
                 value="Fecha"
@@ -129,11 +128,12 @@ const SolicityCreatePresenter = (props: Props) => {
               <TextInput
                 className="w-[306px]"
                 placeholder=""
-                type="date"
+                type="text"
                 onChange={props.onChange}
                 contentEditable={false}
-                value={new Date().toISOString().split('T')[0]}
+                value={new Date().toLocaleString()}
                 name=""
+                disabled={props.disabledDate}
               />{" "}
             </div>
           </div>
@@ -143,7 +143,16 @@ const SolicityCreatePresenter = (props: Props) => {
               value="Ciudad"
               className="mt-2 text-base font-semibold"
             />
-            <Select
+            <TextInput
+              className="w-[717px]"
+              placeholder=""
+              type="text"
+              onChange={props.onChange}
+              name="city"
+              value={props.data.city}
+
+            />{" "}
+            {/*<Select
               className="w-[717px]"
               placeholder=""
               options={Cities.map((city) => ({
@@ -166,14 +175,14 @@ const SolicityCreatePresenter = (props: Props) => {
               }
 
               name=""
-            />{" "}
+            />*/}{" "}
           </div>
 
           <div
             className=" xl:grid-rows-3  lg:grid-rows-3 
            xl:grid-flow-col gap-6 w-auto "
           >
-            <h2 className="text-2xl pl-72 font-bold text-black  my-9">
+            <h2 className="text-2xl xl:pl-72 font-bold text-black  my-9">
               Identificación de la Persona Solicitante
             </h2>
             <div className=" flex  flex-col-2 m-2 h-[44px] gap-32  ">
@@ -189,6 +198,7 @@ const SolicityCreatePresenter = (props: Props) => {
                 name="first_name"
                 value={props.data.first_name}
                 onChange={props.onChange}
+                disabled={props.disabledDate}
 
               />{" "}
             </div>
@@ -205,6 +215,7 @@ const SolicityCreatePresenter = (props: Props) => {
                 type="text"
                 name="last_name"
                 onChange={props.onChange}
+                disabled={props.disabledDate}
 
                 value={props.data.last_name}
               />
@@ -221,6 +232,7 @@ const SolicityCreatePresenter = (props: Props) => {
                 type="email"
                 name="email"
                 onChange={props.onChange}
+                disabled={props.disabledDate}
 
                 value={props.data.email}
               />{" "}
@@ -235,10 +247,12 @@ const SolicityCreatePresenter = (props: Props) => {
               <TextInput
                 className="w-[717px]"
                 placeholder=""
-                type="tel"
+                type="text"
                 onChange={props.onChange}
                 name="phone"
                 value={props.data.phone}
+                disabled={props.disabledDate}
+
               />{" "}
             </div>
 
@@ -301,6 +315,7 @@ const SolicityCreatePresenter = (props: Props) => {
               name="text"
               onChange={props.onChange}
               value={props.data.text}
+              color={props.data.text.length > 0 ? "success" : "failure"}
             ></Textarea>
           </div>
 
@@ -324,66 +339,36 @@ const SolicityCreatePresenter = (props: Props) => {
                 }
               />
             </div>
+            {
+              !props.disabledReceipt ? (
+                <div className=" flex  flex-col -ml-20 h-[44px]  w-[395px] ">
+                  <Select
+                    placeholder={"Formato de recepción"}
+                    name="type_reception"
+                    options={props.format_receipt}
+                    onChange={(value) => {
+                      props.onChangeSelect(value as ColourOption, 'format_receipt')
+                    }}
+                    value={props.solicitySaved.format_receipt ?
+                      props.getSelectedItems(props.solicitySaved.format_receipt, props.format_receipt)
+                      : props.data.format_receipt ? props.getSelectedItems(props.data.format_receipt, props.format_receipt) : null
+                    }
+                  />
+                </div>) : null
+            }
 
-            <div className=" flex  flex-col -ml-20 h-[44px]  w-[395px] ">
-              <Select
-                placeholder={"Formato de recepción"}
-                name="type_reception"
-                options={props.format_receipt}
-                onChange={(value) => {
-                  props.onChangeSelect(value as ColourOption, 'format_receipt')
-                }}
-                value={props.solicitySaved.format_receipt ?
-                  props.getSelectedItems(props.solicitySaved.format_receipt, props.format_receipt)
-                  : props.data.format_receipt ? props.getSelectedItems(props.data.format_receipt, props.format_receipt) : null
-                }
-              />
-            </div>
           </div>
 
-          <div className=" grid grid-cols gap-4 w-auto mt-16">
-            <Label
-              htmlFor=""
-              value="Respuesta de la Entidad"
-              className="text-xl font-bold "
-            />
-            <Textarea
-              placeholder="Escribe la respuesta"
-              className="h-[139px] xl:w-[915px]  "
-              name="description"
-              disabled={true}
-              onChange={props.onChange}
-            ></Textarea>
-          </div>
-          <div className=" grid grid-cols gap-4 w-auto mt-16">
-            <Label
-              htmlFor=""
-              value="Insistencia Ciudadana"
-              className="text-xl font-bold "
-            />
-            <Textarea
-              placeholder="Escribe la petición"
-              className="h-[139px] xl:w-[915px]  "
-              name="description"
-              disabled={true}
 
-            ></Textarea>
-          </div>
-          <div className=" grid grid-cols gap-4 w-auto mt-16">
-            <Label
-              htmlFor=""
-              value="Respuesta a la Insistencia Ciudadana"
-              className="text-xl font-bold "
-            />
-            <Textarea
-              placeholder="Escribe la petición"
-              className="h-[139px] xl:w-[915px]  "
-              name="description"
-              disabled={true}
+          <div className="flex w-auto mt-14">
 
-            ></Textarea>
+            {
+              props.error ? (
+                <Alert color="red">
+                  {props.error}
+                </Alert>) : null
+            }
           </div>
-
           <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-24 ">
             {
               props.solicitySaved?.id && !props.isChanged ? (

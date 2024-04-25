@@ -19,8 +19,7 @@ const ActiveNumeralsContainer = (props: IProps) => {
 
     useEffect(() => {
         props.usecase.getNumeralByUserInSession().then(_numerals => {
-            console.log(_numerals.filter(x => x.published))
-            setNumerals(_numerals)
+            setNumerals(_numerals.sort((a, b) => parseInt(a.name.replace("Numeral", "")) - parseInt(b.name.replace("Numeral", ""))))
         }).catch((e) => {
             setError(e)
         })

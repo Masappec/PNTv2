@@ -13,10 +13,10 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
     return <div>Loading...</div>;
   }
   return (
-    <div className="container w-full md:p-4 mx-auto mt-2 h-screen">
+    <div className=" w-full md:p-4 mx-auto ">
       <div className="flex items-center  justify-center"></div>
 
-      <form className="flex  mt-5">
+      <form className="flex ">
         <section className="container px-4 mx-auto">
           <div className="sm:flex sm:items-center sm:justify-between">
             <div>
@@ -29,35 +29,18 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
             </div>
           </div>
           <div className="mt-14">
-            <div className="grid lg:grid-cols-1 gap-4 grid-cols-1 md:grid-cols-2">
+            <div className="grid lg:grid-cols-2 gap-4 grid-cols-1 md:grid-cols-2">
               {
                 props.numerals.map(numeral => (
 
-                  numeral.parent === null ? (
-                    <>
-                      <h2 className="text-2xl font-bold  text-gray-800 dark:text-white">
-                        {numeral.name}
-                      </h2>
-                      {
-                        props.numerals.filter(n => n.parent === numeral.id).map(child => (
-                          <Numeral title={child.name} text={child.description}
-                            onClick={() => props.onClickItem(child)}
-                            isPublished={child.published}
-                          />
-                        ))
-                      }
-                      {
-                        props.numerals.filter(n => n.parent === numeral.id).length === 0 ? (
-                          <Numeral title={numeral.name} text={numeral.description}
-                            onClick={() => props.onClickItem(numeral)}
-                            isPublished={numeral.published}
-                          />
-                        ) : null
-                      }
-                    </>
-                  ) : null
-
+                  <Numeral title={numeral.name} text={numeral.description}
+                    onClick={() => props.onClickItem(numeral)}
+                    isPublished={numeral.published}
+                  />
                 ))
+
+
+
               }
             </div>
           </div>

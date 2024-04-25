@@ -16,6 +16,7 @@ import PublicEstablishmentDetail from "./interfaces/web/Landing/Establishment/De
 import PublicationDetail from "./interfaces/web/Landing/Publication/Detail";
 import Entry from "./interfaces/web/Auth/Entry";
 import { BASE_URL, IS_SERVER } from "./utils/constans";
+import About from "./interfaces/web/Landing/About";
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged();
@@ -35,6 +36,9 @@ const handleLoade = () => {
 
 const handleLoadeAdmin = (permissions: string) => {
   const user = SessionService.getUserData();
+  if (permissions == '') {
+    return null;
+  }
   if (
     !user.user_permissions?.map((item) => item.codename).includes(permissions)
   ) {
@@ -72,6 +76,10 @@ const Router = createBrowserRouter(
           element: <Normative />,
         },
         {
+          path: '/acerca-de',
+          element: <About />
+        },
+        {
           path: "/area-pedagogica",
           element: <FAQ />,
         },
@@ -87,40 +95,39 @@ const Router = createBrowserRouter(
           path: "/publicaciones/:slug",
           element: <PublicationDetail />,
         },
-
+        {
+          path: "/ingreso",
+          element: <Login />,
+          loader: () => handleLoade(),
+        },
+        {
+          path: "/registro",
+          element: <Register />,
+          loader: () => handleLoade(),
+        },
+        {
+          path: "/auth/forgot-password",
+          element: <ForgotPassword />,
+          loader: () => handleLoade(),
+        },
+        {
+          path: "/auth/reset-password/:token",
+          element: <ConfirmPassword />,
+          loader: () => handleLoade(),
+        },
+        {
+          path: "/auth/activate-account/:uid/:token",
+          element: <ActivateAccount />,
+          loader: () => handleLoade(),
+        },
 
       ],
     },
-    {
-      path: "/ingreso",
-      element: <Login />,
-      loader: () => handleLoade(),
-    },
-    {
-      path: "/registro",
-      element: <Register />,
-      loader: () => handleLoade(),
-    },
-    {
-      path: "/auth/forgot-password",
-      element: <ForgotPassword />,
-      loader: () => handleLoade(),
-    },
-    {
-      path: "/auth/reset-password/:token",
-      element: <ConfirmPassword />,
-      loader: () => handleLoade(),
-    },
-    {
-      path: "/auth/activate-account/:uid/:token",
-      element: <ActivateAccount />,
-      loader: () => handleLoade(),
-    },
+
     {
       path: "/admin",
       element: <Admin />,
       loader: () => handleLoadeAuth(),
-
       children: menu.map((item) => {
         return {
           path: item.path,

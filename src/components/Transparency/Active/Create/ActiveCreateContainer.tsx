@@ -488,6 +488,53 @@ const ActiveCreateContainer = (props: IProps) => {
     setSuccess("Se ha guardado correctamente el archivo")
   }
 
+
+  const downloadTemplate = (id: number) => {
+
+    //create csv file from template
+    const data_template = templateTable.find((data) => {
+      return data.id === id
+    })
+
+    const name_template = templates.find((template) => {
+      return template.id === id
+    })?.name
+
+
+    console.log(data_template, name_template)
+
+    if (!data_template) {
+      setError("No se ha encontrado el template")
+      return;
+    }
+    if (!name_template) {
+      setError("No se ha encontrado el nombre del template")
+      return;
+    }
+
+
+
+
+    const blob = props.usecase.generateBlob(data_template.data);
+    const file = new File([blob], name_template + ".csv", {
+      type: "text/csv;charset=utf-8;",
+    });
+    const url = URL.createObjectURL(file);
+
+
+    const a_ = document.createElement("a");
+    a_.setAttribute("href", url);
+    a_.setAttribute("download", name_template + ".csv");
+    a_.setAttribute("target", "_blank");
+    a_.style.display = "none";
+    document.body.appendChild(a_);
+
+
+    a_.click();
+
+
+  }
+
   return (
     <ActiveCreatePresenter
       title={numeral?.description || ""}
@@ -508,6 +555,7 @@ const ActiveCreateContainer = (props: IProps) => {
       numeralDetail={detail}
       onSaveTable={handleSaveDataTable}
       onGenerateFileFromTable={onSaveTable}
+      downloadTemplate={downloadTemplate}
     />
   )
 }

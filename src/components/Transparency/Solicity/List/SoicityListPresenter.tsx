@@ -1,4 +1,4 @@
-import { FaEdit, FaClock } from "react-icons/fa"
+import { FaClock } from "react-icons/fa"
 import Alert from "../../../Common/Alert"
 import Modal from "../../../Common/Modal"
 import Table from "../../../Common/Table/index"
@@ -6,6 +6,7 @@ import { Badge, Button } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StageSolicity, StatusSolicity, StatusStageSolicity } from "../../../../utils/enums"
+import { FiEdit2 } from "react-icons/fi"
 
 
 
@@ -34,12 +35,14 @@ interface Props {
     from: number
     to: number
     total: number
-    totalPage: number
+    totalPage: number;
+    limits: number[]
+    onChangesLimit: (limit: number) => void
 }
 
 const SolicityListPresenter = (props: Props) => {
     return (
-        <div className="container">
+        <div className="">
             <div className="flex items-center py-5 justify-center">
 
 
@@ -68,14 +71,25 @@ const SolicityListPresenter = (props: Props) => {
             </div>
             <div className="flex justify-between items-center mt-5">
                 <Table
-                show= {true}
+                    show={true}
+                    limits={props.limits}
+                    onChangesLimit={props.onChangesLimit}
                     columns={[
+                        {
+                            title: "#",
+                            render: (solicity, index) => (
+                                <a
+                                    className="text-blue-500 hover:courser-pointer hover:underline"
+                                    onClick={() => props.onEdit(solicity)}
+                                >{index + 1}</a>
+                            )
+                        },
                         {
                             title: "Entidad",
                             render: (solicity) => (
                                 <p className="text-sm font-semibold flex-nowrap col-span-10">
                                     {
-                                        solicity.estblishment_name && solicity.estblishment_name.length > 20 ? solicity.estblishment_name.substring(0, 20) + "..." : solicity.estblishment_name
+                                        solicity.estblishment_name
 
                                     }
                                 </p>
@@ -83,23 +97,38 @@ const SolicityListPresenter = (props: Props) => {
                             width: 2
                         },
                         {
-                            title: "Fecha de recepción",
+                            title: "No. SAIP",
                             render: (solicity) => (
-                                <p>{
-                                    solicity.date ? new Date(solicity.date).toLocaleDateString() : ""
-                                }</p>
+                                <a href="#" className="text-blue-500 hover:courser-pointer hover:underline"
+                                    onClick={() => props.onEdit(solicity)}>
+                                    {solicity.number_saip}
+                                </a>
+
                             )
                         },
                         {
-                            title: 'Fecha respuesta',
-                            render: (solicity) => {
+                            title: "Solicitante",
+                            render: (solicity) => (
+                                <p
+                                    onClick={() => props.onEdit(solicity)}
 
-                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE)
-                                return <p>{
-                                    element ? new Date(element.created_at).toLocaleDateString() : ""
-                                }</p>
-                            }
+                                >
+                                    <a href="#" className="text-blue-500 hover:courser-pointer hover:underline"
+                                        onClick={() => props.onDetail()}>
+                                        {solicity.first_name} {solicity.last_name}
+                                    </a>
+                                </p>
+                            )
                         },
+                        {
+                            title: "Fecha de recepción",
+                            render: (solicity) => (
+                                <p>{
+                                    solicity.date ? new Date(solicity.date).toLocaleString() : ""
+                                }</p>
+                            )
+                        },
+
                         {
                             title: "Días transcurridos",
                             render: (solicity) => (
@@ -108,8 +137,9 @@ const SolicityListPresenter = (props: Props) => {
                                 }</p>
                             )
                         },
+
                         {
-                            title: "SAIP",
+                            title: "Estado",
                             render: (solicity) => {
                                 console.log(solicity)
                                 const status = StatusSolicity[solicity.status as keyof typeof StatusSolicity]
@@ -118,7 +148,6 @@ const SolicityListPresenter = (props: Props) => {
 
                                     <div className="flex items-center">
                                         <Badge color={bg} className="rounded-2xl py-3 px-3">
-                                            {status.icon}
                                             {status.value}
                                         </Badge>
                                     </div>
@@ -126,50 +155,50 @@ const SolicityListPresenter = (props: Props) => {
                             }
                         },
                         {
-                            title: "Fecha insistencia/correción",
+                            title: 'Fecha respuesta SAIP',
+                            render: (solicity) => {
+
+                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE)
+                                return <p>{
+                                    element ? new Date(element.created_at).toLocaleString() : ""
+                                }</p>
+                            }
+                        },
+                        {
+                            title: "Fecha insistencia",
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
                             }
                         },
                         {
-                            title: "Fecha entrega",
+                            title: "Fecha R. Insistencia",
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE_INSISTENCY)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
                             }
-
                         },
                         {
-                            title: 'Días transcurridos',
+                            title: "Fecha gestión oficiosa",
                             render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE_INSISTENCY)
+                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
                                 return <p>{
-                                    element ? Math.floor((new Date().getTime() - new Date(element.created_at).getTime()) / (1000 * 60 * 60 * 24)) : ""
+                                    element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
                             }
                         },
                         {
-                            title: 'Insistencia/Correción',
+                            title: 'Insistencia/ \n Correción',
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
                                 const status = StatusStageSolicity[element?.status as keyof typeof StatusStageSolicity]
 
                                 return <p>{
                                     element ? status.icon : <FaClock size={20} />
-                                }</p>
-                            }
-                        },
-                        {
-                            title: 'Fecha gestión oficiosa',
-                            render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
-                                return <p>{
-                                    element ? new Date(element.created_at).toLocaleDateString() : ""
                                 }</p>
                             }
                         },
@@ -184,15 +213,6 @@ const SolicityListPresenter = (props: Props) => {
 
                             },
                         },
-                        {
-                            title: 'No. SAIP',
-                            render: (solicity) => (
-                                <p>{
-                                    solicity.number_saip
-                                }</p>
-                            )
-                        },
-
 
                         {
                             title: "Acciones",
@@ -200,20 +220,20 @@ const SolicityListPresenter = (props: Props) => {
                                 <div className="flex items-center">
 
 
+
                                     <button
                                         onClick={() => {
                                             props.onEdit(item)
                                         }}
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl">
-                                        <FaEdit />
+                                        className="py-2 px-2 text-lg hover:text-blue-500">
+                                        <FiEdit2 />
                                     </button>
-
 
                                 </div>
                             )
                         }
                     ]}
-                    currentPage={1}
+                    currentPage={props.page}
                     data={props.data}
                     description="aquí se muestran las instituciones registradas en el sistema"
                     length={0}
@@ -235,8 +255,8 @@ const SolicityListPresenter = (props: Props) => {
 
 
                 />
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 

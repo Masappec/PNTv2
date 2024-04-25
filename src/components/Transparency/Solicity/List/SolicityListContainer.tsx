@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase"
 import { Solicity } from "../../../../domain/entities/Solicity"
+import { StatusSolicity } from "../../../../utils/enums"
 
 interface Props {
     useCase: SolicityUseCase;
@@ -22,7 +23,7 @@ const SolicityListContainer = (props: Props) => {
     const [from, setFrom] = useState<number>(0)
     const [to, setTo] = useState<number>(0)
     const [total, setTotal] = useState<number>(0)
-
+    const [limitOptions,] = useState<number[]>([5, 10, 20, 40, 50])
 
     useEffect(() => {
         props.useCase.getSolicities("", currentPage).then(response => {
@@ -41,7 +42,17 @@ const SolicityListContainer = (props: Props) => {
         navigate('/admin/solicity/create')
     }
     const handleEdit = (item: Solicity) => {
-        navigate(`/admin/solicity/edit/${item.id}`)
+        console.log(item)
+        if (item.status === StatusSolicity.DRAFT.key) {
+            navigate(`/admin/solicity/edit/${item.id}`)
+        } else {
+            navigate(`/admin/solicity/response/citizen`, {
+                state: {
+                    data: item
+                }
+            })
+        }
+
     }
 
     const handleOnHold = () => {
@@ -67,13 +78,52 @@ const SolicityListContainer = (props: Props) => {
 
     }
 
+    const setPage = (page: number) => {
+        props.useCase.getSolicities("", page).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
 
+    const onSearch = (search: string) => {
+        props.useCase.getSolicities(search, currentPage).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
+
+    const onChangeLimit = (limit: number) => {
+        props.useCase.getSolicities("", currentPage, limit).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
 
     return (
         <SolicityListPresenter
 
             error={error}
             data={solicitudes}
+            limits={limitOptions}
+            onChangesLimit={onChangeLimit}
 
             onAdd={handleAdd}
             onCancelDelete={handleCancelDelete}
@@ -85,11 +135,11 @@ const SolicityListContainer = (props: Props) => {
             onDetail={handleDetail}
             onFilter={() => { }}
             onImport={() => { }}
-            onSearch={() => { }}
+            onSearch={onSearch}
             page={currentPage}
             search=""
 
-            setPage={() => { }}
+            setPage={setPage}
             setSeach={() => { }}
             setVisibleModal={() => { }}
             visibleModal={visibleModal}

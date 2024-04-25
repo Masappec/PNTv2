@@ -12,6 +12,8 @@ import { toast } from 'react-toastify';
 import { Solicity } from "../../../../domain/entities/Solicity";
 import { sleep } from "../../../../utils/functions";
 import { useNavigate } from "react-router-dom";
+import UserEntity from "../../../../domain/entities/UserEntity";
+import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
 
 
 interface Props {
@@ -43,7 +45,6 @@ const SolicityCreateContainer = (props: Props) => {
 
     const [entity, setEntity] = useState<EstablishmentEntity>({} as EstablishmentEntity)
 
-
     const [success, setSuccess] = useState<string>("")
     const [error, setError] = useState<string>("")
 
@@ -52,12 +53,13 @@ const SolicityCreateContainer = (props: Props) => {
     const [isLoadingSave, setIsLoadingSave] = useState<boolean>(false)
     const [isLoadingSend, setIsLoadingSend] = useState<boolean>(false)
 
-    const navigate = useNavigate()
+    const [userSession, setUserSession] = useState<UserEntity>({} as UserEntity)
 
+    const navigate = useNavigate()
 
     useEffect(() => {
 
-        props.usecase.getLastDraftSolicity().then((res) => {
+        /*props.usecase.getLastDraftSolicity().then((res) => {
             console.log(res)
             const data_ = {
                 number_saip: res.number_saip,
@@ -81,21 +83,29 @@ const SolicityCreateContainer = (props: Props) => {
         }).catch((e) => {
             console.log(e + "error")
             console.log(e + "error")
-            const user = SessionService.getUserData()
-            setData({
-                ...data,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.email,
-                number_saip: props.usecase.buildSaipCode().toString()
-            })
+            
+        })*/
+        const user = SessionService.getUserData()
+        const person = SessionService.getPersonData()
+        setUserSession(user)
+        setData({
+            ...data,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            number_saip: props.usecase.buildSaipCode().toString(),
+            phone: person.phone,
+            gender: person.gender,
+            race_identification: person.race
         })
-
     }, [])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setIsLoadingSend(true)
+        data.format_receipt = "formulario web"
+        data.address = entity.address || "Sin dirección"
+        data.address = entity.address || "Sin Ciudad"
         if (solicitySaved?.id) {
             const draft_send = props.usecase.sendDraftSolicity(data, solicitySaved.id || 0)
 
@@ -104,54 +114,44 @@ const SolicityCreateContainer = (props: Props) => {
                 setSolicitySaved(res)
                 setIsSend(true)
                 setIsLoadingSend(false)
-                toast("Solicitud Enviada con exito", {
-                    type: "success",
-                    autoClose: 2000
-                })
+
                 sleep(2000).then(() => {
                     navigate('/admin/solicity')
                 })
             }).catch((err) => {
                 setError(err.message)
                 setIsLoadingSave(false)
-                toast(err.message, {
-                    type: "error",
-                    autoClose: 2000
-                })
+
             })
         } else {
             data.establishment = entity.id || 0
+
             const send = props.usecase.sendSolicityWithouDraft(data)
 
             send.then((res) => {
                 setSolicitySaved(res)
-                setIsSend(false)
+                setIsSend(true)
                 setIsLoadingSend(false)
-                toast("Solicitud Enviada con exito", {
-                    type: "success",
-                    autoClose: 2000
-                })
+
 
                 sleep(2000).then(() => {
                     navigate('/admin/solicity')
                 })
             }).catch((err) => {
                 setError(err.message)
+                setIsSend(false)
                 setIsLoadingSend(false)
-                toast(err.message, {
-                    type: "error",
-                    autoClose: 2000
-                })
+
             })
         }
 
     }
 
-    const getSelectedEntity = (id: number) => {
+    /*const getSelectedEntity = (id: number) => {
         const entity = _establishments.find((item) => item.id === id)
         setEntity(entity || {} as EstablishmentEntity)
 
-    }
+    }*/
 
 
     const getSelectedItem = (value: string, options: ColourOption[]) => {
@@ -175,7 +175,9 @@ const SolicityCreateContainer = (props: Props) => {
         setEntity(establishment || {} as EstablishmentEntity)
         setData({
             ...data,
-            establishment: parseInt(e.value)
+            establishment: parseInt(e.value),
+            city: establishment?.address || "",
+            address: establishment?.address || ""
         })
     }
 
@@ -255,6 +257,7 @@ const SolicityCreateContainer = (props: Props) => {
             return
         }
         data.establishment = entity.id || 0
+        data.address = entity.address || "Sin dirección"
         console.log(data)
         if (data.text === "" || data.city === ""
             || data.first_name === "" || data.last_name === ""
@@ -262,10 +265,7 @@ const SolicityCreateContainer = (props: Props) => {
             || data.gender === ""
             || data.phone === "" || data.format_send === ""
             || data.format_receipt === "") {
-            toast("Complete todos los campos", {
-                type: "error",
-                autoClose: 2000
-            })
+            setError("Complete todos los campos")
             setIsLoadingSave(false)
             return
         }
@@ -274,10 +274,7 @@ const SolicityCreateContainer = (props: Props) => {
             setIsChanged(false)
             setIsLoadingSave(false)
             setSolicitySaved(res)
-            toast("Solicitud Guardada como borrador", {
-                type: "info",
-                autoClose: 2000
-            })
+
         }).catch((err) => {
             setSuccess("")
             setIsLoadingSave(false)
@@ -288,37 +285,52 @@ const SolicityCreateContainer = (props: Props) => {
         })
     }
 
-
+    const isCitizen = () => {
+        console.log(userSession?.group?.find(x => x.name === 'Ciudadano'))
+        return userSession?.group?.find(x => x.name === 'Ciudadano') ? true : false;
+    }
 
     return (
         <>
-            <SolicityCreatePresenter
-                handleSubmit={handleSubmit}
-                onCancel={() => { }}
-                onChange={handleChange}
-                key={0}
-                loadOptions={loadOptions}
-                error={error}
-                setError={setError}
-                setSuccess={setSuccess}
-                success={success}
-                onChangeSelectEstablishment={onChangeSelectEstablishment}
-                handleSave={handleSave}
-                data={data}
-                race_indentification={race_indentification}
-                genders={genders}
-                format_receipt={format_receipt}
-                format_send={formart_send}
-                entitySelected={entity}
-                onChangeSelect={onChangeSelect}
-                solicitySaved={solicitySaved}
-                getSelectedItems={getSelectedItem}
-                isChanged={isChanged}
-                isLoadingSaved={isLoadingSave}
-                isLoadingSend={isLoadingSend}
-                isSaved={solicitySaved.id ? true : false}
-                isSend={isSend}
-            />
+            {
+                isSend ? <ScreenMessage message="Soliciutd enviada con exito"
+                    type="Se ha enviado la solicitud con exito"
+                >
+
+                    <button onClick={() => navigate('/admin/solicity')} className="btn btn-primary">Volver</button>
+                </ScreenMessage> :
+
+                    <SolicityCreatePresenter
+                        handleSubmit={handleSubmit}
+                        onCancel={() => { }}
+                        onChange={handleChange}
+                        key={0}
+                        loadOptions={loadOptions}
+                        error={error}
+                        setError={setError}
+                        setSuccess={setSuccess}
+                        success={success}
+                        onChangeSelectEstablishment={onChangeSelectEstablishment}
+                        handleSave={handleSave}
+                        data={data}
+                        race_indentification={race_indentification}
+                        genders={genders}
+                        format_receipt={format_receipt}
+                        format_send={formart_send}
+                        entitySelected={entity}
+                        onChangeSelect={onChangeSelect}
+                        solicitySaved={solicitySaved}
+                        getSelectedItems={getSelectedItem}
+                        isChanged={isChanged}
+                        isLoadingSaved={isLoadingSave}
+                        isLoadingSend={isLoadingSend}
+                        isSaved={solicitySaved.id ? true : false}
+                        isSend={isSend}
+                        disabledDate={isCitizen()}
+                        disabledReceipt={isCitizen()}
+
+                    />
+            }
         </>
     )
 

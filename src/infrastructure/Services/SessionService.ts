@@ -1,3 +1,4 @@
+import { PersonEntity } from "../../domain/entities/PersonEntity";
 import UserEntity from "../../domain/entities/UserEntity";
 import { USER_LOCKED, USER_PASSWORD_LOCKED } from "../../utils/constans";
 
@@ -6,11 +7,27 @@ class SessionService {
   static REFRESH_TOKEN_KEY = "refresh_token";
   static USER_DATA_KEY = "user_data";
   static USER_LOCKED = "locked";
+
+  static PERSON_DATA_KEY = "person_data";
   static setAccessToken(token: string) {
     localStorage.setItem(this.ACCESS_TOKEN_KEY, token);
   }
   static getAccessToken() {
     return localStorage.getItem(this.ACCESS_TOKEN_KEY);
+  }
+
+
+  static setPersonData(personData: string) {
+    localStorage.setItem(this.PERSON_DATA_KEY, personData);
+  }
+
+  static getPersonData(): PersonEntity {
+    const data = localStorage.getItem(this.PERSON_DATA_KEY) || '{}';
+
+    const json = JSON.parse(data);
+
+    return json as PersonEntity;
+
   }
 
   static removeAccessToken() {
@@ -41,7 +58,6 @@ class SessionService {
     const data = localStorage.getItem(this.USER_DATA_KEY) || "{}";
 
     const json = JSON.parse(data);
-
     return json;
   }
 
@@ -50,7 +66,13 @@ class SessionService {
   }
 
   static clearSession() {
-    localStorage.clear();
+
+
+    localStorage.removeItem(this.ACCESS_TOKEN_KEY);
+    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    localStorage.removeItem(this.USER_DATA_KEY);
+    localStorage.removeItem(this.PERSON_DATA_KEY);
+
   }
 
   static isLogged() {

@@ -21,10 +21,12 @@ const SolicityListEstablishmentContainer = (props: Props) => {
     const [from, setFrom] = useState<number>(0)
     const [to, setTo] = useState<number>(0)
     const [total, setTotal] = useState<number>(0)
-
+    const [limit, setLimit] = useState<number>(10)
+    const [limitOptions,] = useState<number[]>([5, 10, 20, 40, 50])
+    const [columnsSort, setColumnsSort] = useState<string[]>([])
 
     useEffect(() => {
-        props.useCase.getEstablishmentSolicity("", currentPage).then(response => {
+        props.useCase.getEstablishmentSolicity("", currentPage, limit).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)
@@ -47,8 +49,8 @@ const SolicityListEstablishmentContainer = (props: Props) => {
         navigate('/admin/solicity/onhold')
     }
 
-    const handleResponse = () => {
-        navigate('/admin/solicity/response')
+    const handleResponse = (item: Solicity) => {
+        navigate('/admin/solicity/response', { state: { data: item } })
     }
 
     const handleDetail = () => {
@@ -67,10 +69,76 @@ const SolicityListEstablishmentContainer = (props: Props) => {
     }
 
 
+    const setPage = (page: number) => {
+        props.useCase.getEstablishmentSolicity("", page, limit).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
+
+    const onChangesLimit = (limit: number) => {
+        setLimit(limit)
+
+        props.useCase.getEstablishmentSolicity("", currentPage, limit).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
+
+    const onSearch = (search: string) => {
+        props.useCase.getEstablishmentSolicity(search, currentPage, limit).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
+
+    const onChangesSort = (sort: string) => {
+        let copySort = columnsSort
+        if (columnsSort.includes(sort)) {
+            setColumnsSort(columnsSort.filter(item => item !== sort))
+            copySort = copySort.filter(item => item !== sort)
+
+        } else {
+            setColumnsSort([...columnsSort, sort])
+            copySort = [...copySort, sort]
+        }
+
+        props.useCase.getEstablishmentSolicity("", currentPage, limit, copySort).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
+
+
 
     return (
         <SolicityEstablishmentPresenter
-
+            columnsSort={columnsSort}
+            onChangeSort={onChangesSort}
             error={error}
             data={solicitudes}
 
@@ -88,14 +156,16 @@ const SolicityListEstablishmentContainer = (props: Props) => {
             page={currentPage}
             search=""
 
-            setPage={() => { }}
-            setSeach={() => { }}
+            setPage={setPage}
+            setSeach={onSearch}
             setVisibleModal={() => { }}
             visibleModal={visibleModal}
             from={from}
             to={to}
             total={total}
             totalPage={totalPage}
+            onChangesLimit={onChangesLimit}
+            limits={limitOptions}
         />
     )
 

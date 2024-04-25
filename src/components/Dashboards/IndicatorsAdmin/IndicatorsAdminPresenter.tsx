@@ -1,3 +1,4 @@
+import { ApexOptions } from "apexcharts";
 import Select from "../../Common/Select";
 import Chart from "react-apexcharts";
 
@@ -63,7 +64,7 @@ const IndicatorsAdminPresenter = () => {
     labels: ["A", "B"],
     colors: ["#1A7290", "#7DBACF"],
   };
-  const line = {
+  const line: ApexOptions = {
     chart: {
       id: "line",
     },
@@ -86,29 +87,29 @@ const IndicatorsAdminPresenter = () => {
     },
     stroke: {
       curve: "smooth",
-    }, 
-  
+    },
+
     series: [
       {
         name: "series-1",
         data: [0, 100, 100, 200, 100, 300, 200, 100, 200, 300, 400, 400],
         color: "#337FA6",
       },
-    
+
     ],
   };
 
   return (
-    <div className="container">
+    <div className="h-full">
       <div className="border-gray-300 py-5 border-b  ">
         <h2 className="text-2xl font-semibold text-black ml-2">Indicadores</h2>
       </div>
-      <div className="grid grid-rows-1 grid-flow-col space-x-2 w-[650px] pl-48 mt-12">
-        <div className=" flex  flex-col h-[44px]  mt-5 w-[219px]  gap-2">
+      <div className="flex  space-x-2 w-full justify-center mt-12">
+        <div className="flex  flex-col h-[44px]  mt-5 w-[219px]  gap-2">
           <Select
             placeholder={"Entidades"}
             value={""}
-            onChange={() => {}}
+            onChange={() => { }}
             options={[
               {
                 value: "",
@@ -121,7 +122,7 @@ const IndicatorsAdminPresenter = () => {
           <Select
             placeholder={"Periodo"}
             value={""}
-            onChange={() => {}}
+            onChange={() => { }}
             options={[
               {
                 value: "",
@@ -135,7 +136,7 @@ const IndicatorsAdminPresenter = () => {
           <Select
             placeholder={"Meses"}
             value={""}
-            onChange={() => {}}
+            onChange={() => { }}
             options={[
               {
                 value: "",
@@ -145,8 +146,8 @@ const IndicatorsAdminPresenter = () => {
           />
         </div>
       </div>
-      <div className="ml-48 mt-16">
-        <div className="grid grid-rows-1 grid-flow-col space-x-2 w-[600px] ">
+      <div className="mt-16">
+        <div className="flex space-x-2 w-full justify-center">
           <div className="container border w-[290px] h-[222px] px-5 py-6 rounded-3xl ">
             <h2 className="text-start font-semibold text-sm">Usuarios</h2>
             <h2 className="text-2xl mt-2 font-extrabold">55222</h2>
@@ -171,25 +172,31 @@ const IndicatorsAdminPresenter = () => {
           </div>
         </div>
 
-        <div className="container border mt-10 w-[602px] rounded-2xl  ">
-          <h2 className="text-start font-semibold text-sm px-5 py-5">
-            Solicitudes Atendidas
-          </h2>
+        <div className="flex  mt-10 w-full rounded-2xl justify-center">
+          <div className="container border mt-10 w-[602px] rounded-2xl  ">
+            <h2 className="text-start font-semibold text-sm px-5 py-5">
+              Solicitudes Atendidas
+            </h2>
 
-          <Chart
-            options={options}
-            series={options.series}
-            type="bar"
-            width={570}
-          />
+            <Chart
+              options={options}
+              series={options.series}
+              type="bar"
+              width={570}
+            />
+          </div>
         </div>
-        <div className="container border mt-10 w-[602px] rounded-2xl  ">
-          <h2 className="text-start font-semibold text-sm px-5 py-5">
-            Solicitudes Atendidas
-          </h2>
+        <div className="flex  mt-10 w-full rounded-2xl justify-center">
 
-          <Chart options={line} series={line.series} type="line" width={570} />
+          <div className="container border mt-10 w-[602px] rounded-2xl  ">
+            <h2 className="text-start font-semibold text-sm px-5 py-5">
+              Solicitudes Atendidas
+            </h2>
+
+            <Chart options={line} series={line.series} type="line" width={570} />
+          </div>
         </div>
+
       </div>
     </div>
   );

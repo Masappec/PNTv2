@@ -117,22 +117,22 @@ const PublicationDetailPresenter = (props: Props) => {
                                 props.attachments.map((file) => {
                                     return <li className="py-3 sm:py-4">
                                         <a href={file.url_download as string} target="_blank" rel="noreferrer">
-                                        <div className="flex items-center space-x-4">
-                                            <div className="shrink-0">
-                                                <FaExternalLinkAlt
-                                                    className="h-8 w-8 text-primary-600 dark:text-gray-300"
-                                                    size={30}
-                                                />
+                                            <div className="flex items-center space-x-4">
+                                                <div className="shrink-0">
+                                                    <FaExternalLinkAlt
+                                                        className="h-8 w-8 text-primary-600 dark:text-gray-300"
+                                                        size={30}
+                                                    />
+                                                </div>
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
+                                                        {file.name !== "" ? file.name : "Sin nombre"}
+                                                    </p>
+                                                    <p className="truncate text-sm text-gray-500 dark:text-gray-400">
+                                                        {file.description !== "" ? file.description : "Sin descripción"}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div className="min-w-0 flex-1">
-                                                <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                                                    {file.name !== "" ? file.name : "Sin nombre"}
-                                                </p>
-                                                <p className="truncate text-sm text-gray-500 dark:text-gray-400">
-                                                    {file.description !== "" ? file.description : "Sin descripción"}
-                                                </p>
-                                            </div>
-                                        </div>
                                         </a>
                                     </li>
                                 })

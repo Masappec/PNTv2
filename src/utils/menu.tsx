@@ -38,9 +38,18 @@ export interface MenuItem {
   permission_required: string;
   icon: JSX.Element;
   visible: boolean;
+  visible_for_superadmin?: boolean;
 }
 
 const menu = [
+  {
+    name: "Indicadores",
+    path: "/admin/dashboard",
+    visible: true,
+    icon: <BiPieChart size={25} className="text-slate-500" />,
+    permission_required: "",
+    element: <IndicatorsAdmin />,
+  },
   {
     name: 'Usuarios',
     path: '/admin/users',
@@ -145,15 +154,19 @@ const menu = [
     visible: true,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
-    element: <ActiveNumerals />
+    element: <ActiveNumerals />,
+    visible_for_superadmin: false
+
   },
   {
     name: 'Crear T.Activa',
     path: '/admin/active/create',
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "view_publication",
-    element: <ActiveCreate />
+    permission_required: "add_transparencyactive",
+    element: <ActiveCreate />,
+    visible_for_superadmin: false
+
   },
 
   {
@@ -162,7 +175,9 @@ const menu = [
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
-    element: <ActivePreviewData />
+    element: <ActivePreviewData />,
+    visible_for_superadmin: false
+
   },
 
   {
@@ -171,7 +186,9 @@ const menu = [
     visible: true,
     icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
-    element: <FocalizedList />
+    element: <FocalizedList />,
+    visible_for_superadmin: false
+
   },
   {
     name: 'T.Focalizada',
@@ -179,7 +196,9 @@ const menu = [
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
-    element: <FocalizedCreate />
+    element: <FocalizedCreate />,
+    visible_for_superadmin: false
+
   },
   {
     name: 'T.Focalizada',
@@ -195,7 +214,9 @@ const menu = [
     visible: true,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
-    element: <CollaborativeList />
+    element: <CollaborativeList />,
+    visible_for_superadmin: false
+
   },
   {
     name: 'T.Colaborativa',
@@ -223,6 +244,8 @@ const menu = [
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_solicity",
     element: <SolicityList />,
+    visible_for_superadmin: false
+
   },
 
   {
@@ -232,6 +255,7 @@ const menu = [
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_solicityresponse",
     element: <SolicityListEstablishment />,
+    visible_for_superadmin: false
   },
   {
     name: " Crear Solicitudes",
@@ -242,12 +266,29 @@ const menu = [
     element: <SolicityCreate />,
   },
   {
+    name: " Crear Solicitudes",
+    path: "/admin/solicity/create",
+    visible: false,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
+    permission_required: "add_manual_solicity",
+    element: <SolicityCreate />,
+  },
+  {
     name: " Editar Solicitudes",
     path: "/admin/solicity/edit/:id",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "change_solicity",
     element: <SolicityEdit />,
+  },
+
+  {
+    name: " Responder Solicitudes",
+    path: "/admin/solicity/response/citizen",
+    visible: false,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
+    permission_required: "view_solicity",
+    element: <SolicityResponse />,
   },
   {
     name: " Responder Solicitudes",
@@ -273,14 +314,7 @@ const menu = [
     permission_required: "view_configuration",
     element: <SolicityDetail />,
   },
-  {
-    name: "Indicadores",
-    path: "/admin/dashboard",
-    visible: true,
-    icon: <BiPieChart size={25} className="text-slate-500" />,
-    permission_required: "view_solicity",
-    element: <IndicatorsAdmin/>,
-  },
+
 ];
 
 export default menu;

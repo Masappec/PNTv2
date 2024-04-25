@@ -25,7 +25,7 @@ interface Props {
     visibleModal: boolean
     onConfirmDelete: () => void
     onCancelDelete: () => void
-    onDelete: (id:number) => void
+    onDelete: (id: number) => void
 
     publicationSelected: PublicationEntity | null
 
@@ -69,6 +69,7 @@ const PublicationListPresenter = (props: Props) => {
             </div>
             <div className="flex justify-between items-center mt-5">
                 <Table
+                    show={true}
                     columns={[
                         {
                             title: "Titulo",

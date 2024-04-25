@@ -9,7 +9,7 @@ interface Props {
 }
 const Header = (props: Props) => {
   return (
-    <header className="border-b-2 border-gray-500 dark:border-primary-600">
+    <header className="border-b-[1px] border-dark-400 dark:border-primary-600">
       <nav className="bg-white border-gray-900 px-4 lg:px-6 py-2.5 dark:bg-gray-800 ">
         <div className="flex flex-wrap justify-between items-center mx-8 ">
           <a href="/" className="flex items-center ">
@@ -30,14 +30,14 @@ const Header = (props: Props) => {
             </Link>
 
             <Link
-              to="/ingreso"
+              to="#"
               tabIndex={3}
               className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-base px-6 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
               <FormattedMessage id="indicators" />
             </Link>
             <Link
-              to="/ingreso"
+              to="/acerca-de"
               tabIndex={4}
               className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-base px-11 py-2.5   dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >

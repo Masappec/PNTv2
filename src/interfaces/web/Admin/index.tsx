@@ -14,13 +14,18 @@ const Admin = () => {
 
     const [user, setUser] = useState<UserEntity>({} as UserEntity)
     const publicApi = new PublicApi(api);
+    const [is_superuser, setIsSuperuser] = useState<boolean | undefined>(false)
 
     const publicService = new PublicService(publicApi);
     const usecase = new PublicUseCase(publicService);
 
     useEffect(() => {
+        setIsSuperuser(SessionService.getUserData().is_superuser)
+
         setUser(SessionService.getUserData())
     }, [])
+
+
 
     const logout = () => {
         SessionService.clearSession();
@@ -33,6 +38,7 @@ const Admin = () => {
                 email={user.email}
                 usecase={usecase}
                 permissions={user.user_permissions?.map((item) => item.codename) || []}
+                isSuperadmin={is_superuser || false}
             />
         </IntlProvider>
     )

@@ -1,6 +1,7 @@
 import { FormattedMessage } from "react-intl";
 import { CustomSearch } from "../CustomSearch";
 import { ColourOption } from "../../../utils/interface";
+
 interface Props {
   loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
   countEntities: number;
@@ -10,7 +11,7 @@ interface Props {
 const Hero = (props: Props) => {
 
   return (
-    <section className="dark:bg-gray-900 mt-2 ">
+    <section className="dark:bg-gray-900 mt-10 ">
       <div className="xl:grid lg:grid xl:max-w-screen-xl sm:w-screen ml-3 xl:ml-10 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 sm:grid-cols-1 lg:grid-cols-10 ">
         <div className="lg:col-span-2 justify-start  ">
           <p
@@ -45,9 +46,9 @@ const Hero = (props: Props) => {
             <div className="relative search 
             lg:mt-8 w-full h-auto 
             
-            xl:justify-center flex xl:ml-48  lg:m-0
+            xl:justify-center flex   lg:m-0
              flex-auto">
-              <div className="relative w-[95%]">
+              <div className="relative w-full xl:w-[730px]">
                 <CustomSearch
                   colourOptions={[]}
                   loadOptions={props.loadOptions}

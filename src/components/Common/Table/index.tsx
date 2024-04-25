@@ -1,9 +1,11 @@
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import HeaderTable from "./header";
 
 import { Pagination, Table as TableFlowbite } from "flowbite-react";
 interface Column<T> {
     title: string
-    render: (data: T) => React.ReactNode,
+    key?: string
+    render: (data: T, index: number) => React.ReactNode,
     width?: number
 }
 
@@ -19,7 +21,7 @@ interface TableProps<T> {
     textAdd?: string;
     textImport?: string;
     data: T[];
-    onSearch: (search: string) => void;
+    onSearch?: (search: string) => void;
     search: string;
     onChangePage?: (page: number) => void;
     currentPage?: number;
@@ -28,22 +30,29 @@ interface TableProps<T> {
     to?: number;
     total?: number;
     show: boolean;
+    limits?: number[];
+    onChangesLimit?: (limit: number) => void;
+    sorteable?: boolean;
+    onSort?: (sort: string) => void;
+    columns_sort?: string[];
 }
 
-function Table<T>(props: TableProps<T>) {
+function Table<T>({ ...props }: TableProps<T>) {
 
     return (
-        <div className="w-full mx-5">
-{ props.show &&
-            <HeaderTable
-                isImport={props.isImport}
-                textImport={props.textImport}
-                textAdd={props.textAdd}
-                onAdd={props.onAdd}
-                key={props.title}
-                onImport={props.onImport}
-                onSearch={props.onSearch}
-            />
+        <div className="w-full">
+            {props.show &&
+                <HeaderTable
+                    isImport={props.isImport}
+                    textImport={props.textImport}
+                    textAdd={props.textAdd}
+                    onAdd={props.onAdd}
+                    key={props.title}
+                    onImport={props.onImport}
+                    onSearch={props.onSearch}
+                    limits={props.limits}
+                    onChangesLimit={props.onChangesLimit}
+                />
             }
             <div className="overflow-x-auto">
                 <TableFlowbite>
@@ -53,30 +62,54 @@ function Table<T>(props: TableProps<T>) {
                             props.columns.map(column => (
 
                                 <TableFlowbite.HeadCell
-                                    key={column.title} className={`px-4 py-3 `}
+                                    key={column.title} className={`px-4 py-3 ${props.sorteable ? 'cursor-pointer' : ''}`}
+                                    onClick={() => props.onSort && props.onSort(column.key || "")}
+
 
                                 >
-                                    {column.title}
+                                    <div className="flex items-center">
+                                        <span className="mr-2">
+                                            {column.title}
+                                        </span>
+                                        {
+                                            props.sorteable ?
+                                                props.columns_sort &&
+                                                    props.columns_sort.includes(column.key || "") ?
+                                                    <FaChevronDown /> : <FaChevronUp />
+                                                : null
+                                        }
+                                    </div>
+
+
                                 </TableFlowbite.HeadCell>
                             ))
                         }
                     </TableFlowbite.Head>
                     <TableFlowbite.Body className="text-sm divide-y divide-gray-200 dark:divide-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800">
                         {
-                            props.data.map(row => (
+                            props.data.map((row, index) => (
                                 <TableFlowbite.Row>
                                     {
-                                        props.columns.map(column => (
+                                        props.columns.map((column) => (
                                             <TableFlowbite.Cell
 
                                                 className={`px-4 py-3 `}
                                                 key={column.title}>
-                                                {column.render(row)}
+                                                {column.render(row, index)}
                                             </TableFlowbite.Cell>
                                         ))
                                     }
                                 </TableFlowbite.Row>
                             ))
+                        }
+                        {
+                            props.data.length === 0 && (
+                                <TableFlowbite.Row>
+                                    <TableFlowbite.Cell className="px-4 py-3 text-center" colSpan={props.columns.length}>
+                                        No hay datos
+                                    </TableFlowbite.Cell>
+                                </TableFlowbite.Row>
+                            )
                         }
 
                     </TableFlowbite.Body>
@@ -112,7 +145,7 @@ function Table<T>(props: TableProps<T>) {
             </nav>
 
 
-        </div>
+        </div >
     )
 
 

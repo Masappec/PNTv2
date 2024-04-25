@@ -25,6 +25,7 @@ class UserEntity {
   user_permissions?: {
     codename: string;
   }[]
+  is_superuser?: boolean;
 
 
   constructor(id: number, username: string, email: string, firstName: string, lastName: string,
@@ -42,7 +43,8 @@ class UserEntity {
     is_active?: boolean,
     user_permissions?: {
       codename: string;
-    }[]
+    }[],
+    is_superuser?: boolean
   ) {
     this.id = id;
     this.username = username;
@@ -64,7 +66,9 @@ class UserEntity {
     this.job = job;
     this.is_active = is_active;
     this.user_permissions = user_permissions;
+    this.is_superuser = is_superuser;
   }
+
 
 
 

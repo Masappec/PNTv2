@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Masculino",
+        "id": "Masculino",
+        "color": "#00B8D9"
+    },
+    {
+        "name": "Femenino",
+        "id": "Femenino",
+        "color": "#00B8D9"
+    },
+    {
+        "name": "LGBTIQ+",
+        "id": "LGBTIQ+",
+        "color": "#00B8D9"
+    },
+    {
+        "name": "Otro",
+        "id": "Otro",
+        "color": "#00B8D9"
+    }
+]

@@ -114,7 +114,7 @@ const UserImportPresenter = (props: Props) => {
             </div>
 
             <Table
-
+                show={true}
                 isImport={false}
                 columns={[
                     {
@@ -155,7 +155,7 @@ const UserImportPresenter = (props: Props) => {
                 onFilter={() => { }}
                 onImport={() => { }}
                 onSearch={() => { }}
-                
+
                 search={""}
 
 

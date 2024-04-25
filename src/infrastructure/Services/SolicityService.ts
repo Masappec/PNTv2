@@ -1,4 +1,5 @@
 import CreateSolicity from "../../domain/entities/CreateSolicity";
+import ResponseSolicity from "../../domain/entities/ResponseSolicity";
 import SolicityMappers from "../../domain/mappers/SolicityMapper";
 import SolicityApi from "../Api/Solicity/SolicityApi";
 import { SolicityResponseDto } from "../Api/Solicity/interface";
@@ -9,8 +10,8 @@ class SolicityService {
     this.api = api;
   }
 
-  async getSolicities(search?: string, page?: number) {
-    const response = await this.api.getSolicity(search, page);
+  async getSolicities(search?: string, page?: number, limit?: number) {
+    const response = await this.api.getSolicity(search, page, limit);
     return {
       ...response,
       results:
@@ -20,8 +21,8 @@ class SolicityService {
     };
   }
 
-  async getEstablishmentSolicity(search?: string, page?: number) {
-    const response = await this.api.getEstablishmentSolicity(search, page);
+  async getEstablishmentSolicity(search?: string, page?: number, limit?: number, sort?: string[]) {
+    const response = await this.api.getEstablishmentSolicity(search, page, limit, sort);
     return {
       ...response,
       results:
@@ -60,12 +61,16 @@ class SolicityService {
     );
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }
+  async getSolicityBiIdEstablishment(id: number) {
 
+    const response = await this.api.getSolicityByIdEstablishment(id);
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
+  }
   async responseSolicity(data: ResponseSolicity) {
     const response = await this.api.responseSolicity(
       SolicityMappers.domainApi(data)
     );
-    return SolicityMappers.apiToDomain(response)
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }
 
   async updateSolicity(data: CreateSolicity, id: number) {

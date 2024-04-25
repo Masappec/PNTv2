@@ -1,5 +1,8 @@
-import React from 'react';
-import { components, ContainerProps, ControlProps, DropdownIndicatorProps, ValueContainerProps } from 'react-select';
+import React, { ComponentType } from 'react';
+import {
+    components, ContainerProps, ControlProps, ValueContainerProps, InputProps,
+
+} from 'react-select';
 import { ColourOption } from '../../../utils/interface';
 import { FaSearch } from 'react-icons/fa';
 import AsyncSelect from 'react-select/async';
@@ -15,48 +18,78 @@ const SelectContainer = ({
     );
 };
 
-const DropdownIndicator = ({ ...props }: DropdownIndicatorProps<ColourOption>) => {
 
-    const copy = props;
+
+const LoadingIndicator = () => {
+    return (
+        <div>
+
+        </div>
+    );
+}
+
+
+const DropdownIndicator = () => {
+
 
 
 
 
     return (
-        <components.DropdownIndicator {...copy}>
-            <div className=" w-fit flex justify-end h-[56px]">
-                <button
+        <button
+            type="button"
 
-                    type="button"
-
-                    className="!absolute w-[86px] h-[56px] border-black  
+            className="!absolute w-[86px] h-[50px] border-black  
                  
                   text-white bg-primary-700
-                  py-5
+                  
                    hover:bg-primary-800 focus:ring-4
                    justify-center
-                    focus:ring-primary-300 font-normal 
+                     font-normal 
                     flex items-center
                     xl:w-[150px]
                     xl:space-x-5
-                    rounded-full text-xl px-5 "
-                >
+                    -ml-20
+                    rounded-full text-xl  "
+        >
 
-                    <p className='hidden xl:flex'>
-                        Buscar
-                    </p>
-                    <FaSearch size="20" />
-                </button>
-            </div>
-        </components.DropdownIndicator>
+            <p className='hidden xl:flex'>
+                Buscar
+            </p>
+            <FaSearch size="20" />
+        </button>
     );
 }
+
+const Input: ComponentType<InputProps<ColourOption>>
+
+    = (props) => {
+        return (
+            <input {...props} className="
+            onfocus:outline-none
+            border-none
+            focus:border-none
+            outline-none
+            focus:outline-none
+            border-white
+            focus:shadow-none
+            w-full
+            "
+
+
+                style={({
+                    "--tw-ring-color": "transparent",
+                } as React.CSSProperties)}
+            />
+        );
+    }
+
 
 const ValueContainer = (props: ValueContainerProps<ColourOption>) => {
     return (
         <components.ValueContainer {...props}
 
-            className="w-full border-2 border-black  rounded-full">
+            className="w-full border-[1px] border-black  rounded-full">
             {props.children}
 
         </components.ValueContainer>
@@ -65,13 +98,17 @@ const ValueContainer = (props: ValueContainerProps<ColourOption>) => {
 
 const Control = (props: ControlProps<ColourOption>) => {
     return (
-        <components.Control {...props} className="xl:w-[730px] h-[56px] w-full md:w-full border-2 border-black  rounded-full">
+        <div
+            ref={props.innerRef}
+            className='w-full flex'
+            {...props.innerProps}>
             {props.children}
-        </components.Control>
+        </div>
 
 
     );
 }
+
 
 interface Props {
     colourOptions: ColourOption[];
@@ -88,7 +125,10 @@ export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSe
         loadOptions={loadOptions}
         cacheOptions={true}
 
-        components={{ SelectContainer, Control, DropdownIndicator, ValueContainer }}
+        components={{
+            SelectContainer, Control, DropdownIndicator, ValueContainer,
+            Input: Input, LoadingIndicator
+        }}
         styles={{
             container: (base) => ({
                 ...base,
@@ -105,10 +145,10 @@ export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSe
 
         }}
         placeholder=""
+
         classNames={{
-            control: (state) => {
-                return state.isFocused ? 'border-none' : 'border-none'
-            }
+
+
         }}
         options={colourOptions}
         onChange={(value) => {

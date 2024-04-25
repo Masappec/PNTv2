@@ -35,7 +35,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
             <header className="border-b-2 border-dark-400 dark:border-primary-600">
                 <nav className="bg-primary-600 border-gray-900 px-4 lg:px-6 py-10 dark:bg-gray-800"></nav>
             </header>
-            <div className="bg-white h-screen md:flex lg:flex xl:flex ">
+            <div className="bg-white h-screen mb-52 md:flex lg:flex xl:flex ">
                 <div className="items-center hidden lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-full w-2/5  ">
                     <div className=" border-l-2 border-gray-400 ml-2 md:ml-16  justify-items-start h-full "></div>
                     <div className=" pl-10  relative">
@@ -50,7 +50,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                         </p>
                     </div>
                 </div>
-                <div className="absolute top-52 h-24 w-6 ml-7 bg-primary-600  hidden lg:block"></div>
+                <div className="absolute top-52 h-24 w-6 ml-14 bg-primary-600  hidden lg:block"></div>
                 <div className="bg-white w-full mt-10 xl:mt-20 lg:mt-20  lg:ml-36 flex justify-center">
                     <form
                         className="border  border-slate-50 xl:shadow-lg h-2/3 md:h-2/5 xl:h-fit lg:h-2/3  rounded-lg text-center  items-center"
@@ -88,16 +88,24 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                                 props.fields.map((field) => {
                                     return (
                                         field.type_field === 'select' ?
-                                            <div className="flex  flex-col m-2 lg:items-center">
+                                            <div className="m-4">
 
                                                 <Select
                                                     placeholder={field.description}
                                                     value={props.data[field.name as keyof RegisterDto] as string}
                                                     onChange={(e) => props.setData(field.name, e.target.value)}
-                                                    options={[
-                                                        { value: '1', label: 'One' },
-                                                        { value: '2', label: 'Two' },
-                                                        { value: '3', label: 'Three' },
+
+                                                    options={[{
+                                                        value: '',
+                                                        label: 'Seleccione una opción'
+                                                    },
+
+                                                    ...field.options?.map((option) => {
+                                                        return {
+                                                            value: option.id as string,
+                                                            label: option.name
+                                                        }
+                                                    }) as { value: string, label: string }[]
                                                     ]}
                                                 />
                                             </div> : field.type_field === 'checkbox' ?

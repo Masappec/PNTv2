@@ -10,11 +10,11 @@ class SolicityApi {
   constructor(api: AxiosInstance) {
     this.api = api;
   }
-  async getSolicity(search?: string, page?: number) {
+  async getSolicity(search?: string, page?: number, limit?: number) {
     try {
       const response = await this.api.get<Pagination<SolicityResponseDto>>(
         TRANSPARENCY_PATH + "/solicity/list",
-        { params: { search, page } }
+        { params: { search, page, limit } }
       );
       return response.data;
     } catch (error) {
@@ -28,14 +28,16 @@ class SolicityApi {
     }
   }
 
-  async getEstablishmentSolicity(search?: string, page?: number) {
+  async getEstablishmentSolicity(search?: string, page?: number, limit?: number, sort?: string[]) {
     try {
       const response = await this.api.get<Pagination<SolicityResponseDto>>(
         TRANSPARENCY_PATH + `/solicity_response/list`,
         {
           params: {
             search: search ? search : null,
-            page: page ? page : null
+            page: page ? page : null,
+            limit: limit ? limit : null,
+            sort: sort ? sort : null
 
           }
         }
@@ -56,6 +58,23 @@ class SolicityApi {
     try {
       const response = await this.api.get<MessageTranslation<SolicityResponseDto>>(
         TRANSPARENCY_PATH + `/solicity/detail/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string =
+          error.response?.data?.message || "Error al obtener la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al obtener la solicitud.");
+      }
+    }
+  }
+
+  async getSolicityByIdEstablishment(id: number) {
+    try {
+      const response = await this.api.get<MessageTranslation<SolicityResponseDto>>(
+        TRANSPARENCY_PATH + `/solicity_response/detail/${id}`
       );
       return response.data;
     } catch (error) {
@@ -151,7 +170,7 @@ class SolicityApi {
 
   async responseSolicity(data: SolicityResult) {
     try {
-      const response = await this.api.post<SolicityResponseDto>(TRANSPARENCY_PATH + "/solicity_response/create", data);
+      const response = await this.api.post<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + "/solicity_response/create", data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {

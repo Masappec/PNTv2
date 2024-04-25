@@ -6,7 +6,6 @@ import Alert from "../../Common/Alert";
 import Spinner from "../../Common/Spinner";
 import { Button } from "flowbite-react";
 import logo from "../../../assets/Home/logo-dpe 2.png";
-import Checkbox from "../../Common/Checkbox";
 
 
 interface LoginPresenterProps {
@@ -44,7 +43,7 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
             </p>
           </div>
         </div>
-        <div className="absolute top-52 h-24 w-6 ml-7 bg-primary-600  hidden lg:block"></div>
+        <div className="absolute top-52 h-24 w-6 ml-14 bg-primary-600  hidden lg:block"></div>
         <div className="bg-white w-full mt-10 xl:mt-20 lg:mt-20  lg:ml-36 flex justify-center">
           <form
             className="border  border-slate-50 xl:shadow-lg h-2/3 md:h-2/5 xl:h-fit lg:h-2/3  rounded-lg text-center  items-center"
@@ -97,14 +96,7 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
                 />
               </div>
               <div className="flex flex-col-2  xl:mt-6   mt-5">
-                <div className="text-zinc-300 font-semibold text-xs ml-4 ">
-                  <Checkbox
-                    id={""}
-                    checked={props.remenber}
-                    onChange={() => { }}
-                    label={"Recordarme por 30 días"}
-                  />
-                </div>
+
                 <div className="text-primary-500 text-xs ml-6 font-semibold">
                   {" "}
                   <Contrasenia
@@ -134,13 +126,13 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
               <div className="text-primary-500 text-base font-semibold lg:-ml-7 md:-ml-7">
                 <Contrasenia text="Registrate" path="/registro" />{" "}
               </div>
-              
+
             </div>
             <div className="flex flex-row justify-center w-full items-center visible xl:hidden md:hidden bg-[#F4FBFE] h-full">
-            <p className="mt-12 mb-16 text-base text-gray-500 font-medium   ">
-              Portal Nacional
-              de Transparencia
-            </p>
+              <p className="mt-12 mb-16 text-base text-gray-500 font-medium   ">
+                Portal Nacional
+                de Transparencia
+              </p>
             </div>
           </form>
         </div>

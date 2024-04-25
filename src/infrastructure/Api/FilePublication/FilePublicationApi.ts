@@ -1,6 +1,6 @@
-import { AxiosError, AxiosInstance } from "axios";
+import { AxiosError, AxiosInstance, AxiosProgressEvent } from "axios";
 import { FilePublicationRequest, FilePublicationResponse } from "./interface";
-import { TRANSPARENCY_PATH } from "..";
+import { Pagination, TRANSPARENCY_PATH } from "..";
 
 
 /**
@@ -33,15 +33,18 @@ export class FilePublicationApi {
      * @param {FilePublicationRequest} data - datos de la publicacion
      * @returns {FilePublicationResponse} publicacion creada
      */
-    async createFilePublication(data: FilePublicationRequest) : Promise<FilePublicationResponse> {
+    async createFilePublication(data: FilePublicationRequest, callbackUpload?: (event: AxiosProgressEvent) => void): Promise<FilePublicationResponse> {
         try {
-            const form  = new FormData();
+            const form = new FormData();
             form.append('name', data.name);
             form.append('description', data.description);
             form.append('url_download', data.url_download);
-            const response = await this._api.post<FilePublicationResponse>(`${TRANSPARENCY_PATH}/publications/file/create`, data,{
+            const response = await this._api.post<FilePublicationResponse>(`${TRANSPARENCY_PATH}/publications/file/create`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
+                },
+                onUploadProgress: (progressEvent) => {
+                    callbackUpload && callbackUpload(progressEvent);
                 }
             });
 
@@ -63,9 +66,17 @@ export class FilePublicationApi {
      * @param {number} id - id de la publicacion
      * @returns {FilePublicationResponse} publicacion
      */
-    async getFilesPublications() : Promise<FilePublicationResponse> {
+    async getFilesPublications(type: "TA" | "TC" | "TF"): Promise<Pagination<
+        FilePublicationResponse>> {
         try {
-            const response = await this._api.get<FilePublicationResponse>(`${TRANSPARENCY_PATH}/publication/file/list`);
+            const response = await this._api.get<Pagination<FilePublicationResponse>>(`${TRANSPARENCY_PATH}/publications/file/list`, {
+                params: {
+                    type: type
+
+                }
+
+
+            });
 
             return response.data;
         } catch (error) {
@@ -85,7 +96,7 @@ export class FilePublicationApi {
      * @param {number} id - id de la publicacion
      * @returns {void}
      */
-    async deleteFilePublication(id: number) : Promise<void> {
+    async deleteFilePublication(id: number): Promise<void> {
         try {
             await this._api.delete(`${TRANSPARENCY_PATH}/publications/file/delete/${id}`);
         } catch (error) {

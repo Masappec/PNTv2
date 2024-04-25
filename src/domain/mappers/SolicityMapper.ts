@@ -1,11 +1,13 @@
 import { SolicityDraftRequestDto, SolicityResponseDto, SolicityResult } from "../../infrastructure/Api/Solicity/interface"
 import CreateSolicity from "../entities/CreateSolicity";
-import { Solicity } from "../entities/Solicity"
+import ResponseSolicity from "../entities/ResponseSolicity";
+import { Comments, Insistency, Solicity } from "../entities/Solicity"
+import { SolicityResultMapper } from "./SolicityResultMapper";
 
 class SolicityMappers {
 
     static apiToDomain(data: SolicityResponseDto): Solicity {
-        console.log(data.time_line)
+        console.log(data)
         return new Solicity(
             data.id,
             data.created_at + "",
@@ -35,13 +37,45 @@ class SolicityMappers {
             data.user_updated + "",
             data.user_deleted + "",
             data.establishment,
-            data.time_line.map((timeline) => ({
+            data.time_line?.map((timeline) => ({
                 status: timeline.status,
                 created_at: timeline.created_at
-            })),
+            })) || [],
             data.estblishment_name,
-
+            data.responses?.map((response) => SolicityResultMapper.apiToDomain(response)),
+            data.insistency?.map(r => new Insistency(
+                r.id,
+                r.created_at,
+                r.updated_at,
+                r.deleted,
+                r.deleted_at,
+                r.ip,
+                r.status,
+                r.expiry_date,
+                r.motive,
+                r.user_created,
+                r.user_updated,
+                r.user_deleted,
+                r.solicity,
+                r.user
+            )
+            ) || [],
+            data.comments?.map(r => new Comments(
+                r.id,
+                r.created_at,
+                r.updated_at,
+                r.deleted,
+                r.deleted_at,
+                r.ip,
+                r.text,
+                r.user,
+                r.solicity,
+                r.files,
+                r.attachments
+            )
+            ) || []
         )
+
     }
 
 

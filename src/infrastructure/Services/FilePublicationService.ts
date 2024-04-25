@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosProgressEvent } from "axios";
 import { Row } from "../../utils/interface";
 import { FilePublicationApi } from "../Api/FilePublication/FilePublicationApi";
 import { FilePublicationEntity } from "../../domain/entities/PublicationEntity";
@@ -102,13 +102,25 @@ class FilePublicationService {
      * @returns {FilePublicationEntity} - publicacion
      */
 
-    async createFilePublication(data: FilePublicationEntity) {
+    async createFilePublication(data: FilePublicationEntity,
+
+        callbackUpload?: (event: AxiosProgressEvent) => void
+    ) {
 
 
-        const response = await this.api.createFilePublication(FilePublicationMapper.fromDomainToApi(data, data.url_download as File));
+        const response = await this.api.createFilePublication(FilePublicationMapper.fromDomainToApi(data, data.url_download as File),
+            callbackUpload);
 
         return FilePublicationMapper.fromApiToDomain(response);
 
+    }
+
+
+    async getFilesPublications(type: "TA" | "TC" | "TF") {
+
+        const response = await this.api.getFilesPublications(type);
+
+        return response.map((item) => FilePublicationMapper.fromApiToDomain(item));
     }
 }
 

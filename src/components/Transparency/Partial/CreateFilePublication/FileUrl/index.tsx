@@ -1,19 +1,20 @@
 import { Button, Label, Spinner, Textarea } from "flowbite-react"
-import { FaCheckCircle, FaDownload, FaFileCsv, FaTrashAlt } from "react-icons/fa"
+import { FaDownload, FaFileCsv } from "react-icons/fa"
 import Input from "../../../../Common/Input"
 import { useState } from "react"
 
 
 interface IFileUrlPartial {
     index: number
-    file: File |string| null
+    file: File | string | null
     onSaveDateUrl: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
     onDownloadFile: (file: File) => void
     loading: boolean
     error: string | null;
-    onSaveFile: (file: File|string|null, name: string, description: string, index: number) => void
+    onSaveFile: (file: File | string | null, name: string, description: string, index: number) => void
     onRemoveFile: (index: number) => void
-    isSaved: boolean
+    isSaved: boolean;
+    isDownloaded?: boolean;
 }
 
 const FileUrlPartial = (props: IFileUrlPartial) => {
@@ -22,16 +23,6 @@ const FileUrlPartial = (props: IFileUrlPartial) => {
     const [description, setDescription] = useState<string>("")
     return (
         <div className="flex flex-col m-2">
-            {!props.isSaved &&
-                <div className="flex items-center justify-between">
-                    <Button className="w-1/12 text-sm tracking-wide" color="green" onClick={() => props.onSaveFile(props.file, name, description, props.index)}>
-                        <FaCheckCircle className="w-5 h-5 text-green" />
-                    </Button>
-                    <Button className="w-1/12 text-sm tracking-wide" color="red" onClick={() => props.onRemoveFile(props.index)} >
-                        <FaTrashAlt className="w-5 h-5 text-red-600" />
-                    </Button>
-                </div>
-            }
 
             <Input type={"text"}
                 placeholder="Nombre"
@@ -53,7 +44,7 @@ const FileUrlPartial = (props: IFileUrlPartial) => {
                 disabled={props.isSaved}
             />
             {
-                props.file != null && (
+                props.file != null && props.isDownloaded && (
                     <div className="flex items-center  mt-4 gap-x-3 w-full">
                         <span className=" text-gray-500 dark:text-gray-300">
                             <FaFileCsv className=" text-green-600" size={30} />
@@ -92,6 +83,30 @@ const FileUrlPartial = (props: IFileUrlPartial) => {
                 )
             }
             <hr className="my-2" />
+            {!props.isSaved &&
+
+                <div className='flex flex-row justify-between'>
+
+
+                    <Button
+                        className='my-5 w-1/6'
+                        color='red'
+                        onClick={() => props.onRemoveFile(props.index)}
+
+                    >
+                        Cancelar
+                    </Button>
+                    <Button
+                        className='my-5 w-1/6'
+
+                        onClick={() => props.onSaveFile(props.file, name, description, props.index)}
+
+                    >
+                        Cargar
+                    </Button>
+                </div>
+            }
+
         </div>
     )
 }
