@@ -111,7 +111,7 @@ class EstablishmentApi {
 
     async getOptions() {
         try {
-            const response = await this.api.get<OptionsSelectCreate>(ADMIN_PATH + 'establishment/form-fields');
+            const response = await this.api.get<OptionsSelectCreate>(ADMIN_PATH + '/establishment/form-fields');
             return response.data;
         } catch (error: any) {
             const e: string = error.response?.data?.message || 'Error al obtener las opciones.';

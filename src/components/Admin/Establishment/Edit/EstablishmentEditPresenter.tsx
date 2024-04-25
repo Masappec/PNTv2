@@ -117,8 +117,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                             <div className="flex  flex-col m-2">
                                 <Select
                                     placeholder="Tipo de institución"
-                                    name="type_organization"
-                                    value={props.data.type_organization || ""}
+                                    name="type_institution"
+                                    value={props.data.type_institution || ""}
                                     onChange={(e) => props.setData(e)}
                                     options={[
                                         { value: "", label: "Seleccione una opción" },
