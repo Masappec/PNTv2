@@ -10,7 +10,7 @@ const FooterInfo = () => {
 
       <h5 className="font-bold text-2xl mt-20 mb-6 xl:ml-0 ml-4">Listado de Entidades</h5>
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between ">
-        <nav className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-center  text-base text-justify sm:gap-[40px] xl:pr-24 ">
+        <nav className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center  text-base md:text-justify sm:gap-[40px] xl:pr-24 ">
 
           <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0  ">
             Función <br /> Ejecutiva

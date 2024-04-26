@@ -9,6 +9,7 @@ import EstablishmentUseCase from "../../../../domain/useCases/Establishment/Esta
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { toast } from "react-toastify";
 import TransparencyCollabUseCase from "../../../../domain/useCases/TransparencyCollabUseCase/TransparencyCollabUseCase";
+import { Pagination } from "../../../../infrastructure/Api";
 
 interface Props {
 
@@ -48,6 +49,17 @@ const CollabCreateContainer = (props: Props) => {
 
   const [establishment, setEstablishment] = useState({} as EstablishmentEntity)
 
+  const [filesList, setFilesList] = useState<Pagination<FilePublicationEntity>>({
+    current: 0,
+    limit: 0,
+    next: 0,
+    previous: 0,
+    results: [],
+    to: 0,
+    total: 0,
+    from: 0,
+    total_pages: 0
+  })
 
   useEffect(() => {
     props.establishmentUseCase.getByUserSession().then((response) => {
@@ -63,7 +75,13 @@ const CollabCreateContainer = (props: Props) => {
 
 
 
-
+  useEffect(() => {
+    props.fileUseCase.getFilesPublications("TC").then((response) => {
+      setFilesList(response)
+    }).catch((error) => {
+      setError(error.message)
+    })
+  }, [])
 
 
   /**
@@ -75,7 +93,27 @@ const CollabCreateContainer = (props: Props) => {
   }
 
 
+  const addFileFromList = (file: FilePublicationEntity) => {
+    const copy = files;
 
+    copy.push({
+      type: "file",
+      error: "",
+      file: file.url_download,
+      file_publication: file,
+      loading: false,
+      success: ""
+    })
+
+    SetFiles(copy)
+    setPublication({
+      ...publication,
+      files: [...publication.files || [], file]
+
+
+    })
+
+  }
 
   /**
    * @summary funcion para guardar los datos de la tabla
@@ -313,6 +351,13 @@ const CollabCreateContainer = (props: Props) => {
     const copyFiles = [...files]
     copyFiles.splice(index, 1)
     SetFiles(copyFiles)
+    const pub = publication
+    pub.files.splice(index, 1)
+    setPublication({
+      ...publication,
+      files: pub.files
+    }
+    )
   }
 
   return (
@@ -335,6 +380,8 @@ const CollabCreateContainer = (props: Props) => {
       onSaveFile={onSaveFile}
       publication={publication}
       onRemoveFileFromPublication={onRemoveFileFromPublication}
+      files_uploaded_last={filesList}
+      onAddFileToPublication={addFileFromList}
     />
   )
 }

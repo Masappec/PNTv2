@@ -42,11 +42,7 @@ const FocalizedListPresenter = (props: Props) => {
           Transparencia LOTAIP - Transparencia focalizada
         </h2>
       </div>
-      <div className="ml-11 mt-10">
-        <h2 className="text-xl text-black font-bold  mb-10">
-          Transparencia focalizada
-        </h2>
-      </div>
+
 
       <div className="mr-40 mt-5 flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-5 flex-shrink-0 ">
 
@@ -94,7 +90,7 @@ const FocalizedListPresenter = (props: Props) => {
           show={true}
           columns={[
             {
-              render: (row: TransparencyFocusEntity) => <p>{new Date(row.published_at).toDateString()}</p>,
+              render: (row: TransparencyFocusEntity) => <p>{new Date(row.published_at).toLocaleString()}</p>,
 
 
               title: "Fecha",
@@ -140,6 +136,7 @@ const FocalizedListPresenter = (props: Props) => {
           onChangePage={props.setPage}
           onImport={props.onImport}
           textImport="Importar"
+          totalPages={props.totalPage}
 
 
 

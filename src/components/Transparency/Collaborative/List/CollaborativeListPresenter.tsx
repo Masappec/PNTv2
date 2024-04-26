@@ -94,7 +94,7 @@ const CollaborativeListPresenter = (props: Props) => {
           show={true}
           columns={[
             {
-              render: (row: TransparencyCollab) => <p>{new Date(row.published_at).toDateString()}</p>,
+              render: (row: TransparencyCollab) => <p>{new Date(row.published_at).toLocaleString()}</p>,
 
 
               title: "Fecha",
@@ -140,7 +140,7 @@ const CollaborativeListPresenter = (props: Props) => {
           onChangePage={props.setPage}
           onImport={props.onImport}
           textImport="Importar"
-
+          totalPages={props.totalPage}
 
 
         />

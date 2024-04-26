@@ -134,7 +134,7 @@ const DynamicTable = (props: Props) => {
                             <>
 
                                 <Table.Row key={rowIndex}
-                                    className={hovered?.row === rowIndex ? "bg-gray-400" : ""}>
+                                    className={hovered?.row === rowIndex ? "bg-gray-200" : ""}>
 
                                     <Table.Cell>
                                         <Button className="w-5 h-5" color="failure" onClick={() => handleRemove(rowIndex, 0, false)} >

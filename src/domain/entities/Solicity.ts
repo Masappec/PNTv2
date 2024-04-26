@@ -154,7 +154,7 @@ export class Comments {
         public deleted: boolean,
         public deleted_at: string,
         public ip: string,
-        public text: string,
+        public motive: string,
         public user: number,
         public solicity: number,
         public files: number[],
@@ -230,7 +230,7 @@ export class Solicity extends BaseEntity {
         })
 
         solicity.comments?.forEach(c => {
-            list.push(new TimeLinePresenter(c.user, c.created_at, c.text, [], [], "COMMENT", "Comentario del ciudadano"))
+            list.push(new TimeLinePresenter(c.user, c.created_at, c.motive, [], [], "COMMENT", "Comentario del ciudadano"))
         })
 
 

@@ -1,5 +1,5 @@
 import { Button, Tabs } from "flowbite-react";
-import { FaFile, FaPlusCircle, FaTrash } from "react-icons/fa";
+import { FaPlusCircle, FaTrash } from "react-icons/fa";
 import Dropzone from "../../../Common/Dropzone";
 import { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
 import { Row } from "../../../../utils/interface";
@@ -8,6 +8,9 @@ import FileUrlPartial from "../../Partial/CreateFilePublication/FileUrl";
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import Spinner from "../../../Common/Spinner";
 import { LuCheck, LuX } from "react-icons/lu";
+import { ListUploadsFiles } from "../../Partial/CreateFilePublication/ListUploadsFiles";
+import { Pagination } from "../../../../infrastructure/Api";
+import IconSearch from "../../../Common/IconSearch";
 
 interface Props {
 
@@ -39,10 +42,10 @@ interface Props {
   onRemoveFile: (index: number) => void
 
   publication: TransparencyFocusEntity,
-
+  files_uploaded_last: Pagination<FilePublicationEntity>;
 
   onRemoveFileFromPublication: (index: number) => void
-
+  onAddFileToPublication: (file: FilePublicationEntity) => void
 }
 
 
@@ -54,14 +57,14 @@ const CollaborativeCreatePresenter = (props: Props) => {
     <div>
       <form onSubmit={props.handleSubmit} className="flex flex-col m-2">
         <div>
-          <div className="flex flex-col m-2">
+          <div className="flex flex-col w-full m-2 justify-between">
 
 
 
-            <h3 className="text-lg font-medium text-gray-800 dark:text-white">
-              Datos de la publicación
+            <h3 className="text-lg font-medium text-gray-800 mt-10 dark:text-white">
+              Datos de la publicación Transparecia colaborativa
             </h3>
-            <div className="flex flex-row m-2">
+            <div className="flex flex-row m-2 justify-end">
               <div className="flex items-center mt-4 gap-x-3">
 
                 <Button
@@ -103,7 +106,8 @@ const CollaborativeCreatePresenter = (props: Props) => {
             props.publication.files?.map((file, index) => {
               return (
                 <div className="flex flex-col w-40 m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
-                  <FaFile className=" text-green-600" size={30} />
+                  <IconSearch type={file.name} />
+
                   <span className=" text-gray-500 dark:text-gray-300">
                     {file.name}
                   </span>
@@ -111,7 +115,7 @@ const CollaborativeCreatePresenter = (props: Props) => {
                     {file.description}
                   </span>
                   <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
-                    <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromPublication(index)} />
+                    <FaTrash className=" text-red-600 cursor-pointer" size={15} onClick={() => props.onRemoveFileFromPublication(index)} />
                   </span>
                 </div>
               )
@@ -187,7 +191,7 @@ const CollaborativeCreatePresenter = (props: Props) => {
               </Button>
             </div>
           </Tabs.Item>
-          <Tabs.Item title="URL">
+          <Tabs.Item title="Enlace (URL)">
             {
               props.files.map((file, index) => {
                 if (file.type === "url") {
@@ -216,6 +220,18 @@ const CollaborativeCreatePresenter = (props: Props) => {
               </Button>
             </div>
           </Tabs.Item>
+          <Tabs.Item title="Buscar archivos Subidos">
+            <ListUploadsFiles
+              currentPage={props.files_uploaded_last.current}
+              files={props.files_uploaded_last.results}
+              onAddFileToPublication={(file) => props.onAddFileToPublication(file)}
+              onChangePage={() => { }}
+              onDownloadFileFromUrl={() => { }}
+              totalPages={props.files_uploaded_last.total_pages as number}
+
+            />
+          </Tabs.Item>
+
         </Tabs>
       </form>
     </div >

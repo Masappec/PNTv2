@@ -9,6 +9,7 @@ import TransparencyFocusUseCase from "../../../../domain/useCases/TransparencyFo
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { toast } from "react-toastify";
+import { Pagination } from "../../../../infrastructure/Api";
 
 interface Props {
 
@@ -44,6 +45,17 @@ const FocalizedCreateContainer = (props: Props) => {
 
   ));
 
+  const [filesList, setFilesList] = useState<Pagination<FilePublicationEntity>>({
+    current: 0,
+    limit: 0,
+    next: 0,
+    previous: 0,
+    results: [],
+    to: 0,
+    total: 0,
+    from: 0,
+    total_pages: 0
+  })
 
 
   const [establishment, setEstablishment] = useState({} as EstablishmentEntity)
@@ -59,7 +71,13 @@ const FocalizedCreateContainer = (props: Props) => {
   }, [])
 
 
-
+  useEffect(() => {
+    props.fileUseCase.getFilesPublications("TF").then((response) => {
+      setFilesList(response)
+    }).catch((error) => {
+      setError(error.message)
+    })
+  }, [])
 
 
 
@@ -265,7 +283,27 @@ const FocalizedCreateContainer = (props: Props) => {
     }
 
   }
+  const addFileFromList = (file: FilePublicationEntity) => {
+    const copy = files;
 
+    copy.push({
+      type: "file",
+      error: "",
+      file: file.url_download,
+      file_publication: file,
+      loading: false,
+      success: ""
+    })
+
+    SetFiles(copy)
+    setPublication({
+      ...publication,
+      files: [...publication.files || [], file]
+
+
+    })
+
+  }
 
   /**
    * @summary funcion para remover un archivo del listado no subido
@@ -335,6 +373,8 @@ const FocalizedCreateContainer = (props: Props) => {
       onSaveFile={onSaveFile}
       publication={publication}
       onRemoveFileFromPublication={onRemoveFileFromPublication}
+      files_uploaded_last={filesList}
+      addFileFromList={addFileFromList}
     />
   )
 }

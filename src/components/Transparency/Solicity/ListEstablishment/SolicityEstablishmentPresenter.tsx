@@ -162,7 +162,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         key: 'date',
                         render: (solicity) => {
 
-                            const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE)
+                            const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.RESPONSED.key)
                             return <p>{
                                 element ? new Date(element.created_at).toLocaleString() : ""
                             }</p>
@@ -172,7 +172,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         title: "Fecha insistencia",
                         key: "date",
                         render: (solicity) => {
-                            const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
+                            const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_SEND.key)
                             return <p>{
                                 element ? new Date(element.created_at).toLocaleString() : ""
                             }</p>
@@ -182,7 +182,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         title: "Fecha R. Insistencia",
                         key: "date",
                         render: (solicity) => {
-                            const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE_INSISTENCY)
+                            const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_RESPONSED.key)
                             return <p>{
                                 element ? new Date(element.created_at).toLocaleString() : ""
                             }</p>
@@ -192,7 +192,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         title: "Fecha gestión oficiosa",
                         key: "date",
                         render: (solicity) => {
-                            const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
+                            const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INFORMAL_MANAGMENT_SEND.key)
                             return <p>{
                                 element ? new Date(element.created_at).toLocaleDateString() : ""
                             }</p>
@@ -201,11 +201,11 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                     {
                         title: 'Insistencia/ \n Correción',
                         render: (solicity) => {
-                            const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
-                            const status = StatusStageSolicity[element?.status as keyof typeof StatusStageSolicity]
+                            const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_RESPONSED.key)
+                            const status = StatusSolicity[element?.status as keyof typeof StatusSolicity]
 
                             return <p>{
-                                element ? status.icon : <FaClock size={20} />
+                                status?.icon ? status?.icon : <FaClock size={20} />
                             }</p>
                         }
                     },

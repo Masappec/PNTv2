@@ -12,7 +12,7 @@ const Hero = (props: Props) => {
 
   return (
     <section className="dark:bg-gray-900 mt-2 ">
-      <div className="xl:grid lg:grid xl:max-w-screen-xl sm:w-screen 
+      <div className="xl:grid lg:grid 
       ml-3 xl:ml-10 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 grid-cols-2   xl:grid-cols-10 ">
         <div className="lg:col-span-2 justify-start  ">
           <p
@@ -22,7 +22,7 @@ const Hero = (props: Props) => {
             <FormattedMessage id="portal_nacional" />
           </p>
         </div>
-        <div className="lg:col-span-8 lg:flex-row 
+        <div className="md:col-span-8 lg:flex-row 
         xl:justify-end xl:items-center lg:space-x-4 lg:space-y-0 lg:flex pt-6 ">
           <div className="flex flex-col xl:items-center xl:justify-center xl:w-full">
             <p

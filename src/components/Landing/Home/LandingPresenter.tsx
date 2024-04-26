@@ -94,12 +94,12 @@ const LandingPresenter = (props: Props) => {
           >
             <FormattedMessage id="search_by_tematic" />
           </p>
-          <hr className="w-[85%] ml-64 border-gray-900 -mt-5 mr-9 hidden xl:block" />
+          <hr className="w-[79%] ml-64 border-gray-900 -mt-5 mr-9 hidden xl:block" />
           <hr className="w-[90%] ml-5 border-blue-300 mt-5 mb-1 mr-9 xl:hidden" />
         </div>
 
-        <div className="grid mt-20 grid-cols-1 xl:space-y-4  lg:grid-cols-2 xl:grid-cols-4 
-        lg:ml-5   md:ml-5 xl:-space-x-3 
+        <div className="grid mt-20 grid-cols-1 md:grid-cols-2 xl:space-y-4  lg:grid-cols-2 xl:grid-cols-4 
+        lg:ml-5   md:ml-0 xl:-space-x-3 
          w-full justify-center  mb-44 ">
           <CardConsulta
             icon={
@@ -112,7 +112,7 @@ const LandingPresenter = (props: Props) => {
             backgroundColor="hover:bg-[#F7941D]  bg-[#FFF6EC] px-5 w-full "
             color="text-black "
             content=" Encontrarás información sobre presupuesto participativo, consejo de coordinación regional, audiencias públicas, entre otros."
-            classnames={"px-5 xl:mr-0 mt-4"}
+            classnames={"px-5 xl:mr-0 md:mt-0 lg:mt-4"}
           ></CardConsulta>
           <CardConsulta
             icon={

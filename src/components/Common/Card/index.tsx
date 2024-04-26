@@ -27,7 +27,7 @@ const CardConsulta = (props: Props) => {
         <div
             onMouseOver={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            className={" container flex flex-col h-full w-1/2 lg:w-auto xl:h-[350px]  text-left  " + props.classnames}>
+            className={" container flex flex-col h-full w-10/12 md:w-full lg:w-auto xl:h-[350px]  text-left  " + props.classnames}>
 
             <Card
                 href="#" className={"mt-5 xl:mt-0 lg:mt-0 rounded-none shadow-none border-transparent border-l-[1px] border-t-[1px] border-r-[1px] items-center w-full  h-full flex " + props.backgroundColor}>
