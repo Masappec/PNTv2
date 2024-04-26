@@ -70,3 +70,19 @@ export interface EstablishmentDetailDTO {
     function_organization?: string;
     type_institution?: string;
 }
+
+export interface OptionsSelectCreate {
+    functions: {
+        id: number;
+        name: string;
+    }[],
+    institutions: {
+        id: number;
+        name: string;
+    }[],
+    organizations: {
+        id: number;
+        name: string;
+    }[];
+
+}

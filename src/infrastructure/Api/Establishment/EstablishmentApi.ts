@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance } from "axios";
 import { ADMIN_PATH, Pagination } from "..";
-import { EstablishmentCreateDTO, EstablishmentDetailDTO, EstablishmentListDto } from "./interface";
+import { EstablishmentCreateDTO, EstablishmentDetailDTO, EstablishmentListDto, OptionsSelectCreate } from "./interface";
 import { URL_API } from "../../../utils/constans";
 import { MessageTranslation } from "../../../utils/data";
 
@@ -108,6 +108,17 @@ class EstablishmentApi {
             }
         }
     }
+
+    async getOptions() {
+        try {
+            const response = await this.api.get<OptionsSelectCreate>(ADMIN_PATH + '/establishment/form-fields');
+            return response.data;
+        } catch (error: any) {
+            const e: string = error.response?.data?.message || 'Error al obtener las opciones.';
+            throw new Error(e);
+        }
+    }
+
 }
 
 export default EstablishmentApi;

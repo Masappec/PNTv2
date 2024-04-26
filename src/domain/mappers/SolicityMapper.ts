@@ -7,6 +7,7 @@ import { SolicityResultMapper } from "./SolicityResultMapper";
 class SolicityMappers {
 
     static apiToDomain(data: SolicityResponseDto): Solicity {
+        console.log(data)
         return new Solicity(
             data.id,
             data.created_at + "",
@@ -42,7 +43,7 @@ class SolicityMappers {
             })) || [],
             data.estblishment_name,
             data.responses?.map((response) => SolicityResultMapper.apiToDomain(response)),
-            data.insistency.map(r => new Insistency(
+            data.insistency?.map(r => new Insistency(
                 r.id,
                 r.created_at,
                 r.updated_at,
@@ -58,8 +59,8 @@ class SolicityMappers {
                 r.solicity,
                 r.user
             )
-            ),
-            data.comments.map(r => new Comments(
+            ) || [],
+            data.comments?.map(r => new Comments(
                 r.id,
                 r.created_at,
                 r.updated_at,
@@ -72,7 +73,7 @@ class SolicityMappers {
                 r.files,
                 r.attachments
             )
-            ),
+            ) || []
         )
 
     }

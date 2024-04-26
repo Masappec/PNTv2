@@ -170,7 +170,7 @@ class SolicityApi {
 
   async responseSolicity(data: SolicityResult) {
     try {
-      const response = await this.api.post<SolicityResponseDto>(TRANSPARENCY_PATH + "/solicity_response/create", data);
+      const response = await this.api.post<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + "/solicity_response/create", data);
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {

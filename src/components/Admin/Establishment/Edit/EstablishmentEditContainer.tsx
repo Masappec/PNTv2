@@ -3,6 +3,7 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
 import { useNavigate, useParams } from "react-router-dom"
 import EstablishmentEditPresenter from "./EstablishmentEditPresenter"
+import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
 
 
 
@@ -38,8 +39,22 @@ const EstablishmentEditContainer = ({
         last_name_committe: "",
         identification: "",
     })
+    const [options, setOptions] = useState<OptionsSelectCreate>({
+        functions: [],
+        organizations: [],
+        institutions: []
 
+    })
 
+    useEffect(() => {
+        usecase.getOptions().then((res) => {
+            setOptions(res)
+        }
+        ).catch((err) => {
+            console.log(err)
+        })
+
+    }, [])
 
     useEffect(() => {
         usecase.detail(id || "").then((res) => {
@@ -71,10 +86,10 @@ const EstablishmentEditContainer = ({
 
     }
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
-
     const handleCancel = () => {
         navigation("/admin/entities")
     }
@@ -91,6 +106,7 @@ const EstablishmentEditContainer = ({
             success={success}
             setError={setError}
             setSuccess={setSuccess}
+            options={options}
 
         />
     )

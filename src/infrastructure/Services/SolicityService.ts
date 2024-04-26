@@ -70,7 +70,7 @@ class SolicityService {
     const response = await this.api.responseSolicity(
       SolicityMappers.domainApi(data)
     );
-    return SolicityMappers.apiToDomain(response)
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }
 
   async updateSolicity(data: CreateSolicity, id: number) {
