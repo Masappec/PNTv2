@@ -1,4 +1,4 @@
-import { FaDownload, FaFile, FaFilePdf, FaImage, FaPlus } from "react-icons/fa6";
+import { FaDownload, FaPlus } from "react-icons/fa6";
 import { FilePublicationEntity } from "../../../../../domain/entities/PublicationEntity";
 import { Pagination } from "flowbite-react";
 import IconSearch from "../../../../Common/IconSearch";
