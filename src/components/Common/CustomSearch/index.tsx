@@ -1,6 +1,6 @@
 import React, { ComponentType } from 'react';
 import {
-    components, ContainerProps, ControlProps, ValueContainerProps, InputProps,
+    components, ContainerProps, ControlProps, ValueContainerProps, InputProps, MenuProps, SingleValueProps
 
 } from 'react-select';
 import { ColourOption } from '../../../utils/interface';
@@ -18,7 +18,32 @@ const SelectContainer = ({
     );
 };
 
+const Menu = (props: MenuProps<ColourOption>) => {
+    return (
+        <components.Menu {...props}>
+            {props.isLoading ? (
+                <div className='w-full h-10 flex justify-center items-center text-gray-500'>
+                    Buscando...
+                </div>
+            ) : props.options.length === 0 ? (
+                <div className='w-full h-10 flex justify-center items-center text-gray-500'>
+                    No se encontraron resultados
+                </div>
+            ) : props.children}
 
+        </components.Menu>
+    );
+}
+
+const SingleValue = (props: SingleValueProps<ColourOption>) => {
+    return (
+        <components.SingleValue {...props}
+            className="text-gray-500 mt-5"
+        >
+            {props.children}
+        </components.SingleValue>
+    );
+}
 
 const LoadingIndicator = () => {
     return (
@@ -41,7 +66,7 @@ const DropdownIndicator = () => {
 
             className="!absolute w-[86px] h-[50px] border-black  
                  
-                  text-white bg-primary-700
+                  text-white bg-primary-500
                   
                    hover:bg-primary-800 focus:ring-4
                    justify-center
@@ -72,6 +97,7 @@ const Input: ComponentType<InputProps<ColourOption>>
             outline-none
             focus:outline-none
             border-white
+            bg-transparent
             focus:shadow-none
             lg:w-full
             "
@@ -127,7 +153,7 @@ export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSe
 
         components={{
             SelectContainer, Control, DropdownIndicator, ValueContainer,
-            Input: Input, LoadingIndicator
+            Input: Input, LoadingIndicator, Menu, SingleValue
         }}
         styles={{
             container: (base) => ({
@@ -141,13 +167,19 @@ export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSe
                 ...base,
                 height: 50,
             }),
+            input: (base) => ({
+                ...base,
+                margin: 0,
+                padding: 0,
+                height: 50,
+            }),
 
 
         }}
         placeholder=""
 
         classNames={{
-
+            input: (base) => base.value ? 'mt-10' : 'w-full',
 
         }}
         options={colourOptions}

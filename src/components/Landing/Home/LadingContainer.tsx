@@ -51,7 +51,7 @@ const LandingContainer = (props: Props) => {
         SetSearching(true)
         const filter = listEnt.filter((item) => {
             return item.name.toLowerCase().includes(inputValue.toLowerCase())
-        })
+        }).slice(0, 3)
         SetSearching(false)
         callback(filter.map((item) => {
             const data: ColourOption = {
