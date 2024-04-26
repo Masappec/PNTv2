@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../../../assets/Home/logo-dpe 1.png";
 import { FormattedMessage } from "react-intl";
-
 import { AiOutlineMenu } from "react-icons/ai";
 
 interface Props {
@@ -9,7 +8,7 @@ interface Props {
 }
 const Header = (props: Props) => {
   return (
-    <header className="border-b-[1px] border-dark-400 dark:border-primary-600">
+    <header className="border-b-[1px] border-gray-400 dark:border-primary-600">
       <nav className="bg-white border-gray-900 px-4 lg:px-6 py-2.5 dark:bg-gray-800 ">
         <div className="flex flex-wrap justify-between items-center mx-8 ">
           <a href="/" className="flex items-center ">

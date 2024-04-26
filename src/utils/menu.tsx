@@ -28,6 +28,8 @@ import CollaborativeCreate from "../interfaces/web/Transparency/Collaborative/Cr
 import SolicityListEstablishment from "../interfaces/web/Transparency/Solicity/ListEstablishment";
 import IndicatorsAdmin from "../interfaces/web/Dashboard/IndicatorsAdmin";
 import { BiPieChart } from "react-icons/bi";
+import FocalizedEdit from "../interfaces/web/Transparency/Focalized/Edit";
+import CollaborativeEdit from "../interfaces/web/Transparency/Collaborative/Edit";
 
 
 export interface MenuItem {
@@ -199,6 +201,14 @@ const menu = [
 
   },
   {
+    name: 'T.Focalizada',
+    path: '/admin/focalized/Edit',
+    visible: false,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: "view_transparencyactive",
+    element: <FocalizedEdit />
+  },
+  {
     name: 'T.Colaborativa',
     path: '/admin/transparency/collaborative',
     visible: true,
@@ -216,6 +226,15 @@ const menu = [
     permission_required: "view_transparencyactive",
     element: <CollaborativeCreate />
   },
+  {
+    name: 'T.Colaborativa',
+    path: '/admin/collaborative/Edit',
+    visible: false,
+    icon: <RiCheckFill size={25} className="text-slate-500" />,
+    permission_required: "view_transparencyactive",
+    element: <CollaborativeEdit />
+  },
+
 
 
   {

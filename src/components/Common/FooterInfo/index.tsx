@@ -13,16 +13,16 @@ const FooterInfo = () => {
         <nav className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-center  text-base text-justify sm:gap-[40px] xl:pr-24 ">
 
           <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0  ">
-            Función Ejecutiva
+            Función <br /> Ejecutiva
           </a>
           <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0 ">
-            Función Legislativa
+            Función <br />Legislativa
           </a>
           <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0 ">
-            Función Judicial
+            Función <br /> Judicial
           </a>
           <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0 xl:-ml-10  ">
-            Función de Transparencia
+            Función de <br /> Transparencia
           </a>
           <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0 w-[300px] text-start   ">
             Gobiernos Autónomos Descentralizados
@@ -85,7 +85,7 @@ const FooterInfo = () => {
             <span className="text-slate-500 xl:whitespace-nowrap whitespace-break-spaces
             text-center
             ">
-              Plataforma Nacional de Transparencia  {"\n"}&copy; Todos los derechos reservados
+              Portal Nacional de Transparencia 2024  {"\n"}&copy; 
             </span>
           </div>
           <div className="flex flex-col xl:flex-row space-x-0 xl:space-x-20 xl:whitespace-nowrap 
