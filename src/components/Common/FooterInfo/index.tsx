@@ -54,7 +54,7 @@ const FooterInfo = () => {
 
           </div>
 
-          <div className="lg:flex grid grid-cols-2   w-full lg:ml-12 lg:justify-center">
+          <div className="lg:flex grid grid-cols-2 w-auto   lg:w-full lg:ml-12 lg:justify-center">
             <a href="#" className="block  lg:inline-block  lg:mr-4">
               <img src={logo_cd} alt="" className=" w-[84px] h-[84px] " />
             </a>
@@ -85,7 +85,7 @@ const FooterInfo = () => {
             <span className="text-slate-500 xl:whitespace-nowrap whitespace-break-spaces
             text-center
             ">
-              Portal Nacional de Transparencia 2024  {"\n"}&copy; 
+              Portal Nacional de Transparencia 2024  {"\n"}&copy;
             </span>
           </div>
           <div className="flex flex-col xl:flex-row space-x-0 xl:space-x-20 xl:whitespace-nowrap 

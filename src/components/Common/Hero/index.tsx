@@ -12,17 +12,19 @@ const Hero = (props: Props) => {
 
   return (
     <section className="dark:bg-gray-900 mt-2 ">
-      <div className="xl:grid lg:grid xl:max-w-screen-xl sm:w-screen ml-3 xl:ml-10 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 sm:grid-cols-1 lg:grid-cols-10 ">
+      <div className="xl:grid lg:grid xl:max-w-screen-xl sm:w-screen 
+      ml-3 xl:ml-10 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 grid-cols-2   xl:grid-cols-10 ">
         <div className="lg:col-span-2 justify-start  ">
           <p
-            className="xl:lg:text-3xl text-xl  font-extrabold text-black dark:text-white  w-5/12 lg:w-[215px] mt-8"
+            className="xl:lg:text-3xl text-xl  font-extrabold text-black dark:text-white w-5/12 lg:w-[215px] mt-8"
             tabIndex={6}
           >
             <FormattedMessage id="portal_nacional" />
           </p>
         </div>
-        <div className="lg:col-span-8 lg:flex-row lg:justify-end lg:items-center lg:space-x-4 lg:space-y-0 lg:flex pt-6 ">
-          <div className="flex flex-col items-center justify-center w-full">
+        <div className="lg:col-span-8 lg:flex-row 
+        xl:justify-end xl:items-center lg:space-x-4 lg:space-y-0 lg:flex pt-6 ">
+          <div className="flex flex-col xl:items-center xl:justify-center xl:w-full">
             <p
               className="xl:text-4xl lg:text-4xl 
               font-medium
@@ -48,7 +50,7 @@ const Hero = (props: Props) => {
             
             xl:justify-center flex   lg:m-0
              flex-auto">
-              <div className="relative lg:w-full xl:w-[730px]">
+              <div className="relative lg:w-full w-[90%] xl:w-[730px]">
                 <CustomSearch
                   colourOptions={[]}
                   loadOptions={props.loadOptions}
