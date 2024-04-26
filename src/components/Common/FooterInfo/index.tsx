@@ -33,7 +33,8 @@ const FooterInfo = () => {
       <hr className="w-full  border-slate-500 mt-20 -mr-96 " />
 
       <div className=" mx-auto flex  w-full md:flex-row mt-[80px] ">
-        <nav className="flex 
+        <nav className="lg:flex 
+        flex-col lg:flex-row
         justify-between mt-4 w-full
         space-x-10
         ">
@@ -53,23 +54,23 @@ const FooterInfo = () => {
 
           </div>
 
-          <div className="flex flex-row  w-full ml-12 justify-center">
-            <a href="#" className="block  lg:inline-block  mr-4">
+          <div className="lg:flex grid grid-cols-2   w-full lg:ml-12 lg:justify-center">
+            <a href="#" className="block  lg:inline-block  lg:mr-4">
               <img src={logo_cd} alt="" className=" w-[84px] h-[84px] " />
             </a>
-            <a href="#" className="block  lg:inline-block mr-4">
+            <a href="#" className="  lg:inline-block lg:mr-4">
               <img src={datalad} alt="" className=" w-32 h-14" />
             </a>
-            <a href="#" className="block  lg:inline-block mr-4">
+            <a href="#" className="block  lg:inline-block lg:mr-4">
               <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
             </a>
-            <a href="#" className="block  lg:inline-block  mr-4">
+            <a href="#" className="block  lg:inline-block  lg:mr-4">
               <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
             </a>
-            <a href="#" className="block  lg:inline-block  mr-4">
+            <a href="#" className="block  lg:inline-block  lg:mr-4">
               <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
             </a>
-            <a href="#" className="block  lg:inline-block  mr-4">
+            <a href="#" className="block  lg:inline-block  lg:mr-4">
               <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
             </a>
           </div>

@@ -28,7 +28,7 @@ const Hero = (props: Props) => {
               font-medium
               mt-7 xl:mt-0 lg:mt-0
               text-xl xl:font-normal text-black
-               dark:text-white w-auto lg:w-[65%] "
+               dark:text-white w-[80%] lg:w-[65%] "
               tabIndex={7}
             >
               <FormattedMessage id="title_search_entities" />
@@ -48,7 +48,7 @@ const Hero = (props: Props) => {
             
             xl:justify-center flex   lg:m-0
              flex-auto">
-              <div className="relative w-full xl:w-[730px]">
+              <div className="relative lg:w-full xl:w-[730px]">
                 <CustomSearch
                   colourOptions={[]}
                   loadOptions={props.loadOptions}

@@ -82,7 +82,7 @@ const LandingPresenter = (props: Props) => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 lg:ml-5   md:ml-5 xl:-space-x-6 
-        md:grid-cols-2 w-full
+         w-full
         justify-center  mb-44 ">
           <CardConsulta
             icon={<BiBriefcaseAlt size={85} className="text-white bg-[#FFBD71] rounded-full py-5 px-2" />}

@@ -73,7 +73,7 @@ const Input: ComponentType<InputProps<ColourOption>>
             focus:outline-none
             border-white
             focus:shadow-none
-            w-full
+            lg:w-full
             "
 
 
