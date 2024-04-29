@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import LandingPresenter from "./LandingPresenter"
-import PublicUseCase from "../../../domain/useCases/Public/PublicUseCase";
 import { FrequencyAsked } from "../../../domain/entities/PedagodyAreaEntity";
 import { ColourOption } from "../../../utils/interface";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +7,8 @@ import EstablishmentEntity from "../../../domain/entities/Establishment";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../infrastructure/Store";
 
-interface Props {
-    usecase: PublicUseCase;
-}
 
-const LandingContainer = (props: Props) => {
+const LandingContainer = () => {
     const [faq,] = useState<FrequencyAsked[]>([
         {
             question: "¿Qué puedo hacer en el portal?",

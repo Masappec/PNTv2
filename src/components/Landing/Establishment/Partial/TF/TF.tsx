@@ -38,7 +38,7 @@ const TF = (props: Props) => {
                         show={true}
                         columns={[
                             {
-                                render: (item, index) => {
+                                render: (_item, index) => {
                                     return (
                                         <p className="text-gray-900 dark:text-white text-base">{index}</p>
                                     )

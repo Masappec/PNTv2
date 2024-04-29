@@ -1,14 +1,10 @@
-import { useOutletContext } from "react-router-dom"
 import LandingContainer from "../../../../components/Landing/Home/LadingContainer"
-import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase"
 
 
-const Home = ()=>{
-    const {usecase} = useOutletContext<{
-        usecase: PublicUseCase
-    }>()
+const Home = () => {
+
     return (
-        <LandingContainer usecase={usecase}/>
+        <LandingContainer />
     )
 }
 
