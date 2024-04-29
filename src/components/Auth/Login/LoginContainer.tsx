@@ -27,7 +27,7 @@ const LoginContainer = ({ useCase }: {
       .then(() => {
         setIsLoading(false)
 
-        history('/admin/dashboard')
+        history('/admin')
       })
       .catch((e) => {
         setIsLoading(false)
