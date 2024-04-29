@@ -75,7 +75,7 @@ const TA = (props: Props) => {
                                                 hover:text-primary-600 text-base">
                                                     <FaFileCsv className="text-primary-500 
                                                 hover:text-primary-600 text-base ml-5" />
-                                                    {file.name}
+                                                    {file.description}
 
                                                 </a>
                                             )

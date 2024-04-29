@@ -32,5 +32,18 @@ class TransparencyFocusService {
         return TransparencyFocusMapper.apiToDomain(response.json as TransparencyFocusListDto);
     }
 
+    async updateTransparencyFocus(data: TransparencyFocusCreateDto, id: number): Promise<TransparencyFocusEntity> {
+        const response = await this.api.updateTransparencyFocus(data, id);
+        return TransparencyFocusMapper.apiToDomain(response.json as TransparencyFocusListDto);
+    }
+
+    async getTransparencyFocusPublics(month: number, year: number, establishment_id: number): Promise<TransparencyFocusEntity[]> {
+        const response = await this.api.getTransparencyFocusPublic(month, year, establishment_id);
+        return response.map((transparencyFocus: TransparencyFocusListDto) => TransparencyFocusMapper.apiToDomain(transparencyFocus));
+    }
+    async deleteTransparencyFocus(id: number): Promise<void> {
+        return await this.api.deleteTransparencyFocus(id);
+    }
+
 }
 export default TransparencyFocusService

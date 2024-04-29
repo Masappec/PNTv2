@@ -23,6 +23,32 @@ class TransparencyCollabUseCase {
         });
         return response;
     }
+
+    async updateTransparencyCollab(
+        entity_id: number,
+        files: number[],
+        id: number
+    ) {
+        const response = await this.service.updateTransparencyFocus({
+            establishment_id: entity_id,
+            files
+
+        }, id);
+        return response;
+    }
+
+    async getTransparencyCollabPublics(
+        month: number,
+        year: number,
+        establishment_id: number
+    ) {
+        const response = await this.service.getTransparencyCollabPublics(month, year, establishment_id);
+        return response;
+    }
+
+    async deleteTransparencyCollab(id: number) {
+        return await this.service.deleteTransparencyCollab(id);
+    }
 }
 
 export default TransparencyCollabUseCase;

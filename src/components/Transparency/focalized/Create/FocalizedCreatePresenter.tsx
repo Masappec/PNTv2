@@ -1,4 +1,4 @@
-import { Button, Tabs } from "flowbite-react";
+/*import { Button, Tabs } from "flowbite-react";
 import { FaPlusCircle, FaTrash } from "react-icons/fa";
 import Dropzone from "../../../Common/Dropzone";
 import { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
@@ -11,6 +11,9 @@ import { LuCheck, LuX } from "react-icons/lu";
 import { ListUploadsFiles } from "../../Partial/CreateFilePublication/ListUploadsFiles";
 import { Pagination } from "../../../../infrastructure/Api";
 import IconSearch from "../../../Common/IconSearch";
+import NumeralDetail from "../../../../domain/entities/NumeralDetail";
+import DataTablePartial from "../../Partial/CreateFilePublication/DataTable";
+import { CiSaveDown1 } from "react-icons/ci";
 
 interface Props {
 
@@ -46,6 +49,7 @@ interface Props {
   files_uploaded_last: Pagination<FilePublicationEntity>
   onRemoveFileFromPublication: (index: number) => void
   addFileFromList: (file: FilePublicationEntity) => void
+  numeralDetail: NumeralDetail
 }
 
 
@@ -155,7 +159,7 @@ const FocalizedCreatePresenter = (props: Props) => {
               </span>
             </Button>
           </div>
-        </Tabs.Item>*/}
+        </Tabs.Item>
           <Tabs.Item title="Subir Archivos">
             <div className="flex flex-row m-2">
 
@@ -219,21 +223,103 @@ const FocalizedCreatePresenter = (props: Props) => {
               </Button>
             </div>
           </Tabs.Item>
-          <Tabs.Item title="Buscar archivos Subidos">
-            <ListUploadsFiles
-              currentPage={props.files_uploaded_last.current}
-              files={props.files_uploaded_last.results}
-              onAddFileToPublication={props.addFileFromList}
-              onChangePage={() => { }}
-              onDownloadFileFromUrl={() => { }}
-              totalPages={props.files_uploaded_last.total_pages as number}
 
+        </Tabs >
+  <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800">
+    <Tabs.Item title="Subir Archivos" >
+      <div className="mb-36 mt-5 xl:grid-cols-3 grid-cols-1 grid gap-5">
+        {
+          props.numeralDetail.templates.map((template, index) => {
+            return (
+              <div>
+                <Dropzone
+                  key={index}
+                  handleChageLogo={(e) => { }}
+                  id={template.id.toString()}
+                  multiple={false}
+                  type="image"
+                  label={template.name}
+                  name="logo"
+                  className=""//{/*template.file != null ? template.isValid ? "bg-green-200" : "bg-red-200" : ""}
+                  accept=".csv"
+                />
+                <Button key={index} type="button"
+                  onClick={() => {/*props.downloadTemplate(template.id)}}
+                  className="flex items-center justify-center w-12 text-sm">
+                  <span className=" dark:text-gray-300 font-semibold">
+                    <CiSaveDown1 className="w-5 h-5 font-normal" />
+                  </span>
+                </Button>
+              </div>
+            );
+          })
+        }
+      </div>
+    </Tabs.Item>
+    <Tabs.Item title="Agregar enlances">
+      <div className="flex flex-row m-2">
+
+        {
+          props.numeralDetail.templates.map((file, index) => {
+
+            return <FileUrlPartial
+              error={props.files[index].error || ""}
+              file={props.files[index].file || null}
+              index={index}
+              loading={props.files[index].loading || false}
+              onDownloadFile={props.onDownloadFile}
+              onSaveDateUrl={props.onSaveDateUrl}
+              key={index}
+              onSaveFile={(file, name, description) => props.onSaveFile(file, name, description, index)}
+              onRemoveFile={(index) => props.onRemoveFile(index)}
+              isSaved={props.files[index].file_publication != null}
             />
-          </Tabs.Item>
-        </Tabs>
-      </form>
+
+          })
+        }
+      </div>
+    </Tabs.Item>
+    <Tabs.Item title="Crear documentos">
+      {
+        props.numeralDetail.templates.map((file, index) => {
+
+
+          return (
+            <DataTablePartial
+              data={[[]]}
+              handleCancel={() => { }}
+              index={index}
+              onCancel={() => { }}
+              handleSave={(fileDoc) => {
+                // props.onGenerateFileFromTable(fileDoc, file)
+              }}
+              file={null}
+              onSaveTable={(data) => {  }}
+              key={index}
+              isSaved={false}
+              title={file.name}
+              limit={props.numeralDetail?.templates.find((e) => e.id == file.id)?.maxInserts || undefined}
+            />
+          )
+
+        })
+      }
+    </Tabs.Item>
+    <Tabs.Item title="Buscar archivos Subidos">
+      <ListUploadsFiles
+        currentPage={props.files_uploaded_last.current}
+        files={props.files_uploaded_last.results}
+        onAddFileToPublication={props.addFileFromList}
+        onChangePage={() => { }}
+        onDownloadFileFromUrl={() => { }}
+        totalPages={props.files_uploaded_last.total_pages as number}
+
+      />
+    </Tabs.Item>
+  </Tabs>
+      </form >
     </div >
   )
 
 }
-export default FocalizedCreatePresenter; 
+export default FocalizedCreatePresenter; */

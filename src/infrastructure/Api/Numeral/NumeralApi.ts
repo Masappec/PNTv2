@@ -31,11 +31,12 @@ class NumeralApi {
     }
 
 
-    async getNumeralById(id: number) {
+    async getNumeralById(id: number, type?: string) {
         try {
             const response = await this.api.get<NumeralDetailDTO>(TRANSPARENCY_PATH + "/numerals/detail/", {
                 params: {
-                    numeral_id: id
+                    numeral_id: id || null,
+                    type
                 }
             });
             return response.data;

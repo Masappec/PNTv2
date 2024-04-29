@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { TransparencyActivePublicResponse, TransparencyActivePublish, TransparencyActivePublishResponse } from "./interface";
 import { TRANSPARENCY_PATH } from "..";
+import { MessageTranslation } from "../../../utils/data";
 
 
 
@@ -14,7 +15,25 @@ class TransparencyActiveApi {
 
         try {
 
-            const res = await this.api.post<TransparencyActivePublishResponse>(TRANSPARENCY_PATH + '/transparency/active/publish', data);
+            const res = await this.api.post<MessageTranslation<TransparencyActivePublishResponse>>(TRANSPARENCY_PATH + '/transparency/active/publish', data);
+            return res.data;
+
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                const message = e.response?.data.message || e.message || 'Error desconocido';
+                throw new Error(message);
+            } else {
+                throw new Error('Error desconocido');
+            }
+        }
+    }
+
+
+    async updatePublication(data: TransparencyActivePublish) {
+
+        try {
+
+            const res = await this.api.put<MessageTranslation<TransparencyActivePublishResponse>>(TRANSPARENCY_PATH + '/transparency/active/update', data);
             return res.data;
 
         } catch (e) {

@@ -30,6 +30,7 @@ import IndicatorsAdmin from "../interfaces/web/Dashboard/IndicatorsAdmin";
 import { BiPieChart } from "react-icons/bi";
 import FocalizedEdit from "../interfaces/web/Transparency/Focalized/Edit";
 import CollaborativeEdit from "../interfaces/web/Transparency/Collaborative/Edit";
+import ActiveEdit from "../interfaces/web/Transparency/Active/Edit";
 
 
 export interface MenuItem {
@@ -44,7 +45,7 @@ export interface MenuItem {
 const menu = [
   {
     name: "Indicadores",
-    path: "/admin/dashboard",
+    path: "/admin",
     visible: true,
     icon: <BiPieChart size={25} className="text-slate-500" />,
     permission_required: "",
@@ -167,6 +168,14 @@ const menu = [
     element: <ActiveCreate />,
     visible_for_superadmin: false
 
+  },
+  {
+    name: 'Editar T.Activa',
+    path: '/admin/active/edit',
+    visible: false,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: "change_transparencyactive",
+    element: <ActiveEdit />,
   },
 
   {

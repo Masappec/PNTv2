@@ -1,16 +1,19 @@
-import { Accordion, Badge, Button, Checkbox, Dropdown } from "flowbite-react";
+import { Accordion, Badge, Dropdown } from "flowbite-react";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 
 
 
-import { CiMenuBurger } from "react-icons/ci";
 
 import { FiCalendar } from "react-icons/fi";
-import TableInfo from "../../../Common/TableInfo";
 import CardNormative from "../../../Common/CardNormative";
 import TransparencyActive from "../../../../domain/entities/TransparencyActive";
 import TA from "../Partial/TA/TA";
 import { AcordionMonthYear } from "../../../../utils/interface";
+import { CalendarYear } from "../../../Common/CalendarYear";
+import TF from "../Partial/TF/TF";
+import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
+import TransparencyCollab from "../../../../domain/entities/TransparencyCollab";
+import TC from "../Partial/TC";
 
 interface Props {
   entity: EstablishmentEntity;
@@ -26,6 +29,18 @@ interface Props {
   onSelectYear: (year: number) => void;
   selectedYear: number;
   onOpenMonth: (month: number) => void
+  onSelectYearTC: (year: number) => void;
+  selectedYearTC: number;
+  onOpenMonthTC: (month: number) => void
+  publicationsTC: AcordionMonthYear<TransparencyCollab>[];
+
+  onSelectedYearTF: (year: number) => void;
+  selectedYearTF: number;
+  onOpenMonthTF: (month: number) => void;
+  publicationsTF: AcordionMonthYear<TransparencyFocusEntity>[];
+  handlePageInfo: () => void;
+  handlePageSolicity: () => void;
+  handlePageIndicators: () => void;
 }
 
 const PublicEstablishmentDetailPresenter = (props: Props) => {
@@ -71,6 +86,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
               content={""}
               contrast="#F7941D"
               bgcolor="#FFFAF4"
+              onClick={props.handlePageInfo}
             ></CardNormative>
             <CardNormative
               title="Solicitud 
@@ -78,12 +94,14 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
               content={""}
               contrast="#A5C330"
               bgcolor="#FBFCF5"
+              onClick={props.handlePageSolicity}
             ></CardNormative>
             <CardNormative
               title="Indicadores"
               content={""}
               contrast="#D26497 "
               bgcolor=""
+              onClick={props.handlePageIndicators}
             ></CardNormative>
           </div>
 
@@ -103,7 +121,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                   <h2 className="text-2xl font-semibold mt-4">
                     {props.entity.name}
                   </h2>
-                  <p className=" text-sm xl:w-full w-auto  mt-8 font-medium">
+                  <p className=" text-sm xl:w-full w-auto  mt-8 font-medium mb-10">
                     La ley Orgánica de Transparencia y Acceso de la Información Pública
                     (LOTAIP) obliga a todas las instituciones del Estado que conforman
                     el sector público a difundir a través de la página web
@@ -112,28 +130,27 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                   </p>
                   <Dropdown label={
                     <>
+                      <FiCalendar className="w-5 h-5 mr-5 "></FiCalendar>
+
                       Seleccionar año
-                      <FiCalendar className="w-5 h-5 ml-5"></FiCalendar>
-                      {props.selectedYear ? <Badge className="ml-3">{props.selectedYear}</Badge> : ""}
+                      <Badge className="ml-2" color="info">
+                        {props.selectedYear}
+                      </Badge>
                     </>
 
                   }
-                    size={"lg"}
+                    size={"md"}
                     arrowIcon={false}
                     dismissOnClick={true}
-                    className="flex items-center justify-center 
-                     text-lg tracking-wide
-                     rounded-xl 
-                     "
 
                   >
-                    {
-                      props.years.map(_y => (
-                        <Dropdown.Item
-                          onClick={() => props.onSelectYear(_y)}>{_y}</Dropdown.Item>
 
-                      ))
-                    }
+
+
+                    <CalendarYear
+                      onSelect={props.onSelectYear}
+
+                    />
                   </Dropdown>
 
 
@@ -173,13 +190,13 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
               <Accordion.Content>
                 <>
                   <p className="text-start text-lg font-medium mt-14">
-                    Transparencia activa{" "}
+                    Transparencia focalizada{" "}
                   </p>
 
                   <h2 className="text-2xl font-semibold mt-4">
                     {props.entity.name}
                   </h2>
-                  <p className=" text-sm xl:w-full mt-8 font-medium">
+                  <p className=" text-sm xl:w-full mt-8 font-medium mb-10">
                     La ley Orgánica de Transparencia y Acceso de la Información Pública
                     (LOTAIP) obliga a todas las instituciones del Estado que conforman
                     el sector público a difundir a través de la página web
@@ -187,71 +204,45 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                     obligatoria.
                   </p>
 
-                  <Button
-                    type="button"
-                    onClick={() => { }}
-                    className="flex 
-                                         rounded-xl
+                  <Dropdown label={
+                    <>
+                      <FiCalendar className="w-5 h-5 mr-5 "></FiCalendar>
 
-                    items-center justify-center w-1/2 text-lg tracking-wide
-                                text-gray-700 font-semibold bg-gray-200  border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
-                  >
-                    <span className="flex col-2 gap-6 ">
-                      <FiCalendar className="w-5 h-5" />
                       Seleccionar año
-                    </span>
-                  </Button>
+                      <Badge className="ml-2" color="info">
+                        {props.selectedYearTF}
+                      </Badge>
+                    </>
+
+                  }
+                    size={"md"}
+                    arrowIcon={false}
+                    dismissOnClick={true}
+
+                  >
+
+
+
+                    <CalendarYear onSelect={props.onSelectedYearTF} />
+                  </Dropdown>
+
                   <div>
-
-
-                    <TableInfo<TransparencyActive>
-                      columns={[
-                        {
-                          render: (row) => <p>{row.numeral}</p>,
-
-                          title: <><Checkbox className="mr-5" />{"Numeral"}</>,
-                          classname: "w-70",
-                        },
-                        {
-                          render: () => <p>{""}</p>,
-                          title: "Tamaño de archivo",
-                        },
-                        {
-                          render: () => <p>{ }</p>,
-                          title: "Fecha de carga",
-                        },
-                        {
-                          render: () => <p>{""}</p>,
-                          title: "Fecha de actualización",
-                        },
-                        {
-                          render: () => <p>{""}</p>,
-                          title: "Cargado por",
-                        },
-                        {
-                          render: () => (
-                            <p>
-                              {" "}
-                              <button
-                                onClick={() => { }}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl"
-                              >
-                                <CiMenuBurger />
-                              </button>
-                            </p>
-                          ),
-                          title: "",
-                        },
-                      ]}
-                      title={""}
-
-                      onFilter={function (type: string): void {
-                        throw new Error("Function not implemented." + type);
-                      }}
-                      data={[]}
-
-
-                    />
+                    <Accordion className="mt-14" key={"TA"}>
+                      {
+                        props.meses.map((mes, index) => {
+                          return (
+                            <TF
+                              data={props.publicationsTF.find(x => x.month == index + 1 && x.year == props.selectedYear)?.data || []}
+                              month={mes}
+                              number_month={index + 1}
+                              year={2021}
+                              key={index}
+                              onOpen={(month) => props.onOpenMonthTF(month)}
+                            />
+                          );
+                        })
+                      }
+                    </Accordion>
                   </div>
                 </>
               </Accordion.Content>
@@ -272,76 +263,56 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
                   <h2 className="text-2xl font-semibold mt-4">
                     {props.entity.name}
                   </h2>
-                  <p className=" text-sm xl:w-full mt-8 font-medium">
+                  <p className=" text-sm xl:w-full mt-8 font-medium mb-10">
                     La ley Orgánica de Transparencia y Acceso de la Información Pública
                     (LOTAIP) obliga a todas las instituciones del Estado que conforman
                     el sector público a difundir a través de la página web
                     institucional, información mínima actualizada de naturaleza
                     obligatoria.
                   </p>
+                  <Dropdown label={
+                    <>
+                      <FiCalendar className="w-5 h-5 mr-5 "></FiCalendar>
 
-                  <Button
-                    type="button"
-                    onClick={() => { }}
-                    className="flex items-center justify-center w-1/2 text-lg tracking-wide
-                                text-gray-700 font-semibold bg-gray-200 rounded-xl border-gray-300 border-2  sm:w-auto gap-x-2 hover:bg-slate-400 mt-12 mb-10 "
-                  >
-                    <span className="flex col-2 gap-6 ">
-                      <FiCalendar className="w-5 h-5" />
                       Seleccionar año
-                    </span>
-                  </Button>
+                      <Badge className="ml-2" color="info">
+                        {props.selectedYearTC}
+                      </Badge>
+                    </>
+
+                  }
+                    size={"md"}
+                    arrowIcon={false}
+                    dismissOnClick={true}
+
+                  >
+
+
+
+                    <CalendarYear onSelect={props.onSelectYearTC} />
+                  </Dropdown>
+
                   <div >
 
 
-                    <TableInfo
-                      columns={[
+                    <div>
+                      <Accordion className="mt-14" key={"TA"}>
                         {
-                          render: () => <p>{""}</p>,
-
-                          title: <><Checkbox className="mr-5" />{"filename"}</>,
-                          classname: "w-70",
-                        },
-                        {
-                          render: () => <p>{""}</p>,
-                          title: "Tamaño de archivo",
-                        },
-                        {
-                          render: () => <p>{ }</p>,
-                          title: "Fecha de carga",
-                        },
-                        {
-                          render: () => <p>{""}</p>,
-                          title: "Fecha de actualización",
-                        },
-                        {
-                          render: () => <p>{""}</p>,
-                          title: "Cargado por",
-                        },
-                        {
-                          render: () => (
-                            <p>
-                              {" "}
-                              <button
-                                onClick={() => { }}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl"
-                              >
-                                <CiMenuBurger />
-                              </button>
-                            </p>
-                          ),
-                          title: "",
-                        },
-                      ]}
-                      title={""}
-
-                      onFilter={function (type: string): void {
-                        throw new Error("Function not implemented." + type);
-                      }}
-                      data={[]}
-
-
-                    />
+                          props.meses.map((mes, index) => {
+                            return (
+                              <TC
+                                data={props.publicationsTC.find(x => x.month == index + 1 && x.year == props.selectedYear)?.data || []}
+                                month={mes}
+                                number_month={index + 1}
+                                year={2021}
+                                key={index}
+                                onOpen={(month) => props.onOpenMonthTC(month)}
+                              />
+                            );
+                          })
+                        }
+                      </Accordion>
+                    </div>
                   </div>
                 </>
               </Accordion.Content>

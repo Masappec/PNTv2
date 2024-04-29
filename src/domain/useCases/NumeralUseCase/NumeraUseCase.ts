@@ -24,6 +24,11 @@ class NumeralUseCase {
         const numeral = await this.service.getNumeralById(id)
         return numeral
     }
+
+    async getNumeralFocalizedOrCollab(type: string) {
+        return await this.service.getFocalizedOrCollab(type)
+
+    }
 }
 
 export default NumeralUseCase;

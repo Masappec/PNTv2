@@ -1,12 +1,16 @@
 
 import { createSlice } from '@reduxjs/toolkit';
+import EstablishmentEntity from '../../domain/entities/Establishment';
+
+
+
 
 
 const establishmentSlice = createSlice({
 
     name: 'establishment',
     initialState: {
-        establishments: [],
+        establishments: [] as EstablishmentEntity[]
     },
     reducers: {
         setEstablishments(state, action) {

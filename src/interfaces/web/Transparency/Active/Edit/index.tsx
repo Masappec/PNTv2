@@ -1,37 +1,40 @@
-import FocalizedCreateContainer from "../../../../../components/Transparency/focalized/Create/FocalizedCreateContainer";
+
+import ActiveEditContainer from "../../../../../components/Transparency/Active/Edit/TransparencyActiveEditContainer";
 import EstablishmentUseCase from "../../../../../domain/useCases/Establishment/EstablishmentUseCase";
 import FilePublicationUseCase from "../../../../../domain/useCases/FilePublicationUseCase/FilePublicationUseCase";
 import NumeralUseCase from "../../../../../domain/useCases/NumeralUseCase/NumeraUseCase";
 import TemplateFileUseCase from "../../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
-import TransparencyFocusUseCase from "../../../../../domain/useCases/TransparencyFocusUseCase/TransparencyFocusUseCase";
+import TransparencyActiveUseCase from "../../../../../domain/useCases/TransparencyActive/TransparencyActiveUseCase";
 import api from "../../../../../infrastructure/Api";
 import EstablishmentApi from "../../../../../infrastructure/Api/Establishment/EstablishmentApi";
 import { FilePublicationApi } from "../../../../../infrastructure/Api/FilePublication/FilePublicationApi";
 import NumeralApi from "../../../../../infrastructure/Api/Numeral/NumeralApi";
+import TransparencyActiveApi from "../../../../../infrastructure/Api/TansparencyActive/TransparencyActiveApi";
 import TemplateFileApi from "../../../../../infrastructure/Api/TemplateFile/TemplateFileApi";
-import TransparencyFocusApi from "../../../../../infrastructure/Api/TransparencyFocus/TransparencyFocusApi";
 import EstablishmentService from "../../../../../infrastructure/Services/EstablishmentService";
 import FilePublicationService from "../../../../../infrastructure/Services/FilePublicationService";
 import NumeralService from "../../../../../infrastructure/Services/NumeralService";
 import TemplateService from "../../../../../infrastructure/Services/TemplateService";
-import TransparencyFocusService from "../../../../../infrastructure/Services/TransparencyFocusService";
+import TransparencyActiveService from "../../../../../infrastructure/Services/TransparencyActiveService";
 
-const FocalizedCreate = () => {
+const ActiveEdit = () => {
 
+    const fileUseCase = new FilePublicationUseCase(
+        new FilePublicationService(new FilePublicationApi(api))
+    )
+    const templateFileUseCase = new TemplateFileUseCase(
+        new TemplateService(new TemplateFileApi(api))
+    )
 
-    const estab = new EstablishmentUseCase(
+    const transparencyActiveUseCase = new TransparencyActiveUseCase(
+        new TransparencyActiveService(
+            new TransparencyActiveApi(api)
+        )
+    )
+
+    const establishmentUseCase = new EstablishmentUseCase(
         new EstablishmentService(
             new EstablishmentApi(api)
-        )
-    )
-    const file = new FilePublicationUseCase(
-        new FilePublicationService(
-            new FilePublicationApi(api)
-        )
-    )
-    const tfocalized = new TransparencyFocusUseCase(
-        new TransparencyFocusService(
-            new TransparencyFocusApi(api)
         )
     )
 
@@ -43,19 +46,17 @@ const FocalizedCreate = () => {
             new EstablishmentApi(api)
         )
     )
-    const templateFileUseCase = new TemplateFileUseCase(
-        new TemplateService(new TemplateFileApi(api))
+    return (
+        <ActiveEditContainer
+            usecase={fileUseCase}
+            templateUseCase={templateFileUseCase}
+            transparencyActiveUseCase={transparencyActiveUseCase}
+            establishmentUseCase={establishmentUseCase}
+            numeralUsecase={numeral}
+        />
+
     )
 
-    return (
-        <FocalizedCreateContainer
-            establishmentUseCase={estab}
-            fileUseCase={file}
-            tfocalizedUseCase={tfocalized}
-            numeral={numeral}
-            templateUseCase={templateFileUseCase}
-        />
-    )
 }
 
-export default FocalizedCreate;
+export default ActiveEdit

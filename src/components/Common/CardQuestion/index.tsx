@@ -32,10 +32,10 @@ const CardQuestion = (props: Props) => {
                 }}
 
             >
-                <div className="grid xl:grid-cols-2 grid-cols-1 gap-2 -mt-28">
+                <div className="grid xl:grid-cols-2 grid-cols-1 gap-2 -mt-28 mb">
 
                     <Icon size={65} className={` dark:text-primary-400 h-full ml-4 `} style={{ color: "#FFF9FC" }}></Icon>
-                    <h5 className="text-2xl w-full md:text-lg lg:text-2xl lg:w-8/12 sm:w-64 font-semibold tracking-tight text-slate-50 dark:text-white xl:-ml-20  ">
+                    <h5 className="text-2xl w-full md:text-lg lg:text-3xl  sm:w-64 font-semibold tracking-tight text-slate-50 dark:text-white xl:-ml-20  ">
                         {props.title}
                     </h5>
                 </div>
@@ -43,7 +43,7 @@ const CardQuestion = (props: Props) => {
 
 
                     <div className=" content-center w-auto xl:w-[400px] h-[55px] bg-transparent ">
-                        <p className="font-normal xl:w-10/12 text-white mt-28  dark:text-gray-400 h-full text-xl  md:text-lg lg:text-sm mb-5 lg:ml-4">
+                        <p className="font-normal xl:w-10/12 text-white mt-28  dark:text-gray-400 h-full text-xl  md:text-lg  mb-5 lg:ml-4">
                             {props.content}
                         </p>
                         <div className="lg:flex items-end justify-between mt-10 md:mt-16 xl:mt-20 h-full">
@@ -53,10 +53,6 @@ const CardQuestion = (props: Props) => {
                     </div>
 
                 </div>
-
-
-
-
             </Card>
         </div>
 

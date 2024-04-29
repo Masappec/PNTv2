@@ -1,5 +1,6 @@
 import { NumeralDTO } from "../../infrastructure/Api/Numeral/interface";
 import NumeralEntity from "../entities/NumeralEntity";
+import TransparencyActiveMapper from "./TransparencyActiveMapper";
 
 
 
@@ -28,7 +29,9 @@ class NumeralMapper {
             userCreated: data.user_created?.toString(),
             userDeleted: data.user_deleted?.toString(),
             userUpdated: data.user_updated?.toString(),
-            published: data.published
+            published: data.published,
+            publication: data.publication != null ? TransparencyActiveMapper.fromApiToDomain(data.publication) : null
+
         }
     }
 

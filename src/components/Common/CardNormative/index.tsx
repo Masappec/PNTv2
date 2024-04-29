@@ -8,6 +8,7 @@ interface Props {
     content: string;
     bgcolor: string;
     contrast: string;
+    onClick?: () => void;
 
 }
 
@@ -36,7 +37,8 @@ const CardNormative = (props: Props) => {
                     <p className="font-semibold w-fit xl:w-10/12 text-black  dark:text-gray-400 h-full text-lg xl:-mb-10 xl:ml-4">
                         {props.content}
                     </p>
-                    <div className="flex items-start justify-between ml-2  xl:mt-28  xl:-ml-80 ">
+                    <div className="flex items-start justify-between ml-2  xl:mt-28  xl:-ml-80 cursor-pointer"
+                        onClick={props.onClick}>
                         <GoArrowRight size={53} className="text-gray-900 dark:text-white " />
 
                     </div>

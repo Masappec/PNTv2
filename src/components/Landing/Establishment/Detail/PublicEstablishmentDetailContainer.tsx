@@ -6,10 +6,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import TransparencyActiveUseCase from "../../../../domain/useCases/TransparencyActive/TransparencyActiveUseCase";
 import TransparencyActive from "../../../../domain/entities/TransparencyActive";
 import { AcordionMonthYear } from "../../../../utils/interface";
+import TransparencyFocusUseCase from "../../../../domain/useCases/TransparencyFocusUseCase/TransparencyFocusUseCase";
+import TransparencyCollabUseCase from "../../../../domain/useCases/TransparencyCollabUseCase/TransparencyCollabUseCase";
+import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
+import TransparencyCollab from "../../../../domain/entities/TransparencyCollab";
 
 interface Props {
     usecase: PublicUseCase;
-    transparencyUseCase?: TransparencyActiveUseCase
+    transparencyUseCase?: TransparencyActiveUseCase;
+    tfusecase: TransparencyFocusUseCase;
+    tcusecase: TransparencyCollabUseCase
 }
 const PublicEstablishmentDetailContainer = (props: Props) => {
 
@@ -36,12 +42,17 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         last_name_committe: "",
         identification: "",
     })
-
+    const navigation = useNavigate()
     const [publications, setPublications] = useState<AcordionMonthYear<TransparencyActive>[]>([])
+    const [publicationsTF, setPublicationsTF] = useState<AcordionMonthYear<TransparencyFocusEntity>[]>([])
+    const [publicationsTC, setPublicationsTC] = useState<AcordionMonthYear<TransparencyCollab>[]>([])
 
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string>("")
     const [year, setYear] = useState<number>(new Date().getFullYear())
+    const [yearTF, setYearTF] = useState<number>(new Date().getFullYear())
+    const [yearTC, setYearTC] = useState<number>(new Date().getFullYear())
+
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
     useEffect(() => {
         props.usecase.getEstablishment(slug || "").then((response) => {
@@ -77,16 +88,20 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
         props.transparencyUseCase?.getPublicationsPublics(month, year, entity.id || 0).then((response) => {
 
+            const numeral = response.sort((a, b) => parseInt(a.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "") || "0") -
+                parseInt(b.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "") || "0"))
+
             const data: AcordionMonthYear<TransparencyActive> = {
-                data: response,
+                data: numeral,
                 isLoading: false,
                 month: month,
-                total: response.length,
+                total: numeral.length,
                 year: year
             }
 
             const searchPub = publications.find(x => x.year == year && x.month == month)
             if (!searchPub) {
+
                 setPublications([...publications, data])
             } else {
                 const index = publications.indexOf(searchPub);
@@ -103,6 +118,87 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         }).finally(() => {
             setLoading(false)
         })
+    }
+
+
+    const onOpenMonthTF = (month: number) => {
+
+        props.tfusecase.getTransparencyFocusPublics(month, yearTF, entity.id || 0).then((response) => {
+
+            const data: AcordionMonthYear<TransparencyFocusEntity> = {
+                data: response,
+                isLoading: false,
+                month: month,
+                total: response.length,
+                year: yearTF
+            }
+
+            const searchPub = publicationsTF.find(x => x.year == yearTF && x.month == month)
+            if (!searchPub) {
+                setPublicationsTF([...publicationsTF, data])
+            } else {
+                const index = publicationsTF.indexOf(searchPub);
+                if (index != -1) {
+                    const copy = publicationsTF;
+
+                    copy[index] = data;
+                    setPublicationsTF(copy)
+                }
+            }
+
+        }).catch((error) => {
+            setError(error.message)
+        }).finally(() => {
+            setLoading(false)
+        })
+
+    }
+
+    const onOpenMonthTC = (month: number) => {
+
+        props.tcusecase.getTransparencyCollabPublics(month, yearTC, entity.id || 0).then((response) => {
+
+            const data: AcordionMonthYear<TransparencyCollab> = {
+                data: response,
+                isLoading: false,
+                month: month,
+                total: response.length,
+                year: yearTC
+            }
+
+            const searchPub = publicationsTC.find(x => x.year == yearTC && x.month == month)
+            if (!searchPub) {
+                setPublicationsTC([...publicationsTC, data])
+            } else {
+                const index = publicationsTC.indexOf(searchPub);
+                if (index != -1) {
+                    const copy = publicationsTC;
+
+                    copy[index] = data;
+                    setPublicationsTC(copy)
+                }
+            }
+
+        }).catch((error) => {
+            setError(error.message)
+        }).finally(() => {
+            setLoading(false)
+        })
+
+    }
+
+
+
+    const handlePageInfo = () => {
+        console.log("page info")
+    }
+
+    const handlePageSolicity = () => {
+        navigation('/ingreso')
+    }
+
+    const handlePageIndicators = () => {
+        console.log("page indicators")
     }
 
     return (
@@ -123,6 +219,17 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             }}
             meses={meses}
             onOpenMonth={onOpenMonth}
+            onOpenMonthTC={onOpenMonthTC}
+            onOpenMonthTF={onOpenMonthTF}
+            onSelectYearTC={(year) => setYearTC(year)}
+            onSelectedYearTF={(year) => setYearTF(year)}
+            publicationsTC={publicationsTC}
+            publicationsTF={publicationsTF}
+            selectedYearTC={yearTC}
+            selectedYearTF={yearTF}
+            handlePageIndicators={handlePageIndicators}
+            handlePageInfo={handlePageInfo}
+            handlePageSolicity={handlePageSolicity}
 
 
         />

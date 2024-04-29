@@ -42,6 +42,49 @@ class TransparencyCollabApi {
         }
 
     }
+
+    async updateTransparencyFocus(data: TransparencyCollabCreateDto, id: number) {
+        try {
+            const res = await this.api.put<MessageTranslation<TransparencyCollabListDto>>(TRANSPARENCY_PATH + "/transparency/colaborative/update/" + id, data);
+            return res.data;
+        } catch (error: any) {
+            const e: string = error.response?.data?.message || "Error al actualizar publicación.";
+            throw new Error(e);
+        }
+    }
+
+    async getTransparencyCollabPublics(month: number, year: number, establishment_id: number) {
+        try {
+            const res = await this.api.get<TransparencyCollabListDto[]>(TRANSPARENCY_PATH + '/transparency/colaborative/public',
+                {
+                    params: {
+                        month: month,
+                        year: year,
+                        establishment_id: establishment_id
+                    }
+                })
+
+            return res.data;
+
+        } catch (error: any) {
+
+            const message = error?.response?.data?.message || 'Erro al buscar transparencia colaborativa';
+            throw new Error(message);
+        }
+    }
+
+
+    //transparency/colaborative/delete/
+
+    async deleteTransparencyCollab(id: number) {
+        try {
+            const res = await this.api.delete(TRANSPARENCY_PATH + '/transparency/colaborative/delete/' + id);
+            return res.data;
+        } catch (error: any) {
+            const e: string = error.response?.data?.message || "Error al eliminar publicación.";
+            throw new Error(e);
+        }
+    }
 }
 
 export default TransparencyCollabApi;

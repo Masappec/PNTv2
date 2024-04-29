@@ -49,7 +49,19 @@ class FilePublicationService {
 
     }
 
+    generateBlobVertical(data: Row[][]) {
+        let csvContent = "";
 
+        data.forEach(function (rowArray) {
+            const row = rowArray.map((item) => item.value).join(",");
+            row.split(",").forEach((element) => {
+                csvContent += element + "\r\n";
+            })
+        })
+
+        return new Blob([csvContent], { type: 'text/csv' });
+
+    }
     /**
      * 
      * 

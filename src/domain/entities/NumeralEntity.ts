@@ -2,6 +2,7 @@
 
 import BaseEntity, { BaseDTO } from "./BaseEntity";
 import TemplateFileEntity from "./TemplateFileEntity";
+import TransparencyActive from "./TransparencyActive";
 
 
 
@@ -24,6 +25,7 @@ class NumeralEntity extends BaseEntity {
     parent: number | null = 0
     templates: TemplateFileEntity[] = []
     published: boolean = false;
+    publication: TransparencyActive | null = null;
     constructor(
         {
             id,

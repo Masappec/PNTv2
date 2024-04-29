@@ -1,4 +1,5 @@
 import { BaseObject } from "..";
+import { TransparencyActivePublishResponse } from "../TansparencyActive/interface";
 import { TemplateDetail } from "../TemplateFile/inteface";
 
 interface PartialTemplateDto {
@@ -15,6 +16,7 @@ export interface NumeralDTO extends BaseObject {
   parent: number | null;
   templates: PartialTemplateDto[];
   published: boolean;
+  publication: TransparencyActivePublishResponse | null;
 }
 
 

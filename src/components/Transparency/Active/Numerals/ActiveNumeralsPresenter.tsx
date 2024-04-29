@@ -1,16 +1,20 @@
 import Numeral from "../../../Common/Numeral";
 import NumeralEntity from "../../../../domain/entities/NumeralEntity";
+import Spinner from "../../../Common/Spinner";
+import { Alert } from "flowbite-react";
 
 interface ActiveNumeralsPresenterProps {
   onAdd?: () => void;
   numerals: NumeralEntity[]
   loading: boolean;
-  onClickItem: (numeral: NumeralEntity) => void
+  onClickItem: (numeral: NumeralEntity) => void,
+  error?: string;
+  setError?: (error: string) => void;
 }
 
 const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
   if (props.loading) {
-    return <div>Loading...</div>;
+    return <Spinner />
   }
   return (
     <div className=" w-full md:p-4 mx-auto ">
@@ -28,6 +32,12 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
 
             </div>
           </div>
+          {
+            props.error &&
+            <Alert color="failure" className="mt-4">
+              {props.error}
+            </Alert>
+          }
           <div className="mt-14">
             <div className="grid lg:grid-cols-2 gap-4 grid-cols-1 md:grid-cols-2">
               {

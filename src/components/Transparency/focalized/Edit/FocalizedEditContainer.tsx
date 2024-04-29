@@ -1,6 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import FocalizedEditPresenter from "./FocalizedEditPresenter";
-import { FormEvent, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import { Row } from "../../../../utils/interface";
@@ -8,14 +7,25 @@ import FilePublicationUseCase from "../../../../domain/useCases/FilePublicationU
 import TransparencyFocusUseCase from "../../../../domain/useCases/TransparencyFocusUseCase/TransparencyFocusUseCase";
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
-import { toast } from "react-toastify";
 import { Pagination } from "../../../../infrastructure/Api";
+import NumeralUseCase from "../../../../domain/useCases/NumeralUseCase/NumeraUseCase";
+import NumeralDetail from "../../../../domain/entities/NumeralDetail";
+import ActiveCreatePresenter from "../../Active/Create/ActiveCreatePresenter";
+import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
+import Template from "../../../../domain/entities/Template";
+import TemplateFileUseCase from "../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
 
 interface Props {
 
   fileUseCase: FilePublicationUseCase;
   tfocalizedUseCase: TransparencyFocusUseCase;
   establishmentUseCase: EstablishmentUseCase;
+  numeral: NumeralUseCase;
+  templateUseCase: TemplateFileUseCase;
+
+}
+export interface INeedProps {
+  item: TransparencyFocusEntity,
 }
 const FocalizedEditContainer = (props: Props) => {
 
@@ -23,6 +33,7 @@ const FocalizedEditContainer = (props: Props) => {
 
   const navigation = useNavigate()
 
+  const location = useLocation()
 
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
@@ -44,6 +55,15 @@ const FocalizedEditContainer = (props: Props) => {
   }, [], "", 0, 0, "", false, "", "", 0
 
   ));
+  const navigate = useNavigate()
+
+  const state = location.state as INeedProps;
+
+  const [numeral, setNumeral] = useState<NumeralDetail>(new NumeralDetail(0, [], new Date(), new Date(), false, null, "", "", "", false, "", "", "", 0))
+  const [templates, setTemplates] = useState<TemplateFileEntity[]>([]);
+  const [templateTable, setTemplateTable] = useState<Array<{ id: number, data: Row[][] }>>([]);
+  const [filesPublication, setFilesPublication] = useState<FilePublicationEntity[]>([]);
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
   const [filesList, setFilesList] = useState<Pagination<FilePublicationEntity>>({
     current: 0,
@@ -70,6 +90,36 @@ const FocalizedEditContainer = (props: Props) => {
 
   }, [])
 
+  useEffect(() => {
+    if (state) {
+      setPublication(state.item)
+      setFilesPublication(state.item.files)
+      SetFiles(state.item.files.map((file) => {
+        return {
+          file: file.url_download,
+          type: "file",
+          error: "",
+          loading: false,
+          success: "",
+          file_publication: file
+        }
+      }))
+    }
+  }, [state])
+
+  useEffect(() => {
+    props.numeral.getNumeralFocalizedOrCollab("F").then((response) => {
+      setNumeral(response)
+      setTemplates(response.templates.map((template) => {
+        return new TemplateFileEntity(template.id, null, template.name, true, "")
+      }))
+      buildRowFromTemplate(response.templates)
+    }).catch((error) => {
+      setError(error.message)
+    })
+
+  }, [])
+
 
   useEffect(() => {
     props.fileUseCase.getFilesPublications("TF").then((response) => {
@@ -79,9 +129,33 @@ const FocalizedEditContainer = (props: Props) => {
     })
   }, [])
 
+  useEffect(() => {
+    console.log(templates, filesPublication)
+    setIsDisabled(_isDisabled())
+  }, [templates, filesPublication])
 
 
+  const buildRowFromTemplate = (templates: Template[]) => {
+    const data: { id: number, data: Row[][] }[] = templates.map((template) => {
+      return {
+        id: template.id,
+        data: [
+          template.columns.map((column) => {
+            return {
+              key: column.id.toString(),
+              value: column.name,
+              is_header: true,
+            }
+          })
+        ] as Row[][]
+      }
 
+    })
+    console.log(data)
+
+
+    setTemplateTable(data)
+  }
 
 
   /**
@@ -95,286 +169,504 @@ const FocalizedEditContainer = (props: Props) => {
 
 
 
-  /**
-   * @summary funcion para guardar los datos de la tabla
-   * @param data datos de la tabla
-   * @param index indice de la tabla
-   */
-  const handleSaveDataTable = (data: Row[][], index: number) => {
+
+  const handleSaveDataTable = (data: Row[][], template: TemplateFileEntity) => {
 
 
     const blob = props.fileUseCase.generateBlob(data);
 
 
-    const file = new File([blob], "data.csv", {
+    const file = new File([blob], template.name + ".csv", {
       type: "text/csv;charset=utf-8;",
     });
 
 
-    const copyFiles = [...files]
-    copyFiles[index].file = file
-    SetFiles(copyFiles)
-
-
-
-
-  }
-
-
-
-
-
-  /**
-   * @summary funcion para guardar los datos de un archivo
-   * @param e evento de cambio
-   * @param index indice del archivo
-   */
-  const handleSaveDataFile = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const file = e.target?.files?.[0] || null
-    if (file === null) {
-      return
-    }
-    const copyFiles = [...files]
-    copyFiles[index].file = file
-    copyFiles[index].error = ""
-    copyFiles[index].loading = false
-    copyFiles[index].success = ""
-    props.fileUseCase.createFilePublication(new FilePublicationEntity(0, file?.name || "", "", file as File)).then((response) => {
-      copyFiles[index].file_publication = response
-      SetFiles(copyFiles)
-      setPublication({
-        ...publication,
-        files: [...publication.files || [], response]
-
-      })
-    }).catch((error) => {
-      copyFiles[index].error = error.message
-      SetFiles(copyFiles)
-
+    const copyFiles = templates.find((_template) => {
+      return _template.id === template.id
     })
-  }
 
-  /**
-   * @summary funcion para guardar los datos de un archivo a partir de una url
-   * @param e evento de cambio
-   * @param index indice del archivo
-   */
-  const handleSaveDataUrl = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const url = e.target.value
+    if (!copyFiles) {
+      setError("No se ha encontrado el template")
+      return;
+    }
 
-    const copy = [...files]
-    copy[index].loading = true
-    SetFiles(copy)
-    props.fileUseCase.downloadFileFromUrl(url).then((file) => {
+    copyFiles.file = file
 
-      if (file instanceof Blob) {
-        const copyFiles = [...files]
-        copyFiles[index].loading = false
-        copyFiles[index].error = ""
-        const file_ = new File([file], "data.csv", {
-          type: "text/csv;charset=utf-8;",
-        });
-        copyFiles[index].file = file_
-        SetFiles(copyFiles)
-      } else if (typeof file === "string") {
-        const copyFiles = [...files]
-        copyFiles[index].loading = false
-        copyFiles[index].error = "El enlace no es un archivo valido, por lo que se guardará como un enlace"
-        copyFiles[index].file = file
-        SetFiles(copyFiles)
-
+    setTemplates(templates.map((_template) => {
+      if (_template.id === template.id) {
+        return copyFiles
       }
-    }).catch((error) => {
-      const copyFiles = [...files]
+      return _template
+    }))
 
-      copyFiles[index].loading = false
-      copyFiles[index].error = error.message
-      copyFiles[index].file = null
-      SetFiles(copyFiles)
-    })
+
+
+
   }
 
 
 
 
-  /**
-   * @summary funcion para descargar un archivo
-   * @param file archivo a descargar
-   * @returns {void}
-   */
-  const onDownloadFile = (file: File) => {
-
-    const a = document.createElement("a");
-    const url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = file.name || "data.csv";
-    a.click();
-
-    a.remove();
-  }
 
 
-  /**
-   * @summary funcion para agregar un nuevo archivo
-   * @param type tipo de archivo
-   * @returns {void}
-   */
-  const onAddDataSet = (type: "table" | "file" | "url") => {
-
-    const copyFiles = [...files]
-    copyFiles.push({
-      file: null,
-      type: type,
-      error: "",
-      loading: false,
-      success: "",
-      file_publication: null
-    })
-    SetFiles(copyFiles)
-  }
-
-
-  /**
-   * @summary funcion para guardar un archivo enviando los datos al servidor
-   * @param file Archivo a guardar
-   * @param name  nombre del archivo
-   * @param description  descripcion del archivo
-   * @param index  indice del archivo
-   * @returns  {void}
-   */
-  const onSaveFile = (file: File | string | null, name: string, description: string, index: number): void => {
-
-
-
-    if (name === "") {
-      const copyFiles = [...files]
-      copyFiles[index].error = "El nombre es requerido"
-      SetFiles(copyFiles)
-      return
-    }
-    if (description === "") {
-      const copyFiles = [...files]
-      copyFiles[index].error = "La descripción es requerida"
-      SetFiles(copyFiles)
-      return
-    }
-    if (file === null) {
-      const copyFiles = [...files]
-      copyFiles[index].error = "El archivo es requerido"
-      SetFiles(copyFiles)
-      return
-    }
-    const data = new FilePublicationEntity(0, name, description, file);
-    if (file instanceof File) {
-      props.fileUseCase.createFilePublication(data).then((response) => {
-        const copyFiles = [...files]
-        copyFiles[index].file_publication = response
-        SetFiles(copyFiles)
-        setPublication({
-          ...publication,
-          files: [...publication.files || [], response]
-
-        })
-      }).catch((error) => {
-        const copyFiles = [...files]
-        copyFiles[index].error = error.message
-        SetFiles(copyFiles)
-      })
-    }
-
-  }
   const addFileFromList = (file: FilePublicationEntity) => {
     const copy = files;
 
-    copy.push({
-      type: "file",
-      error: "",
-      file: file.url_download,
-      file_publication: file,
-      loading: false,
-      success: ""
-    })
+    if (filesPublication.length < templates.length) {
 
-    SetFiles(copy)
-    setPublication({
-      ...publication,
-      files: [...publication.files || [], file]
+      copy.push({
+        type: "file",
+        error: "",
+        file: file.url_download,
+        file_publication: file,
+        loading: false,
+        success: ""
+      })
 
-
-    })
-
-  }
-
-  /**
-   * @summary funcion para remover un archivo del listado no subido
-   * @param index indice del archivo
-   * @returns {void}
-   */
-  const onRemoveFile = (index: number) => {
-    const copyFiles = [...files]
-    copyFiles.splice(index, 1)
-    SetFiles(copyFiles)
+      SetFiles(copy)
+      setFilesPublication([...filesPublication, file])
+      setPublication({
+        ...publication,
+        files: [...publication.files || [], file]
+      })
+    } else {
+      setError("No se pueden agregar más archivos")
+    }
   }
 
 
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const publish = () => {
 
 
     setLoading(true)
 
+    if (filesPublication.length !== templates.length) {
+      setError("No se han subido todos los archivos")
+      setLoading(false)
+      return
+    }
 
 
 
 
-    props.tfocalizedUseCase.createTransparencyFocus(
+    props.tfocalizedUseCase.updateTransparencyFocus(
       establishment.id || 0,
-      files.map((file) => file.file_publication?.id || 0),
+      filesPublication
+        .map((file) => file?.id || 0),
+      publication.id || 0
     ).then(() => {
-      setSuccess("Publicación creada correctamente")
+      setSuccess("Publicación actualizada correctamente")
       setLoading(false)
       navigation("/admin/transparency/focalized")
     }).catch((error) => {
       setError(error.message)
-      toast.error("Error al crear la publicación " + error.message, {
-        position: "top-right"
-      })
+
       setLoading(false)
     })
 
   }
 
 
-  const onRemoveFileFromPublication = (index: number) => {
 
-    const copyFiles = [...files]
-    copyFiles.splice(index, 1)
-    SetFiles(copyFiles)
+  const handleChanngeFile = (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
+
+    let newTemplates = templates.find((template) => {
+      return template.id === templateFile.id
+    })
+
+    if (!newTemplates) {
+      setError("No se ha encontrado el template")
+      return;
+    }
+    newTemplates.file = e.target.files?.[0] as File
+    if (!numeral) {
+      setError("No se ha encontrado el detalle del numeral")
+      return;
+    }
+
+    if (filesPublication.length >= templates.length) {
+      setError("No se pueden agregar más archivos")
+      newTemplates = {
+        ...newTemplates,
+        isValid: false
+      } as TemplateFileEntity
+
+      setTemplates(templates.map((template) => {
+        if (template.id === newTemplates?.id) {
+          return newTemplates
+        }
+        return template
+      }))
+      templateFile.file = null
+
+      return
+    }
+
+    const templateDetail = numeral.templates.find((template) => {
+      return template.id === templateFile.id
+    })
+    if (!templateDetail) return
+
+
+
+    props.templateUseCase.validateLocalFile(
+      newTemplates.file as File,
+      templateDetail
+    ).then((res) => {
+
+      setError("")
+      newTemplates = {
+        ...newTemplates,
+        isValid: res
+      } as TemplateFileEntity
+
+
+      //reemplazar el template
+      setTemplates(templates.map((template) => {
+        if (template.id === newTemplates?.id) {
+          return newTemplates
+        }
+        return template
+      }))
+
+
+
+      //reemplazar el filePublication
+      const name = newTemplates.file?.name || ""
+
+      let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
+      const index = filesPublication.indexOf(filePub as FilePublicationEntity)
+
+
+
+      if (!filePub) {
+        filePub = new FilePublicationEntity(0, name, newTemplates.name, newTemplates.file as File)
+        setFilesPublication([...filesPublication, filePub])
+      } else {
+        filePub.url_download = newTemplates.file as File
+        filePub.name = name
+        const newFiles = [
+          ...filesPublication as FilePublicationEntity[],
+        ]
+        newFiles[index] = filePub
+        setFilesPublication(newFiles)
+      }
+
+
+    }).catch((e) => {
+      newTemplates = {
+        ...newTemplates,
+        isValid: false
+      } as TemplateFileEntity
+
+
+      //reemplazar el template
+      setTemplates(templates.map((template) => {
+        if (template.id === newTemplates?.id) {
+          return newTemplates
+        }
+        return template
+      }))
+
+      setError(e.message)
+    })
+
+
+
+
   }
 
+
+  const uploadFile = async () => {
+
+    setLoading(true)
+    if (!filesPublication) {
+      setLoading(false)
+      setError("No se han subido todos los archivos")
+      return
+    }
+
+    if (!_isDisabled()) {
+      setLoading(false)
+      setError("No se han subido todos los archivos")
+      return
+    }
+
+
+    if (filesPublication.filter(file => file.id !== 0).length !== templates.length) {
+      const promise_array = filesPublication?.filter(x => x.id == 0).map((file) => {
+        return props.fileUseCase.createFilePublication(file)
+      })
+      Promise.all(promise_array as Promise<FilePublicationEntity>[]).then((res) => {
+        res.forEach((file, index) => {
+          filesPublication[index].id = file.id
+        })
+      }).then(() => {
+        publish()
+      }).catch((e) => {
+        setLoading(false)
+        setError(e.message)
+      })
+      return;
+    }
+
+
+
+    publish()
+
+
+
+  }
+
+  const onRemoveFileFromPublication = (index: number) => {
+    const copyFiles = [...filesPublication]
+    copyFiles.splice(index, 1)
+    setFilesPublication(copyFiles)
+  }
+  const _isDisabled = () => {
+    console.log(templates.filter(template => template.isValid).length == templates.length && filesPublication.length === templates.length)
+    return templates.filter(template => template.isValid).length == templates.length && filesPublication.length === templates.length
+  }
+  const onSaveTable = (file: File, template: TemplateFileEntity) => {
+
+    const newTemplates = templates.find((_template) => {
+      return _template.id === template.id
+    })
+    if (!newTemplates) {
+      setError("No se ha encontrado el template")
+      return;
+    }
+
+    if (!file) {
+      setError("No se ha encontrado el archivo")
+      return;
+    }
+
+    if (!numeral) {
+      setError("No se ha encontrado el detalle del numeral")
+      return;
+    }
+
+    newTemplates.file = file
+    newTemplates.isValid = true
+
+    const templateDetail = numeral?.templates.find((template) => {
+      return template.id === template.id
+    })
+
+    if (!templateDetail) return
+
+    setTemplates(templates.map((template) => {
+      if (template.id === newTemplates?.id) {
+        return newTemplates
+      }
+      return template
+    }))
+
+    let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
+    const index = filesPublication.indexOf(filePub as FilePublicationEntity)
+
+
+
+    if (!filePub) {
+      filePub = new FilePublicationEntity(0, newTemplates.name, newTemplates.name, newTemplates.file as File)
+      setFilesPublication([...filesPublication, filePub])
+    } else {
+      filePub.url_download = newTemplates.file as File
+      const newFiles = [
+        ...filesPublication as FilePublicationEntity[],
+      ]
+      newFiles[index] = filePub
+      setFilesPublication(newFiles)
+    }
+
+    setSuccess("Se ha guardado correctamente el archivo")
+  }
+
+  const handleChageLink = async (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
+    let newTemplates = templates.find((template) => {
+      return template.id === templateFile.id
+    })
+    if (!newTemplates) return
+
+    newTemplates.link = e.target.value
+
+    const templateDetail = numeral?.templates.find((template) => {
+      return template.id === templateFile.id
+    })
+
+    if (!templateDetail) return
+
+    props.fileUseCase.downloadFileFromUrl(e.target.value).then((file) => {
+
+      if (file instanceof Blob) {
+        const file_ = new File([file], "data.csv", {
+          type: "text/csv;charset=utf-8;",
+        });
+        props.templateUseCase.validateLocalFile(
+          file_ as File,
+          templateDetail
+        ).then((res) => {
+
+          setError("")
+          newTemplates = {
+            ...newTemplates,
+            isValid: res,
+            file: file_
+          } as TemplateFileEntity
+
+
+          //reemplazar el template
+          setTemplates(templates.map((template) => {
+            if (template.id === newTemplates?.id) {
+              return newTemplates
+            }
+            return template
+          }))
+
+
+
+          //reemplazar el filePublication
+          const name = newTemplates.file?.name || ""
+
+          let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
+          const index = filesPublication.indexOf(filePub as FilePublicationEntity)
+
+
+
+          if (!filePub) {
+            filePub = new FilePublicationEntity(0, name, newTemplates.name, newTemplates.file as File)
+            setFilesPublication([...filesPublication, filePub])
+          } else {
+            filePub.url_download = newTemplates.file as File
+            const newFiles = [
+              ...filesPublication as FilePublicationEntity[],
+            ]
+            newFiles[index] = filePub
+            setFilesPublication(newFiles)
+          }
+
+
+        }).catch((e) => {
+          newTemplates = {
+            ...newTemplates,
+            isValid: false
+          } as TemplateFileEntity
+
+
+          //reemplazar el template
+          setTemplates(templates.map((template) => {
+            if (template.id === newTemplates?.id) {
+              return newTemplates
+            }
+            return template
+          }))
+
+          setError(e.message)
+        })
+
+      } else if (typeof file === "string") {
+        setError("No se ha podido descargar el archivo")
+
+      }
+    }).catch((error) => {
+      setError(error.message)
+    })
+
+
+  }
+  const handleEdit = () => {
+    navigate("/admin/active/previewdata")
+  }
+  const downloadTemplate = (id: number) => {
+
+    //create csv file from template
+    const data_template = templateTable.find((data) => {
+      return data.id === id
+    })
+
+    const name_template = templates.find((template) => {
+      return template.id === id
+    })
+
+    const template = numeral?.templates.find((template) => {
+      return template.id === id
+    })
+
+
+    const name = name_template?.name || ""
+
+
+    console.log(data_template, name_template)
+
+    if (!data_template) {
+      setError("No se ha encontrado el template")
+      return;
+    }
+    if (!name_template) {
+      setError("No se ha encontrado el nombre del template")
+      return;
+    }
+
+
+    if (!template) {
+      setError("No se ha encontrado el template")
+      return
+    }
+    let blob = null;
+    if (template.verticalTemplate) {
+      blob = props.fileUseCase.generateBlobVertical(data_template.data);
+    } else {
+      blob = props.fileUseCase.generateBlob(data_template.data);
+    }
+
+    const file = new File([blob], name + ".csv", {
+      type: "text/csv;charset=utf-8;",
+    });
+    const url = URL.createObjectURL(file);
+
+
+    const a_ = document.createElement("a");
+    a_.setAttribute("href", url);
+    a_.setAttribute("download", name + ".csv");
+    a_.setAttribute("target", "_blank");
+    a_.style.display = "none";
+    document.body.appendChild(a_);
+
+
+    a_.click();
+
+
+  }
+
+
   return (
-    <FocalizedEditPresenter
-      handleSubmit={handleSubmit}
-      onCancel={handleCancel}
-      data={[]}
-      handleSaveDataFile={handleSaveDataFile}
-      files={files}
-      error={error}
+    <ActiveCreatePresenter
+      title={numeral?.description || ""}
+      error={error || ""}
+      handleSubmit={uploadFile}
       loading={loading}
-      success={success}
+      onChageFile={handleChanngeFile}
+      onEdit={handleEdit}
+      setData={() => { }}
       setError={setError}
       setSuccess={setSuccess}
+      templates={templates}
+      onChageLink={handleChageLink}
+      success={success || ""}
+      filesPublication={filesPublication || []}
+      isDisabled={!isDisabled}
+      dataTable={templateTable || []}
+      numeralDetail={numeral}
       onSaveTable={handleSaveDataTable}
-      onAddDataSet={onAddDataSet}
-      onSaveDateUrl={handleSaveDataUrl}
-      onDownloadFile={onDownloadFile}
-      onRemoveFile={onRemoveFile}
-      onSaveFile={onSaveFile}
-      publication={publication}
-      onRemoveFileFromPublication={onRemoveFileFromPublication}
-      files_uploaded_last={filesList}
+      onGenerateFileFromTable={onSaveTable}
+      downloadTemplate={downloadTemplate}
+      type="Transparencia Focalizada"
       addFileFromList={addFileFromList}
+      files_uploaded_last={filesList}
+      onRemoveFileFromPublication={onRemoveFileFromPublication}
+      onCancel={handleCancel}
     />
   )
 }

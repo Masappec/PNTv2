@@ -1,5 +1,6 @@
 import { TransparencyCollabListDto } from "../../infrastructure/Api/TransparencyCollab/interface";
 import TransparencyCollab from "../entities/TransparencyCollab";
+import FilePublicationMapper from "./FilePublicationMapper";
 
 
 class TransparencyCollabMapper {
@@ -7,7 +8,8 @@ class TransparencyCollabMapper {
         return {
             id: data.id,
             numeral: data.numeral,
-            files: data.files,
+            files: data.files.map(f => FilePublicationMapper.fromApiToDomain(f)),
+
             slug: data.slug,
             month: data.month,
             year: data.year,

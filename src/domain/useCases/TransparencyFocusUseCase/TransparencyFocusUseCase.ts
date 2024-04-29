@@ -23,6 +23,33 @@ class TransparencyFocusUseCase {
         });
         return response;
     }
+
+    async updateTransparencyFocus(
+        entity_id: number,
+        files: number[],
+        id: number
+    ) {
+        const response = await this.service.updateTransparencyFocus({
+            establishment_id: entity_id,
+            files
+
+        }, id);
+        return response;
+    }
+
+    async getTransparencyFocusPublics(
+        month: number,
+        year: number,
+        establishment_id: number
+    ) {
+        const response = await this.service.getTransparencyFocusPublics(month, year, establishment_id);
+        return response;
+    }
+
+
+    async deleteTransparencyFocus(id: number) {
+        return await this.service.deleteTransparencyFocus(id);
+    }
 }
 
 export default TransparencyFocusUseCase;
