@@ -142,7 +142,7 @@ const FocalizedCreateContainer = (props: Props) => {
    * @returns {void}
    */
   const handleCancel = () => {
-    navigation("/admin/transparency")
+    navigation("/admin/transparency/focalized")
   }
 
 

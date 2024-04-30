@@ -122,6 +122,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                                                         placeholder={field.description} className="w-60"
                                                         value={props.data[field.name as keyof RegisterDto] as string}
                                                         onChange={(e) => props.setData(field.name, e.target.value)}
+                                                        name={field.name}
                                                     />
                                                 </div>
                                     )

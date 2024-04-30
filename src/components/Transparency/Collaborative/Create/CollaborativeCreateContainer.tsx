@@ -144,7 +144,7 @@ const CollabCreateContainer = (props: Props) => {
    * @returns {void}
    */
   const handleCancel = () => {
-    navigation("/admin/transparency")
+    navigation("/admin/transparency/collaborative")
   }
 
 

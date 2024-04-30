@@ -53,7 +53,7 @@ export interface LoginUserDataResponseDto {
         codename: string;
     }[]
 
-  
+
 
 }
 
@@ -61,7 +61,7 @@ export interface LoginResponseDto {
     access: string,
     refresh: string,
     user: LoginUserDataResponseDto,
-      person: {
+    person: {
         id: number,
         first_name: string,
         last_name: string,
