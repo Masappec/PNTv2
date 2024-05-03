@@ -25,8 +25,8 @@ class FilePublicationUseCase {
         return await this.filePublicationRepository.createFilePublication(data, callbackUpload);
     }
 
-    async getFilesPublications(type:"TA"|"TC"|"TF"){
-        return await this.filePublicationRepository.getFilesPublications(type);
+    async getFilesPublications(type: "TA" | "TC" | "TF", page?: number, limit?: number, search?: string) {
+        return await this.filePublicationRepository.getFilesPublications(type, page, limit, search);
     }
 }
 

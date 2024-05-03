@@ -1,8 +1,9 @@
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import EstablishmentCreatePresenter from "./EstablishmentCreatePresenter"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
 import { useNavigate } from "react-router-dom"
+import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
 
 
 
@@ -18,6 +19,12 @@ const EstablishmentCreateContainer = ({
     const [error, setError] = useState<string>("")
     const [success, setSuccess] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
+    const [options, setOptions] = useState<OptionsSelectCreate>({
+        functions: [],
+        organizations: [],
+        institutions: []
+
+    })
 
     const [data, setData] = useState<EstablishmentEntity>({
         abbreviation: "",
@@ -38,6 +45,16 @@ const EstablishmentCreateContainer = ({
         identification: "",
 
     })
+
+    useEffect(() => {
+        usecase.getOptions().then((res) => {
+            setOptions(res)
+        }
+        ).catch((err) => {
+            console.log(err)
+        })
+
+    }, [])
 
 
 
@@ -85,7 +102,7 @@ const EstablishmentCreateContainer = ({
             success={success}
             setError={setError}
             setSuccess={setSuccess}
-
+            options={options}
         />
     )
 
