@@ -8,7 +8,7 @@ import Alert from "../../../Common/Alert";
 import { Button } from 'flowbite-react';
 import Select from "../../../Common/Select";
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface";
-
+import SelectReact from 'react-select'
 
 
 interface Props {
@@ -273,6 +273,10 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>
+                            <div className="flex  flex-col m-2">
+                                <SelectReact/>
+                            </div>
+
                         </div>
                     </div>
 
