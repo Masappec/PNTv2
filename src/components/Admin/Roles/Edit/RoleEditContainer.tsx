@@ -20,23 +20,38 @@ const RoleEditContainer = ({
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const [data, setData] = useState<PermissionEntity[]>([]);
     const [selected, setSelected] = useState<PermissionEntity[]>([]);
     const [role, setRole] = useState<RoleEntity>({
         name: '',
         id: 0,
         permission: []
     });
+    const [listPer, setListPermissions] = useState<{ type: string, list: PermissionEntity[] }[]>([]);
 
     const navigate = useNavigate();
 
-    
+
+
 
     useEffect(() => {
         
         permissionUsecase.execute().then((data) => {
-            setData(data)
-        }).catch((error:any) => {
+            const types = data.reduce((acc, item) => {
+                if (acc[item.content_type] === undefined) {
+                    acc[item.content_type] = []
+                }
+                acc[item.content_type].push(item)
+                return acc;
+            }, {} as { [key: string]: PermissionEntity[] })
+
+            setListPermissions(Object.entries(types).map(([key, value]) => {
+                return {
+                    type: key,
+                    list: value
+                }
+            }))
+
+        }).catch((error: any) => {
             setError(error.message)
         })
 
@@ -104,7 +119,7 @@ const RoleEditContainer = ({
             setError={setError}
             setSuccess={setSuccess}
             success={success}
-            permissions={data}
+            permissions={listPer}
             onSelected={handleSelected}
             isSelected={isSelected}
             role={role}

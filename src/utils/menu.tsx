@@ -31,6 +31,7 @@ import { BiPieChart } from "react-icons/bi";
 import FocalizedEdit from "../interfaces/web/Transparency/Focalized/Edit";
 import CollaborativeEdit from "../interfaces/web/Transparency/Collaborative/Edit";
 import ActiveEdit from "../interfaces/web/Transparency/Active/Edit";
+import EstablihsmentInSession from "../interfaces/web/Admin/Establishment/InSession/InSession";
 
 
 export interface MenuItem {
@@ -132,6 +133,16 @@ const menu = [
     icon: <RiBuilding4Line size={25} className="text-slate-500" />,
     permission_required: 'change_establishment',
     element: <EstablishmentEdit />
+  },
+  {
+    name: 'Institución',
+    path: '/admin/entity/',
+    element: <EstablihsmentInSession/>,
+    permission_required: 'update_my_establishment',
+    icon: <RiBuilding4Line size={25} className="text-slate-500" />,
+    visible: true,
+    visible_for_superadmin: false
+
   },
   {
     name: 'Área pedagógica',
