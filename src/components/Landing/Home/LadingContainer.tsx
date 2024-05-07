@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import LandingPresenter from "./LandingPresenter"
-import PublicUseCase from "../../../domain/useCases/Public/PublicUseCase";
 import { FrequencyAsked } from "../../../domain/entities/PedagodyAreaEntity";
 import { ColourOption } from "../../../utils/interface";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +7,26 @@ import EstablishmentEntity from "../../../domain/entities/Establishment";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../infrastructure/Store";
 
-interface Props {
-    usecase: PublicUseCase;
-}
 
-const LandingContainer = (props: Props) => {
-    const [faq, setFaq] = useState<FrequencyAsked[]>([])
+const LandingContainer = () => {
+    const [faq,] = useState<FrequencyAsked[]>([
+        {
+            question: "¿Qué puedo hacer en el portal?",
+            answer: "Consulta los datos e información que publican las entidades sujetas al cumplimiento de la LOTAIP.",
+            isActive: true,
+
+        },
+        {
+            question: "¿Qué información voy a encontrar?",
+            answer: "Directorios de personal, presupuestos,  normativas, y toda la información de las distintas modalidades de transparencia.",
+            isActive: true,
+        },
+        {
+            question: "¿Cómo solicito información?",
+            answer: "Si necesitas que una entidad te envíe información adicional a la publicada solicítala desde este sitio.",
+            isActive: true,
+        }
+    ])
     const [isSearching, SetSearching] = useState<boolean>()
     const navigate = useNavigate()
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
@@ -25,13 +38,7 @@ const LandingContainer = (props: Props) => {
     }, [_establishments])
 
 
-    useEffect(() => {
-        props.usecase.getPedagogyArea().then((res) => {
-            setFaq(res.faq)
-        }).catch((err) => {
-            console.log(err.message)
-        })
-    }, [])
+
 
 
 
@@ -51,7 +58,7 @@ const LandingContainer = (props: Props) => {
         SetSearching(true)
         const filter = listEnt.filter((item) => {
             return item.name.toLowerCase().includes(inputValue.toLowerCase())
-        })
+        }).slice(0, 3)
         SetSearching(false)
         callback(filter.map((item) => {
             const data: ColourOption = {

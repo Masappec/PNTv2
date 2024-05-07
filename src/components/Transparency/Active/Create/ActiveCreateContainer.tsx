@@ -15,6 +15,7 @@ import NumeralUseCase from "../../../../domain/useCases/NumeralUseCase/NumeraUse
 import NumeralDetail from "../../../../domain/entities/NumeralDetail";
 import Template from "../../../../domain/entities/Template";
 import { Row } from "../../../../utils/interface";
+import { Pagination } from "../../../../infrastructure/Api";
 
 export interface INeedProps {
   numeral: NumeralEntity,
@@ -52,6 +53,17 @@ const ActiveCreateContainer = (props: IProps) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
   const [establishment, setEstablishment] = useState<EstablishmentEntity>();
+  const [filesList, setFilesList] = useState<Pagination<FilePublicationEntity>>({
+    current: 0,
+    limit: 0,
+    next: 0,
+    previous: 0,
+    results: [],
+    to: 0,
+    total: 0,
+    from: 0,
+    total_pages: 0
+  })
 
   useEffect(() => {
     if (state) {
@@ -83,11 +95,20 @@ const ActiveCreateContainer = (props: IProps) => {
   }, [templates, filesPublication])
 
 
+  useEffect(() => {
+    props.usecase.getFilesPublications("TA").then((response) => {
+      setFilesList(response)
+    }).catch((error) => {
+      setError(error.message)
+    })
+  }, [])
 
 
 
 
-
+  const handleCancel = () => {
+    navigate("/admin/transparency/active")
+  }
 
 
   const buildRowFromTemplate = (templates: Template[]) => {
@@ -389,7 +410,6 @@ const ActiveCreateContainer = (props: IProps) => {
 
 
   const _isDisabled = () => {
-    console.log(templates.filter(template => template.isValid).length == templates.length && filesPublication.length === templates.length)
     return templates.filter(template => template.isValid).length == templates.length && filesPublication.length === templates.length
   }
 
@@ -498,7 +518,13 @@ const ActiveCreateContainer = (props: IProps) => {
 
     const name_template = templates.find((template) => {
       return template.id === id
-    })?.name
+    })
+
+    const template = detail?.templates.find((template) => {
+      return template.id === id
+    })
+
+    const name = name_template?.name || ""
 
 
     console.log(data_template, name_template)
@@ -512,11 +538,17 @@ const ActiveCreateContainer = (props: IProps) => {
       return;
     }
 
-
-
-
-    const blob = props.usecase.generateBlob(data_template.data);
-    const file = new File([blob], name_template + ".csv", {
+    if (!template) {
+      setError("No se ha encontrado el template")
+      return;
+    }
+    let blob;
+    if (template.verticalTemplate) {
+      blob = props.usecase.generateBlobVertical(data_template.data);
+    } else {
+      blob = props.usecase.generateBlob(data_template.data);
+    }
+    const file = new File([blob], name + ".csv", {
       type: "text/csv;charset=utf-8;",
     });
     const url = URL.createObjectURL(file);
@@ -524,7 +556,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
     const a_ = document.createElement("a");
     a_.setAttribute("href", url);
-    a_.setAttribute("download", name_template + ".csv");
+    a_.setAttribute("download", name + ".csv");
     a_.setAttribute("target", "_blank");
     a_.style.display = "none";
     document.body.appendChild(a_);
@@ -534,6 +566,24 @@ const ActiveCreateContainer = (props: IProps) => {
 
 
   }
+
+
+
+
+  const addFileFromList = (file: FilePublicationEntity) => {
+
+
+
+    setFilesPublication([...filesPublication, file])
+
+
+  }
+  const onRemoveFileFromPublication = (index: number) => {
+    const copyFiles = [...filesPublication]
+    copyFiles.splice(index, 1)
+    setFilesPublication(copyFiles)
+  }
+
 
   return (
     <ActiveCreatePresenter
@@ -556,6 +606,12 @@ const ActiveCreateContainer = (props: IProps) => {
       onSaveTable={handleSaveDataTable}
       onGenerateFileFromTable={onSaveTable}
       downloadTemplate={downloadTemplate}
+      type="Transparencia Activa"
+      files_uploaded_last={filesList}
+      addFileFromList={addFileFromList}
+      onRemoveFileFromPublication={onRemoveFileFromPublication}
+      onCancel={handleCancel}
+
     />
   )
 }

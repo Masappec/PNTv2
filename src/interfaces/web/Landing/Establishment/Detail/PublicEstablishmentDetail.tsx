@@ -6,6 +6,12 @@ import TransparencyActiveUseCase from "../../../../../domain/useCases/Transparen
 import TransparencyActiveService from "../../../../../infrastructure/Services/TransparencyActiveService"
 import TransparencyActiveApi from "../../../../../infrastructure/Api/TansparencyActive/TransparencyActiveApi"
 import api from "../../../../../infrastructure/Api"
+import TransparencyFocusUseCase from "../../../../../domain/useCases/TransparencyFocusUseCase/TransparencyFocusUseCase"
+import TransparencyFocusService from "../../../../../infrastructure/Services/TransparencyFocusService"
+import TransparencyFocusApi from "../../../../../infrastructure/Api/TransparencyFocus/TransparencyFocusApi"
+import TransparencyCollabUseCase from "../../../../../domain/useCases/TransparencyCollabUseCase/TransparencyCollabUseCase"
+import TransparencyCollabService from "../../../../../infrastructure/Services/TransparencyCollabService"
+import TransparencyCollabApi from "../../../../../infrastructure/Api/TransparencyCollab/TransparencyCollab"
 
 
 
@@ -22,7 +28,16 @@ const PublicEstablishmentDetail = () => {
             new TransparencyActiveApi(api)
         )
     )
-
+    const tfocalized = new TransparencyFocusUseCase(
+        new TransparencyFocusService(
+            new TransparencyFocusApi(api)
+        )
+    )
+    const tcollab = new TransparencyCollabUseCase(
+        new TransparencyCollabService(
+            new TransparencyCollabApi(api)
+        )
+    )
 
     return (
         <div className="w-screen">
@@ -31,6 +46,8 @@ const PublicEstablishmentDetail = () => {
             <PublicEstablishmentDetailContainer
                 usecase={usecase}
                 transparencyUseCase={taUseCase}
+                tcusecase={tcollab}
+                tfusecase={tfocalized}
             />
         </div>
     )

@@ -97,8 +97,8 @@ const DynamicTable = (props: Props) => {
             setData(copy_data)
 
         } else {
-            const copy_data = [...data]
-            copy_data.splice(row, 1)
+            let copy_data = [...data]
+            copy_data = copy_data.filter((_row, index) => index !== row + 1)
             setData(copy_data)
         }
     }
@@ -134,7 +134,7 @@ const DynamicTable = (props: Props) => {
                             <>
 
                                 <Table.Row key={rowIndex}
-                                    className={hovered?.row === rowIndex ? "bg-gray-400" : ""}>
+                                    className={hovered?.row === rowIndex ? "bg-gray-200" : ""}>
 
                                     <Table.Cell>
                                         <Button className="w-5 h-5" color="failure" onClick={() => handleRemove(rowIndex, 0, false)} >
@@ -163,14 +163,17 @@ const DynamicTable = (props: Props) => {
                             </>
                         );
                     })}
-                    <Table.Row>
-                        <Table.Cell colSpan={data[0].length + 1}>
-                            <Button className="w-full" color="gray" onClick={() => handleClick(data.length - 1)} >
-                                <IoAddCircle size={20} />
+                    {
+                        !props.isSaved ? <Table.Row>
+                            <Table.Cell colSpan={data[0].length + 1}>
+                                <Button className="w-full" color="gray" onClick={() => handleClick(data.length - 1)} >
+                                    <IoAddCircle size={20} />
 
-                            </Button>
-                        </Table.Cell>
-                    </Table.Row>
+                                </Button>
+                            </Table.Cell>
+                        </Table.Row> : null
+                    }
+
                 </Table.Body>
 
             </Table>

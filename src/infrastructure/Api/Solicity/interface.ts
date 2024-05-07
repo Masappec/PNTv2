@@ -49,7 +49,7 @@ export interface CommentsDto {
   deleted: boolean;
   deleted_at: string;
   ip: string;
-  text: string;
+  motive: string;
   user: number;
   solicity: number;
   files: number[];

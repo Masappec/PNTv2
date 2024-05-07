@@ -1,4 +1,4 @@
-import { Alert, Button, Tabs } from "flowbite-react";
+import { Alert, Button, Tabs, Tooltip } from "flowbite-react";
 import Spinner from "../../../Common/Spinner";
 import { FaArrowUp } from "react-icons/fa";
 import Dropzone from "../../../Common/Dropzone";
@@ -10,6 +10,11 @@ import DataTablePartial from "../../Partial/CreateFilePublication/DataTable";
 import { Row } from "../../../../utils/interface";
 import NumeralDetail from "../../../../domain/entities/NumeralDetail";
 import { CiSaveDown1 } from "react-icons/ci";
+import { ListUploadsFiles } from "../../Partial/CreateFilePublication/ListUploadsFiles";
+import { Pagination } from "../../../../infrastructure/Api";
+import IconSearch from "../../../Common/IconSearch";
+import { FaTrash } from "react-icons/fa6";
+import { LuX } from "react-icons/lu";
 
 interface Props {
 
@@ -32,6 +37,11 @@ interface Props {
   numeralDetail: NumeralDetail | null;
   onGenerateFileFromTable: (file: File, index: TemplateFileEntity) => void;
   downloadTemplate: (id: number) => void;
+  type: string
+  files_uploaded_last: Pagination<FilePublicationEntity>
+  addFileFromList: (file: FilePublicationEntity) => void
+  onRemoveFileFromPublication: (index: number) => void;
+  onCancel: () => void;
 }
 
 const ActiveCreatePresenter = (props: Props) => {
@@ -44,7 +54,7 @@ const ActiveCreatePresenter = (props: Props) => {
             <div>
               <div className="flex items-center gap-x-3">
                 <h2 className="text-2xl font-medium text-gray-800 dark:text-white">
-                  Transparencia Activa
+                  {props.type}
                 </h2>
               </div>
               <div className="flex items-center gap-x-3 mt-20">
@@ -63,6 +73,18 @@ const ActiveCreatePresenter = (props: Props) => {
 
             <div className="flex items-center mt-4 +
                 w-auto gap-x-3">
+              <Button
+                type="button"
+                onClick={props.onCancel}
+                className="flex items-center justify-center w-1/2 text-sm tracking-wide
+                                text-white transition-colors duration-200 bg-slate-400
+                                 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-100">
+                <LuX className="w-5 h-5" />
+                <span>
+                  Cancelar
+                </span>
+              </Button>
+
 
               {props.loading ? (
                 <Spinner />
@@ -96,7 +118,31 @@ const ActiveCreatePresenter = (props: Props) => {
               </Alert>
             )
           }
+          <div className="flex flex-row m-2">
+            {
+              props.filesPublication.map((file, index) => {
+                return (
+                  <Tooltip content={file.name}>
 
+                    <div className="flex flex-col w-40 m-2 bg-slate-100 p-5 rounded-lg shadow-xl ">
+                      <IconSearch type={file.name} />
+                      <span className=" text-gray-500 dark:text-gray-300">
+                        {file.name.length > 10 ? file.name.substring(0, 10) + "..." : file.name}
+                      </span>
+                      <span className=" text-gray-500 text-sm dark:text-gray-300 ">
+                        {file.description.length > 10 ? file.description.substring(0, 10) + "..." : file.description}
+                      </span>
+                      <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
+                        <FaTrash className="cursor-pointer text-red-600" size={15} onClick={() => props.onRemoveFileFromPublication(index)} />
+                      </span>
+                    </div>
+                  </Tooltip>
+
+                )
+
+              })
+            }
+          </div>
           <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800">
             <Tabs.Item title="Subir Archivos" >
               <div className="mb-36 mt-5 xl:grid-cols-3 grid-cols-1 grid gap-5">
@@ -112,16 +158,20 @@ const ActiveCreatePresenter = (props: Props) => {
                           type="image"
                           label={template.name}
                           name="logo"
-                          className={template.file != null ? template.isValid ? "bg-green-200" : "bg-red-200" : ""}
+                          className={template.file != null ? (template.isValid ? "bg-green-200" : "bg-red-200") : ""}
                           accept=".csv"
                         />
-                        <Button key={index} type="button"
-                          onClick={() => props.downloadTemplate(template.id)}
-                          className="flex items-center justify-center w-12 text-sm">
-                          <span className=" dark:text-gray-300 font-semibold">
-                            <CiSaveDown1 className="w-5 h-5 font-normal" />
-                          </span>
-                        </Button>
+                        <Tooltip content={`Descargar plantilla de ${template.name}`}>
+
+                          <Button key={index} type="button"
+                            onClick={() => props.downloadTemplate(template.id)}
+                            className="flex items-center justify-center w-12 text-sm">
+                            <span className=" dark:text-gray-300 font-semibold">
+                              <CiSaveDown1 className="w-5 h-5 font-normal" />
+                            </span>
+                          </Button>
+                        </Tooltip>
+
                       </div>
                     );
                   })
@@ -163,7 +213,7 @@ const ActiveCreatePresenter = (props: Props) => {
                       file={file.file}
                       onSaveTable={(data) => { props.onSaveTable(data, file) }}
                       key={index}
-                      isSaved={false}
+                      isSaved={props.filesPublication.find((e) => e.description == file.name) ? true : false}
                       title={file.name}
                       limit={props.numeralDetail?.templates.find((e) => e.id == file.id)?.maxInserts || undefined}
                     />
@@ -171,6 +221,17 @@ const ActiveCreatePresenter = (props: Props) => {
 
                 })
               }
+            </Tabs.Item>
+            <Tabs.Item title="Buscar archivos Subidos">
+              <ListUploadsFiles
+                currentPage={props.files_uploaded_last.current}
+                files={props.files_uploaded_last.results}
+                onAddFileToPublication={props.addFileFromList}
+                onChangePage={() => { }}
+                onDownloadFileFromUrl={() => { }}
+                totalPages={props.files_uploaded_last.total_pages as number}
+
+              />
             </Tabs.Item>
           </Tabs>
           <div className="container">

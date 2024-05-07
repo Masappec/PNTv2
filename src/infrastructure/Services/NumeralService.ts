@@ -18,6 +18,11 @@ class NumeralService {
         return NumeralDetailMapper.toDomain(res)
     }
 
+    async getFocalizedOrCollab(type: string) {
+        const res = await this.api.getNumeralById(0, type)
+        return NumeralDetailMapper.toDomain(res)
+    }
+
 }
 
 export default NumeralService;

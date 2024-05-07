@@ -3,10 +3,13 @@ import Select from "../../../Common/Select";
 import { CiSearch } from "react-icons/ci"
 import { IoBagAddOutline } from "react-icons/io5";
 import { FiEdit2 } from "react-icons/fi";
-import { GrView } from "react-icons/gr";
+//import { GrView } from "react-icons/gr";
 import { RiDeleteBinLine } from "react-icons/ri";
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import Table from "../../../Common/Table";
+import Modal_ from "../../../Common/Modal";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+import Alert from "../../../Common/Alert";
 
 interface Props {
 
@@ -29,7 +32,9 @@ interface Props {
   from: number
   to: number
   total: number
-  totalPage: number
+  totalPage: number,
+  selectedItem: TransparencyFocusEntity | null,
+  type_alert: "success" | "warning" | "info" | "error"
 
 }
 const FocalizedListPresenter = (props: Props) => {
@@ -42,12 +47,32 @@ const FocalizedListPresenter = (props: Props) => {
           Transparencia LOTAIP - Transparencia focalizada
         </h2>
       </div>
-      <div className="ml-11 mt-10">
-        <h2 className="text-xl text-black font-bold  mb-10">
-          Transparencia focalizada
-        </h2>
-      </div>
 
+      <div className="flex items-center py-5 justify-center">
+
+        <Modal_
+          isvisible={props.visibleModal}
+          onClose={() => { }}
+        >
+          {
+            props.error && <Alert type={props.type_alert} message={props.error} onClose={() => { }} />
+          }
+
+
+          <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+          <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+            {`¿Desea Eliminar la publicacion de la fecha ${props.selectedItem?.published_at && new Date(props.selectedItem?.published_at).toLocaleString()}?`}
+          </h3>
+          <div className="flex justify-center gap-4">
+            <Button color="failure" onClick={() => props.onConfirmDelete()}>
+              {"Si, Estoy seguro"}
+            </Button>
+            <Button color="gray" onClick={() => props.onCancelDelete()}>
+              No, Cancelar
+            </Button>
+          </div>
+        </Modal_>
+      </div>
       <div className="mr-40 mt-5 flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-5 flex-shrink-0 ">
 
 
@@ -94,30 +119,32 @@ const FocalizedListPresenter = (props: Props) => {
           show={true}
           columns={[
             {
-              render: (row: TransparencyFocusEntity) => <p>{new Date(row.published_at).toDateString()}</p>,
+              render: (row: TransparencyFocusEntity) => <p>{new Date(row.published_at).toLocaleString()}</p>,
 
 
               title: "Fecha",
             },
 
             {
-              render: () => (
+              render: (item) => (
                 <p>
                   <button
                     onClick={() => {
+                      props.onEdit(item)
                     }}
                     className=" p-5 text-lg text-slate-400 font-bold rounded-full">
                     <FiEdit2 />
                   </button>
 
-                  <button
+                  {/*<button
                     onClick={() => {
                     }}
                     className=" p-5 text-slate-400font-bold ">
                     <GrView />
-                  </button>
+                  </button>*/}
                   <button
                     onClick={() => {
+                      props.onDelete(item)
                     }}
                     className=" p-5 text-slate-400 font-bold ">
                     <RiDeleteBinLine />
@@ -140,6 +167,7 @@ const FocalizedListPresenter = (props: Props) => {
           onChangePage={props.setPage}
           onImport={props.onImport}
           textImport="Importar"
+          totalPages={props.totalPage}
 
 
 

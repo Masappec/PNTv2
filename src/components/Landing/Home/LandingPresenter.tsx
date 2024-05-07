@@ -26,7 +26,7 @@ const LandingPresenter = (props: Props) => {
       bgcolor: "#F7941D",
       contrast: "#F7941D0D",
       color: "#A5C3300D",
-    
+
     },
     {
       bgcolor: "#A5C330",
@@ -43,10 +43,10 @@ const LandingPresenter = (props: Props) => {
     FiLayers,
     () => (
       <svg
-        width="100"
-        height="100"
+        width="60"
+        height="60"
         className="h-full ml-4 "
-        viewBox="0 0 100 100"
+        viewBox="0 0 95 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -72,7 +72,7 @@ const LandingPresenter = (props: Props) => {
           onSelect={props.onSelect}
         />
 
-        <div className="grid mt-8 grid-cols-1 lg:grid-cols-3 pr-5 xl:pr-10 lg:pr-10 w-full ">
+        <div className="grid mt-10 grid-cols-1 lg:grid-cols-3 pr-5 xl:pr-10 lg:pr-10 w-full ">
           {props.faq.map((item, index) => {
             return (
               <CardQuestion
@@ -82,7 +82,6 @@ const LandingPresenter = (props: Props) => {
                 content={item.answer}
                 contrast={""}
                 bgcolor={colors[index].bgcolor}
-                color={colors[index].color}
               ></CardQuestion>
             );
           })}
@@ -95,15 +94,13 @@ const LandingPresenter = (props: Props) => {
           >
             <FormattedMessage id="search_by_tematic" />
           </p>
-          <hr className="w-[85%] ml-64 border-gray-900 -mt-5 mr-9 hidden xl:block" />
+          <hr className="w-[79%] ml-64 border-gray-900 -mt-5 mr-9 hidden xl:block" />
           <hr className="w-[90%] ml-5 border-blue-300 mt-5 mb-1 mr-9 xl:hidden" />
         </div>
 
-        <div
-          className="grid grid-cols-1 lg:grid-cols-4 lg:ml-5   md:ml-5 xl:-space-x-6 
-        md:grid-cols-2 w-full
-        justify-center  mb-44 mt-8  "
-        >
+        <div className="grid mt-20 grid-cols-1 md:grid-cols-2 xl:space-y-4  lg:grid-cols-2 xl:grid-cols-4 
+        lg:ml-5   md:ml-0 xl:-space-x-3 
+         w-full justify-center  mb-44 ">
           <CardConsulta
             icon={
               <BiBriefcaseAlt
@@ -115,7 +112,7 @@ const LandingPresenter = (props: Props) => {
             backgroundColor="hover:bg-[#F7941D]  bg-[#FFF6EC] px-5 w-full "
             color="text-black "
             content=" Encontrarás información sobre presupuesto participativo, consejo de coordinación regional, audiencias públicas, entre otros."
-            classnames={"px-5 xl:mr-0 "}
+            classnames={"px-5 xl:mr-0 md:mt-0 lg:mt-4"}
           ></CardConsulta>
           <CardConsulta
             icon={

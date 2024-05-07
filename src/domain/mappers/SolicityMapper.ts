@@ -67,7 +67,7 @@ class SolicityMappers {
                 r.deleted,
                 r.deleted_at,
                 r.ip,
-                r.text,
+                r.motive,
                 r.user,
                 r.solicity,
                 r.files,

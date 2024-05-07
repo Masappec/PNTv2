@@ -10,7 +10,7 @@ const FooterInfo = () => {
 
       <h5 className="font-bold text-2xl mt-20 mb-6 xl:ml-0 ml-4">Listado de Entidades</h5>
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between ">
-        <nav className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 justify-center  text-base text-justify sm:gap-[40px] xl:pr-24 ">
+        <nav className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center  text-base md:text-justify sm:gap-[40px] xl:pr-24 ">
 
           <a href="#" className="text-gray-200 hover:text-gray-200 mt-[60px] xl:mt-5 lg:mt-0  ">
             Función <br /> Ejecutiva
@@ -33,7 +33,8 @@ const FooterInfo = () => {
       <hr className="w-full  border-slate-500 mt-20 -mr-96 " />
 
       <div className=" mx-auto flex  w-full md:flex-row mt-[80px] ">
-        <nav className="flex 
+        <nav className="lg:flex 
+        flex-col lg:flex-row
         justify-between mt-4 w-full
         space-x-10
         ">
@@ -53,23 +54,23 @@ const FooterInfo = () => {
 
           </div>
 
-          <div className="flex flex-row  w-full ml-12 justify-center">
-            <a href="#" className="block  lg:inline-block  mr-4">
+          <div className="lg:flex grid grid-cols-2 w-auto   lg:w-full lg:ml-12 lg:justify-center">
+            <a href="#" className="block  lg:inline-block  lg:mr-4">
               <img src={logo_cd} alt="" className=" w-[84px] h-[84px] " />
             </a>
-            <a href="#" className="block  lg:inline-block mr-4">
+            <a href="#" className="  lg:inline-block lg:mr-4">
               <img src={datalad} alt="" className=" w-32 h-14" />
             </a>
-            <a href="#" className="block  lg:inline-block mr-4">
+            <a href="#" className="block  lg:inline-block lg:mr-4">
               <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
             </a>
-            <a href="#" className="block  lg:inline-block  mr-4">
+            <a href="#" className="block  lg:inline-block  lg:mr-4">
               <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
             </a>
-            <a href="#" className="block  lg:inline-block  mr-4">
+            <a href="#" className="block  lg:inline-block  lg:mr-4">
               <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
             </a>
-            <a href="#" className="block  lg:inline-block  mr-4">
+            <a href="#" className="block  lg:inline-block  lg:mr-4">
               <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
             </a>
           </div>
@@ -84,7 +85,7 @@ const FooterInfo = () => {
             <span className="text-slate-500 xl:whitespace-nowrap whitespace-break-spaces
             text-center
             ">
-              Portal Nacional de Transparencia 2024  {"\n"}&copy; 
+              Portal Nacional de Transparencia 2024  {"\n"}&copy;
             </span>
           </div>
           <div className="flex flex-col xl:flex-row space-x-0 xl:space-x-20 xl:whitespace-nowrap 

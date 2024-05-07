@@ -33,5 +33,19 @@ class TransparencyCollabService {
         return TransparencyCollabMapper.apiToDomain(response.json as TransparencyCollabListDto);
     }
 
+    async updateTransparencyFocus(data: TransparencyCollabCreateDto, id: number): Promise<TransparencyCollab> {
+        const response = await this.api.updateTransparencyFocus(data, id);
+        return TransparencyCollabMapper.apiToDomain(response.json as TransparencyCollabListDto);
+    }
+
+    async getTransparencyCollabPublics(month: number, year: number, establishment_id: number): Promise<TransparencyCollab[]> {
+        const response = await this.api.getTransparencyCollabPublics(month, year, establishment_id);
+        return response.map((transparencyFocus: TransparencyCollabListDto) => TransparencyCollabMapper.apiToDomain(transparencyFocus));
+    }
+
+    async deleteTransparencyCollab(id: number): Promise<void> {
+        return await this.api.deleteTransparencyCollab(id);
+    }
+
 }
 export default TransparencyCollabService

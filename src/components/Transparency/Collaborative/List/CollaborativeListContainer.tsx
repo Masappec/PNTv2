@@ -18,7 +18,8 @@ const FocalizedListContainer = ({ usecase
   const [totalPage, setTotalPage] = useState(0)
   const [from, setFrom] = useState(0)
   const [to, setTo] = useState(0)
-
+  const [selectedItem, setSelectedItem] = useState<TransparencyCollab | null>(null)
+  const [type_alert, setTypeAlert] = useState<"success" | "warning" | "info" | "error">("success")
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -43,15 +44,40 @@ const FocalizedListContainer = ({ usecase
     navigate("/admin/collaborative/create")
   }
 
+  const handleEdit = (item: TransparencyCollab) => {
+    navigate(`/admin/collaborative/edit/`, { state: { item } })
+  }
+
+  const handleDelete = (item: TransparencyCollab) => {
+    setVisibleModal(true)
+    setSelectedItem(item)
+  }
+
+  const onConfirmDelete = () => {
+    if (selectedItem) {
+      usecase.deleteTransparencyCollab(selectedItem.id)
+        .then(() => {
+          setVisibleModal(false)
+          setTransparencyFocus(transparencyFocus.filter((item) => item.id !== selectedItem.id))
+        })
+        .catch((error) => {
+          setError(error.message)
+          setTypeAlert("error")
+        })
+    }
+  }
+  const onCancelDelete = () => {
+    setVisibleModal(false)
+  }
   return (
     <CollaborativeListPresenter
       error={error}
       data={transparencyFocus}
       onAdd={handleAdd}
-      onCancelDelete={() => { }}
-      onConfirmDelete={() => { }}
-      onDelete={() => { }}
-      onEdit={() => { }}
+      onCancelDelete={onCancelDelete}
+      onConfirmDelete={onConfirmDelete}
+      onDelete={handleDelete}
+      onEdit={handleEdit}
       onFilter={() => { }}
       onImport={() => { }}
       onSearch={() => { }}
@@ -65,6 +91,9 @@ const FocalizedListContainer = ({ usecase
       to={to}
       total={total}
       totalPage={totalPage}
+      selectedItem={selectedItem}
+      type_alert={type_alert}
+
     />
 
   )

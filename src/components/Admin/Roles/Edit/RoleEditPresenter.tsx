@@ -14,7 +14,7 @@ interface RoleEditPresenterProps {
     setError: (e: string) => void;
     setSuccess: (e: string) => void;
     onCancel: () => void;
-    permissions: PermissionEntity[];
+    permissions: { type: string, list: PermissionEntity[] }[];
     onSelected: (checked: boolean, permission: PermissionEntity) => void;
     isSelected: (e: PermissionEntity) => boolean;
     setRole: (data:RoleEntity) => void;
@@ -94,20 +94,21 @@ const RoleEditPresenter = (props: RoleEditPresenterProps) => {
 
 
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-                                {
-                                    props.permissions.map((permission) => (
-
-                                        <Checkbox
-                                            id={permission.id+""}
-                                            label={permission.name}
-                                            checked={props.isSelected(permission)}
-                                            onChange={(checked) => 
-                                                props.onSelected(checked, permission)
-                                            }
-                                        />
-                                    ))
-                                }
+                            {
+                                props.permissions.map((type) => (
+                                    <div>
+                                        <h5 className="text-gray-700 text-sm font-bold mb-2">{type.type}</h5>
+                                        {type.list.map((permission) => (
+                                            <Checkbox
+                                                id={permission.id + ""}
+                                                label={permission.name}
+                                                checked={props.isSelected(permission)}
+                                                onChange={(checked) => props.onSelected(checked, permission)}
+                                            />
+                                        ))}
+                                    </div>
+                                ))
+                            }
                             </div>
 
 

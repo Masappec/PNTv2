@@ -17,7 +17,8 @@ class AuthMapper {
             age_range: '',
             gender: '',
             race: '',
-            confirm_password: ''
+            confirm_password: '',
+            //email: auth.email
         }
     }
 

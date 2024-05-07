@@ -16,6 +16,10 @@ class TransparencyActiveUseCase {
         return this.service.getPublicationsPublics(month, year, establishment_id);
     }
 
+    public async updatePublication(data: TransparencyActive) {
+        return this.service.updatePublication(data);
+    }
+
 }
 
 export default TransparencyActiveUseCase;

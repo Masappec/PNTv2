@@ -12,7 +12,7 @@ interface RoleCreatePresenterProps {
   setError: (e: string) => void;
   setSuccess: (e: string) => void;
   onCancel: () => void;
-  permissions: PermissionEntity[];
+  permissions: {type:string,list:PermissionEntity[]}[];
   onSelected: (checked: boolean, permission: PermissionEntity) => void;
   isSelected: (e: PermissionEntity) => boolean;
   role_name: string;
@@ -83,18 +83,26 @@ const RoleCreatePresenter = (props: RoleCreatePresenterProps) => {
             </div>
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <h5 className="text-gray-700 text-sm font-bold mb-2">Permisos</h5>
+              <h5 className="text-gray-700 text-xl font-bold mb-2">Permisos</h5>
             </div>
+            <hr className="my-5" />
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {props.permissions.map((permission) => (
-                <Checkbox
-                  id={permission.id + ""}
-                  label={permission.name}
-                  checked={props.isSelected(permission)}
-                  onChange={(checked) => props.onSelected(checked, permission)}
-                />
-              ))}
+              {
+                props.permissions.map((type) => (
+                  <div>
+                    <h5 className="text-gray-700 text-sm font-bold mb-2">{type.type}</h5>
+                    {type.list.map((permission) => (
+                      <Checkbox
+                        id={permission.id + ""}
+                        label={permission.name}
+                        checked={props.isSelected(permission)}
+                        onChange={(checked) => props.onSelected(checked, permission)}
+                      />
+                    ))}
+                  </div>
+                ))
+              }
             </div>
           </div>
         </section>

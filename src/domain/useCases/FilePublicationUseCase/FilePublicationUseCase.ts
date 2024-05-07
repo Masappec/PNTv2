@@ -18,6 +18,9 @@ class FilePublicationUseCase {
     async downloadFileFromUrl(url: string) {
         return await this.filePublicationRepository.downloadFileFromUrl(url);
     }
+    generateBlobVertical(data: Row[][]) {
+        return this.filePublicationRepository.generateBlobVertical(data);
+    }
 
     async createFilePublication(data: FilePublicationEntity,
         callbackUpload?: (e: AxiosProgressEvent) => void,

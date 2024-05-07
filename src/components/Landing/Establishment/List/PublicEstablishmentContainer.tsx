@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom"
 import PublicEstablishmentPresenter from "./PublicEstablishmentPresenter"
 import { setEstablishments as saveEstablishment } from "../../../../infrastructure/Slice/EstablishmentSlice"
 import { useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
+import { RootState } from "../../../../infrastructure/Store"
 
 interface Props {
     usecase: PublicUseCase
@@ -22,6 +24,7 @@ const PublicEstablishmentContainer = (props: Props) => {
     }[]>([])
     const [selectedLetter, setSelectedLetter] = useState<string>("A")
     const [error, setError] = useState("")
+    const _entities = useSelector((state: RootState) => state.establishment.establishments)
 
     const [total, setTotal] = useState(0)
 
@@ -39,6 +42,32 @@ const PublicEstablishmentContainer = (props: Props) => {
 
 
     useEffect(() => {
+        if (_entities.length > 0) {
+
+            let list_by_letters: {
+                letter: string,
+                data: EstablishmentEntity[]
+            }[] = []
+            _entities.forEach((entity) => {
+
+                list_by_letters = [
+                    ...list_by_letters,
+                    {
+                        letter: entity.name[0].toUpperCase(),
+                        data: [
+                            ...list_by_letters.find((item) => item.letter === entity.name[0].toUpperCase())?.data || [],
+                            entity
+                        ]
+                    }
+                ]
+            })
+
+
+            setOriginalEntities(list_by_letters)
+            setEntities(list_by_letters)
+            setLoad(false)
+            return;
+        }
         props.usecase.getEstablishments().then((entities) => {
             setLoad(false)
             setEntities(entities.results)

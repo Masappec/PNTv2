@@ -3,10 +3,13 @@ import Select from "../../../Common/Select";
 import { CiSearch } from "react-icons/ci"
 import { IoBagAddOutline } from "react-icons/io5";
 import { FiEdit2 } from "react-icons/fi";
-import { GrView } from "react-icons/gr";
+//import { GrView } from "react-icons/gr";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Table from "../../../Common/Table";
 import TransparencyCollab from "../../../../domain/entities/TransparencyCollab";
+import Alert from "../../../Common/Alert";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+import Modal_ from "../../../Common/Modal";
 
 interface Props {
 
@@ -29,7 +32,9 @@ interface Props {
   from: number
   to: number
   total: number
-  totalPage: number
+  totalPage: number,
+  selectedItem: TransparencyCollab | null,
+  type_alert: "success" | "warning" | "info" | "error"
 
 }
 const CollaborativeListPresenter = (props: Props) => {
@@ -39,15 +44,39 @@ const CollaborativeListPresenter = (props: Props) => {
     <div className="h-full">
       <div className="border-gray-300 py-5 border-b  ">
         <h2 className="text-2xl font-semibold text-black ml-11">
-          Transparencia LOTAIP - Transparencia focalizada
+          Transparencia LOTAIP - Transparencia Colaborativa
         </h2>
       </div>
       <div className="ml-11 mt-10">
         <h2 className="text-xl text-black font-bold  mb-10">
-          Transparencia focalizada
+          Transparencia Colaborativa
         </h2>
       </div>
+      <div className="flex items-center py-5 justify-center">
 
+        <Modal_
+          isvisible={props.visibleModal}
+          onClose={() => { }}
+        >
+          {
+            props.error && <Alert type={props.type_alert} message={props.error} onClose={() => { }} />
+          }
+
+
+          <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+          <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+            {`¿Desea Eliminar la publicacion de la fecha ${props.selectedItem?.published_at && new Date(props.selectedItem?.published_at).toLocaleString()}?`}
+          </h3>
+          <div className="flex justify-center gap-4">
+            <Button color="failure" onClick={() => props.onConfirmDelete()}>
+              {"Si, Estoy seguro"}
+            </Button>
+            <Button color="gray" onClick={() => props.onCancelDelete()}>
+              No, Cancelar
+            </Button>
+          </div>
+        </Modal_>
+      </div>
       <div className="mr-40 mt-5 flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-5 flex-shrink-0 ">
 
 
@@ -94,30 +123,33 @@ const CollaborativeListPresenter = (props: Props) => {
           show={true}
           columns={[
             {
-              render: (row: TransparencyCollab) => <p>{new Date(row.published_at).toDateString()}</p>,
+              render: (row: TransparencyCollab) => <p>{new Date(row.published_at).toLocaleString()}</p>,
 
 
               title: "Fecha",
             },
 
             {
-              render: () => (
+              render: (item) => (
                 <p>
                   <button
                     onClick={() => {
+                      props.onEdit(item)
                     }}
                     className=" p-5 text-lg text-slate-400 font-bold rounded-full">
                     <FiEdit2 />
                   </button>
 
-                  <button
+                  {/*<button
                     onClick={() => {
                     }}
                     className=" p-5 text-slate-400font-bold ">
                     <GrView />
-                  </button>
+                  </button>*/}
                   <button
                     onClick={() => {
+                      props.onDelete(item)
+
                     }}
                     className=" p-5 text-slate-400 font-bold ">
                     <RiDeleteBinLine />
@@ -140,7 +172,7 @@ const CollaborativeListPresenter = (props: Props) => {
           onChangePage={props.setPage}
           onImport={props.onImport}
           textImport="Importar"
-
+          totalPages={props.totalPage}
 
 
         />

@@ -55,12 +55,13 @@ class SolicityUseCase {
   availabletoComment(user: UserEntity, solicity: Solicity) {
     const lastComment = solicity.comments ? solicity.comments[solicity.comments.length - 1] : null;
     if (lastComment) {
-      console.log(lastComment.user, user.id)
       if (lastComment.user !== user.id) {
-        return solicity.status == StatusSolicity.INSISTENCY_PERIOD.key ||
+        return (solicity.status == StatusSolicity.INSISTENCY_PERIOD.key ||
           solicity.status == StatusSolicity.INSISTENCY_SEND.key ||
           solicity.status == StatusSolicity.SEND.key ||
-          solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
+          solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key) && (solicity.comments != undefined ?
+            solicity.comments.length < 11 : true
+          )
       }
     }
 

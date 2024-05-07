@@ -25,12 +25,10 @@ class TemplateFileUseCase {
                         columns = rows.map(row => row.split(delim)[0]);
 
 
-
                     }
 
                     columns = columns.filter(col => col.trim() !== '');
 
-                    console.log(columns, template.columns)
 
                     if (columns.length !== template.columns.length) {
                         throw new Error('El archivo no coincide con la plantilla, la cantidad de columnas no coincide');
@@ -67,7 +65,7 @@ class TemplateFileUseCase {
 
             const sortedDelimiters = counts.sort((a, b) => b.count - a.count);
 
-            callback(sortedDelimiters[0].delimiter, sample);
+            callback(sortedDelimiters[0].delimiter || ",", sample);
         };
 
         reader.readAsText(file.slice(0, sampleSize), 'UTF-8');

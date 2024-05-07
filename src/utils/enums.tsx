@@ -57,14 +57,14 @@ export const StatusSolicity = {
         value: 'Insistencia enviada',
         key: 'INSISTENCY_SEND',
         bg: 'info',
-        icon: <FaClock />,
+        icon: <FaCheck />,
         value_2: 'Insistencia Recibida'
     },
     INSISTENCY_RESPONSED: {
         value: 'Insistencia respondida',
         key: 'INSISTENCY_RESPONSED',
         bg: 'info',
-        icon: <FaClock />,
+        icon: <FaCheck />,
         value_2: 'Insistencia respondida'
     },
     INSISTENCY_NO_RESPONSED: {
