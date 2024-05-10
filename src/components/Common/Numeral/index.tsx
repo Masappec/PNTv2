@@ -22,10 +22,10 @@ const Numeral = ({ title, text, onClick, isPublished }: Props) => {
             }
           </div>
         </div>
-        <div className="text-base font-medium text-gray-500 my-2">{title}</div>
+        <div className="text-base font-medium text-gray-500 my-2 whitespace-nowrap ">{title}</div>
 
         <div className="border-l-2 border-gray-300 h-6 my-2"></div>
-        <div className="text-base font-medium my-2">{text}</div>
+        <div className="text-base font-medium my-2 ">{text}</div>
       </div>
     </div>
   );

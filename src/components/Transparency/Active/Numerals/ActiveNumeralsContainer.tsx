@@ -17,6 +17,9 @@ const ActiveNumeralsContainer = (props: IProps) => {
     const [loading, setLoading] = useState<boolean>(true)
     const navigate = useNavigate()
 
+
+    
+
     useEffect(() => {
         props.usecase.getNumeralByUserInSession().then(_numerals => {
             setNumerals(_numerals.sort((a, b) => parseInt(a.name.replace("Numeral", "")) - parseInt(b.name.replace("Numeral", ""))))
@@ -26,6 +29,8 @@ const ActiveNumeralsContainer = (props: IProps) => {
             setLoading(false)
         })
     }, [])
+
+    
 
 
     const handleClickItem = (numeral: NumeralEntity) => {
