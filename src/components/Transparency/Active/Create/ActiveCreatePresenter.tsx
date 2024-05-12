@@ -16,6 +16,8 @@ import IconSearch from "../../../Common/IconSearch";
 import { FaTrash } from "react-icons/fa6";
 import { LuX } from "react-icons/lu";
 
+
+
 interface Props {
 
   title: string;
@@ -44,7 +46,18 @@ interface Props {
   onCancel: () => void;
 }
 
+
+  const getCurrentDate = (): string => {
+    const currentDate = new Date();
+  const options: Intl.DateTimeFormatOptions = { 
+    year: 'numeric', 
+    month: 'long' 
+  };
+  return currentDate.toLocaleDateString(undefined, options);
+};
 const ActiveCreatePresenter = (props: Props) => {
+
+  const currentDate = getCurrentDate();
   return (
     <div className="container w-full">
       <div className="flex items-center py-2 justify-center"></div>
@@ -56,15 +69,15 @@ const ActiveCreatePresenter = (props: Props) => {
                 <h2 className="text-2xl font-medium text-gray-800 dark:text-white">
                   {props.type}
                 </h2>
+              </div> 
+              <p className="text lg font-medium text-gray-800 mt-4 ">{currentDate}</p>
+              <div className="flex items-center gap-x-3 mt-10">
               </div>
-              <div className="flex items-center gap-x-3 mt-20">
-              </div>
+              
               <p className="text-lg font-semibold text-gray-800 dark:text-white">
                 {props.title}
               </p>
-
-
-
+               
               <p className="mt-6 mb-10 text-base text-gray-500 dark:text-gray-300 font-semibold ">
                 Elija un método de carga
               </p>

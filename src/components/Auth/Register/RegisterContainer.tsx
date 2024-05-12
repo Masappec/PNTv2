@@ -40,6 +40,7 @@ const RegisterContainer = ({ usecase, configUseCase }: {
   const [success, setSuccess] = useState(false)
   const [showPassword, setShowPassword] = useState (false) 
 
+
   useEffect(() => {
     setError('')
     configUseCase.execute(ROLE_CIUDADANO, 'Usuario').then((res) => {
@@ -48,11 +49,6 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       setError(e.message)
     })
   }, [])
-
-
-
-
-
 
   const handleShowPassword = () =>{
     setShowPassword (!showPassword);
@@ -102,7 +98,7 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       return
     }
 
-    if (data.username === '') {
+    if (data.username === '*') {
       setError('Debe ingresar un correo electrónico')
       setLoading(false)
       return
@@ -169,9 +165,8 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       setError={setError}
       isLoading={loading}
       showPassword={showPassword}
-    
-    
-     
+   
+  
     /> : <ScreenMessage message="Registro Existoso" type="Revisa tu correo para activar tu cuenta" >
       <button onClick={() => {
         history('/ingreso')

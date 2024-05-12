@@ -12,6 +12,7 @@ import Spinner from "../../Common/Spinner";
 import logo from "../../../assets/Home/logo-dpe 2.png";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
+
 interface RegisterPresenterProps {
   error: string;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -23,10 +24,15 @@ interface RegisterPresenterProps {
   isLoading: boolean;
   handleShowPassword: () => void;
   showPassword: boolean;
+ 
   
 }
 
 const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
+
+
+
+  
   return (
     <>
       <header className="border-b-2 border-dark-400 dark:border-primary-600">
@@ -95,6 +101,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                       }
                       name={field.name}
                     />
+                        <span className="absolute top-0 -left-3 text-red-500 ">*</span>
                     <button
                       type="button"
                       className="absolute end-2 top-12  hover:cursor-pointer text-gray-600"
@@ -112,7 +119,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
               
              
                 : field.type_field === "select" ? (
-                  <div className="m-4">
+                  <div className="m-4 relative">
                     <Select
                       placeholder={field.description}
                       value={
@@ -135,9 +142,10 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                         }) as { value: string; label: string }[]),
                       ]}
                     />
+                        <span className="absolute top-0 -left-3 text-red-500 ">*</span>
                   </div>
                 ) : field.type_field === "checkbox" ? (
-                  <div className="flex  flex-col m-2 items-center">
+                  <div className="flex  flex-col m-2 items-center relative">
                     <Checkbox
                       checked={
                         props.data[field.name as keyof RegisterDto] as boolean
@@ -146,13 +154,14 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                       id={field.name}
                       label={field.description}
                     />
+                       
                   </div>
                 ) : (
-                  <div className="flex  flex-col m-2 mt-5 items-center">
+                  <div className="flex  flex-col m-2 mt-5 items-center relative ">
                     <Input
                       type={field.type_field}
                       placeholder={field.description}
-                      className="w-60"
+                      className= "w-60 " 
                       value={
                         props.data[field.name as keyof RegisterDto] as string
                       }
@@ -161,6 +170,9 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                       }
                       name={field.name}
                     />
+                  <span className="absolute top-0 left-2 text-red-500 ">*</span>
+                  
+                    
                   </div>
                 );
               })}

@@ -52,6 +52,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
+  
+
   const [establishment, setEstablishment] = useState<EstablishmentEntity>();
   const [filesList, setFilesList] = useState<Pagination<FilePublicationEntity>>({
     current: 0,
@@ -64,6 +66,7 @@ const ActiveCreateContainer = (props: IProps) => {
     from: 0,
     total_pages: 0
   })
+
 
   useEffect(() => {
     if (state) {
