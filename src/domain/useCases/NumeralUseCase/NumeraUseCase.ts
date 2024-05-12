@@ -29,6 +29,10 @@ class NumeralUseCase {
         return await this.service.getFocalizedOrCollab(type)
 
     }
+
+    async getNumeralsAllowed() {
+        return await this.service.getNumeralsAllowed()
+    }
 }
 
 export default NumeralUseCase;

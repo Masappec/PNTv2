@@ -4,13 +4,17 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
 import { useNavigate } from "react-router-dom"
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
+import NumeralUseCase from "../../../../domain/useCases/NumeralUseCase/NumeraUseCase"
+import NumeralDetail from "../../../../domain/entities/NumeralDetail"
 
 
 
 const EstablishmentCreateContainer = ({
-    usecase
+    usecase,
+    numeralUsecase
 }: {
-    usecase: EstablishmentUseCase
+    usecase: EstablishmentUseCase;
+    numeralUsecase: NumeralUseCase
 }) => {
 
 
@@ -46,6 +50,8 @@ const EstablishmentCreateContainer = ({
 
     })
 
+    const [numerals, setNumerals] = useState<NumeralDetail[]>([])
+
     useEffect(() => {
         usecase.getOptions().then((res) => {
             setOptions(res)
@@ -54,6 +60,14 @@ const EstablishmentCreateContainer = ({
             console.log(err)
         })
 
+    }, [])
+
+    useEffect(() => {
+        numeralUsecase.getNumeralsAllowed().then((res) => {
+            setNumerals(res)
+        }).catch((err) => {
+            console.log(err)
+        })
     }, [])
 
 
@@ -103,6 +117,7 @@ const EstablishmentCreateContainer = ({
             setError={setError}
             setSuccess={setSuccess}
             options={options}
+            numerals={numerals}
         />
     )
 

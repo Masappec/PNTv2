@@ -23,7 +23,7 @@ interface RegisterPresenterProps {
   isLoading: boolean;
   handleShowPassword: () => void;
   showPassword: boolean;
-  
+
 }
 
 const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
@@ -107,62 +107,63 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                       )}
                     </button>
                   </div>
-                  
-                ) 
-              
-             
-                : field.type_field === "select" ? (
-                  <div className="m-4">
-                    <Select
-                      placeholder={field.description}
-                      value={
-                        props.data[field.name as keyof RegisterDto] as string
-                      }
-                      onChange={(e) =>
-                        props.setData(field.name, e.target.value)
-                      }
-                      options={[
-                        {
-                          value: "",
-                          label: "Seleccione una opción",
-                        },
 
-                        ...(field.options?.map((option) => {
-                          return {
-                            value: option.id as string,
-                            label: option.name,
-                          };
-                        }) as { value: string; label: string }[]),
-                      ]}
-                    />
-                  </div>
-                ) : field.type_field === "checkbox" ? (
-                  <div className="flex  flex-col m-2 items-center">
-                    <Checkbox
-                      checked={
-                        props.data[field.name as keyof RegisterDto] as boolean
-                      }
-                      onChange={(e) => props.setData(field.name, e)}
-                      id={field.name}
-                      label={field.description}
-                    />
-                  </div>
-                ) : (
-                  <div className="flex  flex-col m-2 mt-5 items-center">
-                    <Input
-                      type={field.type_field}
-                      placeholder={field.description}
-                      className="w-60"
-                      value={
-                        props.data[field.name as keyof RegisterDto] as string
-                      }
-                      onChange={(e) =>
-                        props.setData(field.name, e.target.value)
-                      }
-                      name={field.name}
-                    />
-                  </div>
-                );
+                )
+
+
+                  : field.type_field === "select" ? (
+                    <div className="m-4">
+                      <Select
+                        placeholder={field.description}
+                        value={
+                          props.data[field.name as keyof RegisterDto] as string
+                        }
+                        onChange={(e) =>
+                          props.setData(field.name, e.target.value)
+                        }
+                        options={[
+                          {
+                            value: "",
+                            label: "Seleccione una opción",
+                          },
+
+                          ...(field.options?.map((option) => {
+                            return {
+                              value: option.id as string,
+                              label: option.name,
+                            };
+                          }) as { value: string; label: string }[]),
+                        ]}
+                      />
+                    </div>
+                  ) : field.type_field === "checkbox" ? (
+                    <div className="flex  flex-col m-2 items-center">
+                      <Checkbox
+                        checked={
+                          props.data[field.name as keyof RegisterDto] as boolean
+                        }
+                        onChange={(e) => props.setData(field.name, e)}
+                        id={field.name}
+                        label={field.description}
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex  flex-col m-2 mt-5 items-center">
+                      <Input
+                        type={field.type_field}
+                        placeholder={field.description}
+                        className="w-60"
+                        value={
+                          props.data[field.name as keyof RegisterDto] as string
+                        }
+                        onChange={(e) =>
+                          props.setData(field.name, e.target.value)
+                        }
+                        name={field.name}
+                        maxLength={field.name === "phone" ? 10 : undefined}
+                      />
+                    </div>
+                  );
               })}
             </div>
             {props.isLoading ? (

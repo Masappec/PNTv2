@@ -16,7 +16,6 @@ const RegisterContainer = ({ usecase, configUseCase }: {
 
 
 
-
   const [data, setData] = useState({
     accept_terms: false,
     age_range: '',
@@ -38,7 +37,7 @@ const RegisterContainer = ({ usecase, configUseCase }: {
   const history = useNavigate()
   const [config, setConfig] = useState<FormFieldsEntity[]>([])
   const [success, setSuccess] = useState(false)
-  const [showPassword, setShowPassword] = useState (false) 
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     setError('')
@@ -54,8 +53,8 @@ const RegisterContainer = ({ usecase, configUseCase }: {
 
 
 
-  const handleShowPassword = () =>{
-    setShowPassword (!showPassword);
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -169,9 +168,9 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       setError={setError}
       isLoading={loading}
       showPassword={showPassword}
-    
-    
-     
+
+
+
     /> : <ScreenMessage message="Registro Existoso" type="Revisa tu correo para activar tu cuenta" >
       <button onClick={() => {
         history('/ingreso')
