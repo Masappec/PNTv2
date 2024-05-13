@@ -3,8 +3,10 @@
 
 const AboutPresenter = () => {
     return (
-        <div className="container mx-auto mt-10 text-justify">
-            <h1 className="text-3xl font-bold text-center">COORDINACIÓN GENERAL DE TRANSPARENCIA Y ACCESO A LA INFORMACIÓN PÚBLICA
+        <div className="flex flex-col w-full  bg-white pr-10">
+            <div className="border-l-[1px]  border-gray-800 ml-8 md:ml-14 p-10">
+
+            <h1 className="text-3xl font-bold text-center ">COORDINACIÓN GENERAL DE TRANSPARENCIA Y ACCESO A LA INFORMACIÓN PÚBLICA
             </h1>
             <div className="space-y-20 mt-5 m-20 text-justify">
                 <p>
@@ -45,6 +47,8 @@ const AboutPresenter = () => {
                 Números telefónicos a nivel nacional (PBX):
                 (02) 3829670 – (02) 2900834 – (02) 2235439 – (02) 2521082 – (02) 2553832 – (02) 2546843”
             </div>
+            </div>
+
         </div>
     )
 }

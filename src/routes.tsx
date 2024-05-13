@@ -17,6 +17,7 @@ import PublicationDetail from "./interfaces/web/Landing/Publication/Detail";
 import Entry from "./interfaces/web/Auth/Entry";
 import { BASE_URL, IS_SERVER } from "./utils/constans";
 import About from "./interfaces/web/Landing/About";
+import PublicIndicators from "./interfaces/web/Landing/Establishment/Indicators";
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged();
@@ -90,6 +91,10 @@ const Router = createBrowserRouter(
         {
           path: "/entidades/:slug",
           element: <PublicEstablishmentDetail />,
+        },
+        {
+          path: "/indicadores",
+          element: <PublicIndicators />,
         },
         {
           path: "/publicaciones/:slug",

@@ -45,7 +45,9 @@ interface Props {
 
 const PublicEstablishmentDetailPresenter = (props: Props) => {
   return (
-    <div className="border-l-2 border-gray-800  ml-10 md:ml-14">
+    <div className="flex flex-col w-full  bg-white pr-10">
+
+    <div className="border-l-[1px]  border-gray-800 ml-8 md:ml-14">
       <div className=" flex flex-col  bg-white lg:pr-10 relative ">
 
         <div></div>
@@ -105,7 +107,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
             ></CardNormative>
           </div>
 
-          <Accordion className="mt-28 mb-24">
+          <Accordion className="mt-28 mb-24" collapseAll>
             <Accordion.Panel>
               <Accordion.Title>
                 <p className="text-start text-black text-lg font-medium">
@@ -155,7 +157,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
 
 
                   <div className="">
-                    <Accordion className="mt-14" key={"TA"}>
+                    <Accordion className="mt-14" key={"TA"} >
                       {
                         props.meses.map((mes, index) => {
                           return (
@@ -323,6 +325,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
         </div >
 
       </div >
+    </div >
     </div >
 
   );

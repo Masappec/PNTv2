@@ -27,7 +27,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
     return (
         <div className="flex flex-col w-full  bg-white pr-10">
             <div></div>
-            <div className="border-l-2 border-gray-900 ml-10 md:ml-10">
+            <div className="border-l-[1px]  border-gray-800 ml-8 md:ml-14">
 
                 {
                     props.error &&

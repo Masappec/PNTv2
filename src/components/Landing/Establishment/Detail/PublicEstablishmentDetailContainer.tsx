@@ -190,7 +190,8 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
 
     const handlePageInfo = () => {
-        console.log("page info")
+        //scroll to bottom
+        window.scrollTo(0, 400);
     }
 
     const handlePageSolicity = () => {
@@ -198,7 +199,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     }
 
     const handlePageIndicators = () => {
-        console.log("page indicators")
+        navigate('/indicadores')
     }
 
     return (

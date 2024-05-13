@@ -23,7 +23,7 @@ const Header = (props: Props) => {
             <Link
               to="entidades"
               tabIndex={2}
-              className="text-gray-800  dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-base px-8 py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+              className="text-gray-800  dark:text-white hover:bg-primary-200 hover:text-white  font-medium rounded-lg text-base px-8 py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
               <FormattedMessage id="list_entities" />
             </Link>
@@ -31,14 +31,14 @@ const Header = (props: Props) => {
             <Link
               to="#"
               tabIndex={3}
-              className="text-gray-800  dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-base px-6 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+              className="text-gray-800  dark:text-white hover:bg-primary-200 hover:text-white  font-medium rounded-lg text-base px-6 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
               <FormattedMessage id="indicators" />
             </Link>
             <Link
               to="/acerca-de"
               tabIndex={4}
-              className="text-gray-800  dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-base px-11 py-2.5   dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+              className="text-gray-800  dark:text-white hover:bg-primary-200 hover:text-white  font-medium rounded-lg text-base px-11 py-2.5   dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
               <FormattedMessage id="about" />
             </Link>

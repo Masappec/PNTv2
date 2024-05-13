@@ -24,17 +24,17 @@ const LandingPresenter = (props: Props) => {
   const colors = [
     {
       bgcolor: "#F7941D",
-      contrast: "#F7941D0D",
+      contrast: "#FFCD92",
       color: "#A5C3300D",
 
     },
     {
       bgcolor: "#A5C330",
-      contrast: "#A5C3300D",
+      contrast: "#E5FD85",
     },
     {
       bgcolor: "#D26497",
-      contrast: "#FFF9FC",
+      contrast: "#FCA5CD",
     },
   ];
 
@@ -80,7 +80,7 @@ const LandingPresenter = (props: Props) => {
                 icon={Icon[index] || Icon[0]}
                 title={item.question}
                 content={item.answer}
-                contrast={""}
+                contrast={colors[index].contrast}
                 bgcolor={colors[index].bgcolor}
               ></CardQuestion>
             );
@@ -168,7 +168,7 @@ const LandingPresenter = (props: Props) => {
           ></CardConsulta>
         </div>
         <div className="container flex items-center md:sm:justify-center  mb-24 w-full">
-          <div className="flex -mt-20 xl:w-1/2 md:sm:ml-52 w-auto">
+          <div className="flex -mt-20 xl:w-1/3 w-auto">
             <img src={logo} alt="" className="w-[150px] h-[150px]" />
             <span className="pl-5 py-7 text-base font-medium w-[70%]">
               "Este Portal Nacional de Transparencia" es uno de los compromisos
@@ -177,14 +177,17 @@ const LandingPresenter = (props: Props) => {
                 Estado Abierto Ecuador 2022-2024.
               </a>
               <br />
-              <a
-                href="https://www.gobiernoabierto.ec/plan-de-accion-2022-2024/"
-                target="_blank"
-                className="text-blue-500 font-semibold"
-              >
-                {" "}
-                Conoce más.
-              </a>
+              <div className="w-full flex justify-end">
+                <a
+                  href="https://www.gobiernoabierto.ec/plan-de-accion-2022-2024/"
+                  target="_blank"
+                  className="text-blue-500 font-semibold "
+                >
+                  {" "}
+                  Conoce más.
+                </a>
+              </div>
+              
             </span>
           </div>
         </div>

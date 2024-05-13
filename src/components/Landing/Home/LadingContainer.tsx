@@ -47,7 +47,7 @@ const LandingContainer = () => {
             return;
         }
 
-        if (inputValue.length < 5) {
+        if (inputValue.length < 3) {
             return;
         }
 

@@ -43,7 +43,7 @@ export const UserListPresenter = (props: Props) => {
     return (
 
         <div className="w-full">
-            <div className="border-gray-300 py-5 border-b  ">
+            <div className="border-gray-300border-b">
                 <h2 className="text-2xl font-semibold text-black ml-5">
                     Transparencia LOTAIP
                 </h2>

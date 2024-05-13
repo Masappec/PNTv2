@@ -65,12 +65,12 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
     }, [])
 
     return (
-        <div className="layout-admin  overflow-y-hidden">
+        <div className="layout-admin  overflow-y-hidden  h-2/3">
             <div className="flex-col overflow-y-hidden">
                 <HeaderPages open={open} setOpen={setOpen} haveImage={true} />
                 <div className="flex  overflow-y-hidden">
                     <div
-                        className={` lg:block xl:block ${open ? "block" : "hidden"} z-30  bg-slate-200
+                        className={` lg:block xl:block ${open ? "block" : "hidden"} z-30  
                         mb-52
                         `}
                     >
@@ -83,13 +83,13 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                             permissions={permissions}
                         />
                     </div>
-                    <div className="w-full overflow-y-hidden">
+                    <div className="w-full  h-fit">
                         <div
-                            className={` ${open ? " bg-black bg-opacity-40 lg:bg-none h-screen fixed z-20" : ""
+                            className={` ${open ? " bg-black bg-opacity-40 lg:bg-none  fixed z-20" : ""
                                 }`}
                             onClick={() => setOpen(false)}
                         ></div>
-                        <div className="overflow-y-scroll m-5 ">
+                        <div className="m-5">
                             <ToastContainer />
 
                             <Outlet />

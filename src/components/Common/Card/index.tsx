@@ -30,7 +30,7 @@ const CardConsulta = (props: Props) => {
             className={" container flex flex-col h-full w-10/12 md:w-full lg:w-auto xl:h-[350px]  text-left  " + props.classnames}>
 
             <Card
-                href="#" className={"mt-5 xl:mt-0 lg:mt-0 rounded-none shadow-none border-transparent border-l-[1px] border-t-[1px] border-r-[1px] items-center w-full  h-full flex " + props.backgroundColor}>
+                className={"mt-5 xl:mt-0 lg:mt-0 rounded-none shadow-none border-transparent border-l-[1px] border-t-[1px] border-r-[1px] items-center w-full  h-full flex " + props.backgroundColor}>
 
                 <div className={`text-center ${hover ? "xl:hidden lg:hidden" : ""}`}>
                     {props.icon}

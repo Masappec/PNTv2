@@ -26,10 +26,13 @@ const CardNormative = (props: Props) => {
             onClick={props.onClick}
         >
 
-            <Card href="#" className=" flex rounded-none shadow-none  border-gray-700 border-l-[1px]  border-t-[1px] border-r-[1px] border-t-gray-400 pt-6 w-full h-auto    "
+            <Card className=" flex rounded-none shadow-none  border-gray-700 border-l-[1px]  border-t-[1px] border-r-[1px] border-t-gray-400 pt-6 w-full h-auto    "
                 style={{
                     backgroundColor: props.bgcolor,
+                    cursor: "pointer",
+                    
                 }}
+                
             >
 
                 <div className="flex flex-col xl:flex-row gap-y-2 xl:-mt-6  ">

@@ -1,4 +1,5 @@
 import { Card } from "flowbite-react";
+import { useState } from "react";
 import { IconType } from "react-icons";
 import { CiCircleAlert } from "react-icons/ci";
 import { IoArrowForwardOutline } from "react-icons/io5";
@@ -18,19 +19,23 @@ interface Props {
 const CardQuestion = (props: Props) => {
 
     const Icon = props.icon || CiCircleAlert;
-
+    const [hover,setHover] = useState<boolean>(false);
 
     return (
 
-        <div className={`flex  h-[400px] bg-[#F7941D0D]   m-b-8  lg:w-full`} style={{
-            borderColor: props.contrast,
-
-        }}>
-            <Card href="#" className=" m-0 p-0 flex rounded-none shadow-none border-gray-700 border-l-[1px]  border-t-[1px] border-r-[1px] border-t-gray-400 lg:pt-6 w-full h-auto "
+        <div className={`flex  h-[400px] bg-[#F7941D0D]   m-b-8  lg:w-full`} >
+            <Card className={` m-0 p-0 flex rounded-none shadow-none border-gray-700 border-l-[1px]  border-t-[1px] border-r-[1px]
+             border-t-gray-400 lg:pt-6 w-full h-auto hover:text-black`}
                 style={{
-                    backgroundColor: props.bgcolor,
+                    backgroundColor: hover?props.contrast:props.bgcolor,
+                    //hover
+                    color: hover?props.bgcolor:props.contrast,
+
                 }}
 
+                onMouseEnter={()=>setHover(true)}
+                onMouseLeave={()=>setHover(false)}
+                
             >
                 <div className="grid xl:grid-cols-2 grid-cols-1 gap-2 -mt-28 mb">
 
