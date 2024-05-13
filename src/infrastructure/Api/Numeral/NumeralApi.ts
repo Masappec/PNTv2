@@ -50,6 +50,22 @@ class NumeralApi {
             }
         }
     }
+
+
+    async getNumeralsAllowed() {
+        try {
+            const response = await this.api.get<NumeralDetailDTO[]>(TRANSPARENCY_PATH + "/numerals/allow/");
+            return response.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                const message = error?.response?.data?.message || "Ocurrió un error al obtener los numerales permitidos"
+                throw new Error(message);
+            } else {
+                throw new Error("Ocurrió un error al obtener los numerales permitidos");
+
+            }
+        }
+    }
 }
 
 export default NumeralApi;

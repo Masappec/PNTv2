@@ -7,7 +7,7 @@ class SessionService {
   static REFRESH_TOKEN_KEY = "refresh_token";
   static USER_DATA_KEY = "user_data";
   static USER_LOCKED = "locked";
-
+  static ESTABLISHMENT_DATA_KEY = "establishment_data";
   static PERSON_DATA_KEY = "person_data";
   static setAccessToken(token: string) {
     localStorage.setItem(this.ACCESS_TOKEN_KEY, token);
@@ -16,7 +16,15 @@ class SessionService {
     return localStorage.getItem(this.ACCESS_TOKEN_KEY);
   }
 
+  static setEstablishmentData(establishmentData: string) {
+    localStorage.setItem(this.ESTABLISHMENT_DATA_KEY, establishmentData);
+  }
+  static getEstablishmentData() {
+    const data = localStorage.getItem(this.ESTABLISHMENT_DATA_KEY) || "{}";
 
+    const json = JSON.parse(data);
+    return json;
+  }
   static setPersonData(personData: string) {
     localStorage.setItem(this.PERSON_DATA_KEY, personData);
   }

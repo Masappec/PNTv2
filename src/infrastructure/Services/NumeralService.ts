@@ -23,6 +23,11 @@ class NumeralService {
         return NumeralDetailMapper.toDomain(res)
     }
 
+    async getNumeralsAllowed() {
+        const res = await this.api.getNumeralsAllowed()
+        return res.map(r => NumeralDetailMapper.toDomain(r))
+    }
+
 }
 
 export default NumeralService;

@@ -8,7 +8,8 @@ import Alert from "../../../Common/Alert";
 import { Button } from 'flowbite-react';
 import Select from "../../../Common/Select";
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface";
-import SelectReact from 'react-select'
+import ReactSelect from 'react-select';
+import NumeralDetail from "../../../../domain/entities/NumeralDetail";
 
 
 interface Props {
@@ -23,6 +24,8 @@ interface Props {
     setError: (e: string) => void;
     setSuccess: (e: string) => void;
     options: OptionsSelectCreate;
+
+    numerals: NumeralDetail[];
 }
 
 const EstablishmentCreatePresenter = (props: Props) => {
@@ -275,6 +278,26 @@ const EstablishmentCreatePresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <SelectReact/>
+                            </div>
+
+                        </div>
+                        <hr />
+                        <div className="flex-col items-center justify-between mt-5 pb-20">
+
+                            <h4 className="text-lg font-medium text-gray-800 dark:text-white">
+                                Obligaciones específicas
+                            </h4>
+
+                            <div className="flex items-center gap-x-3">
+                                <ReactSelect
+                                    placeholder="Seleccione los numerales"
+                                    options={props.numerals.map((numeral) => ({
+                                        value: numeral.id + "",
+                                        label: numeral.name
+                                    }))
+                                    }
+                                    className="w-full"
+                                />
                             </div>
 
                         </div>

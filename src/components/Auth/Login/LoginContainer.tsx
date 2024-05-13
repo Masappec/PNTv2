@@ -23,7 +23,7 @@ const LoginContainer = ({ useCase }: {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true)
-    useCase.authService.authenticate(email, password)
+    useCase.execute(email, password)
       .then(() => {
         setIsLoading(false)
 
