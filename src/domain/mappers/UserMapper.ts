@@ -3,7 +3,7 @@ import UserEntity from "../entities/UserEntity";
 
 
 class UserMapper {
-    static fromApiToDomain(user: User):UserEntity {
+    static fromApiToDomain(user: User): UserEntity {
         return {
             email: user.email,
             username: user.username,
@@ -18,14 +18,14 @@ class UserMapper {
             province: user.province,
             group: user.group,
             is_active: user.is_active,
-            
+
         }
     }
 
 
-    
 
-    static fromDomainToApi(user: UserEntity):UserCreateInterface {
+
+    static fromDomainToApi(user: UserEntity): UserCreateInterface {
         return {
             username: user.username,
             first_name: user.first_name,
@@ -40,11 +40,11 @@ class UserMapper {
             password: user.password || "",
             accept_terms: user.accept_terms || true,
             age_range: user.age_range || "",
-            establishment_id: user.establishment_id||0,
+            establishment_id: user.establishment_id || 0,
             job: user.job || "",
             race: user.race || "",
-            
-            
+            email: user.email,
+
         }
     }
 }

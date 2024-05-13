@@ -45,7 +45,7 @@ class FilePublicationService {
             csvContent += row + "\r\n";
         })
 
-        return new Blob([csvContent], { type: 'text/csv' });
+        return new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
 
     }
 
@@ -59,7 +59,7 @@ class FilePublicationService {
             })
         })
 
-        return new Blob([csvContent], { type: 'text/csv' });
+        return new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
 
     }
     /**

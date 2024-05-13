@@ -39,6 +39,7 @@ const RegisterContainer = ({ usecase, configUseCase }: {
   const [success, setSuccess] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
+
   useEffect(() => {
     setError('')
     configUseCase.execute(ROLE_CIUDADANO, 'Usuario').then((res) => {
@@ -101,7 +102,7 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       return
     }
 
-    if (data.username === '') {
+    if (data.username === '*') {
       setError('Debe ingresar un correo electrónico')
       setLoading(false)
       return

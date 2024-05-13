@@ -133,6 +133,7 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                                     placeholder={field.description} width="w-60"
                                                     value={props.data[field.name as keyof UserEntity] as string}
                                                     onChange={(e) => props.setData(field.name, e.target.value)}
+                                                    name={field.name}
                                                 />
                                             </div>
                                     )

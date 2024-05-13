@@ -48,6 +48,6 @@ export interface UserCreateInterface {
     age_range?: string;
     accept_terms?: boolean;
 
-
+    email: string;
 
 }

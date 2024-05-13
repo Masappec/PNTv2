@@ -52,6 +52,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
+
+
   const [establishment, setEstablishment] = useState<EstablishmentEntity>();
   const [filesList, setFilesList] = useState<Pagination<FilePublicationEntity>>({
     current: 0,
@@ -64,6 +66,7 @@ const ActiveCreateContainer = (props: IProps) => {
     from: 0,
     total_pages: 0
   })
+
 
   useEffect(() => {
     if (state) {
@@ -548,10 +551,7 @@ const ActiveCreateContainer = (props: IProps) => {
     } else {
       blob = props.usecase.generateBlob(data_template.data);
     }
-    const file = new File([blob], name + ".csv", {
-      type: "text/csv;charset=utf-8;",
-    });
-    const url = URL.createObjectURL(file);
+    const url = URL.createObjectURL(blob);
 
 
     const a_ = document.createElement("a");
@@ -563,6 +563,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
 
     a_.click();
+
+    window.URL.revokeObjectURL(url);
 
 
   }

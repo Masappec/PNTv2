@@ -404,7 +404,7 @@ const SolicityResponsePresenter = (props: Props) => {
                             </Alert>
                         }
                     </div>
-                    <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-24 ">
+                    <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-10 ">
                         {props.isAvaliableToResponse ? <Button
                             type="button"
                             color="danger"
