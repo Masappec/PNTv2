@@ -276,9 +276,6 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
-                                <SelectReact/>
-                            </div>
 
                         </div>
                         <hr />
