@@ -8,7 +8,7 @@ export interface IOncalculate {
 }
 interface IProps {
     password: string;
-    onCalculate: (date: IOncalculate) => void;
+    onCalculate?: (date: IOncalculate) => void;
 }
 
 const PasswordMeter = ({ password, onCalculate }: IProps) => {
@@ -84,7 +84,7 @@ const PasswordMeter = ({ password, onCalculate }: IProps) => {
         } else {
             colorClass = 'bg-green-500';
         }
-        onCalculate({ percentage, strength, feedback, colorClass });
+        onCalculate && onCalculate({ percentage, strength, feedback, colorClass });
 
         return { percentage, strength, feedback, colorClass };
     };

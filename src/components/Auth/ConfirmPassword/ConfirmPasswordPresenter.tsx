@@ -22,8 +22,8 @@ interface ConfirmPasswordPresenterProps {
     setSuccess: (e: string) => void;
 
 }
-const ConfirmPasswordPresenter = (props:ConfirmPasswordPresenterProps) => {
-    
+const ConfirmPasswordPresenter = (props: ConfirmPasswordPresenterProps) => {
+
     if (props.success) {
         return (
             <div className='bg-sky-700 h-screen flex'>
@@ -52,7 +52,7 @@ const ConfirmPasswordPresenter = (props:ConfirmPasswordPresenterProps) => {
     }
     return (
         <>
-        <div className='bg-sky-700 h-screen flex'>
+            <div className='bg-sky-700 h-screen flex'>
                 <div className='items-center lg:flex xl:flex 2xl:flex justify-center h-auto flex-col flex-auto justify-items-start hidden' >
                     <Title title="Ultimo paso para recuperar tu cuenta" text="Crea una contraseña y accede a tus solicitudes" color='white' />
                     <img src={img} alt='imagen' className='w-1/2 h-1/2' />
@@ -71,7 +71,8 @@ const ConfirmPasswordPresenter = (props:ConfirmPasswordPresenterProps) => {
                                     value={props.password}
                                     onChange={(e) => props.setPassword(e.target.value)}
                                 />
-                                <PasswordMeter  password={props.password} />
+                                <PasswordMeter password={props.password}
+                                />
 
                             </div>
                             <div className="flex flex-col m-2 items-center">
@@ -86,7 +87,7 @@ const ConfirmPasswordPresenter = (props:ConfirmPasswordPresenterProps) => {
                             {
                                 props.isloading ? <Spinner /> : <Button title="Confirmar" width="w-72" />
                             }
-                            
+
 
                         </div>
 
