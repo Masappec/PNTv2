@@ -3,6 +3,7 @@ import TransparencyActive from "../../../../../domain/entities/TransparencyActiv
 import Table from "../../../../Common/Table";
 import { FaFileCsv } from "react-icons/fa";
 import { useState } from "react";
+import axios from "axios";
 
 
 interface Props {
@@ -24,6 +25,21 @@ const TA = (props: Props) => {
         setIsOpen(!isOpen)
     }
 
+    const onDownloadFile = async(url:string,name:string) => {
+        try{
+            const res = await axios.get(url,{
+                responseType:'blob'
+            })
+            const blobUrl = window.URL.createObjectURL(new Blob([res.data]));
+            const a = document.createElement("a");
+            a.href = blobUrl;
+            a.download = name+'.csv'
+            a.click();
+            window.URL.revokeObjectURL(blobUrl);
+        }catch(e){
+            console.log(e)
+        }
+    }
     return (
         <>
             <Accordion.Panel
@@ -71,6 +87,9 @@ const TA = (props: Props) => {
                                         {
                                             item.files.map((file, i) =>
                                                 <a key={i} href={file.url_download as string}
+                                                    onClick={() => onDownloadFile(file.url_download as string,
+                                                        `${props.year}-${props.month}-${file.name}`
+                                                    )}
                                                     className="text-primary-500 
                                                 hover:text-primary-600 text-base">
                                                     <FaFileCsv className="text-primary-500 

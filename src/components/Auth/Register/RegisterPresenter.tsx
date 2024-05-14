@@ -156,7 +156,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                       <span className="absolute top-0 -left-3 text-red-500 ">*</span>
                     </div>
                   ) : field.type_field === "checkbox" ? (
-                    <div className="flex  flex-col m-2 items-center relative">
+                    <div className="flex col-span-2 flex-row m-2 items-center relative w-full">
                       <Checkbox
                         checked={
                           props.data[field.name as keyof RegisterDto] as boolean
