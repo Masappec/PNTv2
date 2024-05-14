@@ -16,9 +16,13 @@ class LoginUseCase {
   async execute(username: string, password: string) {
     // Lógica de autenticación
     const user = await this.authService.authenticate(username, password);
-    const est = await this.establishment.getByUserSession();
 
-    SessionService.setEstablishmentData(JSON.stringify(est));
+    try {
+      const est = await this.establishment.getByUserSession();
+      SessionService.setEstablishmentData(JSON.stringify(est));
+    } catch (e) {
+      console.log(e);
+    }
     return user;
 
   }

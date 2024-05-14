@@ -40,7 +40,7 @@ interface TableProps<T> {
 function Table<T>({ ...props }: TableProps<T>) {
 
     return (
-        <div className="w-full">
+        <div className="xl:w-[80vw] lg:w-[80vw] w-full mx-auto">
             {props.show &&
                 <HeaderTable
                     isImport={props.isImport}
@@ -54,8 +54,8 @@ function Table<T>({ ...props }: TableProps<T>) {
                     onChangesLimit={props.onChangesLimit}
                 />
             }
-            <div className="overflow-x-auto">
-                <TableFlowbite>
+            <div className=" overflow-x-auto">
+                <TableFlowbite className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 dark:text-gray-400">
                     <TableFlowbite.Head className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 
                         {

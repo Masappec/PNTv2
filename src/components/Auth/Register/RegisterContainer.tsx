@@ -8,6 +8,7 @@ import { ROLE_CIUDADANO } from "../../../utils/constans"
 import { RegisterDto } from "../../../infrastructure/Api/Auth/interface"
 import ScreenMessage from "../../Common/ScreenMessage/ScreenMessage"
 import { useNavigate } from "react-router-dom"
+import { IOncalculate } from "../../Common/PasswordMeter"
 
 const RegisterContainer = ({ usecase, configUseCase }: {
   usecase: RegisterUseCase,
@@ -38,7 +39,7 @@ const RegisterContainer = ({ usecase, configUseCase }: {
   const [config, setConfig] = useState<FormFieldsEntity[]>([])
   const [success, setSuccess] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-
+  const [isEnable, setIsEnable] = useState(false)
 
   useEffect(() => {
     setError('')
@@ -52,6 +53,14 @@ const RegisterContainer = ({ usecase, configUseCase }: {
 
 
 
+  const onChangePassword = (data: IOncalculate) => {
+
+    if (data.percentage === 100) {
+      setIsEnable(true)
+    } else {
+      setIsEnable(false)
+    }
+  };
 
 
   const handleShowPassword = () => {
@@ -169,17 +178,24 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       setError={setError}
       isLoading={loading}
       showPassword={showPassword}
-
-
+      isEnable={isEnable}
+      onChangePassword={onChangePassword}
 
     /> : <ScreenMessage message="Registro Existoso" type="Revisa tu correo para activar tu cuenta" >
-      <button onClick={() => {
-        history('/ingreso')
 
-      }}
-        className="bg-primary-400 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded">
-        Volver
-      </button>
+      <div className="flex items-center gap-16 mt-8 ">
+
+
+        <button
+          onClick={() => {
+            history('/ingreso')
+
+          }}
+          className=" text-xl text-white font-medium hover:bg-primary-200 bg-primary-500 w-[300px]  py-2 rounded-lg shadow-xl">
+          Continuar
+        </button>
+
+      </div>
     </ScreenMessage>
 
 }

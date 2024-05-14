@@ -42,31 +42,28 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
 
     const dispatch = useDispatch()
 
-    const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
 
 
     useEffect(() => {
-        console.log(props.isSuperadmin)
-        if (_establishments.length == 0) {
-            props.usecase.getEstablishments().then(res => {
-                const result = res.results.map((item) => item.data)
-                const final: EstablishmentEntity[] = []
-                result.map((item) => {
-                    item.map((_item) => {
-                        final.push(_item)
-                    })
+        props.usecase.getEstablishments().then(res => {
+            const result = res.results.map((item) => item.data)
+            const final: EstablishmentEntity[] = []
+            result.map((item) => {
+                item.map((_item) => {
+                    final.push(_item)
                 })
-                dispatch(setEstablishments(final))
-
-            }).catch(() => {
-                console.log("Error")
             })
-        }
+            dispatch(setEstablishments(final))
+
+        }).catch(() => {
+            console.log("Error")
+        })
+
     }, [])
 
     return (
-        <div className="layout-admin  overflow-y-hidden  h-2/3">
-            <div className="flex-col overflow-y-hidden">
+        <div className="layout-admin overflow-y-hidden  h-2/3">
+            <div className="flex-col  overflow-y-hidden">
                 <HeaderPages open={open} setOpen={setOpen} haveImage={true} />
                 <div className="flex  overflow-y-hidden">
                     <div
@@ -83,7 +80,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                             permissions={permissions}
                         />
                     </div>
-                    <div className="w-full  h-fit">
+                    <div className="h-fit">
                         <div
                             className={` ${open ? " bg-black bg-opacity-40 lg:bg-none  fixed z-20" : ""
                                 }`}

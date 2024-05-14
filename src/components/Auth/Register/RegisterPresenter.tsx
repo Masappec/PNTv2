@@ -11,6 +11,7 @@ import { Button } from "flowbite-react";
 import Spinner from "../../Common/Spinner";
 import logo from "../../../assets/Home/logo-dpe 2.png";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import PasswordMeter, { IOncalculate } from "../../Common/PasswordMeter";
 
 
 interface RegisterPresenterProps {
@@ -24,6 +25,8 @@ interface RegisterPresenterProps {
   isLoading: boolean;
   handleShowPassword: () => void;
   showPassword: boolean;
+  onChangePassword: (data: IOncalculate) => void;
+  isEnable: boolean;
 }
 
 const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
@@ -36,9 +39,9 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
       <header className="border-b-2 border-dark-400 dark:border-primary-600">
         <nav className="bg-primary-600 border-gray-900 px-4 lg:px-6 py-10 dark:bg-gray-800"></nav>
       </header>
-      <div className="bg-white h-screen mb-52 md:flex lg:flex xl:flex ">
-        <div className="items-center hidden lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-full w-2/5  ">
-          <div className=" border-l-2 border-gray-400 ml-2 md:ml-16  justify-items-start h-full "></div>
+      <div className="bg-white h-max mb-52 md:flex lg:flex xl:flex ">
+        <div className="items-center hidden lg:flex xl:flex 2xl:flex  pr-56 bg-emerald-50 h-[100%] w-2/5  ">
+          <div className=" border-l-2 border-gray-400 ml-2 md:ml-16  justify-items-start h-screen "></div>
           <div className=" pl-10  relative">
             <img
               src={logo}
@@ -87,6 +90,8 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
               {props.fields.map((field) => {
                 return field.type_field === "password" ? (
                   <div className="relative m-7">
+                    <span className="absolute top-0 -left-3 text-red-500 ">*</span>
+
                     <Input
                       type={props.showPassword ? "text" : field.type_field}
                       placeholder={field.description}
@@ -99,7 +104,6 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                       }
                       name={field.name}
                     />
-                    <span className="absolute top-0 -left-3 text-red-500 ">*</span>
                     <button
                       type="button"
                       className="absolute end-2 top-12  hover:cursor-pointer text-gray-600"
@@ -111,6 +115,15 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                         <IoEyeOutline />
                       )}
                     </button>
+                    {
+                      field.name === "password" && (
+
+                        <PasswordMeter
+                          onCalculate={props.onChangePassword}
+                          password={props.data[field.name as keyof RegisterDto] as string}
+                        />
+                      )
+                    }
                   </div>
 
                 )
@@ -182,6 +195,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                 <Button
                   className="w-80 justify-center flex bg-primary-600 rounded-3xl"
                   type="submit"
+                  disabled={!props.isEnable}
                 >
                   Registrarse
                 </Button>

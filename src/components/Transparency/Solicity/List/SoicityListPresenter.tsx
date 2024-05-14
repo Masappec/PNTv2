@@ -69,7 +69,7 @@ const SolicityListPresenter = (props: Props) => {
                     </div>
                 </Modal>
             </div>
-            <div className="flex justify-between items-center mt-5">
+            <div className="flex justify-between items-center w-full mt-5">
                 <Table
                     show={true}
                     limits={props.limits}

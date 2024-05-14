@@ -32,10 +32,6 @@ const DataTablePartial = (props: IDataTablePartial) => {
                         onClick={() => props.handleSave(props.file as File)}
                         type="button"
                     >Guardar</button>
-                    <button className="bg-red-600 text-white px-4 py-2 rounded-md mx-4"
-                        onClick={props.handleCancel}
-                        type="button"
-                    >Cancelar</button>
                 </div>
 
             }

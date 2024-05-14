@@ -80,7 +80,7 @@ class SessionService {
     localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     localStorage.removeItem(this.USER_DATA_KEY);
     localStorage.removeItem(this.PERSON_DATA_KEY);
-
+    localStorage.removeItem(this.ESTABLISHMENT_DATA_KEY);
   }
 
   static isLogged() {

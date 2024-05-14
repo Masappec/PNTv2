@@ -24,15 +24,15 @@ const LandingPresenter = (props: Props) => {
   const colors = [
     {
       bgcolor: "#F7941D",
-      contrast: "#F7941D0D",
+      contrast: "#CC7002",
     },
     {
       bgcolor: "#A5C330",
-      contrast: "#E5FD85",
+      contrast: "#667C0F",
     },
     {
       bgcolor: "#D26497",
-      contrast: "#FCA5CD",
+      contrast: "#922859",
     },
   ];
 
@@ -187,7 +187,7 @@ const LandingPresenter = (props: Props) => {
                   Conoce más.
                 </a>
               </div>
-              
+
             </span>
           </div>
         </div>

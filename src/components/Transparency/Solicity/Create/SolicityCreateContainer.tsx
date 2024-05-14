@@ -134,9 +134,6 @@ const SolicityCreateContainer = (props: Props) => {
                 setIsLoadingSend(false)
 
 
-                sleep(2000).then(() => {
-                    navigate('/admin/solicity')
-                })
             }).catch((err) => {
                 setError(err.message)
                 setIsSend(false)
@@ -293,12 +290,20 @@ const SolicityCreateContainer = (props: Props) => {
     return (
         <>
             {
-                isSend ? <ScreenMessage message="Soliciutd enviada con exito"
-                    type="Se ha enviado la solicitud con exito"
-                >
+                isSend ?
+                    <ScreenMessage message="Solicitud enviada con exito"
+                        type="Se ha enviado la solicitud con exito"
+                    >
+                        <div className="flex items-center gap-16 mt-8 ">
 
-                    <button onClick={() => navigate('/admin/solicity')} className="btn btn-primary">Volver</button>
-                </ScreenMessage> :
+
+                            <button
+                                onClick={() => navigate('/admin/solicity')}
+                                className=" text-xl text-white font-medium hover:bg-primary-200 bg-primary-500 w-[300px]  py-2 rounded-lg shadow-xl">
+                                Continuar
+                            </button>
+                        </div>
+                    </ScreenMessage> :
 
                     <SolicityCreatePresenter
                         handleSubmit={handleSubmit}

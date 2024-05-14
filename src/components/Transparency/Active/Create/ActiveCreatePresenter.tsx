@@ -174,7 +174,10 @@ const ActiveCreatePresenter = (props: Props) => {
                           className={template.file != null ? (template.isValid ? "bg-green-200" : "bg-red-200") : ""}
                           accept=".csv"
                         />
-                        <Tooltip content={`Descargar plantilla de ${template.name}`}>
+                        <Tooltip content={`Descargar plantilla de ${template.name}`}
+
+                          className="flex items-center justify-center  text-sm"
+                        >
 
                           <Button key={index} type="button"
                             onClick={() => props.downloadTemplate(template.id)}
