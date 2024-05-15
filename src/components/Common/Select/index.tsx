@@ -7,7 +7,9 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
         value: string;
         label: string;
     }[];
-
+    selected?: {
+        value: string;
+}
 }
 
 const Select = (props: SelectProps) => {
@@ -25,7 +27,11 @@ const Select = (props: SelectProps) => {
 
                 {
                     props.options?.map((option) => (
-                        <option value={option.value}>{option.label}</option>
+                        <option value={option.value}
+                        selected={
+                            option.value == props.selected?.value
+                        }
+                        >{option.label}</option>
                     ))
                 }
             </SelectBite>

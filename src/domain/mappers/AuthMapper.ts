@@ -18,7 +18,7 @@ class AuthMapper {
             gender: '',
             race: '',
             confirm_password: '',
-            //email: auth.email
+            email: auth.email
         }
     }
 

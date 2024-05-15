@@ -7,6 +7,7 @@ import RoleEntity from "../../../../domain/entities/RoleEntity"
 import UserEntity from "../../../../domain/entities/UserEntity"
 import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
 import Spinner from "../../../Common/Spinner"
+import EstablishmentEntity from "../../../../domain/entities/Establishment"
 
 interface UserEditPresenterProps {
 
@@ -22,7 +23,7 @@ interface UserEditPresenterProps {
     roles_list: RoleEntity[]
     fields: FormFieldsEntity[];
     loading: boolean;
-
+    establishment:EstablishmentEntity|null;
 }
 
 const UserEditPresenter = (props: UserEditPresenterProps) => {
@@ -105,6 +106,10 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                 }))
                             }
                                 onChange={(e) => props.onChangeRole(e)}
+                                selected={{
+                                    value: props.data && props.data.group && props.data.group[0]
+                                     ? props.data.group[0].id + "" : "",
+                                }}
                             />
                         }
                         <div className="grid xl:grid-cols-3 gap-4">
@@ -128,6 +133,13 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                                             label: option.name
                                                         }
                                                     }) || [])
+                                                }
+                                                selected={
+                                                    field.name=='establishment_id' ?
+                                                    props.establishment ?
+                                                    {
+                                                        value: props.establishment.id + "",
+                                                            } : undefined : undefined
                                                 }
                                             />
                                         </div> :

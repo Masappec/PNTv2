@@ -7,16 +7,20 @@ import { useNavigate, useParams } from "react-router-dom"
 import UserEntity from "../../../../domain/entities/UserEntity"
 import ConfigurationUseCase from "../../../../domain/useCases/Configuration/ConfigurationUseCase"
 import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
+import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
+import EstablishmentEntity from "../../../../domain/entities/Establishment"
 
 
 const UserEditContainer = ({
     usecase,
     roleUseCase,
-    configUseCase
+    configUseCase,
+    establishmentUseCase
 }:{
     usecase: UserUseCase,
     roleUseCase: RoleUseCase,
-    configUseCase: ConfigurationUseCase
+    configUseCase: ConfigurationUseCase,
+    establishmentUseCase: EstablishmentUseCase
 }) => {
 
 
@@ -31,13 +35,18 @@ const UserEditContainer = ({
     const [config, setConfig] = useState<FormFieldsEntity[]>([])
 
     const [loading, setLoading] = useState<boolean>(false)
-
+    const [establishment, setEstablishment] = useState<EstablishmentEntity|null>(null)
     const navigate = useNavigate()
 
+    
 
     useEffect(() => {
 
-
+        establishmentUseCase.getEstablishmentsByUser(id||"").then((res) => {
+            setEstablishment(res)
+        }).catch(() => {
+            setEstablishment(null)
+        })
         usecase.get(parseInt(id||"0")).then((user) => {
             setData(user)
             setRoleSelected(user.group?.[0] || null)
@@ -74,6 +83,9 @@ const UserEditContainer = ({
 
         data.group = [{id: roleSelected?.id || 0, name: roleSelected?.name || ""}]
         e.preventDefault()
+        if(!data.establishment_id){
+            data.establishment_id = establishment?.id || 0
+        }
         usecase.update(data).then(() => {
             setSuccess("Usuario actualizado correctamente")
             const target = e.target as HTMLFormElement
@@ -127,6 +139,7 @@ const UserEditContainer = ({
             fields={config}
             onChangeRole={handleChangeRole}
             loading={loading}
+            establishment={establishment}
         />
     )
 }

@@ -74,11 +74,6 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       data.disability = false
     }
 
-    if (data.phone === '') {
-      setError('Debe ingresar un número de teléfono')
-      setLoading(false)
-      return
-    }
 
     //validar que phone solo sea numeros
     if (isNaN(Number(data.phone))) {
@@ -118,7 +113,7 @@ const RegisterContainer = ({ usecase, configUseCase }: {
     }
 
     //valid email
-    if (!data.username.includes('@')) {
+    if (!data.email.includes('@')) {
       setError('Correo electrónico inválido')
       setLoading(false)
       return

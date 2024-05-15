@@ -45,5 +45,10 @@ class EstablishmentUseCase {
         const res = await this.service.getOptions();
         return res;
     }
+
+    async getEstablishmentsByUser(user_id: string) {
+        const res = await this.service.getEstablishmentsByUser(user_id);
+        return res;
+    }
 }
 export default EstablishmentUseCase;

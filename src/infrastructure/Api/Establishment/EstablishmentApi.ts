@@ -118,7 +118,20 @@ class EstablishmentApi {
             throw new Error(e);
         }
     }
-
+    //establishment/user
+    async getEstablishmentsByUser(user_id: string) {
+        try {
+            const response = await this.api.get<EstablishmentDetailDTO>(ADMIN_PATH + '/establishment/user', {
+                params: {
+                    user_id
+                }
+            });
+            return response.data;
+        } catch (error: any) {
+            const e: string = error.response?.data?.message || 'Error al obtener los establecimientos.';
+            throw new Error(e);
+        }
+    }
 }
 
 export default EstablishmentApi;

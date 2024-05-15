@@ -39,7 +39,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
     }, [])
 
     const handleAdd = () => {
-        navigate('/admin/solicity/create')
+        navigate('/admin/solicity/create/manual')
     }
     const handleEdit = (item: Solicity) => {
         navigate(`/admin/solicity/edit/${item.id}`)

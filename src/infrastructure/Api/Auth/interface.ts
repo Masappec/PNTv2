@@ -14,7 +14,7 @@ export interface RegisterDto {
     race: string,
     disability?: boolean,
     accept_terms: boolean
-
+    email:string
 }
 
 /*{

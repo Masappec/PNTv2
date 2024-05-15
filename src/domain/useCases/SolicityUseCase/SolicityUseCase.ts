@@ -56,12 +56,7 @@ class SolicityUseCase {
     const lastComment = solicity.comments ? solicity.comments[solicity.comments.length - 1] : null;
     if (lastComment) {
       if (lastComment.user !== user.id) {
-        return (solicity.status == StatusSolicity.INSISTENCY_PERIOD.key ||
-          solicity.status == StatusSolicity.INSISTENCY_SEND.key ||
-          solicity.status == StatusSolicity.SEND.key ||
-          solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key) && (solicity.comments != undefined ?
-            solicity.comments.length < 11 : true
-          )
+        return solicity.comments?solicity.comments?.length < 10:true;
       }
     }
 

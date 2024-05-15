@@ -201,21 +201,35 @@ const SolicityResponsePresenter = (props: Props) => {
 
                     </div>
                     {
-                        props.isAvaliableToInsistency || props.isAvaliableToComment ?
+                        props.isAvaliableToComment ? 
+                            <div className=" grid grid-cols gap-4 w-auto mt-16">
+                                <Label
+                                    htmlFor=""
+                                    value={`Comentar. \n
+                                        Si necesitas comentar algo sobre la respuesta recibida, ingresarla a continuación`
+                                    }
+                                />
+                                <Textarea
+                                    placeholder=""
+                                    className="h-[100px] xl:w-full"
+                                    name="description"
+                                    onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
+                                    ref={responseRef as React.RefObject<HTMLTextAreaElement>}
+                                ></Textarea>
+                            </div>:null
+                    }
+                    {
+                        props.isAvaliableToInsistency?
                             <> <div className=" grid grid-cols gap-4 w-auto mt-16">
                                 <Label
                                     htmlFor=""
-                                    value={
-                                        props.isAvaliableToComment ?
-                                            `Comentar. \n
-                                        Si necesitas comentar algo sobre la respuesta recibida, ingresarla a continuación`:
-                                            `Solicitar Insistencia. \n
+                                    value={`Solicitar Insistencia. \n
                                     Si necesitas consultar alguna aclaración sobre la respuesta recibida, ingresarla a continuación`}
                                     className="text-xl font-bold "
                                 />
                                 <Textarea
                                     placeholder=""
-                                    className="h-[139px] xl:w-[915px]  "
+                                    className="h-[139px] xl:w-[915px]"
                                     name="description"
                                     onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
                                     ref={responseRef as React.RefObject<HTMLTextAreaElement>}

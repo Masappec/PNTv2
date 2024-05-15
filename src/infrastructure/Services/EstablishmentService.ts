@@ -97,7 +97,12 @@ class EstablishmentService {
     async getOptions() {
         return await this.api.getOptions();
     }
+    async getEstablishmentsByUser(user_id: string) {
+        
+            const response = await this.api.getEstablishmentsByUser(user_id);
+        return EstablishmentMapper.apiToDomainDetail(response);
 
+    }
 }
 
 export default EstablishmentService;

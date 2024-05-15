@@ -32,6 +32,7 @@ import FocalizedEdit from "../interfaces/web/Transparency/Focalized/Edit";
 import CollaborativeEdit from "../interfaces/web/Transparency/Collaborative/Edit";
 import ActiveEdit from "../interfaces/web/Transparency/Active/Edit";
 import EstablihsmentInSession from "../interfaces/web/Admin/Establishment/InSession/InSession";
+import SolicityManual from "../interfaces/web/Transparency/Solicity/Manual";
 
 
 export interface MenuItem {
@@ -287,11 +288,11 @@ const menu = [
   },
   {
     name: " Crear Solicitudes",
-    path: "/admin/solicity/create",
+    path: "/admin/solicity/create/manual",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "add_manual_solicity",
-    element: <SolicityCreate />,
+    element: <SolicityManual />,
   },
   {
     name: " Editar Solicitudes",
