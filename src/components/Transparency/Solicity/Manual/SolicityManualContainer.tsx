@@ -59,88 +59,51 @@ const SolicityManualContainer = (props: Props) => {
 
     useEffect(() => {
 
-        /*props.usecase.getLastDraftSolicity().then((res) => {
-            console.log(res)
-            const data_ = {
-                number_saip: res.number_saip,
-                city: res.city,
-                text: res.text,
-                first_name: res.first_name,
-                last_name: res.last_name,
-                email: res.email,
-                establishment: res.establishment,
-                address: res.address,
-                phone: res.phone,
-                format_receipt: res.format_receipt,
-                format_send: res.format_send,
-                gender: res.gender,
-                race_identification: res.race_identification
-            }
-            setData(data_)
-            setSolicitySaved(res)
 
-            getSelectedEntity(res.establishment)
-        }).catch((e) => {
-            console.log(e + "error")
-            console.log(e + "error")
-            
-        })*/
         const user = SessionService.getUserData()
         const person = SessionService.getPersonData()
+        const saip = props.usecase.buildSaipCode().toString()
+        console.log(saip)
         setUserSession(user)
+        const est = SessionService.getEstablishmentData();
+        setEntity(est)
+
         setData({
             ...data,
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
-            number_saip: props.usecase.buildSaipCode().toString(),
+            number_saip: saip,
             phone: person.phone,
             gender: person.gender,
-            race_identification: person.race
+            race_identification: person.race,
+            establishment: est.id || 0,
+
         })
+
     }, [])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setIsLoadingSend(true)
-        data.format_receipt = "formulario web"
-        data.address = entity.address || "Sin dirección"
-        data.address = entity.address || "Sin Ciudad"
-        if (solicitySaved?.id) {
-            const draft_send = props.usecase.sendDraftSolicity(data, solicitySaved.id || 0)
 
-            draft_send.then((res) => {
-                setSuccess("Solicitud Guardada como borrador")
-                setSolicitySaved(res)
-                setIsSend(true)
-                setIsLoadingSend(false)
+        data.establishment = entity.id || 0
 
-                sleep(2000).then(() => {
-                    navigate('/admin/solicity')
-                })
-            }).catch((err) => {
-                setError(err.message)
-                setIsLoadingSave(false)
+        const send = props.usecase.createManualSolicity(data)
 
-            })
-        } else {
-            data.establishment = entity.id || 0
-
-            const send = props.usecase.sendSolicityWithouDraft(data)
-
-            send.then((res) => {
-                setSolicitySaved(res)
-                setIsSend(true)
-                setIsLoadingSend(false)
+        send.then((res) => {
+            setSolicitySaved(res)
+            setIsSend(true)
+            setIsLoadingSend(false)
 
 
-            }).catch((err) => {
-                setError(err.message)
-                setIsSend(false)
-                setIsLoadingSend(false)
+        }).catch((err) => {
+            setError(err.message)
+            setIsSend(false)
+            setIsLoadingSend(false)
 
-            })
-        }
+        })
+
 
     }
 
@@ -196,10 +159,12 @@ const SolicityManualContainer = (props: Props) => {
     ]
 
     const race_indentification: ColourOption[] = [
-        { value: 'Meztizo', label: 'Meztizo', color: '#00B8D9' },
+        { value: 'Mestiza', label: 'Mestiza', color: '#00B8D9' },
         { value: 'Pueblo Montubio', label: 'Pueblo Montubio', color: '#00B8D9' },
         { value: 'Pueblo o Nacionalidad Indígena', label: 'Pueblo o Nacionalidad Indígena', color: '#00B8D9' },
         { value: 'Pueblo Afrodescendiente', label: 'Pueblo Afrodescendiente', color: '#00B8D9' },
+        { value: 'Blanca', label: 'Blanca', color: '#00B8D9' },
+
     ]
 
     const formart_send: ColourOption[] = [
@@ -266,7 +231,7 @@ const SolicityManualContainer = (props: Props) => {
             setIsLoadingSave(false)
             return
         }
-        props.usecase.createDraft(data).then((res) => {
+        props.usecase.createManualSolicity(data).then((res) => {
             setError("")
             setIsChanged(false)
             setIsLoadingSave(false)

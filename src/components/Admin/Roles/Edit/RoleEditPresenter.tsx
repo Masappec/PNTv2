@@ -6,6 +6,7 @@ import Checkbox from "../../../Common/Checkbox";
 import Input from "../../../Common/Input";
 import RoleEntity from "../../../../domain/entities/RoleEntity";
 import Spinner from "../../../Common/Spinner";
+import { getTranslatedPermissions } from "../../../../utils/enums";
 
 interface RoleEditPresenterProps {
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -17,13 +18,13 @@ interface RoleEditPresenterProps {
     permissions: { type: string, list: PermissionEntity[] }[];
     onSelected: (checked: boolean, permission: PermissionEntity) => void;
     isSelected: (e: PermissionEntity) => boolean;
-    setRole: (data:RoleEntity) => void;
+    setRole: (data: RoleEntity) => void;
     role: RoleEntity;
 }
 
 const RoleEditPresenter = (props: RoleEditPresenterProps) => {
     if (!props.role.id) return (<div className="flex items-center py-5 justify-center">
-        <Spinner /> 
+        <Spinner />
     </div>)
     return (
         <div className="container">
@@ -79,11 +80,11 @@ const RoleEditPresenter = (props: RoleEditPresenterProps) => {
                             props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
                         }
                         <div className="flex flex-col mb-5 w-1/2">
-                        <Input   placeholder="Nombre del rol"
-                        onChange={(e) => props.setRole({...props.role, name: e.target.value})}
-                        value={props.role.name}
+                            <Input placeholder="Nombre del rol"
+                                onChange={(e) => props.setRole({ ...props.role, name: e.target.value })}
+                                value={props.role.name}
 
-                        />
+                            />
                         </div>
 
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -96,8 +97,10 @@ const RoleEditPresenter = (props: RoleEditPresenterProps) => {
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             {
                                 props.permissions.map((type) => (
+
                                     <div>
-                                        <h5 className="text-gray-700 text-sm font-bold mb-2">{type.type}</h5>
+                                        <h5 className="text-gray-700 text-sm font-bold mb-2">
+                                            {getTranslatedPermissions(type.type)}</h5>
                                         {type.list.map((permission) => (
                                             <Checkbox
                                                 id={permission.id + ""}
@@ -109,7 +112,7 @@ const RoleEditPresenter = (props: RoleEditPresenterProps) => {
                                     </div>
                                 ))
                             }
-                            </div>
+                        </div>
 
 
 

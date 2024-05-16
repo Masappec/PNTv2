@@ -24,7 +24,7 @@ interface Props {
     setError: (e: string) => void;
     setSuccess: (e: string) => void;
     options: OptionsSelectCreate;
-
+    validateFields: (name: string) => string;
     numerals: NumeralDetail[];
 }
 
@@ -94,6 +94,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.name || ""}
                                     name="name"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('name')}
                                 />
                             </div>
 
@@ -103,6 +104,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.abbreviation || ""}
                                     name="abbreviation"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('abbreviation')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -111,6 +114,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.identification || ""}
                                     name="identification"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('identification')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -123,6 +128,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     focus:outline-none focus:border-blue-500"
                                     onChange={(e) => props.setData(e)}
                                     rows={1}
+                                    color={props.validateFields('address')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -138,6 +145,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                             label: institution.name
                                         }))
                                     ]}
+                                    color={props.validateFields('type_institution')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -154,6 +163,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                             label: func.name
                                         }))
                                     ]}
+                                    color={props.validateFields('function_organization')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -169,6 +180,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                             label: type.name
                                         }))
                                     ]}
+                                    color={props.validateFields('type_organization')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -180,6 +193,9 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     label="Logo"
                                     name="logo"
                                     accept="image/*"
+                                    className={`${props.validateFields('type_organization') == "success" ?
+                                        "border-green-500" : "border-gray-300"
+                                        }`}
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -188,6 +204,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.highest_authority || ""}
                                     name="highest_authority"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('highest_authority')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -196,6 +214,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.first_name_authority || ""}
                                     name="first_name_authority"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('first_name_authority')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -204,6 +224,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.last_name_authority || ""}
                                     name="last_name_authority"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('last_name_authority')}
+
                                 />
                             </div>
 
@@ -213,6 +235,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.job_authority || ""}
                                     name="job_authority"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('job_authority')}
+
                                 />
                             </div>
 
@@ -222,6 +246,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.email_authority || ""}
                                     name="email_authority"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('email_authority')}
+
                                 />
                             </div>
 
@@ -231,6 +257,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.highest_committe || ""}
                                     name="highest_committe"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('highest_committe')}
+
                                 />
                             </div>
 
@@ -240,6 +268,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.first_name_committe || ""}
                                     name="first_name_committe"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('first_name_committe')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -248,6 +278,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     value={props.data.last_name_committe || ""}
                                     name="last_name_committe"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('last_name_committe')}
+
                                 />
 
                             </div>
@@ -256,6 +288,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     placeholder={"Cargo del comité"} width="w-60"
                                     value={props.data.job_committe || ""}
                                     name="job_committe"
+                                    color={props.validateFields('job_committe')}
+
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>
@@ -264,6 +298,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     placeholder={"Correo del comité"} width="w-60"
                                     value={props.data.email_committe || ""}
                                     name="email_committe"
+                                    color={props.validateFields('email_committe')}
+
                                     onChange={(e) => props.setData(e)}
                                 />
 
@@ -273,6 +309,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     placeholder={"Correo de acceso a la información"} width="w-60"
                                     value={props.data.email_accesstoinformation || ""}
                                     name="email_accesstoinformation"
+                                    color={props.validateFields('email_accesstoinformation')}
+
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>

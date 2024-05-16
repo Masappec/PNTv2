@@ -56,7 +56,7 @@ class SolicityUseCase {
     const lastComment = solicity.comments ? solicity.comments[solicity.comments.length - 1] : null;
     if (lastComment) {
       if (lastComment.user !== user.id) {
-        return solicity.comments?solicity.comments?.length < 10:true;
+        return solicity.comments ? solicity.comments?.length < 10 : true;
       }
     }
 
@@ -87,6 +87,10 @@ class SolicityUseCase {
 
     return false;
 
+  }
+
+  async createManualSolicity(data: CreateSolicity) {
+    return await this.solicityService.createManualSolicity(data);
   }
 }
 export default SolicityUseCase;

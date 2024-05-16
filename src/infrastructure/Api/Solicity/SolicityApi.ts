@@ -122,6 +122,22 @@ class SolicityApi {
   }
 
 
+  //solicity/create_manual
+  async createManualSolicity(data: SolicityDraftRequestDto) {
+
+    try {
+      const response = await this.api.post<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + "/solicity/create_manual", data);
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string = error.response?.data?.message || "Error al crear la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al crear la solicitud.");
+      }
+    }
+  }
+
   async getLastDraftSolicity() {
     try {
       const response = await this.api.get<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + "/solicity/get_last_draft");

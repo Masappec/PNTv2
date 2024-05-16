@@ -1,3 +1,4 @@
+import EstablishmentEntity from "../../domain/entities/Establishment";
 import { PersonEntity } from "../../domain/entities/PersonEntity";
 import UserEntity from "../../domain/entities/UserEntity";
 import { USER_LOCKED, USER_PASSWORD_LOCKED } from "../../utils/constans";
@@ -19,7 +20,7 @@ class SessionService {
   static setEstablishmentData(establishmentData: string) {
     localStorage.setItem(this.ESTABLISHMENT_DATA_KEY, establishmentData);
   }
-  static getEstablishmentData() {
+  static getEstablishmentData(): EstablishmentEntity {
     const data = localStorage.getItem(this.ESTABLISHMENT_DATA_KEY) || "{}";
 
     const json = JSON.parse(data);

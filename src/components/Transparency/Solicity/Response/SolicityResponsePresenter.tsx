@@ -201,7 +201,7 @@ const SolicityResponsePresenter = (props: Props) => {
 
                     </div>
                     {
-                        props.isAvaliableToComment ? 
+                        props.isAvaliableToComment ?
                             <div className=" grid grid-cols gap-4 w-auto mt-16">
                                 <Label
                                     htmlFor=""
@@ -216,10 +216,10 @@ const SolicityResponsePresenter = (props: Props) => {
                                     onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
                                     ref={responseRef as React.RefObject<HTMLTextAreaElement>}
                                 ></Textarea>
-                            </div>:null
+                            </div> : null
                     }
                     {
-                        props.isAvaliableToInsistency?
+                        props.isAvaliableToInsistency ?
                             <> <div className=" grid grid-cols gap-4 w-auto mt-16">
                                 <Label
                                     htmlFor=""
@@ -270,12 +270,16 @@ const SolicityResponsePresenter = (props: Props) => {
                                     htmlFor=""
                                     value={
                                         (props.userSession.id || 0) == props.solicitySaved.userCreated ?
-                                            "Solicitar explicación. Si necesitas consultar alguna aclaración sobre la respuesta recibida, ingresarla a continuación" :
+                                            "Si necesitas consultar alguna aclaración \n sobre la respuesta recibida, ingresarla a continuación" :
                                             "Escriba a continuación la respuesta para esta solicitud"}
-                                    className="text-xl font-bold "
+                                    className="text-xl font-bold flex-wrap"
                                 />
                                 <Textarea
-                                    placeholder="Escribe la petición"
+                                    placeholder={
+                                        (props.userSession.id || 0) == props.solicitySaved.userCreated ?
+                                            "Solicitar explicación. Si necesitas consultar alguna aclaración sobre la respuesta recibida, ingresarla a continuación" :
+                                            "Escriba a continuación la respuesta para esta solicitud"
+                                    }
                                     className="h-[139px] xl:w-[915px]  "
                                     name="description"
                                     id="description"
