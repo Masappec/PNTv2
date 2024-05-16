@@ -182,7 +182,11 @@ const DynamicTable = (props: Props) => {
             </p>
             <div className="flex overflow-x-auto sm:justify-center">
 
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons />
+                <Pagination currentPage={currentPage} totalPages={totalPages} 
+                onPageChange={onPageChange} showIcons 
+                nextLabel="Siguiente"
+                previousLabel="Anterior"
+                />
             </div>
         </div >
     );

@@ -65,9 +65,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                 <HeaderPages open={open} setOpen={setOpen} haveImage={true} />
                 <div className="flex  overflow-y-hidden">
                     <div
-                        className={` lg:block xl:block ${open ? "block" : "hidden"} z-30  
-                        mb-52
-                        `}
+                        className={`lg:block xl:block ${open ? "block" : "hidden"} z-30 mb-52`}
                     >
                         <Sidebar
                             email={email}
@@ -78,7 +76,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                             permissions={permissions}
                         />
                     </div>
-                    <div className="h-fit">
+                    <div className="h-fit w-full">
                         <div
                             className={` ${open ? " bg-black bg-opacity-40 lg:bg-none  fixed z-20" : ""
                                 }`}

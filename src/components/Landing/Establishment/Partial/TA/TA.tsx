@@ -86,7 +86,8 @@ const TA = (props: Props) => {
                                     return <div className="flex flex-row space-x-5">
                                         {
                                             item.files.map((file, i) =>
-                                                <a key={i} href={file.url_download as string}
+                                                <a key={i} 
+                                                    href={file.url_download as string}
                                                     onClick={() => onDownloadFile(file.url_download as string,
                                                         `${props.year}-${props.month}-${file.name}`
                                                     )}

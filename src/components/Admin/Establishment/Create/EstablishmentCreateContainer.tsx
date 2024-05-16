@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
 import NumeralUseCase from "../../../../domain/useCases/NumeralUseCase/NumeraUseCase"
 import NumeralDetail from "../../../../domain/entities/NumeralDetail"
+import { sleep } from "../../../../utils/functions"
+import { MultiValue } from "react-select"
 
 
 
@@ -48,9 +50,9 @@ const EstablishmentCreateContainer = ({
         job_committe: "",
         last_name_committe: "",
         identification: "",
-
+        extra_numerals:''
     })
-
+    const [selectedExtraNumeral, setSelectedExtraNumeral] = useState<number[]>([])
     const [numerals, setNumerals] = useState<NumeralDetail[]>([])
 
     useEffect(() => {
@@ -76,15 +78,54 @@ const EstablishmentCreateContainer = ({
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
-
+        data.extra_numerals = selectedExtraNumeral.join(',')
+        /*abbreviation: "",
+        code: "",
+        email_authority: "",
+        first_name_authority: "",
+        highest_authority: "",
+        last_name_authority: "",
+        job_authority: "",
+        logo: "",
+        name: "",
+        email_accesstoinformation: "",
+        email_committe: "",
+        first_name_committe: "",
+        highest_committe: "",
+        job_committe: "",
+        last_name_committe: "",
+        identification: "",
+        extra_numerals:''*/
+        if (data.abbreviation === ""  || 
+        data.email_authority === "" || data.first_name_authority === "" || 
+        data.highest_authority === "" || data.last_name_authority === "" || 
+        data.job_authority === "" || data.name === "" || 
+        data.email_accesstoinformation === "" || data.email_committe === "" || 
+        data.first_name_committe === "" || data.highest_committe === "" ||
+         data.job_committe === "" || data.last_name_committe === "" ||
+          data.identification === "") {
+            setError("Ingrese los campos requeridos")
+            setLoading(false)
+            return
+        }
+        if (data.logo === "") {
+            setError("Debe seleccionar un logo")
+            setLoading(false)
+            return
+        }
+        
         usecase.Create(data).then((res) => {
             console.log(res)
             setLoading(false)
             setSuccess("Se ha creado la Institución")
             setError("")
+            sleep(2000).then(() => {
+                navigation("/admin/entities")
+            })
         }).catch((err) => {
             console.log(err)
             setError(err.message)
+            setModified(false)
             setSuccess("")
             setLoading(false)
         })
@@ -94,8 +135,9 @@ const EstablishmentCreateContainer = ({
 
     const validateFields = (name: string) => {
         if (modified) {
-
-            if (data[name as keyof EstablishmentEntity] === "") {
+            console.log(data[name as keyof EstablishmentEntity], name)
+            if (data[name as keyof EstablishmentEntity] == "" || data[name as keyof EstablishmentEntity] == null
+                || data[name as keyof EstablishmentEntity] == undefined) {
                 return 'failure'
             }
             return 'success'
@@ -120,6 +162,12 @@ const EstablishmentCreateContainer = ({
         navigation("/admin/entities")
     }
 
+    const hangelChangeExtraNumeral = (e: MultiValue<{ value: string, label: string }>) => {
+        
+        setSelectedExtraNumeral(e.map((item) => parseInt(item.value)))
+        setData({ ...data, extra_numerals: e.map((item) => item.value).join(',') })
+    }
+    
     return (
         <EstablishmentCreatePresenter
             handleSubmit={handleSubmit}
@@ -135,6 +183,7 @@ const EstablishmentCreateContainer = ({
             options={options}
             numerals={numerals}
             validateFields={validateFields}
+            hangelChangeExtraNumeral={hangelChangeExtraNumeral}
         />
     )
 

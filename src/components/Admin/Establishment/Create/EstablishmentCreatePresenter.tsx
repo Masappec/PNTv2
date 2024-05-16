@@ -8,7 +8,7 @@ import Alert from "../../../Common/Alert";
 import { Button } from 'flowbite-react';
 import Select from "../../../Common/Select";
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface";
-import ReactSelect from 'react-select';
+import ReactSelect, { MultiValue } from 'react-select';
 import NumeralDetail from "../../../../domain/entities/NumeralDetail";
 
 
@@ -26,13 +26,14 @@ interface Props {
     options: OptionsSelectCreate;
     validateFields: (name: string) => string;
     numerals: NumeralDetail[];
+    hangelChangeExtraNumeral: (e: MultiValue<{ value: string, label: string }>) => void
 }
 
 const EstablishmentCreatePresenter = (props: Props) => {
 
     return (
 
-        <div className="container">
+        <div className="container mb-24">
             <div className="flex items-center py-5 justify-center">
 
 
@@ -59,7 +60,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                 type="button"
                                 onClick={props.onCancel}
                                 className="flex items-center justify-center w-1/2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-red-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-red-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                                text-white transition-colors duration-200 bg-gray-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-red-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                                 <LuX className="w-5 h-5" />
                                 <span>
                                     Cancelar
@@ -69,7 +70,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                 props.loading ? <Spinner /> : <Button
                                     type="submit"
                                     className="flex items-center justify-center w-1/2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-green-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                                text-white transition-colors duration-200 bg-primary-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                                     <LuCheck className="w-5 h-5" />
                                     <span>
                                         Crear
@@ -124,11 +125,14 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     placeholder={"Dirección"}
                                     value={props.data.address || ""}
                                     name="address"
-                                    className="w-full h-20 p-2 border border-gray-300 rounded-lg 
-                                    focus:outline-none focus:border-blue-500"
+                                    className={`w-full h-20 p-2 border border-gray-300 rounded-lg 
+                                    focus:outline-none focus:border-blue-500 ${props.validateFields('address') === 'success'?
+                                    'border-green-500':props.validateFields('address') === 'failure'?
+                                    'border-red-400':''
+
+                                    }`}
                                     onChange={(e) => props.setData(e)}
                                     rows={1}
-                                    color={props.validateFields('address')}
 
                                 />
                             </div>
@@ -193,8 +197,11 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     label="Logo"
                                     name="logo"
                                     accept="image/*"
-                                    className={`${props.validateFields('type_organization') == "success" ?
-                                        "border-green-500" : "border-gray-300"
+                                    className={`${
+                                        props.validateFields('logo') == "success" ?
+                                        "bg-green-500" :
+                                        props.validateFields('logo') == "failure"  ?
+                                            "bg-red-200" : "bg-white" 
                                         }`}
                                 />
                             </div>
@@ -332,6 +339,10 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                     }))
                                     }
                                     className="w-full"
+                                    isMulti
+                                    onChange={(e) => {
+                                        props.hangelChangeExtraNumeral(e)
+                                    }}
                                 />
                             </div>
 

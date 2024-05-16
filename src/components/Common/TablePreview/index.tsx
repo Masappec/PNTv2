@@ -57,8 +57,8 @@ function TablePreview<T>(props: TableProps<T>) {
             totalPages={100}
             onPageChange={onPageChange}
             showIcons
-            previousLabel=""
-            nextLabel=""
+            nextLabel="Siguiente"
+            previousLabel="Anterior"
           />
         )}
       </div>

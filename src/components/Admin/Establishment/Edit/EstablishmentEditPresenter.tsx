@@ -5,9 +5,11 @@ import Input from "../../../Common/Input";
 import Dropzone from "../../../Common/Dropzone";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
+import ReactSelect, { MultiValue } from 'react-select';
 
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface";
 import Select from "../../../Common/Select";
+import NumeralDetail from "../../../../domain/entities/NumeralDetail";
 
 
 
@@ -23,7 +25,11 @@ interface Props {
     setError: (e: string) => void;
     setSuccess: (e: string) => void;
     options: OptionsSelectCreate;
+    hangelChangeExtraNumeral: (e: MultiValue<{ value: string, label: string }>) => void
+    numerals: NumeralDetail[];
+    validateFields: (name: string) => string;
 
+    getSelectedExtraNumeral: (extra_numerals: string) => MultiValue<{ value: string, label: string }>
 }
 
 const EstablishmentEditPresenter = (props: Props) => {
@@ -34,7 +40,7 @@ const EstablishmentEditPresenter = (props: Props) => {
 
     return (
 
-        <div className="container">
+        <div className="container mb-24">
             <div className="flex items-center py-5 justify-center">
 
 
@@ -45,14 +51,14 @@ const EstablishmentEditPresenter = (props: Props) => {
                         <div>
                             <div className="flex items-center gap-x-3">
                                 <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-                                    Crear  Institución
+                                    Actualizar  Institución {props.data.name}
                                 </h2>
 
 
                             </div>
 
                             <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
-                                Llena los campos para crear una institución
+                                Llena los campos para Actualizar una institución
                             </p>
                         </div>
                         <div className="flex items-center mt-4 gap-x-3">
@@ -96,6 +102,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.name || ""}
                                     name="name"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('name')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -104,6 +112,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.abbreviation || ""}
                                     name="abbreviation"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('abbreviation')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -112,6 +122,25 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.identification || ""}
                                     name="identification"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('identification')}
+
+                                />
+                            </div>
+                            <div className="flex  flex-col m-2">
+                                <label className="text-sm font-medium text-gray-800 dark:text-white">Dirección</label>
+                                <textarea
+                                    placeholder={"Dirección"}
+                                    value={props.data.address || ""}
+                                    name="address"
+                                    className={`w-full h-20 p-2 border border-gray-300 rounded-lg 
+                                    focus:outline-none focus:border-blue-500 ${props.validateFields('address') === 'success' ?
+                                            'border-green-500' : props.validateFields('address') === 'failure' ?
+                                                'border-red-400' : ''
+
+                                        }`}
+                                    onChange={(e) => props.setData(e)}
+                                    rows={1}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -127,6 +156,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                             label: institution.name
                                         }))
                                     ]}
+                                    color={props.validateFields('type_institution')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -143,6 +174,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                             label: func.name
                                         }))
                                     ]}
+                                    color={props.validateFields('function_organization')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -158,6 +191,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                             label: type.name
                                         }))
                                     ]}
+                                    color={props.validateFields('type_organization')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -170,6 +205,11 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="logo"
                                     accept="image/*"
                                     url={props.data.logo as string}
+                                    className={`${props.validateFields('logo') == "success" ?
+                                            "bg-green-500" :
+                                            props.validateFields('logo') == "failure" ?
+                                                "bg-red-200" : "bg-white"
+                                        }`}
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -178,6 +218,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.highest_authority || ""}
                                     name="highest_authority"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('highest_authority')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -186,6 +228,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.first_name_authority || ""}
                                     name="first_name_authority"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('first_name_authority')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -194,6 +238,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.last_name_authority || ""}
                                     name="last_name_authority"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('last_name_authority')}
+
                                 />
                             </div>
 
@@ -203,6 +249,9 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.job_authority || ""}
                                     name="job_authority"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('job_authority')}
+
+                                    
                                 />
                             </div>
 
@@ -212,6 +261,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.email_authority || ""}
                                     name="email_authority"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('email_authority')}
+
                                 />
                             </div>
 
@@ -221,6 +272,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.highest_committe || ""}
                                     name="highest_committe"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('highest_committe')}
+
                                 />
                             </div>
 
@@ -230,6 +283,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.first_name_committe || ""}
                                     name="first_name_committe"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('first_name_committe')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -238,6 +293,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.last_name_committe || ""}
                                     name="last_name_committe"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('first_name_committe')}
+
                                 />
 
                             </div>
@@ -247,6 +304,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.job_committe || ""}
                                     name="job_committe"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('job_committe')}
+
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -255,6 +314,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.email_committe || ""}
                                     name="email_committe"
                                     onChange={(e) => props.setData(e)}
+                                    color={props.validateFields('email_committe')}
+
                                 />
 
                             </div>
@@ -263,9 +324,36 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     placeholder={"Correo de acceso a la información"} width="w-60"
                                     value={props.data.email_accesstoinformation || ""}
                                     name="email_accesstoinformation"
+                                    color={props.validateFields('email_accesstoinformation')}
+
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>
+                        </div>
+                        <hr />
+                        <div className="flex-col items-center justify-between mt-5 pb-20">
+
+                            <h4 className="text-lg font-medium text-gray-800 dark:text-white">
+                                Obligaciones específicas
+                            </h4>
+
+                            <div className="flex items-center gap-x-3">
+                                <ReactSelect
+                                    placeholder="Seleccione los numerales"
+                                    options={props.numerals.map((numeral) => ({
+                                        value: numeral.id + "",
+                                        label: numeral.name
+                                    }))
+                                    }
+                                    className="w-full"
+                                    isMulti
+                                    onChange={(e) => {
+                                        props.hangelChangeExtraNumeral(e)
+                                    }}
+                                    value={props.getSelectedExtraNumeral(props.data.extra_numerals||"")}
+                                />
+                            </div>
+
                         </div>
                     </div>
 

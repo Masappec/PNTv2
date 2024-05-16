@@ -135,7 +135,11 @@ function Table<T>({ ...props }: TableProps<T>) {
                         props.totalPages && (
                             <div className="flex overflow-x-auto sm:justify-center">
                                 <Pagination currentPage={props.currentPage || 1
-                                } totalPages={props.totalPages} onPageChange={props.onChangePage || (() => { })} />
+                                } totalPages={props.totalPages}
+                                 onPageChange={props.onChangePage || (() => { })}
+                                 nextLabel="Siguiente"
+                                    previousLabel="Anterior"
+                                 />
                             </div>
                         )
                     }

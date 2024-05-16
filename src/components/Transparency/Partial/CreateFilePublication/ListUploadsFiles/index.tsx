@@ -52,7 +52,8 @@ export const ListUploadsFiles = (props: IListUploadsFilesProps) => {
                 currentPage={props.currentPage}
                 totalPages={props.totalPages}
                 onPageChange={props.onChangePage}
-
+                nextLabel="Siguiente"
+                previousLabel="Anterior"
             />
         </div>
     )

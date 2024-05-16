@@ -135,7 +135,7 @@ const ActiveCreatePresenter = (props: Props) => {
             {
               props.filesPublication.map((file, index) => {
                 return (
-                  <Tooltip content={file.name}>
+                  <Tooltip content={file.name} >
 
                     <div className="flex flex-col w-40 m-2 bg-slate-100 p-5 rounded-lg shadow-xl ">
                       <IconSearch type={file.name} />
@@ -175,7 +175,7 @@ const ActiveCreatePresenter = (props: Props) => {
                           accept=".csv"
                         />
                         <Tooltip content={`Descargar plantilla de ${template.name}`}
-
+                        placement="right-end"
                           className="flex items-center justify-center  text-sm"
                         >
 

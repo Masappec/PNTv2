@@ -38,17 +38,10 @@ class EstablishmentService {
 
 
     async Create(data: EstablishmentEntity) {
-        try {
+        
             const response = await this.api.Create(EstablishmentMapper.domainToApi(data));
             return response;
-        } catch (error) {
-            if (error instanceof AxiosError) {
-                const e: string = error.response?.data?.message || 'Error al crear el establecimiento.';
-                throw new Error(e);
-            } else {
-                throw new Error('Error al crear el establecimiento.');
-            }
-        }
+        
 
     }
 
