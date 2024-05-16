@@ -83,5 +83,12 @@ class SolicityService {
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }
 
+
+  async createManualSolicity(data: CreateSolicity) {
+    const response = await this.api.createManualSolicity(
+      SolicityMappers.domainToApi(data)
+    );
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
+  }
 }
 export default SolicityService;

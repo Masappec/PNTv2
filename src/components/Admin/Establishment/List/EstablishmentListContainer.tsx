@@ -3,6 +3,7 @@ import EstablishmentUseCase from "../../../../domain/useCases/Establishment/Esta
 import EstablishmentListPresenter from "./EstablishmentListPresenter"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { useNavigate } from "react-router-dom"
+import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
 
 
 
@@ -22,9 +23,22 @@ const EstablishmentListContainer = ({
     const [totalPage, setTotalPage] = useState(0)
     const [from, setFrom] = useState(0)
     const [to, setTo] = useState(0)
-    
-    const navigate = useNavigate()
+    const [options, setOptions] = useState<OptionsSelectCreate>({
+        functions: [],
+        organizations: [],
+        institutions: []
 
+    })
+    const navigate = useNavigate()
+    useEffect(() => {
+        usecase.getOptions().then((res) => {
+            setOptions(res)
+        }
+        ).catch((err) => {
+            console.log(err)
+        })
+
+    }, [])
     useEffect(() => {
         usecase.getEstablishments()
             .then((response) => {
@@ -97,7 +111,7 @@ const EstablishmentListContainer = ({
             setError(error.message)
         })
     }
-    
+
     const handleSearch = (search: string) => {
         usecase.getEstablishments(search).then((response) => {
             setEstablishments(response.results)
@@ -135,6 +149,7 @@ const EstablishmentListContainer = ({
             to={to}
             total={total}
             totalPage={totalPage}
+            options={options}
         />
     )
 

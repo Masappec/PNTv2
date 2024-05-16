@@ -11,6 +11,7 @@ import { RxCardStackPlus } from "react-icons/rx"
 import { BiExport } from "react-icons/bi"
 import Select from "../../../Common/Select";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
 
 
 
@@ -35,7 +36,9 @@ interface Props {
     from: number
     to: number
     total: number
-    totalPage: number
+    totalPage: number,
+    options: OptionsSelectCreate;
+
 }
 
 const EstablishmentListPresenter = (props: Props) => {
@@ -53,73 +56,27 @@ const EstablishmentListPresenter = (props: Props) => {
                 <div className=" flex  flex-col mt-6 ml-36 ">
                     <button type="button"
                         onClick={props.onAdd}
-                        className="w-[100px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
+                        className="w-[100px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-primary-400 font-medium rounded-lg text-sm px-4 py-2 ">
                         <RxCardStackPlus size={25} className="mr-2 " />
                         Nuevo
                     </button>
                 </div>
-                <div className=" flex  flex-col mt-6  ">
-                    <button type="button"
-                        onClick={() => { }}
-                        className="w-[115px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
-                        <BiExport size={25} className="mr-2" />
-                        Exportar
-                        { }
-                    </button>
-                </div>
-                <div className=" flex  flex-col mt-6 pr-32">
 
-                    <button id=""
-                        onClick={props.onImport}
-                        data-dropdown-toggle="actionsDropdown"
-                        className="w-[115px] h-[40px] flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" type="button">
-                        <RxCardStackPlus size={25} className="mr-2" />
-                        { }
-                        Importar
-                    </button>
-                </div>
 
             </div>
             <div className="grid grid-rows-1 grid-flow-col space-x-2 w-full pl-10 mt-12">
-
-                <div className=" flex  flex-col h-[44px]  mt-5 w-[177px]  gap-2">
-                    <Select
-                        placeholder={"Zona 5"}
-                        value={""}
-                        onChange={() => { }}
-                        options={[
-                            {
-                                value: "",
-                                label: "Zona 5",
-                            },
-                        ]}
-                    />
-                </div>
-                <div className=" flex  flex-col h-[44px]  mt-5 w-[242px]  gap-2">
-                    <Select
-                        placeholder={"Institución"}
-                        value={""}
-                        onChange={() => { }}
-                        options={[
-                            {
-                                value: "",
-                                label: "Defensoría del Pueblo",
-                            },
-                        ]}
-                    />
-                </div>
-
                 <div className=" flex  flex-col h-[44px] mt-5 w-[242px] gap-2">
                     <Select
                         placeholder={"Función"}
                         value={""}
                         onChange={() => { }}
-                        options={[
-                            {
-                                value: "",
-                                label: "Defensoría del Pueblo",
-                            },
-                        ]}
+                        options={props.options.functions.map((item) => {
+                            return {
+                                value: item.id + "",
+                                label: item.name
+                            }
+                        })}
+
                     />
                 </div>
             </div>

@@ -30,6 +30,7 @@ const EstablishmentCreateContainer = ({
 
     })
 
+    const [modified, setModified] = useState<boolean>(false)
     const [data, setData] = useState<EstablishmentEntity>({
         abbreviation: "",
         code: "",
@@ -75,20 +76,34 @@ const EstablishmentCreateContainer = ({
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
+
         usecase.Create(data).then((res) => {
             console.log(res)
             setLoading(false)
             setSuccess("Se ha creado la Institución")
+            setError("")
         }).catch((err) => {
             console.log(err)
             setError(err.message)
+            setSuccess("")
             setLoading(false)
         })
 
 
     }
-    const handleChageLogo = (e: ChangeEvent<HTMLInputElement>) => {
 
+    const validateFields = (name: string) => {
+        if (modified) {
+
+            if (data[name as keyof EstablishmentEntity] === "") {
+                return 'failure'
+            }
+            return 'success'
+        }
+        return 'default'
+    }
+    const handleChageLogo = (e: ChangeEvent<HTMLInputElement>) => {
+        setModified(true)
         const file = e.target.files;
         if (!file) return
         const image = file[0]
@@ -97,6 +112,7 @@ const EstablishmentCreateContainer = ({
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        setModified(true)
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
@@ -118,6 +134,7 @@ const EstablishmentCreateContainer = ({
             setSuccess={setSuccess}
             options={options}
             numerals={numerals}
+            validateFields={validateFields}
         />
     )
 

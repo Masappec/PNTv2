@@ -196,11 +196,14 @@ const SolicityCreateContainer = (props: Props) => {
     ]
 
     const race_indentification: ColourOption[] = [
-        { value: 'Meztizo', label: 'Meztizo', color: '#00B8D9' },
+        { value: 'Mestiza', label: 'Mestiza', color: '#00B8D9' },
         { value: 'Pueblo Montubio', label: 'Pueblo Montubio', color: '#00B8D9' },
         { value: 'Pueblo o Nacionalidad Indígena', label: 'Pueblo o Nacionalidad Indígena', color: '#00B8D9' },
         { value: 'Pueblo Afrodescendiente', label: 'Pueblo Afrodescendiente', color: '#00B8D9' },
+        { value: 'Blanca', label: 'Blanca', color: '#00B8D9' },
+
     ]
+
 
     const formart_send: ColourOption[] = [
         { value: 'formato fisico: copia en papel', label: 'formato fisico: copia en papel', color: '#00B8D9' },

@@ -2,9 +2,8 @@ import { FormEvent } from "react";
 import { Alert, Button, TextInput, Textarea } from "flowbite-react";
 import { Label } from "flowbite-react";
 
-import { IoCheckmarkCircle, IoSaveOutline } from "react-icons/io5";
+import { IoCheckmarkCircle } from "react-icons/io5";
 import { FiSend } from "react-icons/fi";
-import AsyncSelect from "react-select/async";
 import Select from 'react-select';
 import { ColourOption } from "../../../../utils/interface";
 import CreateSolicity from "../../../../domain/entities/CreateSolicity";
@@ -72,10 +71,10 @@ const SolicityManualPresenter = (props: Props) => {
                         />
                         <TextInput
                             className="w-[717px]"
-                            placeholder=""
+                            placeholder={props.data.number_saip}
                             type="text"
                             onChange={props.onChange}
-                            name=""
+                            name="number_saip"
                             value={props.data.number_saip}
                         />{" "}
                     </div>
@@ -87,21 +86,9 @@ const SolicityManualPresenter = (props: Props) => {
                             className="mt-2 text-base font-semibold"
                         />
 
-                        <AsyncSelect
-                            cacheOptions
-                            loadOptions={props.loadOptions}
-                            defaultOptions
-                            className="lg:w-[720px] xl:w-[720px] h-[50px] w-[720px] m-2 rounded-full "
-                            placeholder={"Institución seleccionada"}
-                            onChange={(value) =>
-                                props.onChangeSelectEstablishment(value as ColourOption)
-                            }
-                            value={props.entitySelected ? {
-                                value: props.entitySelected.slug,
-                                label: props.entitySelected.name,
-                            } as ColourOption
-                                : null}
-                        />
+                        <p className="text-base ml-5 mt-3 font-semibold text-black">
+                            {props.entitySelected.name}
+                        </p>
                     </div>
                     <div className="xl:flex xl:flex-col-2 flex-col-1 gap-12">
                         <div className="flex  xl:flex-col-2 sm:flex-col-1 h-[44px]  mt-5 gap-20">
@@ -370,33 +357,7 @@ const SolicityManualPresenter = (props: Props) => {
                         }
                     </div>
                     <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-24 ">
-                        {
-                            props.solicitySaved?.id && !props.isChanged ? (
-                                <div
 
-                                    className="
-                  flex items-center justify-center
-                  text-green-500 bg-white font-bold 
-               w-[129px] h-[48px]  hover:bg-gray-200 "
-                                >
-                                    <IoCheckmarkCircle size={22} className=" mr-4 text-green-500 " />
-                                    <span>Guardada</span>
-                                </div>
-                            ) : props.isLoadingSaved ? (
-                                <Spinner></Spinner>) :
-                                <Button
-                                    type="button"
-                                    color="secondary"
-                                    onClick={props.handleSave}
-                                    className=" text-gray-900 border-gray-300 font-bold 
-              border w-[129px] h-[48px]  hover:bg-gray-200 "
-                                >
-                                    <IoSaveOutline size={22} className=" mr-4 text-gray-900 " />
-                                    <span>Guardar</span>
-                                </Button>
-
-
-                        }
                         {
                             props.isLoadingSend ? (
                                 <Spinner></Spinner>) : props.isSend ? (

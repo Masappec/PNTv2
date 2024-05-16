@@ -184,3 +184,22 @@ export const StatusStageSolicity = {
         icon: <FaClock />
     }
 }
+
+
+
+export const permissionsProcess = {
+    'configuration': 'Configuración SMTP',
+    'establishment': 'Instituciones',
+    'pedagogyarea': 'Áreas de pedagogía',
+    'group': 'Roles',
+    'solicity': 'Solicitudes',
+    'solicityresponse': 'Solicitudes Entidad',
+    'transparencyactive': 'Transparencia activa',
+    'transparencycolab': 'Transparencia colaborativa',
+    'transparencyfocal': 'Transparencia focalizada',
+}
+
+
+export const getTranslatedPermissions = (type: string) => {
+    return permissionsProcess[type as keyof typeof permissionsProcess] ?? type
+}
