@@ -291,7 +291,7 @@ const SolicityCreateContainer = (props: Props) => {
         <>
             {
                 isSend ?
-                    <ScreenMessage message="Solicitud enviada con exito"
+                    <ScreenMessage message="Solicitud de Acceso a Información Pública ingresada con éxito"
                         type="Se ha enviado la solicitud con exito"
                     >
                         <div className="flex items-center gap-16 mt-8 ">
@@ -300,7 +300,7 @@ const SolicityCreateContainer = (props: Props) => {
                             <button
                                 onClick={() => navigate('/admin/solicity')}
                                 className=" text-xl text-white font-medium hover:bg-primary-200 bg-primary-500 w-[300px]  py-2 rounded-lg shadow-xl">
-                                Continuar
+                                Ver SAIP
                             </button>
                         </div>
                     </ScreenMessage> :
