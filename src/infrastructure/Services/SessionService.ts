@@ -97,6 +97,7 @@ class SessionService {
       localStorage.getItem("locked") === USER_LOCKED + USER_PASSWORD_LOCKED
     );
   }
+
 }
 
 export default SessionService;

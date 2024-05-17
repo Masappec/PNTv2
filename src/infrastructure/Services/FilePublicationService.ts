@@ -41,26 +41,61 @@ class FilePublicationService {
         let csvContent = "";
 
         data.forEach(function (rowArray) {
-            const row = rowArray.map((item) => item.value).join(",");
+            const row = rowArray.map((item) => item.value).join(";");
             csvContent += row + "\r\n";
         })
 
-        return new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const utf8Bytes = new TextEncoder().encode(csvContent);
+        return new Blob([utf8Bytes], { type: 'application/csv;charset=UTF-8' });
 
     }
 
     generateBlobVertical(data: Row[][]) {
         let csvContent = "";
+        /**
+         * [ [ {value: "1", "is_header":true}, {value: "2","is_header":true},
+         *  {value: "3","is_header":true}], [{value: "4"}, {value: "5"}, {value: "6"}]
+         * 
+         */
+        const transposedData = data[0].map((_, colIndex) => data.map(row => row[colIndex]));
+
+        transposedData.forEach((column) => {
+            column.forEach((cell, rowIndex) => {
+                // Si es la primera fila, agregar el valor al CSV directamente; si no, agregarlo con un salto de línea
+                csvContent += (rowIndex === 0) ? cell.value : ";" + cell.value;
+            });
+            csvContent += "\r\n"; // Agregar un salto de línea después de cada columna
+        });
+
+        const utf8Bytes = new TextEncoder().encode(csvContent);
+        return new Blob([utf8Bytes], { type: 'application/csv;charset=UTF-8' });
+
+    }
+
+    generateContentCsv = (data: Row[][]) => {
+        let csvContent = "";
 
         data.forEach(function (rowArray) {
-            const row = rowArray.map((item) => item.value).join(",");
-            row.split(",").forEach((element) => {
-                csvContent += element + "\r\n";
-            })
+            const row = rowArray.map((item) => item.value).join(";");
+            csvContent += row + "\r\n";
         })
+        
+        return csvContent
+    }
 
-        return new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
 
+    generateContentCsvVertical = (data: Row[][]) => {
+        let csvContent = "";
+        const transposedData = data[0].map((_, colIndex) => data.map(row => row[colIndex]));
+
+        transposedData.forEach((column) => {
+            column.forEach((cell, rowIndex) => {
+                // Si es la primera fila, agregar el valor al CSV directamente; si no, agregarlo con un salto de línea
+                csvContent += (rowIndex === 0) ? cell.value : ";" + cell.value;
+            });
+            csvContent += "\r\n"; // Agregar un salto de línea después de cada columna
+        });
+        return csvContent;
     }
     /**
      * 

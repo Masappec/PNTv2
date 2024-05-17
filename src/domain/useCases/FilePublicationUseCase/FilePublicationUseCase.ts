@@ -18,10 +18,12 @@ class FilePublicationUseCase {
     async downloadFileFromUrl(url: string) {
         return await this.filePublicationRepository.downloadFileFromUrl(url);
     }
+    
     generateBlobVertical(data: Row[][]) {
         return this.filePublicationRepository.generateBlobVertical(data);
     }
 
+    
     async createFilePublication(data: FilePublicationEntity,
         callbackUpload?: (e: AxiosProgressEvent) => void,
     ) {
@@ -30,6 +32,13 @@ class FilePublicationUseCase {
 
     async getFilesPublications(type: "TA" | "TC" | "TF", page?: number, limit?: number, search?: string) {
         return await this.filePublicationRepository.getFilesPublications(type, page, limit, search);
+    }
+    generateContentCsv(data: Row[][]) {
+        return this.filePublicationRepository.generateContentCsv(data);
+    }
+
+    generateContentCsvVertical(data: Row[][]) {
+        return this.filePublicationRepository.generateContentCsvVertical(data);
     }
 }
 

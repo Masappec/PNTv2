@@ -29,7 +29,7 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 
 
 		<Sidebar aria-label="Default sidebar example"
-			className="border-r bg-slate-200 w-64 z-30 h-screen ">
+			className="border-r bg-slate-200 w-64 z-30 h-full">
 
 			<Sidebar.Items className="flex flex-col 
 			justify-between ">
@@ -56,7 +56,7 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 					}
 				</Sidebar.ItemGroup>
 
-				<Sidebar.ItemGroup className="relative p-4 ">
+				<Sidebar.CTA className="relative p-4 ">
 					<div className="flex items-col">
 
 						<div className="flex flex-row">
@@ -75,7 +75,7 @@ const Sidebar_ = ({ menu, permissions, user, email, onLogout }: Props) => {
 						</div>
 
 					</div>
-				</Sidebar.ItemGroup>
+				</Sidebar.CTA>
 			</Sidebar.Items>
 
 		</Sidebar >

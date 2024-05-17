@@ -60,10 +60,10 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
     }, [])
 
     return (
-        <div className="layout-admin overflow-y-hidden  h-2/3">
+        <div className="layout-admin overflow-y-hidden h-fit ">
             <div className="flex-col  overflow-y-hidden">
                 <HeaderPages open={open} setOpen={setOpen} haveImage={true} />
-                <div className="flex  overflow-y-hidden">
+                <div className="flex h-full">
                     <div
                         className={`lg:block xl:block ${open ? "block" : "hidden"} z-30 mb-52`}
                     >
@@ -76,7 +76,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                             permissions={permissions}
                         />
                     </div>
-                    <div className="h-fit w-full">
+                    <div className="w-full">
                         <div
                             className={` ${open ? " bg-black bg-opacity-40 lg:bg-none  fixed z-20" : ""
                                 }`}

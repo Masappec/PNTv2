@@ -1,4 +1,5 @@
 import TemplateService from "../../../infrastructure/Services/TemplateService";
+import { DELIMITER } from "../../../utils/constans";
 import Template from "../../entities/Template";
 import TemplateFileEntity from "../../entities/TemplateFileEntity";
 
@@ -17,29 +18,45 @@ class TemplateFileUseCase {
         return new Promise<boolean>((resolve, reject) => {
             this.detectDelimiter(data, 1024, (delim, text) => {
                 try {
-                    const rows = text.split('\n');
-
+                    
+                    let rows = text.split('\r\n');
                     let columns = rows[0].split(delim);
 
                     if (template.verticalTemplate) {
                         columns = rows.map(row => row.split(delim)[0]);
+                        rows = rows.map(row => row.split(delim).slice(1).join(delim));
 
-
+                    }else{
+                        if (delim !== DELIMITER) {
+                            throw new Error('El archivo no coincide con la plantilla, el delimitador debe ser: ' + DELIMITER);
+                        }
+                        
                     }
 
                     columns = columns.filter(col => col.trim() !== '');
+                    console.log(text,columns, template.columns)
 
 
                     if (columns.length !== template.columns.length) {
                         throw new Error('El archivo no coincide con la plantilla, la cantidad de columnas no coincide');
 
                     }
+
                     columns.forEach(element => {
                         console.log(template.columns.find(col => col.name.toLowerCase().trim() === element.toLowerCase().trim()))
                         if (!template.columns.find(col => col.name.toLowerCase().trim() === element.toLowerCase().trim())) {
                             throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden');
                         }
                     });
+
+                    const rows_ = rows.slice(1);
+                    //validar que las filas no esten vacias
+                    if (rows_.filter(row => row.trim() !== '').length === 0) {
+                        throw new Error('El archivo no contiene datos');
+                    }
+
+                    
+
                     resolve(true);
                 } catch (error) {
                     reject(error);
@@ -68,7 +85,7 @@ class TemplateFileUseCase {
             callback(sortedDelimiters[0].delimiter || ",", sample);
         };
 
-        reader.readAsText(file.slice(0, sampleSize), 'UTF-8');
+        reader.readAsText(file.slice(0, sampleSize), 'ISO-8859-1');
     }
 
 

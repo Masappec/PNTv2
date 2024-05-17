@@ -160,7 +160,7 @@ const ActiveCreatePresenter = (props: Props) => {
           </div>
           <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800">
             <Tabs.Item title="Subir Archivos" >
-              <div className="mb-36 mt-5 xl:grid-cols-3 grid-cols-1 grid gap-5">
+              <div className="mt-5 xl:grid-cols-3 grid-cols-1 grid gap-5">
                 {
                   props.templates.map((template, index) => {
                     return (
@@ -259,12 +259,6 @@ const ActiveCreatePresenter = (props: Props) => {
               />
             </Tabs.Item>
           </Tabs>
-          <div className="container">
-            <div className="grid grid-rows-3 grid-flow-col flex-col mt-9 text- h-96  ml-14 mr-40 gap-32">
-
-
-            </div>
-          </div>
 
         </section>
       </form>

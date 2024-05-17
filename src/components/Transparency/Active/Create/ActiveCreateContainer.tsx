@@ -490,13 +490,37 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const handleSaveDataTable = (data: Row[][], template: TemplateFileEntity) => {
 
+    if (data.length === 0) {
+      return;
+    }
+    const templateDetail = detail?.templates.find((_template) => {
+      return _template.id === template.id
+    })
+    if (!templateDetail){
+      return;
+    }
 
-    const blob = props.usecase.generateBlob(data);
+    
+    let blob;
+    if(templateDetail.verticalTemplate){
+      console.log(' es vertical')
+
+       blob = props.usecase.generateContentCsvVertical(data);
+      //descargar archivo
+    }else{
+       blob = props.usecase.generateContentCsv(data);
+
+    }
+
+    const csvContent = '\uFEFF' + blob; // Agregamos la marca de orden de bytes UTF-8 al inicio
+
+    // Crear un nuevo Blob con el contenido y el tipo MIME adecuados
+    const blob_ = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+
+    // Crear un objeto File a partir del Blob
+    const file = new File([blob_], template.name + '.csv', { type: 'text/csv;charset=utf-8' });
 
 
-    const file = new File([blob], template.name + ".csv", {
-      type: "text/csv;charset=utf-8;",
-    });
 
 
     const copyFiles = templates.find((_template) => {
@@ -531,7 +555,6 @@ const ActiveCreateContainer = (props: IProps) => {
       setError("No se ha encontrado el template")
       return;
     }
-
     if (!file) {
       setError("No se ha encontrado el archivo")
       return;
@@ -542,15 +565,21 @@ const ActiveCreateContainer = (props: IProps) => {
       return;
     }
 
-    newTemplates.file = file
-    newTemplates.isValid = true
+  
 
-    const templateDetail = detail?.templates.find((template) => {
-      return template.id === template.id
+    const templateDetail = detail?.templates.find((_template) => {
+      return template.id === _template.id
     })
-
+    console.log(templateDetail?.name)
     if (!templateDetail) return
 
+    props.templateUseCase.validateLocalFile(file, templateDetail).then((res) => {
+    if(!res){
+      setError("El archivo no cumple con el formato")
+      return
+    }
+      newTemplates.file = file
+      newTemplates.isValid = true
     setTemplates(templates.map((template) => {
       if (template.id === newTemplates?.id) {
         return newTemplates
@@ -576,6 +605,9 @@ const ActiveCreateContainer = (props: IProps) => {
     }
 
     setSuccess("Se ha guardado correctamente el archivo")
+  }).catch((e) => {
+    setError(e.message)
+  })
   }
 
 
@@ -612,26 +644,18 @@ const ActiveCreateContainer = (props: IProps) => {
       setError("No se ha encontrado el template")
       return;
     }
-    let blob;
+    let content;
     if (template.verticalTemplate) {
-      blob = props.usecase.generateBlobVertical(data_template.data);
+      content = props.usecase.generateContentCsvVertical(data_template.data);
     } else {
-      blob = props.usecase.generateBlob(data_template.data);
+      content = props.usecase.generateContentCsv(data_template.data);
     }
-    const url = URL.createObjectURL(blob);
 
+    const a = document.createElement('a')
+    a.download = name+".csv";
+    a.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(content);
+    a.click();
 
-    const a_ = document.createElement("a");
-    a_.setAttribute("href", url);
-    a_.setAttribute("download", name + ".csv");
-    a_.setAttribute("target", "_blank");
-    a_.style.display = "none";
-    document.body.appendChild(a_);
-
-
-    a_.click();
-
-    window.URL.revokeObjectURL(url);
 
 
   }

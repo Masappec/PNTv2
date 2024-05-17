@@ -494,12 +494,37 @@ const ActiveEditContainer = (props: Props) => {
     const handleSaveDataTable = (data: Row[][], template: TemplateFileEntity) => {
 
 
-        const blob = props.usecase.generateBlob(data);
+
+        if (data.length === 0) {
+            return;
+        }
+        const templateDetail = detail?.templates.find((_template) => {
+            return _template.id === template.id
+        })
+        if (!templateDetail) {
+            return;
+        }
 
 
-        const file = new File([blob], template.name + ".csv", {
-            type: "text/csv;charset=utf-8;",
-        });
+        let blob;
+        if (templateDetail.verticalTemplate) {
+            console.log(' es vertical')
+
+            blob = props.usecase.generateContentCsvVertical(data);
+            //descargar archivo
+        } else {
+            blob = props.usecase.generateContentCsv(data);
+
+        }
+
+        const csvContent = '\uFEFF' + blob; // Agregamos la marca de orden de bytes UTF-8 al inicio
+
+        // Crear un nuevo Blob con el contenido y el tipo MIME adecuados
+        const blob_ = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+
+        // Crear un objeto File a partir del Blob
+        const file = new File([blob_], template.name + '.csv', { type: 'text/csv;charset=utf-8' });
+
 
 
         const copyFiles = templates.find((_template) => {
@@ -545,40 +570,48 @@ const ActiveEditContainer = (props: Props) => {
             return;
         }
 
-        newTemplates.file = file
-        newTemplates.isValid = true
 
-        const templateDetail = detail?.templates.find((template) => {
-            return template.id === template.id
+
+        const templateDetail = detail?.templates.find((_template) => {
+            return template.id === _template.id
         })
-
+        console.log(templateDetail?.name)
         if (!templateDetail) return
 
-        setTemplates(templates.map((template) => {
-            if (template.id === newTemplates?.id) {
-                return newTemplates
+        props.templateUseCase.validateLocalFile(file, templateDetail).then((res) => {
+            if (!res) {
+                setError("El archivo no cumple con el formato")
+                return
             }
-            return template
-        }))
+            newTemplates.file = file
+            newTemplates.isValid = true
+            setTemplates(templates.map((template) => {
+                if (template.id === newTemplates?.id) {
+                    return newTemplates
+                }
+                return template
+            }))
+            let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
+            const index = filesPublication.indexOf(filePub as FilePublicationEntity)
 
-        let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
-        const index = filesPublication.indexOf(filePub as FilePublicationEntity)
 
 
+            if (!filePub) {
+                filePub = new FilePublicationEntity(0, newTemplates.name, newTemplates.name, newTemplates.file as File)
+                setFilesPublication([...filesPublication, filePub])
+            } else {
+                filePub.url_download = newTemplates.file as File
+                const newFiles = [
+                    ...filesPublication as FilePublicationEntity[],
+                ]
+                newFiles[index] = filePub
+                setFilesPublication(newFiles)
+            }
 
-        if (!filePub) {
-            filePub = new FilePublicationEntity(0, newTemplates.name, newTemplates.name, newTemplates.file as File)
-            setFilesPublication([...filesPublication, filePub])
-        } else {
-            filePub.url_download = newTemplates.file as File
-            const newFiles = [
-                ...filesPublication as FilePublicationEntity[],
-            ]
-            newFiles[index] = filePub
-            setFilesPublication(newFiles)
-        }
-
-        setSuccess("Se ha guardado correctamente el archivo")
+            setSuccess("Se ha guardado correctamente el archivo")
+        }).catch((e) => {
+            setError(e.message)
+        })
     }
 
 
@@ -615,27 +648,20 @@ const ActiveEditContainer = (props: Props) => {
             setError("No se ha encontrado el template")
             return;
         }
-        let blob;
+        let content;
         if (template.verticalTemplate) {
-            blob = props.usecase.generateBlobVertical(data_template.data);
+            content = props.usecase.generateContentCsvVertical(data_template.data);
         } else {
-            blob = props.usecase.generateBlob(data_template.data);
+            content = props.usecase.generateContentCsv(data_template.data);
         }
-        const file = new File([blob], name + ".csv", {
-            type: "text/csv;charset=utf-8;",
-        });
-        const url = URL.createObjectURL(file);
 
 
-        const a_ = document.createElement("a");
-        a_.setAttribute("href", url);
-        a_.setAttribute("download", name + ".csv");
-        a_.setAttribute("target", "_blank");
-        a_.style.display = "none";
-        document.body.appendChild(a_);
 
 
-        a_.click();
+        const a = document.createElement('a')
+        a.download = name + ".csv";
+        a.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(content);
+        a.click();
 
 
     }
