@@ -87,9 +87,9 @@ const TA = (props: Props) => {
                                         {
                                             item.files.map((file, i) =>
                                                 <a key={i}
-                                                    href={file.url_download as string}
+                                                    href={'#'}
                                                     onClick={() => onDownloadFile(file.url_download as string,
-                                                        `${props.year}-${props.month}-${file.name}`
+                                                        `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
                                                     )}
                                                     className="text-primary-500 
                                                 hover:text-primary-600 text-base">
