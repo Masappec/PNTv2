@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import { IoAddCircle, IoCloseCircle } from "react-icons/io5";
+import { IoAddCircle } from "react-icons/io5";
 import { Row } from "../../../utils/interface";
 import { Button, Pagination, Table } from "flowbite-react";
+import { FaTrash } from "react-icons/fa";
 
 
 interface Props {
@@ -26,10 +27,11 @@ const DynamicTable = (props: Props) => {
     const [totalPages, setTotalPages] = useState(0);
     const [from, setFrom] = useState(0);
     const [to, setTo] = useState(0);
-
+    const [datarows, setDatarows] = useState<Row[][]>([])
 
     useEffect(() => {
         setData(props.data)
+        setDatarows(props.data.slice(0))
     }, [props.data])
 
     useEffect(() => {
@@ -44,14 +46,13 @@ const DynamicTable = (props: Props) => {
 
 
     const handleClick = (row: number) => {
-        console.log(data.length, props.limitRows)
         if (props.limitRows) {
             if (data.length > props.limitRows) {
                 return
             }
         }
 
-        const copy_data = [...data]
+        const copy_data = [...datarows]
 
         copy_data.splice(row + 1, 0,
             Array.from({ length: copy_data[row].length }, () => ({
@@ -61,6 +62,7 @@ const DynamicTable = (props: Props) => {
         )
 
         setData(copy_data)
+        setDatarows(copy_data)
         setTotalPages(Math.ceil(copy_data.length / limit))
         setCurrentPage(Math.ceil(copy_data.length / limit))
         setFrom((currentPage * limit) - limit + 1)
@@ -129,7 +131,7 @@ const DynamicTable = (props: Props) => {
                     }
                 </Table.Head>
                 <Table.Body className="divide-y">
-                    {data.slice(from, to).map((row, rowIndex) => {
+                    {datarows.slice(from, to).map((row, rowIndex) => {
                         return (
                             <>
 
@@ -138,7 +140,7 @@ const DynamicTable = (props: Props) => {
 
                                     <Table.Cell>
                                         <Button className="w-5 h-5" color="failure" onClick={() => handleRemove(rowIndex, 0, false)} >
-                                            <IoCloseCircle size={20} />
+                                            <FaTrash size={10} />
                                         </Button>
                                     </Table.Cell>
 
@@ -164,7 +166,7 @@ const DynamicTable = (props: Props) => {
                         );
                     })}
                     {
-                        !props.isSaved ? <Table.Row>
+                        !props.isSaved && (props.limitRows !== (data.length - 1)) ? <Table.Row>
                             <Table.Cell colSpan={data[0].length + 1}>
                                 <Button className="w-full" color="gray" onClick={() => handleClick(data.length - 1)} >
                                     <IoAddCircle size={20} />
@@ -182,10 +184,10 @@ const DynamicTable = (props: Props) => {
             </p>
             <div className="flex overflow-x-auto sm:justify-center">
 
-                <Pagination currentPage={currentPage} totalPages={totalPages} 
-                onPageChange={onPageChange} showIcons 
-                nextLabel="Siguiente"
-                previousLabel="Anterior"
+                <Pagination currentPage={currentPage} totalPages={totalPages}
+                    onPageChange={onPageChange} showIcons
+                    nextLabel="Siguiente"
+                    previousLabel="Anterior"
                 />
             </div>
         </div >

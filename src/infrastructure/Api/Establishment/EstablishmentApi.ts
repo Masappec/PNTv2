@@ -11,12 +11,13 @@ class EstablishmentApi {
         this.api = api;
     }
 
-    async getEstablishments(search?: string, page?: number) {
+    async getEstablishments(search?: string, page?: number, function_?: string): Promise<Pagination<EstablishmentListDto>> {
         try {
             const response = await this.api.get<Pagination<EstablishmentListDto>>(ADMIN_PATH + '/establishment/list', {
                 params: {
                     search,
-                    page
+                    page,
+                    funcion: function_
                 }
             });
             return response.data;

@@ -667,6 +667,8 @@ const FocalizedEditContainer = (props: Props) => {
       files_uploaded_last={filesList}
       onRemoveFileFromPublication={onRemoveFileFromPublication}
       onCancel={handleCancel}
+      DownloadFileFromUrl={() => { }}
+      onChangePage={() => { }}
     />
   )
 }

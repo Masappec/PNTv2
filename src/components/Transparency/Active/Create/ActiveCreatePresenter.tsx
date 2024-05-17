@@ -44,6 +44,8 @@ interface Props {
   addFileFromList: (file: FilePublicationEntity) => void
   onRemoveFileFromPublication: (index: number) => void;
   onCancel: () => void;
+  onChangePage: (page: number) => void;
+  DownloadFileFromUrl: (url: string) => void;
 }
 
 
@@ -173,9 +175,13 @@ const ActiveCreatePresenter = (props: Props) => {
                           name="logo"
                           className={template.file != null ? (template.isValid ? "bg-green-200" : "bg-red-200") : ""}
                           accept=".csv"
+                          disabled={
+                            props.filesPublication.find((e) => e.description.trim() === template.name.trim()) ? true : false
+                          }
+
                         />
                         <Tooltip content={`Descargar plantilla de ${template.name}`}
-                        placement="right-end"
+                          placement="right-end"
                           className="flex items-center justify-center  text-sm"
                         >
 
@@ -205,6 +211,9 @@ const ActiveCreatePresenter = (props: Props) => {
                         <TextInput placeholder="Ingresar link" type="url"
                           onChange={(e) => props.onChageLink(e, template)}
                           value={template.link || ""}
+                          disabled={
+                            props.filesPublication.find((e) => e.description.trim() === template.name.trim()) ? true : false
+                          }
                         />
                       </div>
                     );
@@ -229,7 +238,7 @@ const ActiveCreatePresenter = (props: Props) => {
                       file={file.file}
                       onSaveTable={(data) => { props.onSaveTable(data, file) }}
                       key={index}
-                      isSaved={props.filesPublication.find((e) => e.description == file.name) ? true : false}
+                      isSaved={props.filesPublication.find((e) => e.description.trim() === file.name.trim()) ? true : false}
                       title={file.name}
                       limit={props.numeralDetail?.templates.find((e) => e.id == file.id)?.maxInserts || undefined}
                     />
@@ -243,8 +252,8 @@ const ActiveCreatePresenter = (props: Props) => {
                 currentPage={props.files_uploaded_last.current}
                 files={props.files_uploaded_last.results}
                 onAddFileToPublication={props.addFileFromList}
-                onChangePage={() => { }}
-                onDownloadFileFromUrl={() => { }}
+                onChangePage={props.onChangePage}
+                onDownloadFileFromUrl={props.DownloadFileFromUrl}
                 totalPages={props.files_uploaded_last.total_pages as number}
 
               />

@@ -40,7 +40,7 @@ interface TableProps<T> {
 function Table<T>({ ...props }: TableProps<T>) {
 
     return (
-        <div className="xl:w-[80vw] lg:w-[80vw] w-full mx-auto">
+        <div className=" w-full mx-auto">
             {props.show &&
                 <HeaderTable
                     isImport={props.isImport}
@@ -116,7 +116,7 @@ function Table<T>({ ...props }: TableProps<T>) {
                 </TableFlowbite>
             </div>
             <nav className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                {props.totalPages && (<span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                     Mostrando
                     {
 
@@ -128,7 +128,7 @@ function Table<T>({ ...props }: TableProps<T>) {
                             </> : <></>
                     }
                     <span className="font-semibold text-gray-900 dark:text-white">{props.total}</span>
-                </span>
+                </span>)}
 
                 <ul className="inline-flex items-stretch -space-x-px">
                     {
@@ -136,10 +136,10 @@ function Table<T>({ ...props }: TableProps<T>) {
                             <div className="flex overflow-x-auto sm:justify-center">
                                 <Pagination currentPage={props.currentPage || 1
                                 } totalPages={props.totalPages}
-                                 onPageChange={props.onChangePage || (() => { })}
-                                 nextLabel="Siguiente"
+                                    onPageChange={props.onChangePage || (() => { })}
+                                    nextLabel="Siguiente"
                                     previousLabel="Anterior"
-                                 />
+                                />
                             </div>
                         )
                     }

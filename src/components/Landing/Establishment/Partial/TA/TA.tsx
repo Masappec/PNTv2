@@ -25,18 +25,18 @@ const TA = (props: Props) => {
         setIsOpen(!isOpen)
     }
 
-    const onDownloadFile = async(url:string,name:string) => {
-        try{
-            const res = await axios.get(url,{
-                responseType:'blob'
+    const onDownloadFile = async (url: string, name: string) => {
+        try {
+            const res = await axios.get(url, {
+                responseType: 'blob'
             })
             const blobUrl = window.URL.createObjectURL(new Blob([res.data]));
             const a = document.createElement("a");
             a.href = blobUrl;
-            a.download = name+'.csv'
+            a.download = name + '.csv'
             a.click();
             window.URL.revokeObjectURL(blobUrl);
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
     }
@@ -45,7 +45,7 @@ const TA = (props: Props) => {
             <Accordion.Panel
                 isOpen={isOpen}
                 setOpen={() => handleOpen()}
-                className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-5 mb-5">
+                className="bg-white dark:bg-gray-800 shadow-md w-full rounded-lg p-5 mb-5">
                 <Accordion.Title>
                     {props.month}
                 </Accordion.Title>
@@ -86,7 +86,7 @@ const TA = (props: Props) => {
                                     return <div className="flex flex-row space-x-5">
                                         {
                                             item.files.map((file, i) =>
-                                                <a key={i} 
+                                                <a key={i}
                                                     href={file.url_download as string}
                                                     onClick={() => onDownloadFile(file.url_download as string,
                                                         `${props.year}-${props.month}-${file.name}`
@@ -110,7 +110,6 @@ const TA = (props: Props) => {
                         description="No se encontraron resultados"
                         length={props.data.length}
                         onFilter={() => { }}
-                        onSearch={() => { }}
                         search=""
                         title=""
                         currentPage={1}
@@ -121,7 +120,6 @@ const TA = (props: Props) => {
                         onImport={() => { }}
                         to={props.data.length}
                         total={props.data.length}
-                        totalPages={1}
                     />
                 </Accordion.Content>
             </Accordion.Panel>

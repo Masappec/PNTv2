@@ -13,6 +13,7 @@ interface DropzoneProps {
     label?: string;
     url?: string;
     className?: string;
+    disabled?: boolean;
 }
 
 const Dropzone = (props: DropzoneProps) => {
@@ -43,7 +44,7 @@ const Dropzone = (props: DropzoneProps) => {
 
 
     const click = () => {
-
+        if (props.disabled) return
         const input = document.getElementById(props.id)
         input?.click()
     }
@@ -93,7 +94,7 @@ const Dropzone = (props: DropzoneProps) => {
             </label>
             <div className={`border-dashed border-slate-300 border-2 h-40 rounded flex justify-center items-center ${props.className}`} onClick={click}>
 
-                {
+                {!props.disabled ?
                     url ?
                         <div className="w-full h-full justify-center items-center flex">
                             {getComponentPreview()}
@@ -116,6 +117,10 @@ const Dropzone = (props: DropzoneProps) => {
                                 <span className="block text-grey"> o arrastre y suelte</span>
                             </div>
                         </>
+                    : <div className="w-full h-full justify-center items-center flex">
+                        <p className="text-gray-400">No permitido</p>
+                    </div>
+
                 }
 
 

@@ -157,7 +157,74 @@ const ActiveCreateContainer = (props: IProps) => {
 
     if (!templateDetail) return
 
-    props.usecase.downloadFileFromUrl(e.target.value).then((file) => {
+
+    fetch(e.target.value).then((response) => {
+      if (!response.ok) {
+        throw new Error("No se ha podido descargar el archivo")
+      }
+      return response.blob()
+    }).then((file) => {
+
+      const file_ = new File([file], "data.csv", {
+        type: "text/csv;charset=utf-8;",
+      });
+
+      props.templateUseCase.validateLocalFile(
+        file_ as File,
+        templateDetail
+      ).then((res) => {
+
+        setError("")
+
+        newTemplates = {
+          ...newTemplates,
+          isValid: res,
+          file: file_
+        } as TemplateFileEntity
+
+
+        //reemplazar el template
+        setTemplates(templates.map((template) => {
+          if (template.id === newTemplates?.id) {
+            return newTemplates
+          }
+          return template
+        }))
+
+        const name = newTemplates.file?.name || ""
+
+        let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
+        const index = filesPublication.indexOf(filePub as FilePublicationEntity)
+
+
+
+        if (!filePub) {
+          filePub = new FilePublicationEntity(0, name, newTemplates.name, newTemplates.file as File)
+          setFilesPublication([...filesPublication, filePub])
+        } else {
+          filePub.url_download = newTemplates.file as File
+          const newFiles = [
+            ...filesPublication as FilePublicationEntity[],
+          ]
+          newFiles[index] = filePub
+          setFilesPublication(newFiles)
+        }
+
+
+
+      }).catch((e) => {
+        setError(e.message)
+        newTemplates = {
+          ...newTemplates,
+          isValid: false
+        } as TemplateFileEntity
+      })
+    }).catch((error) => {
+      setError(error.message)
+    })
+
+
+    /*props.usecase.downloadFileFromUrl(e.target.value).then((file) => {
 
       if (file instanceof Blob) {
         const file_ = new File([file], "data.csv", {
@@ -231,7 +298,7 @@ const ActiveCreateContainer = (props: IProps) => {
       }
     }).catch((error) => {
       setError(error.message)
-    })
+    })*/
 
 
   }
@@ -574,8 +641,14 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const addFileFromList = (file: FilePublicationEntity) => {
 
-
-
+    const files = filesPublication.find((file_) => {
+      return file_.description.trim() === file.description.trim()
+    })
+    if (files) {
+      setError("Ya existe un archivo de " + file.description)
+      return
+    }
+    setError("")
     setFilesPublication([...filesPublication, file])
 
 
@@ -586,7 +659,37 @@ const ActiveCreateContainer = (props: IProps) => {
     setFilesPublication(copyFiles)
   }
 
+  const onChangePage = (page: number) => {
+    props.usecase.getFilesPublications("TA", page).then((response) => {
+      setFilesList(response)
+    }).catch((error) => {
+      setError(error.message)
+    })
+  }
+  const Download = (url: string) => {
 
+
+
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'archivo.csv'
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      })
+      .catch(error => console.error('Ocurrió un error al descargar el archivo:', error));
+  }
   return (
     <ActiveCreatePresenter
       title={numeral?.description || ""}
@@ -613,7 +716,8 @@ const ActiveCreateContainer = (props: IProps) => {
       addFileFromList={addFileFromList}
       onRemoveFileFromPublication={onRemoveFileFromPublication}
       onCancel={handleCancel}
-
+      onChangePage={onChangePage}
+      DownloadFileFromUrl={Download}
     />
   )
 }

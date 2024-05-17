@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"
 import UserEntity from "../../../../domain/entities/UserEntity"
 import ConfigurationUseCase from "../../../../domain/useCases/Configuration/ConfigurationUseCase"
 import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
+import { sleep } from "../../../../utils/functions"
 
 
 const UserCreateContainer = ({
@@ -55,8 +56,14 @@ const UserCreateContainer = ({
         e.preventDefault()
         usecase.create(data).then(() => {
             setSuccess("Usuario creado con éxito")
+            setError("")
             const target = e.target as HTMLFormElement
             target.reset()
+            setData({} as UserEntity)
+            sleep(2000).then(() => {
+                navigate("/admin/users")
+            })
+
 
         }).catch((error) => {
             setError(error.message)

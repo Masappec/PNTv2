@@ -71,7 +71,7 @@ const EstablishmentEditContainer = ({
             console.log(err)
         })
     }, [])
-    
+
     useEffect(() => {
         usecase.detail(id || "").then((res) => {
             const es = res

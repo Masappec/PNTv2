@@ -9,9 +9,9 @@ class EstablishmentUseCase {
     }
 
 
-    async getEstablishments(search?: string, page?: number) {
+    async getEstablishments(search?: string, page?: number, function_?: string) {
 
-        const response = await this.service.getEstablishments(search, page);
+        const response = await this.service.getEstablishments(search, page, function_);
         return response;
 
     }

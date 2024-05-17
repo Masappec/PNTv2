@@ -29,6 +29,7 @@ const EstablishmentListContainer = ({
         institutions: []
 
     })
+    const [functionSelected, setFunctionSelected] = useState<string>("")
     const navigate = useNavigate()
     useEffect(() => {
         usecase.getOptions().then((res) => {
@@ -125,6 +126,38 @@ const EstablishmentListContainer = ({
             setError(error.message)
         })
     }
+    const onChangeFilter = (name: string) => {
+        setFunctionSelected(name)
+        if (name === "") {
+            usecase.getEstablishments()
+                .then((response) => {
+                    setEstablishments(response.results)
+                    setCurrentPage(response.current)
+                    setFrom(response.from || 1)
+                    setTo(response.to || 1)
+                    setTotal(response.total)
+                    setTotalPage(response.total_pages || 0)
+
+                })
+                .catch((error) => {
+                    setError(error.message)
+                })
+        } else {
+            usecase.getEstablishments("", currentPage, name)
+                .then((response) => {
+                    setEstablishments(response.results)
+                    setCurrentPage(response.current)
+                    setFrom(response.from || 1)
+                    setTo(response.to || 1)
+                    setTotal(response.total)
+                    setTotalPage(response.total_pages || 0)
+
+                })
+                .catch((error) => {
+                    setError(error.message)
+                })
+        }
+    }
     return (
         <EstablishmentListPresenter
 
@@ -150,6 +183,8 @@ const EstablishmentListContainer = ({
             total={total}
             totalPage={totalPage}
             options={options}
+            onChangeFilter={onChangeFilter}
+            functionSelected={functionSelected}
         />
     )
 

@@ -8,7 +8,6 @@ import Badge from "../../../Common/Badge"
 import { Button, } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
 import { RxCardStackPlus } from "react-icons/rx"
-import { BiExport } from "react-icons/bi"
 import Select from "../../../Common/Select";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
@@ -38,7 +37,8 @@ interface Props {
     total: number
     totalPage: number,
     options: OptionsSelectCreate;
-
+    onChangeFilter: (name: string) => void;
+    functionSelected: string;
 }
 
 const EstablishmentListPresenter = (props: Props) => {
@@ -68,14 +68,20 @@ const EstablishmentListPresenter = (props: Props) => {
                 <div className=" flex  flex-col h-[44px] mt-5 w-[242px] gap-2">
                     <Select
                         placeholder={"Función"}
-                        value={""}
-                        onChange={() => { }}
-                        options={props.options.functions.map((item) => {
-                            return {
-                                value: item.id + "",
-                                label: item.name
-                            }
-                        })}
+
+                        onChange={(e) => {
+                            props.onChangeFilter(e.target.value)
+                        }}
+                        options={[
+                            { value: "", label: "Seleccione una opción" },
+                            ...props.options.functions.map((func) => ({
+                                value: func.name,
+                                label: func.name
+                            }))
+
+                        ]}
+                        name="function_organization"
+
 
                     />
                 </div>

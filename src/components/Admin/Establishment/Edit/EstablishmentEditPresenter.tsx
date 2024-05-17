@@ -5,7 +5,7 @@ import Input from "../../../Common/Input";
 import Dropzone from "../../../Common/Dropzone";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
-import ReactSelect, { MultiValue } from 'react-select';
+import { MultiValue } from 'react-select';
 
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface";
 import Select from "../../../Common/Select";
@@ -206,9 +206,9 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     accept="image/*"
                                     url={props.data.logo as string}
                                     className={`${props.validateFields('logo') == "success" ?
-                                            "bg-green-500" :
-                                            props.validateFields('logo') == "failure" ?
-                                                "bg-red-200" : "bg-white"
+                                        "bg-green-500" :
+                                        props.validateFields('logo') == "failure" ?
+                                            "bg-red-200" : "bg-white"
                                         }`}
                                 />
                             </div>
@@ -251,7 +251,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('job_authority')}
 
-                                    
+
                                 />
                             </div>
 
@@ -331,7 +331,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </div>
                         </div>
                         <hr />
-                        <div className="flex-col items-center justify-between mt-5 pb-20">
+                        {/* <div className="flex-col items-center justify-between mt-5 pb-20">
 
                             <h4 className="text-lg font-medium text-gray-800 dark:text-white">
                                 Obligaciones específicas
@@ -354,7 +354,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                 />
                             </div>
 
-                        </div>
+                                </div>*/}
                     </div>
 
                 </section>

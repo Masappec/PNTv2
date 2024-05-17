@@ -91,27 +91,20 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             const numeral = response.sort((a, b) => parseInt(a.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "") || "0") -
                 parseInt(b.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "") || "0"))
 
-            
+
 
             const searchPub = publications.find(x => x.year == year && x.month == month)
             if (!searchPub) {
 
                 const datos = numeral.map((item) => {
-                    const files = Array.from({
-                        length: item.files.length
-                    })
+                    const files = item.files;
 
-                    item.files.map((file) => {
-                        if (file.name.toLowerCase().startsWith('conjunto')){
-                           files[0] = file;
-                        }else if (file.name.toLowerCase().startsWith('metadatos')){
-                            files[1] = file;
-                        }else if (file.name.toLowerCase().startsWith('diccionario')){
-                            files[2] = file;
-                        }else{
-                            files.push(file)
-                        }
-                    })
+                    files.sort((a, b) => {
+                        const order = ["Conjunto de datos", "Metadatos", "Diccionario"];
+                        return order.indexOf(a.description) - order.indexOf(b.description);
+                    });
+
+                    item.files = files;
                     return item;
                 })
                 const data: AcordionMonthYear<TransparencyActive> = {
@@ -133,7 +126,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
                     copy[index] = {
                         ...searchPub,
                         data: numeral
-                    
+
                     };
                     setPublications(copy)
                 }

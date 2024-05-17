@@ -11,9 +11,9 @@ class EstablishmentService {
     constructor(establishmentApi: EstablishmentApi) {
         this.api = establishmentApi;
     }
-    async getEstablishments(search?: string, page?: number): Promise<Pagination<EstablishmentEntity>> {
+    async getEstablishments(search?: string, page?: number, function_?: string): Promise<Pagination<EstablishmentEntity>> {
         try {
-            const response = await this.api.getEstablishments(search, page);
+            const response = await this.api.getEstablishments(search, page, function_);
             return {
                 current: response.current,
                 limit: response.limit,
@@ -38,10 +38,10 @@ class EstablishmentService {
 
 
     async Create(data: EstablishmentEntity) {
-        
-            const response = await this.api.Create(EstablishmentMapper.domainToApi(data));
-            return response;
-        
+
+        const response = await this.api.Create(EstablishmentMapper.domainToApi(data));
+        return response;
+
 
     }
 
@@ -91,8 +91,8 @@ class EstablishmentService {
         return await this.api.getOptions();
     }
     async getEstablishmentsByUser(user_id: string) {
-        
-            const response = await this.api.getEstablishmentsByUser(user_id);
+
+        const response = await this.api.getEstablishmentsByUser(user_id);
         return EstablishmentMapper.apiToDomainDetail(response);
 
     }

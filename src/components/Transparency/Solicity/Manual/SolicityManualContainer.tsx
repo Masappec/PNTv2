@@ -10,7 +10,7 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import SessionService from "../../../../infrastructure/Services/SessionService";
 import { toast } from 'react-toastify';
 import { Solicity } from "../../../../domain/entities/Solicity";
-import { sleep } from "../../../../utils/functions";
+//import { sleep } from "../../../../utils/functions";
 import { useNavigate } from "react-router-dom";
 import UserEntity from "../../../../domain/entities/UserEntity";
 import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
