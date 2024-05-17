@@ -19,11 +19,13 @@ export class FilePublicationEntity{
     name: string;
     description: string;
     url_download: string | File;
-
-    constructor(id: number, name: string, description: string, url_download: string|File){
+    created_at?: string;
+    constructor(id: number, name: string, description: string, url_download: string|File,
+        created_at?: string){
         this.id = id;
         this.name = name;
         this.description = description;
+        this.created_at = created_at;
         this.url_download = url_download;
     }
 }

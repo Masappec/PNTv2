@@ -12,4 +12,5 @@ export interface FilePublicationResponse {
     name: string;
     description: string;
     url_download: string;
+    created_at: string;
 }

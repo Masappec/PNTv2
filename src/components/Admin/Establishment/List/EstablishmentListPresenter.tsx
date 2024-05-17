@@ -5,7 +5,7 @@ import Modal from "../../../Common/Modal"
 import Table from "../../../Common/Table/index"
 import { FiEdit2 } from "react-icons/fi";
 import Badge from "../../../Common/Badge"
-import { Button, } from "flowbite-react"
+import { Button, Tooltip, } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
 import { RxCardStackPlus } from "react-icons/rx"
 import Select from "../../../Common/Select";
@@ -150,6 +150,7 @@ const EstablishmentListPresenter = (props: Props) => {
                             title: "Acciones",
                             render: (row: EstablishmentEntity) => (
                                 <div className="flex items-center">
+                                    <Tooltip content="Editar" placement="top">
                                     <button
                                         onClick={() => {
                                             props.onEdit(row)
@@ -157,6 +158,8 @@ const EstablishmentListPresenter = (props: Props) => {
                                         className=" hover:text-blue-700  font-bold py-2 px-4 text-lg">
                                         <FiEdit2 />
                                     </button>
+                                    </Tooltip>
+                                    <Tooltip content={row.is_active ? "Desactivar" : "Activar"} placement="top">
                                     <button
 
                                         //add alt
@@ -170,6 +173,7 @@ const EstablishmentListPresenter = (props: Props) => {
                                             row.is_active ? <RiDeleteBin6Line /> : <FaCheckCircle />
                                         }
                                     </button>
+                                    </Tooltip>
                                 </div>
                             )
                         }

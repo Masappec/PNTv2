@@ -19,7 +19,8 @@ class FilePublicationMapper {
             description: filePublication.description,
             name: filePublication.name,
             url_download: filePublication.url_download ? URL_API + TRANSPARENCY_PATH + filePublication.url_download : "",
-            id: filePublication.id
+            id: filePublication.id,
+            created_at: filePublication.created_at
         }
     }
 }
