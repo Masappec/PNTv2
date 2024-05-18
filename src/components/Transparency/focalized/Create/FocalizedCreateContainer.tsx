@@ -629,6 +629,7 @@ const FocalizedCreateContainer = (props: Props) => {
 
       DownloadFileFromUrl={() => { }}
       onChangePage={() => { }}
+      loadingFiles={[]}
     />
   )
 }

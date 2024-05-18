@@ -112,10 +112,11 @@ const DynamicTable = (props: Props) => {
 
             <Table>
                 <Table.Head>
+                    {
+                        !props.isSaved && <Table.HeadCell className="w-10">
 
-                    <Table.HeadCell className="w-10">
-
-                    </Table.HeadCell>
+                        </Table.HeadCell>
+                    }
 
                     {
                         data[0].map((column, index) => {
@@ -138,11 +139,14 @@ const DynamicTable = (props: Props) => {
                                 <Table.Row key={rowIndex}
                                     className={hovered?.row === rowIndex ? "bg-gray-200" : ""}>
 
-                                    <Table.Cell>
-                                        <Button className="w-5 h-5" color="failure" onClick={() => handleRemove(rowIndex, 0, false)} >
-                                            <FaTrash size={10} />
-                                        </Button>
-                                    </Table.Cell>
+                                    {
+                                        !props.isSaved && <Table.Cell>
+                                            <Button className="w-5 h-5" color="failure" onClick={() => handleRemove(rowIndex, 0, false)} >
+                                                <FaTrash size={10} />
+                                            </Button>
+                                        </Table.Cell>
+
+                                    }
 
 
 

@@ -5,7 +5,7 @@ import Modal from "../../../Common/Modal"
 import Alert from "../../../Common/Alert"
 
 import { CiCircleCheck, CiTrash } from "react-icons/ci";
-import { Button } from "flowbite-react"
+import { Button, Tooltip } from "flowbite-react"
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 //import Select from "../../../Common/Select";
 //import { BiExport } from "react-icons/bi";
@@ -183,27 +183,31 @@ export const UserListPresenter = (props: Props) => {
                         },
                         {
                             render: (row: UserEntity) => (
-                                <p>
-                                    <button
-                                        onClick={() => {
-                                            props.onEdit(row)
-                                        }}
-                                        className="py-2 px-2 text-lg hover:text-blue-500">
-                                        <FiEdit2 />
-                                    </button>
-                                    <button
+                                <p className="flex gap-2">
+                                    <Tooltip content="Editar ">
+                                        <button
+                                            onClick={() => {
+                                                props.onEdit(row)
+                                            }}
+                                            className="py-2 px-2 text-lg hover:text-blue-500">
+                                            <FiEdit2 />
+                                        </button>
+                                    </Tooltip>
+                                    <Tooltip content={row.is_active ? "Inactivar " : "Activar "} >
+                                        <button
 
-                                        //add alt
-                                        onClick={() => {
-                                            props.onDelete(row)
+                                            //add alt
+                                            onClick={() => {
+                                                props.onDelete(row)
 
-                                        }
-                                        }
-                                        className={"  font-bold py-2 px-2 text-lg" + (row.is_active ? "  hover:text-red-700" : "text-green-500 hover:text-green-700")}>
-                                        {
-                                            row.is_active ? <CiTrash /> : <CiCircleCheck size={20} />
-                                        }
-                                    </button>
+                                            }
+                                            }
+                                            className={"  font-bold py-2 px-2 text-lg" + (row.is_active ? "  hover:text-red-700" : "text-green-500 hover:text-green-700")}>
+                                            {
+                                                row.is_active ? <CiTrash /> : <CiCircleCheck size={20} />
+                                            }
+                                        </button>
+                                    </Tooltip>
                                 </p>
                             ),
                             title: "Acciones"

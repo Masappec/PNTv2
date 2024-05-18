@@ -11,7 +11,7 @@ interface Props {
 const Hero = (props: Props) => {
 
   return (
-    <section className="dark:bg-gray-900 mt-10 ">
+    <section className="dark:bg-gray-900 2xl:mt-10 xl:mt-5 sm:mt-20">
       <div className="xl:grid lg:grid 
       ml-3 xl:ml-10 py-6 mx-auto lg:gap-8 xl:gap-0 lg:py-16 grid-cols-2   xl:grid-cols-10 ">
         <div className="lg:col-span-2 justify-start  ">

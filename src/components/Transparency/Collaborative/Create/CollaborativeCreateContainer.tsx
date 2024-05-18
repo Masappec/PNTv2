@@ -630,6 +630,7 @@ const CollabCreateContainer = (props: Props) => {
       onCancel={handleCancel}
       DownloadFileFromUrl={() => { }}
       onChangePage={() => { }}
+      loadingFiles={[]}
     />
   )
 }

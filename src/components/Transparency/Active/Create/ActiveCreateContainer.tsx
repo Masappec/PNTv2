@@ -16,6 +16,7 @@ import NumeralDetail from "../../../../domain/entities/NumeralDetail";
 import Template from "../../../../domain/entities/Template";
 import { Row } from "../../../../utils/interface";
 import { Pagination } from "../../../../infrastructure/Api";
+import { sleep } from "../../../../utils/functions";
 
 export interface INeedProps {
   numeral: NumeralEntity,
@@ -52,7 +53,9 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
-
+  const [loadingFiles, setLoadingFiles] = useState<{
+    name: string,
+  }[]>([])
 
   const [establishment, setEstablishment] = useState<EstablishmentEntity>();
   const [filesList, setFilesList] = useState<Pagination<FilePublicationEntity>>({
@@ -144,6 +147,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
 
   const handleChageLink = async (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
+    setLoadingFiles([...loadingFiles, { name: templateFile.name }])
     let newTemplates = templates.find((template) => {
       return template.id === templateFile.id
     })
@@ -156,16 +160,11 @@ const ActiveCreateContainer = (props: IProps) => {
     })
 
     if (!templateDetail) return
+    const url = e.target.value
 
+    props.usecase.getFromUrl(url).then((file) => {
 
-    fetch(e.target.value).then((response) => {
-      if (!response.ok) {
-        throw new Error("No se ha podido descargar el archivo")
-      }
-      return response.blob()
-    }).then((file) => {
-
-      const file_ = new File([file], "data.csv", {
+      const file_ = new File([file], templateDetail.name + ".csv", {
         type: "text/csv;charset=utf-8;",
       });
 
@@ -173,7 +172,9 @@ const ActiveCreateContainer = (props: IProps) => {
         file_ as File,
         templateDetail
       ).then((res) => {
-
+        setLoadingFiles(loadingFiles.filter((loading) => {
+          return loading.name !== templateFile.name
+        }))
         setError("")
 
         newTemplates = {
@@ -214,91 +215,28 @@ const ActiveCreateContainer = (props: IProps) => {
 
       }).catch((e) => {
         setError(e.message)
+        setLoadingFiles(loadingFiles.filter((loading) => {
+          return loading.name !== templateFile.name
+        }))
         newTemplates = {
           ...newTemplates,
           isValid: false
         } as TemplateFileEntity
+        sleep(2000).then(() => {
+          setError("")
+        })
       })
     }).catch((error) => {
+      setLoadingFiles(loadingFiles.filter((loading) => {
+        return loading.name !== templateFile.name
+      }))
       setError(error.message)
+      sleep(2000).then(() => {
+        setError("")
+      })
     })
 
 
-    /*props.usecase.downloadFileFromUrl(e.target.value).then((file) => {
-
-      if (file instanceof Blob) {
-        const file_ = new File([file], "data.csv", {
-          type: "text/csv;charset=utf-8;",
-        });
-        props.templateUseCase.validateLocalFile(
-          file_ as File,
-          templateDetail
-        ).then((res) => {
-
-          setError("")
-          newTemplates = {
-            ...newTemplates,
-            isValid: res,
-            file: file_
-          } as TemplateFileEntity
-
-
-          //reemplazar el template
-          setTemplates(templates.map((template) => {
-            if (template.id === newTemplates?.id) {
-              return newTemplates
-            }
-            return template
-          }))
-
-
-
-          //reemplazar el filePublication
-          const name = newTemplates.file?.name || ""
-
-          let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
-          const index = filesPublication.indexOf(filePub as FilePublicationEntity)
-
-
-
-          if (!filePub) {
-            filePub = new FilePublicationEntity(0, name, newTemplates.name, newTemplates.file as File)
-            setFilesPublication([...filesPublication, filePub])
-          } else {
-            filePub.url_download = newTemplates.file as File
-            const newFiles = [
-              ...filesPublication as FilePublicationEntity[],
-            ]
-            newFiles[index] = filePub
-            setFilesPublication(newFiles)
-          }
-
-
-        }).catch((e) => {
-          newTemplates = {
-            ...newTemplates,
-            isValid: false
-          } as TemplateFileEntity
-
-
-          //reemplazar el template
-          setTemplates(templates.map((template) => {
-            if (template.id === newTemplates?.id) {
-              return newTemplates
-            }
-            return template
-          }))
-
-          setError(e.message)
-        })
-
-      } else if (typeof file === "string") {
-        setError("No se ha podido descargar el archivo")
-
-      }
-    }).catch((error) => {
-      setError(error.message)
-    })*/
 
 
   }
@@ -392,6 +330,9 @@ const ActiveCreateContainer = (props: IProps) => {
       }))
 
       setError(e.message)
+      sleep(2000).then(() => {
+        setError("")
+      })
     })
 
 
@@ -496,19 +437,19 @@ const ActiveCreateContainer = (props: IProps) => {
     const templateDetail = detail?.templates.find((_template) => {
       return _template.id === template.id
     })
-    if (!templateDetail){
+    if (!templateDetail) {
       return;
     }
 
-    
+
     let blob;
-    if(templateDetail.verticalTemplate){
+    if (templateDetail.verticalTemplate) {
       console.log(' es vertical')
 
-       blob = props.usecase.generateContentCsvVertical(data);
+      blob = props.usecase.generateContentCsvVertical(data);
       //descargar archivo
-    }else{
-       blob = props.usecase.generateContentCsv(data);
+    } else {
+      blob = props.usecase.generateContentCsv(data);
 
     }
 
@@ -565,7 +506,7 @@ const ActiveCreateContainer = (props: IProps) => {
       return;
     }
 
-  
+
 
     const templateDetail = detail?.templates.find((_template) => {
       return template.id === _template.id
@@ -574,40 +515,43 @@ const ActiveCreateContainer = (props: IProps) => {
     if (!templateDetail) return
 
     props.templateUseCase.validateLocalFile(file, templateDetail).then((res) => {
-    if(!res){
-      setError("El archivo no cumple con el formato")
-      return
-    }
+      if (!res) {
+        setError("El archivo no cumple con el formato")
+        return
+      }
       newTemplates.file = file
       newTemplates.isValid = true
-    setTemplates(templates.map((template) => {
-      if (template.id === newTemplates?.id) {
-        return newTemplates
+      setTemplates(templates.map((template) => {
+        if (template.id === newTemplates?.id) {
+          return newTemplates
+        }
+        return template
+      }))
+
+      let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
+      const index = filesPublication.indexOf(filePub as FilePublicationEntity)
+
+
+
+      if (!filePub) {
+        filePub = new FilePublicationEntity(0, newTemplates.name, newTemplates.name, newTemplates.file as File)
+        setFilesPublication([...filesPublication, filePub])
+      } else {
+        filePub.url_download = newTemplates.file as File
+        const newFiles = [
+          ...filesPublication as FilePublicationEntity[],
+        ]
+        newFiles[index] = filePub
+        setFilesPublication(newFiles)
       }
-      return template
-    }))
 
-    let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
-    const index = filesPublication.indexOf(filePub as FilePublicationEntity)
-
-
-
-    if (!filePub) {
-      filePub = new FilePublicationEntity(0, newTemplates.name, newTemplates.name, newTemplates.file as File)
-      setFilesPublication([...filesPublication, filePub])
-    } else {
-      filePub.url_download = newTemplates.file as File
-      const newFiles = [
-        ...filesPublication as FilePublicationEntity[],
-      ]
-      newFiles[index] = filePub
-      setFilesPublication(newFiles)
-    }
-
-    setSuccess("Se ha guardado correctamente el archivo")
-  }).catch((e) => {
-    setError(e.message)
-  })
+      setSuccess("Se ha guardado correctamente el archivo")
+    }).catch((e) => {
+      setError(e.message)
+      sleep(2000).then(() => {
+        setError("")
+      })
+    })
   }
 
 
@@ -652,7 +596,7 @@ const ActiveCreateContainer = (props: IProps) => {
     }
 
     const a = document.createElement('a')
-    a.download = name+".csv";
+    a.download = name + ".csv";
     a.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(content);
     a.click();
 
@@ -670,6 +614,9 @@ const ActiveCreateContainer = (props: IProps) => {
     })
     if (files) {
       setError("Ya existe un archivo de " + file.description)
+      sleep(2000).then(() => {
+        setError("")
+      })
       return
     }
     setError("")
@@ -742,6 +689,7 @@ const ActiveCreateContainer = (props: IProps) => {
       onCancel={handleCancel}
       onChangePage={onChangePage}
       DownloadFileFromUrl={Download}
+      loadingFiles={loadingFiles}
     />
   )
 }

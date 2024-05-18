@@ -37,7 +37,7 @@ const UserCreate = () => {
                     },
                     {
                         name: 'Nuevo',
-                        path: '/admin/create',
+                        path: '#',
                     }
                 ]}
             />

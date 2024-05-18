@@ -8,6 +8,8 @@ import UserEntity from "../../../../domain/entities/UserEntity"
 import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
 import Spinner from "../../../Common/Spinner"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
+import PasswordMeter, { IOncalculate } from "../../../Common/PasswordMeter"
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5"
 
 interface UserEditPresenterProps {
 
@@ -23,7 +25,12 @@ interface UserEditPresenterProps {
     roles_list: RoleEntity[]
     fields: FormFieldsEntity[];
     loading: boolean;
-    establishment:EstablishmentEntity|null;
+    establishment: EstablishmentEntity | null;
+    isDisabled: boolean;
+    showPassword: boolean;
+    handleShowPassword: () => void;
+    onChangePassword: (data: IOncalculate) => void;
+    loadingSubmit: boolean;
 }
 
 const UserEditPresenter = (props: UserEditPresenterProps) => {
@@ -56,26 +63,31 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                             </p>
                         </div>
                         <div className="flex items-center mt-4 gap-x-3">
+
                             <button
                                 type="button"
                                 onClick={props.onCancel}
+                                disabled={props.isDisabled}
                                 className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-red-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-red-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                                text-white transition-colors duration-200 bg-gray-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-200">
                                 <LuX className="w-5 h-5" />
                                 <span>
                                     Cancelar
                                 </span>
                             </button>
 
-                            <button
-                                type="submit"
-                                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-green-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                                <LuCheck className="w-5 h-5" />
-                                <span>
-                                    Guardar
-                                </span>
-                            </button>
+                            {
+                                props.loadingSubmit ? <Spinner /> :
+                                    <button
+                                        type="submit"
+                                        className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
+                                text-white transition-colors duration-200 bg-primary-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-600">
+                                        <LuCheck className="w-5 h-5" />
+                                        <span>
+                                            Guardar
+                                        </span>
+                                    </button>
+                            }
                         </div>
                     </div>
 
@@ -108,7 +120,7 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                 onChange={(e) => props.onChangeRole(e)}
                                 selected={{
                                     value: props.data && props.data.group && props.data.group[0]
-                                     ? props.data.group[0].id + "" : "",
+                                        ? props.data.group[0].id + "" : "",
                                 }}
                             />
                         }
@@ -116,7 +128,42 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
 
                             {
                                 props.fields.map((field) => {
-                                    return (
+                                    return (field.type_field === "password" ?
+                                        <div className="relative mt-2">
+
+                                            <Input
+                                                type={props.showPassword ? "text" : field.type_field}
+                                                placeholder={field.description}
+                                                className="w-60"
+                                                value={
+                                                    props.data[field.name as keyof UserEntity] as string || ""
+                                                }
+                                                onChange={(e) =>
+                                                    props.setData(field.name, e.target.value)
+                                                }
+                                                name={field.name}
+                                            />
+                                            <button
+                                                type="button"
+                                                className="absolute left-64 top-12  hover:cursor-pointer text-gray-600"
+                                                onClick={props.handleShowPassword}
+                                            >
+                                                {props.showPassword ? (
+                                                    <IoEyeOffOutline />
+                                                ) : (
+                                                    <IoEyeOutline />
+                                                )}
+                                            </button>
+                                            {
+                                                field.name === "password" && (
+
+                                                    <PasswordMeter
+                                                        onCalculate={props.onChangePassword}
+                                                        password={props.data[field.name as keyof UserEntity] as string || ""}
+                                                    />
+                                                )
+                                            }
+                                        </div> :
                                         field.type_field === 'select' ? <div className="flex  flex-col m-2 ">
 
                                             <Select
@@ -135,10 +182,10 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                                     }) || [])
                                                 }
                                                 selected={
-                                                    field.name=='establishment_id' ?
-                                                    props.establishment ?
-                                                    {
-                                                        value: props.establishment.id + "",
+                                                    field.name == 'establishment_id' ?
+                                                        props.establishment ?
+                                                            {
+                                                                value: props.establishment.id + "",
                                                             } : undefined : undefined
                                                 }
                                             />

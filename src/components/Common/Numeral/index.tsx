@@ -13,7 +13,7 @@ const Numeral = ({ title, text, onClick, isPublished }: Props) => {
     <div className="flex bg-stone-100  px-4  py-2.5 dark:bg-gray-800  h-auto rounded-lg"
 
       onClick={() => onClick()}>
-      <div className="flex flex-cols gap-5 items-center">
+      <div className="flex flex-row gap-5 items-center">
         <div>
           <div className={`${isPublished == true ? "bg-green-600" : "bg-amber-500 hover:bg-amber-300"} text-white font-bold py-2 px-2 rounded-lg mt-2 cursor-pointer`}>
 

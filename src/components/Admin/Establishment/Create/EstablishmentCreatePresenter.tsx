@@ -60,7 +60,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                 type="button"
                                 onClick={props.onCancel}
                                 className="flex items-center justify-center w-1/2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-gray-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-red-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                                text-white transition-colors duration-200 bg-gray-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-200 dark:hover:bg-blue-500 dark:bg-blue-600">
                                 <LuX className="w-5 h-5" />
                                 <span>
                                     Cancelar
@@ -70,7 +70,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                 props.loading ? <Spinner /> : <Button
                                     type="submit"
                                     className="flex items-center justify-center w-1/2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-primary-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                                text-white transition-colors duration-200 bg-primary-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                                     <LuCheck className="w-5 h-5" />
                                     <span>
                                         Crear

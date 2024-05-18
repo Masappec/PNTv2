@@ -121,13 +121,15 @@ function Table<T>({ ...props }: TableProps<T>) {
                     {
 
                         props.from ?
-                            <> <span className="font-semibold text-gray-900 dark:text-white">
+                            <> <span className="font-semibold text-gray-500 dark:text-white mr-2">
                                 {props.from} - {props.to}
                             </span>
-                                de
+                                <span className=" text-gray-500 dark:text-white mr-2">
+                                    de
+                                </span>
                             </> : <></>
                     }
-                    <span className="font-semibold text-gray-900 dark:text-white">{props.total}</span>
+                    <span className="font-semibold text-gray-500 dark:text-white">{props.total}</span>
                 </span>)}
 
                 <ul className="inline-flex items-stretch -space-x-px">

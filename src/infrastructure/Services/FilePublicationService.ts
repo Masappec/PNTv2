@@ -79,7 +79,7 @@ class FilePublicationService {
             const row = rowArray.map((item) => item.value).join(";");
             csvContent += row + "\r\n";
         })
-        
+
         return csvContent
     }
 
@@ -171,6 +171,11 @@ class FilePublicationService {
             results: response.results?.map((file) => FilePublicationMapper.fromApiToDomain(file)) || [],
 
         }
+    }
+    async getFromUri(uri: string) {
+        const response = await this.api.getFromUri(uri);
+
+        return response;
     }
 }
 

@@ -1,7 +1,7 @@
-import { Label, TextInput } from 'flowbite-react';
-import { FC, InputHTMLAttributes } from 'react';
+import { Label, TextInput, TextInputProps } from 'flowbite-react';
+import { FC } from 'react';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends TextInputProps {
   width?: string;
 }
 

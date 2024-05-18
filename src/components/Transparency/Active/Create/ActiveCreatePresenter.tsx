@@ -46,6 +46,7 @@ interface Props {
   onCancel: () => void;
   onChangePage: (page: number) => void;
   DownloadFileFromUrl: (url: string) => void;
+  loadingFiles: { name: string }[]
 }
 
 
@@ -215,6 +216,11 @@ const ActiveCreatePresenter = (props: Props) => {
                             props.filesPublication.find((e) => e.description.trim() === template.name.trim()) ? true : false
                           }
                         />
+                        {
+                          props.loadingFiles.find((e) => e.name === template.name) && (
+                            <Spinner />
+                          )
+                        }
                       </div>
                     );
                   })

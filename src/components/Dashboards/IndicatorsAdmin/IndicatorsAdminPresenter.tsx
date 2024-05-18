@@ -147,7 +147,7 @@ const IndicatorsAdminPresenter = () => {
         </div>
       </div>
       <div className="mt-16">
-        <div className="flex space-x-2 w-full justify-center">
+        <div className="2xl:flex-row flex  flex-col space-x-2 w-full justify-center">
           <div className="container border w-[290px] h-[222px] px-5 py-6 rounded-3xl ">
             <h2 className="text-start font-semibold text-sm">Usuarios</h2>
             <h2 className="text-2xl mt-2 font-extrabold">55222</h2>

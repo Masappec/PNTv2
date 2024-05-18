@@ -669,6 +669,7 @@ const FocalizedEditContainer = (props: Props) => {
       onCancel={handleCancel}
       DownloadFileFromUrl={() => { }}
       onChangePage={() => { }}
+      loadingFiles={[]}
     />
   )
 }

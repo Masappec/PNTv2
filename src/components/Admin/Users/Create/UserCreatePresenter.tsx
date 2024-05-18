@@ -7,6 +7,8 @@ import RoleEntity from "../../../../domain/entities/RoleEntity"
 import UserEntity from "../../../../domain/entities/UserEntity"
 import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
 import Spinner from "../../../Common/Spinner"
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5"
+import PasswordMeter, { IOncalculate } from "../../../Common/PasswordMeter"
 
 interface UserCreatePresenterProps {
 
@@ -22,6 +24,11 @@ interface UserCreatePresenterProps {
     roles_list: RoleEntity[]
     fields: FormFieldsEntity[];
     loading: boolean;
+    isDisabled: boolean;
+    showPassword: boolean;
+    handleShowPassword: () => void;
+    onChangePassword: (data: IOncalculate) => void;
+    loadingSubmit: boolean;
 
 }
 
@@ -55,23 +62,28 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                             <button
                                 type="button"
                                 onClick={props.onCancel}
+                                disabled={props.isDisabled}
                                 className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-red-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-red-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                                text-white transition-colors duration-200 bg-gray-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-200">
                                 <LuX className="w-5 h-5" />
                                 <span>
                                     Cancelar
                                 </span>
                             </button>
 
-                            <button
-                                type="submit"
-                                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-green-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                                <LuCheck className="w-5 h-5" />
-                                <span>
-                                    Crear
-                                </span>
-                            </button>
+                            {
+                                props.loadingSubmit ? <Spinner /> :
+
+                                    <button
+                                        type="submit"
+                                        className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
+                                text-white transition-colors duration-200  bg-primary-400  rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-600">
+                                        <LuCheck className="w-5 h-5" />
+                                        <span>
+                                            Crear
+                                        </span>
+                                    </button>
+                            }
                         </div>
                     </div>
 
@@ -104,38 +116,76 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                 onChange={(e) => props.onChangeRole(e)}
                             />
                         }
-                        <div className="grid xl:grid-cols-3 gap-4">
+                        <div className="grid xl:grid-cols-3 grid-cols-1 md:grid-cols-2 gap-4">
 
                             {
                                 props.fields.map((field) => {
                                     return (
-                                        field.type_field === 'select' ? <div className="flex  flex-col m-2 ">
+                                        field.type_field === "password" ?
+                                            <div className="relative mt-2">
 
-                                            <Select
-                                                placeholder={field.description}
-                                                value={props.data[field.name as keyof UserEntity] as string}
-                                                onChange={(e) => props.setData(field.name, e.target.value)}
-                                                options={
-                                                    [{
-                                                        value: "",
-                                                        label: "Seleccione una opción"
-                                                    }].concat(field.options?.map((option) => {
-                                                        return {
-                                                            value: option.id + "",
-                                                            label: option.name
-                                                        }
-                                                    }) || [])
-                                                }
-                                            />
-                                        </div> :
-                                            <div className="flex  flex-col m-2">
-                                                <Input type={field.type_field}
-                                                    placeholder={field.description} width="w-60"
-                                                    value={props.data[field.name as keyof UserEntity] as string}
-                                                    onChange={(e) => props.setData(field.name, e.target.value)}
+                                                <Input
+                                                    type={props.showPassword ? "text" : field.type_field}
+                                                    placeholder={field.description}
+                                                    className="w-60"
+                                                    value={
+                                                        props.data[field.name as keyof UserEntity] as string || ""
+                                                    }
+                                                    onChange={(e) =>
+                                                        props.setData(field.name, e.target.value)
+                                                    }
                                                     name={field.name}
                                                 />
+                                                <button
+                                                    type="button"
+                                                    className="absolute left-64 top-12  hover:cursor-pointer text-gray-600"
+                                                    onClick={props.handleShowPassword}
+                                                >
+                                                    {props.showPassword ? (
+                                                        <IoEyeOffOutline />
+                                                    ) : (
+                                                        <IoEyeOutline />
+                                                    )}
+                                                </button>
+                                                {
+                                                    field.name === "password" && (
+
+                                                        <PasswordMeter
+                                                            onCalculate={props.onChangePassword}
+                                                            password={props.data[field.name as keyof UserEntity] as string || ""}
+                                                        />
+                                                    )
+                                                }
                                             </div>
+
+                                            :
+                                            field.type_field === 'select' ? <div className="flex  flex-col m-2 ">
+
+                                                <Select
+                                                    placeholder={field.description}
+                                                    value={props.data[field.name as keyof UserEntity] as string}
+                                                    onChange={(e) => props.setData(field.name, e.target.value)}
+                                                    options={
+                                                        [{
+                                                            value: "",
+                                                            label: "Seleccione una opción"
+                                                        }].concat(field.options?.map((option) => {
+                                                            return {
+                                                                value: option.id + "",
+                                                                label: option.name
+                                                            }
+                                                        }) || [])
+                                                    }
+                                                />
+                                            </div> :
+                                                <div className="flex  flex-col m-2">
+                                                    <Input type={field.type_field}
+                                                        placeholder={field.description} width="w-60"
+                                                        value={props.data[field.name as keyof UserEntity] as string}
+                                                        onChange={(e) => props.setData(field.name, e.target.value)}
+                                                        name={field.name}
+                                                    />
+                                                </div>
                                     )
                                 })
                             }

@@ -112,4 +112,25 @@ export class FilePublicationApi {
             }
         }
     }
+
+    //publications/file/from-uri/
+    async getFromUri(uri: string) {
+        try {
+            const response = await this._api.get<Blob>(`${TRANSPARENCY_PATH}/publications/file/from-uri/?uri=${uri}`,
+                {
+                    responseType: 'blob'
+                });
+
+            return response.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                const _error = error.response?.data?.message;
+
+                throw new Error(_error);
+            } else {
+                throw new Error('Error de conexión');
+            }
+        }
+    }
+
 }

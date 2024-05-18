@@ -670,6 +670,7 @@ const CollaborativeEditContainer = (props: Props) => {
       onCancel={handleCancel}
       DownloadFileFromUrl={() => { }}
       onChangePage={() => { }}
+      loadingFiles={[]}
     />
   )
 

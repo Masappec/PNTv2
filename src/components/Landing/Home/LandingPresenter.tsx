@@ -41,10 +41,10 @@ const LandingPresenter = (props: Props) => {
     FiLayers,
     () => (
       <svg
-        width="100"
-        height="100"
-        className="h-full ml-4 "
+        width="70"
+        height="70"
         viewBox="0 0 100 100"
+        className="ml-3 2xl:w-1/2"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -70,7 +70,7 @@ const LandingPresenter = (props: Props) => {
           onSelect={props.onSelect}
         />
 
-        <div className="grid mt-8 grid-cols-1 lg:grid-cols-3 pr-5 xl:pr-10 lg:pr-10 w-full ">
+        <div className="grid 2xl:mt-8 xl:mt-0 mt-20 grid-cols-1 lg:grid-cols-3 pr-5 xl:pr-10 lg:pr-10 w-full ">
           {props.faq.map((item, index) => {
             return (
               <CardQuestion

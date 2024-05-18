@@ -8,6 +8,7 @@ import UserEntity from "../../../../domain/entities/UserEntity"
 import ConfigurationUseCase from "../../../../domain/useCases/Configuration/ConfigurationUseCase"
 import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
 import { sleep } from "../../../../utils/functions"
+import { IOncalculate } from "../../../Common/PasswordMeter"
 
 
 const UserCreateContainer = ({
@@ -29,7 +30,9 @@ const UserCreateContainer = ({
     const [config, setConfig] = useState<FormFieldsEntity[]>([])
 
     const [loading, setLoading] = useState<boolean>(false)
-
+    const [showPassword, setShowPassword] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(false)
+    const [loadingSubmit, setLoadingSubmit] = useState(false)
     const navigate = useNavigate()
 
 
@@ -54,7 +57,36 @@ const UserCreateContainer = ({
 
         data.group = [{ id: roleSelected?.id || 0, name: roleSelected?.name || "" }]
         e.preventDefault()
+        setLoadingSubmit(true)
+
+        if (data.first_name === undefined || data.first_name === "") {
+            setError("El nombre es obligatorio")
+            setLoadingSubmit(false)
+            return
+        }
+        if (data.last_name === undefined || data.last_name === "") {
+            setError("El apellido es obligatorio")
+            setLoadingSubmit(false)
+            return
+        }
+
+        if (data.email === undefined || data.email === "") {
+            setError("El correo es obligatorio")
+            setLoadingSubmit(false)
+            return
+        }
+        if (roleSelected === null) {
+            setError("El rol es obligatorio")
+            setLoadingSubmit(false)
+            return
+        }
+        if (data.password === undefined || data.password === "") {
+            setError("La contraseña es obligatoria")
+            setLoadingSubmit(false)
+            return
+        }
         usecase.create(data).then(() => {
+            setLoadingSubmit(false)
             setSuccess("Usuario creado con éxito")
             setError("")
             const target = e.target as HTMLFormElement
@@ -66,6 +98,7 @@ const UserCreateContainer = ({
 
 
         }).catch((error) => {
+            setLoadingSubmit(false)
             setError(error.message)
         })
     }
@@ -99,7 +132,19 @@ const UserCreateContainer = ({
     const onCancel = () => {
         navigate("/admin/users")
     }
+    const onChangePassword = (data: IOncalculate) => {
 
+        if (data.percentage === 100) {
+            setIsDisabled(false)
+        } else {
+            setIsDisabled(true)
+        }
+    };
+
+
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword);
+    }
     return (
         <UserCreatePresenter
             data={data as UserEntity}
@@ -114,6 +159,11 @@ const UserCreateContainer = ({
             fields={config}
             onChangeRole={handleChangeRole}
             loading={loading}
+            handleShowPassword={handleShowPassword}
+            isDisabled={isDisabled}
+            onChangePassword={onChangePassword}
+            showPassword={showPassword}
+            loadingSubmit={loadingSubmit}
         />
     )
 }

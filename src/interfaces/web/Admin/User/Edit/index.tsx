@@ -39,8 +39,8 @@ const UserEdit = () => {
                         path: '/admin/users',
                     },
                     {
-                        name: 'Nuevo',
-                        path: '/admin/create',
+                        name: 'Editar',
+                        path: '#',
                     }
                 ]}
             />

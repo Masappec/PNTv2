@@ -16,6 +16,7 @@ import Template from "../../../../domain/entities/Template";
 import { Row } from "../../../../utils/interface";
 import { Pagination } from "../../../../infrastructure/Api";
 import ActiveCreatePresenter from "../Create/ActiveCreatePresenter";
+import { sleep } from "../../../../utils/functions";
 
 export interface INeedProps {
     numeral: NumeralEntity,
@@ -62,7 +63,9 @@ const ActiveEditContainer = (props: Props) => {
         from: 0,
         total_pages: 0
     })
-
+    const [loadingFiles, setLoadingFiles] = useState<{
+        name: string,
+    }[]>([])
     useEffect(() => {
         if (state) {
             setNumeral(state.numeral)
@@ -141,6 +144,8 @@ const ActiveEditContainer = (props: Props) => {
 
 
     const handleChageLink = async (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
+        setLoadingFiles([...loadingFiles, { name: templateFile.name }])
+
         let newTemplates = templates.find((template) => {
             return template.id === templateFile.id
         })
@@ -154,15 +159,10 @@ const ActiveEditContainer = (props: Props) => {
 
         if (!templateDetail) return
 
+        const url = e.target.value
+        props.usecase.getFromUrl(url).then((file) => {
 
-        fetch(e.target.value).then((response) => {
-            if (!response.ok) {
-                throw new Error("No se ha podido descargar el archivo")
-            }
-            return response.blob()
-        }).then((file) => {
-
-            const file_ = new File([file], "data.csv", {
+            const file_ = new File([file], templateDetail.name + ".csv", {
                 type: "text/csv;charset=utf-8;",
             });
 
@@ -170,6 +170,9 @@ const ActiveEditContainer = (props: Props) => {
                 file_ as File,
                 templateDetail
             ).then((res) => {
+                setLoadingFiles(loadingFiles.filter((file) => {
+                    return file.name !== newTemplates?.name
+                }))
 
                 setError("")
 
@@ -210,14 +213,26 @@ const ActiveEditContainer = (props: Props) => {
 
 
             }).catch((e) => {
+                setLoadingFiles(loadingFiles.filter((file) => {
+                    return file.name !== newTemplates?.name
+                }))
                 setError(e.message)
                 newTemplates = {
                     ...newTemplates,
                     isValid: false
                 } as TemplateFileEntity
+                sleep(2000).then(() => {
+                    setError("")
+                })
             })
         }).catch((error) => {
+            setLoadingFiles(loadingFiles.filter((file) => {
+                return file.name !== newTemplates?.name
+            }))
             setError(error.message)
+            sleep(2000).then(() => {
+                setError("")
+            })
         })
 
 
@@ -389,6 +404,9 @@ const ActiveEditContainer = (props: Props) => {
             }))
 
             setError(e.message)
+            sleep(2000).then(() => {
+                setError("")
+            })
         })
 
 
@@ -439,10 +457,16 @@ const ActiveEditContainer = (props: Props) => {
                 }).catch((e) => {
                     setLoading(false)
                     setError(e.message)
+                    sleep(2000).then(() => {
+                        setError("")
+                    })
                 })
             }).catch((e) => {
                 setLoading(false)
                 setError(e.message)
+                sleep(2000).then(() => {
+                    setError("")
+                })
             })
             return;
         }
@@ -611,6 +635,9 @@ const ActiveEditContainer = (props: Props) => {
             setSuccess("Se ha guardado correctamente el archivo")
         }).catch((e) => {
             setError(e.message)
+            sleep(2000).then(() => {
+                setError("")
+            })
         })
     }
 
@@ -676,6 +703,9 @@ const ActiveEditContainer = (props: Props) => {
         })
         if (files) {
             setError("Ya existe un archivo de " + file.description)
+            sleep(2000).then(() => {
+                setError("")
+            })
             return
         }
         setError("")
@@ -750,6 +780,7 @@ const ActiveEditContainer = (props: Props) => {
             onCancel={handleCancel}
             onChangePage={onChangePage}
             DownloadFileFromUrl={Download}
+            loadingFiles={loadingFiles}
 
         />
     )
