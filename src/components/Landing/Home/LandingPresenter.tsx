@@ -70,7 +70,7 @@ const LandingPresenter = (props: Props) => {
           onSelect={props.onSelect}
         />
 
-        <div className="grid 2xl:mt-8 xl:mt-0 mt-20 grid-cols-1 lg:grid-cols-3 pr-5 xl:pr-10 lg:pr-10 w-full ">
+        <div className="grid 2xl:mt-4 xl:mt-0 mt-20 grid-cols-1 lg:grid-cols-3 pr-5 xl:pr-10 lg:pr-10 w-full ">
           {props.faq.map((item, index) => {
             return (
               <CardQuestion

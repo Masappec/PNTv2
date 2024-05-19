@@ -22,7 +22,7 @@ const CardQuestion = (props: Props) => {
 
     return (
 
-        <div className={`flex 2xl:h-[450px] h-[400px] bg-[#F7941D0D]   m-b-8  lg:w-full`} >
+        <div className={`flex 2xl:h-[400px] md:h-[400px] h-[450px] bg-[#F7941D0D]   m-b-8  lg:w-full`} >
             <div className={`border bg-white dark:border-gray-700 dark:bg-gray-800 flex-col m-0 p-0 flex rounded-none shadow-none border-gray-700 border-l-[1px] border-t-[1px] border-r-[1px] justify-content-start border-t-gray-400 lg:pt-6 w-full h-auto hover:text-black`}
                 style={{
                     backgroundColor: hover ? props.contrast : props.bgcolor,
@@ -35,15 +35,16 @@ const CardQuestion = (props: Props) => {
                 onMouseLeave={() => setHover(false)}
 
 
-            ><div className="flex h-full flex-col gap-4 p-6">
-                    <div className="grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-2 mt-0 xl:mt-0 2xl:mt-5 mb">
+            ><div className="flex h-full flex-col gap-4 px-6 ">
+                    <div className="grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1
+                     gap-2 mt-5 xl:mt-0 md:mt-10 mb">
 
                         <Icon size={65} className={` dark:text-primary-400 h-full ml-4 
-                        2xl:w-1/2 md:w-1/6 xl:w-1/3
+                        2xl:w-1/2 md:w-24 xl:w-1/3
                         `}
                             style={{ color: "#FFF9FC" }}></Icon>
                         <h5 className="text-2xl   
-                        lg:text-3xl 2xl:text-4xl  sm:w-full font-semibold 
+                        lg:text-3xl 2xl:text-3xl  sm:w-full font-semibold 
                         tracking-tight text-slate-50 dark:text-white 2xl:ml-0 xl:-ml-20 
                         2xl:col-span-2 2xl:w-full md:text-3xl xl:w-auto
                         ">
@@ -60,7 +61,7 @@ const CardQuestion = (props: Props) => {
                                 {props.content}
                             </p>
                             <div className="lg:flex 
-                            items-end justify-between mt-20 2xl:mt-28 md:mt-25 xl:mt-20">
+                            items-end justify-between  2xl:mt-28 md:mt-10 xl:mt-20 mt-28">
                                 <IoArrowForwardOutline size={53} className="text-white dark:text-white" />
 
                             </div>

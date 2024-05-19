@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { IoAddCircle } from "react-icons/io5";
 import { Row } from "../../../utils/interface";
-import { Button, Pagination, Table } from "flowbite-react";
+import { Button, Pagination, Table, TextInput } from "flowbite-react";
 import { FaTrash } from "react-icons/fa";
 
 
@@ -82,6 +82,7 @@ const DynamicTable = (props: Props) => {
         const copy_data = [...data]
         copy_data[row][column].value = value
         setData(copy_data)
+        setDatarows(copy_data)
     }
 
     const handleRemove = (row: number, column: number, is_header: boolean) => {
@@ -97,11 +98,13 @@ const DynamicTable = (props: Props) => {
 
             copy_data[row].splice(column, 1)
             setData(copy_data)
+            setDatarows(copy_data)
 
         } else {
             let copy_data = [...data]
             copy_data = copy_data.filter((_row, index) => index !== row + 1)
             setData(copy_data)
+            setDatarows(copy_data)
         }
     }
 
@@ -154,12 +157,16 @@ const DynamicTable = (props: Props) => {
                                         return (
                                             <Table.Cell
                                                 key={columnIndex}
-                                                onMouseEnter={() => handleMouseEnter(rowIndex, columnIndex)}
+                                                onMouseEnter={() => handleMouseEnter(rowIndex + 1, columnIndex)}
 
-                                                contentEditable={!props.isSaved}
-                                                onChange={(e) => handleChanged(rowIndex, columnIndex, e.currentTarget.nodeValue || "")}
+
                                             >
-                                                {column.value}
+                                                <TextInput
+                                                    value={column.value}
+                                                    onChange={(e) => handleChanged(rowIndex + 1, columnIndex, e.currentTarget.value)}
+                                                    className="w-full"
+                                                    disabled={props.isSaved}
+                                                />
 
                                             </Table.Cell>
                                         );

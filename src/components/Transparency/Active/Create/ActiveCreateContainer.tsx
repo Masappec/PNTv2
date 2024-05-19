@@ -431,6 +431,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const handleSaveDataTable = (data: Row[][], template: TemplateFileEntity) => {
 
+    console.log(data, "Datos")
     if (data.length === 0) {
       return;
     }
