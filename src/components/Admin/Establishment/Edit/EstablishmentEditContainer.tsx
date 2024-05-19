@@ -108,7 +108,7 @@ const EstablishmentEditContainer = ({
             return
         }
         usecase.update(data, id || "").then(() => {
-            setSuccess("Establecimiento actualizado correctamente")
+            setSuccess("Institución actualizada correctamente")
             setLoading(false)
         }).catch((err) => {
             setModified(false)

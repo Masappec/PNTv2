@@ -171,7 +171,7 @@ const ActiveCreatePresenter = (props: Props) => {
                           handleChageLogo={(e) => props.onChageFile(e, template)}
                           id={template.id.toString()}
                           multiple={false}
-                          type="image"
+                          type="csv"
                           label={template.name}
                           name="logo"
                           className={template.file != null ? (template.isValid ? "bg-green-200" : "bg-red-200") : ""}

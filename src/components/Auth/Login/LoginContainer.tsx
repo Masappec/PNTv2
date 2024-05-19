@@ -12,7 +12,7 @@ const LoginContainer = ({ useCase }: {
   const [error, setError] = useState<string | null>(null)
   const [isloading, setIsLoading] = useState<boolean>(false)
   const [remenber, setRemenber] = useState<boolean>(false)
-
+  const [showPassword, setShowPassword] = useState<boolean>(false)
   const history = useNavigate()
 
   useEffect(() => {
@@ -36,6 +36,9 @@ const LoginContainer = ({ useCase }: {
 
 
   }
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
   return (
     <LoginPresenter
 
@@ -49,6 +52,8 @@ const LoginContainer = ({ useCase }: {
       isloading={isloading}
       remenber={remenber}
       setRemenber={setRemenber}
+      handleShowPassword={handleShowPassword}
+      showPassword={showPassword}
 
     />
   )

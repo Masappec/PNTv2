@@ -7,7 +7,7 @@ interface DropzoneProps {
     handleChageLogo: (e: ChangeEvent<HTMLInputElement>) => void
     accept: string;
     multiple: boolean;
-    type: "image" | "pdf" | "excel" | "word" | "powerpoint" | "audio" | "video" | "text" | "archive" | "code" | "other";
+    type: "image" | "pdf" | "excel" | "word" | "powerpoint" | "audio" | "video" | "text" | "archive" | "code" | "other" | "csv" | "sheet";
     id: string;
     name: string;
     label?: string;
@@ -24,20 +24,27 @@ const Dropzone = (props: DropzoneProps) => {
 
     useEffect(() => {
         setUrl(props.url ? props.url : "")
-    }, [props.url])
+        setType(props.type)
+    }, [props.url, props.type])
 
     const handleChageLogo = (e: ChangeEvent<HTMLInputElement>) => {
+
         const file = e.target.files;
+        console.log("file", file)
         if (!file) return
         const image = file[0]
-        setFileSelected(image)
+        if (!image) return
         setType(image.type)
+        if (image.type.match(/image/)) {
+            const reader = new FileReader();
+            reader.readAsDataURL(image);
+            reader.onload = function () {
+                setUrl(reader.result as string)
 
-        const reader = new FileReader();
-        reader.readAsDataURL(image);
-        reader.onload = function () {
-            setUrl(reader.result as string)
-        };
+            };
+        }
+        setFileSelected(image)
+
         props.handleChageLogo(e)
 
     }
@@ -52,7 +59,6 @@ const Dropzone = (props: DropzoneProps) => {
     const getComponentPreview = () => {
 
 
-        console.log(type)
 
         if (type.match(/image/)) {
             return <img src={url} alt="" className="w-full h-full object-cover" />
@@ -85,6 +91,8 @@ const Dropzone = (props: DropzoneProps) => {
         }
 
 
+
+
     }
 
     return (
@@ -95,11 +103,13 @@ const Dropzone = (props: DropzoneProps) => {
             <div className={`border-dashed border-slate-300 border-2 h-40 rounded flex justify-center items-center ${props.className}`} onClick={click}>
 
                 {!props.disabled ?
-                    url ?
+                    url && url != "" ?
                         <div className="w-full h-full justify-center items-center flex">
                             {getComponentPreview()}
                             <p>
-                                {fileSelected?.name}
+                                {
+                                    type.startsWith('image') ? '' :
+                                        fileSelected?.name + type}
                             </p>
                         </div>
                         : <>
@@ -124,9 +134,11 @@ const Dropzone = (props: DropzoneProps) => {
                 }
 
 
+
                 <input type="file" className="hidden" onChange={handleChageLogo} accept={props.accept} multiple={props.multiple}
                     id={props.id} name={props.name}
                 />
+
             </div>
         </>
 

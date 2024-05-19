@@ -89,7 +89,16 @@ const UserEditContainer = ({
         data.group = [{ id: roleSelected?.id || 0, name: roleSelected?.name || "" }]
         e.preventDefault()
         setLoadingSubmit(true)
-
+        if (data.group === undefined || data.group.length === 0) {
+            setError("El rol es obligatorio")
+            setLoadingSubmit(false)
+            return
+        }
+        if (data.group[0].id === 0) {
+            setError("El rol es obligatorio")
+            setLoadingSubmit(false)
+            return
+        }
         if (data.first_name === undefined || data.first_name === "") {
             setError("El nombre es obligatorio")
             setLoadingSubmit(false)

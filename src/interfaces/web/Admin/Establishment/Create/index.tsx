@@ -29,7 +29,7 @@ const EstablishmentCreate = () => {
                     },
                     {
                         name: 'Crear',
-                        path: '/admin/entities/create',
+                        path: '#',
                     }
                 ]}
             />

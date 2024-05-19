@@ -6,6 +6,7 @@ import Alert from "../../Common/Alert";
 import Spinner from "../../Common/Spinner";
 import { Button } from "flowbite-react";
 import logo from "../../../assets/Home/logo-dpe 2.png";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 
 interface LoginPresenterProps {
@@ -19,6 +20,9 @@ interface LoginPresenterProps {
   setError: (e: string) => void;
   setRemenber: (value: boolean) => void;
   isloading?: boolean;
+  showPassword: boolean;
+  handleShowPassword: () => void;
+
 }
 
 const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
@@ -86,14 +90,35 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
                   onChange={(e) => props.setEmail(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col m-2 items-center  mt-10">
-                <Input
-                  type="password"
-                  placeholder="Contraseña"
-                  className="w-80"
-                  value={props.password}
-                  onChange={(e) => props.setPassword(e.target.value)}
-                />
+              <div className="flex flex-col m-2 items-center ">
+
+                <div className="relative m-7">
+
+                  <Input
+                    type={props.showPassword ? "text" : 'password'}
+                    placeholder='Contraseña'
+                    className="w-80"
+                    value={
+                      props.password
+                    }
+                    onChange={(e) =>
+                      props.setPassword(e.target.value)
+                    }
+
+                  />
+                  <button
+                    type="button"
+                    className="absolute end-2 top-12  hover:cursor-pointer text-gray-600"
+                    onClick={props.handleShowPassword}
+                  >
+                    {props.showPassword ? (
+                      <IoEyeOffOutline />
+                    ) : (
+                      <IoEyeOutline />
+                    )}
+                  </button>
+
+                </div>
               </div>
               <div className="flex flex-col-2  xl:mt-6   mt-5">
 

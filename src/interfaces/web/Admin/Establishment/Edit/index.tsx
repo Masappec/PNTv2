@@ -24,8 +24,8 @@ const EstablishmentEdit = () => {
                         path: '/admin/entities',
                     },
                     {
-                        name: 'Crear',
-                        path: '/admin/entities/create',
+                        name: 'Editar',
+                        path: '#',
                     }
                 ]}
             />

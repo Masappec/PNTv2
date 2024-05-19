@@ -196,6 +196,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
+
                                 <Dropzone
                                     handleChageLogo={props.onChageLogo}
                                     id="logo"
