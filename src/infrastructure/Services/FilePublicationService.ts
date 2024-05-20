@@ -163,8 +163,8 @@ class FilePublicationService {
     }
 
 
-    async getFilesPublications(type: "TA" | "TC" | "TF", page?: number, limit?: number, search?: string) {
-        const response = await this.api.getFilesPublications(type, page, limit, search);
+    async getFilesPublications(type: "TA" | "TC" | "TF", numeral_id: number, page?: number, limit?: number, search?: string) {
+        const response = await this.api.getFilesPublications(type, numeral_id, page, limit, search);
 
         return {
             ...response,

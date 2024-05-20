@@ -15,6 +15,7 @@ import ActiveCreatePresenter from "../../Active/Create/ActiveCreatePresenter";
 import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
 import Template from "../../../../domain/entities/Template";
 import TemplateFileUseCase from "../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
+import { sleep } from "../../../../utils/functions";
 
 
 interface Props {
@@ -60,7 +61,7 @@ const FocalizedCreateContainer = (props: Props) => {
   const [templateTable, setTemplateTable] = useState<Array<{ id: number, data: Row[][] }>>([]);
   const [filesPublication, setFilesPublication] = useState<FilePublicationEntity[]>([]);
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
-
+  const [loadingFiles, setLoadingFiles] = useState<{ name: string }[]>([])
   const [filesList, setFilesList] = useState<Pagination<FilePublicationEntity>>({
     current: 0,
     limit: 0,
@@ -101,12 +102,12 @@ const FocalizedCreateContainer = (props: Props) => {
 
 
   useEffect(() => {
-    props.fileUseCase.getFilesPublications("TF").then((response) => {
+    props.fileUseCase.getFilesPublications("TF", numeral.id).then((response) => {
       setFilesList(response)
     }).catch((error) => {
       setError(error.message)
     })
-  }, [])
+  }, [numeral])
 
   useEffect(() => {
     console.log(templates, filesPublication)
@@ -445,6 +446,8 @@ const FocalizedCreateContainer = (props: Props) => {
   }
 
   const handleChageLink = async (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
+    setLoadingFiles([...loadingFiles, { name: templateFile.name }])
+
     let newTemplates = templates.find((template) => {
       return template.id === templateFile.id
     })
@@ -458,80 +461,80 @@ const FocalizedCreateContainer = (props: Props) => {
 
     if (!templateDetail) return
 
-    props.fileUseCase.downloadFileFromUrl(e.target.value).then((file) => {
+    props.fileUseCase.getFromUrl(e.target.value).then((file) => {
 
-      if (file instanceof Blob) {
-        const file_ = new File([file], "data.csv", {
-          type: "text/csv;charset=utf-8;",
-        });
-        props.templateUseCase.validateLocalFile(
-          file_ as File,
-          templateDetail
-        ).then((res) => {
+      const file_ = new File([file], templateDetail.name + ".csv", {
+        type: "text/csv;charset=utf-8;",
+      });
 
-          setError("")
-          newTemplates = {
-            ...newTemplates,
-            isValid: res,
-            file: file_
-          } as TemplateFileEntity
+      props.templateUseCase.validateLocalFile(
+        file_ as File,
+        templateDetail
+      ).then((res) => {
+        setLoadingFiles(loadingFiles.filter((loading) => {
+          return loading.name !== templateFile.name
+        }))
+        setError("")
 
-
-          //reemplazar el template
-          setTemplates(templates.map((template) => {
-            if (template.id === newTemplates?.id) {
-              return newTemplates
-            }
-            return template
-          }))
+        newTemplates = {
+          ...newTemplates,
+          isValid: res,
+          file: file_
+        } as TemplateFileEntity
 
 
-
-          //reemplazar el filePublication
-          const name = newTemplates.file?.name || ""
-
-          let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
-          const index = filesPublication.indexOf(filePub as FilePublicationEntity)
-
-
-
-          if (!filePub) {
-            filePub = new FilePublicationEntity(0, name, newTemplates.name, newTemplates.file as File)
-            setFilesPublication([...filesPublication, filePub])
-          } else {
-            filePub.url_download = newTemplates.file as File
-            const newFiles = [
-              ...filesPublication as FilePublicationEntity[],
-            ]
-            newFiles[index] = filePub
-            setFilesPublication(newFiles)
+        //reemplazar el template
+        setTemplates(templates.map((template) => {
+          if (template.id === newTemplates?.id) {
+            return newTemplates
           }
+          return template
+        }))
+
+        const name = newTemplates.file?.name || ""
+
+        let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
+        const index = filesPublication.indexOf(filePub as FilePublicationEntity)
 
 
-        }).catch((e) => {
-          newTemplates = {
-            ...newTemplates,
-            isValid: false
-          } as TemplateFileEntity
+
+        if (!filePub) {
+          filePub = new FilePublicationEntity(0, name, newTemplates.name, newTemplates.file as File)
+          setFilesPublication([...filesPublication, filePub])
+        } else {
+          filePub.url_download = newTemplates.file as File
+          const newFiles = [
+            ...filesPublication as FilePublicationEntity[],
+          ]
+          newFiles[index] = filePub
+          setFilesPublication(newFiles)
+        }
 
 
-          //reemplazar el template
-          setTemplates(templates.map((template) => {
-            if (template.id === newTemplates?.id) {
-              return newTemplates
-            }
-            return template
-          }))
-
-          setError(e.message)
+      }).catch((e) => {
+        setError(e.message)
+        setLoadingFiles(loadingFiles.filter((loading) => {
+          return loading.name !== templateFile.name
+        }))
+        newTemplates = {
+          ...newTemplates,
+          isValid: false
+        } as TemplateFileEntity
+        sleep(2000).then(() => {
+          setError("")
         })
 
-      } else if (typeof file === "string") {
-        setError("No se ha podido descargar el archivo")
+      })
 
-      }
+
     }).catch((error) => {
+      setLoadingFiles(loadingFiles.filter((loading) => {
+        return loading.name !== templateFile.name
+      }))
       setError(error.message)
+      sleep(2000).then(() => {
+        setError("")
+      })
     })
 
 
@@ -574,36 +577,55 @@ const FocalizedCreateContainer = (props: Props) => {
       setError("No se ha encontrado el template")
       return
     }
-    let blob = null;
+    let content;
     if (template.verticalTemplate) {
-      blob = props.fileUseCase.generateBlobVertical(data_template.data);
+      content = props.fileUseCase.generateContentCsvVertical(data_template.data);
     } else {
-      blob = props.fileUseCase.generateBlob(data_template.data);
+      content = props.fileUseCase.generateContentCsv(data_template.data);
     }
 
-    const file = new File([blob], name + ".csv", {
-      type: "text/csv;charset=utf-8;",
-    });
-    const url = URL.createObjectURL(file);
-
-
-    const a_ = document.createElement("a");
-    a_.setAttribute("href", url);
-    a_.setAttribute("download", name + ".csv");
-    a_.setAttribute("target", "_blank");
-    a_.style.display = "none";
-    document.body.appendChild(a_);
-
-
-    a_.click();
+    const a = document.createElement('a')
+    a.download = name + ".csv";
+    a.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(content);
+    a.click();
 
 
   }
+  const Download = (url: string) => {
 
+
+
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'archivo.csv'
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      })
+      .catch(error => console.error('Ocurrió un error al descargar el archivo:', error));
+  }
+  const onChangePage = (page: number) => {
+    props.fileUseCase.getFilesPublications("TF", numeral.id, page).then((response) => {
+      setFilesList(response)
+    }).catch((error) => {
+      setError(error.message)
+    })
+  }
   return (
     <ActiveCreatePresenter
       title={numeral?.description || ""}
-      error={error || ""}
+      error={error}
       handleSubmit={uploadFile}
       loading={loading}
       onChageFile={handleChanngeFile}
@@ -627,9 +649,9 @@ const FocalizedCreateContainer = (props: Props) => {
       onRemoveFileFromPublication={onRemoveFileFromPublication}
       onCancel={handleCancel}
 
-      DownloadFileFromUrl={() => { }}
-      onChangePage={() => { }}
-      loadingFiles={[]}
+      DownloadFileFromUrl={Download}
+      onChangePage={onChangePage}
+      loadingFiles={loadingFiles}
     />
   )
 }

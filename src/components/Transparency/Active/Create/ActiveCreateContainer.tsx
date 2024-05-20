@@ -102,12 +102,12 @@ const ActiveCreateContainer = (props: IProps) => {
 
 
   useEffect(() => {
-    props.usecase.getFilesPublications("TA").then((response) => {
+    props.usecase.getFilesPublications("TA", numeral?.id || 0).then((response) => {
       setFilesList(response)
     }).catch((error) => {
       setError(error.message)
     })
-  }, [])
+  }, [numeral])
 
 
 
@@ -632,7 +632,7 @@ const ActiveCreateContainer = (props: IProps) => {
   }
 
   const onChangePage = (page: number) => {
-    props.usecase.getFilesPublications("TA", page).then((response) => {
+    props.usecase.getFilesPublications("TA", numeral?.id || 0, page).then((response) => {
       setFilesList(response)
     }).catch((error) => {
       setError(error.message)

@@ -99,12 +99,12 @@ const ActiveEditContainer = (props: Props) => {
 
 
     useEffect(() => {
-        props.usecase.getFilesPublications("TA").then((response) => {
+        props.usecase.getFilesPublications("TA", numeral?.id || 0).then((response) => {
             setFilesList(response)
         }).catch((error) => {
             setError(error.message)
         })
-    }, [])
+    }, [numeral])
 
 
 
@@ -721,7 +721,7 @@ const ActiveEditContainer = (props: Props) => {
     }
 
     const onChangePage = (page: number) => {
-        props.usecase.getFilesPublications("TA", page).then((response) => {
+        props.usecase.getFilesPublications("TA", numeral?.id || 0, page).then((response) => {
             setFilesList(response)
         }).catch((error) => {
             setError(error.message)

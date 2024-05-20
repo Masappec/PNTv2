@@ -66,7 +66,7 @@ export class FilePublicationApi {
      * @param {number} id - id de la publicacion
      * @returns {FilePublicationResponse} publicacion
      */
-    async getFilesPublications(type: "TA" | "TC" | "TF", page?: number, limit?: number, search?: string): Promise<Pagination<
+    async getFilesPublications(type: "TA" | "TC" | "TF", numeral_id: number, page?: number, limit?: number, search?: string): Promise<Pagination<
         FilePublicationResponse>> {
         try {
             const response = await this._api.get<Pagination<FilePublicationResponse>>(`${TRANSPARENCY_PATH}/publications/file/list`, {
@@ -74,6 +74,7 @@ export class FilePublicationApi {
                     type: type,
                     page: page,
                     limit: limit,
+                    numeral_id: numeral_id,
                     search: search
 
                 }

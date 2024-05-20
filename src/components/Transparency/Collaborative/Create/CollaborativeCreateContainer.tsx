@@ -103,12 +103,12 @@ const CollabCreateContainer = (props: Props) => {
 
 
   useEffect(() => {
-    props.fileUseCase.getFilesPublications("TC").then((response) => {
+    props.fileUseCase.getFilesPublications("TC", numeral.id).then((response) => {
       setFilesList(response)
     }).catch((error) => {
       setError(error.message)
     })
-  }, [])
+  }, [numeral])
 
   useEffect(() => {
     console.log(templates, filesPublication)

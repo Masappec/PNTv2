@@ -122,12 +122,12 @@ const FocalizedEditContainer = (props: Props) => {
 
 
   useEffect(() => {
-    props.fileUseCase.getFilesPublications("TF").then((response) => {
+    props.fileUseCase.getFilesPublications("TF", numeral.id).then((response) => {
       setFilesList(response)
     }).catch((error) => {
       setError(error.message)
     })
-  }, [])
+  }, [numeral])
 
   useEffect(() => {
     console.log(templates, filesPublication)
