@@ -162,3 +162,10 @@ export interface SolicityResult {
   attachment: number[];
   category_id: number;
 }
+
+
+
+export interface CommentDto{
+  solicity_id:number;
+  motive:string;
+}

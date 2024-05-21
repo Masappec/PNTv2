@@ -21,6 +21,7 @@ import UserEntity from "../../../../domain/entities/UserEntity";
 import SolicityDetailContainer from "../Detail/SolicityDetailContainer";
 import { AxiosProgressEvent } from "axios";
 import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
+import SolicityOnHoldContainer from "../OnHold/SolicityOnHoldContainer";
 
 
 interface Props {
@@ -85,6 +86,7 @@ const SolicityResponseContainer = (props: Props) => {
         percent: number,
         file_solicity: FilePublicationEntity | null
     }[]>([])
+
 
     const [timeline, setTimeline] = useState<TimeLinePresenter[]>([])
 
@@ -455,6 +457,29 @@ const SolicityResponseContainer = (props: Props) => {
         return item || {} as ColourOption
     }
 
+
+    const onSuccessComment = () => {
+        props.usecase.getSolicityById(solicityToResponse.id).then((res) => {
+            setSolicityToResponse(res)
+            setTimeline(Solicity.ordernReponse(res))
+            setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
+            setIsAvaliableToComment(props.usecase.availabletoComment(userSession, res))
+            setIsAvaliableToInsistency(props.usecase.availableToInsistency(userSession, res))
+        }).catch((e) => {
+            console.log(e + "error")
+        })
+    }
+    
+
+    const commentComponent = ()=>(
+        <SolicityOnHoldContainer
+            onSuccessComment={onSuccessComment}
+            solicity_id={solicityToResponse.id}
+            usecase={props.usecase}
+        />
+    )
+
+
     return isSaved ? <ScreenMessage message="Solicitud enviada correctamente" type="success" >
         <button onClick={handleCancel} className="bg-primary text-white px-4 py-2 rounded-md">Volver</button>
     </ScreenMessage>
@@ -471,6 +496,7 @@ const SolicityResponseContainer = (props: Props) => {
                 handleSubmit={handleSubmit}
                 onCancel={handleCancel}
                 data={[[]]}
+                commentForm={commentComponent()}
                 handleSaveDataFile={handleSaveDataFile}
                 files={files}
                 error={error}

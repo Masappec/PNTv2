@@ -50,6 +50,10 @@ class SolicityUseCase {
 
   }
 
+  commentSolicity(comment: string, solicityId: number) {
+    return this.solicityService.commentSolicity(solicityId, comment);
+  }
+
 
 
   availabletoComment(user: UserEntity, solicity: Solicity) {
@@ -60,7 +64,7 @@ class SolicityUseCase {
       }
     }
 
-    return false;
+    return true;
   }
 
 
@@ -79,10 +83,15 @@ class SolicityUseCase {
 
   availableToResponse(user: UserEntity, solicity: Solicity) {
     //obtener el ultimo elemto de la lista de respuestas de la solicitud
+    const user_citizen_id = parseInt(solicity.user_created);
+    const user_session = user.id
     if (solicity && user) {
-      return solicity.status == StatusSolicity.INSISTENCY_SEND.key
-        || solicity.status == StatusSolicity.SEND.key
-        || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_SEND.key
+      if (user_citizen_id !== user_session){
+        return solicity.status == StatusSolicity.INSISTENCY_SEND.key
+          || solicity.status == StatusSolicity.SEND.key
+          || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_SEND.key
+      }
+      
     }
 
     return false;

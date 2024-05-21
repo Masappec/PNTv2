@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance } from "axios";
 import { Pagination, TRANSPARENCY_PATH } from "..";
-import { SendDraftSolicity, SolicityDraftRequestDto, SolicityResponseDto, SolicityResult } from "./interface";
+import { CommentDto, SendDraftSolicity, SolicityDraftRequestDto, SolicityResponseDto, SolicityResult } from "./interface";
 import { MessageTranslation } from "../../../utils/data";
 
 
@@ -191,6 +191,21 @@ class SolicityApi {
     } catch (error) {
       if (error instanceof AxiosError) {
         const e: string = error.response?.data?.message || "Error al responder la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al responder la solicitud.");
+      }
+    }
+
+  }
+
+  async commentSolicity(data: CommentDto) {
+    try{
+      const res = await this.api.post(TRANSPARENCY_PATH+'/solicity/comment',data);
+      return res.data;
+    } catch (error){
+      if (error instanceof AxiosError) {
+        const e: string = error.response?.data?.message || "Error al enviar commentario.";
         throw new Error(e);
       } else {
         throw new Error("Error al responder la solicitud.");

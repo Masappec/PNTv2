@@ -73,6 +73,7 @@ interface Props {
     entitySelected: EstablishmentEntity;
     getSelectedItems: (value: string, items: ColourOption[]) => ColourOption;
     onChangeTextResponse: (value: string) => void;
+    onChangeTextComment?: (value: string) => void;
     onDownloadFromUrl: (url: string, name: string) => void;
     userSession: UserEntity;
     isAvaliableToResponse: boolean;
@@ -80,6 +81,7 @@ interface Props {
     isAvaliableToComment: boolean;
     isLoadingSend: boolean
     timeline: TimeLinePresenter[];
+    commentForm: React.ReactNode
 }
 /**
  * 
@@ -153,14 +155,14 @@ const SolicityResponsePresenter = (props: Props) => {
                                             <Label
                                                 htmlFor=""
                                                 value={`${response.user_id == props.userSession.id ?
-                                                    "Tu Respuesta" :
+                                                    response.other_title:
                                                     response.title
 
                                                     }`}
                                                 className="text-xl font-bold "
                                             />
                                             <p className="text-gray-500 font-light">
-                                                {"("} {new Date(response.created_at).toLocaleString()}{")"}
+                                                {new Date(response.created_at).toLocaleString()}
                                             </p>
                                             <p className="h-auto mb-5 xl:w-[915px]  text-gray-900 dark:text-gray-300">
 
@@ -201,22 +203,8 @@ const SolicityResponsePresenter = (props: Props) => {
 
                     </div>
                     {
-                        props.isAvaliableToComment ?
-                            <div className=" grid grid-cols gap-4 w-auto mt-16">
-                                <Label
-                                    htmlFor=""
-                                    value={`Comentar. \n
-                                        Si necesitas comentar algo sobre la respuesta recibida, ingresarla a continuación`
-                                    }
-                                />
-                                <Textarea
-                                    placeholder=""
-                                    className="h-[100px] xl:w-full"
-                                    name="description"
-                                    onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
-                                    ref={responseRef as React.RefObject<HTMLTextAreaElement>}
-                                ></Textarea>
-                            </div> : null
+                        props.isAvaliableToComment ? props.commentForm:null
+                            
                     }
                     {
                         props.isAvaliableToInsistency ?

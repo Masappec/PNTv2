@@ -90,5 +90,13 @@ class SolicityService {
     );
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }
+
+  async commentSolicity(solicity_id: number, comment: string) {
+    const response = await this.api.commentSolicity({
+      motive: comment,
+      solicity_id: solicity_id,
+    });
+    return response;
+  }
 }
 export default SolicityService;

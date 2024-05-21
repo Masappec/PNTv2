@@ -1,30 +1,38 @@
-import {  FormEvent, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import {   useState } from "react"
 import SolicityOnHoldPresenter from "./SolicityOnHoldPresenter"
+import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase"
 
-const SolicityOnHoldContainer= ()=>{
-    const navigation = useNavigate()
+interface Props{
+    usecase:SolicityUseCase;
+    solicity_id:number;
+    onSuccessComment:()=>void;
+}
+const SolicityOnHoldContainer = (props: Props) => {
 
     const [error, setError] = useState<string>("")
     const [success, setSuccess] = useState<string>("")
-
+    const [comment, setComment] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
 
     
 
-    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const handleSubmit = () => {
         
 
         setLoading(true)
-        console.log("")
+        props.usecase.commentSolicity(comment, props.solicity_id).then(() => {
+            setLoading(false)
+            setSuccess("Comentario agregado con éxito")
+            setComment('')
+            props.onSuccessComment()
+        }).catch(() => {
+            setLoading(false)
+            setError("Error al agregar comentario")
+        })
         
     }
 
-    const handleCancel = ()=>{
-        setLoading(false)
-        navigation('/transparency/solicity')
-    }
+   
 
 
 
@@ -32,13 +40,13 @@ const SolicityOnHoldContainer= ()=>{
         <>
         <SolicityOnHoldPresenter
             handleSubmit={handleSubmit}
-            onCancel={handleCancel}
-            data={[]}
             error={error}
             loading={loading}
             success={success}
             setError={setError}
+            setComment={setComment}
             setSuccess={setSuccess}
+            comment={comment}
         />
         </>
     )
