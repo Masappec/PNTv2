@@ -178,7 +178,7 @@ const RegisterContainer = ({ usecase, configUseCase }: {
 
     /> : <ScreenMessage message="Registro Existoso" type="Revisa tu correo para activar tu cuenta" >
 
-      <div className="flex items-center gap-16 mt-8 ">
+      <div className="flex flex-row items-center justify-center  gap-16 mt-8 w-full">
 
 
         <button

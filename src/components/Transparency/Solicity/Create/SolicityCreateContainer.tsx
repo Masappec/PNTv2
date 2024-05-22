@@ -297,7 +297,7 @@ const SolicityCreateContainer = (props: Props) => {
                     <ScreenMessage message="Solicitud de Acceso a Información Pública ingresada con éxito"
                         type="Se ha enviado la solicitud con exito"
                     >
-                        <div className="flex items-center gap-16 mt-8 ">
+                        <div className="flex items-center gap-16 mt-8 justify-center ">
 
 
                             <button

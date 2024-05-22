@@ -59,12 +59,21 @@ class SolicityUseCase {
   availabletoComment(user: UserEntity, solicity: Solicity) {
     const lastComment = solicity.comments ? solicity.comments[solicity.comments.length - 1] : null;
     if (lastComment) {
-      if (lastComment.user !== user.id) {
-        return solicity.comments ? solicity.comments?.length < 10 : true;
+      console.log('lastComment', lastComment);
+      if (lastComment.user === user.id) {
+        return false;
+      } else {
+        return solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
+          || solicity.status == StatusSolicity.RESPONSED.key
+          || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_RESPONSED.key
       }
     }
 
-    return true;
+
+
+
+
+    return false;
   }
 
 
@@ -73,8 +82,6 @@ class SolicityUseCase {
       if (user.id == solicity.userCreated) {
 
         return solicity.status == StatusSolicity.INSISTENCY_PERIOD.key
-          || solicity.status == StatusSolicity.RESPONSED.key
-          || solicity.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
       }
 
     }
@@ -86,12 +93,12 @@ class SolicityUseCase {
     const user_citizen_id = parseInt(solicity.user_created);
     const user_session = user.id
     if (solicity && user) {
-      if (user_citizen_id !== user_session){
+      if (user_citizen_id !== user_session) {
         return solicity.status == StatusSolicity.INSISTENCY_SEND.key
           || solicity.status == StatusSolicity.SEND.key
           || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_SEND.key
       }
-      
+
     }
 
     return false;

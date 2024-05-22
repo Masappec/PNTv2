@@ -469,9 +469,9 @@ const SolicityResponseContainer = (props: Props) => {
             console.log(e + "error")
         })
     }
-    
 
-    const commentComponent = ()=>(
+
+    const commentComponent = () => (
         <SolicityOnHoldContainer
             onSuccessComment={onSuccessComment}
             solicity_id={solicityToResponse.id}
@@ -480,8 +480,19 @@ const SolicityResponseContainer = (props: Props) => {
     )
 
 
-    return isSaved ? <ScreenMessage message="Solicitud enviada correctamente" type="success" >
-        <button onClick={handleCancel} className="bg-primary text-white px-4 py-2 rounded-md">Volver</button>
+    return isSaved ? <ScreenMessage message="Respuesta enviada correctamente" type="
+    se ha enviado tu respuesta correctamente
+    " >
+        <div className="flex flex-row items-center justify-center  gap-16 mt-8 w-full">
+
+
+            <button
+                onClick={handleCancel}
+                className=" text-xl text-white font-medium hover:bg-primary-200 bg-primary-500 w-[300px]  py-2 rounded-lg shadow-xl">
+                Continuar
+            </button>
+
+        </div>
     </ScreenMessage>
         :
         <> <SolicityDetailContainer

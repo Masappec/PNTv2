@@ -155,7 +155,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                             <Label
                                                 htmlFor=""
                                                 value={`${response.user_id == props.userSession.id ?
-                                                    response.other_title:
+                                                    response.other_title :
                                                     response.title
 
                                                     }`}
@@ -203,8 +203,47 @@ const SolicityResponsePresenter = (props: Props) => {
 
                     </div>
                     {
-                        props.isAvaliableToComment ? props.commentForm:null
-                            
+                        props.isAvaliableToComment ? <> <div className=" grid grid-cols gap-4 w-auto mt-16">
+                            <Label
+                                htmlFor=""
+                                value={`Comentar. \n
+                                        Si necesitas comentar algo sobre la respuesta recibida, ingresarla a continuación`}
+                                className="text-xl font-bold "
+                            />
+                            <Textarea
+                                placeholder=""
+                                className="h-[139px] xl:w-[915px]"
+                                name="description"
+                                onChange={(e) => { props.onChangeTextResponse(e.target.value) }}
+                                ref={responseRef as React.RefObject<HTMLTextAreaElement>}
+                            ></Textarea>
+                        </div>
+
+
+                            <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-24 ">
+                                <Button
+                                    type="button"
+                                    color="danger"
+                                    className="text-white font-bold bg-gray-500 w-[185px] h-[48px] 
+                            hover:bg-gray-700 "
+                                    onClick={props.onCancel}
+                                >
+                                    Cancelar
+                                </Button>
+                                {props.isLoadingSend ? (
+                                    <Spinner></Spinner>) : <Button
+                                        type="submit"
+                                        className="text-white font-bold bg-sky-800 w-[185px] h-[48px] "
+                                    >
+                                    <FiSend size={23} className=" mr-4" />
+                                    <span>Enviar</span>
+                                </Button>
+
+                                }
+
+
+                            </div></> : null
+
                     }
                     {
                         props.isAvaliableToInsistency ?

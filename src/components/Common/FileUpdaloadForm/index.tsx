@@ -1,6 +1,7 @@
 
 import { Button, FileInput, Label, Progress, TextInput, Textarea } from 'flowbite-react'
 import { useEffect, useState } from 'react';
+import Alert from "../../Common/Alert";
 
 interface FileUploadFormProps {
 
@@ -18,7 +19,7 @@ const FileUploadForm = (props: FileUploadFormProps) => {
     const [description, setDescription] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [percent, setPercent] = useState<number>(0);
-
+    const [error, setError] = useState<string>('');
 
     useEffect(() => {
         setLoading(props.loading);
@@ -40,7 +41,21 @@ const FileUploadForm = (props: FileUploadFormProps) => {
     }
 
     const onSave = () => {
+        if (!file) {
+            setError('Debe seleccionar un archivo');
+            return;
+        }
+        if (!name) {
+            setError('Debe ingresar un nombre');
+            return;
+        }
+        if (!description) {
+            setError('Debe ingresar una descripción');
+            return;
+        }
+
         props.onSave(file!, name, description);
+        setError('');
     }
 
     const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +70,16 @@ const FileUploadForm = (props: FileUploadFormProps) => {
             <p>
                 Se aceptan archivos de hasta 500KB
             </p>
+            {
+                error ? (
+                    <Alert
+                        onClose={() => setError('')}
+                        message={error}
+                        type='error'
+                    >
+                    </Alert>
+                ) : null
+            }
             <FileInput
                 onChange={onChangeFile}
                 className='my-5'
