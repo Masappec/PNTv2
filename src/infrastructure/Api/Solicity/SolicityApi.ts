@@ -213,6 +213,20 @@ class SolicityApi {
     }
 
   }
+
+  async changeStatus(data:{solicity_id:number}) {
+    try {
+      const res = await this.api.post(TRANSPARENCY_PATH + '/solicity/change-status', data);
+      return res.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string = error.response?.data?.message || "Error al enviar commentario.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al solicitar operación");
+      }
+    }
+  }
 }
 
 export default SolicityApi;

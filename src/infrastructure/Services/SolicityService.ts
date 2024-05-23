@@ -98,5 +98,14 @@ class SolicityService {
     });
     return response;
   }
+
+  async changeStatus(solicity_id:number){
+    
+    const response = await this.api.changeStatus({
+      solicity_id: solicity_id,
+    });
+    return response;
+  
+  }
 }
 export default SolicityService;

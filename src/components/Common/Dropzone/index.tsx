@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState, DragEvent } from "react"
 import { FaFileCsv, FaFileExcel, FaFilePdf, FaFilePowerpoint, FaFileWord } from "react-icons/fa";
 import { IoCloudUploadOutline } from "react-icons/io5"
 
@@ -21,7 +21,7 @@ const Dropzone = (props: DropzoneProps) => {
     const [url, setUrl] = useState<string>("")
     const [type, setType] = useState<string>("")
     const [fileSelected, setFileSelected] = useState<File | null>(null)
-
+    const [error,setError] =useState<string>('')
     useEffect(() => {
         setUrl(props.url ? props.url : "")
         setType(props.type)
@@ -30,6 +30,8 @@ const Dropzone = (props: DropzoneProps) => {
     const handleChageLogo = (e: ChangeEvent<HTMLInputElement>) => {
 
         const file = e.target.files;
+        setError('')
+
         console.log("file", file)
         if (!file) return
         const image = file[0]
@@ -94,13 +96,65 @@ const Dropzone = (props: DropzoneProps) => {
 
 
     }
+    const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
 
+        const files = e.dataTransfer.files;
+
+        //validar el tipo de archivo
+        
+
+        if (files && files.length > 0) {
+            const fileList = Array.from(files);
+            const file = fileList[0];
+            console.log(file.type,props.accept)
+            //image/png image/*
+
+            const reg= file.type;
+            if (!props.accept.split(',').some(acceptType => new RegExp(acceptType.trim().replace('*', '.*')).test(reg))){
+                setError('Tipo de archivo no permitido')
+                return 
+            }
+
+            setType(file.type);
+            if (file.type.match(/image/)) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    setUrl(reader.result as string);
+                };
+            }
+            setFileSelected(file);
+            // Create a synthetic event to pass to the handleChageLogo function
+            const syntheticEvent = {
+                target: { files }
+            } as ChangeEvent<HTMLInputElement>;
+            setError('')
+
+            props.handleChageLogo(syntheticEvent);
+        }
+    };
+
+    const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
     return (
         <>
             <label htmlFor={props.id} className="block text-sm font-medium text-gray-700">
                 {props.label}
             </label>
-            <div className={`border-dashed border-slate-300 border-2 h-40 rounded flex justify-center items-center ${props.className}`} onClick={click}>
+            {
+                error !=''&&
+                <h6 className="text-red-400">
+                    {error}
+                </h6>
+            }
+            <div 
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                className={`border-dashed border-slate-300 border-2 h-40 rounded flex justify-center items-center ${props.className}`} onClick={click}>
 
                 {!props.disabled ?
                     url && url != "" ?
@@ -137,6 +191,7 @@ const Dropzone = (props: DropzoneProps) => {
 
                 <input type="file" className="hidden" onChange={handleChageLogo} accept={props.accept} multiple={props.multiple}
                     id={props.id} name={props.name}
+                    
                 />
 
             </div>

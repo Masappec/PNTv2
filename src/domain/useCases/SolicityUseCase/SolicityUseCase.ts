@@ -4,6 +4,7 @@ import CreateSolicity from "../../entities/CreateSolicity";
 import ResponseSolicity from "../../entities/ResponseSolicity";
 import { Solicity } from "../../entities/Solicity";
 import UserEntity from "../../entities/UserEntity";
+import moment from 'moment';
 
 class SolicityUseCase {
   constructor(private readonly solicityService: SolicityService) { }
@@ -67,13 +68,13 @@ class SolicityUseCase {
           || solicity.status == StatusSolicity.RESPONSED.key
           || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_RESPONSED.key
       }
+    }else{
+      return solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
+        || solicity.status == StatusSolicity.RESPONSED.key
+        || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_RESPONSED.key
     }
+    
 
-
-
-
-
-    return false;
   }
 
 
@@ -81,7 +82,7 @@ class SolicityUseCase {
     if (solicity && user) {
       if (user.id == solicity.userCreated) {
 
-        return solicity.status == StatusSolicity.INSISTENCY_PERIOD.key
+        return solicity.status == StatusSolicity.INSISTENCY_PERIOD.key || solicity.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
       }
 
     }
@@ -107,6 +108,45 @@ class SolicityUseCase {
 
   async createManualSolicity(data: CreateSolicity) {
     return await this.solicityService.createManualSolicity(data);
+  }
+
+  async changeStatus(solicityId:number){
+    return await this.solicityService.changeStatus(solicityId)
+  }
+
+  isAvaliableChangeStaus(solicity: Solicity) {
+    const expired_date = moment.utc(solicity.expiry_date).toDate()
+    const now = new Date()
+    
+    console.log(now.getDate() ,expired_date.getDate()
+      ,now.getFullYear() ,expired_date.getFullYear()
+      ,now.getMonth() , expired_date.getMonth())
+    if (solicity.status == StatusSolicity.RESPONSED.key
+      || solicity.status == StatusSolicity.NO_RESPONSED.key
+      || solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
+      || solicity.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key) {
+      if (now.getDate() == expired_date.getDate()
+        && now.getFullYear() == expired_date.getFullYear()
+        && now.getMonth() == expired_date.getMonth()
+      ) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  getTextChangeStatus(solicity:Solicity){
+    if (solicity.status == StatusSolicity.RESPONSED.key
+      || solicity.status == StatusSolicity.NO_RESPONSED.key){
+        return 'Solicitar Insistencia'
+      }
+
+    if (solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
+      || solicity.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key){
+        return 'Solicitar Gestión oficiosa'
+      }
+      return ''
   }
 }
 export default SolicityUseCase;

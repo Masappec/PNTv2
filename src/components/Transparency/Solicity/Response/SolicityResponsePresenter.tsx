@@ -14,7 +14,7 @@ import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { FaDownload } from "react-icons/fa6";
 import UserEntity from "../../../../domain/entities/UserEntity";
-import { FiSend } from "react-icons/fi";
+import { FiCheckSquare, FiSend } from "react-icons/fi";
 import Spinner from "../../../Common/Spinner";
 import FileUploadForm from "../../../Common/FileUpdaloadForm";
 
@@ -81,7 +81,11 @@ interface Props {
     isAvaliableToComment: boolean;
     isLoadingSend: boolean
     timeline: TimeLinePresenter[];
-    commentForm: React.ReactNode
+    commentForm: React.ReactNode;
+
+    isAvaliableForChangeStatus: boolean;
+    ChangeStatus: () => void
+    textForChangeStatus: string
 }
 /**
  * 
@@ -244,6 +248,18 @@ const SolicityResponsePresenter = (props: Props) => {
 
                             </div></> : null
 
+                    }
+                    {
+                        props.isAvaliableForChangeStatus ?
+
+                            <Button
+                                onClick={() => { props.ChangeStatus() }}
+                                type="button"
+                                className="text-white font-bold bg-sky-800 w-[185px] h-[48px] "
+                            >
+                                <FiCheckSquare size={23} className=" mr-4" />
+                                <span>{props.textForChangeStatus}</span>
+                            </Button> : null
                     }
                     {
                         props.isAvaliableToInsistency ?

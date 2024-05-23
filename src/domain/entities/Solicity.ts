@@ -1,3 +1,4 @@
+import { StatusSolicity } from "../../utils/enums";
 import BaseEntity from "./BaseEntity";
 import { AttachmentEntity, FilePublicationEntity } from "./PublicationEntity";
 import { SolicityResultEntity } from "./SolicityResultEntity";
@@ -227,8 +228,15 @@ export class Solicity extends BaseEntity {
         })
 
         solicity.insistency?.forEach(i => {
-            list.push(new TimeLinePresenter(i.user_created, i.created_at, i.motive, [], [],
-                 "INSISTENCY", "Insistencia del ciudadano",'Tu Insistencia'))
+            if(i.status==StatusSolicity.INFORMAL_MANAGMENT_SEND.key){
+
+                list.push(new TimeLinePresenter(i.user_created, i.created_at, i.motive, [], [],
+                    "INSISTENCY", "Gestión Oficiosa", 'Gestión Oficiosa'))
+            }else{
+
+                list.push(new TimeLinePresenter(i.user_created, i.created_at, i.motive, [], [],
+                    "INSISTENCY", "Insistencia del ciudadano", 'Tu Insistencia'))
+            }
         })
 
         solicity.comments?.forEach(c => {

@@ -480,9 +480,23 @@ const SolicityResponseContainer = (props: Props) => {
     )
 
 
-    return isSaved ? <ScreenMessage message="Respuesta enviada correctamente" type="
-    se ha enviado tu respuesta correctamente
-    " >
+    const isChangeStatus = ()=>{
+        if(userSession.id == parseInt(solicityToResponse.user_created||"0")){
+            return props.usecase.isAvaliableChangeStaus(solicityToResponse)
+
+        }
+        return false;
+    }
+    const textChangeStatus = ()=>{
+        return props.usecase.getTextChangeStatus(solicityToResponse)
+    }
+
+    const changeStatus = ()=>{
+        props.usecase.changeStatus(solicityToResponse.id)
+    }
+    return isSaved ? 
+    <ScreenMessage message="Respuesta enviada correctamente" 
+    type="se ha enviado tu respuesta correctamente" >
         <div className="flex flex-row items-center justify-center  gap-16 mt-8 w-full">
 
 
@@ -546,6 +560,9 @@ const SolicityResponseContainer = (props: Props) => {
                 isAvaliableToInsistency={isAvaliableToInsistency}
                 timeline={timeline}
                 isAvaliableToComment={isAvaliableToComment}
+                ChangeStatus={() => { changeStatus()}}
+                isAvaliableForChangeStatus={isChangeStatus()}
+                textForChangeStatus={textChangeStatus()}
             />
         </SolicityDetailContainer >
         </>
