@@ -5,7 +5,7 @@ import Table from "../../../Common/Table/index"
 import { Badge, Button } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
 import { Solicity } from "../../../../domain/entities/Solicity"
-import { StageSolicity, StatusSolicity, StatusStageSolicity } from "../../../../utils/enums"
+import { StatusSolicity } from "../../../../utils/enums"
 import { FiEdit2 } from "react-icons/fi"
 
 
@@ -69,7 +69,7 @@ const SolicityListPresenter = (props: Props) => {
                     </div>
                 </Modal>
             </div>
-            <div className="flex justify-between items-center  mt-5">
+            <div className="">
                 <Table
                     show={true}
                     limits={props.limits}
@@ -158,7 +158,7 @@ const SolicityListPresenter = (props: Props) => {
                             title: 'Fecha respuesta SAIP',
                             render: (solicity) => {
 
-                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE)
+                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.RESPONSED.key || timeline.status === StatusSolicity.INSISTENCY_RESPONSED.key)
                                 return <p>{
                                     element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
@@ -167,7 +167,7 @@ const SolicityListPresenter = (props: Props) => {
                         {
                             title: "Fecha insistencia",
                             render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
+                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_SEND.key)
                                 return <p>{
                                     element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
@@ -176,7 +176,7 @@ const SolicityListPresenter = (props: Props) => {
                         {
                             title: "Fecha R. Insistencia",
                             render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.RESPONSE_INSISTENCY)
+                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_RESPONSED.key)
                                 return <p>{
                                     element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
@@ -185,7 +185,7 @@ const SolicityListPresenter = (props: Props) => {
                         {
                             title: "Fecha gestión oficiosa",
                             render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
+                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INFORMAL_MANAGMENT_SEND.key)
                                 return <p>{
                                     element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>
@@ -194,8 +194,8 @@ const SolicityListPresenter = (props: Props) => {
                         {
                             title: 'Insistencia/ \n Correción',
                             render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INSISTENCY)
-                                const status = StatusStageSolicity[element?.status as keyof typeof StatusStageSolicity]
+                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_SEND.key)
+                                const status = StatusSolicity[element?.status as keyof typeof StatusSolicity]
 
                                 return <p>{
                                     element ? status.icon : <FaClock size={20} />
@@ -205,8 +205,8 @@ const SolicityListPresenter = (props: Props) => {
                         {
                             title: 'Gestión oficiosa',
                             render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
-                                const status = StatusStageSolicity[element?.status as keyof typeof StatusStageSolicity]
+                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INFORMAL_MANAGMENT_SEND.key)
+                                const status = StatusSolicity[element?.status as keyof typeof StatusSolicity]
                                 return <p>{
                                     element ? status.icon : <FaClock size={20} />
                                 }</p>

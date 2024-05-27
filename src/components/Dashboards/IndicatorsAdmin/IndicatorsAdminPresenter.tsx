@@ -100,7 +100,7 @@ const IndicatorsAdminPresenter = () => {
   };
 
   return (
-    <div className="h-full">
+    <div className="h-full overflow-y-hidden">
       <div className="border-gray-300 py-5 border-b  ">
         <h2 className="text-2xl font-semibold text-black ml-2">Indicadores</h2>
       </div>

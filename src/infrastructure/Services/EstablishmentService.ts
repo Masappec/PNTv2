@@ -96,6 +96,12 @@ class EstablishmentService {
         return EstablishmentMapper.apiToDomainDetail(response);
 
     }
+
+
+    async getEstablishmentsByUserList(search?: string, page?: number) {
+        const res = await this.api.getEstablishmentsByUserList(search, page);
+        return res
+    }
 }
 
 export default EstablishmentService;

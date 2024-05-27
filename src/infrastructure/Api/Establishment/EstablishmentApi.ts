@@ -3,6 +3,7 @@ import { ADMIN_PATH, Pagination } from "..";
 import { EstablishmentCreateDTO, EstablishmentDetailDTO, EstablishmentListDto, OptionsSelectCreate } from "./interface";
 import { URL_API } from "../../../utils/constans";
 import { MessageTranslation } from "../../../utils/data";
+import { User, UserListResponse } from "../User/interface";
 
 
 class EstablishmentApi {
@@ -125,6 +126,22 @@ class EstablishmentApi {
             const response = await this.api.get<EstablishmentDetailDTO>(ADMIN_PATH + '/establishment/user', {
                 params: {
                     user_id
+                }
+            });
+            return response.data;
+        } catch (error: any) {
+            const e: string = error.response?.data?.message || 'Error al obtener los establecimientos.';
+            throw new Error(e);
+        }
+    }
+
+    ///establishment/user/list
+    async getEstablishmentsByUserList(search?: string, page?: number) {
+        try {
+            const response = await this.api.get<Pagination<User>>(ADMIN_PATH + '/establishment/user/list', {
+                params: {
+                    search,
+                    page
                 }
             });
             return response.data;

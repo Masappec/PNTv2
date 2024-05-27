@@ -480,34 +480,43 @@ const SolicityResponseContainer = (props: Props) => {
     )
 
 
-    const isChangeStatus = ()=>{
-        if(userSession.id == parseInt(solicityToResponse.user_created||"0")){
+    const isChangeStatus = () => {
+        if (userSession.id == parseInt(solicityToResponse.user_created || "0")) {
             return props.usecase.isAvaliableChangeStaus(solicityToResponse)
 
         }
         return false;
     }
-    const textChangeStatus = ()=>{
+    const textChangeStatus = () => {
         return props.usecase.getTextChangeStatus(solicityToResponse)
     }
 
-    const changeStatus = ()=>{
-        props.usecase.changeStatus(solicityToResponse.id)
+    const changeStatus = () => {
+        props.usecase.changeStatus(solicityToResponse.id).then((res) => {
+            setSolicityToResponse(res)
+            setTimeline(Solicity.ordernReponse(res))
+            setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
+            setIsAvaliableToComment(props.usecase.availabletoComment(userSession, res))
+            setIsAvaliableToInsistency(props.usecase.availableToInsistency(userSession, res))
+            window.location.reload()
+        }).catch((e) => {
+            console.log(e)
+        })
     }
-    return isSaved ? 
-    <ScreenMessage message="Respuesta enviada correctamente" 
-    type="se ha enviado tu respuesta correctamente" >
-        <div className="flex flex-row items-center justify-center  gap-16 mt-8 w-full">
+    return isSaved ?
+        <ScreenMessage message="Respuesta enviada correctamente"
+            type="se ha enviado tu respuesta correctamente" >
+            <div className="flex flex-row items-center justify-center  gap-16 mt-8 w-full">
 
 
-            <button
-                onClick={handleCancel}
-                className=" text-xl text-white font-medium hover:bg-primary-200 bg-primary-500 w-[300px]  py-2 rounded-lg shadow-xl">
-                Continuar
-            </button>
+                <button
+                    onClick={handleCancel}
+                    className=" text-xl text-white font-medium hover:bg-primary-200 bg-primary-500 w-[300px]  py-2 rounded-lg shadow-xl">
+                    Continuar
+                </button>
 
-        </div>
-    </ScreenMessage>
+            </div>
+        </ScreenMessage>
         :
         <> <SolicityDetailContainer
             attachmentUsecase={props.attachmentUsecase}
@@ -560,7 +569,7 @@ const SolicityResponseContainer = (props: Props) => {
                 isAvaliableToInsistency={isAvaliableToInsistency}
                 timeline={timeline}
                 isAvaliableToComment={isAvaliableToComment}
-                ChangeStatus={() => { changeStatus()}}
+                ChangeStatus={() => { changeStatus() }}
                 isAvaliableForChangeStatus={isChangeStatus()}
                 textForChangeStatus={textChangeStatus()}
             />

@@ -3,23 +3,23 @@ import PedagogyAreaEntity from "../../../../domain/entities/PedagodyAreaEntity";
 import PedagogyAreaCreatePresenter from "./PedagodyAreaCrearePresenter";
 import PedagogyAreaUseCase from "../../../../domain/useCases/PedagogyArea/PedagogyAreaUseCase";
 
- 
+
 interface Props {
     usecase: PedagogyAreaUseCase;
 }
 
- const  PedagogyAreaCreateContainer = (props:Props) => {
+const PedagogyAreaCreateContainer = (props: Props) => {
 
     const [data, set_data] = useState<PedagogyAreaEntity>({
-        faq:[
+        faq: [
             {
                 answer: "Ingrese la respuesta aquí",
                 question: "Ingrese la pregunta aquí",
                 isActive: true,
-                
+
             }
         ],
-        normatives:[
+        normatives: [
             {
                 description: "Ingrese la descripción aquí",
                 title: "Ingrese el título aquí",
@@ -27,7 +27,7 @@ interface Props {
                 isActive: true,
             }
         ],
-        tutorials:[{
+        tutorials: [{
             description: "Ingrese la descripción aquí",
             title: "Ingrese el título aquí",
             url: "Ingrese la url aquí",
@@ -44,8 +44,6 @@ interface Props {
     useEffect(() => {
         props.usecase.getPedagogyArea().then((data) => {
             set_data(data);
-        }).catch((error) => {
-            setError(error.message);
         })
     }, []);
 
@@ -54,7 +52,7 @@ interface Props {
     }
 
     const handleAddQuestion = () => {
-        const newData = {...data};
+        const newData = { ...data };
         newData.faq.push({
             answer: "Ingrese la respuesta aquí",
             question: "Ingrese la pregunta aquí",
@@ -64,13 +62,13 @@ interface Props {
     }
 
     const handleDropQuestion = (index: number) => {
-        const newData = {...data};
+        const newData = { ...data };
         newData.faq.splice(index, 1);
         set_data(newData);
     }
 
     const handleAddTutorial = () => {
-        const newData = {...data};
+        const newData = { ...data };
         newData.tutorials.push({
             title: "",
             url: "",
@@ -80,13 +78,13 @@ interface Props {
         set_data(newData);
     }
     const handleDropTutorial = (index: number) => {
-        const newData = {...data};
+        const newData = { ...data };
         newData.tutorials.splice(index, 1);
         set_data(newData);
     }
 
     const handleAddNormative = () => {
-        const newData = {...data};
+        const newData = { ...data };
         newData.normatives.push({
             title: "",
             url: "",
@@ -97,37 +95,37 @@ interface Props {
     }
 
     const handleDropNormative = (index: number) => {
-        const newData = {...data};
+        const newData = { ...data };
         newData.normatives.splice(index, 1);
         set_data(newData);
     }
 
-    const handleChange = (root:string,name:string,value:string,index:number) => {
-        const newData = {...data};
+    const handleChange = (root: string, name: string, value: string, index: number) => {
+        const newData = { ...data };
         if (root === "faq") {
-            newData.faq[index]= {
+            newData.faq[index] = {
                 ...newData.faq[index],
                 [name]: value,
-            
+
             }
         }
 
         if (root === "tutorials") {
-            newData.tutorials[index]= {
+            newData.tutorials[index] = {
                 ...newData.tutorials[index],
                 [name]: value,
-            
+
             }
         }
 
         if (root === "normatives") {
-            newData.normatives[index]= {
+            newData.normatives[index] = {
                 ...newData.normatives[index],
                 [name]: value,
-            
+
             }
         }
-        
+
         set_data(newData);
     }
 
@@ -150,8 +148,8 @@ interface Props {
             handleSubmit={handleSave}
             loading={false}
             onEdit={handleEdit}
-            setData={()=>{}}
-            setEdit={()=>{}}
+            setData={() => { }}
+            setEdit={() => { }}
             setError={setError}
             setSuccess={setSuccess}
             success={success}
@@ -165,7 +163,7 @@ interface Props {
             onChangeValue={handleChange}
         />
     )
-    
- };
+
+};
 
 export default PedagogyAreaCreateContainer;

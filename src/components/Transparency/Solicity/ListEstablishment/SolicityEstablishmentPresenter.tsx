@@ -5,7 +5,7 @@ import Table from "../../../Common/Table/index"
 import { Badge, Button } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
 import { Solicity } from "../../../../domain/entities/Solicity"
-import { StageSolicity, StatusSolicity, StatusStageSolicity } from "../../../../utils/enums"
+import { StatusSolicity } from "../../../../utils/enums"
 import { FiEdit2 } from "react-icons/fi"
 
 
@@ -215,8 +215,8 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             title: 'Gestión oficiosa',
                             key: 'date',
                             render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StageSolicity.INFORMAL_MANAGEMENT)
-                                const status = StatusStageSolicity[element?.status as keyof typeof StatusStageSolicity]
+                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INFORMAL_MANAGMENT_SEND.key)
+                                const status = StatusSolicity[element?.status as keyof typeof StatusSolicity]
                                 return <p>{
                                     element ? status.icon : <FaClock size={20} />
                                 }</p>

@@ -60,12 +60,12 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
     }, [])
 
     return (
-        <div className="layout-admin overflow-y-hidden h-fit ">
-            <div className="flex-col  overflow-y-hidden">
+        <div className="layout-admin  overflow-y-hidden overflow-x-hidden h-fit ">
+            <div className=" flex-col  overflow-y-hidden">
                 <HeaderPages open={open} setOpen={setOpen} haveImage={true} />
-                <div className="flex h-full">
+                <div className=" flex flex-row h-full">
                     <div
-                        className={`lg:block xl:block ${open ? "block" : "hidden"} z-30 mb-52`}
+                        className={`lg:block xl:block w-auto ${open ? "block" : "hidden"} z-30 mb-52`}
                     >
                         <Sidebar
                             email={email}
@@ -76,17 +76,18 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                             permissions={permissions}
                         />
                     </div>
-                    <div className="w-full">
-                        <div
-                            className={` ${open ? " bg-black bg-opacity-40 lg:bg-none  fixed z-20" : ""
-                                }`}
-                            onClick={() => setOpen(false)}
-                        ></div>
-                        <div className="m-5">
-                            <ToastContainer />
+                    <div
+                        className={` ${open ? " bg-black bg-opacity-40 lg:bg-none  fixed z-20" : "hidden"
+                            }`}
+                        onClick={() => setOpen(false)}
+                    >
 
-                            <Outlet />
-                        </div>
+
+                    </div>
+                    <div className=" m-5 w-full overflow-x-hidden">
+                        <ToastContainer />
+
+                        <Outlet />
                     </div>
                 </div>
             </div>

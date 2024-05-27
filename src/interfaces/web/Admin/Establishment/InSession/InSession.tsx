@@ -1,31 +1,29 @@
-import { useEffect, useState } from "react"
-import { Navigate } from "react-router-dom"
 import EstablishmentUseCase from "../../../../../domain/useCases/Establishment/EstablishmentUseCase"
 import EstablishmentService from "../../../../../infrastructure/Services/EstablishmentService"
 import EstablishmentApi from "../../../../../infrastructure/Api/Establishment/EstablishmentApi"
 import api from "../../../../../infrastructure/Api"
-import EstablishmentEntity from "../../../../../domain/entities/Establishment"
+import EstablishmentInSessionContainer from "../../../../../components/Admin/Establishment/InSession/EstablishmentInSessionContainer"
+import NumeralUseCase from "../../../../../domain/useCases/NumeralUseCase/NumeraUseCase"
+import NumeralService from "../../../../../infrastructure/Services/NumeralService"
+import NumeralApi from "../../../../../infrastructure/Api/Numeral/NumeralApi"
 
 
 
-const EstablihsmentInSession = ()=>{
+const EstablihsmentInSession = () => {
 
     //const user = SessionService.USER_DATA_KEY
-    const usecase = new EstablishmentUseCase(new EstablishmentService(new EstablishmentApi(api)))
+    const api_establishment = new EstablishmentApi(api)
+    const service = new EstablishmentService(api_establishment)
+    const usecase = new EstablishmentUseCase(service)
+    const numeralUsecase = new NumeralUseCase(new NumeralService(new NumeralApi(api)), service)
 
 
-    const [Establishment,SetEstablishment] =useState({} as EstablishmentEntity)
+    return <EstablishmentInSessionContainer
 
-    useEffect(()=>{
-        usecase.getByUserSession().then(res => SetEstablishment(res))
-    },[])
+        numeralUsecase={numeralUsecase}
+        usecase={usecase}
+    />
 
-
-
-
-    if(Establishment){
-        return <Navigate to={'/admin/entities/' + Establishment.id} replace/>
-    }
 
     return null
 }

@@ -33,6 +33,7 @@ import CollaborativeEdit from "../interfaces/web/Transparency/Collaborative/Edit
 import ActiveEdit from "../interfaces/web/Transparency/Active/Edit";
 import EstablihsmentInSession from "../interfaces/web/Admin/Establishment/InSession/InSession";
 import SolicityManual from "../interfaces/web/Transparency/Solicity/Manual";
+import UserInSessionList from "../interfaces/web/Admin/User/InSession";
 
 
 export interface MenuItem {
@@ -60,6 +61,14 @@ const menu = [
     visible: true,
     icon: <RiUser3Line size={25} className="text-slate-500" />,
     element: <UserList />
+  },
+  {
+    name: 'Usuarios',
+    path: '/admin/est/users/',
+    permission_required: 'view_users_internal',
+    visible: true,
+    icon: <RiUser3Line size={25} className="text-slate-500" />,
+    element: <UserInSessionList />
   },
   {
     name: 'Crear Usuario',
@@ -138,8 +147,8 @@ const menu = [
   {
     name: 'Institución',
     path: '/admin/entity/',
-    element: <EstablihsmentInSession/>,
-    permission_required: 'update_my_establishment',
+    element: <EstablihsmentInSession />,
+    permission_required: 'view_establishment_internal',
     icon: <RiBuilding4Line size={25} className="text-slate-500" />,
     visible: true,
     visible_for_superadmin: false
