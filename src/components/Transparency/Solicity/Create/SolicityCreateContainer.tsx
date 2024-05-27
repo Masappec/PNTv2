@@ -258,13 +258,12 @@ const SolicityCreateContainer = (props: Props) => {
         }
         data.establishment = entity.id || 0
         data.address = entity.address || "Sin dirección"
-        console.log(data)
+        data.format_receipt = 'formulario web'
         if (data.text === "" || data.city === ""
             || data.first_name === "" || data.last_name === ""
             || data.email === "" || data.race_identification === ""
             || data.gender === ""
-            || data.phone === "" || data.format_send === ""
-            || data.format_receipt === "") {
+            || data.phone === "" || data.format_send === "") {
             setError("Complete todos los campos")
             setIsLoadingSave(false)
             return

@@ -72,6 +72,23 @@ const menu = [
   },
   {
     name: 'Crear Usuario',
+    path: '/admin/est/users/create',
+    permission_required: 'view_users_internal',
+    visible: false,
+    icon: <RiUser3Line size={25} className="text-slate-500" />,
+    element: <UserCreate />
+  },
+
+  {
+    name: 'Editar Usuario',
+    path: '/admin/est/users/:id',
+    visible: false,
+    permission_required: 'view_users_internal',
+    icon: <RiUser3Line size={25} className="text-slate-500" />,
+    element: <UserEdit />
+  },
+  {
+    name: 'Crear Usuario',
     path: '/admin/users/create',
     permission_required: 'add_user',
     visible: false,

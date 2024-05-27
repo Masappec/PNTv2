@@ -2,12 +2,10 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
-import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import { Row } from "../../../../utils/interface";
 import FilePublicationUseCase from "../../../../domain/useCases/FilePublicationUseCase/FilePublicationUseCase";
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
-import { toast } from "react-toastify";
 import { Pagination } from "../../../../infrastructure/Api";
 import NumeralUseCase from "../../../../domain/useCases/NumeralUseCase/NumeraUseCase";
 import NumeralDetail from "../../../../domain/entities/NumeralDetail";
@@ -16,6 +14,7 @@ import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
 import Template from "../../../../domain/entities/Template";
 import TemplateFileUseCase from "../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
 import TransparencyCollabUseCase from "../../../../domain/useCases/TransparencyCollabUseCase/TransparencyCollabUseCase";
+import { sleep } from "../../../../utils/functions";
 
 
 interface Props {
@@ -38,23 +37,8 @@ const CollabCreateContainer = (props: Props) => {
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [files, SetFiles] = useState<{
-    file: File | string | null,
-    type: "table" | "file" | "url",
-    error: string,
-    loading: boolean,
-    success: string,
-    file_publication: FilePublicationEntity | null
-  }[]>([]);
 
-  const [publication, setPublication] = useState<TransparencyFocusEntity>(new TransparencyFocusEntity(
-    0, {
-    id: 0,
-    description: "",
-    name: "",
-  }, [], "", 0, 0, "", false, "", "", 0
-
-  ));
+ 
   const navigate = useNavigate()
 
   const [numeral, setNumeral] = useState<NumeralDetail>(new NumeralDetail(0, [], new Date(), new Date(), false, null, "", "", "", false, "", "", "", 0))
@@ -78,6 +62,9 @@ const CollabCreateContainer = (props: Props) => {
 
   const [establishment, setEstablishment] = useState({} as EstablishmentEntity)
 
+  const [loadingFiles, setLoadingFiles] = useState<{
+    name: string,
+  }[]>([])
 
   useEffect(() => {
     props.establishmentUseCase.getByUserSession().then((response) => {
@@ -154,12 +141,36 @@ const CollabCreateContainer = (props: Props) => {
   const handleSaveDataTable = (data: Row[][], template: TemplateFileEntity) => {
 
 
-    const blob = props.fileUseCase.generateBlob(data);
+    if (data.length === 0) {
+      return;
+    }
+    const templateDetail = numeral?.templates.find((_template) => {
+      return _template.id === template.id
+    })
+    if (!templateDetail) {
+      return;
+    }
 
 
-    const file = new File([blob], template.name + ".csv", {
-      type: "text/csv;charset=utf-8;",
-    });
+    let blob;
+    if (templateDetail.verticalTemplate) {
+      console.log(' es vertical')
+
+      blob = props.fileUseCase.generateContentCsvVertical(data);
+      //descargar archivo
+    } else {
+      blob = props.fileUseCase.generateContentCsv(data);
+
+    }
+    const csvContent = '\uFEFF' + blob; // Agregamos la marca de orden de bytes UTF-8 al inicio
+
+    // Crear un nuevo Blob con el contenido y el tipo MIME adecuados
+    const blob_ = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+
+    // Crear un objeto File a partir del Blob
+    const file = new File([blob_], template.name + '.csv', { type: 'text/csv;charset=utf-8' });
+
+
 
 
     const copyFiles = templates.find((_template) => {
@@ -182,7 +193,6 @@ const CollabCreateContainer = (props: Props) => {
 
 
 
-
   }
 
 
@@ -191,28 +201,20 @@ const CollabCreateContainer = (props: Props) => {
 
 
   const addFileFromList = (file: FilePublicationEntity) => {
-    const copy = files;
 
-    if (filesPublication.length < templates.length) {
-
-      copy.push({
-        type: "file",
-        error: "",
-        file: file.url_download,
-        file_publication: file,
-        loading: false,
-        success: ""
+    const files = filesPublication.find((file_) => {
+      return file_.description.trim() === file.description.trim()
+    })
+    if (files) {
+      setError("Ya existe un archivo de " + file.description)
+      sleep(2000).then(() => {
+        setError("")
       })
-
-      SetFiles(copy)
-      setFilesPublication([...filesPublication, file])
-      setPublication({
-        ...publication,
-        files: [...publication.files || [], file]
-      })
-    } else {
-      setError("No se pueden agregar más archivos")
+      return
     }
+    setError("")
+    setFilesPublication([...filesPublication, file])
+
   }
 
 
@@ -241,9 +243,7 @@ const CollabCreateContainer = (props: Props) => {
       navigation("/admin/transparency/focalized")
     }).catch((error) => {
       setError(error.message)
-      toast.error("Error al crear la publicación " + error.message, {
-        position: "top-right"
-      })
+      
       setLoading(false)
     })
 
@@ -332,6 +332,9 @@ const CollabCreateContainer = (props: Props) => {
       }))
 
       setError(e.message)
+      sleep(2000).then(() => {
+        setError("")
+      })
     })
 
 
@@ -357,7 +360,7 @@ const CollabCreateContainer = (props: Props) => {
 
 
     if (filesPublication.filter(file => file.id !== 0).length !== templates.length) {
-      const promise_array = filesPublication?.filter(x => x.id == 0).map((file) => {
+      const promise_array = filesPublication?.map((file) => {
         return props.fileUseCase.createFilePublication(file)
       })
       Promise.all(promise_array as Promise<FilePublicationEntity>[]).then((res) => {
@@ -366,9 +369,6 @@ const CollabCreateContainer = (props: Props) => {
         })
       }).then(() => {
         publish()
-      }).catch((e) => {
-        setLoading(false)
-        setError(e.message)
       })
       return;
     }
@@ -447,6 +447,7 @@ const CollabCreateContainer = (props: Props) => {
   }
 
   const handleChageLink = async (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
+    setLoadingFiles([...loadingFiles, { name: templateFile.name }])
     let newTemplates = templates.find((template) => {
       return template.id === templateFile.id
     })
@@ -459,81 +460,80 @@ const CollabCreateContainer = (props: Props) => {
     })
 
     if (!templateDetail) return
+    const url = e.target.value
 
-    props.fileUseCase.downloadFileFromUrl(e.target.value).then((file) => {
+    props.fileUseCase.getFromUrl(url).then((file) => {
 
-      if (file instanceof Blob) {
-        const file_ = new File([file], "data.csv", {
-          type: "text/csv;charset=utf-8;",
-        });
-        props.templateUseCase.validateLocalFile(
-          file_ as File,
-          templateDetail
-        ).then((res) => {
+      const file_ = new File([file], templateDetail.name + ".csv", {
+        type: "text/csv;charset=utf-8;",
+      });
 
-          setError("")
-          newTemplates = {
-            ...newTemplates,
-            isValid: res,
-            file: file_
-          } as TemplateFileEntity
+      props.templateUseCase.validateLocalFile(
+        file_ as File,
+        templateDetail
+      ).then((res) => {
+        setLoadingFiles(loadingFiles.filter((loading) => {
+          return loading.name !== templateFile.name
+        }))
+        setError("")
 
-
-          //reemplazar el template
-          setTemplates(templates.map((template) => {
-            if (template.id === newTemplates?.id) {
-              return newTemplates
-            }
-            return template
-          }))
+        newTemplates = {
+          ...newTemplates,
+          isValid: res,
+          file: file_
+        } as TemplateFileEntity
 
 
-
-          //reemplazar el filePublication
-          const name = newTemplates.file?.name || ""
-
-          let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
-          const index = filesPublication.indexOf(filePub as FilePublicationEntity)
-
-
-
-          if (!filePub) {
-            filePub = new FilePublicationEntity(0, name, newTemplates.name, newTemplates.file as File)
-            setFilesPublication([...filesPublication, filePub])
-          } else {
-            filePub.url_download = newTemplates.file as File
-            const newFiles = [
-              ...filesPublication as FilePublicationEntity[],
-            ]
-            newFiles[index] = filePub
-            setFilesPublication(newFiles)
+        //reemplazar el template
+        setTemplates(templates.map((template) => {
+          if (template.id === newTemplates?.id) {
+            return newTemplates
           }
+          return template
+        }))
+
+        const name = newTemplates.file?.name || ""
+
+        let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
+        const index = filesPublication.indexOf(filePub as FilePublicationEntity)
 
 
-        }).catch((e) => {
-          newTemplates = {
-            ...newTemplates,
-            isValid: false
-          } as TemplateFileEntity
+
+        if (!filePub) {
+          filePub = new FilePublicationEntity(0, name, newTemplates.name, newTemplates.file as File)
+          setFilesPublication([...filesPublication, filePub])
+        } else {
+          filePub.url_download = newTemplates.file as File
+          const newFiles = [
+            ...filesPublication as FilePublicationEntity[],
+          ]
+          newFiles[index] = filePub
+          setFilesPublication(newFiles)
+        }
 
 
-          //reemplazar el template
-          setTemplates(templates.map((template) => {
-            if (template.id === newTemplates?.id) {
-              return newTemplates
-            }
-            return template
-          }))
 
-          setError(e.message)
+      }).catch((e) => {
+        setError(e.message)
+        setLoadingFiles(loadingFiles.filter((loading) => {
+          return loading.name !== templateFile.name
+        }))
+        newTemplates = {
+          ...newTemplates,
+          isValid: false
+        } as TemplateFileEntity
+        sleep(2000).then(() => {
+          setError("")
         })
-
-      } else if (typeof file === "string") {
-        setError("No se ha podido descargar el archivo")
-
-      }
+      })
     }).catch((error) => {
+      setLoadingFiles(loadingFiles.filter((loading) => {
+        return loading.name !== templateFile.name
+      }))
       setError(error.message)
+      sleep(2000).then(() => {
+        setError("")
+      })
     })
 
 
@@ -602,6 +602,35 @@ const CollabCreateContainer = (props: Props) => {
 
   }
 
+  const onChangePage = (page: number) => {
+    props.fileUseCase.getFilesPublications("TC", numeral?.id || 0, page).then((response) => {
+      setFilesList(response)
+    }).catch((error) => {
+      setError(error.message)
+    })
+  }
+
+  const Download = (url: string)=>{
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'archivo.csv'
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      })
+      .catch(error => console.error('Ocurrió un error al descargar el archivo:', error));
+  }
   return (
     <ActiveCreatePresenter
       title={numeral?.description || ""}
@@ -628,9 +657,9 @@ const CollabCreateContainer = (props: Props) => {
       files_uploaded_last={filesList}
       onRemoveFileFromPublication={onRemoveFileFromPublication}
       onCancel={handleCancel}
-      DownloadFileFromUrl={() => { }}
-      onChangePage={() => { }}
-      loadingFiles={[]}
+      DownloadFileFromUrl={Download}
+      onChangePage={onChangePage}
+      loadingFiles={loadingFiles}
     />
   )
 }

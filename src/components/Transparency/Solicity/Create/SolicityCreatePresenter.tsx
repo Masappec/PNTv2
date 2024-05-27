@@ -271,6 +271,7 @@ const SolicityCreatePresenter = (props: Props) => {
                 onChange={(value) => {
                   props.onChangeSelect(value as ColourOption, 'gender')
                 }}
+                isDisabled
                 value={
                   props.solicitySaved.gender ?
                     props.getSelectedItems(props.solicitySaved.gender, props.genders)
@@ -293,6 +294,7 @@ const SolicityCreatePresenter = (props: Props) => {
                 onChange={(value) => {
                   props.onChangeSelect(value as ColourOption, 'race_identification')
                 }}
+                isDisabled
                 value={props.solicitySaved.race_identification ?
                   props.getSelectedItems(props.solicitySaved.race_identification, props.race_indentification)
                   : props.data.race_identification ? props.getSelectedItems(props.data.race_identification, props.race_indentification) : null

@@ -9,6 +9,7 @@ import ConfigurationUseCase from "../../../../domain/useCases/Configuration/Conf
 import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
 import { sleep } from "../../../../utils/functions"
 import { IOncalculate } from "../../../Common/PasswordMeter"
+import SessionService from "../../../../infrastructure/Services/SessionService"
 
 
 const UserCreateContainer = ({
@@ -35,6 +36,13 @@ const UserCreateContainer = ({
     const [loadingSubmit, setLoadingSubmit] = useState(false)
     const navigate = useNavigate()
 
+    const [userSession,SetUserSession] = useState<UserEntity>({} as UserEntity)
+
+
+    useEffect(()=>{
+        const user = SessionService.getUserData()
+        SetUserSession(user)
+    },[])
 
     useEffect(() => {
         roleUseCase.listAvailable().then((roles) => {
@@ -43,7 +51,7 @@ const UserCreateContainer = ({
                 handleConfigFields(roles[0].name)
             }
             if (roles.length == 0) {
-                navigate("/admin/users")
+                onCancel()
             }
         }).catch((error) => {
             setError(error.message)
@@ -103,7 +111,7 @@ const UserCreateContainer = ({
             target.reset()
             setData({} as UserEntity)
             sleep(2000).then(() => {
-                navigate("/admin/users")
+                onCancel()
             })
 
 
@@ -140,7 +148,12 @@ const UserCreateContainer = ({
     }
 
     const onCancel = () => {
-        navigate("/admin/users")
+        let route = '/admin/users'
+        const user = userSession.user_permissions?.find(x => x.codename =='view_users_internal')
+        if(user){
+            route='/admin/est/users'
+        }
+        navigate(route)
     }
     const onChangePassword = (data: IOncalculate) => {
 

@@ -3,7 +3,7 @@ import { ADMIN_PATH, Pagination } from "..";
 import { EstablishmentCreateDTO, EstablishmentDetailDTO, EstablishmentListDto, OptionsSelectCreate } from "./interface";
 import { URL_API } from "../../../utils/constans";
 import { MessageTranslation } from "../../../utils/data";
-import { User, UserListResponse } from "../User/interface";
+import { User } from "../User/interface";
 
 
 class EstablishmentApi {
