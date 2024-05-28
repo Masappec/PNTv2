@@ -9,7 +9,6 @@ import Select from 'react-select';
 import { ColourOption } from "../../../../utils/interface";
 import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
-import { Cities } from "../../../../utils/cities";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { Solicity } from "../../../../domain/entities/Solicity";
@@ -142,29 +141,14 @@ const SolicityEditPresenter = (props: Props) => {
                             value="Ciudad"
                             className="mt-2 text-base font-semibold"
                         />
-                        <Select
+                        <TextInput
                             className="w-[717px]"
                             placeholder=""
-                            options={Cities.map((city) => ({
-                                value: city.value,
-                                label: city.value,
-                                color: "#00B8D9",
-                            }))}
-                            onChange={(value) => { props.onChangeSelect(value as ColourOption, "city") }}
-                            value={props.solicitySaved.city ?
-                                props.getSelectedItems(props.solicitySaved?.city, Cities.map((city) => ({
-                                    value: city.value,
-                                    label: city.value,
-                                    color: "#00B8D9",
-                                }))
-                                ) : props.data.city ? props.getSelectedItems(props.data.city, Cities.map((city) => ({
-                                    value: city.value,
-                                    label: city.value,
-                                    color: "#00B8D9",
-                                }))) : null
-                            }
+                            type="text"
+                            onChange={props.onChange}
+                            name="city"
+                            value={props.data.city}
 
-                            name=""
                         />{" "}
                     </div>
 
@@ -188,7 +172,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 name="first_name"
                                 value={props.data.first_name}
                                 onChange={props.onChange}
-
+                                    
                             />{" "}
                         </div>
 
@@ -256,6 +240,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 onChange={(value) => {
                                     props.onChangeSelect(value as ColourOption, 'gender')
                                 }}
+                                isDisabled
                                 value={
                                     props.solicitySaved.gender ?
                                         props.getSelectedItems(props.solicitySaved.gender, props.genders)
@@ -278,6 +263,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 onChange={(value) => {
                                     props.onChangeSelect(value as ColourOption, 'race_identification')
                                 }}
+                                isDisabled
                                 value={props.solicitySaved.race_identification ?
                                     props.getSelectedItems(props.solicitySaved.race_identification, props.race_indentification)
                                     : props.data.race_identification ? props.getSelectedItems(props.data.race_identification, props.race_indentification) : null
@@ -308,21 +294,7 @@ const SolicityEditPresenter = (props: Props) => {
                     </h2>
 
                     <div className="grid xl:grid-flow-col xl:grid-col-2 lg:grid-cols-2 grid-cols-1 gap-2  mt-5  ">
-                        <div className=" flex  flex-col  h-[44px]  xl:w-[438px] ">
-                            <Select
-                                placeholder={"Forma de entrega"}
-                                name="formatSolicity"
-                                options={props.format_send}
-                                onChange={(value) => {
-                                    props.onChangeSelect(value as ColourOption, 'format_send')
-                                }}
-                                value={props.solicitySaved.format_send ?
-                                    props.getSelectedItems(props.solicitySaved.format_send, props.format_send)
-                                    : props.data.format_send ? props.getSelectedItems(props.data.format_send, props.format_send) : null
-
-                                }
-                            />
-                        </div>
+                        
 
                         <div className=" flex  flex-col -ml-20 h-[44px]  w-[395px] ">
                             <Select

@@ -15,6 +15,7 @@ import Template from "../../../../domain/entities/Template";
 import TemplateFileUseCase from "../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
 import TransparencyCollabUseCase from "../../../../domain/useCases/TransparencyCollabUseCase/TransparencyCollabUseCase";
 import { sleep } from "../../../../utils/functions";
+import TransparencyCollab from "../../../../domain/entities/TransparencyCollab";
 
 
 interface Props {
@@ -58,7 +59,22 @@ const CollabCreateContainer = (props: Props) => {
     from: 0,
     total_pages: 0
   })
+  const [publication, setPublication] = useState<TransparencyCollab>(new TransparencyCollab(
+    0, {
+    id: 0,
+    description: "",
+    name: "",
+  }, [], "", 0, 0, "", false, "", "", 0
 
+  ));
+  const [files, SetFiles] = useState<{
+    file: File | string | null,
+    type: "table" | "file" | "url",
+    error: string,
+    loading: boolean,
+    success: string,
+    file_publication: FilePublicationEntity | null
+  }[]>([]);
 
   const [establishment, setEstablishment] = useState({} as EstablishmentEntity)
 
@@ -136,41 +152,15 @@ const CollabCreateContainer = (props: Props) => {
 
 
 
-
-
   const handleSaveDataTable = (data: Row[][], template: TemplateFileEntity) => {
 
 
-    if (data.length === 0) {
-      return;
-    }
-    const templateDetail = numeral?.templates.find((_template) => {
-      return _template.id === template.id
-    })
-    if (!templateDetail) {
-      return;
-    }
+    const blob = props.fileUseCase.generateBlob(data);
 
 
-    let blob;
-    if (templateDetail.verticalTemplate) {
-      console.log(' es vertical')
-
-      blob = props.fileUseCase.generateContentCsvVertical(data);
-      //descargar archivo
-    } else {
-      blob = props.fileUseCase.generateContentCsv(data);
-
-    }
-    const csvContent = '\uFEFF' + blob; // Agregamos la marca de orden de bytes UTF-8 al inicio
-
-    // Crear un nuevo Blob con el contenido y el tipo MIME adecuados
-    const blob_ = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-
-    // Crear un objeto File a partir del Blob
-    const file = new File([blob_], template.name + '.csv', { type: 'text/csv;charset=utf-8' });
-
-
+    const file = new File([blob], template.name + ".csv", {
+      type: "text/csv;charset=utf-8;",
+    });
 
 
     const copyFiles = templates.find((_template) => {
@@ -193,6 +183,7 @@ const CollabCreateContainer = (props: Props) => {
 
 
 
+
   }
 
 
@@ -201,20 +192,28 @@ const CollabCreateContainer = (props: Props) => {
 
 
   const addFileFromList = (file: FilePublicationEntity) => {
+    const copy = files;
 
-    const files = filesPublication.find((file_) => {
-      return file_.description.trim() === file.description.trim()
-    })
-    if (files) {
-      setError("Ya existe un archivo de " + file.description)
-      sleep(2000).then(() => {
-        setError("")
+    if (filesPublication.length < templates.length) {
+
+      copy.push({
+        type: "file",
+        error: "",
+        file: file.url_download,
+        file_publication: file,
+        loading: false,
+        success: ""
       })
-      return
-    }
-    setError("")
-    setFilesPublication([...filesPublication, file])
 
+      SetFiles(copy)
+      setFilesPublication([...filesPublication, file])
+      setPublication({
+        ...publication,
+        files: [...publication.files || [], file]
+      })
+    } else {
+      setError("No se pueden agregar más archivos")
+    }
   }
 
 
@@ -332,9 +331,6 @@ const CollabCreateContainer = (props: Props) => {
       }))
 
       setError(e.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
     })
 
 
@@ -360,7 +356,7 @@ const CollabCreateContainer = (props: Props) => {
 
 
     if (filesPublication.filter(file => file.id !== 0).length !== templates.length) {
-      const promise_array = filesPublication?.map((file) => {
+      const promise_array = filesPublication?.filter(x => x.id == 0).map((file) => {
         return props.fileUseCase.createFilePublication(file)
       })
       Promise.all(promise_array as Promise<FilePublicationEntity>[]).then((res) => {
@@ -369,6 +365,9 @@ const CollabCreateContainer = (props: Props) => {
         })
       }).then(() => {
         publish()
+      }).catch((e) => {
+        setLoading(false)
+        setError(e.message)
       })
       return;
     }
@@ -448,6 +447,7 @@ const CollabCreateContainer = (props: Props) => {
 
   const handleChageLink = async (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
     setLoadingFiles([...loadingFiles, { name: templateFile.name }])
+
     let newTemplates = templates.find((template) => {
       return template.id === templateFile.id
     })
@@ -460,9 +460,8 @@ const CollabCreateContainer = (props: Props) => {
     })
 
     if (!templateDetail) return
-    const url = e.target.value
 
-    props.fileUseCase.getFromUrl(url).then((file) => {
+    props.fileUseCase.getFromUrl(e.target.value).then((file) => {
 
       const file_ = new File([file], templateDetail.name + ".csv", {
         type: "text/csv;charset=utf-8;",
@@ -512,7 +511,6 @@ const CollabCreateContainer = (props: Props) => {
         }
 
 
-
       }).catch((e) => {
         setError(e.message)
         setLoadingFiles(loadingFiles.filter((loading) => {
@@ -525,7 +523,10 @@ const CollabCreateContainer = (props: Props) => {
         sleep(2000).then(() => {
           setError("")
         })
+
       })
+
+
     }).catch((error) => {
       setLoadingFiles(loadingFiles.filter((loading) => {
         return loading.name !== templateFile.name
@@ -576,41 +577,24 @@ const CollabCreateContainer = (props: Props) => {
       setError("No se ha encontrado el template")
       return
     }
-    let blob = null;
+    let content;
     if (template.verticalTemplate) {
-      blob = props.fileUseCase.generateBlobVertical(data_template.data);
+      content = props.fileUseCase.generateContentCsvVertical(data_template.data);
     } else {
-      blob = props.fileUseCase.generateBlob(data_template.data);
+      content = props.fileUseCase.generateContentCsv(data_template.data);
     }
 
-    const file = new File([blob], name + ".csv", {
-      type: "text/csv;charset=utf-8;",
-    });
-    const url = URL.createObjectURL(file);
-
-
-    const a_ = document.createElement("a");
-    a_.setAttribute("href", url);
-    a_.setAttribute("download", name + ".csv");
-    a_.setAttribute("target", "_blank");
-    a_.style.display = "none";
-    document.body.appendChild(a_);
-
-
-    a_.click();
+    const a = document.createElement('a')
+    a.download = name + ".csv";
+    a.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(content);
+    a.click();
 
 
   }
+  const Download = (url: string) => {
 
-  const onChangePage = (page: number) => {
-    props.fileUseCase.getFilesPublications("TC", numeral?.id || 0, page).then((response) => {
-      setFilesList(response)
-    }).catch((error) => {
-      setError(error.message)
-    })
-  }
 
-  const Download = (url: string)=>{
+
     fetch(url)
       .then(response => {
         if (!response.ok) {
@@ -630,6 +614,13 @@ const CollabCreateContainer = (props: Props) => {
         document.body.removeChild(a);
       })
       .catch(error => console.error('Ocurrió un error al descargar el archivo:', error));
+  }
+  const onChangePage = (page: number) => {
+    props.fileUseCase.getFilesPublications("TF", numeral.id, page).then((response) => {
+      setFilesList(response)
+    }).catch((error) => {
+      setError(error.message)
+    })
   }
   return (
     <ActiveCreatePresenter

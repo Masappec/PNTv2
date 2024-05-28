@@ -1,5 +1,4 @@
 import { Button, TextInput } from "flowbite-react";
-import Select from "../../../Common/Select";
 import { CiSearch } from "react-icons/ci"
 import { IoBagAddOutline } from "react-icons/io5";
 import { FiEdit2 } from "react-icons/fi";
@@ -91,18 +90,6 @@ const CollaborativeListPresenter = (props: Props) => {
           sizing="base"
         />
 
-        <Select
-          className="w-[240px] mb-8"
-          placeholder={"Categoría"}
-          value={""}
-          onChange={() => { }}
-          options={[
-            {
-              value: "",
-              label: "Medioambiente",
-            },
-          ]}
-        />
 
 
         <Button

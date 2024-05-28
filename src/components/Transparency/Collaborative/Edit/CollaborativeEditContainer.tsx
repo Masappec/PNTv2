@@ -174,6 +174,8 @@ const CollaborativeEditContainer = (props: Props) => {
 
 
 
+
+
   const handleChageLink = async (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
     setLoadingFiles([...loadingFiles, { name: templateFile.name }])
 
@@ -525,11 +527,12 @@ const CollaborativeEditContainer = (props: Props) => {
     if (establishment === undefined) {
       throw new Error("No se ha encontrado el establecimiento")
     }
-    
-    await props.tfocalizedUseCase.updateTransparencyCollab(establishment.id||0,
-      filesPublication
-        .map((file) => file?.id || 0),
-      numeral.id)
+
+    await props.tfocalizedUseCase.updateTransparencyCollab(
+      establishment.id || 0,
+      filesPublication.map(x => x.id),
+      numeral.id
+    )
 
 
 
@@ -751,7 +754,7 @@ const CollaborativeEditContainer = (props: Props) => {
   }
 
   const onChangePage = (page: number) => {
-    props.fileUseCase.getFilesPublications("TC", numeral?.id || 0, page).then((response) => {
+    props.fileUseCase.getFilesPublications("TA", numeral?.id || 0, page).then((response) => {
       setFilesList(response)
     }).catch((error) => {
       setError(error.message)
