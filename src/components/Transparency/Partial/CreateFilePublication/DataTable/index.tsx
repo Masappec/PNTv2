@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { Row } from "../../../../../utils/interface"
 import DynamicTable from "../../../../Common/DynamicTable"
 
@@ -17,7 +18,11 @@ interface IDataTablePartial {
 }
 const DataTablePartial = (props: IDataTablePartial) => {
 
+    const [data, setData] = useState<Row[][]>(props.data)
 
+    useEffect   (() => {
+        setData(props.data)
+    }, [props.data])
 
 
     return <div className="grid grid-cols-1 gap-4 m-5 h-auto ">
@@ -38,7 +43,7 @@ const DataTablePartial = (props: IDataTablePartial) => {
         </div>
         <DynamicTable
             isSaved={props.isSaved}
-            data={props.data}
+            data={data}
             onSaveTable={(data) => props.onSaveTable(data, props.index)}
             limitRows={props.limit}
         />

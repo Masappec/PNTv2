@@ -15,7 +15,13 @@ class TemplateFileUseCase {
     }
 
     async validateLocalFile(data: File, template: Template) {
-        return new Promise<boolean>((resolve, reject) => {
+        return new Promise<{
+            columns: string[],
+            rows: string[][],
+            verticalTemplate: boolean,
+            valid: boolean
+        
+        }>((resolve, reject) => {
             this.detectDelimiter(data, 1024, (delim, text) => {
                 try {
                     
@@ -34,7 +40,6 @@ class TemplateFileUseCase {
                     }
 
                     columns = columns.filter(col => col.trim() !== '');
-                    console.log(text,columns, template.columns)
 
 
                     if (columns.length !== template.columns.length) {
@@ -48,16 +53,25 @@ class TemplateFileUseCase {
                             throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden');
                         }
                     });
-
                     const rows_ = rows.slice(1);
                     //validar que las filas no esten vacias
+                    console.log(rows_)
                     if (rows_.filter(row => row.trim() !== '').length === 0) {
                         throw new Error('El archivo no contiene datos');
                     }
 
-                    
+                    const final_rows = rows_.map(row => {
+                        const row_data = row.split(delim);
+                        return row_data.filter(col => col.trim() !== '');
+                    });
 
-                    resolve(true);
+                    resolve({
+                        columns,
+                        rows:final_rows,
+                        verticalTemplate: template.verticalTemplate,
+                        valid: true
+                    });
+                    
                 } catch (error) {
                     reject(error);
                 }
@@ -89,6 +103,7 @@ class TemplateFileUseCase {
     }
 
 
+    
 
 }
 

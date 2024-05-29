@@ -1,4 +1,4 @@
-import { Alert, Button, Tabs, Tooltip } from "flowbite-react";
+import { Alert, Button, Tabs, TabsRef, Tooltip } from "flowbite-react";
 import Spinner from "../../../Common/Spinner";
 import { FaArrowUp } from "react-icons/fa";
 import Dropzone from "../../../Common/Dropzone";
@@ -47,6 +47,7 @@ interface Props {
   onChangePage: (page: number) => void;
   DownloadFileFromUrl: (url: string) => void;
   loadingFiles: { name: string }[]
+  tabRef?: React.RefObject<TabsRef>;
 }
 
 
@@ -159,7 +160,9 @@ const ActiveCreatePresenter = (props: Props) => {
               })
             }
           </div>
-          <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800">
+          <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800"
+            ref={props.tabRef}
+          >
             <Tabs.Item title="Subir Archivos" >
               <div className="mt-5 xl:grid-cols-3 grid-cols-1 grid gap-5">
                 {
@@ -201,7 +204,9 @@ const ActiveCreatePresenter = (props: Props) => {
                 }
               </div>
             </Tabs.Item>
-            <Tabs.Item title="Agregar enlances">
+            <Tabs.Item title="Agregar enlances"
+            
+            >
               <div className="flex flex-row m-2">
 
                 {

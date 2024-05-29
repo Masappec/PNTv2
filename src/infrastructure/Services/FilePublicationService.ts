@@ -87,11 +87,18 @@ class FilePublicationService {
     generateContentCsvVertical = (data: Row[][]) => {
         let csvContent = "";
         const transposedData = data[0].map((_, colIndex) => data.map(row => row[colIndex]));
+        if(transposedData === undefined){
 
-        transposedData.forEach((column) => {
+            return csvContent;
+        }
+            
+        if (transposedData.length === 0) {
+            return csvContent;
+        }
+        transposedData.forEach((column) => { 
             column.forEach((cell, rowIndex) => {
                 // Si es la primera fila, agregar el valor al CSV directamente; si no, agregarlo con un salto de línea
-                csvContent += (rowIndex === 0) ? cell.value : ";" + cell.value;
+                csvContent += (rowIndex === 0) ? (cell.value ? cell.value : ";" + cell.value) : ";"
             });
             csvContent += "\r\n"; // Agregar un salto de línea después de cada columna
         });

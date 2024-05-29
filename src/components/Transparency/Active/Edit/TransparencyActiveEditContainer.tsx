@@ -1,7 +1,7 @@
 
 import { useLocation, useNavigate } from "react-router-dom";
 import NumeralEntity from "../../../../domain/entities/NumeralEntity";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FilePublicationUseCase from "../../../../domain/useCases/FilePublicationUseCase/FilePublicationUseCase";
 import TemplateFileUseCase from "../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
 import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
@@ -17,6 +17,7 @@ import { Row } from "../../../../utils/interface";
 import { Pagination } from "../../../../infrastructure/Api";
 import ActiveCreatePresenter from "../Create/ActiveCreatePresenter";
 import { sleep } from "../../../../utils/functions";
+import { TabsRef } from "flowbite-react";
 
 export interface INeedProps {
     numeral: NumeralEntity,
@@ -50,7 +51,7 @@ const ActiveEditContainer = (props: Props) => {
     const [success, setSuccess] = useState<string>();
 
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
-
+    const tabsRef = useRef<TabsRef>(null);
     const [establishment, setEstablishment] = useState<EstablishmentEntity>();
     const [filesList, setFilesList] = useState<Pagination<FilePublicationEntity>>({
         current: 0,
@@ -72,9 +73,12 @@ const ActiveEditContainer = (props: Props) => {
             setTemplates(state.numeral.templates.map((template) => {
                 return new TemplateFileEntity(template.id, template.file, template.name, template.isValid, template.link)
             }))
-            console.log(state.numeral.publication?.files)
             setFilesPublication(state.numeral.publication?.files || [])
-
+            props.usecase.getFilesPublications("TA", state.numeral.id || 0).then((response) => {
+                setFilesList(response)
+            }).catch((error) => {
+                setError(error.message)
+            })
             props.numeralUsecase.getNumeralById(state.numeral.id).then((res) => {
                 setDetail(res)
                 buildRowFromTemplate(res.templates)
@@ -93,17 +97,12 @@ const ActiveEditContainer = (props: Props) => {
     }, [])
 
     useEffect(() => {
-        console.log(templates, filesPublication)
         setIsDisabled(_isDisabled())
     }, [templates, filesPublication])
 
 
     useEffect(() => {
-        props.usecase.getFilesPublications("TA", numeral?.id || 0).then((response) => {
-            setFilesList(response)
-        }).catch((error) => {
-            setError(error.message)
-        })
+       
     }, [numeral])
 
 
@@ -130,14 +129,53 @@ const ActiveEditContainer = (props: Props) => {
             }
 
         })
-        console.log(data)
 
 
         setTemplateTable(data)
     }
 
 
+    const buildRowFromTemplateAnData = (templates: Template,rows:Row[][]) => {
+        
+        let template_mod = templateTable.find((template) => {
+            return template.id === templates.id
+        })
+        if (!template_mod) {
+            template_mod = {
+                id: templates.id,
+                data: [
+                    templates.columns.map((column) => {
+                        return {
+                            key: column.id.toString(),
+                            value: column.name,
+                            is_header: true,
+                        }
+                    })
+                ] as Row[][]
+            }
+        }else{
+            template_mod.data = rows
 
+        }
+
+        if(
+            templateTable.filter((template) => {
+                return template.id === templates.id
+            }).length === 0
+        ){
+            setTemplateTable([...templateTable,template_mod])
+        }else{
+            setTemplateTable(templateTable.map((template) => {
+                if(template.id === templates.id){
+                    return template_mod
+                }
+                return template
+            }))
+        }
+
+        
+        
+    }
 
 
 
@@ -178,7 +216,7 @@ const ActiveEditContainer = (props: Props) => {
 
                 newTemplates = {
                     ...newTemplates,
-                    isValid: res,
+                    isValid: res.valid,
                     file: file_
                 } as TemplateFileEntity
 
@@ -353,7 +391,7 @@ const ActiveEditContainer = (props: Props) => {
             setError("")
             newTemplates = {
                 ...newTemplates,
-                isValid: res
+                isValid: res.valid
             } as TemplateFileEntity
 
 
@@ -431,7 +469,6 @@ const ActiveEditContainer = (props: Props) => {
             return
         }
 
-        console.log(filesPublication)
 
         if (filesPublication.filter(file => file.id === 0).length > 0) {
             const promise_array = filesPublication?.filter(x => x.id === 0).map((file) => {
@@ -518,7 +555,9 @@ const ActiveEditContainer = (props: Props) => {
     const handleSaveDataTable = (data: Row[][], template: TemplateFileEntity) => {
 
 
-
+        if (data==undefined) {
+            return;
+        }
         if (data.length === 0) {
             return;
         }
@@ -532,7 +571,6 @@ const ActiveEditContainer = (props: Props) => {
 
         let blob;
         if (templateDetail.verticalTemplate) {
-            console.log(' es vertical')
 
             blob = props.usecase.generateContentCsvVertical(data);
             //descargar archivo
@@ -599,7 +637,6 @@ const ActiveEditContainer = (props: Props) => {
         const templateDetail = detail?.templates.find((_template) => {
             return template.id === _template.id
         })
-        console.log(templateDetail?.name)
         if (!templateDetail) return
 
         props.templateUseCase.validateLocalFile(file, templateDetail).then((res) => {
@@ -660,7 +697,6 @@ const ActiveEditContainer = (props: Props) => {
         const name = name_template?.name || ""
 
 
-        console.log(data_template, name_template)
 
         if (!data_template) {
             setError("No se ha encontrado el template")
@@ -701,6 +737,22 @@ const ActiveEditContainer = (props: Props) => {
         const files = filesPublication.find((file_) => {
             return file_.description.trim() === file.description.trim()
         })
+
+        const template = templates.find((template) => {
+            return template.name.trim() === file.description.trim()
+        })
+        if (!template) {
+            setError("No se ha encontrado el template")
+            return;
+        }
+        const temDetail = detail?.templates.find((template_) => {
+            return template_.id === template.id
+        })
+        if (!temDetail) {
+            setError("No se ha encontrado el template")
+            return;
+        }
+
         if (files) {
             setError("Ya existe un archivo de " + file.description)
             sleep(2000).then(() => {
@@ -709,8 +761,49 @@ const ActiveEditContainer = (props: Props) => {
             return
         }
         setError("")
+        props.usecase.getFromUrl(file.url_download as string).then((file_) => {
+            const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
+            props.templateUseCase.validateLocalFile(blob as File, temDetail ).then((res) => {
+                if (!res) {
+                    setError("El archivo no cumple con el formato")
+                    return
+                }
+                const columns = res.columns.map((column) => {
+                    return {
+                        key: column,
+                        value: column,
+                        is_header: true
+                    }
+                })
+                if(temDetail.verticalTemplate){
+                    const rows = res.rows.map((row) => {
+                        return{
+                            key: row[0] as string,
+                            value: row[0] as string
+                        }
+                    })
 
-        setFilesPublication([...filesPublication, file])
+                    buildRowFromTemplateAnData(temDetail, [columns,[...rows]])
+                    tabsRef.current?.setActiveTab(2)
+                    return
+                }else{
+                    const rows = res.rows.map((row) => {
+                        return row.map((value, index) => {
+                            return {
+                                key: index.toString(),
+                                value: value
+                            }
+                        })
+                    })
+                    buildRowFromTemplateAnData(temDetail, [columns,...rows])
+                    tabsRef.current?.setActiveTab(2)
+                }
+            }).catch((e) => {
+                setError(e.message)
+            })
+        }).catch((e) => {
+            setError(e.message)
+        })
 
 
     }
@@ -730,7 +823,6 @@ const ActiveEditContainer = (props: Props) => {
     const Download = (url: string) => {
 
 
-        console.log(url)
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -781,7 +873,7 @@ const ActiveEditContainer = (props: Props) => {
             onChangePage={onChangePage}
             DownloadFileFromUrl={Download}
             loadingFiles={loadingFiles}
-
+            tabRef={tabsRef}
         />
     )
 }

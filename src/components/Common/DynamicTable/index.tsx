@@ -24,13 +24,19 @@ const DynamicTable = (props: Props) => {
     const [data, setData] = useState<Row[][]>(props.data)
     const [currentPage, setCurrentPage] = useState(1);
     const [limit,] = useState(15);
-    const [totalPages, setTotalPages] = useState(0);
+    const [totalPages, setTotalPages] = useState(1);
     const [from, setFrom] = useState(0);
     const [to, setTo] = useState(0);
     const [datarows, setDatarows] = useState<Row[][]>([])
 
     useEffect(() => {
+        console.log("data changed", props.data)
         setData(props.data)
+        setTotalPages(Math.ceil(props.data.length / limit))
+        setCurrentPage(Math.ceil(props.data.length / limit))
+        setFrom((currentPage * limit) - limit + 1)
+        setTo(currentPage * limit > props.data.length ? props.data.length : currentPage * limit + 1)
+        
         setDatarows(props.data.slice(0))
     }, [props.data])
 
