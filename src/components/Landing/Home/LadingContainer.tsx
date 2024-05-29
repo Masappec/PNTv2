@@ -8,7 +8,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../infrastructure/Store";
 
 
-const LandingContainer = () => {
+
+const LandingContainer = (  ) => {
+
+    
     const [faq,] = useState<FrequencyAsked[]>([
         {
             question: "¿Qué puedo hacer en el portal?",
@@ -80,6 +83,50 @@ const LandingContainer = () => {
     }
 
 
+    const onQuestion =( index: number )=>{
+    
+        if ( index === 0 ) {
+            
+         navigate('/area-pedagogica');
+        }
+        if ( index === 1 ) {
+            
+            navigate('/normativa');
+           }
+           
+        if (index === 2) {
+
+    
+        navigate('/area-pedagogica/tutoriales');
+        
+        }
+       
+    }
+    
+        
+        
+    
+
+
+    const onFollow = () => {
+        navigate('/presupuesto')
+        
+    }
+
+    const onPersonal = () => {
+        navigate('/personal-remuneracion')
+    }
+
+    const onAudience = () => {
+        navigate('/audiencias-reuniones')
+    }
+
+    const onForm = () => {
+        navigate('/formularios-solicitudes')
+    }
+
+
+
     return (
         <LandingPresenter
             faq={faq}
@@ -87,6 +134,11 @@ const LandingContainer = () => {
             countFiles={0}
             loadOptions={loadOptions}
             onSelect={onSelect}
+            onFollow={onFollow}
+            onPersonal={onPersonal}
+            onAudience={onAudience}
+            onForm={onForm}
+            onQuestion={onQuestion}
         />
     )
 

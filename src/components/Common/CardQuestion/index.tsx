@@ -9,6 +9,10 @@ interface Props {
     content: string;
     bgcolor: string;
     contrast: string;
+    onQuestion?: () => void;
+    
+
+
 
 
 
@@ -60,11 +64,11 @@ const CardQuestion = (props: Props) => {
                              2xl:text-2xl text-xl  md:text-xl  mb-5 lg:ml-4">
                                 {props.content}
                             </p>
-                            <div className="lg:flex 
-                            items-end justify-between  2xl:mt-28 md:mt-10 xl:mt-20 mt-28">
+                            <button className="lg:flex items-end justify-between mt-10 md:mt-16 xl:mt-20 h-full"
+                                onClick={props.onQuestion}>
                                 <IoArrowForwardOutline size={53} className="text-white dark:text-white" />
 
-                            </div>
+                            </button>
                         </div>
                     </div>
 

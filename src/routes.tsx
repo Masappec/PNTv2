@@ -1,4 +1,4 @@
-import { createBrowserRouter, redirect } from "react-router-dom";
+import { createBrowserRouter,  redirect } from "react-router-dom";
 import SessionService from "./infrastructure/Services/SessionService";
 import Login from "./interfaces/web/Auth/Login";
 import Admin from "./interfaces/web/Admin";
@@ -18,6 +18,11 @@ import Entry from "./interfaces/web/Auth/Entry";
 import { BASE_URL, IS_SERVER } from "./utils/constans";
 import About from "./interfaces/web/Landing/About";
 import PublicIndicators from "./interfaces/web/Landing/Establishment/Indicators";
+import Tutorials from "./interfaces/web/Landing/Tutorials";
+import Personal from "./interfaces/web/Landing/Thematics/Personal";
+import Audience from "./interfaces/web/Landing/Thematics/Audience";
+import Solicity from "./interfaces/web/Landing/Thematics/Solicity";
+import Finance from "./interfaces/web/Landing/Thematics/Presupuesto";
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged();
@@ -85,6 +90,10 @@ const Router = createBrowserRouter(
           element: <FAQ />,
         },
         {
+          path: "/area-pedagogica/tutoriales",
+          element: <Tutorials />,
+        },
+        {
           path: "/entidades",
           element: <PublicEstablishment />,
         },
@@ -100,6 +109,28 @@ const Router = createBrowserRouter(
           path: "/publicaciones/:slug",
           element: <PublicationDetail />,
         },
+        
+        {
+          path: "/presupuesto",
+          element: <Finance/>,
+        },
+
+        {
+          path: "/personal-remuneracion",
+          element: <Personal />,
+        },
+        {
+          path: "/audiencias-reuniones",
+          element: <Audience />,
+        },
+        {
+          path: "/formularios-solicitudes",
+          element: <Solicity/>,
+        },
+
+
+
+
         {
           path: "/ingreso",
           element: <Login />,

@@ -19,6 +19,12 @@ interface Props {
   countFiles: number;
   onSelect: (value: ColourOption) => void;
   faq: FrequencyAsked[];
+  onPersonal: () => void;
+  onFollow: () => void;
+  onAudience: () => void;
+  onForm: () => void;
+  onQuestion: (index:number)=> void;
+
 }
 const LandingPresenter = (props: Props) => {
   const colors = [
@@ -80,6 +86,7 @@ const LandingPresenter = (props: Props) => {
                 content={item.answer}
                 contrast={colors[index].contrast}
                 bgcolor={colors[index].bgcolor}
+                onQuestion={()=>props.onQuestion(index)}
               ></CardQuestion>
             );
           })}
@@ -113,6 +120,7 @@ const LandingPresenter = (props: Props) => {
             color="text-black "
             content=" Encontrarás información sobre presupuesto participativo, consejo de coordinación regional, audiencias públicas, entre otros."
             classnames={"px-5 xl:mr-0 "}
+            onFollow={props.onPersonal}
           ></CardConsulta>
           <CardConsulta
             icon={
@@ -126,6 +134,7 @@ const LandingPresenter = (props: Props) => {
             color="text-black"
             classnames={"px-5 xl:mr-0 "}
             content=" Encontrarás información sobre presupuesto participativo, consejo de coordinación regional, audiencias públicas, entre otros."
+            onFollow={props.onFollow}
           ></CardConsulta>
           <CardConsulta
             icon={
@@ -152,6 +161,7 @@ const LandingPresenter = (props: Props) => {
             content=" Encontrarás información sobre presupuesto participativo, consejo de coordinación regional, audiencias públicas, entre otros."
             color="text-black"
             classnames={"px-5 xl:mr-0 "}
+            onFollow={props.onAudience}
           ></CardConsulta>
           <CardConsulta
             icon={
@@ -165,6 +175,7 @@ const LandingPresenter = (props: Props) => {
             color="text-black"
             classnames={"px-5 xl:mr-0 "}
             content=" Encontrarás información sobre presupuesto participativo, consejo de coordinación regional, audiencias públicas, entre otros."
+            onFollow={props.onForm}
           ></CardConsulta>
         </div>
         <div className="container flex items-center md:sm:justify-center  mb-24 w-full">

@@ -12,6 +12,7 @@ interface Props {
     color: string;
     bgcolor?: string | null;
     classnames?: string | null;
+    onFollow?: () => void;
 
 
 }
@@ -46,11 +47,13 @@ const CardConsulta = (props: Props) => {
                     {props.content}
                 </p>
 
+               
+                <button className="flex items-end justify-between h-full   "
 
-                <div className="flex items-end justify-between h-full   ">
+                  onClick={props.onFollow} >
                     <VscArrowRight size={50} className={`${props.color} ${hover ? "text-white" : "text-black"} `} />
 
-                </div>
+                </button>
 
 
 
