@@ -2,7 +2,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import ActiveCreatePresenter from "./ActiveCreatePresenter";
 import NumeralEntity from "../../../../domain/entities/NumeralEntity";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FilePublicationUseCase from "../../../../domain/useCases/FilePublicationUseCase/FilePublicationUseCase";
 import TemplateFileUseCase from "../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
 import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
@@ -17,6 +17,7 @@ import Template from "../../../../domain/entities/Template";
 import { Row } from "../../../../utils/interface";
 import { Pagination } from "../../../../infrastructure/Api";
 import { sleep } from "../../../../utils/functions";
+import { TabsRef } from "flowbite-react";
 
 export interface INeedProps {
   numeral: NumeralEntity,
@@ -50,6 +51,7 @@ const ActiveCreateContainer = (props: IProps) => {
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<string>();
+  const tabsRef = useRef<TabsRef>(null);
 
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
@@ -179,7 +181,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
         newTemplates = {
           ...newTemplates,
-          isValid: res,
+          isValid: res.valid,
           file: file_
         } as TemplateFileEntity
 
@@ -279,7 +281,7 @@ const ActiveCreateContainer = (props: IProps) => {
       setError("")
       newTemplates = {
         ...newTemplates,
-        isValid: res
+        isValid: res.valid
       } as TemplateFileEntity
 
 
@@ -606,24 +608,129 @@ const ActiveCreateContainer = (props: IProps) => {
   }
 
 
+  const buildRowFromTemplateAnData = (templates: Template, rows: Row[][]) => {
 
-
-  const addFileFromList = (file: FilePublicationEntity) => {
-
-    const files = filesPublication.find((file_) => {
-      return file_.description.trim() === file.description.trim()
+    let template_mod = templateTable.find((template) => {
+      return template.id === templates.id
     })
-    if (files) {
-      setError("Ya existe un archivo de " + file.description)
-      sleep(2000).then(() => {
-        setError("")
-      })
-      return
+    if (!template_mod) {
+      template_mod = {
+        id: templates.id,
+        data: [
+          templates.columns.map((column) => {
+            return {
+              key: column.id.toString(),
+              value: column.name,
+              is_header: true,
+            }
+          })
+        ] as Row[][]
+      }
+    } else {
+      template_mod.data = rows
+
     }
-    setError("")
-    setFilesPublication([...filesPublication, file])
+
+    if (
+      templateTable.filter((template) => {
+        return template.id === templates.id
+      }).length === 0
+    ) {
+      setTemplateTable([...templateTable, template_mod])
+    } else {
+      setTemplateTable(templateTable.map((template) => {
+        if (template.id === templates.id) {
+          return template_mod
+        }
+        return template
+      }))
+    }
 
 
+
+  }
+
+
+    const addFileFromList = (file: FilePublicationEntity) => {
+
+      const files = filesPublication.find((file_) => {
+        return file_.description.trim() === file.description.trim()
+      })
+
+      const template = templates.find((template) => {
+        return template.name.trim() === file.description.trim()
+      })
+      if (!template) {
+        setError("No se ha encontrado el template")
+        return;
+      }
+      const temDetail = detail?.templates.find((template_) => {
+        return template_.id === template.id
+      })
+      if (!temDetail) {
+        setError("No se ha encontrado el template")
+        return;
+      }
+
+      if (files) {
+        setError("Ya existe un archivo de " + file.description)
+        sleep(2000).then(() => {
+          setError("")
+        })
+        return
+      }
+      setError("")
+      fetch(file.url_download as string).then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.blob();
+      }).then((file_) => {
+        const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
+        props.templateUseCase.validateLocalFile(blob as File, temDetail).then((res) => {
+          if (!res) {
+            setError("El archivo no cumple con el formato")
+            return
+          }
+          const columns = res.columns.map((column) => {
+            return {
+              key: column,
+              value: column,
+              is_header: true
+            }
+          })
+          if (temDetail.verticalTemplate) {
+            const rows = res.rows.map((row) => {
+              return {
+                key: row[0] as string,
+                value: row[0] as string
+              }
+            })
+
+            buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
+            tabsRef.current?.setActiveTab(2)
+            return
+          } else {
+            const rows = res.rows.map((row) => {
+              return row.map((value, index) => {
+                return {
+                  key: index.toString(),
+                  value: value
+                }
+              })
+            })
+            buildRowFromTemplateAnData(temDetail, [columns, ...rows])
+            tabsRef.current?.setActiveTab(2)
+          }
+        }).catch((e) => {
+          setError(e.message)
+        })
+      }).catch((e) => {
+        setError(e.message)
+      })
+
+
+    
   }
   const onRemoveFileFromPublication = (index: number) => {
     const copyFiles = [...filesPublication]
@@ -691,6 +798,7 @@ const ActiveCreateContainer = (props: IProps) => {
       onChangePage={onChangePage}
       DownloadFileFromUrl={Download}
       loadingFiles={loadingFiles}
+      tabRef={tabsRef}
     />
   )
 }

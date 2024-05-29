@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import { Row } from "../../../../utils/interface";
@@ -15,6 +15,7 @@ import Template from "../../../../domain/entities/Template";
 import TemplateFileUseCase from "../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
 import TransparencyCollabUseCase from "../../../../domain/useCases/TransparencyCollabUseCase/TransparencyCollabUseCase";
 import { sleep } from "../../../../utils/functions";
+import { TabsRef } from "flowbite-react";
 
 interface Props {
 
@@ -57,6 +58,8 @@ const CollaborativeEditContainer = (props: Props) => {
   }, [], "", 0, 0, "", false, "", "", 0
 
   ));
+  const tabsRef = useRef<TabsRef>(null);
+
   const navigate = useNavigate()
 
   const state = location.state as INeedProps;
@@ -211,7 +214,7 @@ const CollaborativeEditContainer = (props: Props) => {
 
         newTemplates = {
           ...newTemplates,
-          isValid: res,
+          isValid: res.valid,
           file: file_
         } as TemplateFileEntity
 
@@ -386,7 +389,7 @@ const CollaborativeEditContainer = (props: Props) => {
       setError("")
       newTemplates = {
         ...newTemplates,
-        isValid: res
+        isValid: res.valid
       } as TemplateFileEntity
 
 
@@ -725,7 +728,47 @@ const CollaborativeEditContainer = (props: Props) => {
 
 
   }
+  const buildRowFromTemplateAnData = (templates: Template, rows: Row[][]) => {
 
+    let template_mod = templateTable.find((template) => {
+      return template.id === templates.id
+    })
+    if (!template_mod) {
+      template_mod = {
+        id: templates.id,
+        data: [
+          templates.columns.map((column) => {
+            return {
+              key: column.id.toString(),
+              value: column.name,
+              is_header: true,
+            }
+          })
+        ] as Row[][]
+      }
+    } else {
+      template_mod.data = rows
+
+    }
+
+    if (
+      templateTable.filter((template) => {
+        return template.id === templates.id
+      }).length === 0
+    ) {
+      setTemplateTable([...templateTable, template_mod])
+    } else {
+      setTemplateTable(templateTable.map((template) => {
+        if (template.id === templates.id) {
+          return template_mod
+        }
+        return template
+      }))
+    }
+
+
+
+  }
 
 
 
@@ -734,6 +777,22 @@ const CollaborativeEditContainer = (props: Props) => {
     const files = filesPublication.find((file_) => {
       return file_.description.trim() === file.description.trim()
     })
+
+    const template = templates.find((template) => {
+      return template.name.trim() === file.description.trim()
+    })
+    if (!template) {
+      setError("No se ha encontrado el template")
+      return;
+    }
+    const temDetail = numeral?.templates.find((template_) => {
+      return template_.id === template.id
+    })
+    if (!temDetail) {
+      setError("No se ha encontrado el template")
+      return;
+    }
+
     if (files) {
       setError("Ya existe un archivo de " + file.description)
       sleep(2000).then(() => {
@@ -742,8 +801,55 @@ const CollaborativeEditContainer = (props: Props) => {
       return
     }
     setError("")
+    fetch(file.url_download as string).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.blob();
+    }).then((file_) => {
+      const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
+      props.templateUseCase.validateLocalFile(blob as File, temDetail).then((res) => {
+        if (!res) {
+          setError("El archivo no cumple con el formato")
+          return
+        }
+        const columns = res.columns.map((column) => {
+          return {
+            key: column,
+            value: column,
+            is_header: true
+          }
+        })
+        if (temDetail.verticalTemplate) {
+          const rows = res.rows.map((row) => {
+            return {
+              key: row[0] as string,
+              value: row[0] as string
+            }
+          })
 
-    setFilesPublication([...filesPublication, file])
+          buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
+          tabsRef.current?.setActiveTab(2)
+          return
+        } else {
+          const rows = res.rows.map((row) => {
+            return row.map((value, index) => {
+              return {
+                key: index.toString(),
+                value: value
+              }
+            })
+          })
+          buildRowFromTemplateAnData(temDetail, [columns, ...rows])
+          tabsRef.current?.setActiveTab(2)
+        }
+      }).catch((e) => {
+        setError(e.message)
+      })
+    }).catch((e) => {
+      setError(e.message)
+    })
+
 
 
   }

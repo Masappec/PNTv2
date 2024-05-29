@@ -26,6 +26,7 @@ class TemplateFileUseCase {
                 try {
                     
                     let rows = text.split('\r\n');
+                    console.log(rows)
                     let columns = rows[0].split(delim);
 
                     if (template.verticalTemplate) {
@@ -48,7 +49,6 @@ class TemplateFileUseCase {
                     }
 
                     columns.forEach(element => {
-                        console.log(template.columns.find(col => col.name.toLowerCase().trim() === element.toLowerCase().trim()))
                         if (!template.columns.find(col => col.name.toLowerCase().trim() === element.toLowerCase().trim())) {
                             throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden');
                         }

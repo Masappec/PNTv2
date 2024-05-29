@@ -579,6 +579,7 @@ const ActiveEditContainer = (props: Props) => {
 
         }
 
+
         const csvContent = '\uFEFF' + blob; // Agregamos la marca de orden de bytes UTF-8 al inicio
 
         // Crear un nuevo Blob con el contenido y el tipo MIME adecuados
@@ -761,7 +762,12 @@ const ActiveEditContainer = (props: Props) => {
             return
         }
         setError("")
-        props.usecase.getFromUrl(file.url_download as string).then((file_) => {
+        fetch(file.url_download as string).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        }).then((file_) => {
             const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
             props.templateUseCase.validateLocalFile(blob as File, temDetail ).then((res) => {
                 if (!res) {
@@ -831,6 +837,9 @@ const ActiveEditContainer = (props: Props) => {
                 return response.blob();
             })
             .then(blob => {
+
+                
+
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.style.display = 'none';

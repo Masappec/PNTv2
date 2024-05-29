@@ -95,10 +95,12 @@ class FilePublicationService {
         if (transposedData.length === 0) {
             return csvContent;
         }
+        console.log(transposedData)
         transposedData.forEach((column) => { 
             column.forEach((cell, rowIndex) => {
+                console.log(cell)
                 // Si es la primera fila, agregar el valor al CSV directamente; si no, agregarlo con un salto de línea
-                csvContent += (rowIndex === 0) ? (cell.value ? cell.value : ";" + cell.value) : ";"
+                csvContent += (rowIndex === 0) ? (cell.value ? cell.value+";" : ";") : cell.value +";"
             });
             csvContent += "\r\n"; // Agregar un salto de línea después de cada columna
         });
