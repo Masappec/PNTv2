@@ -45,7 +45,7 @@ api.interceptors.response.use(
 export const AUTH_PATH = import.meta.env.VITE_PATH_AUTH;
 export const ADMIN_PATH = import.meta.env.VITE_PATH_ADMIN;
 export const TRANSPARENCY_PATH = import.meta.env.VITE_PATH_TRANSPARENCY;
-
+export const PUBLIC_PATH = import.meta.env.VITE_PATH_PUBLIC;
 
 export interface Pagination<T> {
     total: number;

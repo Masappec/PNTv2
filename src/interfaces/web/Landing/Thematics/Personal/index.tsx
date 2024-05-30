@@ -1,11 +1,14 @@
 import PersonalContainer from "../../../../../components/Landing/Thematics/Personal/PersonalContainer";
+import PublicDataApi from "../../../../../infrastructure/Api/PublicDataApi";
 
 
 const Personal = () => {
     return (
     
 
-        <PersonalContainer/>
+        <PersonalContainer
+        usecase={new PublicDataApi()}
+        />
 
     
     );

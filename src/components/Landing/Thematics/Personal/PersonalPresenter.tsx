@@ -1,15 +1,22 @@
-import { CustomSearch } from "../../../Common/CustomSearch";
-
+import { FaSearch } from "react-icons/fa";
+import { ColourOption } from "../../../../utils/interface";
+import DynamicTable from "../../../Common/DynamicTable";
+import Input from "../../../Common/Input";
+import Select from 'react-select/async'
+import { Label } from "flowbite-react";
 interface Props {
-    loadOptions: (inputValue: string, callback: (options: []) => void) => void;
-   
-    onSelect: ()=> void;
-}
-const PersonalPresenter = (props: Props) =>{
-    return(
-        <form action="" className="justify-center">
+  loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
 
-        <div className="w-full h-auto  md:xl:justify-center flex 
+  onSelect: () => void;
+  selectedYear: number;
+  onSelectYear: (year: number) => void;
+  onSearch:()=>void
+}
+const PersonalPresenter = (props: Props) => {
+  return (
+    <form action="" className="justify-center">
+
+      <div className="w-full h-auto  md:xl:justify-center flex 
        flex-auto ">
         <p className="text-gray-700 text-2xl mt-12 mb-2  font-semibold">
           Personal y Remuneración
@@ -22,19 +29,64 @@ const PersonalPresenter = (props: Props) =>{
       xl:justify-center flex   lg:m-0
        flex-auto">
         <div className="relative lg:w-full w-[90%] xl:w-[730px] mb-16">
-          <CustomSearch
-            colourOptions={[]}
+          <Label>
+            Entidad
+          </Label>
+          <Select
             loadOptions={props.loadOptions}
-            onSelect={props.onSelect}
+            placeholder="Buscar por entidad"
+            noOptionsMessage={()=><>Sin Resultados</>}
+
           />
+          <Input
+            type="month"
+            placeholder="Año/Mes"
+          />
+          <div className="w-full flex justify-center mt-3">
+
+            <button
+              type="button"
+              onClick={props.onSearch}
+              className="!absolute w-[86px] h-[50px] border-black  
+                 
+                  text-white bg-primary-500
+                  
+                   hover:bg-primary-800 focus:ring-4
+                   justify-center
+                     font-normal 
+                    flex items-center
+                    xl:w-[150px]
+                    xl:space-x-5
+                    -ml-20
+                    rounded-full text-xl  "
+            >
+
+              <p className='hidden xl:flex'>
+                Buscar
+              </p>
+              <FaSearch size="20" />
+            </button>
+          </div>
+          
         </div>
 
 
       </div>
-</form>
+      <div className="w-full h-auto  md:xl:justify-center flex">
+      
+      
+      </div>
+      <DynamicTable
+        isSaved={true}
+        data={[[]]}
+        onSaveTable={() => {}}
+        limitRows={10}
+      />
+      
+    </form>
 
 
-    )
+  )
 }
 
 export default PersonalPresenter;
