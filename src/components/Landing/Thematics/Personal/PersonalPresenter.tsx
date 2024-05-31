@@ -1,9 +1,9 @@
 import { FaSearch } from "react-icons/fa";
-import { ColourOption } from "../../../../utils/interface";
-import DynamicTable from "../../../Common/DynamicTable";
+import { ColourOption, Row } from "../../../../utils/interface";
 import Input from "../../../Common/Input";
 import Select from 'react-select/async'
 import { Label } from "flowbite-react";
+import DynamicReadTable from "../../../Common/DimanycReadTable";
 interface Props {
   loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
 
@@ -11,6 +11,8 @@ interface Props {
   selectedYear: number;
   onSelectYear: (year: number) => void;
   onSearch:()=>void
+  onChangeEstablishment: (value: string) => void;
+  data:Row[][]
 }
 const PersonalPresenter = (props: Props) => {
   return (
@@ -36,7 +38,9 @@ const PersonalPresenter = (props: Props) => {
             loadOptions={props.loadOptions}
             placeholder="Buscar por entidad"
             noOptionsMessage={()=><>Sin Resultados</>}
-
+            onChange={(value) => {
+              props.onChangeEstablishment(value?.value || "")
+            }}
           />
           <Input
             type="month"
@@ -76,12 +80,15 @@ const PersonalPresenter = (props: Props) => {
       
       
       </div>
-      <DynamicTable
-        isSaved={true}
-        data={[[]]}
-        onSaveTable={() => {}}
-        limitRows={10}
-      />
+      <div className="m-8">
+        <DynamicReadTable
+          isSaved={true}
+          data={props.data}
+          onSaveTable={() => { }}
+          limitRows={10}
+        />
+      </div>
+
       
     </form>
 

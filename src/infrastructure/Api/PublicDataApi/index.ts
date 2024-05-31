@@ -1,54 +1,60 @@
-import { AxiosResponse } from "axios";
-import api, { PUBLIC_PATH } from "..";
+import { PUBLIC_PATH } from "..";
 import { RequestPublicApi, ResponsePublicApi } from "./interface";
+import { URL_API } from "../../../utils/constans";
 
 
 class PublicDataApi {
-    async getPublicData(body: RequestPublicApi) {
+    async getPublicData(body: RequestPublicApi,onUpdate: (data: ResponsePublicApi) => void) {
         try {
 
 
-            const response: AxiosResponse<ReadableStream<Uint8Array>> = await api.post(PUBLIC_PATH + '/public_api_stream/', body);
-            console.log(response)
-            if (!response.data){
-                return;
+            const response = await fetch(URL_API + PUBLIC_PATH + '/public_api_stream/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
             }
-            // Procesar los datos de la respuesta como un stream
-            const reader = response.data.getReader();
-            const chunks: Uint8Array[] = [];
+            if (!response.body){
+                throw new Error('Failed to fetch data');
 
-            // Función para procesar cada fragmento de datos recibido
-            const processChunk = ({ value }: ReadableStreamReadResult<Uint8Array | undefined>) => {
-                if (value === undefined) {
+            }
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+
+            let buffer = '';
+
+            const readStream = async () => {
+                const { value, done } = await reader.read();
+                if (done) {
+                    console.log('Stream completed');
                     return;
                 }
-                // Si se han recibido todos los datos, combinar los fragmentos en un solo Uint8Array
-                const combinedChunks = new Uint8Array(chunks.reduce((acc, chunk) => acc + chunk.length, 0));
-                let offset = 0;
-                for (const chunk of chunks) {
-                    combinedChunks.set(chunk, offset);
-                    offset += chunk.length;
+
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split('\n');
+
+                for (let i = 0; i < lines.length - 1; i++) {
+                    const line = lines[i];
+                    if (line.startsWith('data: ')) {
+                        const jsonString = line.slice(6);
+                        try {
+                            const parsedData = JSON.parse(jsonString);
+                            onUpdate(parsedData)
+                        } catch (err) {
+                            console.error('Error parsing JSON:', err);
+                        }
+                    }
                 }
 
-                // Convertir el Uint8Array a una cadena de texto
-                const data = new TextDecoder().decode(combinedChunks);
-
-                // Parsear los datos recibidos como JSON
-                const jsonData: ResponsePublicApi[] = JSON.parse(data);
-
-                // Hacer algo con los datos recibidos
-                console.log(jsonData);
-
-
-                // Agregar el fragmento de datos a la lista de fragmentos
-                chunks.push(value);
-
-                // Leer el siguiente fragmento de datos
-                reader.read().then(processChunk);
+                buffer = lines[lines.length - 1];
+                readStream();
             };
 
-            // Iniciar el procesamiento de la respuesta como un stream
-            reader.read().then(processChunk);
+            readStream();
         } catch (error) {
             // Capturar cualquier error que ocurra durante la solicitud
             console.error('Error durante la solicitud:', error);

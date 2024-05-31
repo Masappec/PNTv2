@@ -3,8 +3,9 @@ import PersonalPresenter from "./PersonalPresenter";
 import { RootState } from "../../../../infrastructure/Store";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { useEffect, useState } from "react";
-import { ColourOption } from "../../../../utils/interface";
+import { ColourOption, Row } from "../../../../utils/interface";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
+import { RequestPublicApi, ResponsePublicApi } from "../../../../infrastructure/Api/PublicDataApi/interface";
 
 
 interface Props{
@@ -14,8 +15,21 @@ const PersonalContainer = (props:Props) => {
 
 
     const [isSearching, SetSearching] = useState<boolean>()
+    const [dataT,setData] = useState<Row[][]>([[]] as Row[][])
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
-
+    const [query, setQuery] = useState<RequestPublicApi>({
+        article: "19",
+        establishment: "",
+        fields: [],
+        month: (new Date().getMonth() +1 )+"",
+        numerals: [
+            "Numeral 2.1",
+            "Numeral 2.2",
+            "Numeral 3"
+        ],
+        search: "",
+        year: new Date().getFullYear().toString(),
+    })
     const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
     const [year, setYear] = useState<number>(new Date().getFullYear())
     useEffect(() => {
@@ -39,7 +53,7 @@ const PersonalContainer = (props:Props) => {
         SetSearching(false)
         callback(filter.map((item) => {
             const data: ColourOption = {
-                value: item.slug || "",
+                value: item.identification || "",
                 label: item.name,
                 color: "#00B8D9",
             }
@@ -47,22 +61,65 @@ const PersonalContainer = (props:Props) => {
         }))
     }
 
+    
+    const onUpdate = (data:ResponsePublicApi)=>{
+        buildForDataTable(data)
+    }
+
     const handleSearch = ()=>{
-        props.usecase.getPublicData({
-            article:"19",
-            establishment:"",
-            fields:[],
-            month:"5",
-            numerals:[
-                "Numeral 1.1",
-                "Numeral 1.2",
-                "Numeral 1.3"
-            ],
-            search:"",
-            year:"2024"
-        }).then((res)=>{
-            console.log("respuesta",res)
+        setData([[]])
+        props.usecase.getPublicData(query,onUpdate).then(()=>{
+            console.log("done")
         })
+    }
+    const onChangeEstablishment = (value: string) => {
+        setQuery({
+            ...query,
+            establishment: value
+        })
+    }
+
+    const buildForDataTable = (data:ResponsePublicApi)=>{
+        let columns= [] as Row[]
+        columns = data.metadata.columns.map((item) => {
+            return {
+                key: item,
+                value: item,
+                is_header: true
+            } as Row
+        })
+        columns = [
+            {
+                key: 'Institución',
+                value: 'Institución',
+                is_header: true
+            } as Row,
+            ...columns
+        ]
+        const rows = data.data.map((item)=>{
+
+            const list_row = []
+            list_row.push({
+                key: 'Institución',
+                value: data.metadata.establishment_name,
+                is_header: false
+            } as Row)
+            const row = item.map((item)=>{
+                return {
+                    key:item,
+                    value:item
+                } as Row
+            })
+            return [
+                ...list_row,
+                ...row
+            ]
+        })
+        setData([
+            columns,
+            ...dataT,
+            ...rows
+        ])
     }
     return (
 
@@ -73,7 +130,9 @@ const PersonalContainer = (props:Props) => {
                 setYear(year)
             }}
             selectedYear={year}
+            onChangeEstablishment={onChangeEstablishment}
             onSearch={handleSearch}
+            data={dataT}
         />
 
     )
