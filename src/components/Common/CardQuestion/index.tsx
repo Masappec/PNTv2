@@ -27,14 +27,14 @@ const CardQuestion = (props: Props) => {
     return (
 
         <div className={`flex 2xl:h-[400px] md:h-[400px] h-[450px] bg-[#F7941D0D]   m-b-8  lg:w-full`} >
-            <div className={`border bg-white dark:border-gray-700 dark:bg-gray-800 flex-col m-0 p-0 flex rounded-none shadow-none border-gray-700 border-l-[1px] border-t-[1px] border-r-[1px] justify-content-start border-t-gray-400 lg:pt-6 w-full h-auto hover:text-black`}
+            <div className={`cursor-pointer border bg-white dark:border-gray-700 dark:bg-gray-800 flex-col m-0 p-0 flex rounded-none shadow-none border-gray-700 border-l-[1px] border-t-[1px] border-r-[1px] justify-content-start border-t-gray-400 lg:pt-6 w-full h-auto hover:text-black`}
                 style={{
                     backgroundColor: hover ? props.contrast : props.bgcolor,
                     //hover
                     color: hover ? props.bgcolor : props.contrast,
 
                 }}
-
+            onClick={props.onQuestion}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
 
@@ -65,7 +65,7 @@ const CardQuestion = (props: Props) => {
                                 {props.content}
                             </p>
                             <button className="lg:flex items-end justify-between mt-10 md:mt-16 xl:mt-20 h-full"
-                                onClick={props.onQuestion}>
+                                >
                                 <IoArrowForwardOutline size={53} className="text-white dark:text-white" />
 
                             </button>

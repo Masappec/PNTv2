@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa";
 import { ColourOption, Row } from "../../../../utils/interface";
 import Input from "../../../Common/Input";
 import Select from 'react-select/async'
-import { Label } from "flowbite-react";
+import { Alert, Label, Spinner } from "flowbite-react";
 import DynamicReadTable from "../../../Common/DimanycReadTable";
 interface Props {
   loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
@@ -10,9 +10,19 @@ interface Props {
   onSelect: () => void;
   selectedYear: number;
   onSelectYear: (year: number) => void;
-  onSearch:()=>void
+  month: string;
+  onSelectMonth: (month: string) => void;
+  onSearch: () => void
   onChangeEstablishment: (value: string) => void;
-  data:Row[][]
+  tables: {
+    numeral: string,
+    data: Row[][]
+  }[]
+  loading: boolean
+  alert: {
+    type: 'success' | 'failure' | 'warning' | 'info'
+    message: string
+  }
 }
 const PersonalPresenter = (props: Props) => {
   return (
@@ -37,7 +47,7 @@ const PersonalPresenter = (props: Props) => {
           <Select
             loadOptions={props.loadOptions}
             placeholder="Buscar por entidad"
-            noOptionsMessage={()=><>Sin Resultados</>}
+            noOptionsMessage={() => <>Sin Resultados</>}
             onChange={(value) => {
               props.onChangeEstablishment(value?.value || "")
             }}
@@ -45,12 +55,20 @@ const PersonalPresenter = (props: Props) => {
           <Input
             type="month"
             placeholder="Año/Mes"
+            value={new Date(props.selectedYear, parseInt(props.month) - 1).toISOString().slice(0, 7)}
+            onChange={(value) => {
+              const [year, month] = value.target.value.split("-")
+              console.log(year, month)
+              props.onSelectYear(parseInt(year))
+              props.onSelectMonth(parseInt(month)+"")
+            }}
           />
           <div className="w-full flex justify-center mt-3">
 
             <button
               type="button"
               onClick={props.onSearch}
+              disabled={props.loading}
               className="!absolute w-[86px] h-[50px] border-black  
                  
                   text-white bg-primary-500
@@ -68,28 +86,51 @@ const PersonalPresenter = (props: Props) => {
               <p className='hidden xl:flex'>
                 Buscar
               </p>
-              <FaSearch size="20" />
+              {
+                props.loading ? <Spinner aria-label="Extra large spinner example" size="md" />:
+                  <FaSearch size="20" />
+
+
+              }
             </button>
           </div>
-          
+
         </div>
 
 
       </div>
       <div className="w-full h-auto  md:xl:justify-center flex">
-      
-      
+
+        {props.alert.message != '' &&
+          <Alert
+            color={props.alert.type}
+            className="w-full mb-8"
+          >
+            <span className="font-medium"> {props.alert.message}</span>
+
+          </Alert>
+        }
       </div>
       <div className="m-8">
-        <DynamicReadTable
-          isSaved={true}
-          data={props.data}
-          onSaveTable={() => { }}
-          limitRows={10}
-        />
+        {
+          props.tables.map((table, index) => (
+            <div key={index} className="mb-8">
+              <p className="text-gray-700 text-2xl mt-12 mb-2  font-semibold">
+                {table.numeral}
+              </p>
+              <DynamicReadTable
+                isSaved={true}
+                data={table.data}
+                onSaveTable={() => { }}
+                limitRows={10}
+              />
+            </div>
+          ))
+        
+        }
       </div>
 
-      
+
     </form>
 
 

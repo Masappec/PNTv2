@@ -16,6 +16,7 @@ export interface Metadata {
     date_upload: string;
     path: string;
     establishment_name:string;
+    numeral_description:string;
 }
 
 export interface ResponsePublicApi {

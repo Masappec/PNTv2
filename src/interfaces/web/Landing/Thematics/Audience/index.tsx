@@ -1,11 +1,15 @@
 import AudienceContainer from "../../../../../components/Landing/Thematics/Audience/AudienceContainer";
+import PublicDataApi from "../../../../../infrastructure/Api/PublicDataApi";
 
 
 const Audience = () => {
     return (
     
 
-        <AudienceContainer/>
+        <AudienceContainer
+            usecase={new PublicDataApi()}
+
+        />
 
     
     );

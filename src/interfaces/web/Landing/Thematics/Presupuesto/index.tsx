@@ -1,11 +1,15 @@
 import FinanceContainer from "../../../../../components/Landing/Thematics/Presupuesto/FinanceContainer";
+import PublicDataApi from "../../../../../infrastructure/Api/PublicDataApi";
 
 
 const Finance = () => {
     return (
     
 
-        <FinanceContainer/>
+        <FinanceContainer
+            usecase={new PublicDataApi()}
+
+        />
 
     
     );

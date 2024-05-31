@@ -638,9 +638,10 @@ const ActiveCreateContainer = (props: IProps) => {
     ) {
       setTemplateTable([...templateTable, template_mod])
     } else {
-      setTemplateTable(templateTable.map((template) => {
+      setTemplateTable(
+        templateTable.map((template) => {
         if (template.id === templates.id) {
-          return template_mod
+          return template_mod!==undefined? template_mod : template
         }
         return template
       }))

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { ColourOption, Row } from "../../../../utils/interface";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
 import { RequestPublicApi, ResponsePublicApi } from "../../../../infrastructure/Api/PublicDataApi/interface";
+import { sleep } from "../../../../utils/functions";
 
 
 interface Props{
@@ -13,9 +14,18 @@ interface Props{
 }
 const PersonalContainer = (props:Props) => {
 
-
+    const [alert, setAlert] = useState<{
+        type: 'success' | 'failure' | 'warning' | 'info'
+        message: string
+    }>({
+        type: 'info',
+        message: ''
+    })
     const [isSearching, SetSearching] = useState<boolean>()
-    const [dataT,setData] = useState<Row[][]>([[]] as Row[][])
+    const [dataT,setData] = useState<{
+        numeral: string,
+        data:Row[][]}[]>([])
+        const [loading, setLoading] = useState<boolean>(false)
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
     const [query, setQuery] = useState<RequestPublicApi>({
         article: "19",
@@ -61,15 +71,37 @@ const PersonalContainer = (props:Props) => {
         }))
     }
 
-    
+    const list: {
+        numeral: string,
+        data:Row[][]
+    }[] = []
     const onUpdate = (data:ResponsePublicApi)=>{
-        buildForDataTable(data)
+        const table = buildForDataTable(data)
+            list.push(table)
+        
+       
     }
 
     const handleSearch = ()=>{
-        setData([[]])
+        setData([])
+        setLoading(true)
         props.usecase.getPublicData(query,onUpdate).then(()=>{
-            console.log("done")
+            sleep(4000).then(()=>{
+                if (list.length === 0) {
+                    setAlert({
+                        type: 'info',
+                        message: 'No se encontraron resultados'
+                    })
+                }
+                setData(list)
+                setLoading(false)
+            })
+        }).catch(()=>{
+            setAlert({
+                type: 'failure',
+                message: 'Error al obtener los datos'
+            })
+            setLoading(false)
         })
     }
     const onChangeEstablishment = (value: string) => {
@@ -115,11 +147,14 @@ const PersonalContainer = (props:Props) => {
                 ...row
             ]
         })
-        setData([
-            columns,
-            ...dataT,
-            ...rows
-        ])
+        return {
+                numeral: data.metadata.numeral_description,
+                data: [
+                    columns,
+                    ...rows
+                ]
+            }
+        
     }
     return (
 
@@ -132,7 +167,16 @@ const PersonalContainer = (props:Props) => {
             selectedYear={year}
             onChangeEstablishment={onChangeEstablishment}
             onSearch={handleSearch}
-            data={dataT}
+            tables={dataT}
+            loading={loading}
+            month={query.month}
+            onSelectMonth={(month) => {
+                setQuery({
+                    ...query,
+                    month: month
+                })
+            }}
+            alert={alert}
         />
 
     )

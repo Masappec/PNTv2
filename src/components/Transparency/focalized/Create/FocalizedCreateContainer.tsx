@@ -203,7 +203,7 @@ const FocalizedCreateContainer = (props: Props) => {
     } else {
       setTemplateTable(templateTable.map((template) => {
         if (template.id === templates.id) {
-          return template_mod
+          return template_mod !== undefined ? template_mod : template
         }
         return template
       }))

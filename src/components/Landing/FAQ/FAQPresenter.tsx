@@ -1,4 +1,4 @@
-import { Card, Timeline } from "flowbite-react";
+import { Timeline } from "flowbite-react";
 import { FrequencyAsked, Tutorial } from "../../../domain/entities/PedagodyAreaEntity";
 
 
