@@ -72,8 +72,7 @@ const AudienceContainer = (props:Props) => {
         data: Row[][]
     }[] = []
     const onUpdate = (data: ResponsePublicApi) => {
-        const table = buildForDataTable(data)
-        list.push(table)
+        buildForDataTable(data)
 
 
     }
@@ -143,12 +142,24 @@ const AudienceContainer = (props:Props) => {
                 ...row
             ]
         })
-        return {
-            numeral: data.metadata.numeral_description,
-            data: [
-                columns,
-                ...rows
-            ]
+        const elements = list.filter((item) => item.numeral === data.metadata.numeral_description)
+        if (elements.length > 0) {
+            const index = list.indexOf(elements[0])
+            list[index] = {
+                numeral: data.metadata.numeral_description,
+                data: [
+                    ...list[index].data,
+                    ...rows
+                ]
+            }
+        } else {
+            list.push({
+                numeral: data.metadata.numeral_description,
+                data: [
+                    columns,
+                    ...rows
+                ]
+            })
         }
 
     }

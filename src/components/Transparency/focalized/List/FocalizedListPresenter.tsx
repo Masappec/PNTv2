@@ -79,7 +79,7 @@ const FocalizedListPresenter = (props: Props) => {
         <TextInput
           icon={CiSearch}
           id="buscar"
-          type="text"
+          type="date"
           placeholder="Buscar por datos"
           className="w-[190px] mt-0  border-black text-center  bg-gray-100 rounded-full "
           tabIndex={7}

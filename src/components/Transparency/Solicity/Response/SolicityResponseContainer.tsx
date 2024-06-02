@@ -100,7 +100,7 @@ const SolicityResponseContainer = (props: Props) => {
 
     const [tags, SetTags] = useState<TagEntity[]>([])
 
-
+    
     useEffect(() => {
 
         if (state) {
@@ -464,7 +464,9 @@ const SolicityResponseContainer = (props: Props) => {
             setTimeline(Solicity.ordernReponse(res))
             setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
             setIsAvaliableToComment(props.usecase.availabletoComment(userSession, res))
+            console.log(res)
             setIsAvaliableToInsistency(props.usecase.availableToInsistency(userSession, res))
+            SetSolicity(res)
         }).catch((e) => {
             console.log(e + "error")
         })
@@ -497,8 +499,9 @@ const SolicityResponseContainer = (props: Props) => {
             setTimeline(Solicity.ordernReponse(res))
             setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
             setIsAvaliableToComment(props.usecase.availabletoComment(userSession, res))
-            setIsAvaliableToInsistency(props.usecase.availableToInsistency(userSession, res))
-            window.location.reload()
+            SetSolicity(res)
+
+            setIsAvaliableToInsistency(true)
         }).catch((e) => {
             console.log(e)
         })

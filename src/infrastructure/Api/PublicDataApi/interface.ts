@@ -34,3 +34,24 @@ export interface RequestPublicApi {
     fields: string[];
     establishment: string; 
 }
+
+/*{
+            "total": Solicity.objects.count(),
+            "responsed": None,
+            "not_responsed": None,
+            "total_not_responsed": None,
+            "total_responsed": None,
+            "users":None
+        }*/
+
+export interface PublicDataApiResponse {
+    total: number;
+    responsed: number[];
+    not_responsed: number[];
+    total_not_responsed: number;
+    total_responsed: number;
+    users: {
+        active: number;
+        inactive: number;
+    }
+}

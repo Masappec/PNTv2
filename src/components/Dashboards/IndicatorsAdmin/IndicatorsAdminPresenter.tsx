@@ -1,26 +1,69 @@
 import { ApexOptions } from "apexcharts";
-import Select from "../../Common/Select";
+import SelectCommon  from "../../Common/Select";
 import Chart from "react-apexcharts";
+import Select from 'react-select/async'
+import { ColourOption } from "../../../utils/interface";
+import { Label } from "flowbite-react";
+import { PublicDataApiResponse } from "../../../infrastructure/Api/PublicDataApi/interface";
+import { useEffect, useState } from "react";
 
-const IndicatorsAdminPresenter = () => {
-  const options = {
+
+interface Props {
+  loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void
+  onChangeEstablishment: (value: string) => void;
+  onChangeYear: (value: string) => void;
+  data: PublicDataApiResponse;
+}
+const IndicatorsAdminPresenter = (props:Props) => {
+
+
+
+  const [chartPieSolicities, setChartPieSolicities] = useState<ApexOptions>({
+    chart: {
+      id: "donut",
+      width: 500,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    
+    series: [],
+    labels: [],
+    colors: ["#1A7290", "#5CA9C3", "#e2e8f0"],
+  });
+
+  const [chartPieUsers, setChartPieUsers] = useState<ApexOptions>({
+    chart: {
+      id: "donut",
+      width: 500,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    series: [],
+    labels: [],
+    colors: ["#1A7290", "#5CA9C3", "#e2e8f0"],
+  });
+
+
+  const [chartBar, setChartBar] = useState({
     chart: {
       id: "bar",
     },
     xaxis: {
       categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
       ],
     },
     series: [
@@ -40,49 +83,28 @@ const IndicatorsAdminPresenter = () => {
         columnWidth: "30%",
       },
     },
-  };
+  });
 
-  const options1 = {
-    chart: {
-      id: "donut",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    series: [60, 10, 30],
-    labels: ["A", "B", "C"],
-    colors: ["#1A7290", "#5CA9C3", "#e2e8f0"],
-  };
-  const options2 = {
-    chart: {
-      id: "donut",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    series: [30, 70],
-    labels: ["A", "B"],
-    colors: ["#1A7290", "#7DBACF"],
-  };
-  const line: ApexOptions = {
+
+  const [chartLine, setChartLine] = useState<ApexOptions>({
     chart: {
       id: "line",
     },
 
     xaxis: {
       categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
       ],
     },
     stroke: {
@@ -97,77 +119,151 @@ const IndicatorsAdminPresenter = () => {
       },
 
     ],
-  };
+  });
+
+  useEffect(() => {
+    if (props.data) {
+      setChartPieSolicities({
+        chart: {
+          id: "donut",
+          width: 1000,
+          height: 1000,
+          
+        },
+        dataLabels: {
+          enabled: false,
+
+        },
+        series: [props.data.total_responsed, props.data.total_not_responsed],
+        labels: ["Atendidas", "No Atendidas"],
+        colors: ["#1A7290", "#7DBACF"],
+      });
+      console.log(props.data.responsed, "responsed")
+
+      setChartPieUsers({
+        chart: {
+          id: "donut",
+          width: 1000,
+          height: 1000,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        series: [props.data.users.active, props.data.users.inactive],
+        labels: ["Activos", "Inactivos"],
+        colors: ["#1A7290", "#5CA9C3"],
+      });
+
+      setChartBar({
+        ...chartBar,
+        series: [
+          {
+            name: "Atendidas",
+            data: [...props.data.responsed],
+            color: "#3781A9CC",
+            stroke: {
+              curve: "straight",
+            },
+          },
+        ],
+      });
+
+      setChartLine({
+        ...chartLine,
+        series: [
+          {
+            name: "No Atendidas",
+            data: [...props.data.not_responsed],
+            color: "#337FA6",
+          },
+        ],
+      });
+    }
+  }, [props.data]);
+  
+  
+
+
+
+
+
+
+  
 
   return (
-    <div className="h-full overflow-y-hidden">
-      <div className="border-gray-300 py-5 border-b  ">
-        <h2 className="text-2xl font-semibold text-black ml-2">Indicadores</h2>
+    <div className="h-full overflow-y-hidden bg-white">
+      <div className="border-gray-300 py-5 border-b flex  justify-center w-full">
+        <h2 className="text-2xl font-semibold text-black ml-2 justify-center">Indicadores</h2>
       </div>
       <div className="flex  space-x-2 w-full justify-center mt-12">
         <div className="flex  flex-col h-[44px]  mt-5 w-[219px]  gap-2">
+          <Label>Entidad</Label>
+
           <Select
-            placeholder={"Entidades"}
-            value={""}
-            onChange={() => { }}
-            options={[
-              {
-                value: "",
-                label: "Seleccionar",
-              },
-            ]}
+            loadOptions={props.loadOptions}
+            placeholder="Buscar por entidad"
+            noOptionsMessage={() => <>Sin Resultados</>}
+            onChange={(value) => {
+              props.onChangeEstablishment(value?.value || "")
+            }}
+            className="mt-1"
           />
         </div>
-        <div className=" flex  flex-col h-[44px]  mt-5 w-[179px]  gap-2">
-          <Select
+        <div className="flex  flex-col h-[44px]  mt-5 w-[179px]  gap-2">
+
+
+          <SelectCommon
             placeholder={"Periodo"}
-            value={""}
-            onChange={() => { }}
+            onChange={(value) => {
+              props.onChangeYear(value.target.value)
+            }}
             options={[
               {
                 value: "",
                 label: "Año: Todos",
               },
+              ...Array.from({ length: 10 }, (_, i) => {
+                const year = new Date().getFullYear() - i
+                return {
+                  value: year.toString(),
+                  label: `Año: ${year}`
+                }
+              })
             ]}
           />
         </div>
 
-        <div className=" flex  flex-col h-[44px] mt-5 w-[179px] gap-2">
-          <Select
-            placeholder={"Meses"}
-            value={""}
-            onChange={() => { }}
-            options={[
-              {
-                value: "",
-                label: "Meses: Todos",
-              },
-            ]}
-          />
+        <div className=" flex  flex-col h-auto mt-5 w-[179px] gap-2">
+          
         </div>
       </div>
       <div className="mt-16">
         <div className="2xl:flex-row flex  flex-col space-x-2 w-full justify-center">
-          <div className="container border w-[290px] h-[222px] px-5 py-6 rounded-3xl ">
+          <div className="container border w-[400px] h-auto px-5 py-6 rounded-3xl ">
             <h2 className="text-start font-semibold text-sm">Usuarios</h2>
-            <h2 className="text-2xl mt-2 font-extrabold">55222</h2>
+            <h2 className="text-2xl mt-2 font-extrabold">
+              {props.data?.users.active+props.data?.users.inactive || 0}
+            </h2>
             <Chart
-              options={options1}
-              series={options1.series}
+              options={chartPieUsers}
+              series={chartPieUsers.series}
               type="donut"
-              width={230}
+              width={300}
             />
           </div>
-          <div className="container border w-[290px] h-[222px] px-3 py-6 rounded-3xl ">
+          <div className="container border w-[400px] h-auto px-3 py-6 rounded-3xl ">
             <h2 className="text-start font-semibold text-sm">
               Número de solicitudes de información
             </h2>
-            <h2 className="text-2xl mt-2 font-extrabold">55222</h2>
+            <h2 className="text-2xl mt-2 font-extrabold">
+              {props.data?.total || 0}
+            </h2>
             <Chart
-              options={options2}
-              series={options2.series}
+              options={chartPieSolicities}
+              series={chartPieSolicities.series}
               type="donut"
-              width={230}
+              width={330}
+              
             />
           </div>
         </div>
@@ -179,8 +275,8 @@ const IndicatorsAdminPresenter = () => {
             </h2>
 
             <Chart
-              options={options}
-              series={options.series}
+              options={chartBar}
+              series={chartBar.series}
               type="bar"
               width={570}
             />
@@ -190,10 +286,10 @@ const IndicatorsAdminPresenter = () => {
 
           <div className="container border mt-10 w-[602px] rounded-2xl  ">
             <h2 className="text-start font-semibold text-sm px-5 py-5">
-              Solicitudes Atendidas
+              Solicitudes no Atendidas
             </h2>
 
-            <Chart options={line} series={line.series} type="line" width={570} />
+            <Chart options={chartLine} series={chartLine.series} type="line" width={570} />
           </div>
         </div>
 

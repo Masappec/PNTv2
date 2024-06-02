@@ -46,7 +46,7 @@ const UserListContainer = ({
 
     const handleAdd = () => {
 
-        navigate("/admin/users/create")
+        navigate("/admin/est/users/create")
 
 
 
@@ -54,7 +54,7 @@ const UserListContainer = ({
 
 
     const handleEdit = (user: UserEntity) => {
-        navigate("/admin/users/" + user.id)
+        navigate("/admin/est/users/" + user.id)
     }
 
     const handlePage = (page: number) => {
@@ -103,7 +103,7 @@ const UserListContainer = ({
             setVisibleModal(false)
             setSelectedUser(null)
             setTypeAlert(status == 202 ? "success" : "error")
-            usecase.execute().then((users) => {
+            estUsecase.getEstablishmentsByUserList().then((users) => {
                 setUsers(users.results)
                 setTotalPage(users.total_pages || 0)
             }).catch((error) => {

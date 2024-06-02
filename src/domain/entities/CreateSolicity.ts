@@ -16,7 +16,8 @@ class CreateSolicity {
         public phone: string,
         public format_send: string,
         public format_receipt: string,
-        public establishment: number
+        public establishment: number,
+        public date?: string,
     ) { }
 }
 

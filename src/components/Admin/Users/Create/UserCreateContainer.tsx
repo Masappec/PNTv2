@@ -36,19 +36,20 @@ const UserCreateContainer = ({
     const [loadingSubmit, setLoadingSubmit] = useState(false)
     const navigate = useNavigate()
 
-    const [userSession,SetUserSession] = useState<UserEntity>({} as UserEntity)
+    const [userSession, SetUserSession] = useState<UserEntity>({} as UserEntity)
 
 
-    useEffect(()=>{
+    useEffect(() => {
         const user = SessionService.getUserData()
         SetUserSession(user)
-    },[])
+    }, [])
 
     useEffect(() => {
         roleUseCase.listAvailable().then((roles) => {
             setRoleList(roles.filter(x => x.name != 'Ciudadano'))
             if (roles.length == 1) {
                 handleConfigFields(roles[0].name)
+                setRoleSelected(roles[0])
             }
             if (roles.length == 0) {
                 onCancel()
@@ -149,9 +150,12 @@ const UserCreateContainer = ({
 
     const onCancel = () => {
         let route = '/admin/users'
-        const user = userSession.user_permissions?.find(x => x.codename =='view_users_internal')
-        if(user){
-            route='/admin/est/users'
+        if (!userSession.is_superuser) {
+
+            const user = userSession.user_permissions?.find(x => x.codename == 'view_users_internal')
+            if (user) {
+                route = '/admin/est/users'
+            }
         }
         navigate(route)
     }

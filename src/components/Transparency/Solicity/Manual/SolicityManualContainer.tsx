@@ -36,7 +36,8 @@ const SolicityManualContainer = (props: Props) => {
         phone: "",
         format_send: "",
         format_receipt: "",
-        establishment: 0
+        establishment: 0,
+        date: ""
     })
 
     const [solicitySaved, setSolicitySaved] = useState<Solicity>({} as Solicity)
@@ -121,6 +122,7 @@ const SolicityManualContainer = (props: Props) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setIsChanged(true)
+        console.log(e.target.value)
         setData({
             ...data,
             [e.target.name]: e.target.value

@@ -63,7 +63,7 @@ const SolicityManualPresenter = (props: Props) => {
                 <div className="container flex-col sm:flex-col sm:items-center sm:justify-between   ">
 
 
-                    <div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-32">
+                    {/*<div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-32">
                         <Label
                             htmlFor=""
                             value="No.SAIP"
@@ -77,7 +77,7 @@ const SolicityManualPresenter = (props: Props) => {
                             name="number_saip"
                             value={props.data.number_saip}
                         />{" "}
-                    </div>
+    </div>*/}
 
                     <div className=" flex  flex-col-2 m-2 h-[50px]  mt-5 gap-14">
                         <Label
@@ -115,11 +115,10 @@ const SolicityManualPresenter = (props: Props) => {
                             <TextInput
                                 className="w-[306px]"
                                 placeholder=""
-                                type="text"
-                                onChange={props.onChange}
+                                type="date"
+                                onChange={(e) => props.onChange(e)}
                                 contentEditable={false}
-                                value={new Date().toLocaleString()}
-                                name=""
+                                name="date"
                                 disabled={props.disabledDate}
                             />{" "}
                         </div>

@@ -33,7 +33,7 @@ const UserCreate = () => {
                 items={[
                     {
                         name: 'Usuarios',
-                        path: '/admin/users',
+                        path: '/admin/est/users/',
                     },
                     {
                         name: 'Nuevo',

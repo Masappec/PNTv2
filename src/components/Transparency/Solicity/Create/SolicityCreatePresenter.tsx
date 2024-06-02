@@ -64,7 +64,7 @@ const SolicityCreatePresenter = (props: Props) => {
         <div className="container flex-col sm:flex-col sm:items-center sm:justify-between   ">
 
 
-          <div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-32">
+          {/*<div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-32">
             <Label
               htmlFor=""
               value="No.SAIP"
@@ -78,7 +78,7 @@ const SolicityCreatePresenter = (props: Props) => {
               name=""
               value={props.data.number_saip}
             />{" "}
-          </div>
+  </div>*/}
 
           <div className=" flex  flex-col-2 m-2 h-[50px]  mt-5 gap-14">
             <Label

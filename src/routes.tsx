@@ -17,12 +17,12 @@ import PublicationDetail from "./interfaces/web/Landing/Publication/Detail";
 import Entry from "./interfaces/web/Auth/Entry";
 import { BASE_URL, IS_SERVER } from "./utils/constans";
 import About from "./interfaces/web/Landing/About";
-import PublicIndicators from "./interfaces/web/Landing/Establishment/Indicators";
 import Tutorials from "./interfaces/web/Landing/Tutorials";
 import Personal from "./interfaces/web/Landing/Thematics/Personal";
 import Audience from "./interfaces/web/Landing/Thematics/Audience";
 import Solicity from "./interfaces/web/Landing/Thematics/Solicity";
 import Finance from "./interfaces/web/Landing/Thematics/Presupuesto";
+import IndicatorsAdmin from "./interfaces/web/Dashboard/IndicatorsAdmin";
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged();
@@ -103,7 +103,7 @@ const Router = createBrowserRouter(
         },
         {
           path: "/indicadores",
-          element: <PublicIndicators />,
+          element: <IndicatorsAdmin />,
         },
         {
           path: "/publicaciones/:slug",

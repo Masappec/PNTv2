@@ -99,7 +99,10 @@ class EstablishmentApi {
     async getByUserSession() {
         try {
             const res = await this.api.get<EstablishmentDetailDTO>(ADMIN_PATH + '/establishment/user/session')
-            return res.data
+            return {
+                ...res.data,
+                logo: res.data.logo ? URL_API + ADMIN_PATH + res.data.logo : undefined
+            };
         } catch (error) {
             if (error instanceof AxiosError) {
 

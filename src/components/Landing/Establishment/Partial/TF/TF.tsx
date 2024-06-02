@@ -3,6 +3,7 @@ import Table from "../../../../Common/Table";
 import { FaFileCsv } from "react-icons/fa";
 import { useState } from "react";
 import TransparencyFocusEntity from "../../../../../domain/entities/TransparencyFocus";
+import axios from "axios";
 
 
 interface Props {
@@ -23,7 +24,21 @@ const TF = (props: Props) => {
 
         setIsOpen(!isOpen)
     }
-
+    const onDownloadFile = async (url: string, name: string) => {
+        try {
+            const res = await axios.get(url, {
+                responseType: 'blob'
+            })
+            const blobUrl = window.URL.createObjectURL(new Blob([res.data]));
+            const a = document.createElement("a");
+            a.href = blobUrl;
+            a.download = name + '.csv'
+            a.click();
+            window.URL.revokeObjectURL(blobUrl);
+        } catch (e) {
+            console.log(e)
+        }
+    }
     return (
         <>
             <Accordion.Panel
@@ -63,7 +78,9 @@ const TF = (props: Props) => {
                                     return <div className="flex flex-row space-x-5">
                                         {
                                             item.files.map((file, i) =>
-                                                <a key={i} href={file.url_download as string}
+                                                <a key={i} href="#" onClick={() => onDownloadFile(file.url_download as string,
+                                                    `transparencia-focalizada-${props.year}-${props.number_month}-${file.description}`
+                                                )}
                                                     className="text-primary-500 
                                                 hover:text-primary-600 text-base">
                                                     <FaFileCsv className="text-primary-500 

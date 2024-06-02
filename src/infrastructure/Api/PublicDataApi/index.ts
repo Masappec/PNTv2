@@ -1,5 +1,5 @@
-import { PUBLIC_PATH } from "..";
-import { RequestPublicApi, ResponsePublicApi } from "./interface";
+import api, { PUBLIC_PATH, TRANSPARENCY_PATH } from "..";
+import { PublicDataApiResponse, RequestPublicApi, ResponsePublicApi } from "./interface";
 import { URL_API } from "../../../utils/constans";
 
 
@@ -58,6 +58,20 @@ class PublicDataApi {
         } catch (error) {
             // Capturar cualquier error que ocurra durante la solicitud
             console.error('Error durante la solicitud:', error);
+        }
+    }
+
+    public async getPublicDataCount(establishment_id?: number|null,year?:number|null) {
+        try {
+            const response = await api.get<PublicDataApiResponse>(TRANSPARENCY_PATH + '/stats/citizen', {
+                params: {
+                    establishment_id,
+                    year
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al obtener los datos');
         }
     }
 }

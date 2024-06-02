@@ -1,10 +1,14 @@
 import IndicatorsAdminContainer from "../../../../components/Dashboards/IndicatorsAdmin/IndicatorsAdminContainer";
+import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
 
 const IndicatorsAdmin =()=>{
 
 return(
 
-   < IndicatorsAdminContainer/>
+   < IndicatorsAdminContainer
+   
+   usecase={new PublicDataApi()}
+   />
    
 )
 }

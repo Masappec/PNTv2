@@ -11,6 +11,7 @@ import EstablishmentUseCase from "../../../../domain/useCases/Establishment/Esta
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { IOncalculate } from "../../../Common/PasswordMeter"
 import { sleep } from "../../../../utils/functions"
+import SessionService from "../../../../infrastructure/Services/SessionService"
 
 
 const UserEditContainer = ({
@@ -31,6 +32,7 @@ const UserEditContainer = ({
     const [data, setData] = useState<UserEntity>({} as UserEntity)
     const [error, setError] = useState<string>("")
     const [success, setSuccess] = useState<string>("")
+    const [userSession, SetUserSession] = useState<UserEntity>({} as UserEntity)
 
     const [roleList, setRoleList] = useState<RoleEntity[]>([])
     const [roleSelected, setRoleSelected] = useState<RoleEntity | null>(null)
@@ -44,6 +46,10 @@ const UserEditContainer = ({
     const [isDisabled, setIsDisabled] = useState(false)
     const [loadingSubmit, setLoadingSubmit] = useState(false)
 
+    useEffect(() => {
+        const user = SessionService.getUserData()
+        SetUserSession(user)
+    }, [])
 
     useEffect(() => {
 
@@ -166,7 +172,15 @@ const UserEditContainer = ({
     }
 
     const onCancel = () => {
-        navigate("/admin/users")
+        let route = '/admin/users'
+        if (!userSession.is_superuser) {
+
+            const user = userSession.user_permissions?.find(x => x.codename == 'view_users_internal')
+            if (user) {
+                route = '/admin/est/users'
+            }
+        }
+        navigate(route)
     }
     const onChangePassword = (data: IOncalculate) => {
 

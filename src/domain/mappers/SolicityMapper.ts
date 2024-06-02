@@ -101,7 +101,9 @@ class SolicityMappers {
             format_send: data.format_send,
             format_receipt: data.format_receipt,
             establishment: data.establishment,
-            date: new Date().toISOString()
+            date: data.date ? data.date
+            
+            : new Date().toDateString()
 
         }
     }

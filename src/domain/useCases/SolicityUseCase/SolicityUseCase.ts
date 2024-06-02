@@ -94,6 +94,9 @@ class SolicityUseCase {
     const user_citizen_id = parseInt(solicity.user_created);
     const user_session = user.id
     if (solicity && user) {
+      if(solicity.is_manual){
+        return true;
+      }
       if (user_citizen_id !== user_session) {
         return solicity.status == StatusSolicity.INSISTENCY_SEND.key
           || solicity.status == StatusSolicity.SEND.key
@@ -107,6 +110,7 @@ class SolicityUseCase {
   }
 
   async createManualSolicity(data: CreateSolicity) {
+    console.log(data)
     return await this.solicityService.createManualSolicity(data);
   }
 

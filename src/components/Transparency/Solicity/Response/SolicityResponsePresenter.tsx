@@ -103,7 +103,7 @@ const SolicityResponsePresenter = (props: Props) => {
             responseRef.current?.scrollIntoView({ behavior: "smooth" });
             responseRef.current?.focus();
         }
-    }, [props.isAvaliableToResponse])
+    }, [props.isAvaliableToResponse, props.isAvaliableToInsistency, props.isAvaliableToComment])
 
     return (
 

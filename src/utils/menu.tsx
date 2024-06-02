@@ -68,7 +68,9 @@ const menu = [
     permission_required: 'view_users_internal',
     visible: true,
     icon: <RiUser3Line size={25} className="text-slate-500" />,
-    element: <UserInSessionList />
+    element: <UserInSessionList />,
+    visible_for_superadmin: false
+
   },
   {
     name: 'Crear Usuario',

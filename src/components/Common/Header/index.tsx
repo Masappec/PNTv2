@@ -29,7 +29,7 @@ const Header = (props: Props) => {
             </Link>
 
             <Link
-              to="#"
+              to="indicadores"
               tabIndex={3}
               className="text-gray-800  dark:text-white hover:bg-primary-200 hover:text-white  font-medium rounded-lg text-base px-6 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
