@@ -162,7 +162,7 @@ const SolicityEditContainer = (props: Props) => {
 
 
     const getSelectedItem = (value: string, options: ColourOption[]) => {
-        const item = options.find((item) => item.value === value)
+        const item = options.find((item) => item.label === value)
         return item || {} as ColourOption
     }
 

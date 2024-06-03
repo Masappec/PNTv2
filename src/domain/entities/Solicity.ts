@@ -235,13 +235,13 @@ export class Solicity extends BaseEntity {
             }else{
 
                 list.push(new TimeLinePresenter(i.user_created, i.created_at, i.motive, [], [],
-                    "INSISTENCY", "Insistencia del ciudadano", 'Tu Insistencia'))
+                    "INSISTENCY", "Insistencia del ciudadano", 'Respuesta de la Entidad'))
             }
         })
 
         solicity.comments?.forEach(c => {
             list.push(new TimeLinePresenter(c.user, c.created_at, c.motive, [], [], 
-                "COMMENT", "Comentario del ciudadano",'Tu Comentario'))
+                "COMMENT", "Comentario del ciudadano",'Comentario de la Entidad'))
         })
 
 

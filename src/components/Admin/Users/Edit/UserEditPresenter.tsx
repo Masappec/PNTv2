@@ -31,6 +31,7 @@ interface UserEditPresenterProps {
     handleShowPassword: () => void;
     onChangePassword: (data: IOncalculate) => void;
     loadingSubmit: boolean;
+    isEstablishmentUser: boolean;
 }
 
 const UserEditPresenter = (props: UserEditPresenterProps) => {
@@ -164,7 +165,36 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                                 )
                                             }
                                         </div> :
-                                        field.type_field === 'select' ? <div className="flex  flex-col m-2 ">
+                                        field.type_field === 'select' ? (
+                                            field.name === 'establishment_id' && props.isEstablishmentUser ?
+                                                <div className="flex  flex-col m-2">
+                                                    <Select
+                                                        placeholder={field.description}
+                                                        value={props.data[field.name as keyof UserEntity] as string}
+                                                        onChange={(e) => props.setData(field.name, e.target.value)}
+                                                        options={
+                                                            [{
+                                                                value: "",
+                                                                label: "Seleccione una opción"
+                                                            }].concat(field.options?.map((option) => {
+                                                                return {
+                                                                    value: option.id + "",
+                                                                    label: option.name
+                                                                }
+                                                            }) || [])
+                                                        }
+                                                        selected={
+                                                            field.name == 'establishment_id' ?
+                                                                props.establishment ?
+                                                                    {
+                                                                        value: props.establishment.id + "",
+                                                                    } : undefined : undefined
+                                                        }
+                                                        disabled={true}
+                                                    />
+                                                </div>
+
+                                                : <div className="flex  flex-col m-2 ">
 
                                             <Select
                                                 placeholder={field.description}
@@ -189,7 +219,7 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                                             } : undefined : undefined
                                                 }
                                             />
-                                        </div> :
+                                        </div> ):
                                             <div className="flex  flex-col m-2">
                                                 <Input type={field.type_field}
                                                     placeholder={field.description} width="w-60"

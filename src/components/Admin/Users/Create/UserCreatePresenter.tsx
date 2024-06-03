@@ -29,6 +29,7 @@ interface UserCreatePresenterProps {
     handleShowPassword: () => void;
     onChangePassword: (data: IOncalculate) => void;
     loadingSubmit: boolean;
+    isEstablishmentUser: boolean;
 
 }
 
@@ -159,7 +160,30 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                             </div>
 
                                             :
-                                            field.type_field === 'select' ? <div className="flex  flex-col m-2 ">
+                                            field.type_field === 'select' ? 
+                                            (
+                                                    field.name === 'establishment_id' && props.isEstablishmentUser ?
+                                                <div className="flex  flex-col m-2">
+                                                            <Select
+                                                                placeholder={field.description}
+                                                                value={props.data[field.name as keyof UserEntity] as string}
+                                                                onChange={(e) => props.setData(field.name, e.target.value)}
+                                                                options={
+                                                                    [{
+                                                                        value: "",
+                                                                        label: "Seleccione una opción"
+                                                                    }].concat(field.options?.map((option) => {
+                                                                        return {
+                                                                            value: option.id + "",
+                                                                            label: option.name
+                                                                        }
+                                                                    }) || [])
+                                                                }
+                                                                disabled={true}
+                                                            />
+                                                </div>
+
+                                                : <div className="flex  flex-col m-2 ">
 
                                                 <Select
                                                     placeholder={field.description}
@@ -177,7 +201,7 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                                         }) || [])
                                                     }
                                                 />
-                                            </div> :
+                                            </div>) :
                                                 <div className="flex  flex-col m-2">
                                                     <Input type={field.type_field}
                                                         placeholder={field.description} width="w-60"

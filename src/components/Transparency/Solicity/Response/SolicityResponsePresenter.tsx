@@ -158,7 +158,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                         <div className=" grid grid-cols gap-4 w-auto mt-16">
                                             <Label
                                                 htmlFor=""
-                                                value={`${response.user_id == props.userSession.id ?
+                                                value={`${response.user_id == parseInt(props.solicitySaved.user_created) ?
                                                     response.other_title :
                                                     response.title
 
@@ -166,6 +166,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                                 className="text-xl font-bold "
                                             />
                                             <p className="text-gray-500 font-light">
+                                              
                                                 {new Date(response.created_at).toLocaleString()}
                                             </p>
                                             <p className="h-auto mb-5 xl:w-[915px]  text-gray-900 dark:text-gray-300">

@@ -44,22 +44,22 @@ const PublicEstablishmentContainer = (props: Props) => {
     useEffect(() => {
         if (_entities.length > 0) {
 
-            let list_by_letters: {
+            const list_by_letters: {
                 letter: string,
                 data: EstablishmentEntity[]
             }[] = []
             _entities.forEach((entity) => {
-
-                list_by_letters = [
-                    ...list_by_letters,
-                    {
+                const index = list_by_letters.findIndex((item) => item.letter === entity.name[0].toUpperCase())
+                if (index >= 0) {
+                    list_by_letters[index].data.push(entity)
+                    return;
+                }else{
+                    list_by_letters.push({
                         letter: entity.name[0].toUpperCase(),
-                        data: [
-                            ...list_by_letters.find((item) => item.letter === entity.name[0].toUpperCase())?.data || [],
-                            entity
-                        ]
-                    }
-                ]
+                        data: [entity]
+                    })
+                }
+                
             })
 
 

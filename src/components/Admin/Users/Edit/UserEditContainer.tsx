@@ -45,10 +45,19 @@ const UserEditContainer = ({
     const [showPassword, setShowPassword] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false)
     const [loadingSubmit, setLoadingSubmit] = useState(false)
+    const [isUserEntity, setIsUserEntity] = useState<boolean>(false)
 
     useEffect(() => {
         const user = SessionService.getUserData()
         SetUserSession(user)
+        const is = UserEntity.isUserEntity(user)
+        if (is) {
+            const establishment = SessionService.getEstablishmentData();
+
+            setIsUserEntity(is)
+            setData({ ...data, establishment_id: establishment?.id })
+
+        }
     }, [])
 
     useEffect(() => {
@@ -213,6 +222,7 @@ const UserEditContainer = ({
             loadingSubmit={loadingSubmit}
             onChangePassword={onChangePassword}
             showPassword={showPassword}
+            isEstablishmentUser={isUserEntity}
         />
     )
 }

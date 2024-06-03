@@ -172,7 +172,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 name="first_name"
                                 value={props.data.first_name}
                                 onChange={props.onChange}
-                                    
+                                disabled
                             />{" "}
                         </div>
 
@@ -188,7 +188,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 type="text"
                                 name="last_name"
                                 onChange={props.onChange}
-
+                                disabled
                                 value={props.data.last_name}
                             />
                         </div>
@@ -204,7 +204,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 type="email"
                                 name="email"
                                 onChange={props.onChange}
-
+                                disabled
                                 value={props.data.email}
                             />{" "}
                         </div>
@@ -222,6 +222,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 onChange={props.onChange}
                                 name="phone"
                                 value={props.data.phone}
+                                disabled
                             />{" "}
                         </div>
 
@@ -232,20 +233,15 @@ const SolicityEditPresenter = (props: Props) => {
                                 className="mt-2 text-base font-semibold"
                             />
 
-                            <Select
-
-                                className="lg:w-[720px] xl:w-[720px] h-[50px] w-[720px] m-2 rounded-full "
-                                placeholder={"Género"}
-                                options={props.genders}
-                                onChange={(value) => {
-                                    props.onChangeSelect(value as ColourOption, 'gender')
-                                }}
-                                isDisabled
-                                value={
-                                    props.solicitySaved.gender ?
-                                        props.getSelectedItems(props.solicitySaved.gender, props.genders)
-                                        : props.data.gender ? props.getSelectedItems(props.data.gender, props.genders) : null}
-
+                            
+                            <TextInput
+                                className="w-[717px]"
+                                placeholder=""
+                                type="text"
+                                onChange={props.onChange}
+                                name="gender"
+                                value={props.data.gender}
+                                disabled
                             />
                         </div>
                         <div className=" flex  flex-col-2 m-2 h-[50px]  mt-5 gap-5">
@@ -255,20 +251,15 @@ const SolicityEditPresenter = (props: Props) => {
                                 className="mt-2 text-base font-semibold"
                             />
 
-                            <Select
-
-                                className="lg:w-[720px] xl:w-[720px] h-[50px] w-[720px] "
-                                placeholder={"Identificación Cultural"}
-                                options={props.race_indentification}
-                                onChange={(value) => {
-                                    props.onChangeSelect(value as ColourOption, 'race_identification')
-                                }}
-                                isDisabled
-                                value={props.solicitySaved.race_identification ?
-                                    props.getSelectedItems(props.solicitySaved.race_identification, props.race_indentification)
-                                    : props.data.race_identification ? props.getSelectedItems(props.data.race_identification, props.race_indentification) : null
-                                }
-
+                            
+                            <TextInput
+                                className="w-[717px]"
+                                placeholder=""
+                                type="text"
+                                onChange={props.onChange}
+                                name="race_identification"
+                                value={props.data.race_identification}
+                                disabled
                             />
                         </div>
                     </div>
@@ -296,17 +287,17 @@ const SolicityEditPresenter = (props: Props) => {
                     <div className="grid xl:grid-flow-col xl:grid-col-2 lg:grid-cols-2 grid-cols-1 gap-2  mt-5  ">
                         
 
-                        <div className=" flex  flex-col -ml-20 h-[44px]  w-[395px] ">
+                        <div className=" flex  flex-col  h-[44px]  w-[395px] ">
                             <Select
                                 placeholder={"Formato de recepción"}
                                 name="type_reception"
-                                options={props.format_receipt}
+                                options={props.format_send}
                                 onChange={(value) => {
                                     props.onChangeSelect(value as ColourOption, 'format_receipt')
                                 }}
-                                value={props.solicitySaved.format_receipt ?
-                                    props.getSelectedItems(props.solicitySaved.format_receipt, props.format_receipt)
-                                    : props.data.format_receipt ? props.getSelectedItems(props.data.format_receipt, props.format_receipt) : null
+                                value={props.solicitySaved.format_send ?
+                                    props.getSelectedItems(props.solicitySaved.format_send, props.format_send)
+                                    : props.data.format_send ? props.getSelectedItems(props.data.format_send, props.format_send) : null
                                 }
                             />
                         </div>

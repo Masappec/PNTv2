@@ -72,6 +72,10 @@ class UserEntity {
 
 
 
+  static isUserEntity(data: UserEntity): boolean {
+    if (!data) return false;
+    return data.user_permissions?.find(x => x.codename === 'view_users_internal') !== undefined && !data.is_superuser
+  }
 }
 
 export default UserEntity;

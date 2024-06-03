@@ -343,7 +343,7 @@ const SolicityCreatePresenter = (props: Props) => {
             </div>
             {
               !props.disabledReceipt ? (
-                <div className=" flex  flex-col -ml-20 h-[44px]  w-[395px] ">
+                <div className=" flex  flex-col  h-[44px]  w-[395px] ">
                   <Select
                     placeholder={"Formato de recepción"}
                     name="type_reception"

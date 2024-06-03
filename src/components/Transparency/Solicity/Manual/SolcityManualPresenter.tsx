@@ -309,8 +309,8 @@ const SolicityManualPresenter = (props: Props) => {
                         Forma de Recepción de la información
                     </h2>
 
-                    <div className="grid xl:grid-flow-col xl:grid-col-2 lg:grid-cols-2 grid-cols-1 gap-2  mt-5  ">
-                        <div className=" flex  flex-col  h-[44px]  xl:w-[438px] ">
+                    <div className="grid xl:grid-flow-col xl:grid-col-2 lg:grid-cols-2 grid-cols-1 gap-2  xl:w-1/2 mt-5  ">
+                        <div className=" flex  flex-col  h-[44px]  w-full  ">
                             <Select
                                 placeholder={"Forma de entrega"}
                                 name="formatSolicity"
@@ -327,7 +327,7 @@ const SolicityManualPresenter = (props: Props) => {
                         </div>
                         {
                             !props.disabledReceipt ? (
-                                <div className=" flex  flex-col -ml-20 h-[44px]  w-[395px] ">
+                                <div className=" flex  flex-col h-[44px] w-full ">
                                     <Select
                                         placeholder={"Formato de recepción"}
                                         name="type_reception"

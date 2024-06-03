@@ -36,12 +36,22 @@ const UserCreateContainer = ({
     const [loadingSubmit, setLoadingSubmit] = useState(false)
     const navigate = useNavigate()
 
+
+    const [isUserEntity, setIsUserEntity] = useState<boolean>(false)
     const [userSession, SetUserSession] = useState<UserEntity>({} as UserEntity)
 
 
     useEffect(() => {
         const user = SessionService.getUserData()
         SetUserSession(user)
+        const is = UserEntity.isUserEntity(user)
+        if (is){
+            const establishment = SessionService.getEstablishmentData();
+            
+            setIsUserEntity(is)
+            setData({ ...data, establishment_id: establishment?.id })
+
+        }
     }, [])
 
     useEffect(() => {
@@ -172,6 +182,8 @@ const UserCreateContainer = ({
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
     }
+
+    
     return (
         <UserCreatePresenter
             data={data as UserEntity}
@@ -191,6 +203,7 @@ const UserCreateContainer = ({
             onChangePassword={onChangePassword}
             showPassword={showPassword}
             loadingSubmit={loadingSubmit}
+            isEstablishmentUser={isUserEntity}
         />
     )
 }

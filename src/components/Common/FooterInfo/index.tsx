@@ -1,8 +1,7 @@
 
 import { FaXTwitter } from "react-icons/fa6";
 import { SiFacebook } from "react-icons/si";
-import logo_cd from '../../../assets/fundacion_ciudadani_desarrollo.png'
-import datalad from '../../../assets/datalat.png'
+import { placeHolderImage } from "../../../utils/functions";
 const FooterInfo = () => {
   return (
     <footer className="bg-dark-400 text-white py-8 w-screen xl:w-full lg:pl-24 pl-5 ">
@@ -56,22 +55,22 @@ const FooterInfo = () => {
 
           <div className="lg:flex grid grid-cols-2 w-auto   lg:w-full lg:ml-12 lg:justify-center">
             <a href="#" className="block  lg:inline-block  lg:mr-4">
-              <img src={logo_cd} alt="" className=" w-[84px] h-[84px] " />
+               <img src={placeHolderImage()} alt="" className=" w-[84px] h-[84px] " />
             </a>
             <a href="#" className="  lg:inline-block lg:mr-4">
-              <img src={datalad} alt="" className=" w-32 h-14" />
+              <img src={placeHolderImage()} alt="" className=" w-[84px] h-[84px] " />
             </a>
             <a href="#" className="block  lg:inline-block lg:mr-4">
-              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+               <img src={placeHolderImage()} alt="" className=" w-[84px] h-[84px] " />
             </a>
             <a href="#" className="block  lg:inline-block  lg:mr-4">
-              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+               <img src={placeHolderImage()} alt="" className=" w-[84px] h-[84px] " />
             </a>
             <a href="#" className="block  lg:inline-block  lg:mr-4">
-              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+               <img src={placeHolderImage()} alt="" className=" w-[84px] h-[84px] " />
             </a>
             <a href="#" className="block  lg:inline-block  lg:mr-4">
-              <img src="" alt="" className=" w-[84px] h-[84px] border-2 " />
+               <img src={placeHolderImage()} alt="" className=" w-[84px] h-[84px] " />
             </a>
           </div>
 

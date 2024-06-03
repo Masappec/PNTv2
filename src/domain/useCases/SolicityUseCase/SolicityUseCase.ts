@@ -129,10 +129,7 @@ class SolicityUseCase {
       || solicity.status == StatusSolicity.NO_RESPONSED.key
       || solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
       || solicity.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key) {
-      if (now.getDate() == expired_date.getDate()
-        && now.getFullYear() == expired_date.getFullYear()
-        && now.getMonth() == expired_date.getMonth()
-      ) {
+      if (now > expired_date) {
         return true
       }
     }
