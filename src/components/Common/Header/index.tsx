@@ -1,82 +1,100 @@
 import { Link } from "react-router-dom";
-import logo from "../../../assets/Home/logo-dpe 1.png";
-import { FormattedMessage } from "react-intl";
-import { AiOutlineMenu } from "react-icons/ai";
+import { LogoDefensoria } from "../LogoDefensoria";
 
-interface Props {
-  onOpen: () => void;
-}
-const Header = (props: Props) => {
+
+
+const Header = () => {
+
+
   return (
-    <header className="border-b-[1px] border-gray-400 dark:border-primary-600">
-      <nav className="bg-white border-gray-900 px-4 lg:px-6 py-2.5 dark:bg-gray-800 ">
-        <div className="flex flex-wrap justify-between items-center mx-8 ">
-          <a href="/" className="flex items-center ">
-            <img
-              src={logo}
-              className="mr-3 xl:h-20 lg:h-20 h-12  "
-              alt="Logo de la defensoria del pueblo"
-              tabIndex={1}
-            />
-          </a>
-          <div className="items-center lg:order-2 pr-2 space-x-6 hidden lg:block ">
-            <Link
-              to="entidades"
-              tabIndex={2}
-              className="text-gray-800  dark:text-white hover:bg-primary-200 hover:text-white  font-medium rounded-lg text-base px-8 py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-            >
-              <FormattedMessage id="list_entities" />
-            </Link>
-
-            <Link
-              to="indicadores"
-              tabIndex={3}
-              className="text-gray-800  dark:text-white hover:bg-primary-200 hover:text-white  font-medium rounded-lg text-base px-6 py-2.5  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-            >
-              <FormattedMessage id="indicators" />
-            </Link>
-            <Link
-              to="/acerca-de"
-              tabIndex={4}
-              className="text-gray-800  dark:text-white hover:bg-primary-200 hover:text-white  font-medium rounded-lg text-base px-11 py-2.5   dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-            >
-              <FormattedMessage id="about" />
-            </Link>
-
-            <Link
-              to="/ingreso"
-              tabIndex={5}
-              className="text-white bg-primary-500
-                         hover:bg-primary-800 focus:ring-4 
-                         
-                         focus:ring-blue-300  rounded-full text-lg font-semibold px-10 py-3.5 
-                          dark:bg-primary-300 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800
-                          
-                          
-                          "
-            >
-              <FormattedMessage id="login" />
-            </Link>
-
+    <header className='w-full border-b border-gray-300'>
+      <div className='section-container flex flex-wrap items-center justify-between py-2'>
+        {/* Logo */}
+        <a href='/' className='flex cursor-pointer select-none items-center'>
+          <span className='sr-only'>logo</span>
+          <LogoDefensoria className='max-w-32' />
+        </a>
+        {/* Fin Logo */}
+        <button
+          id='header-menu-btn'
+          data-collapse-toggle='navbar-sticky'
+          type='button'
+          className='inline-flex h-10 w-10 items-center justify-center rounded-sm bg-gray-100 p-2 text-sm focus:outline-none focus:ring-1 lg:hidden'
+          aria-controls='navbar-sticky'
+          aria-expanded='false'
+        ><span className='sr-only'>abrir menú de navegación</span><svg
+          width='24'
+          height='24'
+          viewBox='0 0 24 24'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+        ><path
+          fill='currentColor'
+          d='M4 6.3C4 6.13431 4.13431 6 4.3 6H19.7C19.8657 6 20 6.13431 20 6.3V7.7C20 7.86569 19.8657 8 19.7 8H4.3C4.13431 8 4 7.86569 4 7.7V6.3ZM4 11.3C4 11.1343 4.13431 11 4.3 11H19.7C19.8657 11 20 11.1343 20 11.3V12.7C20 12.8657 19.8657 13 19.7 13H4.3C4.13431 13 4 12.8657 4 12.7V11.3ZM4 16.3C4 16.1343 4.13431 16 4.3 16H19.7C19.8657 16 20 16.1343 20 16.3V17.7C20 17.8657 19.8657 18 19.7 18H4.3C4.13431 18 4 17.8657 4 17.7V16.3Z'
+        ></path>
+          </svg>
+        </button>
+        {/* Navigation Links */}
+        <nav
+          className='hidden w-full items-center justify-between md:order-1 lg:flex lg:w-auto'
+          id='navbar-sticky'>
+          <ul className='flex flex-col gap-x-8 p-4 pt-8 font-medium md:mt-0 md:flex-row md:p-0'>
+            {/* Navigation Link */}
+            <li className='m-0 w-max'>
+              <Link
+                to='/entidades'
+                className='group relative inline-block cursor-pointer rounded-t-md p-2 text-lg transition hover:bg-primary/20'>
+                <span className='text-pretty text-base font-medium'>Listado de Entidades</span>
+                <span
+                  className='absolute -bottom-1 left-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+                <span
+                  className='absolute -bottom-1 right-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+              </Link>
+            </li>
+            {/* Navigation Link */}
+            <li className='m-0 w-max'>
+              <Link
+                to='/indicadores'
+                className='group relative inline-block cursor-pointer rounded-t-md p-2 text-lg transition hover:bg-primary/20'>
+                <span className='text-pretty text-base font-medium'>Indicadores</span>
+                <span
+                  className='absolute -bottom-1 left-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+                <span
+                  className='absolute -bottom-1 right-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+              </Link>
+            </li>
+            {/* Navigation Link */}
+            <li className='m-0 w-max'>
+              <Link
+                to='/acerca-de'
+                className='group relative inline-block cursor-pointer rounded-t-md p-2 text-lg transition hover:bg-primary/20'>
+                <span className='text-pretty text-base font-medium'>Acerca de</span>
+                <span
+                  className='absolute -bottom-1 left-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+                <span
+                  className='absolute -bottom-1 right-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+              </Link>
+            </li>
+            {/* Primary Button */}
+            <li>
+              <button
+                type='button'
+                className='hover:bg-primary-800 rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                {/* No usar el <a> y <button> solo se lo hizo para facilitar el acceso */}
+                <Link to='/ingreso'>Ingresar al Portal</Link>
+                </button>
+                </li>
+              </ul>
+            </nav>
           </div>
-          <div>
-            <button
-              data-collapse-toggle="mobile-menu-2"
-              type="button"
-              onClick={props.onOpen}
-              className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              aria-controls="mobile-menu-2"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              <AiOutlineMenu size={25} />
-
-            </button>
-          </div>
-        </div>
-      </nav>
-    </header>
-  );
+        </header>
+  )
 };
 
 export default Header;

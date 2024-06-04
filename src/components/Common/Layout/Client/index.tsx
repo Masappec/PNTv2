@@ -3,8 +3,7 @@ import FooterInfo from "../../FooterInfo";
 import Header from "../../Header";
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
 import TransparencyUseCase from "../../../../domain/useCases/Transparency/TransparencyUseCase";
-import MenuMobile from "../../MenuMobile";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { useDispatch } from "react-redux";
 import { setEstablishments } from "../../../../infrastructure/Slice/EstablishmentSlice";
@@ -36,27 +35,22 @@ const LayouClient = (props: Props) => {
 
   }, [])
 
-  const [visible, setVisible] = useState(false);
   return (
-    <div className="">
-      <MenuMobile
-        onClose={() => setVisible(false)}
-        open={visible}
-      />
-
-      <Header
-        onOpen={() => setVisible(true)}
-      />
-      <div className="bg-[#fbf9f8]">
+    <>
+      <Header/>
+      <main className='relative'>
+        <div className='absolute left-8 hidden h-full w-[1px] bg-gray-300 lg:block'></div>
+      <>
         <Outlet
           context={{
             usecase: props.usecase,
             transparencyUseCase: props.transparencyUseCase,
           }}
         />
-      </div>
+      </>
+      </main>
       <FooterInfo />
-    </div>
+    </>
   );
 };
 
