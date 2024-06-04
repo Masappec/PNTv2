@@ -43,29 +43,76 @@ const LandingPresenter = (props: Props) => {
   ];
 
   const Icon = [
-    BsQuestionCircle,
-    FiLayers,
-    () => (
-      <svg
-        width="70"
-        height="70"
-        viewBox="0 0 100 100"
-        className="ml-3 2xl:w-1/2"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M45.8333 16.6667H32.5C25.4993 16.6667 21.999 16.6667 19.3251 18.0291C16.9731 19.2275 15.0608 21.1398 13.8624 23.4918C12.5 26.1657 12.5 29.666 12.5 36.6667V67.5C12.5 74.5007 12.5 78.001 13.8624 80.6749C15.0608 83.0269 16.9731 84.9392 19.3251 86.1376C21.999 87.5 25.4993 87.5 32.5 87.5H63.3333C70.334 87.5 73.8343 87.5 76.5082 86.1376C78.8602 84.9392 80.7725 83.0269 81.9709 80.6749C83.3333 78.001 83.3333 74.5007 83.3333 67.5V54.1667M54.1667 70.8333H29.1667M62.5 54.1667H29.1667M83.8388 16.1612C88.7204 21.0427 88.7204 28.9573 83.8388 33.8388C78.9573 38.7204 71.0427 38.7204 66.1612 33.8388C61.2796 28.9573 61.2796 21.0427 66.1612 16.1612C71.0427 11.2796 78.9573 11.2796 83.8388 16.1612Z"
-          stroke="#FFE0EE"
-          stroke-width="8"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    ),
+    ()=><svg
+      className='mb-8'
+      xmlns='http://www.w3.org/2000/svg'
+      width='60'
+      height='61'
+      viewBox='0 0 60 61'
+      fill='none'>
+      <path
+        d='M30 3.5L3 17L30 30.5L57 17L30 3.5Z'
+        stroke='currentColor'
+        stroke-width='5.41667'
+        stroke-linecap='round'
+        stroke-linejoin='round'></path>
+      <path
+        d='M3 44L30 57.5L57 44'
+        stroke='currentColor'
+        stroke-width='5.41667'
+        stroke-linecap='round'
+        stroke-linejoin='round'></path>
+      <path
+        d='M3 30.5L30 44L57 30.5'
+        stroke='currentColor'
+        stroke-width='5.41667'
+        stroke-linecap='round'
+        stroke-linejoin='round'></path>
+    </svg>,
+    () => <svg
+      className='mb-8'
+      xmlns='http://www.w3.org/2000/svg'
+      width='60'
+      height='61'
+      viewBox='0 0 60 61'
+      fill='none'>
+      <path
+        d='M30 3.5L3 17L30 30.5L57 17L30 3.5Z'
+        stroke='currentColor'
+        stroke-width='5.41667'
+        stroke-linecap='round'
+        stroke-linejoin='round'></path>
+      <path
+        d='M3 44L30 57.5L57 44'
+        stroke='currentColor'
+        stroke-width='5.41667'
+        stroke-linecap='round'
+        stroke-linejoin='round'></path>
+      <path
+        d='M3 30.5L30 44L57 30.5'
+        stroke='currentColor'
+        stroke-width='5.41667'
+        stroke-linecap='round'
+        stroke-linejoin='round'></path>
+    </svg>,
+    () => <svg
+      className='mb-8'
+      xmlns='http://www.w3.org/2000/svg'
+      width='60'
+      height='60'
+      viewBox='0 0 60 60'
+      fill='none'>
+      <path
+        d='M27 6.00002H17.4C12.3595 6.00002 9.83928 6.00002 7.91407 6.98095C6.22063 7.8438 4.84378 9.22066 3.98093 10.9141C3 12.8393 3 15.3595 3 20.4V42.6C3 47.6405 3 50.1607 3.98093 52.0859C4.84378 53.7794 6.22063 55.1562 7.91407 56.0191C9.83928 57 12.3595 57 17.4 57H39.6C44.6405 57 47.1607 57 49.0859 56.0191C50.7793 55.1562 52.1562 53.7794 53.0191 52.0859C54 50.1607 54 47.6405 54 42.6V33M33 45H15M39 33H15M54.3639 5.63606C57.8787 9.15074 57.8787 14.8493 54.3639 18.3639C50.8493 21.8787 45.1507 21.8787 41.6361 18.3639C38.1213 14.8493 38.1213 9.15074 41.6361 5.63606C45.1507 2.12131 50.8493 2.12131 54.3639 5.63606Z'
+        stroke='currentColor'
+        stroke-width='4.8'
+        stroke-linecap='round'
+        stroke-linejoin='round'></path>
+    </svg>
+
   ];
 
-  return (
+ /* return (
     <div className="flex flex-col w-full  bg-white lg:pr-10">
       <div></div>
       <div className="border-l-[1px]  border-gray-800 ml-8 md:ml-14">
@@ -204,7 +251,148 @@ const LandingPresenter = (props: Props) => {
         </div>
       </div>
     </div>
-  );
+  );*/
+
+  return (
+    <>
+
+      <Hero
+
+        countEntities={props.countEntities}
+        countFiles={props.countFiles}
+        loadOptions={props.loadOptions}
+        onSelect={props.onSelect} />
+        <section
+          className='section-container mt-32 grid min-h-64 w-full grid-cols-[repeat(auto-fit,minmax(18rem,_1fr))] place-items-center'>
+
+        <CardConsulta
+        
+          title="¿Qué puedo hacer en este portal?"
+          content="Consulta las preguntas frecuentes para resolver tus principales dudas sobre esta plataforma."
+          backgroundColor="bg-custom-orange"
+          color="text-black"
+          
+        />
+        {/*props.faq.map((item, index) => {
+          return (
+            <CardQuestion
+              key={index}
+              icon={Icon[index] || Icon[0]}
+              title={item.question}
+              content={item.answer}
+              contrast={colors[index].contrast}
+              bgcolor={colors[index].bgcolor}
+              onQuestion={() => props.onQuestion(index)}
+            ></CardQuestion>
+          );
+        })*/}
+        <article
+          id='video-tutorial-card'
+          className='group flex h-full w-full cursor-pointer flex-col justify-between bg-custom-green px-8 py-8 text-white hover:text-gray-800'>
+          <div className='grid grid-rows-[92px,80px,max-content]'>
+            <svg
+              className='mb-8'
+              xmlns='http://www.w3.org/2000/svg'
+              width='60'
+              height='61'
+              viewBox='0 0 60 61'
+              fill='none'>
+              <path
+                d='M30 3.5L3 17L30 30.5L57 17L30 3.5Z'
+                stroke='currentColor'
+                stroke-width='5.41667'
+                stroke-linecap='round'
+                stroke-linejoin='round'></path>
+              <path
+                d='M3 44L30 57.5L57 44'
+                stroke='currentColor'
+                stroke-width='5.41667'
+                stroke-linecap='round'
+                stroke-linejoin='round'></path>
+              <path
+                d='M3 30.5L30 44L57 30.5'
+                stroke='currentColor'
+                stroke-width='5.41667'
+                stroke-linecap='round'
+                stroke-linejoin='round'></path>
+            </svg>
+
+            <h2 className='mb-4 text-balance text-2xl font-bold transition'>
+              ¿Qué información voy a encontrar?
+            </h2>
+            <p className='mb-8 text-pretty text-lg font-medium leading-7 transition'>
+              Revisa nuestros vídeo tutoriales que explican paso a paso cómo utilizar este sitio.
+            </p>
+          </div>
+
+          <div className='inline-flex items-center justify-start gap-x-4 text-lg font-semibold'>
+            <span>Ir a la Sección</span>
+
+            <svg
+              width='15'
+              height='15'
+              viewBox='0 0 15 15'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              className='h-8 w-8 transition group-hover:translate-x-4'>
+              <path
+                d='M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z'
+                fill='currentColor'
+                fill-rule='evenodd'
+                clip-rule='evenodd'></path>
+            </svg>
+          </div>
+        </article>
+
+        <article
+          id='faq-card'
+          className='group flex h-full w-full cursor-pointer flex-col justify-between bg-custom-pink px-8 py-8 text-white hover:text-gray-800'>
+          <div className='grid grid-rows-[92px,80px,max-content]'>
+            <svg
+              className='mb-8'
+              xmlns='http://www.w3.org/2000/svg'
+              width='60'
+              height='60'
+              viewBox='0 0 60 60'
+              fill='none'>
+              <path
+                d='M27 6.00002H17.4C12.3595 6.00002 9.83928 6.00002 7.91407 6.98095C6.22063 7.8438 4.84378 9.22066 3.98093 10.9141C3 12.8393 3 15.3595 3 20.4V42.6C3 47.6405 3 50.1607 3.98093 52.0859C4.84378 53.7794 6.22063 55.1562 7.91407 56.0191C9.83928 57 12.3595 57 17.4 57H39.6C44.6405 57 47.1607 57 49.0859 56.0191C50.7793 55.1562 52.1562 53.7794 53.0191 52.0859C54 50.1607 54 47.6405 54 42.6V33M33 45H15M39 33H15M54.3639 5.63606C57.8787 9.15074 57.8787 14.8493 54.3639 18.3639C50.8493 21.8787 45.1507 21.8787 41.6361 18.3639C38.1213 14.8493 38.1213 9.15074 41.6361 5.63606C45.1507 2.12131 50.8493 2.12131 54.3639 5.63606Z'
+                stroke='currentColor'
+                stroke-width='4.8'
+                stroke-linecap='round'
+                stroke-linejoin='round'></path>
+            </svg>
+
+            <h2 className='mb-4 text-balance text-2xl font-bold transition'>
+              ¿Deben las entidades responder a mis solicitudes?
+            </h2>
+            <p className='mb-8 text-pretty text-lg font-medium leading-7 transition'>
+              Encuentra las leyes y normativas que regulan el derecho de acceso a la información
+              pública.
+            </p>
+          </div>
+
+          <div className='inline-flex items-center justify-start gap-x-4 text-lg font-semibold'>
+            <span>Ir a la Sección</span>
+
+            <svg
+              width='15'
+              height='15'
+              viewBox='0 0 15 15'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+              className='h-8 w-8 transition group-hover:translate-x-4'>
+              <path
+                d='M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z'
+                fill='currentColor'
+                fill-rule='evenodd'
+                clip-rule='evenodd'></path>
+            </svg>
+          </div>
+        </article>
+      </section>
+    </>
+  )
 };
 
 export default LandingPresenter;

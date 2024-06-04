@@ -2,3 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer components {
+  .section-container {
+    @apply mx-auto max-w-screen-xl px-4 lg:px-10;
+  }
+}
+
+@layer components {
+  /* Custom Table */
+  th {
+    @apply p-2 text-center text-xs font-medium uppercase text-gray-500;
+  }
+
+  tr {
+    @apply relative divide-x divide-gray-200 hover:bg-gray-100;
+  }
+
+  td {
+    @apply h-max w-max whitespace-nowrap p-2 text-center text-sm font-normal text-gray-900;
+  }
+  /* End Custom Table */
+
+  textarea {
+    @apply resize-none;
+  }
+
+  button,
+  a {
+    @apply outline-primary;
+  }
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 0.4rem;
+    height: 0.6rem;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background-color: none;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #86b5c4;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+}
