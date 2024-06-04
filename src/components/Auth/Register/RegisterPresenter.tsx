@@ -12,6 +12,8 @@ import Spinner from "../../Common/Spinner";
 import logo from "../../../assets/Home/logo-dpe 2.png";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import PasswordMeter, { IOncalculate } from "../../Common/PasswordMeter";
+import LogoPortal from "../../Common/LogoPortal";
+import { BsEyeSlash } from "react-icons/bs";
 
 
 interface RegisterPresenterProps {
@@ -36,7 +38,182 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
 
   return (
     <>
-      <header className="border-b-2 border-dark-400 dark:border-primary-600">
+        <main>
+    <section className='section-container py-16'>
+      <form
+        className='mx-auto max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
+        <LogoPortal className='mx-auto mb-4 max-w-60' />
+
+        <p className='mx-auto w-full text-balance text-center text-lg text-slate-600'>
+          ¡Bienvenido! Ingrese la siguiente información para crear su cuenta
+        </p>
+
+        {props.error && (
+              <Alert
+                message={props.error}
+                type="error"
+                onClose={() => props.setError("")}
+              />
+            )}
+
+        <section className='mt-4 grid grid-cols-1 items-start justify-center gap-4 text-start'>
+        {props.fields.map((field) => {
+                return field.type_field === "password" ? (
+                  <div >
+                  <label className="text-sm font-medium text-gray-900" data-testid="flowbite-label">
+                    {field.description}
+                    <span className='text-red-500'>*</span>
+                    </label>
+
+                    <div className='relative'>
+
+                    <input
+                      type={props.showPassword ? "text" : field.type_field}
+                      placeholder={field.description}
+                      className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
+                      value={
+                        props.data[field.name as keyof RegisterDto] as string
+                      }
+                      onChange={(e) =>
+                        props.setData(field.name, e.target.value)
+                      }
+                      name={field.name}
+                      required
+                    />
+                    <button
+                     type='button'
+                     className='absolute right-0 top-0 p-2 text-gray-600 outline-primary hover:cursor-pointer'
+                      onClick={props.handleShowPassword}
+                    >
+                      {props.showPassword ? (
+                        <IoEyeOffOutline size={22} className=" font-bold text-gray-600" />
+                      ) : (
+                        <IoEyeOutline size={22} className=" font-bold text-gray-600" />
+                      )}
+                    </button>
+                    </div>
+                    {
+                      field.name === "password" && (
+
+                        <PasswordMeter
+                          onCalculate={props.onChangePassword}
+                          password={props.data[field.name as keyof RegisterDto] as string}
+                        />
+                      )
+                    }
+                  </div>
+
+                )
+
+
+                  : field.type_field === "select" ? (
+                    <div>
+                    <label className="text-sm font-medium text-gray-900" data-testid="flowbite-label">
+                      {field.description}
+                      <span className='text-red-500'>*</span>
+                      </label>
+  
+                      <Select
+                        value={
+                          props.data[field.name as keyof RegisterDto] as string
+                        }
+                        onChange={(e) =>
+                          props.setData(field.name, e.target.value)
+                        }
+                        options={[
+                          {
+                            value: "",
+                            label: "Seleccione una opción",
+                          },
+
+                          ...(field.options?.map((option) => {
+                            return {
+                              value: option.id as string,
+                              label: option.name,
+                            };
+                          }) as { value: string; label: string }[]),
+                        ]}
+                        required
+                      />
+                    
+                    </div>
+                  ) : field.type_field === "checkbox" ? (
+                    <div className='mb-4 mt-8 flex items-center'>
+                      <Checkbox
+                  
+                        checked={
+                          props.data[field.name as keyof RegisterDto] as boolean
+                        }
+                        onChange={(e) => props.setData(field.name, e)}
+                        id={field.name}
+
+                      
+                      />
+                       <label htmlFor='accept_terms' className='ml-2 text-sm text-gray-900'>
+                      {field.description}
+          </label>
+
+                    </div>
+                  ) : (
+                    <div>
+                    <label className="text-sm font-medium text-gray-900" data-testid="flowbite-label">
+                    {field.description}
+                    <span className='text-red-500'>*</span>
+                    </label>
+                      <input
+                        type={field.type_field}
+                        placeholder={field.description}
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50 "
+                        value={
+                          props.data[field.name as keyof RegisterDto] as string
+                        }
+                        onChange={(e) =>
+                          props.setData(field.name, e.target.value)
+                        }
+                        name={field.name}
+                      />
+                  
+
+
+                    </div>
+                  );
+              })}
+            </section>
+        {props.isLoading ? (
+              <Spinner />
+            ) : (
+
+        <button
+          type='submit'
+          className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'
+          data-astro-source-file='C:/Users/asanluca/Documents/pro/layouts/src/components/transparencia/Header.astro'
+          data-astro-source-loc='84:197'
+          disabled={!props.isEnable}
+          >
+          Registrarse
+        </button>
+            )
+          }
+
+        <p className='mt-8 text-sm text-gray-900'>
+          ¿Tienes una cuenta? <a
+            className='font-medium text-primary hover:underline hover:underline-offset-2'
+            href='/ingreso'>Inicia sesión
+            </a >
+        </p>
+      </form>
+        
+      
+    </section>
+  </main>
+    </>
+  );
+};
+
+export default RegisterPresenter;
+
+
+ {/* <header className="border-b-2 border-dark-400 dark:border-primary-600">
         <nav className="bg-primary-600 border-gray-900 px-4 lg:px-6 py-10 dark:bg-gray-800"></nav>
       </header>
       <div className="bg-white h-max mb-52 md:flex lg:flex xl:flex ">
@@ -217,8 +394,4 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
           </form>
         </div>
       </div>
-    </>
-  );
-};
-
-export default RegisterPresenter;
+       */}

@@ -7,6 +7,10 @@ import Spinner from "../../Common/Spinner";
 import { Button } from "flowbite-react";
 import logo from "../../../assets/Home/logo-dpe 2.png";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import LogoPortal from "../../Common/LogoPortal";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
+import { BsEyeSlash } from "react-icons/bs";
+
 
 
 interface LoginPresenterProps {
@@ -27,9 +31,120 @@ interface LoginPresenterProps {
 
 const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
   return (
-    <>
+   
+  
+ <main>
+    <section className='section-container py-16'>
+      <form
+        className='mx-auto max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
+        <LogoPortal className='mx-auto mb-4 max-w-60' />
 
-      <header className="border-b-2 border-dark-400 dark:border-primary-600">
+        <p className='mx-auto w-full text-balance text-center text-lg text-slate-600'>
+          Ingrese sus credenciales para acceder al portal
+        </p>
+        {props.error && (
+              <Alert
+                message={props.error}
+                type="error"
+                onClose={() => props.setError("")}
+              />
+            )}
+
+        <section className='mt-4 grid grid-cols-1 items-start justify-center gap-4 text-start'>
+          
+          <div>
+            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'
+              >Usuario
+            </label>
+            <input
+              className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+              type='text'
+              placeholder='Ingrese su nombre de usuario'
+              name='username'
+              required
+              value={props.email}
+              onChange={(e) => props.setEmail(e.target.value)}
+            />
+          </div>
+
+         
+          <div>
+            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'
+              >Contraseña
+            </label>
+
+            <div className='relative'>
+              <input
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pr-10 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                type={props.showPassword ? "text" : 'password'}
+                placeholder='Ingrese su contraseña'
+                name='confirm_password'
+                required
+                value={
+                  props.password
+                }
+                onChange={(e) =>
+                  props.setPassword(e.target.value)
+                }
+              />
+              <button
+                type='button'
+                className='absolute right-0 top-0 p-2 text-gray-600 outline-primary hover:cursor-pointer'
+                onClick={props.handleShowPassword}>
+                  
+                   {props.showPassword ? (
+                      <IoEyeOffOutline size={22} className=" font-bold text-gray-600" />
+                    ) : (
+                      <IoEyeOutline size={22} className=" font-bold text-gray-600" />
+                    )
+                  }
+                 
+              </button>
+            </div>
+          </div>
+
+          <p className='text-end text-sm'>
+            <a
+              className='font-medium text-primary hover:underline hover:underline-offset-2'
+              href='/auth/forgot-password'>¿Olvidaste tu Contraseña?  </a>
+          </p>
+          {props.isloading ? (
+                <Spinner />
+              ) : (
+
+          <button
+            type='submit'
+            className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'
+            data-astro-source-file='C:/Users/asanluca/Documents/pro/layouts/src/components/transparencia/Header.astro'
+            data-astro-source-loc='84:197'>
+            Ingresar
+          </button>
+              )
+            }
+
+          <p className='mt-4 text-center text-sm text-gray-900'>
+            ¿Aún no has creado tu cuenta?
+             <a
+              className='font-medium text-primary hover:underline hover:underline-offset-2'
+              href='/registro'>Regístrate
+              </a>
+          </p>
+        </section>
+      </form>
+    </section>
+  </main>
+    
+
+  );
+};
+
+export default LoginPresenter;
+
+
+
+
+
+ {/* <header className="border-b-2 border-dark-400 dark:border-primary-600">
         <nav className="bg-primary-600 border-gray-900 px-4 lg:px-6 py-10 dark:bg-gray-800"></nav>
       </header>
       <div className="bg-white h-screen md:flex lg:flex xl:flex ">
@@ -162,8 +277,4 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
           </form>
         </div>
       </div>
-    </>
-  );
-};
-
-export default LoginPresenter;
+        */}
