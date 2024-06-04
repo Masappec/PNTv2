@@ -82,13 +82,14 @@ const Header = () => {
               </Link>
             </li>
             {/* Primary Button */}
-            <li>
-              <button
+            <li className="mt-2">
+              <Link
                 type='button'
-                className='hover:bg-primary-800 rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                to='/ingreso'
+                className=' hover:bg-primary-800 rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
                 {/* No usar el <a> y <button> solo se lo hizo para facilitar el acceso */}
-                <Link to='/ingreso'>Ingresar al Portal</Link>
-                </button>
+                <span >Ingresar al Portal</span>
+              </Link>
                 </li>
               </ul>
             </nav>

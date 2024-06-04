@@ -3,7 +3,7 @@ export const LogoPortal = ({ className }: {
 }) =>
 
     <svg
-        className='  w-full h-max max-w-64'
+        className={`w-full h-max ${className}`}
         xmlns='http://www.w3.org/2000/svg'
         width='260'
         height='77'

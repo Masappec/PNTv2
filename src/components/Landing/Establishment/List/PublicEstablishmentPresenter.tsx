@@ -1,8 +1,4 @@
-import { Alert, Label, TextInput } from "flowbite-react"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
-import { HiInformationCircle } from "react-icons/hi"
-import { FormattedMessage, useIntl } from "react-intl";
-import { BiSearch } from "react-icons/bi";
 import Spinner from "../../../Common/Spinner";
 
 
@@ -22,8 +18,242 @@ interface Props {
 
 const PublicEstablishmentPresenter = (props: Props) => {
 
-    const intl = useIntl();
+    return (
+        <section className='section-container my-16'>
+            <h1 className='mb-8 text-balance text-2xl font-normal leading-tight md:text-[40px]'>
+                Instituciones que publican en el Portal
+            </h1>
 
+            <div className='mb-4 flex max-w-2xl flex-wrap items-center'>
+                <a
+                    onClick={() => props.onPageChange("A")}
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    A
+                </a>
+                -
+                <a
+                    onClick={() => props.onPageChange("B")}
+
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    B
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    C
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    D
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    E
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    F
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    G
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    H
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    I
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    J
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    K
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    L
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    M
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    N
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    O
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    P
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    Q
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    R
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    S
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    T
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    U
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    V
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    W
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    X
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    Y
+                </a>
+                -
+                <a
+                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                    Z
+                </a>
+            </div>
+            <section className='grid max-w-2xl grid-cols-1 gap-4 md:grid-cols-2'>
+                <div className='max-w-sm'>
+                    <label className='text-sm font-medium text-gray-900'>Institución</label>
+
+                    <div className='group relative'>
+                        <svg
+                            className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
+                            stroke='currentColor'
+                            fill='currentColor'
+                            stroke-width='0'
+                            viewBox='0 0 24 24'
+                            height='1em'
+                            width='1em'
+                            xmlns='http://www.w3.org/2000/svg'
+                        ><path
+                            d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
+                        ></path>
+                        </svg>
+
+                        <input
+                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                            type='text'
+                            placeholder='Buscar por nombre'
+                            name='first_name'
+                            value=''
+                        />
+                    </div>
+                </div>
+
+                <div className='max-w-sm'>
+                    <label className='text-sm font-medium text-gray-900'>Tipo de Institución</label>
+
+                    <div className='group relative'>
+                        <svg
+                            className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
+                            stroke='currentColor'
+                            fill='currentColor'
+                            stroke-width='0'
+                            viewBox='0 0 24 24'
+                            height='1em'
+                            width='1em'
+                            xmlns='http://www.w3.org/2000/svg'
+                        ><path
+                            d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
+                        ></path>
+                        </svg>
+
+                        <input
+                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                            type='text'
+                            placeholder='Buscar por tipo'
+                            name='first_name'
+                            value=''
+                        />
+                    </div>
+                </div>
+            </section>
+            <section className='mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+                {
+                    props.loading &&
+                    <Spinner />
+
+                }
+                {
+                    !props.loading && props.letters.filter((letter) => props.entities.some((entity) => entity.letter === letter)).map((letra) => {
+                        return (
+                            <article className='flex w-full flex-col'>
+
+                                <h3 className='mb-4 text-2xl font-bold tracking-tight text-primary'>{letra}</h3>
+                                {
+                                    props.entities.filter((entity) => entity.letter === letra).map((items) => {
+                                        return items.data.map((entity) => {
+                                            return (
+
+                                                <div className='flex flex-col gap-y-2'>
+                                                    <a
+                                                        className='uppercase text-primary hover:underline hover:underline-offset-2'
+                                                        onClick={() => props.onItemClicked(entity.slug || "")}>
+                                                        {entity.name}
+                                                    </a>
+                                                </div>
+                                            )
+                                        })
+                                    })
+                                }
+                            </article>
+                        )
+                    })
+
+                }
+            </section>
+
+        </section>
+    )
+
+    /*
     return (
         <div className="flex flex-col w-full  bg-white pr-10">
             <div></div>
@@ -130,6 +360,6 @@ const PublicEstablishmentPresenter = (props: Props) => {
                 </div>
             </div>
         </div>
-    )
+    )*/
 }
 export default PublicEstablishmentPresenter

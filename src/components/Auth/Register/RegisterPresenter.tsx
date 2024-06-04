@@ -41,6 +41,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
         <main>
     <section className='section-container py-16'>
       <form
+      onSubmit={props.handleSubmit}
         className='mx-auto max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
         <LogoPortal className='mx-auto mb-4 max-w-60' />
 
