@@ -1,83 +1,59 @@
-import { useState } from "react";
-import { IconType } from "react-icons";
-import { CiCircleAlert } from "react-icons/ci";
-import { IoArrowForwardOutline } from "react-icons/io5";
+import { ReactElement } from "react";
+
 
 interface Props {
-    icon?: IconType | JSX.ElementType;
     title: string;
-    content: string;
-    bgcolor: string;
-    contrast: string;
-    onQuestion?: () => void;
-    
-
-
-
+    content?: string | null;
+    backgroundColor: string;
+    text?: string | null;
+    icon?: () => ReactElement;
+    color: string;
+    bgcolor?: string | null;
+    classnames?: string | null;
+    onFollow?: () => void;
 
 
 }
 
-
 const CardQuestion = (props: Props) => {
 
-    const Icon = props.icon || CiCircleAlert;
-    const [hover, setHover] = useState<boolean>(false);
-
-    return (
-
-        <div className={`flex 2xl:h-[400px] md:h-[400px] h-[450px] bg-[#F7941D0D]   m-b-8  lg:w-full`} >
-            <div className={`cursor-pointer border bg-white dark:border-gray-700 dark:bg-gray-800 flex-col m-0 p-0 flex rounded-none shadow-none border-gray-700 border-l-[1px] border-t-[1px] border-r-[1px] justify-content-start border-t-gray-400 lg:pt-6 w-full h-auto hover:text-black`}
-                style={{
-                    backgroundColor: hover ? props.contrast : props.bgcolor,
-                    //hover
-                    color: hover ? props.bgcolor : props.contrast,
-
-                }}
-            onClick={props.onQuestion}
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
 
 
-            ><div className="flex h-full flex-col gap-4 px-6 ">
-                    <div className="grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1
-                     gap-2 mt-5 xl:mt-0 md:mt-10 mb">
-
-                        <Icon size={65} className={` dark:text-primary-400 h-full ml-4 
-                        2xl:w-1/2 md:w-24 xl:w-1/3
-                        `}
-                            style={{ color: "#FFF9FC" }}></Icon>
-                        <h5 className="text-2xl   
-                        lg:text-3xl 2xl:text-3xl  sm:w-full font-semibold 
-                        tracking-tight text-slate-50 dark:text-white 2xl:ml-0 xl:-ml-20 
-                        2xl:col-span-2 2xl:w-full md:text-3xl xl:w-auto
-                        ">
-                            {props.title}
-                        </h5>
-                    </div>
-                    <div className="relative xl:mt-0 2xl:mt-0">
+    return (<article
+        onClick={props.onFollow}
+        className={`group flex h-full w-full cursor-pointer flex-col justify-between ${props.backgroundColor} px-8 py-8 text-white hover:text-gray-800`}>
+        <div className='grid grid-rows-[92px,100px,max-content]'>
 
 
-                        <div className="w-auto xl:w-[400px] h-[55px] bg-transparent ">
-                            <p className="font-normal
-                             xl:w-10/12 text-white 2xl:mt-5 xl:mt-3  dark:text-gray-400 h-full
-                             2xl:text-2xl text-xl  md:text-xl  mb-5 lg:ml-4">
-                                {props.content}
-                            </p>
-                            <button className="lg:flex items-end justify-between mt-10 md:mt-16 xl:mt-20 h-full"
-                                >
-                                <IoArrowForwardOutline size={53} className="text-white dark:text-white" />
+            {props.icon ? props.icon() : null}
 
-                            </button>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
+            <h2 className='text-2xl  mb-4 text-balance font-bold transition'>
+                {props.title}
+            </h2>
+            <p className='mb-8 text-pretty text-lg font-medium leading-7 transition'>
+                {props.content}
+            </p>
+        </div>
 
-        </div >
+        <div className='inline-flex items-center justify-start gap-x-4 text-lg font-semibold'>
+            <span>Ir a la Sección</span>
 
-    )
+            <svg
+                width='15'
+                height='15'
+                viewBox='0 0 15 15'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+                className='h-8 w-8 transition group-hover:translate-x-4'>
+                <path
+                    d='M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z'
+                    fill='currentColor'
+                    fill-rule='evenodd'
+                    clip-rule='evenodd'></path>
+            </svg>
+        </div>
+    </article>)
 }
 
 export default CardQuestion;

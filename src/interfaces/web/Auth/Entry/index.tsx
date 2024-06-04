@@ -36,7 +36,7 @@ const Entry = () => {
         type="password"
         onChange={(e) => setData({ ...data, password: e.target.value })}
       />
-      <Button onClick={handleSend}>Ingresar</Button>
+      <Button onClick={handleSend} color="blue">Ingresar</Button>
     </div>
   );
 };

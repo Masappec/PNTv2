@@ -1,196 +1,94 @@
-import React, { ComponentType } from 'react';
-import {
-    components, ContainerProps, ControlProps, ValueContainerProps, InputProps, MenuProps, SingleValueProps
-
-} from 'react-select';
+import React, { useState } from 'react';
 import { ColourOption } from '../../../utils/interface';
-import { FaSearch } from 'react-icons/fa';
-import AsyncSelect from 'react-select/async';
 
-const SelectContainer = ({
-    children,
-    ...props
-}: ContainerProps<ColourOption>) => {
+
+interface Props{
+    loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
+    onSelect: (value: ColourOption) => void;
+    onSearch: () => void;
+}
+const CustomSearch = (props: Props) => {
+    const [_value, setValue] = useState<ColourOption|null>(null);
+    const [suggestions, setSuggestions] = useState<ColourOption[]>([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setValue({ value: value, label: value, color: '#00B8D9' });
+        if (value.length > 0) {
+            props.loadOptions(value, (options) => {
+                setSuggestions(options);
+                setShowSuggestions(true);
+            });
+        } else {
+            setSuggestions([]);
+            setShowSuggestions(false);
+        }
+        
+    };
+
+    const handleSuggestionClick = (suggestion: ColourOption) => {
+        setValue(suggestion);
+        setShowSuggestions(false);
+        props.onSelect(suggestion);
+    };
+
+    const handleBlur = () => {
+        // Es posible que desees agregar un pequeño retraso para permitir hacer clic en una sugerencia
+        setTimeout(() => {
+            setShowSuggestions(false);
+        }, 100);
+    };
+
     return (
-        <components.SelectContainer {...props} >
-            {children}
-        </components.SelectContainer>
+        <form role='search' className='group flex rounded-full border border-gray-300 bg-white relative'>
+            <input
+                type='search'
+                className='text-black-medium m-2 w-3/4 rounded-md border-none p-2 text-lg text-gray-800 focus:outline-none focus:ring-0'
+                placeholder='Escribe aquí la entidad que deseas consultar'
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={_value?.label}
+            />
+            {showSuggestions  && (
+                <div className='absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md mt-1 z-10'>
+                    {suggestions.length > 0 ? (
+                        suggestions.map((suggestion, index) => (
+                            <div
+                                key={index}
+                                className='cursor-pointer p-2 hover:bg-gray-200'
+                                onClick={() => handleSuggestionClick(suggestion)}
+                                onMouseDown={() => handleSuggestionClick(suggestion)}>
+                                {suggestion.label}
+                            </div>
+                        ))
+                    ) : (
+                        <div className='p-2 text-gray-600'>No hay sugerencias</div>
+                    )}
+                </div>
+            )}
+            <button
+                type='button'
+                onClick={props.onSearch}
+                className='flex w-1/4 items-center justify-center gap-x-4 rounded-r-full border border-primary bg-primary px-6 py-3 text-base font-semibold text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                <span className='hidden sm:block'>Buscar</span>
+                <svg
+                    className='size-4'
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='26'
+                    height='26'
+                    viewBox='0 0 26 26'
+                    fill='none'>
+                    <path
+                        d='M25 25L20.3335 20.3333M23.6667 12.3333C23.6667 18.5926 18.5926 23.6667 12.3333 23.6667C6.07411 23.6667 1 18.5926 1 12.3333C1 6.07411 6.07411 1 12.3333 1C18.5926 1 23.6667 6.07411 23.6667 12.3333Z'
+                        stroke='white'
+                        strokeWidth='2'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'></path>
+                </svg>
+            </button>
+        </form>
     );
 };
 
-const Menu = (props: MenuProps<ColourOption>) => {
-    return (
-        <components.Menu {...props}>
-            {props.isLoading ? (
-                <div className='w-full h-10 flex justify-center items-center text-gray-500'>
-                    Buscando...
-                </div>
-            ) : props.options.length === 0 ? (
-                <div className='w-full h-10 flex justify-center items-center text-gray-500'>
-                    No se encontraron resultados
-                </div>
-            ) : props.children}
-
-        </components.Menu>
-    );
-}
-
-const SingleValue = (props: SingleValueProps<ColourOption>) => {
-    return (
-        <components.SingleValue {...props}
-            className="text-gray-500 mt-5"
-        >
-            {props.children}
-        </components.SingleValue>
-    );
-}
-
-const LoadingIndicator = () => {
-    return (
-        <div>
-
-        </div>
-    );
-}
-
-
-const DropdownIndicator = () => {
-
-
-
-
-
-    return (
-        <button
-            type="button"
-
-            className="!absolute w-[86px] h-[50px] border-black  
-                 
-                  text-white bg-primary-500
-                  
-                   hover:bg-primary-800 focus:ring-4
-                   justify-center
-                     font-normal 
-                    flex items-center
-                    xl:w-[150px]
-                    xl:space-x-5
-                    -ml-20
-                    rounded-full text-xl  "
-        >
-
-            <p className='hidden xl:flex'>
-                Buscar
-            </p>
-            <FaSearch size="20" />
-        </button>
-    );
-}
-
-const Input: ComponentType<InputProps<ColourOption>>
-
-    = (props) => {
-        return (
-            <input {...props} className="
-            onfocus:outline-none
-            border-none
-            focus:border-none
-            outline-none
-            focus:outline-none
-            border-white
-            bg-transparent
-            focus:shadow-none
-            lg:w-full
-            "
-
-
-                style={({
-                    "--tw-ring-color": "transparent",
-                } as React.CSSProperties)}
-            />
-        );
-    }
-
-
-const ValueContainer = (props: ValueContainerProps<ColourOption>) => {
-    return (
-        <components.ValueContainer {...props}
-
-            className="w-full border-[1px] border-black  rounded-full">
-            {props.children}
-
-        </components.ValueContainer>
-    );
-}
-
-const Control = (props: ControlProps<ColourOption>) => {
-    return (
-        <div
-            ref={props.innerRef}
-            className='w-full flex'
-            {...props.innerProps}>
-            {props.children}
-        </div>
-
-
-    );
-}
-
-
-interface Props {
-    colourOptions: ColourOption[];
-    loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
-    onSelect: (value: ColourOption) => void;
-}
-export const CustomSearch: React.FC<Props> = ({ colourOptions, loadOptions, onSelect }) => {
-
-    const [selectedOption, setSelectedOption] = React.useState<ColourOption | null>(null);
-
-
-    return <AsyncSelect
-        closeMenuOnSelect={false}
-        loadOptions={loadOptions}
-        cacheOptions={true}
-
-        components={{
-            SelectContainer, Control, DropdownIndicator, ValueContainer,
-            Input: Input, LoadingIndicator, Menu, SingleValue
-        }}
-        styles={{
-            container: (base) => ({
-                ...base,
-                padding: 5,
-
-
-            }),
-
-            valueContainer: (base) => ({
-                ...base,
-                height: 50,
-            }),
-            input: (base) => ({
-                ...base,
-                margin: 0,
-                padding: 0,
-                height: 50,
-            }),
-
-
-        }}
-        placeholder=""
-
-        classNames={{
-            input: (base) => base.value ? 'mt-10' : 'w-full',
-
-        }}
-        options={colourOptions}
-        onChange={(value) => {
-            setSelectedOption(value as ColourOption)
-        }}
-        onMenuOpen={() => {
-            if (selectedOption) {
-                onSelect(selectedOption || { value: "", label: "" } as ColourOption)
-            }
-        }}
-
-    />
-}
+export default CustomSearch;

@@ -33,7 +33,7 @@ const LandingContainer = (  ) => {
     const [isSearching, SetSearching] = useState<boolean>()
     const navigate = useNavigate()
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
-
+    const [selected, setSelected] = useState<ColourOption | null>(null)
     const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
 
     useEffect(() => {
@@ -76,10 +76,15 @@ const LandingContainer = (  ) => {
     }
 
     const onSelect = (value: ColourOption) => {
-        console.log("OBJETO SELECCIONADO", value)
 
+        console.log('value', value)
+        setSelected(value)
+    }
 
-        navigate(`/entidades/${value.value}`)
+    const onSearch = () => {
+        if (selected) {
+            navigate(`/entidades/${selected.value}`)
+        }
     }
 
 
@@ -139,6 +144,7 @@ const LandingContainer = (  ) => {
             onAudience={onAudience}
             onForm={onForm}
             onQuestion={onQuestion}
+            onSearch={onSearch}
         />
     )
 

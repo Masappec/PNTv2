@@ -1,15 +1,12 @@
-import { Card } from "flowbite-react";
-import { VscArrowRight } from "react-icons/vsc";
-import { IconType } from 'react-icons';
-import { ReactElement, useState } from "react";
+
+import { ReactElement } from "react";
 
 interface Props {
     title: string;
     content?: string | null;
     backgroundColor: string;
     text?: string | null;
-    icon?: ReactElement<IconType> | null;
-    color: string;
+    icon?: () => ReactElement;
     bgcolor?: string | null;
     classnames?: string | null;
     onFollow?: () => void;
@@ -19,66 +16,26 @@ interface Props {
 
 const CardConsulta = (props: Props) => {
 
-    const [hover, setHover] = useState(false);
-    /*
-    return (
+    return (<a
+        onClick={props.onFollow}
+        href='#'
+        className={`group flex h-full min-h-[19rem] w-full cursor-pointer flex-col justify-between  px-8 py-8 transition-all ${props.backgroundColor}`}>
+        <div>
+            {props.icon ? props.icon() : null}
 
-
-
-        <div
-            onMouseOver={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            className={" container flex flex-col h-full 2xl:w-10/12 md:w-full lg:w-auto xl:h-[350px]  text-left  " + props.classnames}>
-
-            <Card
-                className={"mt-5 xl:mt-0 lg:mt-0 rounded-none shadow-none border-transparent border-l-[1px] border-t-[1px] border-r-[1px] items-center w-full  h-full flex " + props.backgroundColor}>
-
-                <div className={`text-center ${hover ? "xl:hidden lg:hidden" : ""}`}>
-                    {props.icon}
-
-                </div>
-
-                <h1 className={`  text-2xl font-bold tracking-tight text-black  ${hover ? "hidden" : "flex"}`}>
-                    {props.title}
-                </h1>
-
-                <p className={` font-medium text-black lg:text-white xl:text-white dark:text-gray-400 h-auto mt-0 text-left 
-                w-64 text-lg -mx-2 ${hover ? "flex" : "xl:hidden lg:hidden"}  `}>
-                    {props.content}
-                </p>
-
-               
-                <button className="flex items-end justify-between h-full   "
-
-                  onClick={props.onFollow} >
-                    <VscArrowRight size={50} className={`${props.color} ${hover ? "text-white" : "text-black"} `} />
-
-                </button>
-
-
-
-            </Card>
-        </div>
-    )*/
-    return (<article
-        id='normativa-card'
-        className={`group flex h-full w-full cursor-pointer flex-col justify-between ${props.backgroundColor} px-8 py-8 text-white hover:text-gray-800`}>
-        <div className='grid grid-rows-[92px,80px,max-content]'>
-            
-
-                {props.icon}
-          
-
-            <h2 className='mb-4 text-balance text-2xl font-bold transition'>
+            <h2
+                className='mb-4 text-balance text-2xl font-bold group-hover:text-white md:group-hover:hidden'>
                 {props.title}
             </h2>
-            <p className='mb-8 text-pretty text-lg font-medium leading-7 transition'>
+            <p
+                className='mb-8 text-pretty text-base font-medium leading-7 group-hover:text-white md:hidden md:group-hover:block'>
                 {props.content}
             </p>
         </div>
 
-        <div className='inline-flex items-center justify-start gap-x-4 text-lg font-semibold'>
-            <span>Ir a la Sección</span>
+        <div
+            className='inline-flex items-center justify-start gap-x-4 text-lg font-semibold text-black group-hover:text-white'>
+            <span>Más información</span>
 
             <svg
                 width='15'
@@ -94,7 +51,7 @@ const CardConsulta = (props: Props) => {
                     clip-rule='evenodd'></path>
             </svg>
         </div>
-    </article>)
+    </a>)
 
 
 }

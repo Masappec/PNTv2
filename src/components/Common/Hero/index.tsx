@@ -1,5 +1,6 @@
 
 import { ColourOption } from "../../../utils/interface";
+import CustomSearch from "../CustomSearch";
 import { LogoPortal } from "../LogoPortal";
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
   countEntities: number;
   countFiles: number;
   onSelect: (value: ColourOption) => void;
+  onSearch: () => void;
 }
 const Hero = (props: Props) => {
 
@@ -81,8 +83,9 @@ const Hero = (props: Props) => {
     </section>
   );*/
 
-  return (<section className='section-container relative flex flex-wrap justify-between gap-8 pt-16'>
-    <LogoPortal className='w-full h-max max-w-64' />
+  return (
+  <section className='section-container relative flex flex-wrap justify-between gap-8 pt-16'>
+    <LogoPortal className='max-w-64' />
 
     <article className='max-w-3xl'>
       <h1 className='mb-4 text-balance text-3xl font-normal leading-tight md:text-[40px]'>
@@ -90,33 +93,11 @@ const Hero = (props: Props) => {
         de la LOTAIP
       </h1>
 
-      <form role='search' className='group flex rounded-full border border-gray-300 bg-white'>
-        <input
-          type='search'
-          className='text-black-medium m-2 w-3/4 rounded-md border-none p-2 text-lg text-gray-800 focus:outline-none focus:ring-0'
-          placeholder='Escribe aquí la entidad que deseas consultar'
-        />
-
-        <button
-          type='button'
-          className='flex w-1/4 items-center justify-center gap-x-4 rounded-r-full border border-primary bg-primary px-6 py-3 text-base font-semibold text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
-          <span className='hidden sm:block'>Buscar</span>
-          <svg
-            className='size-4'
-            xmlns='http://www.w3.org/2000/svg'
-            width='26'
-            height='26'
-            viewBox='0 0 26 26'
-            fill='none'>
-            <path
-              d='M25 25L20.3335 20.3333M23.6667 12.3333C23.6667 18.5926 18.5926 23.6667 12.3333 23.6667C6.07411 23.6667 1 18.5926 1 12.3333C1 6.07411 6.07411 1 12.3333 1C18.5926 1 23.6667 6.07411 23.6667 12.3333Z'
-              stroke='white'
-              stroke-width='2'
-              stroke-linecap='round'
-              stroke-linejoin='round'></path>
-          </svg>
-        </button>
-      </form>
+      <CustomSearch
+      loadOptions={props.loadOptions}
+      onSelect={props.onSelect}
+      onSearch={props.onSearch}
+      />
 
       <p className='mt-2 text-slate-600'>
         {props.countEntities} total de entidades públicas y 5004 total de archivos publicados.
