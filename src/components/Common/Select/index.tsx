@@ -3,6 +3,7 @@ import { SelectHTMLAttributes } from "react";
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     placeholder?: string;
+    className?: string;
     options?: {
         value: string;
         label: string;
@@ -19,9 +20,9 @@ const Select = (props: SelectProps) => {
         <div className="flex flex-col">
 
             <div className="mb-2 block">
-                <Label value={props.placeholder} />
+                <Label value={props.placeholder}  data-testid="flowbite-label" />
             </div>
-            <SelectBite 
+            <SelectBite  
                 {...props}
             >
 
