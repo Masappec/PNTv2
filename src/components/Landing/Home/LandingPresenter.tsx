@@ -252,14 +252,14 @@ const LandingPresenter = (props: Props) => {
           <div className='flex max-w-xs flex-col items-end justify-between'>
             <p className=''>
               Este <strong>"Portal Nacional de Transparencia"</strong> es uno de los compromisos del Segundo
-              Plan de
+              Plan de {" "}
               <a
                 className='hover:underline hover:underline-offset-2'
                 href='https://www.gobiernoabierto.ec/'
                 target='_blank'
                 rel='noopener noreferrer'>
                 Estado Abierto Ecuador
-              </a>
+              </a>{" "}
               2022-2024.
             </p>
             <a

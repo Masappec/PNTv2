@@ -1,14 +1,12 @@
 
-import { FaXTwitter } from "react-icons/fa6";
-import { SiFacebook } from "react-icons/si";
-import { placeHolderImage } from "../../../utils/functions";
+
 import logo from "../../../assets/Home/dummy_image.png";
 
 const FooterInfo = () => {   
   return (
 
     <footer className='bg-[#333333]'>
-  <section className='section-container pb-4 pt-8 mx-20'>
+  <section className='section-container pb-4 pt-8 '>
    
     <div className='border-b border-gray-400 pb-8 pt-4'>
       <h3 className='text-balance text-xl font-semibold text-white'>Listado de Entidades</h3>
