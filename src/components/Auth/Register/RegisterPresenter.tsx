@@ -12,7 +12,7 @@ import Spinner from "../../Common/Spinner";
 import logo from "../../../assets/Home/logo-dpe 2.png";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import PasswordMeter, { IOncalculate } from "../../Common/PasswordMeter";
-import LogoPortal from "../../Common/LogoPortal";
+import {LogoPortal} from "../../Common/LogoPortal";
 import { BsEyeSlash } from "react-icons/bs";
 
 
