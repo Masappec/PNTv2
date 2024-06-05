@@ -158,7 +158,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                         <div className=" grid grid-cols gap-4 w-auto mt-16">
                                             <Label
                                                 htmlFor=""
-                                                value={`${response.user_id == parseInt(props.solicitySaved.user_created) ?
+                                                value={`${response.user_id != parseInt(props.solicitySaved.user_created) ?
                                                     response.other_title :
                                                     response.title
 

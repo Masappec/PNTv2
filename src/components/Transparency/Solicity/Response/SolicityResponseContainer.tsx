@@ -495,7 +495,6 @@ const SolicityResponseContainer = (props: Props) => {
 
     const changeStatus = () => {
         props.usecase.changeStatus(solicityToResponse.id).then((res) => {
-            setSolicityToResponse(res)
             setTimeline(Solicity.ordernReponse(res))
             setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
             setIsAvaliableToComment(props.usecase.availabletoComment(userSession, res))

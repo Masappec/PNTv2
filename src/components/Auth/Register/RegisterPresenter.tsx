@@ -33,18 +33,18 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
 
   return (
     <>
-        <main>
-    <section className='section-container py-16'>
-      <form
-      onSubmit={props.handleSubmit}
-        className='mx-auto max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
-        <LogoPortal className='mx-auto mb-4 max-w-60' />
+      <main>
+        <section className='section-container py-16'>
+          <form
+            onSubmit={props.handleSubmit}
+            className='mx-auto max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
+            <LogoPortal className='mx-auto mb-4 max-w-60' />
 
-        <p className='mx-auto w-full text-balance text-center text-lg text-slate-600'>
-          ¡Bienvenido! Ingrese la siguiente información para crear su cuenta
-        </p>
+            <p className='mx-auto w-full text-balance text-center text-lg text-slate-600'>
+              ¡Bienvenido! Ingrese la siguiente información para crear su cuenta
+            </p>
 
-        {props.error && (
+            {props.error && (
               <Alert
                 message={props.error}
                 type="error"
@@ -52,41 +52,41 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
               />
             )}
 
-        <section className='mt-4 grid grid-cols-1 items-start justify-center gap-4 text-start'>
-        {props.fields.map((field) => {
+            <section className='mt-4 grid grid-cols-1 items-start justify-center gap-4 text-start'>
+              {props.fields.map((field) => {
                 return field.type_field === "password" ? (
                   <div >
-                  <label className="text-sm font-medium text-gray-900" data-testid="flowbite-label">
-                    {field.description}
-                    <span className='text-red-500'>*</span>
+                    <label className="text-sm font-medium text-gray-900" data-testid="flowbite-label">
+                      {field.description}
+                      <span className='text-red-500'>*</span>
                     </label>
 
                     <div className='relative'>
 
-                    <input
-                      type={props.showPassword ? "text" : field.type_field}
-                      placeholder={field.description}
-                      className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
-                      value={
-                        props.data[field.name as keyof RegisterDto] as string
-                      }
-                      onChange={(e) =>
-                        props.setData(field.name, e.target.value)
-                      }
-                      name={field.name}
-                      required
-                    />
-                    <button
-                     type='button'
-                     className='absolute right-0 top-0 p-2 text-gray-600 outline-primary hover:cursor-pointer'
-                      onClick={props.handleShowPassword}
-                    >
-                      {props.showPassword ? (
-                        <IoEyeOffOutline size={22} className=" font-bold text-gray-600" />
-                      ) : (
-                        <IoEyeOutline size={22} className=" font-bold text-gray-600" />
-                      )}
-                    </button>
+                      <input
+                        type={props.showPassword ? "text" : field.type_field}
+                        placeholder={field.description}
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
+                        value={
+                          props.data[field.name as keyof RegisterDto] as string
+                        }
+                        onChange={(e) =>
+                          props.setData(field.name, e.target.value)
+                        }
+                        name={field.name}
+                        required
+                      />
+                      <button
+                        type='button'
+                        className='absolute right-0 top-0 p-2 text-gray-600 outline-primary hover:cursor-pointer'
+                        onClick={props.handleShowPassword}
+                      >
+                        {props.showPassword ? (
+                          <IoEyeOffOutline size={22} className=" font-bold text-gray-600" />
+                        ) : (
+                          <IoEyeOutline size={22} className=" font-bold text-gray-600" />
+                        )}
+                      </button>
                     </div>
                     {
                       field.name === "password" && (
@@ -104,11 +104,11 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
 
                   : field.type_field === "select" ? (
                     <div>
-                    <label className="text-sm font-medium text-gray-900" data-testid="flowbite-label">
-                      {field.description}
-                      <span className='text-red-500'>*</span>
+                      <label className="text-sm font-medium text-gray-900" data-testid="flowbite-label">
+                        {field.description}
+                        <span className='text-red-500'>*</span>
                       </label>
-  
+
                       <Select
                         value={
                           props.data[field.name as keyof RegisterDto] as string
@@ -131,31 +131,31 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                         ]}
                         required
                       />
-                    
+
                     </div>
                   ) : field.type_field === "checkbox" ? (
                     <div className='mb-4 mt-8 flex items-center'>
                       <Checkbox
-                  
+
                         checked={
                           props.data[field.name as keyof RegisterDto] as boolean
                         }
                         onChange={(e) => props.setData(field.name, e)}
                         id={field.name}
 
-                      
+
                       />
-                       <label htmlFor='accept_terms' className='ml-2 text-sm text-gray-900'>
-                      {field.description}
-          </label>
+                      <label htmlFor='accept_terms' className='ml-2 text-sm text-gray-900'>
+                        {field.description}
+                      </label>
 
                     </div>
                   ) : (
                     <div>
-                    <label className="text-sm font-medium text-gray-900" data-testid="flowbite-label">
-                    {field.description}
-                    <span className='text-red-500'>*</span>
-                    </label>
+                      <label className="text-sm font-medium text-gray-900" data-testid="flowbite-label">
+                        {field.description}
+                        <span className='text-red-500'>*</span>
+                      </label>
                       <input
                         type={field.type_field}
                         placeholder={field.description}
@@ -168,14 +168,14 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                         }
                         name={field.name}
                       />
-                  
+
 
 
                     </div>
                   );
               })}
             </section>
-        {props.isLoading ? (
+            {props.isLoading ? (
               <Spinner />
             ) : (
 
@@ -187,7 +187,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
           Registrarse
         </button>
             )
-          }
+            }
 
         <p className='mt-8 text-sm text-gray-900'>
           ¿Tienes una cuenta? <a
@@ -208,7 +208,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
 export default RegisterPresenter;
 
 
- {/* <header className="border-b-2 border-dark-400 dark:border-primary-600">
+{/* <header className="border-b-2 border-dark-400 dark:border-primary-600">
         <nav className="bg-primary-600 border-gray-900 px-4 lg:px-6 py-10 dark:bg-gray-800"></nav>
       </header>
       <div className="bg-white h-max mb-52 md:flex lg:flex xl:flex ">
