@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom"
-import HeaderPages from "../../HeaderPages"
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase"
 import TransparencyUseCase from "../../../../domain/useCases/Transparency/TransparencyUseCase"
 
@@ -10,9 +9,6 @@ interface Props {
 const LayouPages = (props: Props) => {
     return (
         <>
-            <HeaderPages
-            haveImage={false}
-            />
             <Outlet
                 context={{
                     usecase: props.usecase,

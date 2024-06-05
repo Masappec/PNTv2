@@ -224,7 +224,7 @@ export class Solicity extends BaseEntity {
         solicity.responses?.forEach(r => {
             list.push(new TimeLinePresenter(
                 r.user.id, r.created_at, r.text, r.files, r.attachments, "RESPONSE",
-                 "Respuesta de la entidad",'Respuesta'))
+                "Respuesta de la entidad",'Respuesta de la entidad'))
         })
 
         solicity.insistency?.forEach(i => {
@@ -235,7 +235,7 @@ export class Solicity extends BaseEntity {
             }else{
 
                 list.push(new TimeLinePresenter(i.user_created, i.created_at, i.motive, [], [],
-                    "INSISTENCY", "Insistencia del ciudadano", 'Respuesta de la Entidad'))
+                    "INSISTENCY", "Insistencia del ciudadano", 'Insistencia del ciudadano'))
             }
         })
 
