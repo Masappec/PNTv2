@@ -1,4 +1,4 @@
-import { Pagination, Table as TableFlowbite } from "flowbite-react";
+import {  Table as TableFlowbite } from "flowbite-react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 interface Column<T> {
     title: string

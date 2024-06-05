@@ -1,20 +1,20 @@
-import { useSelector } from "react-redux";
-import PersonalPresenter from "./PersonalPresenter";
+/*import { useSelector } from "react-redux";
 import { RootState } from "../../../../infrastructure/Store";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { useEffect, useState } from "react";
 import { ColourOption, Row } from "../../../../utils/interface";
-import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
 import { RequestPublicApi, ResponsePublicApi } from "../../../../infrastructure/Api/PublicDataApi/interface";
-import { sleep } from "../../../../utils/functions";
+import { sleep } from "../../../../utils/functions";*/
 
+import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
+import PersonalPresenter from "./PersonalPresenter";
 
 interface Props{
     usecase:PublicDataApi;
 }
 const PersonalContainer = (props:Props) => {
-
-    const [total, setTotal] = useState(0)
+    console.log(props)
+    /*const [total, setTotal] = useState(0)
     const [totalPage, setTotalPage] = useState(0)
     const [from, setFrom] = useState(0)
     const [to, setTo] = useState(0)
@@ -175,15 +175,15 @@ const PersonalContainer = (props:Props) => {
         }
 
         
-    }
+    }*/
     return (
 
         <PersonalPresenter
-        page={currentPage}
-        from={from}
-        to={to}
-        total={total}
-        totalPage={totalPage} 
+        page={0}
+        from={0}
+        to={0}
+        total={0}
+        totalPage={0} 
         setPage={()=>{}
         }
         length={0}  

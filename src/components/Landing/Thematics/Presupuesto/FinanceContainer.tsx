@@ -1,215 +1,216 @@
 
 
-import { useEffect, useState } from "react"
+/*import { useEffect, useState } from "react"
 import { ColourOption, Row } from "../../../../utils/interface"
-import FinancePresenter from "./FinancePresenter"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../infrastructure/Store"
 import { RequestPublicApi, ResponsePublicApi } from "../../../../infrastructure/Api/PublicDataApi/interface"
-import { sleep } from "../../../../utils/functions"
+import { sleep } from "../../../../utils/functions"*/
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi"
+import FinancePresenter from "./FinancePresenter"
+
 interface Props {
     usecase: PublicDataApi;
 }
-const FinanceContainer = (props:Props) => {
-
-    const [total, setTotal] = useState(0)
-    const [totalPage, setTotalPage] = useState(0)
-    const [from, setFrom] = useState(0)
-    const [to, setTo] = useState(0)
-    const [currentPage, setCurrentPage] = useState(1)
-
-
-
-    // const [isSearching, SetSearching] = useState<boolean>()
-    // const [dataT, setData] = useState<{
-    //     numeral: string,
-    //     data: Row[][]
-    // }[]>([])
-    // const [loading, setLoading] = useState<boolean>(false)
-    // const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
-    // const [query, setQuery] = useState<RequestPublicApi>({
-    //     article: "19",
-    //     establishment: "",
-    //     fields: [],
-    //     month: (new Date().getMonth() + 1) + "",
-    //     numerals: [
-    //         "Numeral 6",
-    //     ],
-    //     search: "",
-    //     year: new Date().getFullYear().toString(),
-    // })
-    // const [alert, setAlert] = useState<{
-    //     type: 'success' | 'failure' | 'warning' | 'info'
-    //     message: string
-    // }>({
-    //     type: 'info',
-    //     message: ''
-    // })
-    // const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
-    // const [year, setYear] = useState<number>(new Date().getFullYear())
-    // useEffect(() => {
-    //     setListEnt(_establishments)
-    // }, [_establishments])
-
-    // const loadOptions = (inputValue: string, callback: (options: ColourOption[]) => void) => {
-    //     if (!inputValue) {
-    //         return;
-    //     }
+const FinanceContainer = (props: Props) => {
+    console.log('FinanceContainer',props)
+    /*const [total, ] = useState(0)
+    const [totalPage, ] = useState(0)
+    const [from, ] = useState(0)
+    const [to, ] = useState(0)
+    const [currentPage, ] = useState(1)
 
 
-    //     if (isSearching) {
-    //         return;
-    //     }
 
-    //     SetSearching(true)
-    //     const filter = listEnt.filter((item) => {
-    //         return item.name.toLowerCase().includes(inputValue.toLowerCase())
-    //     }).slice(0, 3)
-    //     SetSearching(false)
-    //     callback(filter.map((item) => {
-    //         const data: ColourOption = {
-    //             value: item.identification || "",
-    //             label: item.name,
-    //             color: "#00B8D9",
-    //         }
-    //         return data;
-    //     }))
-    // }
+    const [isSearching, SetSearching] = useState<boolean>()
+    const [, setData] = useState<{
+        numeral: string,
+        data: Row[][]
+    }[]>([])
+    const [, setLoading] = useState<boolean>(false)
+    const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
+    const [query, setQuery] = useState<RequestPublicApi>({
+        article: "19",
+        establishment: "",
+        fields: [],
+        month: (new Date().getMonth() + 1) + "",
+        numerals: [
+            "Numeral 6",
+        ],
+        search: "",
+        year: new Date().getFullYear().toString(),
+    })
+    const [, setAlert] = useState<{
+        type: 'success' | 'failure' | 'warning' | 'info'
+        message: string
+    }>({
+        type: 'info',
+        message: ''
+    })
+    const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
+    const [year, setYear] = useState<number>(new Date().getFullYear())
+    useEffect(() => {
+        setListEnt(_establishments)
+    }, [_establishments])
 
-    // const list: {
-    //     numeral: string,
-    //     data: Row[][]
-    // }[] = []
-    // const onUpdate = (data: ResponsePublicApi) => {
-    //     buildForDataTable(data)
+    /*const loadOptions = (inputValue: string, callback: (options: ColourOption[]) => void) => {
+        if (!inputValue) {
+            return;
+        }
 
 
-    // }
+        if (isSearching) {
+            return;
+        }
 
-    // const handlePage = (page: number) => {}
+        SetSearching(true)
+        const filter = listEnt.filter((item) => {
+            return item.name.toLowerCase().includes(inputValue.toLowerCase())
+        }).slice(0, 3)
+        SetSearching(false)
+        callback(filter.map((item) => {
+            const data: ColourOption = {
+                value: item.identification || "",
+                label: item.name,
+                color: "#00B8D9",
+            }
+            return data;
+        }))
+    }
+
+    const list: {
+        numeral: string,
+        data: Row[][]
+    }[] = []
+    /*const onUpdate = (data: ResponsePublicApi) => {
+        buildForDataTable(data)
 
 
-    // const handleSearch = () => {
-    //     setData([])
-    //     setLoading(true)
-    //     props.usecase.getPublicData(query, onUpdate).then(() => {
+    }*/
+
+    //const handlePage = (page: number) => {}
+
+
+    /*const handleSearch = () => {
+        setData([])
+        setLoading(true)
+        props.usecase.getPublicData(query, onUpdate).then(() => {
             
-    //         sleep(4000).then(() => {
-    //             if (list.length === 0) {
-    //                 setAlert({
-    //                     type: 'info',
-    //                     message: 'No se encontraron resultados'
-    //                 })
-    //             }
-    //             setData(list)
-    //             setLoading(false)
-    //         })
-    //     }).catch(() => {
-    //         setAlert({
-    //             type: 'failure',
-    //             message: 'Error al obtener los datos'
-    //         })
-    //         setLoading(false)
-    //     })
-    // }
-    // const onChangeEstablishment = (value: string) => {
-    //     setQuery({
-    //         ...query,
-    //         establishment: value
-    //     })
-    // }
+            sleep(4000).then(() => {
+                if (list.length === 0) {
+                    setAlert({
+                        type: 'info',
+                        message: 'No se encontraron resultados'
+                    })
+                }
+                setData(list)
+                setLoading(false)
+            })
+        }).catch(() => {
+            setAlert({
+                type: 'failure',
+                message: 'Error al obtener los datos'
+            })
+            setLoading(false)
+        })
+    }*/
+    /*const onChangeEstablishment = (value: string) => {
+        setQuery({
+            ...query,
+            establishment: value
+        })
+    }*/
 
-    // const buildForDataTable = (data: ResponsePublicApi) => {
-    //     let columns = [] as Row[]
-    //     columns = data.metadata.columns.map((item) => {
-    //         return {
-    //             key: item,
-    //             value: item,
-    //             is_header: true
-    //         } as Row
-    //     })
-    //     columns = [
-    //         {
-    //             key: 'Institución',
-    //             value: 'Institución',
-    //             is_header: true
-    //         } as Row,
-    //         ...columns
-    //     ]
-    //     const rows = data.data.map((item) => {
+    /*const buildForDataTable = (data: ResponsePublicApi) => {
+        let columns = [] as Row[]
+        columns = data.metadata.columns.map((item) => {
+            return {
+                key: item,
+                value: item,
+                is_header: true
+            } as Row
+        })
+        columns = [
+            {
+                key: 'Institución',
+                value: 'Institución',
+                is_header: true
+            } as Row,
+            ...columns
+        ]
+        const rows = data.data.map((item) => {
 
-    //         const list_row = []
-    //         list_row.push({
-    //             key: 'Institución',
-    //             value: data.metadata.establishment_name,
-    //             is_header: false
-    //         } as Row)
-    //         const row = item.map((item) => {
-    //             return {
-    //                 key: item,
-    //                 value: item
-    //             } as Row
-    //         })
-    //         return [
-    //             ...list_row,
-    //             ...row
-    //         ]
-    //     })
-    //     const elements = list.filter((item) => item.numeral === data.metadata.numeral_description)
-    //     if (elements.length > 0) {
-    //         const index = list.indexOf(elements[0])
-    //         list[index] = {
-    //             numeral: data.metadata.numeral_description,
-    //             data: [
-    //                 ...list[index].data,
-    //                 ...rows
-    //             ]
-    //         }
-    //     } else {
-    //         list.push({
-    //             numeral: data.metadata.numeral_description,
-    //             data: [
-    //                 columns,
-    //                 ...rows
-    //             ]
-    //         })
-    //     }
+            const list_row = []
+            list_row.push({
+                key: 'Institución',
+                value: data.metadata.establishment_name,
+                is_header: false
+            } as Row)
+            const row = item.map((item) => {
+                return {
+                    key: item,
+                    value: item
+                } as Row
+            })
+            return [
+                ...list_row,
+                ...row
+            ]
+        })
+        const elements = list.filter((item) => item.numeral === data.metadata.numeral_description)
+        if (elements.length > 0) {
+            const index = list.indexOf(elements[0])
+            list[index] = {
+                numeral: data.metadata.numeral_description,
+                data: [
+                    ...list[index].data,
+                    ...rows
+                ]
+            }
+        } else {
+            list.push({
+                numeral: data.metadata.numeral_description,
+                data: [
+                    columns,
+                    ...rows
+                ]
+            })
+        }
 
-    // }
-    return(
+    }*/
+    return (
 
-   <FinancePresenter
-   page={currentPage}
-   from={from}
-   to={to}
-   total={total}
-   totalPage={totalPage} 
-   setPage={()=>{}}
-   length={0}  
-   
-   
-            // loadOptions={loadOptions}
-            // onSelect={() => { }}
-            // onSelectYear={(year) => {
-            //     setYear(year)
-            // }}
-            // selectedYear={year}
-            // onChangeEstablishment={onChangeEstablishment}
-            // onSearch={handleSearch}
-            // tables={dataT}
-            // loading={loading}
-            // month={query.month}
-            // onSelectMonth={(month) => {
-            //     setQuery({
-            //         ...query,
-            //         month: month
-            //     })
-            // }}
-            // alert={alert}
-   /> 
-   
+        <FinancePresenter
+            page={0}
+            from={0}
+            to={0}
+            total={10}
+            totalPage={10}
+            setPage={() => { }}
+            length={0}
+
+
+        // loadOptions={loadOptions}
+        // onSelect={() => { }}
+        // onSelectYear={(year) => {
+        //     setYear(year)
+        // }}
+        // selectedYear={year}
+        // onChangeEstablishment={onChangeEstablishment}
+        // onSearch={handleSearch}
+        // tables={dataT}
+        // loading={loading}
+        // month={query.month}
+        // onSelectMonth={(month) => {
+        //     setQuery({
+        //         ...query,
+        //         month: month
+        //     })
+        // }}
+        // alert={alert}
+        />
+
     )
 
 }

@@ -1,9 +1,4 @@
-import { Alert, Label, Spinner } from "flowbite-react";
-import { ColourOption, Row } from "../../../../utils/interface";
-import Select from 'react-select/async'
-import { FaSearch } from "react-icons/fa";
-import DynamicReadTable from "../../../Common/DimanycReadTable";
-import Input from "../../../Common/Input";
+
 import TablePublic from "../../../Common/TablePublic";
 import { MapIsotipo } from "../../../Common/MapIsotipo";
 

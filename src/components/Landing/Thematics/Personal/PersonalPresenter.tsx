@@ -1,10 +1,10 @@
-import { FaSearch } from "react-icons/fa";
+/*import { FaSearch } from "react-icons/fa";
 import { ColourOption, Row } from "../../../../utils/interface";
 import Input from "../../../Common/Input";
 import Select from 'react-select/async'
 import { Alert, Label, Spinner } from "flowbite-react";
 import DynamicReadTable from "../../../Common/DimanycReadTable";
-import Table from "../../../Common/Table/index"
+import Table from "../../../Common/Table/index"*/
 import TablePublic from "../../../Common/TablePublic";
 import { MapIsotipo } from "../../../Common/MapIsotipo";
 interface Props {

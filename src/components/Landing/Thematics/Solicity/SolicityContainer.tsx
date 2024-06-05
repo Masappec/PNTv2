@@ -1,17 +1,19 @@
-import SolicityPresenter from "./SolicityPresenter"
-import { useEffect, useState } from "react"
+/*import { useEffect, useState } from "react"
 import { ColourOption, Row } from "../../../../utils/interface"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../infrastructure/Store"
 import { RequestPublicApi, ResponsePublicApi } from "../../../../infrastructure/Api/PublicDataApi/interface"
-import { sleep } from "../../../../utils/functions"
+import { sleep } from "../../../../utils/functions"*/
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi"
+import SolicityPresenter from "./SolicityPresenter"
+
 interface Props {
     usecase: PublicDataApi;
 }
-const SolicityContainer = (props:Props) => {
-    const [total, setTotal] = useState(0)
+const SolicityContainer = (props: Props) => {
+    console.log(props)
+    /*const [total, setTotal] = useState(0)
     const [totalPage, setTotalPage] = useState(0)
     const [from, setFrom] = useState(0)
     const [to, setTo] = useState(0)
@@ -173,41 +175,41 @@ const SolicityContainer = (props:Props) => {
             })
         }
 
-    }
-    return(
+    }*/
+    return (
 
-   <SolicityPresenter
+        <SolicityPresenter
 
-   page={currentPage}
-   from={from}
-   to={to}
-   total={total}
-   totalPage={totalPage} 
-   setPage={()=>{}
-   }
-   length={0}  
+            page={0}
+            from={0}
+            to={0}
+            total={0}
+            totalPage={0}
+            setPage={() => { }
+            }
+            length={0}
 
 
-            // loadOptions={loadOptions}
-            // onSelect={() => { }}
-            // onSelectYear={(year) => {
-            //     setYear(year)
-            // }}
-            // selectedYear={year}
-            // onChangeEstablishment={onChangeEstablishment}
-            // onSearch={handleSearch}
-            // tables={dataT}
-            // loading={loading}
-            // month={query.month}
-            // onSelectMonth={(month) => {
-            //     setQuery({
-            //         ...query,
-            //         month: month
-            //     })
-            // }}
-            // alert={alert}
-   /> 
-   
+        // loadOptions={loadOptions}
+        // onSelect={() => { }}
+        // onSelectYear={(year) => {
+        //     setYear(year)
+        // }}
+        // selectedYear={year}
+        // onChangeEstablishment={onChangeEstablishment}
+        // onSearch={handleSearch}
+        // tables={dataT}
+        // loading={loading}
+        // month={query.month}
+        // onSelectMonth={(month) => {
+        //     setQuery({
+        //         ...query,
+        //         month: month
+        //     })
+        // }}
+        // alert={alert}
+        />
+
     )
 
 }
