@@ -6,6 +6,7 @@ import { Alert, Label, Spinner } from "flowbite-react";
 import DynamicReadTable from "../../../Common/DimanycReadTable";
 import Table from "../../../Common/Table/index"
 import TablePublic from "../../../Common/TablePublic";
+import { MapIsotipo } from "../../../Common/MapIsotipo";
 interface Props {
   // loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
 
@@ -42,6 +43,7 @@ const PersonalPresenter = (props: Props) => {
   return (
    
     <main>
+       <MapIsotipo />
     <section className='section-container my-16'>
       <header className='mb-8'>
         <h1 className='mb-4 text-balance text-2xl font-normal leading-tight md:text-[40px]'>

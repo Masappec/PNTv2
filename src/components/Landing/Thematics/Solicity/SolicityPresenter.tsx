@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import DynamicReadTable from "../../../Common/DimanycReadTable";
 import Input from "../../../Common/Input";
 import TablePublic from "../../../Common/TablePublic";
+import { MapIsotipo } from "../../../Common/MapIsotipo";
 
 interface Props {
 
@@ -38,6 +39,8 @@ interface Props {
 const SolicityPresenter = (props: Props) =>{
     return(
       <main>
+          <MapIsotipo />
+
     <section className='section-container my-16'>
       <header className='mb-8'>
         <h1 className='mb-4 text-balance text-2xl font-normal leading-tight md:text-[40px]'>
