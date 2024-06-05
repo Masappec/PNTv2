@@ -2,8 +2,9 @@
 export default {
   content: [
     "./index.html",
-    './node_modules/flowbite/**/*.js',
-    "./src/**/*.{js,jsx,ts,tsx}", // Ajusta esto según la estructura de tu proyecto
+    "./src/**/*.{js,ts,jsx,tsx}",
+    'node_modules/flowbite-react/lib/esm/**/*.js',
+    './node_modules/flowbite/**/*.js'
 
   ],
   theme: {
@@ -16,7 +17,7 @@ export default {
       },
       colors: {
 
-        /*primary: { 
+        primary: { 
           "50": "#cef4ff", 
           "100": "#abdef4", 
           "200": "#8cc3dd", 
@@ -26,13 +27,14 @@ export default {
           "600": "#006284", 
           "700": "#015e79", 
           "800": "#004b64", 
-          "900": "#00364c", 
-        },*/
+          "900": "#00364c",
+          DEFAULT: '#1A7290',
+ 
+        },
 
         dark: {
           "400": "#15252B"
         },
-        primary: '#1A7290',
 
         'primary-light': '#EAF7FC',
         'custom-orange': '#F7941D',
@@ -49,6 +51,7 @@ export default {
   },
   plugins: [
 
+    // eslint-disable-next-line no-undef
     require('flowbite/plugin'),
 
   ],

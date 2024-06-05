@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { setEstablishments } from "../../../../infrastructure/Slice/EstablishmentSlice";
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
 import { ToastContainer } from "react-toastify";
+import Footer from "../../Footer";
+import SessionService from "../../../../infrastructure/Services/SessionService";
 
 interface LayoutAdminProps {
 
@@ -27,14 +29,18 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
     const [user, setUser] = useState("")
     const [permissions, setPermissions] = useState<string[]>([])
     const [email, setEmail] = useState("")
-    const [open, setOpen] = useState(false)
     const [isSuperadmin, setIsSuperadmin] = useState(false)
+    const [establishmentName, setEstablishmentName] = useState("")
     useEffect(() => {
         setUser(props.username)
         setPermissions(props.permissions)
         setEmail(props.email)
         console.log(props.isSuperadmin)
         setIsSuperadmin(props.isSuperadmin)
+        const est = SessionService.getEstablishmentData();
+        if (est) {
+            setEstablishmentName(est.name)
+        }
     }, [props.username, props.permissions, props.email, props.isSuperadmin])
 
 
@@ -59,6 +65,36 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
 
     }, [])
 
+
+    return (
+        <main className='relative min-h-screen bg-gray-50'>
+
+            <HeaderPages name={user} email={email} onLogout={props.onLogout} />
+
+            <Sidebar
+                establishmentName={establishmentName}
+                menu={isSuperadmin == false ? props.menu :
+                    props.menu.filter((item) => item.visible_for_superadmin != false)}
+                
+                permissions={permissions}
+                key={1}
+
+                />
+            <section className='w-full px-4 py-20 sm:px-6 xl:pl-[17rem]'>
+                <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+                    {/*{titlePanel}
+
+                {titleDate && <span> | {titleDate}</span>}*/}
+                </h2>
+                <ToastContainer />
+
+                <Outlet />
+            </section>
+            <Footer />
+        </main>
+    )
+
+    /*
     return (
         <div className="layout-admin  overflow-y-hidden overflow-x-hidden h-fit ">
             <div className=" flex-col  overflow-y-hidden">
@@ -91,7 +127,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
                     </div>
                 </div>
             </div>
-        </div>)
+        </div>)*/
 }
 
 export default LayoutAdmin;
