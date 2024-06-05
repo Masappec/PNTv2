@@ -4,7 +4,7 @@
 const AboutPresenter = () => {
     return (
         <div className="flex flex-col w-full  bg-white pr-10">
-            <div className="border-l-[1px]  border-gray-800 ml-8 md:ml-14 p-10">
+            <div className="border-l-[1px]  border-gray-300 ml-8 md:ml-14 p-10">
 
             <h1 className="text-3xl font-bold text-center ">COORDINACIÓN GENERAL DE TRANSPARENCIA Y ACCESO A LA INFORMACIÓN PÚBLICA
             </h1>
