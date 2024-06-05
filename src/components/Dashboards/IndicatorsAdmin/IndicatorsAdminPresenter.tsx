@@ -195,9 +195,9 @@ const IndicatorsAdminPresenter = (props:Props) => {
       <div className="border-gray-300 py-5 border-b flex  justify-center w-full">
         <h2 className="text-2xl font-semibold text-black ml-2 justify-center">Indicadores</h2>
       </div>
-      <div className="flex  space-x-2 w-full justify-center mt-12">
-        <div className="flex  flex-col h-[44px]  mt-5 w-[219px]  gap-2">
-          <Label>Entidad</Label>
+      <div className="flex   space-x-2 w-full justify-center mt-12">
+        <div className="flex  flex-col h-[44px]  mt-6 w-[219px]  gap-2 ml-44">
+          <Label >Entidad</Label>
 
           <Select
             loadOptions={props.loadOptions}
@@ -206,7 +206,7 @@ const IndicatorsAdminPresenter = (props:Props) => {
             onChange={(value) => {
               props.onChangeEstablishment(value?.value || "")
             }}
-            className="mt-1"
+            className="  mt-0 "
           />
         </div>
         <div className="flex  flex-col h-[44px]  mt-5 w-[179px]  gap-2">
@@ -238,8 +238,9 @@ const IndicatorsAdminPresenter = (props:Props) => {
         </div>
       </div>
       <div className="mt-16">
-        <div className="2xl:flex-row flex  flex-col space-x-2 w-full justify-center">
-          <div className="container border w-[400px] h-auto px-5 py-6 rounded-3xl ">
+        {/* <div className="2xl:flex-row flex  flex-col space-x-2 w-full justify-center"> */}
+          <div className="flex  mt-10 w-full rounded-2xl justify-center gap-5">
+          <div className="container items-center border w-[400px] h-auto px-5 py-6 rounded-3xl ">
             <h2 className="text-start font-semibold text-sm">Usuarios</h2>
             <h2 className="text-2xl mt-2 font-extrabold">
               {props.data?.users.active+props.data?.users.inactive || 0}
