@@ -232,7 +232,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                                         return items.data.map((entity) => {
                                             return (
 
-                                                <div className='flex flex-col gap-y-2'>
+                                                <div className='flex flex-col gap-y-2 mt-2'>
                                                     <a
                                                         className='uppercase text-primary hover:underline hover:underline-offset-2'
                                                         onClick={() => props.onItemClicked(entity.slug || "")}>
