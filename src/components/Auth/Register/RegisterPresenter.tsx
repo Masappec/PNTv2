@@ -1,19 +1,14 @@
 import { FormEvent } from "react";
-import Title from "../../Common/Title";
-import Input from "../../Common/Input";
-import Contrasenia from "../../Common/Contrasenia";
 import Alert from "../../Common/Alert";
 import FormFieldsEntity from "../../../domain/entities/FormFieldsEntity";
 import Select from "../../Common/Select";
 import Checkbox from "../../Common/Checkbox";
 import { RegisterDto } from "../../../infrastructure/Api/Auth/interface";
-import { Button } from "flowbite-react";
 import Spinner from "../../Common/Spinner";
-import logo from "../../../assets/Home/logo-dpe 2.png";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import PasswordMeter, { IOncalculate } from "../../Common/PasswordMeter";
 import {LogoPortal} from "../../Common/LogoPortal";
-import { BsEyeSlash } from "react-icons/bs";
+
 
 
 interface RegisterPresenterProps {
@@ -187,8 +182,6 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
         <button
           type='submit'
           className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'
-          data-astro-source-file='C:/Users/asanluca/Documents/pro/layouts/src/components/transparencia/Header.astro'
-          data-astro-source-loc='84:197'
           disabled={!props.isEnable}
           >
           Registrarse
@@ -201,6 +194,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
             className='font-medium text-primary hover:underline hover:underline-offset-2'
             href='/ingreso'>Inicia sesión
             </a >
+            
         </p>
       </form>
         

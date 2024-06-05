@@ -11,18 +11,18 @@ interface Column<T> {
 
 interface TableProps<T> {
     columns: Column<T>[]
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
     onAdd?: () => void;
     isImport?: boolean;
     onImport?: () => void;
-    onFilter: (type: string) => void;
-    length: number;
+    onFilter?: (type: string) => void;
+    length?: number;
     textAdd?: string;
     textImport?: string;
     data: T[];
     onSearch?: (search: string) => void;
-    search: string;
+    search?: string;
     onChangePage?: (page: number) => void;
     currentPage?: number;
     totalPages?: number;

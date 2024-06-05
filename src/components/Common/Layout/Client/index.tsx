@@ -38,8 +38,8 @@ const LayouClient = (props: Props) => {
   return (
     <>
       <Header/>
-      <main className='relative'>
-        <div className='absolute left-8 hidden h-full w-[1px] bg-gray-300 lg:block'></div>
+      {/* <main className='relative'>
+        <div className='absolute left-8 hidden h-full w-[1px] bg-gray-900 lg:block'></div> */}
       <>
         <Outlet
           context={{
@@ -48,7 +48,7 @@ const LayouClient = (props: Props) => {
           }}
         />
       </>
-      </main>
+      {/* </main> */}
       <FooterInfo />
     </>
   );

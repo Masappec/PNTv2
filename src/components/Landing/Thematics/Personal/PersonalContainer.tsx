@@ -14,6 +14,13 @@ interface Props{
 }
 const PersonalContainer = (props:Props) => {
 
+    const [total, setTotal] = useState(0)
+    const [totalPage, setTotalPage] = useState(0)
+    const [from, setFrom] = useState(0)
+    const [to, setTo] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1)
+
+
     const [alert, setAlert] = useState<{
         type: 'success' | 'failure' | 'warning' | 'info'
         message: string
@@ -172,24 +179,35 @@ const PersonalContainer = (props:Props) => {
     return (
 
         <PersonalPresenter
-            loadOptions={loadOptions}
-            onSelect={() => { }}
-            onSelectYear={(year) => {
-                setYear(year)
-            }}
-            selectedYear={year}
-            onChangeEstablishment={onChangeEstablishment}
-            onSearch={handleSearch}
-            tables={dataT}
-            loading={loading}
-            month={query.month}
-            onSelectMonth={(month) => {
-                setQuery({
-                    ...query,
-                    month: month
-                })
-            }}
-            alert={alert}
+        page={currentPage}
+        from={from}
+        to={to}
+        total={total}
+        totalPage={totalPage} 
+        setPage={()=>{}
+        }
+        length={0}  
+
+
+
+            // loadOptions={loadOptions}
+            // onSelect={() => { }}
+            // onSelectYear={(year) => {
+            //     setYear(year)
+            // }}
+            // selectedYear={year}
+            // onChangeEstablishment={onChangeEstablishment}
+            // onSearch={handleSearch}
+            // tables={dataT}
+            // loading={loading}
+            // month={query.month}
+            // onSelectMonth={(month) => {
+            //     setQuery({
+            //         ...query,
+            //         month: month
+            //     })
+            // }}
+            // alert={alert}
         />
 
     )

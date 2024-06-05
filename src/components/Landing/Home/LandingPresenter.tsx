@@ -152,6 +152,9 @@ const LandingPresenter = (props: Props) => {
 
   return (
     <>
+    <main className='relative'>
+        <div className='absolute left-8 hidden h-full w-[1px] bg-gray-300 lg:block'></div>
+    
 
       <Hero
         onSearch={props.onSearch}
@@ -202,7 +205,7 @@ const LandingPresenter = (props: Props) => {
         <div className='h-[1px] w-full bg-gray-300'></div>
       </section>
       <section
-        className='section-container grid min-h-[22rem] w-full grid-cols-[repeat(auto-fit,minmax(18rem,_1fr))] place-items-center gap-4'>
+        className="section-container grid min-h-[22rem] w-full grid-cols-[repeat(auto-fit,minmax(18rem,_1fr))] place-items-center gap-4">
       
       
         <CardConsulta
@@ -272,7 +275,7 @@ const LandingPresenter = (props: Props) => {
           </div>
         </article>
       </section>
-
+      </main>
     </>
   )
 };
