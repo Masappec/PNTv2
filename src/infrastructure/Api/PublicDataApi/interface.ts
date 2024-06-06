@@ -55,3 +55,18 @@ export interface PublicDataApiResponse {
         inactive: number;
     }
 }
+
+
+export interface RequestPersonalApi {
+    names: string,
+    institution: string,
+}
+
+export interface PersonalRemunerations {
+
+    puesto: string;
+    unidad: string;
+    remuneracion: string;
+    grado: string;
+    nombre: string;
+}

@@ -35,7 +35,10 @@ interface Props {
   totalPage: number;
   page: number;
   length:number;
- 
+  
+  onSearch: () => void;
+  onNameChange: (value: string) => void;
+  onInstitutionChange: (value: string) => void;
 
   
 }
@@ -147,8 +150,14 @@ const PersonalPresenter = (props: Props) => {
                           )
                         },
                         {
+                          title:"GRADO O ESCALA",
+                          render: () => (
+                              <p>{}</p>
+                          )
+                        },
+                        {
                            
-                          title: "Nombre",
+                          title: "REMUNERACIÓN MENSUAL",
                           render: () => (
                               <p>{}</p>
                           )

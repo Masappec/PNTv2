@@ -6,15 +6,19 @@ import { ColourOption, Row } from "../../../../utils/interface";
 import { RequestPublicApi, ResponsePublicApi } from "../../../../infrastructure/Api/PublicDataApi/interface";
 import { sleep } from "../../../../utils/functions";*/
 
+import { useEffect, useState } from "react";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
+import { RequestPersonalApi } from "../../../../infrastructure/Api/PublicDataApi/interface";
 import PersonalPresenter from "./PersonalPresenter";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../infrastructure/Store";
+import EstablishmentEntity from "../../../../domain/entities/Establishment";
 
 interface Props{
     usecase:PublicDataApi;
 }
 const PersonalContainer = (props:Props) => {
-    console.log(props)
-    /*const [total, setTotal] = useState(0)
+    const [total, setTotal] = useState(0)
     const [totalPage, setTotalPage] = useState(0)
     const [from, setFrom] = useState(0)
     const [to, setTo] = useState(0)
@@ -29,55 +33,15 @@ const PersonalContainer = (props:Props) => {
         message: ''
     })
     const [isSearching, SetSearching] = useState<boolean>()
-    const [dataT,setData] = useState<{
-        numeral: string,
-        data:Row[][]}[]>([])
-        const [loading, setLoading] = useState<boolean>(false)
+    
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
-    const [query, setQuery] = useState<RequestPublicApi>({
-        article: "19",
-        establishment: "",
-        fields: [],
-        month: (new Date().getMonth() +1 )+"",
-        numerals: [
-            "Numeral 2.1",
-            "Numeral 2.2",
-            "Numeral 3"
-        ],
-        search: "",
-        year: new Date().getFullYear().toString(),
-    })
+    const [data, setData] = useState<RequestPersonalApi>()
     const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
-    const [year, setYear] = useState<number>(new Date().getFullYear())
     useEffect(() => {
         setListEnt(_establishments)
     }, [_establishments])
 
-    const loadOptions = (inputValue: string, callback: (options: ColourOption[]) => void) => {
-        if (!inputValue) {
-            return;
-        }
-
-        
-        if (isSearching) {
-            return;
-        }
-
-        SetSearching(true)
-        const filter = listEnt.filter((item) => {
-            return item.name.toLowerCase().includes(inputValue.toLowerCase())
-        }).slice(0, 3)
-        SetSearching(false)
-        callback(filter.map((item) => {
-            const data: ColourOption = {
-                value: item.identification || "",
-                label: item.name,
-                color: "#00B8D9",
-            }
-            return data;
-        }))
-    }
-
+   
     const list: {
         numeral: string,
         data:Row[][]
@@ -89,25 +53,8 @@ const PersonalContainer = (props:Props) => {
     }
 
     const handleSearch = ()=>{
-        setData([])
-        setLoading(true)
-        props.usecase.getPublicData(query,onUpdate).then(()=>{
-            sleep(4000).then(()=>{
-                if (list.length === 0) {
-                    setAlert({
-                        type: 'info',
-                        message: 'No se encontraron resultados'
-                    })
-                }
-                setData(list)
-                setLoading(false)
-            })
-        }).catch(()=>{
-            setAlert({
-                type: 'failure',
-                message: 'Error al obtener los datos'
-            })
-            setLoading(false)
+        getPersonalData({
+            
         })
     }
     const onChangeEstablishment = (value: string) => {
@@ -175,7 +122,7 @@ const PersonalContainer = (props:Props) => {
         }
 
         
-    }*/
+    }
     return (
 
         <PersonalPresenter
@@ -187,6 +134,8 @@ const PersonalContainer = (props:Props) => {
         setPage={()=>{}
         }
         length={0}  
+
+        onSearch={handleSearch}
 
 
 

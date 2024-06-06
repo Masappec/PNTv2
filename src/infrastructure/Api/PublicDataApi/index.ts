@@ -1,5 +1,5 @@
 import api, { PUBLIC_PATH, TRANSPARENCY_PATH } from "..";
-import { PublicDataApiResponse, RequestPublicApi, ResponsePublicApi } from "./interface";
+import { PersonalRemunerations, PublicDataApiResponse, RequestPersonalApi, RequestPublicApi, ResponsePublicApi } from "./interface";
 import { URL_API } from "../../../utils/constans";
 
 
@@ -74,6 +74,20 @@ class PublicDataApi {
             throw new Error('Error al obtener los datos');
         }
     }
+
+
+    public async getPersonalData(body: RequestPersonalApi) {
+        try {
+            const response = await api.post<PersonalRemunerations>(TRANSPARENCY_PATH + '/public/personal-remuneraciones', body);
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al obtener los datos');
+        }
+    }
 }
+
+
+
+
 
 export default PublicDataApi;

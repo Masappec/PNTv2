@@ -1,4 +1,5 @@
 
+import { MapIsotipo } from "../../../Common/MapIsotipo";
 import Select from "../../../Common/Select";
 import TablePublic from "../../../Common/TablePublic";
 
