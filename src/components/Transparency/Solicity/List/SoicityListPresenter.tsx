@@ -160,7 +160,7 @@ const SolicityListPresenter = (props: Props) => {
 
                                 const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.RESPONSED.key)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : "No Respondida"
                                 }</p>
                             }
                         },
@@ -169,7 +169,7 @@ const SolicityListPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_SEND.key)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : "No enviada"
                                 }</p>
                             }
                         },
@@ -178,7 +178,7 @@ const SolicityListPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_RESPONSED.key)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : "No Respondida"
                                 }</p>
                             }
                         },
@@ -187,7 +187,7 @@ const SolicityListPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INFORMAL_MANAGMENT_SEND.key)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : "No enviada"
                                 }</p>
                             }
                         },

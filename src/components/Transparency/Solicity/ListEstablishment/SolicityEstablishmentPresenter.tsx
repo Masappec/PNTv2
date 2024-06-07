@@ -166,7 +166,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
                                 const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.RESPONSED.key)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : "No Respondida"
                                 }</p>
                             }
                         },
@@ -176,7 +176,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_SEND.key)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : "No Recibida"
                                 }</p>
                             }
                         },
@@ -186,7 +186,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_RESPONSED.key)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleString() : ""
+                                    element ? new Date(element.created_at).toLocaleString() : "No Enviada"
                                 }</p>
                             }
                         },
@@ -196,7 +196,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INFORMAL_MANAGMENT_SEND.key)
                                 return <p>{
-                                    element ? new Date(element.created_at).toLocaleDateString() : ""
+                                    element ? new Date(element.created_at).toLocaleDateString() : "No Recibida"
                                 }</p>
                             }
                         },
