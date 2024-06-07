@@ -31,16 +31,14 @@ function TablePublic<T>(props: TableProps<T>) {
 
     const [data, setData] = useState<T[]>(props.data)
     const [currentPage, setCurrentPage] = useState(1);
-    const [limit,] = useState(15);
+    const [limit,] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [from, setFrom] = useState(0);
     const [to, setTo] = useState(0);
 
     useEffect(() => {
-        console.log("data changed", props.data)
-        setData(props.data)
+        setData(props.data.slice((currentPage * limit) - limit, currentPage * limit))
         setTotalPages(Math.ceil(props.data.length / limit))
-        setCurrentPage(Math.ceil(props.data.length / limit))
         setFrom((currentPage * limit) - limit + 1)
         setTo(currentPage * limit > props.data.length ? props.data.length : currentPage * limit + 1)
     }, [props.data])
@@ -49,6 +47,7 @@ function TablePublic<T>(props: TableProps<T>) {
         setCurrentPage(page)
         setFrom((page * limit) - limit + 1)
         setTo(page * limit > data.length ? data.length : page * limit + 1)
+        setData(props.data.slice((page * limit) - limit, page * limit))
     }
     return (
         <div>
@@ -86,7 +85,7 @@ function TablePublic<T>(props: TableProps<T>) {
                     </TableFlowbite.Head>
                     <TableFlowbite.Body className="divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-800">
                         {
-                            props.data.map((row, index) => (
+                            data.map((row, index) => (
                                 <TableFlowbite.Row>
                                     {
                                         props.columns.map((column) => (

@@ -25,138 +25,25 @@ const PublicEstablishmentPresenter = (props: Props) => {
             </h1>
 
             <div className='mb-4 flex max-w-2xl flex-wrap items-center'>
-                <a
-                    onClick={() => props.onPageChange("A")}
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    A
-                </a>
-                -
-                <a
-                    onClick={() => props.onPageChange("B")}
-
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    B
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    C
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    D
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    E
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    F
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    G
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    H
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    I
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    J
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    K
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    L
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    M
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    N
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    O
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    P
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    Q
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    R
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    S
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    T
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    U
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    V
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    W
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    X
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    Y
-                </a>
-                -
-                <a
-                    className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
-                    Z
-                </a>
+                {
+                    props.letters.map((letter, i) => {
+                        return (
+                            <div className='flex flex-row mt-3'>
+                                <p className='text-primary mx-[3px] text-xl'>
+                                    {i === 0 ? "" : i % 3 === 0 ? "  " : "-"}
+                                </p>
+                                <div>
+                                    <a
+                                        onClick={() => props.onPageChange(letter)}
+                                        className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                                        {letter}
+                                    </a>
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+               
             </div>
             <section className='grid max-w-2xl grid-cols-1 gap-4 md:grid-cols-2'>
                 <div className='max-w-sm'>
@@ -221,10 +108,12 @@ const PublicEstablishmentPresenter = (props: Props) => {
                     <Spinner />
 
                 }
+                <article className='flex w-full flex-col'>
+
                 {
                     !props.loading && props.letters.filter((letter) => props.entities.some((entity) => entity.letter === letter)).map((letra) => {
                         return (
-                            <article className='flex w-full flex-col'>
+                            <>
 
                                 <h3 className='mb-4 text-2xl font-bold tracking-tight text-primary'>{letra}</h3>
                                 {
@@ -243,11 +132,13 @@ const PublicEstablishmentPresenter = (props: Props) => {
                                         })
                                     })
                                 }
-                            </article>
+                            </>
                         )
                     })
 
                 }
+                </article>
+
             </section>
 
         </section>

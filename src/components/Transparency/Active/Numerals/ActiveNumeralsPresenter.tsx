@@ -16,48 +16,38 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
   if (props.loading) {
     return <Spinner />
   }
-  return (
-    <div className=" w-full md:p-4 mx-auto ">
-      <div className="flex items-center  justify-center"></div>
 
-      <form className="flex ">
-        <section className="container px-4 mx-auto">
-          <div className="sm:flex sm:items-center sm:justify-between">
-            <div>
-              <div className="flex items-center gap-x-3">
-                <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-                  Transparencia Activa
-                </h2>
-              </div>
+  return(
+    <>
+      <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+        Transparencia Activa
 
-            </div>
-          </div>
+      </h2>
+      <section id='list-buttons' className='mb-16 max-w-6xl'>
+        <h2 className='mb-4 mt-8 rounded-md bg-primary p-4 text-left text-xl font-bold text-white'>
+          Obligaciones Generales
+        </h2>
+        <section className='flex flex-col items-center justify-center gap-4'>
           {
             props.error &&
             <Alert color="failure" className="mt-4">
               {props.error}
             </Alert>
           }
-          <div className="mt-14">
-            <div className="grid lg:grid-cols-2 gap-4 grid-cols-1 md:grid-cols-2 ">
-              {
-                props.numerals.map(numeral => (
-
-                  <Numeral title={numeral.name} text={numeral.description}
-                    onClick={() => props.onClickItem(numeral)}
-                    isPublished={numeral.published}
-                  />
-                ))
-
-
-
-              }
-            </div>
-          </div>
+          {
+            props.numerals.map(numeral => (
+              <Numeral title={numeral.name} text={numeral.description}
+                onClick={() => props.onClickItem(numeral)}
+                isPublished={numeral.published}
+              />
+            ))
+          }
         </section>
-      </form>
-    </div>
-  );
+
+      </section>
+    </>
+  )
+ 
 };
 
 export default ActiveNumeralsPresenter;
