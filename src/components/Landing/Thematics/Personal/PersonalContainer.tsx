@@ -1,162 +1,98 @@
-/*import { useSelector } from "react-redux";
-import { RootState } from "../../../../infrastructure/Store";
-import EstablishmentEntity from "../../../../domain/entities/Establishment";
-import { useEffect, useState } from "react";
-import { ColourOption, Row } from "../../../../utils/interface";
-import { RequestPublicApi, ResponsePublicApi } from "../../../../infrastructure/Api/PublicDataApi/interface";
-import { sleep } from "../../../../utils/functions";*/
 
 import { useEffect, useState } from "react";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
-import { RequestPersonalApi } from "../../../../infrastructure/Api/PublicDataApi/interface";
+import { PersonalRemunerations, RequestPersonalApi } from "../../../../infrastructure/Api/PublicDataApi/interface";
 import PersonalPresenter from "./PersonalPresenter";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../infrastructure/Store";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
+import { ColourOption } from "../../../../utils/interface";
 
-interface Props{
-    usecase:PublicDataApi;
+interface Props {
+    usecase: PublicDataApi;
 }
-const PersonalContainer = (props:Props) => {
-    const [total, setTotal] = useState(0)
-    const [totalPage, setTotalPage] = useState(0)
-    const [from, setFrom] = useState(0)
-    const [to, setTo] = useState(0)
-    const [currentPage, setCurrentPage] = useState(1)
+const PersonalContainer = (props: Props) => {
+
 
 
     const [alert, setAlert] = useState<{
-        type: 'success' | 'failure' | 'warning' | 'info'
+        type: 'info' | 'success' | 'warning' | 'error',
         message: string
     }>({
         type: 'info',
         message: ''
     })
     const [isSearching, SetSearching] = useState<boolean>()
-    
+
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
-    const [data, setData] = useState<RequestPersonalApi>()
+    const [data, setData] = useState<RequestPersonalApi>({
+        institution: "",
+        names: "",
+    })
+    const [res, setRes] = useState<PersonalRemunerations[]>([])
     const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
+
+
+
+    const handleSearch = async () => {
+        try {
+            SetSearching(true)
+            const res = await props.usecase.getPersonalData({
+                ...data
+                
+            })
+            setRes(res)
+            SetSearching(false)
+        } catch (error) {
+            SetSearching(false)
+            setAlert({
+                type: 'error',
+                message: 'Error al obtener los datos'
+            })
+        }
+    }
     useEffect(() => {
         setListEnt(_establishments)
     }, [_establishments])
 
-   
-    const list: {
-        numeral: string,
-        data:Row[][]
-    }[] = []
-    const onUpdate = (data:ResponsePublicApi)=>{
-       buildForDataTable(data)
-        
-       
-    }
 
-    const handleSearch = ()=>{
-        getPersonalData({
-            
-        })
-    }
-    const onChangeEstablishment = (value: string) => {
-        setQuery({
-            ...query,
-            establishment: value
-        })
-    }
-
-    const buildForDataTable = (data:ResponsePublicApi)=>{
-        let columns= [] as Row[]
-        columns = data.metadata.columns.map((item) => {
-            return {
-                key: item,
-                value: item,
-                is_header: true
-            } as Row
-        })
-        columns = [
-            {
-                key: 'Institución',
-                value: 'Institución',
-                is_header: true
-            } as Row,
-            ...columns
-        ]
-        const rows = data.data.map((item)=>{
-
-            const list_row = []
-            list_row.push({
-                key: 'Institución',
-                value: data.metadata.establishment_name,
-                is_header: false
-            } as Row)
-            const row = item.map((item)=>{
-                return {
-                    key:item,
-                    value:item
-                } as Row
-            })
-            return [
-                ...list_row,
-                ...row
-            ]
-        })
-
-        const elements = list.filter((item) => item.numeral === data.metadata.numeral_description)
-        if (elements.length > 0) {
-            const index = list.indexOf(elements[0])
-            list[index] = {
-                numeral: data.metadata.numeral_description,
-                data: [
-                    ...list[index].data,
-                    ...rows
-                ]
-            }
-        } else {
-            list.push({
-                numeral: data.metadata.numeral_description,
-                data: [
-                    columns,
-                    ...rows
-                ]
-            })
+    const loadOptions = (inputValue: string, callback: (options: ColourOption[]) => void) => {
+        if (!inputValue) {
+            return;
         }
 
-        
+
+        if (isSearching) {
+            return;
+        }
+
+        SetSearching(true)
+        const filter = listEnt.filter((item) => {
+            return item.name.toLowerCase().includes(inputValue.toLowerCase())
+        }).slice(0, 3)
+        SetSearching(false)
+        callback(filter.map((item) => {
+            const data: ColourOption = {
+                value: item.identification || "",
+                label: item.name,
+                color: "#00B8D9",
+            }
+            return data;
+        }))
     }
     return (
 
         <PersonalPresenter
-        page={0}
-        from={0}
-        to={0}
-        total={0}
-        totalPage={0} 
-        setPage={()=>{}
-        }
-        length={0}  
+            
+            onInstitutionChange={(value) => setData({ ...data, institution: value })}
 
-        onSearch={handleSearch}
-
-
-
-            // loadOptions={loadOptions}
-            // onSelect={() => { }}
-            // onSelectYear={(year) => {
-            //     setYear(year)
-            // }}
-            // selectedYear={year}
-            // onChangeEstablishment={onChangeEstablishment}
-            // onSearch={handleSearch}
-            // tables={dataT}
-            // loading={loading}
-            // month={query.month}
-            // onSelectMonth={(month) => {
-            //     setQuery({
-            //         ...query,
-            //         month: month
-            //     })
-            // }}
-            // alert={alert}
+            onSearch={handleSearch}
+            loadOptions={loadOptions}
+            onNameChange={(value) => setData({ ...data, names: value })}
+            data={res}
+            alert={alert}
+            setAlert={setAlert}
+            
         />
 
     )

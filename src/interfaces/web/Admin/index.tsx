@@ -29,6 +29,7 @@ const Admin = () => {
 
     const logout = () => {
         SessionService.clearSession();
+        window.location.reload()
     }
 
     return (

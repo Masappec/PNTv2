@@ -158,7 +158,7 @@ const SolicityListPresenter = (props: Props) => {
                             title: 'Fecha respuesta SAIP',
                             render: (solicity) => {
 
-                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.RESPONSED.key || timeline.status === StatusSolicity.INSISTENCY_RESPONSED.key)
+                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.RESPONSED.key)
                                 return <p>{
                                     element ? new Date(element.created_at).toLocaleString() : ""
                                 }</p>

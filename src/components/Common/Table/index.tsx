@@ -6,7 +6,8 @@ interface Column<T> {
     title: string
     key?: string
     render: (data: T, index: number) => React.ReactNode,
-    width?: number
+    width?: number,
+    classes?: string
 }
 
 interface TableProps<T> {
@@ -62,12 +63,13 @@ function Table<T>({ ...props }: TableProps<T>) {
                             props.columns.map(column => (
 
                                 <TableFlowbite.HeadCell
-                                    key={column.title} className={`px-4 py-3 ${props.sorteable ? 'cursor-pointer' : ''}`}
+                                    key={column.title} className={`px-4 py-3 text-center ${props.sorteable ? 'cursor-pointer' : ''}`}
                                     onClick={() => props.onSort && props.onSort(column.key || "")}
+                                    
 
 
                                 >
-                                    <div className="flex items-center">
+                                    <div className="flex items-center justify-center">
                                         <span className="mr-2">
                                             {column.title}
                                         </span>
@@ -93,7 +95,7 @@ function Table<T>({ ...props }: TableProps<T>) {
                                         props.columns.map((column) => (
                                             <TableFlowbite.Cell
 
-                                                className={`px-4 py-3 `}
+                                                className={` ${column.classes || ''}`}
                                                 key={column.title}>
                                                 {column.render(row, index)}
                                             </TableFlowbite.Cell>
@@ -141,6 +143,10 @@ function Table<T>({ ...props }: TableProps<T>) {
                                     onPageChange={props.onChangePage || (() => { })}
                                     nextLabel="Siguiente"
                                     previousLabel="Anterior"
+                                    className="bg-transparent"
+                                    style={{
+                                    
+                                    }}  
                                 />
                             </div>
                         )

@@ -81,11 +81,7 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
 
                 />
             <section className='w-full px-4 py-20 sm:px-6 xl:pl-[17rem]'>
-                <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
-                    {/*{titlePanel}
-
-                {titleDate && <span> | {titleDate}</span>}*/}
-                </h2>
+               
                 <ToastContainer />
 
                 <Outlet />

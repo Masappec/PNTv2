@@ -1,15 +1,10 @@
 import UserEntity from "../../../../domain/entities/UserEntity"
-import Badge from "../../../Common/Badge"
 import Table from "../../../Common/Table/index"
-import Modal from "../../../Common/Modal"
-import Alert from "../../../Common/Alert"
+import {  Tooltip } from "flowbite-react"
+import { HiOutlinePencil } from 'react-icons/hi';
 
-import { CiCircleCheck, CiTrash } from "react-icons/ci";
-import { Button, Tooltip } from "flowbite-react"
-import { HiOutlineExclamationCircle } from 'react-icons/hi';
-//import Select from "../../../Common/Select";
-//import { BiExport } from "react-icons/bi";
-import { FiEdit2 } from "react-icons/fi";
+import { FiUserCheck, FiUserX } from "react-icons/fi";
+import CustomButton from "../../../Common/CustomButton"
 
 
 
@@ -40,111 +35,67 @@ interface Props {
 }
 
 export const UserListPresenter = (props: Props) => {
+
     return (
+        <><h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+            {"Gestión de Usuarios"}
 
-        <div className="w-full">
-            <div className="border-gray-300border-b">
-                <h2 className="text-2xl font-semibold text-black ml-5">
-                    Transparencia LOTAIP
-                </h2>
-            </div>
-            <div className="grid grid-rows-1 grid-flow-col ml-7 ">
+        </h2>
+            <p className='my-8 max-w-3xl items-center text-sm text-primary'>
+                En esta sección podrás visualizar, editar, activar e inactivar los usuarios del portal, así como
+                crear nuevos usuarios.
+            </p>
 
-                <h1 className="flex flex-col mt-7 text-black text-lg  font-bold pr-96">Usuarios</h1>
-
-                <div className=" flex  flex-col mt-6 ml-36 ">
-
-                </div>
-                {/*<div className=" flex  flex-col mt-6  ">
-                    <button type="button"
-                        onClick={() => { }}
-                        className="w-[115px] h-[40px] flex items-center justify-center text-white bg-[#B5B5B5] hover:bg-slate-300 font-medium rounded-lg text-sm px-4 py-2 ">
-                        <BiExport size={25} className="mr-2" />
-                        Exportar
-                        { }
-                    </button>
-                </div>
-                <div className=" flex  flex-col mt-6 pr-32">
-
-                    <button id=""
-                        onClick={props.onImport}
-                        data-dropdown-toggle="actionsDropdown"
-                        className="w-[115px] h-[40px] flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800" type="button">
-                        <RxCardStackPlus size={25} className="mr-2" />
-                        { }
-                        Importar
-                    </button>
-    </div>*/}
-
-            </div>
-
-
-
-            <div className="grid grid-rows-1 grid-flow-col space-x-2 w-full pl-10 mt-12">
-
-                {/* <div className=" flex  flex-col h-[44px]  w-[282px] mt-6 gap-2 ">
-                    <Label htmlFor="" value="Nombre de funcionario" />
-                    <TextInput placeholder="Ingresar nombre" type="text" />{" "}
-                </div>
-                <div className=" flex  flex-col h-[44px]  mt-5 w-[282px]  gap-2">
-                    <Select
-                        placeholder={"Nombre de la Institución"}
-                        value={""}
-                        onChange={() => { }}
-                        options={[
-                            {
-                                value: "",
-                                label: "Defensoría del Pueblo",
-                            },
-                        ]}
-                    />
-                </div>
-
-                <div className=" flex  flex-col h-[44px] mt-5 w-[282px] gap-2">
-                    <Select
-                        placeholder={"Rol"}
-                        value={""}
-                        onChange={() => { }}
-                        options={[
-                            {
-                                value: "",
-                                label: "Administrador general",
-                            },
-                        ]}
-                    />
-                </div>
-                    */}
-            </div>
-            <div className="flex items-center py-5 justify-center">
-
-                <Modal
-                    isvisible={props.visibleModal}
-                    onClose={() => { }}
-                >
-                    {
-                        props.error && <Alert type={props.type_alert} message={props.error} onClose={() => { }} />
-                    }
-
-
-                    <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                    <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        {`¿Desea ${props.selectedUser?.is_active ? "inactivar" : "activar"
-
-                            } este Usuario "${props.selectedUser?.first_name} ${props.selectedUser?.last_name}" ?`}
-                    </h3>
-                    <div className="flex justify-center gap-4">
-                        <Button color="failure" onClick={() => props.onConfirmDelete()}>
-                            {"Si, Estoy seguro"}
-                        </Button>
-                        <Button color="gray" onClick={() => props.onCancelDelete()}>
-                            No, Cancelar
-                        </Button>
+            <section className='mb-4 flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center'>
+                <div className='w-full max-w-md'>
+                    <div className='group relative'>
+                        <svg
+                            className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-focus-within:text-primary group-hover:text-primary'
+                            stroke='currentColor'
+                            fill='currentColor'
+                            stroke-width='0'
+                            viewBox='0 0 24 24'
+                            height='1em'
+                            width='1em'
+                            xmlns='http://www.w3.org/2000/svg'
+                        ><path
+                            d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
+                        ></path>
+                        </svg>
+                        <input
+                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                            type='text'
+                            placeholder='Buscar por nombre o usuario'
+                            name='first_name'
+                            onChange={(e) => props.onSearch(e.target.value)}
+                            value={props.search}
+                        />
                     </div>
-                </Modal>
-            </div>
-            <div className="flex w-full justify-between items-center mt-5">
+                </div>
+
+                <button
+                    onClick={props.onAdd}
+                    type='button'
+                    className='inline-flex w-max items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
+                    <a className='inline-flex items-center gap-2' href='/transparencia/superadmin/users/create'>
+                        <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            height='24px'
+                            viewBox='0 -960 960 960'
+                            width='24px'
+                            fill='currentColor'
+                        ><path
+                            d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
+                        ></path>
+                        </svg>
+                        <span>Nuevo usuario</span>
+                    </a>
+                </button>
+            </section>
+
+            <section className='h-min rounded-md bg-gray-100'>
                 <Table
-                    show={true}
+                    show={false}
                     columns={[
                         {
                             render: (row: UserEntity) => (
@@ -161,8 +112,10 @@ export const UserListPresenter = (props: Props) => {
                         },
                         {
                             render: (row: UserEntity) => (
-                                row.group?.map((group, index) => (
-                                    <Badge key={index} text={group.name} color="primary" />
+                                row.group?.map((group) => (
+                                    <p className='text-primary'>
+                                        {group.name}
+                                    </p>
                                 ))
                             ),
                             title: "Rol"
@@ -175,42 +128,37 @@ export const UserListPresenter = (props: Props) => {
                         },
                         {
                             render: (row: UserEntity) => (
-                                <p>
-                                    <Badge text={row.is_active ? "Activo" : "Inactivo"} color={row.is_active ? "success" : "danger"} />
-                                </p>
+
+                                row.is_active ? <span className='mx-auto block w-full max-w-20 rounded-md border border-custom-green bg-custom-green/5 px-2 py-1 text-xs font-normal text-custom-green sm:text-sm'>
+                                    Activo
+                                </span> : <span className='mx-auto block w-full max-w-20 rounded-md border border-custom-red bg-custom-red/5 px-2 py-1 text-xs font-normal text-custom-red sm:text-sm'>
+                                    Inactivo
+                                </span>
                             ),
                             title: "Estado"
                         },
                         {
                             render: (row: UserEntity) => (
-                                <p className="flex gap-2">
+                                <>
                                     <Tooltip content="Editar ">
-                                        <button
-                                            onClick={() => {
-                                                props.onEdit(row)
-                                            }}
-                                            className="py-2 px-2 text-lg hover:text-blue-500">
-                                            <FiEdit2 />
-                                        </button>
+                                        <CustomButton
+                                            text="Editar"
+                                            onClick={() => props.onEdit(row)}
+                                            icon={<HiOutlinePencil size={19}/>}
+                                        />
                                     </Tooltip>
                                     <Tooltip content={row.is_active ? "Inactivar " : "Activar "} >
-                                        <button
-
-                                            //add alt
-                                            onClick={() => {
-                                                props.onDelete(row)
-
-                                            }
-                                            }
-                                            className={"  font-bold py-2 px-2 text-lg" + (row.is_active ? "  hover:text-red-700" : "text-green-500 hover:text-green-700")}>
-                                            {
-                                                row.is_active ? <CiTrash /> : <CiCircleCheck size={20} />
-                                            }
-                                        </button>
+                                        
+                                        <CustomButton
+                                            text={row.is_active ? "Inactivar " : "Activar "}
+                                            onClick={() => props.onEdit(row)}
+                                            icon={row.is_active ? <FiUserX size={19} /> : <FiUserCheck size={19} />}
+                                        />
                                     </Tooltip>
-                                </p>
+                                </>
                             ),
-                            title: "Acciones"
+                            title: "Acciones",
+                            classes: 'flex w-full items-center justify-center gap-2'
                         }
                     ]}
 
@@ -233,11 +181,10 @@ export const UserListPresenter = (props: Props) => {
                     to={props.to}
                     total={props.total}
                 />
-            </div>
-
-
-        </div>
+            </section>
+        </>
     )
+    
 }
 
 export default UserListPresenter

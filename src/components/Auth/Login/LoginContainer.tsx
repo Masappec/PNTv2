@@ -28,6 +28,7 @@ const LoginContainer = ({ useCase }: {
         setIsLoading(false)
 
         history('/admin')
+        window.location.reload()
       })
       .catch((e) => {
         setIsLoading(false)

@@ -78,7 +78,7 @@ class PublicDataApi {
 
     public async getPersonalData(body: RequestPersonalApi) {
         try {
-            const response = await api.post<PersonalRemunerations>(TRANSPARENCY_PATH + '/public/personal-remuneraciones', body);
+            const response = await api.post<PersonalRemunerations[]>(PUBLIC_PATH + '/public/personal-remuneraciones/', body);
             return response.data;
         } catch (error) {
             throw new Error('Error al obtener los datos');

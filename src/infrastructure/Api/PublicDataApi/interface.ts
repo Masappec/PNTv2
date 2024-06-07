@@ -69,4 +69,5 @@ export interface PersonalRemunerations {
     remuneracion: string;
     grado: string;
     nombre: string;
+    regimen:string;
 }

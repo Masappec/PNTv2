@@ -167,7 +167,6 @@ const AudiencePresenter = (props: Props) =>{
                     length={0}
                     
                     key={"roles-table"}
-                    onChangePage={props.setPage}
                     
                      from={props.from}
                     to={props.to}
