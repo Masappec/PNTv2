@@ -9,6 +9,7 @@ import { LogoPortal } from "../../Common/LogoPortal";
 import Spinner from "../../Common/Spinner";
 import { FormEvent } from "react";
 import Alert from "../../Common/Alert";
+import Contrasenia from "../../Common/Contrasenia";
 
 interface ForgotPasswordPresenterProps {
   email: string;
@@ -53,7 +54,7 @@ const ForgotPasswordPresenter = (props: ForgotPasswordPresenterProps) => {
     <>
       <main>
         <section className='section-container py-16'>
-          <form
+          <form onSubmit={props.handleSubmit}
             className='mx-auto max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
             <LogoPortal className='mx-auto mb-4 max-w-60' />
 
@@ -79,7 +80,6 @@ const ForgotPasswordPresenter = (props: ForgotPasswordPresenterProps) => {
                   className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
                   type='text'
                   placeholder='Ingrese su correo electrónico'
-                  name='email'
                   value={props.email}
                   onChange={(e) => props.setEmail(e.target.value)}
                   required
@@ -95,6 +95,7 @@ const ForgotPasswordPresenter = (props: ForgotPasswordPresenterProps) => {
                   </button>
               }
             </section>
+            <Contrasenia text='Inicia sesión' path='/ingreso' />
           </form>
         </section>
       </main>
