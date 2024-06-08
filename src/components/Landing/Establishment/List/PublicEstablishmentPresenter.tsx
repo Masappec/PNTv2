@@ -35,7 +35,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                                 <div>
                                     <a
                                         onClick={() => props.onPageChange(letter)}
-                                        className='mx-[4px] rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
+                                        className='mx-[4px] cursor-pointer rounded-md p-2 text-xl text-primary hover:cursor-pointer hover:bg-primary hover:text-white xl:ml-2'>
                                         {letter}
                                     </a>
                                 </div>
@@ -123,7 +123,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
 
                                                 <div className='flex flex-col gap-y-2 mt-2'>
                                                     <a
-                                                        className='uppercase text-primary hover:underline hover:underline-offset-2'
+                                                        className='uppercase cursor-pointer text-primary hover:underline hover:underline-offset-2'
                                                         onClick={() => props.onItemClicked(entity.slug || "")}>
                                                         {entity.name}
                                                     </a>

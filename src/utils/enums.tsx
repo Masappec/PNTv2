@@ -1,4 +1,4 @@
-import { FaCheck, FaClock, FaSave } from "react-icons/fa";
+import {  FaCheck, FaSave } from "react-icons/fa";
 
 /*class Status(models.TextChoices):
     DRAFT = 'DRAFT', 'BORRADOR'
@@ -36,56 +36,56 @@ export const StatusSolicity = {
         value: 'Respondida',
         key: 'RESPONSED',
         bg: 'success',
-        icon: <FaCheck />,
+        icon: <FaCheck className="text-primary-500 text-center" />,
         value_2: 'Respondido'
     },
     NO_RESPONSED: {
         value: 'No respondida',
         key: 'NO_RESPONSED',
         bg: 'info',
-        icon: <FaClock />,
+        icon:<FaCheck className="text-primary-500 text-center" />,
         value_2: 'No respondido'
     },
     INSISTENCY_PERIOD: {
         value: 'Periodo de insistencia',
         key: 'INSISTENCY_PERIOD',
         bg: 'info',
-        icon: <FaClock />,
+        icon:<FaCheck className="text-primary-500 text-center" />,
         value_2: 'Periodo de insistencia'
     },
     INSISTENCY_SEND: {
         value: 'Insistencia enviada',
         key: 'INSISTENCY_SEND',
         bg: 'info',
-        icon: <FaCheck />,
+        icon:<FaCheck className="text-primary-500 text-center" />,
         value_2: 'Insistencia Recibida'
     },
     INSISTENCY_RESPONSED: {
         value: 'Insistencia respondida',
         key: 'INSISTENCY_RESPONSED',
         bg: 'info',
-        icon: <FaCheck />,
+        icon:<FaCheck className="text-primary-500 text-center" />,
         value_2: 'Insistencia respondida'
     },
     INSISTENCY_NO_RESPONSED: {
         value: 'Insistencia no respondida',
         key: 'INSISTENCY_NO_RESPONSED',
         bg: 'info',
-        icon: <FaClock />,
+        icon:<FaCheck className="text-primary-500 text-center" />,
         value_2: 'Insistencia no respondida'
     },
     PERIOD_INFORMAL_MANAGEMENT: {
         value: 'Periodo de gestión oficiosa',
         key: 'PERIOD_INFORMAL_MANAGEMENT',
         bg: 'info',
-        icon: <FaClock />,
+        icon:<FaCheck className="text-primary-500 text-center" />,
         value_2: 'Periodo de gestión oficiosa'
     },
     INFORMAL_MANAGMENT_SEND: {
         value: 'Gestión oficiosa enviada',
         key: 'INFORMAL_MANAGMENT_SEND',
         bg: 'info',
-        icon: <FaClock />,
+        icon:<FaCheck className="text-primary-500 text-center" />,
         value_2: 'Gestión oficiosa Recibida'
     },
 
@@ -93,7 +93,7 @@ export const StatusSolicity = {
         value: 'Gestión oficiosa respondida',
         key: 'INFORMAL_MANAGMENT_RESPONSED',
         bg: 'info',
-        icon: <FaClock />,
+        icon:<FaCheck className="text-primary-500 text-center" />,
         value_2: 'Gestión oficiosa respondida'
 
 
@@ -102,7 +102,7 @@ export const StatusSolicity = {
         value: 'Gestión oficiosa no respondida',
         key: 'INFORMAL_MANAGMENT_NO_RESPONSED',
         bg: 'info',
-        icon: <FaClock />,
+        icon:<FaCheck className="text-primary-500 text-center" />,
         value_2: 'Gestión oficiosa no respondida'
     },
 
@@ -110,7 +110,7 @@ export const StatusSolicity = {
         value: 'Finalizado sin respuesta',
         key: 'FINISHED_WITHOUT_RESPONSE',
         bg: 'info',
-        icon: <FaClock />,
+        icon:<FaCheck className="text-primary-500 text-center" />,
         value_2: 'Finalizado sin respuesta'
     },
 
@@ -151,37 +151,37 @@ export const StatusStageSolicity = {
         value: 'Pendiente',
         key: 'PENDING',
         bg: 'info',
-        icon: <FaClock />
+        icon:<FaCheck className="text-primary-500 text-center" />
     },
     RESPONSE: {
         value: 'Respuesta',
         key: 'RESPONSE',
         bg: 'success',
-        icon: <FaCheck />
+        icon:<FaCheck className="text-primary-500 text-center" />
     },
     INSISTENCY: {
         value: 'Insistencia',
         key: 'INSISTENCY',
         bg: 'info',
-        icon: <FaCheck className="text-primary-500" />
+        icon: <FaCheck className="text-primary-500 text-center" />
     },
     PENDING_RESPONSE_INSISTENCY: {
         value: 'Pendiente respuesta insistencia',
         key: 'PENDING_RESPONSE_INSISTENCY',
         bg: 'info',
-        icon: <FaClock />
+        icon:<FaCheck className="text-primary-500 text-center" />
     },
     RESPONSE_INSISTENCY: {
         value: 'Respuesta insistencia',
         key: 'RESPONSE_INSISTENCY',
         bg: 'info',
-        icon: <FaClock />
+        icon:<FaCheck className="text-primary-500 text-center" />
     },
     INFORMAL_MANAGEMENT: {
         value: 'Gestión oficiosa',
         key: 'INFORMAL_MANAGEMENT',
         bg: 'info',
-        icon: <FaClock />
+        icon:<FaCheck className="text-primary-500 text-center" />
     }
 }
 

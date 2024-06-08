@@ -2,7 +2,7 @@ import { FaClock } from "react-icons/fa"
 import Alert from "../../../Common/Alert"
 import Modal from "../../../Common/Modal"
 import Table from "../../../Common/Table/index"
-import { Badge, Button } from "flowbite-react"
+import {  Button } from "flowbite-react"
 import { HiOutlineExclamationCircle } from "react-icons/hi"
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
@@ -143,14 +143,16 @@ const SolicityListPresenter = (props: Props) => {
                             render: (solicity) => {
                                 console.log(solicity)
                                 const status = StatusSolicity[solicity.status as keyof typeof StatusSolicity]
-                                const bg = status?.bg || "info"
                                 return (
 
-                                    <div className="flex items-center">
-                                        <Badge color={bg} className="rounded-2xl py-3 px-3">
+                                    <p className="text-wrap border rounded-md px-2 py-1     border-primary text-primary bg-primary/10">
+
+                                        <span className=' text-xs font-normal  sm:text-sm'>
+
                                             {status.value}
-                                        </Badge>
-                                    </div>
+
+                                        </span>
+                                    </p>   
                                 )
                             }
                         },

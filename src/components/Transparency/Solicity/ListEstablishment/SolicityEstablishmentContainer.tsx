@@ -98,6 +98,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
     }
 
     const onSearch = (search: string) => {
+        console.log(search)
         props.useCase.getEstablishmentSolicity(search, currentPage, limit).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
@@ -152,7 +153,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
             onDetail={handleDetail}
             onFilter={() => { }}
             onImport={() => { }}
-            onSearch={() => { }}
+            onSearch={onSearch}
             page={currentPage}
             search=""
 

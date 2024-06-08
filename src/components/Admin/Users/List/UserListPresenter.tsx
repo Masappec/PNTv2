@@ -1,10 +1,11 @@
 import UserEntity from "../../../../domain/entities/UserEntity"
 import Table from "../../../Common/Table/index"
-import {  Tooltip } from "flowbite-react"
-import { HiOutlinePencil } from 'react-icons/hi';
+import { HiOutlineExclamationCircle, HiOutlinePencil } from 'react-icons/hi';
+import Modal from "../../../Common/Modal";
 
 import { FiUserCheck, FiUserX } from "react-icons/fi";
 import CustomButton from "../../../Common/CustomButton"
+import Alert from "../../../Common/Alert";
 
 
 
@@ -77,7 +78,7 @@ export const UserListPresenter = (props: Props) => {
                     onClick={props.onAdd}
                     type='button'
                     className='inline-flex w-max items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
-                    <a className='inline-flex items-center gap-2' href='/transparencia/superadmin/users/create'>
+                    <div className='inline-flex items-center gap-2'>
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
                             height='24px'
@@ -89,10 +90,33 @@ export const UserListPresenter = (props: Props) => {
                         ></path>
                         </svg>
                         <span>Nuevo usuario</span>
-                    </a>
+                    </div>
                 </button>
             </section>
 
+            <Modal
+                isvisible={props.visibleModal}
+                onClose={() => { }}
+            >
+                {
+                    props.error && <Alert type="error" message={props.error} onClose={() => { }} />
+                }
+
+
+                <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                    {`¿Desea eliminar este Rol "${props.selectedUser?.email}" ?`}
+                </h3>
+                <div className="flex justify-center gap-4">
+                    <button onClick={() => props.onConfirmDelete()} className='flex w-full max-w-24 items-center gap-2 rounded-md border border-primary bg-primary px-2 py-1 text-xs font-medium text-white hover:bg-transparent hover:text-primary'>
+                                                {"Si, Estoy seguro"}
+                    </button>
+                    <button color="gray" onClick={() => props.onCancelDelete()} className='flex w-full max-w-24 items-center gap-2 rounded-md border border-primary px-2 py-1 text-xs font-medium text-primary hover:bg-primary hover:text-white'>
+
+                        No, Cancelar
+                    </button>
+                </div>
+            </Modal>
             <section className='h-min rounded-md bg-gray-100'>
                 <Table
                     show={false}
@@ -140,21 +164,17 @@ export const UserListPresenter = (props: Props) => {
                         {
                             render: (row: UserEntity) => (
                                 <>
-                                    <Tooltip content="Editar ">
                                         <CustomButton
                                             text="Editar"
                                             onClick={() => props.onEdit(row)}
                                             icon={<HiOutlinePencil size={19}/>}
                                         />
-                                    </Tooltip>
-                                    <Tooltip content={row.is_active ? "Inactivar " : "Activar "} >
                                         
                                         <CustomButton
                                             text={row.is_active ? "Inactivar " : "Activar "}
-                                            onClick={() => props.onEdit(row)}
+                                            onClick={() => props.onDelete(row)}
                                             icon={row.is_active ? <FiUserX size={19} /> : <FiUserCheck size={19} />}
                                         />
-                                    </Tooltip>
                                 </>
                             ),
                             title: "Acciones",
