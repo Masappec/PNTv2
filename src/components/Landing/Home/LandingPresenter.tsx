@@ -191,7 +191,7 @@ const LandingPresenter = (props: Props) => {
               pública."
           backgroundColor="bg-custom-pink"
           color="text-black"
-          onFollow={() => props.onQuestion(1)}
+          onFollow={() => props.onQuestion(2)}
           icon={Icon[2]}
         />
 

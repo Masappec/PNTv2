@@ -96,13 +96,13 @@ const LandingContainer = (  ) => {
         }
         if ( index === 1 ) {
             
-            navigate('/normativa');
+            navigate('/area-pedagogica/tutoriales');
            }
            
         if (index === 2) {
 
     
-        navigate('/area-pedagogica/tutoriales');
+        navigate('/normativa');
         
         }
        

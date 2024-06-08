@@ -32,6 +32,8 @@ const NormativeContainer = (props:Props) => {
         loading={loading}
         setError={setError}
         key={Math.random()}
+
+
         />
     )
 }
