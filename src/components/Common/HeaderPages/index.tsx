@@ -15,7 +15,9 @@ const HeaderPages = (props: HeaderPagesProps) => {
     <header className='fixed top-0 z-50 w-full border-b border-gray-300 antialiased'>
       <nav className='bg-gray-200 px-4 py-2.5 lg:px-6'>
         <div className='flex flex-wrap items-center justify-between'>
+          <a href="/" >
           <LogoPortal className='ml-10 max-w-32 xl:ml-0' />
+          </a>
 
           <div className='flex items-center lg:order-2'>
             <button
