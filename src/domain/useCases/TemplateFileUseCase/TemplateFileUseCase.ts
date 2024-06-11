@@ -20,24 +20,23 @@ class TemplateFileUseCase {
             rows: string[][],
             verticalTemplate: boolean,
             valid: boolean
-        
+
         }>((resolve, reject) => {
             this.detectDelimiter(data, 1024, (delim, text) => {
                 try {
-                    
+
                     let rows = text.split('\r\n');
-                    console.log(rows)
                     let columns = rows[0].split(delim);
 
                     if (template.verticalTemplate) {
                         columns = rows.map(row => row.split(delim)[0]);
                         rows = rows.map(row => row.split(delim).slice(1).join(delim));
 
-                    }else{
+                    } else {
                         if (delim !== DELIMITER) {
                             throw new Error('El archivo no coincide con la plantilla, el delimitador debe ser: ' + DELIMITER);
                         }
-                        
+
                     }
 
                     columns = columns.filter(col => col.trim() !== '');
@@ -53,12 +52,18 @@ class TemplateFileUseCase {
                             throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden');
                         }
                     });
-                    const rows_ = rows.slice(1);
-                    //validar que las filas no esten vacias
-                    console.log(rows_)
-                    if (rows_.filter(row => row.trim() !== '').length === 0) {
-                        throw new Error('El archivo no contiene datos');
+                    let rows_ = rows.slice(1);
+                    rows_ = rows_.filter(row => row.trim() !== '');
+                    if (!template.verticalTemplate) {
+                        if (rows_.filter(row => row.trim() !== '').length === 0) {
+                            throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
+                        }
+                        const datacell = rows_.map(row => row.split(delim));
+                        if (datacell.some(row => row.some(cell => cell.trim() == ''))) {
+                            throw new Error('El archivo no contiene datos, por favor verifique que el archivo no tenga celdas vacias');
+                        }
                     }
+
 
                     const final_rows = rows_.map(row => {
                         const row_data = row.split(delim);
@@ -67,11 +72,11 @@ class TemplateFileUseCase {
 
                     resolve({
                         columns,
-                        rows:final_rows,
+                        rows: final_rows,
                         verticalTemplate: template.verticalTemplate,
                         valid: true
                     });
-                    
+
                 } catch (error) {
                     reject(error);
                 }
@@ -103,7 +108,7 @@ class TemplateFileUseCase {
     }
 
 
-    
+
 
 }
 

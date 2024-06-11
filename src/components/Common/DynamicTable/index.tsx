@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
-import { IoAddCircle } from "react-icons/io5";
 import { Row } from "../../../utils/interface";
-import { Button, Pagination, Table, TextInput } from "flowbite-react";
-import { FaTrash } from "react-icons/fa";
+import { Pagination } from "flowbite-react";
+
 
 
 interface Props {
@@ -12,7 +11,7 @@ interface Props {
     isSaved: boolean;
     onSaveTable: (data: Row[][]) => void
     limitRows?: number
-
+    errors?: { row: number, column: number }[] 
 
 }
 
@@ -30,13 +29,12 @@ const DynamicTable = (props: Props) => {
     const [datarows, setDatarows] = useState<Row[][]>([])
 
     useEffect(() => {
-        console.log("data changed", props.data)
         setData(props.data)
         setTotalPages(Math.ceil(props.data.length / limit))
         setCurrentPage(Math.ceil(props.data.length / limit))
         setFrom((currentPage * limit) - limit + 1)
         setTo(currentPage * limit > props.data.length ? props.data.length : currentPage * limit + 1)
-        
+
         setDatarows(props.data.slice(0))
     }, [props.data])
 
@@ -63,7 +61,7 @@ const DynamicTable = (props: Props) => {
         copy_data.splice(row + 1, 0,
             Array.from({ length: copy_data[row].length }, () => ({
                 key: Math.random().toString(36).substring(7),
-                value: "Ingrese valor",
+                value: "",
             }))
         )
 
@@ -116,86 +114,111 @@ const DynamicTable = (props: Props) => {
 
     return (
 
-        <div className="overflow-x-auto">
+        <div className="scrollbar w-full overflow-x-auto">
 
+            <table className='w-full divide-y divide-gray-200'>
+                <thead className='sticky top-0 z-10 w-full bg-gray-100 text-center'>
+                    <tr className='text-sm'>
 
-            <Table>
-                <Table.Head>
-                    {
-                        !props.isSaved && <Table.HeadCell className="w-10">
+                        {
+                            data[0].map((column, index) => {
+                                return (
 
-                        </Table.HeadCell>
-                    }
+                                    <th scope='col' key={index}>{column.value}</th>
+                                )
+                            })
+                        }
 
-                    {
-                        data[0].map((column, index) => {
-                            return (
-                                <>
+                        {
+                            !props.isSaved && <th scope='col'>Acciones</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody className='divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-800'>
 
-                                    <Table.HeadCell key={index}>
-                                        {column.value}
-                                    </Table.HeadCell>
-                                </>
-                            )
-                        })
-                    }
-                </Table.Head>
-                <Table.Body className="divide-y">
                     {datarows.slice(from, to).map((row, rowIndex) => {
                         return (
-                            <>
 
-                                <Table.Row key={rowIndex}
-                                    className={hovered?.row === rowIndex ? "bg-gray-200" : ""}>
-
-                                    {
-                                        !props.isSaved && <Table.Cell>
-                                            <Button className="w-5 h-5" color="failure" onClick={() => handleRemove(rowIndex, 0, false)} >
-                                                <FaTrash size={10} />
-                                            </Button>
-                                        </Table.Cell>
-
-                                    }
+                            <tr key={rowIndex}
+                                className={hovered?.row === rowIndex ? "bg-gray-200" : ""}>
 
 
 
-                                    {row.map((column, columnIndex) => {
-                                        return (
-                                            <Table.Cell
-                                                key={columnIndex}
-                                                onMouseEnter={() => handleMouseEnter(rowIndex + 1, columnIndex)}
+
+                                {row.map((column, columnIndex) => {
+                                    return (
+
+                                        <td onMouseEnter={() => handleMouseEnter(rowIndex, columnIndex)}>
+                                            <input
+                                                className={`w-full rounded-md 
+                                                border border-gray-300 bg-gray-50
+                                                 p-2.5 text-sm text-gray-900 outline-primary
+                                                  focus:border-cyan-500 focus:ring-cyan-500 
+                                                  disabled:cursor-not-allowed disabled:opacity-80
+                                                  
+                                                    ${props.errors?.some((error) => error.row === rowIndex && error.column === columnIndex) ? 'border-red-500' : 'border-gray-300'}
+                                                  `}
+                                                type='text'
+                                                placeholder={`Ingrese ${data[0][columnIndex].value}`}
+                                                name='data'
+                                                value={column.value}
+                                                onChange={(e) => handleChanged(rowIndex + 1, columnIndex, e.currentTarget.value)}
+                                                disabled={props.isSaved}
+                                                required
+                                            />
+                                        </td>
+                                    );
+                                })}
+                                {
+                                    !props.isSaved && <td className='text-center'>
+                                        <button
+                                            onClick={() => handleRemove(rowIndex, 0, false)}
+                                            className='mx-auto flex items-center gap-2 rounded-md border border-red-500 px-2 py-1 text-xs font-medium text-red-500 hover:bg-red-500 hover:text-white'>
+                                            <svg
+                                                xmlns='http://www.w3.org/2000/svg'
+                                                height='20px'
+                                                viewBox='0 -960 960 960'
+                                                width='20px'
+                                                fill='currentColor'>
+                                                <path
+                                                    d='M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z'
+                                                ></path>
+                                            </svg>
+                                            <span>Eliminar</span>
+                                        </button>
+                                    </td>
+                                }
 
 
-                                            >
-                                                <TextInput
-                                                    value={column.value}
-                                                    onChange={(e) => handleChanged(rowIndex + 1, columnIndex, e.currentTarget.value)}
-                                                    className="w-full"
-                                                    disabled={props.isSaved}
-                                                />
-
-                                            </Table.Cell>
-                                        );
-                                    })}
-
-                                </Table.Row>
-                            </>
+                            </tr>
                         );
                     })}
-                    {
-                        !props.isSaved && (props.limitRows !== (data.length - 1)) ? <Table.Row>
-                            <Table.Cell colSpan={data[0].length + 1}>
-                                <Button className="w-full" color="gray" onClick={() => handleClick(data.length - 1)} >
-                                    <IoAddCircle size={20} />
+                </tbody>
+            </table>
+            <footer className='w-full bg-gray-100'>
+                {
+                    !props.isSaved && (props.limitRows !== (data.length - 1)) ?
+                        <section className='flex w-full items-end justify-center gap-2 p-2 text-sm'>
+                            <button
+                                onClick={() => handleClick(data.length - 1)}
+                                className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    height='24px'
+                                    viewBox='0 -960 960 960'
+                                    width='24px'
+                                    fill='currentColor'
+                                ><path
+                                    d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
+                                ></path>
+                                </svg>
+                                <span>Añadir fila</span>
+                            </button>
+                        </section> : null}
+            </footer>
 
-                                </Button>
-                            </Table.Cell>
-                        </Table.Row> : null
-                    }
 
-                </Table.Body>
 
-            </Table>
             <p className="text-sm text-gray-700 dark:text-gray-300">
                 Página {currentPage} de {totalPages}
             </p>

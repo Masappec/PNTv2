@@ -1,4 +1,3 @@
-import { Card } from "flowbite-react";
 import { FrequencyAsked, Tutorial } from "../../../domain/entities/PedagodyAreaEntity";
 import Iframe from "../../Common/Iframe";
 import { MapIsotipo } from "../../Common/MapIsotipo";
@@ -13,7 +12,7 @@ interface Props {
     
 }
 const TutorialsPresenter = (props:Props) => {
-
+      console.log(props)
         return (
             <main>
                  <MapIsotipo />

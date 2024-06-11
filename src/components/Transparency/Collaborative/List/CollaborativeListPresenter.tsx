@@ -1,14 +1,8 @@
-import { Button, TextInput } from "flowbite-react";
-import { CiSearch } from "react-icons/ci"
-import { IoBagAddOutline } from "react-icons/io5";
-import { FiEdit2 } from "react-icons/fi";
-//import { GrView } from "react-icons/gr";
-import { RiDeleteBinLine } from "react-icons/ri";
-import Table from "../../../Common/Table";
+
+import { Pagination } from "flowbite-react";
 import TransparencyCollab from "../../../../domain/entities/TransparencyCollab";
-import Alert from "../../../Common/Alert";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
-import Modal_ from "../../../Common/Modal";
+
+import Numeral from "../../../Common/Numeral";
 
 interface Props {
 
@@ -37,8 +31,41 @@ interface Props {
 
 }
 const CollaborativeListPresenter = (props: Props) => {
+return(<>
+  <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+    Transparencia Colaborativa
+  </h2>
+  <h2 className='mb-4 mt-8 hidden rounded-md bg-primary p-4 text-left text-xl font-bold text-white' />
+  <section className='flex flex-col items-center justify-center gap-4'>
+    <Numeral
+      title={"Transparencia Colaborativa"}
+      text={""}
+      onClick={() => props.onAdd()}
+      isPublished={false}
+    />
 
-  return (
+    {
+      props.data.map(transparency => (
+        <Numeral
+          title={"Transparencia Colaborativa"}
+          text={new Date(transparency.published_at).toLocaleString()}
+          onClick={() => props.onEdit(transparency)}
+          isPublished={transparency.published}
+        />
+      ))
+    }
+    <Pagination 
+      currentPage={props.page || 1} 
+      totalPages={props.totalPage}
+      onPageChange={props.setPage || (() => { })}
+      nextLabel="Siguiente"
+      previousLabel="Anterior"
+      className="bg-transparent"
+     
+    />
+  </section>
+</>)
+  /*return (
 
     <div className="h-full">
       <div className="border-gray-300 py-5 border-b  ">
@@ -132,7 +159,7 @@ const CollaborativeListPresenter = (props: Props) => {
                     }}
                     className=" p-5 text-slate-400font-bold ">
                     <GrView />
-                  </button>*/}
+                  </button>}
                   <button
                     onClick={() => {
                       props.onDelete(item)
@@ -168,7 +195,7 @@ const CollaborativeListPresenter = (props: Props) => {
 
 
 
-  )
+  )*/
 }
 
 export default CollaborativeListPresenter;

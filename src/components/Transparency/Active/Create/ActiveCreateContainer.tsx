@@ -548,7 +548,6 @@ const ActiveCreateContainer = (props: IProps) => {
         setFilesPublication(newFiles)
       }
 
-      setSuccess("Se ha guardado correctamente el archivo")
     }).catch((e) => {
       setError(e.message)
       sleep(2000).then(() => {
