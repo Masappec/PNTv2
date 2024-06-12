@@ -1,5 +1,4 @@
 import RoleListContainer from "../../../../../components/Admin/Roles/List/RoleListContainer"
-import Breadcrumb from "../../../../../components/Common/Breadcrumb"
 import RoleUseCase from "../../../../../domain/useCases/Role/RoleUseCase";
 import api from "../../../../../infrastructure/Api"
 import RoleApi from "../../../../../infrastructure/Api/Role/RoleApi";
@@ -15,18 +14,7 @@ const RoleList = () => {
     const usecase = new RoleUseCase(roleService);
     return (
         <>
-            <Breadcrumb
-                items={[
-                    {
-                        name: 'Roles',
-                        path: '/admin/roles',
-                    },
-                    {
-                        name: 'Listado',
-                        path: '/admin/roles',
-                    }
-                ]}
-            />
+          
             <RoleListContainer 
                 usecase={usecase}
             />
