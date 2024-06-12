@@ -1,18 +1,24 @@
 
+import { ResponsePresupuestos } from "../../../../infrastructure/Api/PublicDataApi/interface";
+import { ColourOption } from "../../../../utils/interface";
+import CustomInputSearch from "../../../Common/CustomInputSearch";
 import { MapIsotipo } from "../../../Common/MapIsotipo";
-import Select from "../../../Common/Select";
 import TablePublic from "../../../Common/TablePublic";
+import Input from "../../../Common/Input";
+import axios from "axios";
+import { FaFileCsv } from "react-icons/fa";
+import { URL_API } from "../../../../utils/constans";
+import { PUBLIC_PATH } from "../../../../infrastructure/Api";
 
 interface Props {
-  // loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
+  loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
 
-  // onSelect: () => void;
-  // selectedYear: number;
-  // onSelectYear: (year: number) => void;
-  // month: string;
-  // onSelectMonth: (month: string) => void;
-  // onSearch: () => void
-  // onChangeEstablishment: (value: string) => void;
+   selectedYear: number;
+   onSelectYear: (year: number) => void;
+  month: number;
+  onSelectMonth: (month: number) => void;
+  onSearch: () => void
+   onChangeEstablishment: (value: string) => void;
   // tables: {
   //   numeral: string,
   //   data: Row[][]
@@ -31,10 +37,26 @@ interface Props {
   page: number;
   length:number;
  
-
+  data: ResponsePresupuestos[]
 
 }
 const FinancePresenter = (props:Props) => {
+
+  const onDownloadFile = async (url: string, name: string) => {
+    try {
+      const res = await axios.get(url, {
+        responseType: 'blob'
+      })
+      const blobUrl = window.URL.createObjectURL(new Blob([res.data]));
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = name + '.csv'
+      a.click();
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (e) {
+      console.log(e)
+    }
+  }
   return (
   
     <main>
@@ -51,72 +73,36 @@ const FinancePresenter = (props:Props) => {
 
       <form className='mb-4 w-full'>
         <div className='max-w-2xl'>
-          <label className='text-sm font-medium text-gray-900'>Institución</label>
-          <div className='group relative'>
-            <svg
-              className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
-              stroke='currentColor'
-              fill='currentColor'
-              stroke-width='0'
-              viewBox='0 0 24 24'
-              height='1em'
-              width='1em'
-              xmlns='http://www.w3.org/2000/svg'
-              ><path
-                d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
-              ></path>
-            </svg>
-            <input
-              className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-              type='text'
-              placeholder='Escribe el nombre de la institución a consultar'
-              name='first_name'
-               onChange={()=>{}}
-              required
+            <CustomInputSearch
+
+              loadOptions={props.loadOptions}
+              onSearch={props.onSearch}
+              onSelect={(e) => props.onChangeEstablishment(e.value)}
             />
-          </div>
         </div>
 
         <section className='mt-4 flex max-w-max items-center gap-4'>
+          
           <div>
-          <Select
-                        placeholder={"Año"}
-                        
-                        options={[
-                            {
-                                value: "",
-                                label: "Seleccione un año",
-                                
-                            },
-                        ]}
-                       
-                        className="block w-full rounded-lg  text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
-                        required 
-                        value={""}
-                         onChange={()=>{}} />
-          </div>
+            <Input
+              placeholder={"Mes y Año"}
+              
+              onChange={(e) => { 
 
-          <div>
-            <Select
-                        placeholder={"Mes"}
-                        value={""}
-                        onChange={() => { }}
-                        options={[
-                            {
-                                value: "",
-                                label: "Seleccione un mes",
-                                
-                            },
-                        ]}
-                       
-                        className="block w-full rounded-lg  text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
-                        required    />
+                const [year, month] = e.target.value.split("-")
+                props.onSelectYear(parseInt(year))
+                props.onSelectMonth(parseInt(month))
+              }}
+              type="month"
+              
+              className="block w-full rounded-lg  text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
+              required    />
           </div>
         </section>
 
         <button
-          onClick={()=>{}}
-          type='submit'
+          onClick={()=>{props.onSearch()}}
+          type='button'
           className='mt-8 rounded-md bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
           Buscar
         </button>
@@ -124,50 +110,85 @@ const FinancePresenter = (props:Props) => {
 
       <div className='mt-8 h-min rounded-md bg-gray-100'>
                 <TablePublic
-
+                    
                     columns={[
                       {
                         title: "INSTITUCIÓN",
-                        render: () => (
-                            <p>{}</p>
+                        render: (row) => (
+                            <p>{row.establishment_name}</p>
                         )
                     },
                     {
                       title: "AÑO",
-                      render: () => (
-                          <p>{}</p>
+                      render: (row) => (
+                          <p>{row.year}</p>
                       )
                      },
                      {
                       title: "MES",
-                    render: () => (
-                        <p>{}</p>
+                    render: (row) => (
+                        <p>{row.month}</p>
                     )
                    },
                    {
                    title: "CONJUNTO DE DATOS",
-                   render: () => (
-                      <p>{}</p>
-                   )
+                   render: (row) => {
+                     const file = row.files.find(e => e.description.toLowerCase() == 'conjunto de datos')
+                      return<div className="flex flex-row justify-center"> 
+                        <a key={row.id} href="#" 
+                        onClick={() => onDownloadFile(URL_API+PUBLIC_PATH+file?.url_download as string,
+                                                    `transparencia-focalizada-${props.selectedYear}-${props.month}-${file?.description}`
+                                                )}
+                                                    className="text-primary-500 
+                                                hover:text-primary-600 text-base">
+                                                    <FaFileCsv className="text-primary-500 
+                                                hover:text-primary-600 text-base ml-5" 
+                                                
+                                                />
+                                                Descargar
+                                                    
+
+                      </a></div>
+                   }
                    },
                    {
                    title: "METADATOS",
-                   render: () => (
-                    <p>{}</p>
-                    )
+                   render: (row) => {
+                     const file = row.files.find(e => e.description.toLowerCase() == 'metadatos')
+                     return <div className="flex flex-row justify-center">  <a key={row.id} href="#" onClick={() => onDownloadFile(URL_API +PUBLIC_PATH+file?.url_download as string,
+                       `transparencia-focalizada-${props.selectedYear}-${props.month}-${file?.description}`
+                     )}
+                       className="text-primary-500 
+                                                hover:text-primary-600 text-base">
+                       <FaFileCsv className="text-primary-500 
+                                                hover:text-primary-600 text-base ml-5" />
+                       Descargar
+
+                     </a></div>
+                   }
                     },
                     {
                       title: "DICCIONARIO",
-                      render: () => (
-                       <p>{}</p>
-                       )
+                      render: (row) => {
+                        const file = row.files.find(e => e.description.toLowerCase() == 'diccionario')
+                        return <div className="flex flex-row justify-center"> <a key={row.id} href="#" onClick={() => onDownloadFile(URL_API +PUBLIC_PATH+file?.url_download as string,
+                          `transparencia-focalizada-${props.selectedYear}-${props.month}-${file?.description}`
+                        )}
+                          className="text-primary-500 
+                                                hover:text-primary-600 text-base">
+                          <FaFileCsv className="text-primary-500 
+                                                hover:text-primary-600 text-base ml-5" />
+                          
+                          Descargar
+                        </a></div>
+                      }
                        }
                   
 
                   ]
                 }
                     currentPage={props.page}
-                    data={[]}
+                    data={props.data}
                     length={0}
                     
                     key={"roles-table"}
@@ -189,110 +210,4 @@ const FinancePresenter = (props:Props) => {
 
 export default FinancePresenter;
 
-// <form action="" className="justify-center">
-
-    //   <div className="w-full h-auto  md:xl:justify-center flex 
-    //    flex-auto ">
-    //     <p className="text-gray-700 text-2xl mt-12 mb-2  font-semibold">
-    //       Presupuesto
-    //     </p>
-    //   </div>
-
-    //   <div className="relative search 
-    //   lg:mt-8 w-full h-auto 
-      
-    //   xl:justify-center flex   lg:m-0
-    //    flex-auto">
-    //     <div className="relative lg:w-full w-[90%] xl:w-[730px] mb-16">
-    //       <Label>
-    //         Entidad
-    //       </Label>
-    //       <Select
-    //         loadOptions={props.loadOptions}
-    //         placeholder="Buscar por entidad"
-    //         noOptionsMessage={() => <>Sin Resultados</>}
-    //         onChange={(value) => {
-    //           props.onChangeEstablishment(value?.value || "")
-    //         }}
-    //       />
-    //       <Input
-    //         type="month"
-    //         placeholder="Año/Mes"
-    //         value={new Date(props.selectedYear, parseInt(props.month) - 1).toISOString().slice(0, 7)}
-    //         onChange={(value) => {
-    //           const [year, month] = value.target.value.split("-")
-    //           console.log(year, month)
-    //           props.onSelectYear(parseInt(year))
-    //           props.onSelectMonth(parseInt(month) + "")
-    //         }}
-    //       />
-    //       <div className="w-full flex justify-center mt-3">
-
-    //         <button
-    //           type="button"
-    //           onClick={props.onSearch}
-    //           disabled={props.loading}
-    //           className="!absolute w-[86px] h-[50px] border-black  
-                 
-    //               text-white bg-primary-500
-                  
-    //                hover:bg-primary-800 focus:ring-4
-    //                justify-center
-    //                  font-normal 
-    //                 flex items-center
-    //                 xl:w-[150px]
-    //                 xl:space-x-5
-    //                 -ml-20
-    //                 rounded-full text-xl  "
-    //         >
-
-    //           <p className='hidden xl:flex'>
-    //             Buscar
-    //           </p>
-    //           {
-    //             props.loading ? <Spinner aria-label="Extra large spinner example" size="md" /> :
-    //               <FaSearch size="20" />
-
-
-    //           }
-    //         </button>
-    //       </div>
-
-    //     </div>
-
-
-    //   </div>
-    //   <div className="w-full h-auto m-5 md:xl:justify-center flex">
-
-    //     {props.alert.message != '' &&
-    //       <Alert
-    //         color={props.alert.type}
-    //         className="w-full mb-8"
-    //       >
-    //         <span className="font-medium"> {props.alert.message}</span>
-
-    //       </Alert>
-    //     }
-    //   </div>
-    //   <div className="m-8">
-    //     {
-    //       props.tables.map((table, index) => (
-    //         <div key={index} className="mb-8">
-    //           <p className="text-gray-700 text-2xl mt-12 mb-2  font-semibold">
-    //             {table.numeral}
-    //           </p>
-    //           <DynamicReadTable
-    //             isSaved={true}
-    //             data={table.data}
-    //             onSaveTable={() => { }}
-    //             limitRows={10}
-    //           />
-    //         </div>
-    //       ))
-
-    //     }
-    //   </div>
-
-
-    // </form>
 

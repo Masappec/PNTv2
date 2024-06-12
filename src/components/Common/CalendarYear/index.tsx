@@ -30,6 +30,7 @@ export const CalendarYear = ({ onSelect }: ICalendarYearProps) => (
             generateConfig={momentGenerateConfig}
             dateRender={dateRender}
             mode='year'
+            
             onSelect={(value) => onSelect(value.year())}
 
         />
@@ -40,6 +41,9 @@ export const CalendarYear = ({ onSelect }: ICalendarYearProps) => (
             locale={esMX}
             generateConfig={momentGenerateConfig}
             dateRender={dateRender}
+            style={{
+                zIndex:1000
+            }}
         />
     </div>
 );

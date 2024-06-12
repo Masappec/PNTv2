@@ -71,3 +71,34 @@ export interface PersonalRemunerations {
     nombre: string;
     regimen:string;
 }
+
+
+
+export interface RequestPresupuestoApi{
+    
+    ruc:string;
+    year:number;
+    month:number;
+}
+
+export interface ResponsePresupuestos{
+
+    id:number;
+    files: {
+      id:number;
+      name:string;
+      description:string;
+      url_download:string;
+
+    }[];
+    establishment_name:string;
+    slug:string;
+    month:number;
+    year:number;
+    status:string;
+    published:boolean;
+    published_at:string;
+    max_date_to_publish:string;
+    establishment:number;
+    numeral:number;
+}

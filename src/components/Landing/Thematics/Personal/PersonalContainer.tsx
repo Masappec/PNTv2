@@ -83,9 +83,7 @@ const PersonalContainer = (props: Props) => {
     return (
 
         <PersonalPresenter
-            
             onInstitutionChange={(value) => setData({ ...data, institution: value })}
-
             onSearch={handleSearch}
             loadOptions={loadOptions}
             onNameChange={(value) => setData({ ...data, names: value })}

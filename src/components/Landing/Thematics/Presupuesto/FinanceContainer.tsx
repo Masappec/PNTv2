@@ -7,54 +7,33 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../../../infrastructure/Store"
 import { RequestPublicApi, ResponsePublicApi } from "../../../../infrastructure/Api/PublicDataApi/interface"
 import { sleep } from "../../../../utils/functions"*/
+import { useEffect, useState } from "react";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi"
 import FinancePresenter from "./FinancePresenter"
+import { ColourOption } from "../../../../utils/interface";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../infrastructure/Store";
+import EstablishmentEntity from "../../../../domain/entities/Establishment";
+import { ResponsePresupuestos } from "../../../../infrastructure/Api/PublicDataApi/interface";
 
 interface Props {
     usecase: PublicDataApi;
 }
 const FinanceContainer = (props: Props) => {
-    console.log('FinanceContainer',props)
-    /*const [total, ] = useState(0)
-    const [totalPage, ] = useState(0)
-    const [from, ] = useState(0)
-    const [to, ] = useState(0)
-    const [currentPage, ] = useState(1)
 
 
-
-    const [isSearching, SetSearching] = useState<boolean>()
-    const [, setData] = useState<{
-        numeral: string,
-        data: Row[][]
-    }[]>([])
-    const [, setLoading] = useState<boolean>(false)
-    const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
-    const [query, setQuery] = useState<RequestPublicApi>({
-        article: "19",
-        establishment: "",
-        fields: [],
-        month: (new Date().getMonth() + 1) + "",
-        numerals: [
-            "Numeral 6",
-        ],
-        search: "",
-        year: new Date().getFullYear().toString(),
-    })
-    const [, setAlert] = useState<{
-        type: 'success' | 'failure' | 'warning' | 'info'
-        message: string
-    }>({
-        type: 'info',
-        message: ''
-    })
-    const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
+    const [isSearching, SetSearching] = useState<boolean>(false)
     const [year, setYear] = useState<number>(new Date().getFullYear())
+    const [month, setMonth] = useState<number>(new Date().getMonth())
+    const [ruc,setRuc] = useState<string>("")
+    const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
+    const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
+    const [data, setData] = useState<ResponsePresupuestos[]>([])
     useEffect(() => {
         setListEnt(_establishments)
     }, [_establishments])
-
-    /*const loadOptions = (inputValue: string, callback: (options: ColourOption[]) => void) => {
+    
+    const loadOptions = (inputValue: string, callback: (options: ColourOption[]) => void) => {
         if (!inputValue) {
             return;
         }
@@ -78,107 +57,17 @@ const FinanceContainer = (props: Props) => {
             return data;
         }))
     }
-
-    const list: {
-        numeral: string,
-        data: Row[][]
-    }[] = []
-    /*const onUpdate = (data: ResponsePublicApi) => {
-        buildForDataTable(data)
-
-
-    }*/
-
-    //const handlePage = (page: number) => {}
-
-
-    /*const handleSearch = () => {
-        setData([])
-        setLoading(true)
-        props.usecase.getPublicData(query, onUpdate).then(() => {
-            
-            sleep(4000).then(() => {
-                if (list.length === 0) {
-                    setAlert({
-                        type: 'info',
-                        message: 'No se encontraron resultados'
-                    })
-                }
-                setData(list)
-                setLoading(false)
-            })
-        }).catch(() => {
-            setAlert({
-                type: 'failure',
-                message: 'Error al obtener los datos'
-            })
-            setLoading(false)
+ 
+    const handleSearch=()=>{
+        props.usecase.getPresupuestoData({
+            month: month,
+            ruc: ruc,
+            year: year
+        }).then((data)=>{
+            setData(data)
         })
-    }*/
-    /*const onChangeEstablishment = (value: string) => {
-        setQuery({
-            ...query,
-            establishment: value
-        })
-    }*/
 
-    /*const buildForDataTable = (data: ResponsePublicApi) => {
-        let columns = [] as Row[]
-        columns = data.metadata.columns.map((item) => {
-            return {
-                key: item,
-                value: item,
-                is_header: true
-            } as Row
-        })
-        columns = [
-            {
-                key: 'Institución',
-                value: 'Institución',
-                is_header: true
-            } as Row,
-            ...columns
-        ]
-        const rows = data.data.map((item) => {
-
-            const list_row = []
-            list_row.push({
-                key: 'Institución',
-                value: data.metadata.establishment_name,
-                is_header: false
-            } as Row)
-            const row = item.map((item) => {
-                return {
-                    key: item,
-                    value: item
-                } as Row
-            })
-            return [
-                ...list_row,
-                ...row
-            ]
-        })
-        const elements = list.filter((item) => item.numeral === data.metadata.numeral_description)
-        if (elements.length > 0) {
-            const index = list.indexOf(elements[0])
-            list[index] = {
-                numeral: data.metadata.numeral_description,
-                data: [
-                    ...list[index].data,
-                    ...rows
-                ]
-            }
-        } else {
-            list.push({
-                numeral: data.metadata.numeral_description,
-                data: [
-                    columns,
-                    ...rows
-                ]
-            })
-        }
-
-    }*/
+    }
     return (
 
         <FinancePresenter
@@ -189,26 +78,15 @@ const FinanceContainer = (props: Props) => {
             totalPage={10}
             setPage={() => { }}
             length={0}
+            loadOptions={loadOptions}
+            month={month}
+            onChangeEstablishment={(e)=>setRuc(e)}
+            onSearch={handleSearch}
+            onSelectMonth={(e)=>setMonth(e)}
+            onSelectYear={(e)=>setYear(e)}
+            selectedYear={year}
+            data={data}
 
-
-        // loadOptions={loadOptions}
-        // onSelect={() => { }}
-        // onSelectYear={(year) => {
-        //     setYear(year)
-        // }}
-        // selectedYear={year}
-        // onChangeEstablishment={onChangeEstablishment}
-        // onSearch={handleSearch}
-        // tables={dataT}
-        // loading={loading}
-        // month={query.month}
-        // onSelectMonth={(month) => {
-        //     setQuery({
-        //         ...query,
-        //         month: month
-        //     })
-        // }}
-        // alert={alert}
         />
 
     )

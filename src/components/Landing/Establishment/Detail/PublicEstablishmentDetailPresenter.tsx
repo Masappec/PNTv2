@@ -191,8 +191,8 @@ return(
               size={"md"}
               arrowIcon={false}
               dismissOnClick={true}
-                
-
+              color={"cyan"}
+              
             >
 
 
@@ -268,6 +268,7 @@ return(
               size={"md"}
               arrowIcon={false}
               dismissOnClick={true}
+                color={"cyan"}
 
             >
 
@@ -334,6 +335,7 @@ return(
               size={"md"}
               arrowIcon={false}
               dismissOnClick={true}
+                color={"cyan"}
 
             >
 

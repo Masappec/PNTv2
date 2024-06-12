@@ -3,8 +3,9 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    './node_modules/flowbite/**/*.js',
+
     'node_modules/flowbite-react/lib/esm/**/*.js',
-    './node_modules/flowbite/**/*.js'
   ],
   theme: {
     extend: {
@@ -29,6 +30,20 @@ export default {
           "900": "#00364c",
           DEFAULT: '#1A7290',
  
+        },
+        "cyan": {
+          "50": "#cef4ff",
+          "100": "#abdef4",
+          "200": "#8cc3dd",
+          "300": "#69a9c6",
+          "400": "#4d95b3",
+          "500": "#1A7290",
+          "600": "#006284",
+          "700": "#015e79",
+          "800": "#004b64",
+          "900": "#00364c",
+          DEFAULT: '#1A7290',
+
         },
 
         dark: {
