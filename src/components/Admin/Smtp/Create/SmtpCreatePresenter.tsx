@@ -1,7 +1,5 @@
-import { FormEvent, useEffect, useState } from "react";
-import { LuCheck, LuFileEdit } from "react-icons/lu"
-import Input from "../../../Common/Input";
-import Spinner from "../../../Common/Spinner";
+import { FormEvent } from "react";
+
 import Alert from "../../../Common/Alert";
 import SmtpEntity from "../../../../domain/entities/SmtpEntity";
 
@@ -22,11 +20,118 @@ interface Props {
 }
 
 const SmtpCreatePresenter = (props: Props) => {
-    const [_edit, set_edit] = useState(props.edit);
-    useEffect(() => {
-        set_edit(props.edit);
-    }, [props.edit])
-    return (
+    
+   return(
+    <>
+           <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+               Configuración SMTP
+           </h2>
+           <p className='my-8 max-w-3xl items-center text-sm text-primary'>
+               Configura el servidor SMTP para el envío de correos electrónicos. Por favor tenga en cuenta que
+               cambiar estos valores puede afectar el envío de correos electrónicos.
+           </p>
+           <section className='flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center'>
+               {
+                   props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
+               }
+               {
+                   props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
+               }
+
+               <form
+                   onSubmit={props.handleSubmit}
+                   className='mx-auto w-full max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
+                   <section className='grid grid-cols-1 items-start justify-center gap-4 text-start'>
+                       <div>
+                           <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                               Servidor STMP
+                           </label>
+                           <input
+                               className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                               type='text'
+                               name='host'
+                               placeholder='Ingresa el servidor SMTP, ej: smtp.gmail.com'
+                               required
+                               onChange={(e) => props.setData("host", e.target.value)}
+                               value={props.data.host}
+                           />
+                       </div>
+
+                       <div>
+                           <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                               Usuario STMP
+                           </label>
+                           <input
+                               className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                               type='text'
+                               name='user'
+                               placeholder='Ingresa el usuario SMTP'
+                               required
+                               onChange={(e) => props.setData("user", e.target.value)}
+                               value={props.data.auth.user}
+                           />
+                       </div>
+
+                       <div>
+                           <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                               Puerto STMP
+                           </label>
+                           <input
+                               className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                               type='number'
+                               name='port'
+                               min='1'
+                               placeholder='Ingresa el puerto SMTP, ej: 587'
+                               required
+                               onChange={(e) => props.setData("port", e.target.value)}
+                               value={props.data.port}
+                           />
+                       </div>
+
+                       <div>
+                           <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                               Contraseña STMP
+                           </label>
+                           <input
+                               className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                               type='password'
+                               name='pass'
+                               placeholder='Ingresa la contraseña SMTP'
+                               required
+                               onChange={(e) => props.setData("pass", e.target.value)}
+                               value={props.data.auth.pass}
+                           />
+                       </div>
+
+                       <div className='flex items-center'>
+                           <input
+                               type='checkbox'
+                               id='secure'
+                               className='h-5 w-5 rounded accent-primary'
+                               required
+                               onChange={(e) => props.setData("secure", e.target.checked)}
+                               checked={props.data.secure}
+                           />
+                           <label
+                               htmlFor='secure'
+                               className='ml-2 text-sm font-medium text-gray-900'
+                               >
+                               Activar TSL
+                           </label>
+                       </div>
+                       <button
+                           type='submit'
+                           className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                           Guardar
+                       </button>
+                   </section>
+               </form>
+           </section>
+    </>
+
+   )
+   
+   /* return (
 
         <div className="container">
             <div className="flex items-center py-5 justify-center">
@@ -145,7 +250,7 @@ const SmtpCreatePresenter = (props: Props) => {
                 </section>
             </form>
         </div>
-    )
+    )*/
 
 }
 

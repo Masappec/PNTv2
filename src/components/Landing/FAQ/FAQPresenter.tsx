@@ -1,4 +1,4 @@
-import { Timeline } from "flowbite-react";
+import { Accordion } from "flowbite-react";
 import { FrequencyAsked, Tutorial } from "../../../domain/entities/PedagodyAreaEntity";
 
 
@@ -8,47 +8,50 @@ interface Props {
     faq: FrequencyAsked[];
     loading: boolean;
     error: string;
-    
+
 }
-const FAQPresenter = (props:Props) => {
+const FAQPresenter = (props: Props) => {
+
+
     return (
-        <div className="h-auto">
-            <div className="row mt-10">
-                <div className="col-md-12">
-                    <h2 className="text-center
-                    text-4xl
-                    font-bold
-                    text-primary-800
-                    
-                    ">Preguntas frecuentes</h2>
-                </div>
-            </div>
-            <div className="row flex items-center justify-center mt-10 w-1/2">
-                <Timeline>
+        <section id='faq' className='section-container my-16'>
+            <h2 className='mb-4 text-balance text-2xl font-normal leading-tight md:text-[40px]'>
+                ¿Qué puedo hacer en este portal?
+            </h2>
 
-                
-                {
-                    props.faq.map((item,index)=>{
-                        return (
-                            <Timeline.Item>
+            <p className='mb-8 text-sm text-gray-600 md:text-base'>
+                A continuación, te presentamos las respuestas a las preguntas más frecuentes sobre este
+                Portal.
+            </p>
+            <Accordion collapseAll>
+            {
+                props.faq.map((item) => {
+                    return (
+                        <Accordion.Panel
+                        
+                        >
+                            <Accordion.Title> <span>{item.question}</span></Accordion.Title>
+                            <Accordion.Content>
 
-                                <Timeline.Content>
-                                    <Timeline.Point className="text-primary-600" /> 
-                                    <Timeline.Time>{index+1}</Timeline.Time>
-                                    <Timeline.Title className="text-primary-800  text-2xl"
-                                    >{item.question}</Timeline.Title>
-                                    <Timeline.Body>
-                                        {item.answer}
-                                    </Timeline.Body>
-                                </Timeline.Content>
-                            </Timeline.Item>
-                        )
-                    })
-                }
-                </Timeline>
-            </div>
-          
-        </div>
-    );
+
+                                <p className="text-gray-500 dark:text-gray-400">
+                                    <div className='border border-b-0 border-gray-300 p-4'>
+                                        <p className='mb-2 text-gray-600'>
+                                            {item.answer}
+                                        </p>
+                                    </div>
+                                </p>
+
+                            </Accordion.Content>
+                        </Accordion.Panel>
+
+                    )
+                })
+            }
+            </Accordion>
+
+        </section>
+
+    )
 }
 export default FAQPresenter;
