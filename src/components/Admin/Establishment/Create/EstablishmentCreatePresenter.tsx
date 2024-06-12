@@ -8,7 +8,7 @@ import Alert from "../../../Common/Alert";
 import { Button } from 'flowbite-react';
 import Select from "../../../Common/Select";
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface";
-import { MultiValue } from 'react-select';
+import ReactSelect, { MultiValue } from 'react-select';
 import NumeralDetail from "../../../../domain/entities/NumeralDetail";
 
 
@@ -323,7 +323,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
 
                         </div>
                         <hr />
-                        {/*<div className="flex-col items-center justify-between mt-5 pb-20">
+                        <div className="flex-col items-center justify-between mt-5 pb-20">
 
                             <h4 className="text-lg font-medium text-gray-800 dark:text-white">
                                 Obligaciones específicas
@@ -345,7 +345,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                 />
                             </div>
 
-                                </div>*/}
+                                </div>
                     </div>
 
                 </section>

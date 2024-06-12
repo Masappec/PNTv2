@@ -5,7 +5,7 @@ import Input from "../../../Common/Input";
 import Dropzone from "../../../Common/Dropzone";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
-import { MultiValue } from 'react-select';
+import ReactSelect, { MultiValue } from 'react-select';
 
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface";
 import Select from "../../../Common/Select";
@@ -332,7 +332,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </div>
                         </div>
                         <hr />
-                        {/* <div className="flex-col items-center justify-between mt-5 pb-20">
+                        <div className="flex-col items-center justify-between mt-5 pb-20">
 
                             <h4 className="text-lg font-medium text-gray-800 dark:text-white">
                                 Obligaciones específicas
@@ -354,8 +354,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.getSelectedExtraNumeral(props.data.extra_numerals||"")}
                                 />
                             </div>
-
-                                </div>*/}
+                        </div>
                     </div>
 
                 </section>
