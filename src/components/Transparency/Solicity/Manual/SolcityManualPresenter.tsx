@@ -6,7 +6,7 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import 'react-toastify/dist/ReactToastify.css';
 import { Solicity } from "../../../../domain/entities/Solicity";
 import Spinner from "../../../Common/Spinner";
-import { Alert } from "flowbite-react";
+import Alert from "../../../Common/Alert";
 
 interface Props {
     handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -65,7 +65,7 @@ const SolicityManualPresenter = (props: Props) => {
                             <input
                                 className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
                                 type='date'
-                                required
+                                
                                 onChange={(e) => props.onChange(e)}
                                 contentEditable={false}
                                 name="date"
@@ -161,7 +161,6 @@ const SolicityManualPresenter = (props: Props) => {
                             </label>
                             <select
                                 className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                                required
                                 onChange={(value) => {
                                     props.onChangeSelect({
                                         color: '',
@@ -191,7 +190,6 @@ const SolicityManualPresenter = (props: Props) => {
                             </label>
                             <select
                                 className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                                required
                                 onChange={(value) => {
                                     props.onChangeSelect({
                                         color: '',
@@ -220,7 +218,7 @@ const SolicityManualPresenter = (props: Props) => {
                                 className='block w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500'
                                 placeholder='Escribir motivo de la solicitud'
                                 rows={4}
-                                required
+                                
                                 name="text"
                                 onChange={props.onChange}
                                 value={props.data.text}
@@ -234,7 +232,6 @@ const SolicityManualPresenter = (props: Props) => {
                             </label>
                             <select
                                 className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                                required
                                 onChange={(value) => {
                                     props.onChangeSelect({
                                         color: '',
@@ -264,7 +261,6 @@ const SolicityManualPresenter = (props: Props) => {
                                     </label>
                                     <select
                                         className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                                        required
                                         onChange={(value) => {
                                             props.onChangeSelect({
                                                 color: '',
@@ -288,9 +284,12 @@ const SolicityManualPresenter = (props: Props) => {
                             ) : null}
                         {
                             props.error ? (
-                                <Alert color="red">
-                                    {props.error}
-                                </Alert>) : null
+                                <Alert
+                                    message={props.error}
+                                    type='error'
+                                    onClose={() => props.setError('')}
+                                />
+                            ) : null
                         }
 
                         {
@@ -314,304 +313,7 @@ const SolicityManualPresenter = (props: Props) => {
             </section>
         </>
     )
-    /*return (
-        <div>
-            <div className="border-gray-300 py-5 border-b  ">
-                <h2 className="text-2xl font-bold text-black ">
-                    Formulario de Solicitud de Acceso a la Información Pública (SAIP)
-                </h2>
-            </div>
-            <form
-                className="flex flex-col lg:flex-row mt-10"
-                onSubmit={props.handleSubmit}
-            >
-                <div className="container flex-col sm:flex-col sm:items-center sm:justify-between   ">
-
-
-                   
-                    <div className=" flex  flex-col-2 m-2 h-[50px]  mt-5 gap-14">
-                        <Label
-                            htmlFor=""
-                            value="Nombre Entidad"
-                            className="mt-2 text-base font-semibold"
-                        />
-
-                        <p className="text-base ml-5 mt-3 font-semibold text-black">
-                            {props.entitySelected.name}
-                        </p>
-                    </div>
-                    <div className="xl:flex xl:flex-col-2 flex-col-1 gap-12">
-                        <div className="flex  xl:flex-col-2 sm:flex-col-1 h-[44px]  mt-5 gap-20">
-                            <Label
-                                htmlFor=""
-                                value="No. RUC entidad"
-                                className="mt-2 text-base font-semibold"
-                            />
-                            <TextInput
-                                className="w-[288px]"
-                                placeholder=""
-                                type="number"
-                                onChange={props.onChange}
-                                name=""
-                                value={props.entitySelected.identification}
-                            />{" "}
-                        </div>
-                        <div className=" flex  xl:flex-col-2  flex-col-1 m-2 h-[44px]  mt-5 gap-3">
-                            <Label
-                                htmlFor=""
-                                value="Fecha"
-                                className="mt-2 text-base font-semibold"
-                            />
-                            <TextInput
-                                className="w-[306px]"
-                                placeholder=""
-                                type="date"
-                                onChange={(e) => props.onChange(e)}
-                                contentEditable={false}
-                                name="date"
-                                disabled={props.disabledDate}
-                            />{" "}
-                        </div>
-                    </div>
-                    <div className=" flex  flex-col-2 m h-[44px]  mt-5 gap-36">
-                        <Label
-                            htmlFor=""
-                            value="Ciudad"
-                            className="mt-2 text-base font-semibold"
-                        />
-                        <TextInput
-                            className="w-[717px]"
-                            placeholder=""
-                            type="text"
-                            onChange={props.onChange}
-                            name="city"
-                            value={props.data.city}
-
-                        />{" "}
-                        {" "}
-                    </div>
-
-                    <div
-                        className=" xl:grid-rows-3  lg:grid-rows-3 
-           xl:grid-flow-col gap-6 w-auto "
-                    >
-                        <h2 className="text-2xl xl:pl-72 font-bold text-black  my-9">
-                            Identificación de la Persona Solicitante
-                        </h2>
-                        <div className=" flex  flex-col-2 m-2 h-[44px] gap-32  ">
-                            <Label
-                                htmlFor=""
-                                value="Nombre"
-                                className="mt-2 text-base font-semibold"
-                            />
-                            <TextInput
-                                className="w-[717px]"
-                                placeholder=""
-                                type="text"
-                                name="first_name"
-                                value={props.data.first_name}
-                                onChange={props.onChange}
-                                disabled={props.disabledDate}
-
-                            />{" "}
-                        </div>
-
-                        <div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-32 ">
-                            <Label
-                                htmlFor=""
-                                value="Apellido"
-                                className="mt-2 text-base font-semibold"
-                            />
-                            <TextInput
-                                className="w-[717px]"
-                                placeholder=""
-                                type="text"
-                                name="last_name"
-                                onChange={props.onChange}
-                                disabled={props.disabledDate}
-
-                                value={props.data.last_name}
-                            />
-                        </div>
-                        <div className=" flex  flex-col-2 m-2 h-[44px] mt-5 gap-12">
-                            <Label
-                                htmlFor=""
-                                value="Correo Electrónico"
-                                className="mt-2 text-base font-semibold"
-                            />
-                            <TextInput
-                                className="w-[717px]"
-                                placeholder=""
-                                type="email"
-                                name="email"
-                                onChange={props.onChange}
-                                disabled={props.disabledDate}
-
-                                value={props.data.email}
-                            />{" "}
-                        </div>
-
-                        <div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-12">
-                            <Label
-                                htmlFor=""
-                                value="Teléfono Contacto"
-                                className="mt-2 text-base font-semibold"
-                            />
-                            <TextInput
-                                className="w-[717px]"
-                                placeholder=""
-                                type="text"
-                                onChange={props.onChange}
-                                name="phone"
-                                value={props.data.phone}
-                                disabled={props.disabledDate}
-
-                            />{" "}
-                        </div>
-
-                        <div className=" flex  flex-col-2 m-2 h-[50px]  mt-5 gap-32">
-                            <Label
-                                htmlFor=""
-                                value="Género"
-                                className="mt-2 text-base font-semibold"
-                            />
-
-                            <Select
-
-                                className="lg:w-[720px] xl:w-[720px] h-[50px] w-[720px] m-2 rounded-full "
-                                placeholder={"Género"}
-                                options={props.genders}
-                                onChange={(value) => {
-                                    props.onChangeSelect(value as ColourOption, 'gender')
-                                }}
-                                value={
-                                    props.solicitySaved.gender ?
-                                        props.getSelectedItems(props.solicitySaved.gender, props.genders)
-                                        : props.data.gender ? props.getSelectedItems(props.data.gender, props.genders) : null}
-
-                            />
-                        </div>
-                        <div className=" flex  flex-col-2 m-2 h-[50px]  mt-5 gap-5">
-                            <Label
-                                htmlFor=""
-                                value="Identificación Cultural"
-                                className="mt-2 text-base font-semibold"
-                            />
-
-                            <Select
-
-                                className="lg:w-[720px] xl:w-[720px] h-[50px] w-[720px] "
-                                placeholder={"Identificación Cultural"}
-                                options={props.race_indentification}
-                                onChange={(value) => {
-                                    props.onChangeSelect(value as ColourOption, 'race_identification')
-                                }}
-                                value={props.solicitySaved.race_identification ?
-                                    props.getSelectedItems(props.solicitySaved.race_identification, props.race_indentification)
-                                    : props.data.race_identification ? props.getSelectedItems(props.data.race_identification, props.race_indentification) : null
-                                }
-
-                            />
-                        </div>
-                    </div>
-                    <div></div>
-
-                    <div className=" grid grid-cols gap-4  mt-16 ">
-                        <Label
-                            htmlFor=""
-                            value="Petición completa"
-                            className="text-xl font-bold "
-                        />
-                        <Textarea
-                            placeholder="Escribe la petición"
-                            className="h-[139px] xl:w-[915px]"
-                            name="text"
-                            onChange={props.onChange}
-                            value={props.data.text}
-                            color={props.data.text.length > 0 ? "success" : "failure"}
-                        ></Textarea>
-                    </div>
-
-                    <h2 className="text-xl font-bold text-black  mt-7">
-                        Forma de Recepción de la información
-                    </h2>
-
-                    <div className="grid xl:grid-flow-col xl:grid-col-2 lg:grid-cols-2 grid-cols-1 gap-2  xl:w-1/2 mt-5  ">
-                        <div className=" flex  flex-col  h-[44px]  w-full  ">
-                            <Select
-                                placeholder={"Forma de entrega"}
-                                name="formatSolicity"
-                                options={props.format_send}
-                                onChange={(value) => {
-                                    props.onChangeSelect(value as ColourOption, 'format_send')
-                                }}
-                                value={props.solicitySaved.format_send ?
-                                    props.getSelectedItems(props.solicitySaved.format_send, props.format_send)
-                                    : props.data.format_send ? props.getSelectedItems(props.data.format_send, props.format_send) : null
-
-                                }
-                            />
-                        </div>
-                        {
-                            !props.disabledReceipt ? (
-                                <div className=" flex  flex-col h-[44px] w-full ">
-                                    <Select
-                                        placeholder={"Formato de recepción"}
-                                        name="type_reception"
-                                        options={props.format_receipt}
-                                        onChange={(value) => {
-                                            props.onChangeSelect(value as ColourOption, 'format_receipt')
-                                        }}
-                                        value={props.solicitySaved.format_receipt ?
-                                            props.getSelectedItems(props.solicitySaved.format_receipt, props.format_receipt)
-                                            : props.data.format_receipt ? props.getSelectedItems(props.data.format_receipt, props.format_receipt) : null
-                                        }
-                                    />
-                                </div>) : null
-                        }
-
-                    </div>
-
-
-                    <div className="flex w-auto mt-14">
-
-                        {
-                            props.error ? (
-                                <Alert color="red">
-                                    {props.error}
-                                </Alert>) : null
-                        }
-                    </div>
-                    <div className="flex gap-x-3 mt-14 xl:ml-96 xl:pl-52   mb-24 ">
-
-                        {
-                            props.isLoadingSend ? (
-                                <Spinner></Spinner>) : props.isSend ? (
-                                    <div
-                                        className="
-                  flex items-center justify-center
-                  text-green-500 bg-white font-bold
-                w-[185px] h-[48px]  hover:bg-gray-200 "
-                                    >
-                                        <IoCheckmarkCircle size={22} className=" mr-4 text-green-500 " />
-                                        <span>Enviada</span>
-                                    </div>
-                                ) : <Button
-                                    type="submit"
-                                    className="text-white font-bold bg-sky-800 w-[185px] h-[48px] "
-                                >
-                                <FiSend size={23} className=" mr-4" />
-                                <span>Enviar solicitud</span>
-                            </Button>
-
-                        }
-
-
-                    </div>
-                </div>
-            </form>
-        </div>
-    );*/
+    
 };
 
 export default SolicityManualPresenter;

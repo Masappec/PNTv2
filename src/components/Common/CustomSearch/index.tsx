@@ -44,7 +44,7 @@ const CustomSearch = (props: Props) => {
         <form role='search' className='group flex rounded-full border border-gray-300 bg-white relative'>
             <input
                 type='search'
-                className='text-black-medium m-2 w-3/4 rounded-md border-none p-2 text-lg text-gray-800 focus:outline-none focus:ring-0'
+                className='text-black-medium m-2 w-3/4 rounded-md border-none p-2 px-4 text-lg text-gray-800 focus:outline-none focus:ring-0'
                 placeholder='Escribe aquí la entidad que deseas consultar'
                 onChange={handleChange}
                 onBlur={handleBlur}

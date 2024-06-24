@@ -4,7 +4,7 @@ import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/Solicit
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
 import FilePublicationUseCase from "../../../../domain/useCases/FilePublicationUseCase/FilePublicationUseCase";
 import AttachmentUseCase from "../../../../domain/useCases/AttachmentUseCase/AttachmentUseCase";
-import { Solicity } from "../../../../domain/entities/Solicity";
+import { PartialTimelineSolicty, Solicity } from "../../../../domain/entities/Solicity";
 import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { useSelector } from "react-redux";
@@ -20,6 +20,7 @@ interface Props {
     fileUseCase: FilePublicationUseCase;
     attachmentUsecase: AttachmentUseCase;
     children?: React.ReactNode;
+    timeline: PartialTimelineSolicty[]
 }
 
 const SolicityDetailContainer = (props: Props) => {
@@ -151,6 +152,7 @@ const SolicityDetailContainer = (props: Props) => {
                 isLoadingSend={false}
                 onChange={() => { }}
                 children={props.children}
+                timeline={props.timeline}
 
 
             />

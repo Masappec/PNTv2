@@ -24,10 +24,18 @@ const LoginContainer = ({ useCase }: {
     e.preventDefault();
     setIsLoading(true)
     useCase.execute(email, password)
-      .then(() => {
+      .then((user) => {
         setIsLoading(false)
-
-        history('/admin')
+        if(user === null){
+          history('/admin')
+          return
+        }
+        const exist = user && user.user_permissions?.map((item) => item.codename).includes('view_solicity')
+        if(exist){
+          history('/admin/solicity')
+        } else{
+          history('/admin')
+        }
         window.location.reload()
       })
       .catch((e) => {

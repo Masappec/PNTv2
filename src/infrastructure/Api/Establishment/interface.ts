@@ -16,6 +16,9 @@ export interface EstablishmentListDto extends BaseObject {
     email_authority: string;
     is_active: boolean;
     slug: string;
+    type_institution: string;
+    type_organization: string;
+    function_organization: string;
 }
 
 

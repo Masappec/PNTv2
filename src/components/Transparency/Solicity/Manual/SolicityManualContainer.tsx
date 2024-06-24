@@ -8,9 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../infrastructure/Store";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import SessionService from "../../../../infrastructure/Services/SessionService";
-import { toast } from 'react-toastify';
 import { Solicity } from "../../../../domain/entities/Solicity";
-//import { sleep } from "../../../../utils/functions";
 import { useNavigate } from "react-router-dom";
 import UserEntity from "../../../../domain/entities/UserEntity";
 import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
@@ -89,6 +87,74 @@ const SolicityManualContainer = (props: Props) => {
         setIsLoadingSend(true)
 
         data.establishment = entity.id || 0
+        if (entity.id === 0) {
+            setError("Seleccione una entidad")
+            setIsLoadingSend(false)
+            return
+        }
+        data.establishment = entity.id || 0
+        data.address = entity.address || "Sin dirección"
+        if (data.date === "") {
+            setError("Seleccione una fecha")
+            setIsLoadingSend(false)
+            return
+        }
+
+        if (data.text == "") {
+            setError("Ingresa la petición de la solicitud")
+            setIsLoadingSend(false)
+            return
+        }
+        if (data.city === "") {
+            setError("Ingresa la ciudad")
+            setIsLoadingSend(false)
+            return
+        }
+        if (data.first_name === "") {
+            setError("Ingresa el nombre")
+            setIsLoadingSend(false)
+            return
+        }
+
+        if (data.last_name === "") {
+            setError("Ingresa el apellido")
+            setIsLoadingSend(false)
+            return
+        }
+
+        if (data.email === "") {
+            setError("Ingresa el correo")
+            setIsLoadingSend(false)
+            return
+        }
+
+        if (!data.race_identification) {
+            setError("Selecciona la raza")
+            setIsLoadingSend(false)
+            return
+        }
+
+        if (!data.gender) {
+
+            setError("Selecciona el género")
+            setIsLoadingSend(false)
+            return
+        }
+        if (data.phone === "") {
+            setError("Ingresa el teléfono")
+            setIsLoadingSend(false)
+            return
+        }
+        if (!data.format_send) {
+            setError("Selecciona el formato de envío")
+            setIsLoadingSend(false)
+            return
+        }
+        if (!data.format_receipt) {
+            setError("Selecciona el formato de recepción")
+            setIsLoadingSend(false)
+            return
+        }
 
         const send = props.usecase.createManualSolicity(data)
 
@@ -222,17 +288,70 @@ const SolicityManualContainer = (props: Props) => {
         }
         data.establishment = entity.id || 0
         data.address = entity.address || "Sin dirección"
-        console.log(data)
-        if (data.text === "" || data.city === ""
-            || data.first_name === "" || data.last_name === ""
-            || data.email === "" || data.race_identification === ""
-            || data.gender === ""
-            || data.phone === "" || data.format_send === ""
-            || data.format_receipt === "") {
-            setError("Complete todos los campos")
+        if (data.date === "") {
+            setError("Seleccione una fecha")
             setIsLoadingSave(false)
             return
         }
+
+        if (data.text == ""){
+            setError("Ingresa la petición de la solicitud")
+            setIsLoadingSave(false)
+            return
+        }
+        if (data.city === ""){
+            setError("Ingresa la ciudad")
+            setIsLoadingSave(false)
+            return
+        }
+        if (data.first_name === ""){
+            setError("Ingresa el nombre")
+            setIsLoadingSave(false)
+            return
+        }
+
+        if (data.last_name === ""){
+            setError("Ingresa el apellido")
+            setIsLoadingSave(false)
+            return
+        }
+
+        if (data.email === ""){
+            setError("Ingresa el correo")
+            setIsLoadingSave(false)
+            return
+        }
+
+        if (!data.race_identification){
+            setError("Selecciona la raza")
+            setIsLoadingSave(false)
+            return
+        }
+
+        if (!data.gender){
+
+            setError("Selecciona el género")
+            setIsLoadingSave(false)
+            return
+        }
+        if (data.phone === ""){
+            setError("Ingresa el teléfono")
+            setIsLoadingSave(false)
+            return
+        }
+        if (!data.format_send){
+            setError("Selecciona el formato de envío")
+            setIsLoadingSave(false)
+            return
+        }
+        if (!data.format_receipt){
+            setError("Selecciona el formato de recepción")
+            setIsLoadingSave(false)
+            return
+        }
+
+
+        
         props.usecase.createManualSolicity(data).then((res) => {
             setError("")
             setIsChanged(false)
@@ -242,10 +361,8 @@ const SolicityManualContainer = (props: Props) => {
         }).catch((err) => {
             setSuccess("")
             setIsLoadingSave(false)
-            toast(err.message, {
-                type: "error",
-                autoClose: 2000
-            })
+            setError(err.message)
+            
         })
     }
 
@@ -261,15 +378,15 @@ const SolicityManualContainer = (props: Props) => {
                     <ScreenMessage message="Solicitud de Acceso a Información Pública ingresada con éxito"
                         type="Se ha enviado la solicitud con exito"
                     >
-                        <div className="flex items-center gap-16 mt-8 justify-center ">
+                      
 
+                        <button
+                            type='button'
+                            onClick={() => navigate('/admin/establishment/solicity')}
 
-                            <button
-                                onClick={() => navigate('/admin/establishment/solicity')}
-                                className=" text-xl text-white font-medium hover:bg-primary-200 bg-primary-500 w-[300px]  py-2 rounded-lg shadow-xl">
-                                Ver SAIP
-                            </button>
-                        </div>
+                            className='w-full rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80'>
+                            Ver SAIP
+                        </button>
                     </ScreenMessage> :
 
                     <SolicityManualPresenter

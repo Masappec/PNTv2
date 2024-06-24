@@ -24,7 +24,7 @@ const CardConsulta = (props: Props) => {
             {props.icon ? props.icon() : null}
 
             <h2
-                className='mb-4 text-balance text-2xl font-bold group-hover:text-white md:group-hover:hidden'>
+                className='mb-4 text-balance text-gray-700 text-2xl font-bold group-hover:text-white md:group-hover:hidden'>
                 {props.title}
             </h2>
             <p
@@ -34,7 +34,7 @@ const CardConsulta = (props: Props) => {
         </div>
 
         <div
-            className='inline-flex items-center justify-start gap-x-4 text-lg font-semibold text-black group-hover:text-white'>
+            className='inline-flex items-center justify-start gap-x-4 text-lg font-semibold  group-hover:text-white text-gray-700'>
             <span>Más información</span>
 
             <svg

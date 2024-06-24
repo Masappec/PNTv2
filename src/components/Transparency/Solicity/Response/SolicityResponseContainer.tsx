@@ -76,7 +76,7 @@ const SolicityResponseContainer = (props: Props) => {
     const [isSaved, setIsSaved] = useState<boolean>(false)
     const [isAvaliableToInsistency, setIsAvaliableToInsistency] = useState<boolean>(false)
     const [isAvaliableToResponse, setIsAvaliableToResponse] = useState<boolean>(false)
-    const [isAvaliableToComment, setIsAvaliableToComment] = useState<boolean>(false)
+    const [isAvaliableToComment, ] = useState<boolean>(false)
     const [files, SetFiles] = useState<{
         file: File | string | null,
         type: "table" | "file" | "url",
@@ -131,7 +131,6 @@ const SolicityResponseContainer = (props: Props) => {
                     getSelectedEntity(res.establishment)
                     setData(data_)
                     setIsAvaliableToResponse(props.usecase.availableToResponse(_user, res))
-                    setIsAvaliableToComment(props.usecase.availabletoComment(_user, res))
                     getSelectedEntity(res.establishment)
                 })
 
@@ -157,7 +156,6 @@ const SolicityResponseContainer = (props: Props) => {
                     setData(data_)
                     setSolicityToResponse(res)
                     getSelectedEntity(res.establishment)
-                    setIsAvaliableToComment(props.usecase.availabletoComment(_user, res))
 
                     setIsAvaliableToInsistency(props.usecase.availableToInsistency(_user, res))
 
@@ -421,9 +419,16 @@ const SolicityResponseContainer = (props: Props) => {
         e.preventDefault()
         setLoading(true)
         dataResponseSolicity.id_solicitud = solicityToResponse.id
-        dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0)
+        dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0).filter(
+            e => e!=0
+        )
         dataResponseSolicity.attachment = attachs.map((attach) => attach.entity?.id || 0)
         dataResponseSolicity.attachment = []
+        if (dataResponseSolicity.text==''){
+            setError('Ingresa tu consulta/respuesta')
+            setLoading(false);
+            return
+        }
         props.usecase.responseSolicity(dataResponseSolicity).then((_solicity) => {
             setLoading(false)
             setSuccess("Solicitud enviada correctamente")
@@ -463,7 +468,6 @@ const SolicityResponseContainer = (props: Props) => {
             setSolicityToResponse(res)
             setTimeline(Solicity.ordernReponse(res))
             setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
-            setIsAvaliableToComment(props.usecase.availabletoComment(userSession, res))
             console.log(res)
             setIsAvaliableToInsistency(props.usecase.availableToInsistency(userSession, res))
             SetSolicity(res)
@@ -497,7 +501,6 @@ const SolicityResponseContainer = (props: Props) => {
         props.usecase.changeStatus(solicityToResponse.id).then((res) => {
             setTimeline(Solicity.ordernReponse(res))
             setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
-            setIsAvaliableToComment(props.usecase.availabletoComment(userSession, res))
             SetSolicity(res)
 
             setIsAvaliableToInsistency(true)
@@ -525,8 +528,8 @@ const SolicityResponseContainer = (props: Props) => {
             fileUseCase={props.fileUseCase}
             publicusecase={props.publicusecase}
             usecase={props.usecase}
-
-
+            timeline={solicityToResponse.timeline}
+            
         >
             <SolicityResponsePresenter
                 handleSubmit={handleSubmit}

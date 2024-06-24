@@ -21,6 +21,7 @@ const ForgotPasswordContainer = (
         setIsLoading(true)
         usecase.execute(email).then(() => {
             setIsLoading(false)
+            setEmail('')
             setSuccess("Revisa tu correo electrónico para ver si hay un enlace para restablecer tu contraseña. Si no aparece en unos minutos, revisa tu carpeta de correo no deseado.")
         }).catch((error) => {
             setIsLoading(false)

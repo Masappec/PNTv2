@@ -1,6 +1,9 @@
 import { FormEvent } from "react";
 
 import PedagogyAreaEntity from "../../../../domain/entities/PedagodyAreaEntity";
+import { Tabs } from "flowbite-react";
+import { themeTabs } from "../../../Common/Tabs/Theme";
+import Alert from "../../../Common/Alert";
 
 interface PedagogyAreaCreatePresenterProps {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -35,305 +38,363 @@ const PedagogyAreaCreatePresenter = (
 
   return(
     <>
+      <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+        {"Area Pedagógica"}
+
+      </h2>
       <form className='mt-8' onSubmit={props.handleSubmit}>
         <p className='max-w-3xl items-center text-sm text-primary'>
           Gestiona la información de normativas, tutoriales y preguntas frecuentes del área pedagógica
           de la plataforma. Ingresa los datos y presiona "Guardar" para que los cambios se reflejen en
           la plataforma.
         </p>
-        <div className='my-8'>
-          <h4 className='my-4 text-sm font-semibold text-gray-900'>Normativa</h4>
-          <section className='h-min rounded-md bg-gray-100'>
-            
-            <section className='scrollbar w-full overflow-auto'>
-              <table className='w-full divide-y divide-gray-200'>
-                <thead className='sticky top-0 z-10 w-full bg-gray-100 text-center'>
-                  <tr className='text-sm'>
-                    <th scope='col' className='rounded-tl-md'>TÍTULO</th>
-                    <th scope='col'>DESCRIPCIÓN</th>
-                    <th scope='col'>URL</th>
-                    <th scope='col' className='rounded-tr-md'>ACCIONES</th>
-                  </tr>
-                </thead>
-                <tbody className='divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-800'>
-                  {props.data.normatives.map((e, i) => (
-                  <tr>
-                    <td>
-                      <input
-                        className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                        type='text'
-                        placeholder='Ingresa el título de la normativa'
-                        name='data'
-                          onChange={(value) => props.onChangeValue(
-                            "normatives",
-                            "title",
-                            value.target.value,
-                            i
-                          )}
-                        value={e.title}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                        type='text'
-                        placeholder='Ingresa la descripción de la normativa'
-                        name='data'
-                          onChange={(value) => props.onChangeValue(
-                            "normatives",
-                            "description",
-                            value.target.value,
-                            i
-                          )}
-                          value={e.description}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                        type='text'
-                        placeholder='Ingresa la URL donde se encuentra la normativa'
-                        name='data'
-                          onChange={(value) => props.onChangeValue(
-                            "normatives",
-                            "url",
-                            value.target.value,
-                            i
-                          )}
-                          value={e.url}
-                      />
-                    </td>
-                    <td className='text-center'>
-                      <button
-                          onClick={() => props.onDropNormative(i)}
-                        className='mx-auto flex items-center gap-2 rounded-md border border-red-500 px-2 py-1 text-xs font-medium text-red-500 hover:bg-red-500 hover:text-white'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          height='20px'
-                          viewBox='0 -960 960 960'
-                          width='20px'
-                          fill='currentColor'>
-                          <path
-                            d='M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z'
-                          ></path>
-                        </svg>
-                        <span>Eliminar</span>
-                      </button>
-                    </td>
-                  </tr>
-                  ))}
-                </tbody>
-              </table>
-            </section>
-           
-            <footer className='w-full bg-gray-100'>
-              <section className='flex w-full items-end justify-center gap-2 p-2 text-sm'>
-                <button
-                onClick={()=>props.onAddNormative()}
-                  className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    height='24px'
-                    viewBox='0 -960 960 960'
-                    width='24px'
-                    fill='currentColor'
-                  ><path
-                    d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
-                  ></path>
-                  </svg>
-                  <span>Añadir fila</span>
-                </button>
-              </section>
-            </footer>
-          </section>
-        </div>
+        {
+          props.error && (
+            <Alert
+              message={props.error}
+              type='error'
+              onClose={() => props.setError('')}
+            />
+          )
+        }
+        {
+          props.success && (
+            <Alert
+              message={props.success}
+              type='success'
+              onClose={() => props.setSuccess('')}
+            />
+          )
+        }
+        <Tabs aria-label="Datos"
+           style="underline"
+          theme={themeTabs}
+          className='mb-4 mt-8 border-b border-gray-300'
+        >
+          <Tabs.Item title="¿Qué información voy a encontrar?"
 
-        <div className='my-8'>
-          <h4 className='my-4 text-sm font-semibold text-gray-900'>Vídeo Tutoriales</h4>
-          <section className='h-min rounded-md bg-gray-100'>
-            <section className='scrollbar w-full overflow-auto'>
-              <table className='w-full divide-y divide-gray-200'>
-                <thead className='sticky top-0 z-10 w-full bg-gray-100 text-center'>
-                  <tr className='text-sm'>
-                    <th scope='col' className='rounded-tl-md'>TÍTULO</th>
-                    <th scope='col'>DESCRIPCIÓN</th>
-                    <th scope='col'>URL</th>
-                    <th scope='col' className='rounded-tr-md'>ACCIONES</th>
-                  </tr>
-                </thead>
-                <tbody className='divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-800'>
-                  {props.data.tutorials.map((e, i) => (
-                  <tr>
-                    <td>
-                      <input
-                        className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                        type='text'
-                        placeholder='Ingresar Titulo'
-                        name='data'
-                        required
-                          onChange={(value) => props.onChangeValue(
-                            "tutorials",
-                            "title",
-                            value.target.value,
-                            i
-                          )}
-                          value={e.title}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                        type='text'
-                        placeholder='Ingresar unidad'
-                        name='data'
-                        required
-                          onChange={(value) => props.onChangeValue(
-                            "tutorials",
-                            "description",
-                            value.target.value,
-                            i
-                          )}
-                          value={e.description}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                        type='text'
-                        placeholder='Ingresar nivel de los procesos de la estructura'
-                        name='data'
-                        required
-                          onChange={(value) => props.onChangeValue(
-                            "tutorials",
-                            "url",
-                            value.target.value,
-                            i
-                          )}
-                          value={e.url}
-                      />
-                    </td>
-                    <td className='text-center'>
-                      <button
-                        onClick={()=>props.onDropTutorial(i)}
-                        className='mx-auto flex items-center gap-2 rounded-md border border-red-500 px-2 py-1 text-xs font-medium text-red-500 hover:bg-red-500 hover:text-white'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        height='20px'
-                        viewBox='0 -960 960 960'
-                        width='20px'
-                        fill='currentColor'>
-                        <path
-                          d='M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z'
-                        ></path>
-                      </svg>
-                      <span>Eliminar</span>
-                    </button>
-                  </td>
-                </tr>))}
-              </tbody>
-            </table>
-          </section>
-          <footer className='w-full bg-gray-100'>
-            <section className='flex w-full items-end justify-center gap-2 p-2 text-sm'>
-              <button
-              onClick={()=>props.onAddTutorial()}
-                className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                height='24px'
-                viewBox='0 -960 960 960'
-                width='24px'
-                fill='currentColor'
-              ><path
-                d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
-              ></path>
-              </svg>
-              <span>Añadir fila</span>
-            </button>
-          </section>
-        </footer>
-      </section>
-    </div >
+          >
 
-      <div className='my-8'>
-        <h4 className='my-4 text-sm font-semibold text-gray-900'>Preguntas Frecuentes</h4>
-        <section className='h-min rounded-md bg-gray-100'>
-          <section className='scrollbar w-full overflow-auto'>
-            <table className='w-full divide-y divide-gray-200'>
-              <thead className='sticky top-0 z-10 w-full bg-gray-100 text-center'>
-                <tr className='text-sm'>
-                  <th scope='col' className='rounded-tl-md'>PREGUNTA</th>
-                  <th scope='col'>RESPUESTA</th>
-                  <th scope='col' className='rounded-tr-md'>ACCIONES</th>
-                </tr>
-              </thead>
-              <tbody className='divide-y divide-gray-200 bg-white'>
-                  {props.data.faq.map((e, i) => (<tr>
-                  <td>
-                    <input
-                      className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                      type='text'
-                      placeholder='Ingresa la pregunta'
-                      name='data'
-                      value={e.question}
-                        onChange={(e) => props.onChangeValue("faq", "question", e.target.value, i)}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                      type='text'
-                      placeholder='Ingresa la respuesta'
-                      name='data'
-                        value={e.answer}
 
-                        onChange={(e) => props.onChangeValue("faq", "answer", e.target.value, i)}
+            <div className='my-8'>
+              <h4 className='my-4 text-sm font-semibold text-gray-900'>Preguntas Frecuentes</h4>
+              <section className='h-min rounded-md bg-gray-100'>
+                <section className='scrollbar w-full overflow-auto'>
+                  <table className='w-full divide-y divide-gray-200'>
+                    <thead className='sticky top-0 z-10 w-full bg-gray-100 text-center'>
+                      <tr className='text-sm'>
+                        <th scope='col' className='rounded-tl-md'>PREGUNTA</th>
+                        <th scope='col'>RESPUESTA</th>
+                        <th scope='col' className='rounded-tr-md'>ACCIONES</th>
+                      </tr>
+                    </thead>
+                    <tbody className='divide-y divide-gray-200 bg-white'>
+                      {props.data.faq.map((e, i) => (<tr>
+                        <td>
+                          <input
+                            className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                            type='text'
+                            placeholder='Ingresa la pregunta'
+                            name='data'
+                            value={e.question}
+                            onChange={(e) => props.onChangeValue("faq", "question", e.target.value, i)}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                            type='text'
+                            placeholder='Ingresa la respuesta'
+                            name='data'
+                            value={e.answer}
 
-                    />
-                  </td>
+                            onChange={(e) => props.onChangeValue("faq", "answer", e.target.value, i)}
 
-                  <td className='text-center'>
+                          />
+                        </td>
+
+                        <td className='text-center'>
+                          <button
+                            type="button"
+
+                            onClick={() => props.onDropQuestion(i)}
+                            className='mx-auto flex items-center gap-2 rounded-md border border-red-500 px-2 py-1 text-xs font-medium text-red-500 hover:bg-red-500 hover:text-white'>
+                            <svg
+                              xmlns='http://www.w3.org/2000/svg'
+                              height='20px'
+                              viewBox='0 -960 960 960'
+                              width='20px'
+                              fill='currentColor'>
+                              <path
+                                d='M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z'
+                              ></path>
+                            </svg>
+                            <span>Eliminar</span>
+                          </button>
+                        </td>
+                      </tr>))}
+                    </tbody>
+                  </table>
+                </section>
+                <footer className='w-full bg-gray-100'>
+                  <section className='flex w-full items-end justify-center gap-2 p-2 text-sm'>
                     <button
-                    onClick={()=>props.onDropQuestion(i)}
-                      className='mx-auto flex items-center gap-2 rounded-md border border-red-500 px-2 py-1 text-xs font-medium text-red-500 hover:bg-red-500 hover:text-white'>
+                    type="button"
+                      onClick={() => props.onAddQuestion()}
+                      className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
-                        height='20px'
+                        height='24px'
                         viewBox='0 -960 960 960'
-                        width='20px'
-                        fill='currentColor'>
-                        <path
-                          d='M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z'
-                        ></path>
+                        width='24px'
+                        fill='currentColor'
+                      ><path
+                        d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
+                      ></path>
                       </svg>
-                      <span>Eliminar</span>
+                      <span>Añadir fila</span>
                     </button>
-                  </td>
-                </tr>))}
-              </tbody>
-            </table>
-          </section>
-          <footer className='w-full bg-gray-100'>
-            <section className='flex w-full items-end justify-center gap-2 p-2 text-sm'>
-              <button
-              onClick={()=>props.onAddQuestion()}
-                className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                height='24px'
-                viewBox='0 -960 960 960'
-                width='24px'
-                fill='currentColor'
-              ><path
-                d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
-              ></path>
-              </svg>
-              <span>Añadir fila</span>
-            </button>
-        </section>
-      </footer>
-      </section >
-    </div >
+                  </section>
+                </footer>
+              </section >
+            </div >
+          </Tabs.Item>
+          <Tabs.Item title="¿Qué información voy a encontrar?"
+
+          >
+
+            <div className='my-8'>
+              <h4 className='my-4 text-sm font-semibold text-gray-900'>Vídeo Tutoriales</h4>
+              <section className='h-min rounded-md bg-gray-100'>
+                <section className='scrollbar w-full overflow-auto'>
+                  <table className='w-full divide-y divide-gray-200'>
+                    <thead className='sticky top-0 z-10 w-full bg-gray-100 text-center'>
+                      <tr className='text-sm'>
+                        <th scope='col' className='rounded-tl-md'>TÍTULO</th>
+                        <th scope='col'>DESCRIPCIÓN</th>
+                        <th scope='col'>URL</th>
+                        <th scope='col' className='rounded-tr-md'>ACCIONES</th>
+                      </tr>
+                    </thead>
+                    <tbody className='divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-800'>
+                      {props.data.tutorials.map((e, i) => (
+                        <tr>
+                          <td>
+                            <input
+                              className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                              type='text'
+                              placeholder='Ingresar Titulo'
+                              name='data'
+                              required
+                              onChange={(value) => props.onChangeValue(
+                                "tutorials",
+                                "title",
+                                value.target.value,
+                                i
+                              )}
+                              value={e.title}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                              type='text'
+                              placeholder='Ingresar unidad'
+                              name='data'
+                              required
+                              onChange={(value) => props.onChangeValue(
+                                "tutorials",
+                                "description",
+                                value.target.value,
+                                i
+                              )}
+                              value={e.description}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                              type='text'
+                              placeholder='Ingresar nivel de los procesos de la estructura'
+                              name='data'
+                              required
+                              onChange={(value) => props.onChangeValue(
+                                "tutorials",
+                                "url",
+                                value.target.value,
+                                i
+                              )}
+                              value={e.url}
+                            />
+                          </td>
+                          <td className='text-center'>
+                            <button
+                              type="button"
+
+                              onClick={() => props.onDropTutorial(i)}
+                              className='mx-auto flex items-center gap-2 rounded-md border border-red-500 px-2 py-1 text-xs font-medium text-red-500 hover:bg-red-500 hover:text-white'>
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                height='20px'
+                                viewBox='0 -960 960 960'
+                                width='20px'
+                                fill='currentColor'>
+                                <path
+                                  d='M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z'
+                                ></path>
+                              </svg>
+                              <span>Eliminar</span>
+                            </button>
+                          </td>
+                        </tr>))}
+                    </tbody>
+                  </table>
+                </section>
+                <footer className='w-full bg-gray-100'>
+                  <section className='flex w-full items-end justify-center gap-2 p-2 text-sm'>
+                    <button
+                      type="button"
+
+                      onClick={() => props.onAddTutorial()}
+                      className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        height='24px'
+                        viewBox='0 -960 960 960'
+                        width='24px'
+                        fill='currentColor'
+                      ><path
+                        d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
+                      ></path>
+                      </svg>
+                      <span>Añadir fila</span>
+                    </button>
+                  </section>
+                </footer>
+              </section>
+            </div >
+
+          </Tabs.Item>
+          <Tabs.Item title="¿Deben las entidades responder mis solicitudes?"
+
+          >
+            <div className='my-8'>
+              <h4 className='my-4 text-sm font-semibold text-gray-900'>Normativa</h4>
+              <section className='h-min rounded-md bg-gray-100'>
+
+                <section className='scrollbar w-full overflow-auto'>
+                  <table className='w-full divide-y divide-gray-200'>
+                    <thead className='sticky top-0 z-10 w-full bg-gray-100 text-center'>
+                      <tr className='text-sm'>
+                        <th scope='col' className='rounded-tl-md'>TÍTULO</th>
+                        <th scope='col'>DESCRIPCIÓN</th>
+                        <th scope='col'>URL</th>
+                        <th scope='col' className='rounded-tr-md'>ACCIONES</th>
+                      </tr>
+                    </thead>
+                    <tbody className='divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-800'>
+                      {props.data.normatives.map((e, i) => (
+                        <tr>
+                          <td>
+                            <input
+                              className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                              type='text'
+                              placeholder='Ingresa el título de la normativa'
+                              name='data'
+                              onChange={(value) => props.onChangeValue(
+                                "normatives",
+                                "title",
+                                value.target.value,
+                                i
+                              )}
+                              value={e.title}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                              type='text'
+                              placeholder='Ingresa la descripción de la normativa'
+                              name='data'
+                              onChange={(value) => props.onChangeValue(
+                                "normatives",
+                                "description",
+                                value.target.value,
+                                i
+                              )}
+                              value={e.description}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                              type='text'
+                              placeholder='Ingresa la URL donde se encuentra la normativa'
+                              name='data'
+                              onChange={(value) => props.onChangeValue(
+                                "normatives",
+                                "url",
+                                value.target.value,
+                                i
+                              )}
+                              value={e.url}
+                            />
+                          </td>
+                          <td className='text-center'>
+                            <button
+                              type="button"
+
+                              onClick={() => props.onDropNormative(i)}
+                              className='mx-auto flex items-center gap-2 rounded-md border border-red-500 px-2 py-1 text-xs font-medium text-red-500 hover:bg-red-500 hover:text-white'>
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                height='20px'
+                                viewBox='0 -960 960 960'
+                                width='20px'
+                                fill='currentColor'>
+                                <path
+                                  d='M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z'
+                                ></path>
+                              </svg>
+                              <span>Eliminar</span>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </section>
+
+                <footer className='w-full bg-gray-100'>
+                  <section className='flex w-full items-end justify-center gap-2 p-2 text-sm'>
+                    <button
+                      type="button"
+
+                      onClick={() => props.onAddNormative()}
+                      className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        height='24px'
+                        viewBox='0 -960 960 960'
+                        width='24px'
+                        fill='currentColor'
+                      ><path
+                        d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
+                      ></path>
+                      </svg>
+                      <span>Añadir fila</span>
+                    </button>
+                  </section>
+                </footer>
+              </section>
+            </div>
+            </Tabs.Item>
+
+          </Tabs>
+        
+
+        
+
 
   <div
     className='flex w-full flex-col flex-wrap items-end justify-end gap-4 border-t border-gray-300 pt-8'>

@@ -1,17 +1,32 @@
 import { useEffect, useState } from "react"
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import PublicEstablishmentPresenter from "./PublicEstablishmentPresenter"
 import { setEstablishments as saveEstablishment } from "../../../../infrastructure/Slice/EstablishmentSlice"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../../infrastructure/Store"
+import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
+import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
 
 interface Props {
-    usecase: PublicUseCase
+    usecase: PublicUseCase,
+    usecaseEst:EstablishmentUseCase
 }
 const PublicEstablishmentContainer = (props: Props) => {
+
+
+    //get query param tipo
+    
+    const [searchParams, ] = useSearchParams();
+
+    const params:[string,string][] = [];
+
+    for (const entry of searchParams.entries()) {
+        params.push(entry);
+    }
+
 
     const [load, setLoad] = useState(true)
     const [entities, setEntities] = useState<{
@@ -25,6 +40,12 @@ const PublicEstablishmentContainer = (props: Props) => {
     const [selectedLetter, setSelectedLetter] = useState<string>("A")
     const [error, setError] = useState("")
     const _entities = useSelector((state: RootState) => state.establishment.establishments)
+    const [typeInstitution, setTypeInstitution] = useState<OptionsSelectCreate>({
+        functions: [],
+        institutions: [],
+        organizations: []
+    })
+    const [selectedType, setSelectedType] = useState<string>("")
 
     const [total, setTotal] = useState(0)
 
@@ -40,6 +61,25 @@ const PublicEstablishmentContainer = (props: Props) => {
         abecedario.push(String.fromCharCode(i));
     }
 
+
+    useEffect(()=>{
+        if(params.length>0){
+            const search = params.find(e=>e[0] == 'tipo')
+            const valor = search ? search[1]:''
+            const data = originalEntities.filter((entity) => entity.data.some((item) => 
+                item.function_organization?.toLowerCase() === valor.toLowerCase()))
+            setEntities(data)
+        }
+
+    }, [_entities])
+
+    useEffect(() => {
+        props.usecaseEst.getOptions().then((data) => {
+            setTypeInstitution(data)
+        }).catch((error) => {
+            setError(error.message)
+        })
+    }, [])
 
     useEffect(() => {
         if (_entities.length > 0) {
@@ -112,6 +152,17 @@ const PublicEstablishmentContainer = (props: Props) => {
     }
 
 
+    const onSelectType = (type: string) => {
+        setSelectedType(type)
+        if (type === "") {
+            setEntities(originalEntities)
+            return;
+        }
+        const data = originalEntities.filter((entity) => entity.data.some((item) => item.function_organization === type))
+        setEntities(data)
+
+    }
+
     return (
         <PublicEstablishmentPresenter
             error={error}
@@ -122,7 +173,9 @@ const PublicEstablishmentContainer = (props: Props) => {
             onItemClicked={onItemClicked}
             letters={abecedario}
             loading={load}
-
+            options={typeInstitution}
+            onSelectType={onSelectType}
+            selectedType={selectedType}
 
         />
     )

@@ -35,7 +35,7 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
         <LogoPortal className='mx-auto mb-4 max-w-60' />
 
         <p className='mx-auto w-full text-balance text-center text-lg text-slate-600'>
-          Ingrese sus credenciales para acceder al portal
+          Ingresa tus credenciales para acceder al portal
         </p>
         {props.error && (
               <Alert
@@ -54,9 +54,9 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
             <input
               className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
               type='text'
-              placeholder='Ingrese su nombre de usuario'
+              placeholder='Escribe tu nombre de usuario'
               name='username'
-              required
+              
               value={props.email}
               onChange={(e) => props.setEmail(e.target.value)}
             />
@@ -72,9 +72,9 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
               <input
                 className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pr-10 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
                 type={props.showPassword ? "text" : 'password'}
-                placeholder='Ingrese su contraseña'
+                placeholder='Ingresa tu contraseña'
                 name='confirm_password'
-                required
+                
                 value={
                   props.password
                 }

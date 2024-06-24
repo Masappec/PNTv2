@@ -8,8 +8,8 @@ import moment from 'moment';
 
 class SolicityUseCase {
   constructor(private readonly solicityService: SolicityService) { }
-  async getSolicities(search: string, page: number, limit?: number) {
-    return await this.solicityService.getSolicities(search, page, limit);
+  async getSolicities(search: string, page: number, limit?: number,sort?:string[]) {
+    return await this.solicityService.getSolicities(search, page, limit,sort);
   }
   async getEstablishmentSolicity(search: string, page: number, limit?: number, sort?: string[]) {
     return await this.solicityService.getEstablishmentSolicity(search, page, limit, sort);

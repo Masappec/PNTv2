@@ -3,53 +3,47 @@
 
 const AboutPresenter = () => {
     return (
-        <div className="flex flex-col w-full  bg-white pr-10">
-            <div className="border-l-[1px]  border-gray-300 ml-8 md:ml-14 p-10">
+        <section className='section-container my-16 mb-20'>
+            <h1 className='mb-8 text-balance text-2xl font-normal leading-tight md:text-[40px]'>Acerca de</h1>
 
-            <h1 className="text-3xl font-bold text-center ">COORDINACIÓN GENERAL DE TRANSPARENCIA Y ACCESO A LA INFORMACIÓN PÚBLICA
-            </h1>
-            <div className="space-y-20 mt-5 m-20 text-justify">
+            <article className='space-y-4 text-lg text-gray-800'>
                 <p>
-                    Dirección Nacional de Promoción y Monitoreo de la Transparencia Activa
-                    <br />
-                    Correo electrónico:
-                    <a href="mailto:lotaip@dpe.gob.ec">
-                        lotaip@dpe.gob.ec
+                    El Portal Nacional de Transparencia surge como respuesta para fortalecer el ejercicio del
+                    derecho a la transparencia y el acceso a la información pública consagrados en la
+                    <span className='font-bold text-primary'
+                    >Ley Orgánica de Transparencia y Acceso a la Información Pública</span>.
+                </p>
+
+                <p>
+                    Esta herramienta es el resultado de un proceso de cocreación en el que intervino la
+                    <span className='font-bold text-primary'>Defensoría del Pueblo</span> como órgano garante, servidores
+                    responsables de los
+                    <span className='font-bold text-primary'>Comités de Transparencia</span> de distintas entidades,
+                    representantes de organizaciones de
+                    <span className='font-bold text-primary'>sociedad civil</span> y <span
+                        className='font-bold text-primary'>academia</span
+                    >, incorporando innovación a la forma tradicional que por más de 15 años se ha
+                    implementado desde las distintas instituciones públicas.
+                </p>
+
+                <div className='border-l-4 border-primary bg-blue-50 p-4'>
+                    <p className='text-primary'>
+                        Esta herramienta es el resultado de un proceso de cocreación con la Defensoría del
+                        Pueblo, servidores responsables de los Comités de Transparencia de distintas entidades,
+                        representantes de organizaciones de sociedad civil y academia.
+                    </p>
+                </div>
+
+                <p>
+                    Cualquier consulta sobre esta herramienta puede dirigirse a
+                    <a
+                        href='mailto:email@dpe.gob.ec'
+                        className='font-bold text-primary underline underline-offset-2'>
+                        email@dpe.gob.ec
                     </a>
-
                 </p>
-                <br />
-                <p>
-                    Dirección Nacional de Promoción y Garantía del Acceso a la Información Pública
-                    <br />
-                    Correo electrónico: accesoinformacion@dpe.gob.ec
-                </p>
-                <br />
-                <p>
-
-                    Directorio telefónico Defensoría del Pueblo de Ecuador:
-                    <br />
-                    Enlace: https://directorio.dpe.gob.ec/dpe_directorio.php
-                </p>
-                <br />
-                <p>
-                    Direcciones y contactos de las delegaciones provinciales a nivel nacional
-                    <br />
-                    https://www.google.com/maps/d/viewer?mid=15m6NBCDCjzdtjwKPR09tWvBw0QdBLPww&femb=1&ll=-1.1200483961917918%2C-78.55296010905656&z=8
-                </p>
-                <br />
-                <p>
-                    Directorio de las delegadas y delegados provinciales de la Defensoría del Pueblo en territorio
-                    <br />
-                    https://www.dpe.gob.ec/directorio-representantes-provinciales/
-                </p>
-                <br />
-                Números telefónicos a nivel nacional (PBX):
-                (02) 3829670 – (02) 2900834 – (02) 2235439 – (02) 2521082 – (02) 2553832 – (02) 2546843”
-            </div>
-            </div>
-
-        </div>
+            </article>
+        </section>
     )
 }
 

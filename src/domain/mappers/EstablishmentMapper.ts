@@ -18,7 +18,10 @@ class EstablishmentMapper {
             logo: data.logo,
             is_active: data.is_active,
             slug: data.slug,
-            identification: data.identification
+            identification: data.identification,
+            type_institution: data.type_institution,
+            type_organization: data.type_organization,
+            function_organization: data.function_organization
 
         }
     }

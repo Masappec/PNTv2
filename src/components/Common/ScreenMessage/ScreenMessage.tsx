@@ -1,4 +1,3 @@
-import { FaCircleCheck } from "react-icons/fa6";
 
 
 interface Props {
@@ -8,16 +7,21 @@ interface Props {
 }
 const ScreenMessage = ({ message, type, children }: Props) => {
     return (
-        <div className="container w-auto m-24 h-[650px] px-20 border border-gray-100 shadow-2xl  ">
-            <div className="flex flex-col items-center justify-center  ">
-                < FaCircleCheck size={250} className="text-primary-500 mt-24 " />
-                <div className="text-3xl text-center text-gray-600 mt-16">{message}</div>
-                <div className="text-3xl text-center text-gray-600 mt-4 ">{type}</div>
+        <section className='mt-8 flex h-full flex-col items-center justify-center'>
+            <div
+                className='text-zin mx-auto w-full max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
+                <h2 className='mb-4 text-2xl font-bold text-gray-700'>{type}</h2>
+
+                <p className='mx-auto mb-4 w-full text-center text-lg text-slate-600'>
+                    {message}
+                </p>
+                {
+                    children
+                }
+
+                
             </div>
-
-            {children}
-
-        </div>
+        </section>
     )
 }
 

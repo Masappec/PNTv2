@@ -98,8 +98,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
     }
 
     const onSearch = (search: string) => {
-        console.log(search)
-        props.useCase.getEstablishmentSolicity(search, currentPage, limit).then(response => {
+        props.useCase.getEstablishmentSolicity(search, currentPage, limit, columnsSort).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)

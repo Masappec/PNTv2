@@ -74,7 +74,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                           props.setData(field.name, e.target.value)
                         }
                         name={field.name}
-                        required
+                        
                       />
                       <button
                         type='button'
@@ -110,6 +110,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                       </label>
 
                       <Select
+                        className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
                         value={
                           props.data[field.name as keyof RegisterDto] as string
                         }
@@ -129,7 +130,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                             };
                           }) as { value: string; label: string }[]),
                         ]}
-                        required
+                        
                       />
 
                     </div>

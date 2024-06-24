@@ -163,8 +163,7 @@ const LandingPresenter = (props: Props) => {
         loadOptions={props.loadOptions}
         onSelect={props.onSelect} />
         <section
-          className='section-container mt-32 grid min-h-64 w-full grid-cols-[repeat(auto-fit,minmax(18rem,_1fr))] 
-          place-items-center'>
+          className='section-container grid min-h-64 w-full grid-cols-[repeat(auto-fit,minmax(18rem,_1fr))] place-items-center'>
 
         <CardQuestion
         
@@ -252,7 +251,7 @@ const LandingPresenter = (props: Props) => {
             />
           </a>
 
-          <div className='flex max-w-xs flex-col items-end justify-between'>
+            <div className='flex  max-w-[332px] flex-col items-end justify-between'>
             <p className=''>
               Este <strong>"Portal Nacional de Transparencia"</strong> es uno de los compromisos del Segundo
               Plan de {" "}
@@ -266,7 +265,7 @@ const LandingPresenter = (props: Props) => {
               2022-2024.
             </p>
             <a
-              className='text-primary hover:underline hover:underline-offset-2'
+                className='mr-1.5 mt-6 block text-primary hover:underline hover:underline-offset-2'
               href='https://www.gobiernoabierto.ec/'
               target='_blank'
               rel='noopener noreferrer'>

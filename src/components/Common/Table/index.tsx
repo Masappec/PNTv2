@@ -68,8 +68,10 @@ function Table<T>({ ...props }: TableProps<T>) {
                                     <span className="flex text-center justify-center">
                                         {column.title}
                                         {
-                                            props.sorteable ?
-                                                <a href='#'>
+                                            props.sorteable && column.key ?
+                                                <a href='#'
+                                                onClick={() => props.onSort && props.onSort(column.key || '')}
+                                                >
                                                     <svg
                                                         className='size-3'
                                                         aria-hidden='true'

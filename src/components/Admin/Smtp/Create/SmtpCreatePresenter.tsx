@@ -31,16 +31,17 @@ const SmtpCreatePresenter = (props: Props) => {
                cambiar estos valores puede afectar el envío de correos electrónicos.
            </p>
            <section className='flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center'>
-               {
-                   props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
-               }
-               {
-                   props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
-               }
-
+               
                <form
                    onSubmit={props.handleSubmit}
                    className='mx-auto w-full max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
+                   {
+                       props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
+                   }
+                   {
+                       props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
+                   }
+
                    <section className='grid grid-cols-1 items-start justify-center gap-4 text-start'>
                        <div>
                            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
@@ -108,7 +109,7 @@ const SmtpCreatePresenter = (props: Props) => {
                                type='checkbox'
                                id='secure'
                                className='h-5 w-5 rounded accent-primary'
-                               required
+                               
                                onChange={(e) => props.setData("secure", e.target.checked)}
                                checked={props.data.secure}
                            />

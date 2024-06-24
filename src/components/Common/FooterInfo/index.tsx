@@ -12,12 +12,11 @@ const FooterInfo = () => {
       <h3 className='text-balance text-xl font-semibold text-white'>Listado de Entidades</h3>
 
       <nav>
-        <ul
-          className='mt-8 flex flex-col flex-wrap justify-start gap-x-16 gap-y-4 md:flex-row md:items-center'>
+        <ul className='mt-8 flex flex-col flex-wrap justify-start gap-x-8 gap-y-4 md:flex-row md:items-center'>
           <li>
             <a
               className='text-gray-300 hover:underline hover:underline-offset-2'
-              href='https://www.gobiernoabierto.ec/'
+                  href='/entidades?tipo=Función Ejecutiva'
               target='_blank'
               rel='noopener noreferrer'>
               Función Ejecutiva
@@ -26,8 +25,9 @@ const FooterInfo = () => {
           <li>
             <a
               className='text-gray-300 hover:underline hover:underline-offset-2'
-              href='https://www.gobiernoabierto.ec/'
               target='_blank'
+                  href='/entidades?tipo=Función Legislativa'
+
               rel='noopener noreferrer'>
               Función Legislativa
             </a>
@@ -35,8 +35,9 @@ const FooterInfo = () => {
           <li>
             <a
               className='text-gray-300 hover:underline hover:underline-offset-2'
-              href='https://www.gobiernoabierto.ec/'
               target='_blank'
+                  href='/entidades?tipo=Función Judicial'
+
               rel='noopener noreferrer'>
               Función Judicial
             </a>
@@ -44,8 +45,9 @@ const FooterInfo = () => {
           <li>
             <a
               className='text-gray-300 hover:underline hover:underline-offset-2'
-              href='https://www.gobiernoabierto.ec/'
               target='_blank'
+                  href='/entidades?tipo=Función de Transparencia'
+
               rel='noopener noreferrer'>
               Función de Transparencia
             </a>
@@ -53,12 +55,21 @@ const FooterInfo = () => {
           <li>
             <a
               className='text-gray-300 hover:underline hover:underline-offset-2'
-              href='https://www.gobiernoabierto.ec/'
+                  href='/entidades?tipo=Gobiernos Autónomos Descentralizados'
               target='_blank'
               rel='noopener noreferrer'>
               Gobiernos Autónomos Descentralizados
             </a>
           </li>
+              <li>
+                <a
+                  className='text-gray-300 hover:underline hover:underline-offset-2'
+                  href='/entidades?tipo=Empresas Públicas'
+                  target='_blank'
+                  rel='noopener noreferrer'>
+                  Empresas Públicas
+                </a>
+              </li>
         </ul>
       </nav>
     </div>
@@ -69,7 +80,9 @@ const FooterInfo = () => {
         <span>Síguenos</span>
 
         <div className='flex items-center justify-center gap-x-4'>
-          <a href='#' className='text-gray-200 hover:text-gray-400'>
+              <a href='https://www.facebook.com/DefensoriaEC'
+              target="_blank"
+              className='text-gray-200 hover:text-gray-400'>
             <svg
               stroke='currentColor'
               fill='currentColor'
@@ -84,7 +97,10 @@ const FooterInfo = () => {
               ></path>
             </svg>
           </a>
-          <a href='#' className='text-gray-200 hover:text-gray-400'>
+              <a href='https://x.com/DEFENSORIAEC' 
+              
+              target="_blank"
+              className='text-gray-200 hover:text-gray-400'>
             <svg
               stroke='currentColor'
               fill='currentColor'

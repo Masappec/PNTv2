@@ -21,7 +21,7 @@ const CardQuestion = (props: Props) => {
 
     return (<article
         onClick={props.onFollow}
-        className={`group flex h-full w-full cursor-pointer flex-col justify-between ${props.backgroundColor} px-8 py-8 text-white hover:text-gray-800`}>
+        className={`group flex h-full w-full cursor-pointer flex-col justify-between ${props.backgroundColor} px-8 py-8 text-white hover:text-gray-700`}>
         <div className='grid grid-rows-[92px,100px,max-content]'>
 
 

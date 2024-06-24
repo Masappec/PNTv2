@@ -11,7 +11,7 @@ const Header = () => {
       <div className='section-container flex flex-wrap items-center justify-between py-2'>
         {/* Logo */}
         <a href='/' className='flex cursor-pointer select-none items-center'>
-          <span className='sr-only'>logo</span>
+          <span className='sr-only'>Logo de la Defensoría del Pueblo</span>
           <LogoDefensoria className='max-w-32' />
         </a>
         {/* Fin Logo */}
@@ -19,7 +19,7 @@ const Header = () => {
           id='header-menu-btn'
           data-collapse-toggle='navbar-sticky'
           type='button'
-          className='inline-flex h-10 w-10 items-center justify-center rounded-sm bg-gray-100 p-2 text-sm focus:outline-none focus:ring-1 lg:hidden'
+          className='inline-flex h-11 w-11 items-center justify-center rounded-md bg-gray-100 p-2 text-sm text-gray-700 focus:bg-primary focus:text-white focus:outline-none focus:ring-1 lg:hidden'
           aria-controls='navbar-sticky'
           aria-expanded='false'
         ><span className='sr-only'>abrir menú de navegación</span><svg
@@ -36,9 +36,9 @@ const Header = () => {
         </button>
         {/* Navigation Links */}
         <nav
-          className='hidden w-full items-center justify-between md:order-1 lg:flex lg:w-auto'
+          className='hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto'
           id='navbar-sticky'>
-          <ul className='flex flex-col gap-x-8 p-4 pt-8 font-medium md:mt-0 md:flex-row md:p-0'>
+          <ul className='flex flex-col gap-x-8 gap-y-4 p-4 pt-8 font-medium md:mt-0 lg:flex-row lg:p-0'>
             {/* Navigation Link */}
             <li className='m-0 w-max'>
               <Link
@@ -86,15 +86,15 @@ const Header = () => {
               <Link
                 type='button'
                 to='/ingreso'
-                className=' hover:bg-primary-800 rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                className='hover:bg-primary-800 mt-4 rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400 lg:mt-0'>
                 {/* No usar el <a> y <button> solo se lo hizo para facilitar el acceso */}
                 <span >Ingresar al Portal</span>
               </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </header>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
   )
 };
 

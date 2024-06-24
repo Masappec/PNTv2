@@ -84,7 +84,7 @@ const Hero = (props: Props) => {
   );*/
 
   return (
-  <section className='section-container relative flex flex-wrap justify-between gap-8 pt-16'>
+    <section className='section-container relative flex flex-wrap justify-between gap-8 py-24'>
     <LogoPortal className='max-w-64' />
 
     <article className='max-w-3xl'>
@@ -99,7 +99,7 @@ const Hero = (props: Props) => {
       onSearch={props.onSearch}
       />
 
-      <p className='mt-2 text-slate-600'>
+        <p className='mt-4 text-slate-600'>
         {props.countEntities} total de entidades públicas y 5004 total de archivos publicados.
       </p>
     </article>

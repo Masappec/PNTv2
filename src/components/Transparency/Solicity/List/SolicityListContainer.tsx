@@ -24,7 +24,8 @@ const SolicityListContainer = (props: Props) => {
     const [to, setTo] = useState<number>(0)
     const [total, setTotal] = useState<number>(0)
     const [limitOptions,] = useState<number[]>([5, 10, 20, 40, 50])
-
+    const [columnsSort, setColumnsSort] = useState<string[]>([])
+    const [limit, setLimit] = useState<number>(5)
     useEffect(() => {
         props.useCase.getSolicities("", currentPage).then(response => {
             SetSolicitudes(response.results)
@@ -105,6 +106,7 @@ const SolicityListContainer = (props: Props) => {
     }
 
     const onChangeLimit = (limit: number) => {
+        setLimit(limit)
         props.useCase.getSolicities("", currentPage, limit).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
@@ -117,14 +119,37 @@ const SolicityListContainer = (props: Props) => {
         })
     }
 
+    const onChangesSort = (sort: string) => {
+        let copySort = columnsSort
+        console.log(columnsSort)
+        if (columnsSort.includes(sort)) {
+            setColumnsSort(columnsSort.filter(item => item !== sort))
+            copySort = copySort.filter(item => item !== sort)
+
+        } else {
+            setColumnsSort([...columnsSort, sort])
+            copySort = [...copySort, sort]
+        }
+
+        props.useCase.getSolicities("", currentPage, limit, copySort).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
     return (
         <SolicityListPresenter
-
+            columnsSort={columnsSort}
+            onChangesSort={onChangesSort}
             error={error}
             data={solicitudes}
             limits={limitOptions}
             onChangesLimit={onChangeLimit}
-
             onAdd={handleAdd}
             onCancelDelete={handleCancelDelete}
             onConfirmDelete={() => { }}
@@ -138,7 +163,6 @@ const SolicityListContainer = (props: Props) => {
             onSearch={onSearch}
             page={currentPage}
             search=""
-
             setPage={setPage}
             setSeach={() => { }}
             setVisibleModal={() => { }}
