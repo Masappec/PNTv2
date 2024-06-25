@@ -1,4 +1,4 @@
-import { FaClock } from "react-icons/fa"
+
 import Table from "../../../Common/Table/index"
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
@@ -87,7 +87,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
                         ></path>
                         </svg>
-                        <span>Nueva solicitud</span>
+                        <span>Ingresar solicitud  <br />recibida por otros medios</span>
                     </div>
                 </button>
             </section>
@@ -132,7 +132,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             )
                         },
                         {
-                            title: "Fecha de recepción",
+                            title: "Fecha de envío",
                             key: "date",
                             render: (solicity) => (
                                 <p>{
@@ -154,6 +154,8 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         {
                             title: "Estado",
                             key: "status",
+                            classes: 'flex w-full justify-center',
+
                             render: (solicity) => {
                                 const status = StatusSolicity[solicity.status as keyof typeof StatusSolicity]
                                 return (
@@ -168,70 +170,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                                 )
                             }
                         },
-                        {
-                            title: 'Fecha respuesta SAIP',
-                            key: 'date',
-                            render: (solicity) => {
-
-                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.RESPONSED.key)
-                                return <p>{
-                                    element ? new Date(element.created_at).toLocaleString() : "No Respondida"
-                                }</p>
-                            }
-                        },
-                        {
-                            title: "Fecha insistencia",
-                            key: "date",
-                            render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_SEND.key)
-                                return <p>{
-                                    element ? new Date(element.created_at).toLocaleString() : "No Recibida"
-                                }</p>
-                            }
-                        },
-                        {
-                            title: "Fecha R. Insistencia",
-                            key: "date",
-                            render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_RESPONSED.key)
-                                return <p>{
-                                    element ? new Date(element.created_at).toLocaleString() : "No Enviada"
-                                }</p>
-                            }
-                        },
-                        {
-                            title: "Fecha gestión oficiosa",
-                            key: "date",
-                            render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INFORMAL_MANAGMENT_SEND.key)
-                                return <p>{
-                                    element ? new Date(element.created_at).toLocaleDateString() : "No Recibida"
-                                }</p>
-                            }
-                        },
-                        {
-                            title: 'Insistencia/ \n Correción',
-                            render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INSISTENCY_RESPONSED.key)
-                                const status = StatusSolicity[element?.status as keyof typeof StatusSolicity]
-
-                                return <p className='text-center flex justify-center'>{
-                                    status?.icon ? status?.icon : <FaClock size={20} className="text-primary-500 text-center" />
-                                }</p>
-                            }
-                        },
-                        {
-                            title: 'Gestión oficiosa',
-                            key: 'date',
-                            render: (solicity) => {
-                                const element = solicity.timeline.find((timeline) => timeline.status === StatusSolicity.INFORMAL_MANAGMENT_SEND.key)
-                                const status = StatusSolicity[element?.status as keyof typeof StatusSolicity]
-                                return <p className='text-center flex justify-center'>{
-                                    element ? status.icon : <FaClock size={20} className="text-primary-500 text-center" />
-                                }</p>
-
-                            },
-                        },
+                       
 
                         
                     ]}

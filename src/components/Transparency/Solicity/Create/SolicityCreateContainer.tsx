@@ -59,32 +59,7 @@ const SolicityCreateContainer = (props: Props) => {
 
     useEffect(() => {
 
-        /*props.usecase.getLastDraftSolicity().then((res) => {
-            console.log(res)
-            const data_ = {
-                number_saip: res.number_saip,
-                city: res.city,
-                text: res.text,
-                first_name: res.first_name,
-                last_name: res.last_name,
-                email: res.email,
-                establishment: res.establishment,
-                address: res.address,
-                phone: res.phone,
-                format_receipt: res.format_receipt,
-                format_send: res.format_send,
-                gender: res.gender,
-                race_identification: res.race_identification
-            }
-            setData(data_)
-            setSolicitySaved(res)
-
-            getSelectedEntity(res.establishment)
-        }).catch((e) => {
-            console.log(e + "error")
-            console.log(e + "error")
-            
-        })*/
+        
         const user = SessionService.getUserData()
         const person = SessionService.getPersonData()
         setUserSession(user)
@@ -106,6 +81,8 @@ const SolicityCreateContainer = (props: Props) => {
         data.format_receipt = "formulario web"
         data.address = entity.address || "Sin dirección"
         data.address = entity.address || "Sin Ciudad"
+        console.log(data)
+
         if (solicitySaved?.id) {
             const draft_send = props.usecase.sendDraftSolicity(data, solicitySaved.id || 0)
 
@@ -126,6 +103,28 @@ const SolicityCreateContainer = (props: Props) => {
         } else {
             data.establishment = entity.id || 0
 
+            if(data.establishment === 0){
+                setError("Seleccione una entidad")
+                setIsLoadingSend(false)
+                return
+            }
+
+            data.address = entity.address || "Sin dirección"
+
+            if (data.text==""){
+                setError("Ingrese el texto de la solicitud")
+                setIsLoadingSend(false)
+                return
+            }
+
+            
+
+            if (data.format_send === ""){
+                setError("Seleccione el formato de envio")
+                setIsLoadingSend(false)
+                return
+            }
+            console.log(data)
             const send = props.usecase.sendSolicityWithouDraft(data)
 
             send.then((res) => {
@@ -285,8 +284,11 @@ const SolicityCreateContainer = (props: Props) => {
     }
 
     const isCitizen = () => {
-        console.log(userSession?.group?.find(x => x.name === 'Ciudadano'))
         return userSession?.group?.find(x => x.name === 'Ciudadano') ? true : false;
+    }
+
+    const handleCancel = () => {
+        navigate('/admin/solicity')
     }
 
     return (
@@ -309,7 +311,7 @@ const SolicityCreateContainer = (props: Props) => {
 
                     <SolicityCreatePresenter
                         handleSubmit={handleSubmit}
-                        onCancel={() => { }}
+                        onCancel={handleCancel}
                         onChange={handleChange}
                         key={0}
                         loadOptions={loadOptions}

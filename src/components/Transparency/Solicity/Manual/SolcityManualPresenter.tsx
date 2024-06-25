@@ -304,7 +304,7 @@ const SolicityManualPresenter = (props: Props) => {
                                     <button
                                         type='submit'
                                         className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
-                                        Enviar solicitud
+                                        Registrar Solicitud
                                     </button>
                         }
 

@@ -10,9 +10,9 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import SessionService from "../../../../infrastructure/Services/SessionService";
 import { toast } from 'react-toastify';
 import { Solicity } from "../../../../domain/entities/Solicity";
-import { sleep } from "../../../../utils/functions";
 import { useNavigate, useParams } from "react-router-dom";
 import { formart_send, format_receipt, genders, race_indentification } from "../../../../utils/options";
+import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
 
 
 interface Props {
@@ -134,19 +134,11 @@ const SolicityEditContainer = (props: Props) => {
             setSolicitySaved(res)
             setIsLoadingSend(false)
             setIsSend(true)
-            toast("Solicitud actualizada", {
-                type: "success",
-                autoClose: 2000
-            })
-            sleep(2000).then(() => {
-                navigate('/admin/solicity')
-            })
+            
+            
         }).catch((e) => {
             setIsLoadingSend(false)
-            toast(e.message, {
-                type: "error",
-                autoClose: 2000
-            })
+            setError(e.message)
         })
 
 
@@ -240,6 +232,19 @@ const SolicityEditContainer = (props: Props) => {
 
     return (
         <>
+            {isSend ? <ScreenMessage message="Solicitud de Acceso a Información Pública ingresada con éxito"
+                type="Se ha enviado la solicitud con exito"
+            >
+                <div className="flex items-center gap-16 mt-8 justify-center ">
+
+
+                    <button
+                        onClick={() => navigate('/admin/solicity')}
+                        className=" text-xl text-white font-medium hover:bg-primary-200 bg-primary-500 w-[300px]  py-2 rounded-lg shadow-xl">
+                        Ver SAIP
+                    </button>
+                </div>
+            </ScreenMessage>:
             <SolicityEditPresenter
                 handleSubmit={handleSubmit}
                 onCancel={onCancel}
@@ -264,7 +269,7 @@ const SolicityEditContainer = (props: Props) => {
                 isLoadingSend={isLoadingSend}
                 isSaved={solicitySaved.id ? true : false}
                 isSend={isSend}
-            />
+            />}
         </>
     )
 

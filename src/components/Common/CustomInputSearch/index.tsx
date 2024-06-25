@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ColourOption } from '../../../utils/interface';
 
 
@@ -6,11 +6,18 @@ interface Props {
     loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
     onSelect: (value: ColourOption) => void;
     onSearch: () => void;
+    value?: ColourOption | null;
 }
 const CustomInputSearch = (props: Props) => {
     const [_value, setValue] = useState<ColourOption | null>(null);
     const [suggestions, setSuggestions] = useState<ColourOption[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+
+    useEffect(() => {
+        if (props.value) {
+            setValue(props.value);
+        }
+    }, [props.value]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;

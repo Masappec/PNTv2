@@ -1,17 +1,14 @@
 import { FormEvent } from "react";
-import { Alert, Button, TextInput, Textarea } from "flowbite-react";
-import { Label } from "flowbite-react";
 
-import { IoCheckmarkCircle, IoSaveOutline } from "react-icons/io5";
-import { FiSend } from "react-icons/fi";
-import AsyncSelect from "react-select/async";
-import Select from 'react-select';
+import { IoCheckmarkCircle } from "react-icons/io5";
 import { ColourOption } from "../../../../utils/interface";
 import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import 'react-toastify/dist/ReactToastify.css';
 import { Solicity } from "../../../../domain/entities/Solicity";
 import Spinner from "../../../Common/Spinner";
+import Alert from "../../../Common/Alert";
+import CustomInputSearch from "../../../Common/CustomInputSearch";
 
 interface Props {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -50,7 +47,359 @@ interface Props {
 }
 const SolicityCreatePresenter = (props: Props) => {
 
-  return (
+  const formatDate = (date:Date) => {
+    const padTo2Digits = (num:number) => num.toString().padStart(2, '0');
+
+    return [
+      date.getFullYear(),
+      padTo2Digits(date.getMonth() + 1),
+      padTo2Digits(date.getDate()),
+    ].join('-') + 'T' + [
+      padTo2Digits(date.getHours()),
+      padTo2Digits(date.getMinutes())
+    ].join(':');
+  };
+
+
+
+
+
+  return(
+    <>
+      <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+        Formulario de Solicitud de Acceso a la Información Pública (SAIP)
+
+
+      </h2>
+      <section className='mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center'>
+        <form
+          onSubmit={props.handleSubmit}
+          className='mx-auto w-full max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
+          <section className='grid grid-cols-1 items-start justify-center gap-4 text-start'>
+            <h2 className='mx-auto w-full text-balance text-lg font-semibold text-gray-900'>
+              Datos de la Entidad
+            </h2>
+            <div>
+              
+              
+              <CustomInputSearch
+                loadOptions={props.loadOptions}
+                onSelect={(value) => props.onChangeSelectEstablishment(value)}
+                onSearch={()=>{}}
+              />
+            </div>
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Ruc
+              </label>
+              <input
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                type='text'
+                placeholder='Aqui va el RUC de la entidad seleccionada'
+                onChange={props.onChange}
+                name="identification"
+                value={props.entitySelected.identification}
+
+              />
+            </div>
+            </section>
+          
+          
+          <section className='mt-5 grid grid-cols-1 items-start justify-center gap-4 text-start'>
+            <h2 className='mx-auto w-full text-balance text-lg font-semibold text-gray-900'>
+              Persona Solicitante
+            </h2>
+
+
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Fecha
+              </label>
+              <input
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                type='datetime-local'
+                onChange={(e) => props.onChange(e)}
+                value={formatDate(new Date())}
+                name="date"
+                disabled={props.disabledDate}
+              />
+            </div>
+
+
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Ciudad
+              </label>
+              <input
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                type='text'
+                placeholder='Ingresa el nombre de la ciudad'
+                onChange={props.onChange}
+                name="city"
+                value={props.data.city}
+              />
+            </div>
+
+
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Nombre
+              </label>
+              <input
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                type='text'
+                placeholder='Ingresa el nombre de la persona solicitante'
+                name="first_name"
+                value={props.data.first_name}
+                onChange={props.onChange}
+                disabled={props.disabledDate}
+              />
+            </div>
+
+
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Apellido
+              </label>
+              <input
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                type='text'
+                placeholder='Ingresa el apellido de la persona solicitante'
+                name="last_name"
+                onChange={props.onChange}
+                disabled={props.disabledDate}
+
+                value={props.data.last_name}
+              />
+            </div>
+
+
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Correo Electrónico
+              </label>
+              <input
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                placeholder='Correo electrónico del solicitante'
+                type="email"
+                name="email"
+                onChange={props.onChange}
+                disabled={props.disabledDate}
+
+                value={props.data.email}
+              />
+            </div>
+
+
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Teléfono
+              </label>
+              <input
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                type='text'
+                placeholder='Teléfono del solicitante'
+                onChange={props.onChange}
+                name="phone"
+                value={props.data.phone}
+                disabled={props.disabledDate}
+              />
+            </div>
+
+
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Género
+              </label>
+              <select
+                disabled
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                onChange={(value) => {
+                  props.onChangeSelect({
+                    color: '',
+                    label: value.target.value,
+                    value: value.target.value
+                  }, 'gender')
+                }}
+              >
+                <option value="">Seleccione una opción</option>
+
+                {
+                  props.genders.map(e => {
+
+                    return <option value={e.value} selected={props.data.gender == e.value}>{e.label}</option>
+
+                  })
+                }
+
+              </select>
+
+            </div>
+
+
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Identificación Cultural
+              </label>
+              <select
+              disabled
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                onChange={(value) => {
+                  props.onChangeSelect({
+                    color: '',
+                    label: value.target.value,
+                    value: value.target.value
+                  }, 'race_identification')
+                }}
+              >
+                <option value="">Seleccione una opción</option>
+                {
+                  props.race_indentification.map(e => {
+
+                    return <option value={e.value} selected={props.data.race_identification == e.value}>{e.label}</option>
+
+                  })
+                }
+              </select>
+            </div>
+
+
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Petición
+              </label>
+              <textarea
+                className='block w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500'
+                placeholder='Escribir motivo de la solicitud'
+                rows={4}
+
+                name="text"
+                onChange={props.onChange}
+                value={props.data.text}
+              ></textarea>
+            </div>
+
+
+           
+            
+            <div>
+
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Formato de entrega
+              </label>
+              <select
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                onChange={(value) => {
+                  props.onChangeSelect({
+                    color: '',
+                    label: value.target.value,
+                    value: value.target.value
+                  }, 'format_send')
+                }}
+              >
+                <option value="">Seleccione una opción</option>
+
+                {
+                  props.format_send.map(e => {
+
+                    return <option value={e.value} selected={props.solicitySaved.format_send == e.value}>{e.label}</option>
+
+                  })
+                }
+              </select>
+            </div>
+            {
+              !props.disabledReceipt ? (
+                <div>
+
+                  <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                    Formato de Envío
+                  </label>
+                  <select
+                    className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                    onChange={(value) => {
+                      props.onChangeSelect({
+                        color: '',
+                        label: value.target.value,
+                        value: value.target.value
+                      }, 'format_receipt')
+                    }}
+                  >
+                    <option value="">Seleccione una opción</option>
+
+                    {
+                      props.format_receipt.map(e => {
+
+                        return <option value={e.value} selected={props.solicitySaved.format_receipt == e.value}>{e.label}</option>
+
+                      })
+                    }
+                  </select>
+                </div>
+
+              ) : null}
+            {
+              props.error ? (
+                <Alert
+                  message={props.error}
+                  type='error'
+                  onClose={() => props.setError('')}
+                />
+              ) : null
+            }
+            <div className="flex flex-row gap-5 justify-between">
+              {
+                props.isLoadingSaved ? <Spinner></Spinner> :
+                  props.isSaved ? <button
+                    type='button'
+                    className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                    <IoCheckmarkCircle size={22} className=" mr-4 text-green-500 " />
+                    <span>Guardada</span>
+                  </button> :
+                    <button
+                      type='button'
+                      onClick={props.handleSave}
+                      className='w-full rounded-full bg-white px-6 py-3 text-base 
+                    font-medium text-primary-500 transition-opacity hover:opacity-80 
+                    border border-primary-500
+                    focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                      Guardar
+                    </button>
+              }
+            {
+
+              props.isLoadingSend ? <Spinner></Spinner> :
+                props.isSend ? <button
+                  type='submit'
+                  className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                  <IoCheckmarkCircle size={22} className=" mr-4 text-green-500 " />
+                  <span>Enviada</span>
+                </button> :
+                  <button
+                    type='submit'
+                    className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                    Enviar solicitud
+                  </button>
+            }
+            
+            </div>
+            <div className="flex flex-row gap-5 justify-center">
+              <button
+                type='button'
+                onClick={props.onCancel}
+                className='w-full rounded-full bg-slate-100 px-6 py-3 text-base 
+                font-medium text-gray-800 transition-opacity 
+                border border-gray-800
+                hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                Cancelar
+              </button>
+            </div>
+          </section>
+        </form>
+      </section>
+    </>
+  )
+  /*return (
     <div>
       <div className="border-gray-300 py-5 border-b  ">
         <h2 className="text-2xl font-bold text-black ">
@@ -64,21 +413,7 @@ const SolicityCreatePresenter = (props: Props) => {
         <div className="container flex-col sm:flex-col sm:items-center sm:justify-between   ">
 
 
-          {/*<div className=" flex  flex-col-2 m-2 h-[44px]  mt-5 gap-32">
-            <Label
-              htmlFor=""
-              value="No.SAIP"
-              className="mt-2 text-base font-semibold"
-            />
-            <TextInput
-              className="w-[717px]"
-              placeholder=""
-              type="text"
-              onChange={props.onChange}
-              name=""
-              value={props.data.number_saip}
-            />{" "}
-  </div>*/}
+          
 
           <div className=" flex  flex-col-2 m-2 h-[50px]  mt-5 gap-14">
             <Label
@@ -152,30 +487,7 @@ const SolicityCreatePresenter = (props: Props) => {
               value={props.data.city}
 
             />{" "}
-            {/*<Select
-              className="w-[717px]"
-              placeholder=""
-              options={Cities.map((city) => ({
-                value: city.value,
-                label: city.value,
-                color: "#00B8D9",
-              }))}
-              onChange={(value) => { props.onChangeSelect(value as ColourOption, "city") }}
-              value={props.solicitySaved.city ?
-                props.getSelectedItems(props.solicitySaved?.city, Cities.map((city) => ({
-                  value: city.value,
-                  label: city.value,
-                  color: "#00B8D9",
-                }))
-                ) : props.data.city ? props.getSelectedItems(props.data.city, Cities.map((city) => ({
-                  value: city.value,
-                  label: city.value,
-                  color: "#00B8D9",
-                }))) : null
-              }
-
-              name=""
-            />*/}{" "}
+            
           </div>
 
           <div
@@ -426,7 +738,7 @@ const SolicityCreatePresenter = (props: Props) => {
         </div>
       </form>
     </div>
-  );
+  );*/
 };
 
 export default SolicityCreatePresenter;
