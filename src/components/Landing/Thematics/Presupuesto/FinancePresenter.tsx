@@ -8,7 +8,7 @@ import Input from "../../../Common/Input";
 import axios from "axios";
 import { FaFileCsv } from "react-icons/fa";
 import { URL_API } from "../../../../utils/constans";
-import { PUBLIC_PATH, TRANSPARENCY_PATH } from "../../../../infrastructure/Api";
+import { TRANSPARENCY_PATH } from "../../../../infrastructure/Api";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
 
