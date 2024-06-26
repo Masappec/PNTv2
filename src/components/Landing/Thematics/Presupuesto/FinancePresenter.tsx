@@ -8,7 +8,7 @@ import Input from "../../../Common/Input";
 import axios from "axios";
 import { FaFileCsv } from "react-icons/fa";
 import { URL_API } from "../../../../utils/constans";
-import { PUBLIC_PATH } from "../../../../infrastructure/Api";
+import { PUBLIC_PATH, TRANSPARENCY_PATH } from "../../../../infrastructure/Api";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
 
@@ -153,7 +153,7 @@ const FinancePresenter = (props:Props) => {
                      const file = row.files.find(e => e.description.toLowerCase() == 'conjunto de datos')
                       return<div className="flex flex-row justify-center"> 
                         <a key={row.id} href="#" 
-                        onClick={() => onDownloadFile(URL_API+PUBLIC_PATH+file?.url_download as string,
+                        onClick={() => onDownloadFile(URL_API+TRANSPARENCY_PATH+"/media/"+file?.url_download as string,
                                                     `transparencia-focalizada-${props.selectedYear}-${props.month}-${file?.description}`
                                                 )}
                                                     className="text-primary-500 
@@ -172,7 +172,7 @@ const FinancePresenter = (props:Props) => {
                    title: "METADATOS",
                    render: (row) => {
                      const file = row.files.find(e => e.description.toLowerCase() == 'metadatos')
-                     return <div className="flex flex-row justify-center">  <a key={row.id} href="#" onClick={() => onDownloadFile(URL_API +PUBLIC_PATH+file?.url_download as string,
+                     return <div className="flex flex-row justify-center">  <a key={row.id} href="#" onClick={() => onDownloadFile(URL_API + TRANSPARENCY_PATH + "/media/" +file?.url_download as string,
                        `transparencia-focalizada-${props.selectedYear}-${props.month}-${file?.description}`
                      )}
                        className="text-primary-500 
@@ -188,7 +188,7 @@ const FinancePresenter = (props:Props) => {
                       title: "DICCIONARIO",
                       render: (row) => {
                         const file = row.files.find(e => e.description.toLowerCase() == 'diccionario')
-                        return <div className="flex flex-row justify-center"> <a key={row.id} href="#" onClick={() => onDownloadFile(URL_API +PUBLIC_PATH+file?.url_download as string,
+                        return <div className="flex flex-row justify-center"> <a key={row.id} href="#" onClick={() => onDownloadFile(URL_API + TRANSPARENCY_PATH + "/media/" +file?.url_download as string,
                           `transparencia-focalizada-${props.selectedYear}-${props.month}-${file?.description}`
                         )}
                           className="text-primary-500 
