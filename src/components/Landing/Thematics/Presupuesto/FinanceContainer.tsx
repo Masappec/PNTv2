@@ -29,6 +29,14 @@ const FinanceContainer = (props: Props) => {
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
     const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
     const [data, setData] = useState<ResponsePresupuestos[]>([])
+    const [alert, setAlert] = useState<{
+        type: 'info' | 'success' | 'warning' | 'error',
+        message: string
+    }>({
+        type: 'info',
+        message: ''
+    })
+    const [loading, setLoading] = useState<boolean>(false)
     useEffect(() => {
         setListEnt(_establishments)
     }, [_establishments])
@@ -59,12 +67,48 @@ const FinanceContainer = (props: Props) => {
     }
  
     const handleSearch=()=>{
+        if(ruc==""){
+            setAlert({
+                type: 'error',
+                message: 'Selecciona un establecimiento'
+            })
+            return
+        }
+        if (month == 0) {
+            setAlert({
+                type: 'error',
+                message: 'Selecciona un mes'
+            })
+            return
+        }
+
+        if (year == 0) {
+            setAlert({
+                type: 'error',
+                message: 'Selecciona un año'
+            })
+            return
+        }
+        setLoading(true)
         props.usecase.getPresupuestoData({
             month: month,
             ruc: ruc,
             year: year
         }).then((data)=>{
             setData(data)
+            if (data.length == 0) {
+                setAlert({
+                    type: 'warning',
+                    message: 'No hay datos para mostrar'
+                })
+            }
+            setLoading(false)
+        }).catch(()=>{
+            setAlert({
+                type: 'error',
+                message: 'Error al obtener los datos'
+            })
+            setLoading(false)
         })
 
     }
@@ -86,6 +130,9 @@ const FinanceContainer = (props: Props) => {
             onSelectYear={(e)=>setYear(e)}
             selectedYear={year}
             data={data}
+            loading={loading}
+            alert={alert}
+            setAlert={(alert) => setAlert(alert)}
 
         />
 

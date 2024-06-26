@@ -36,12 +36,38 @@ const PersonalContainer = (props: Props) => {
 
     const handleSearch = async () => {
         try {
+           
+            if (!data.names) {
+                setAlert({
+                    type: 'error',
+                    message: 'Ingresa un nombre'
+                })
+                return
+            }
+
+            if (!data.institution) {
+                setAlert({
+                    type: 'error',
+                    message: 'Selecciona una institución'
+                })
+                return
+            }
             SetSearching(true)
+            setAlert({
+                type: 'info',
+                message: ''
+            })
             const res = await props.usecase.getPersonalData({
                 ...data
                 
             })
             setRes(res)
+            if (res.length === 0) {
+                setAlert({
+                    type: 'warning',
+                    message: 'No se encontraron resultados'
+                })
+            }
             SetSearching(false)
         } catch (error) {
             SetSearching(false)

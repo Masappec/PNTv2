@@ -1,5 +1,5 @@
 import api, { PUBLIC_PATH, TRANSPARENCY_PATH } from "..";
-import { PersonalRemunerations, PublicDataApiResponse, RequestPersonalApi, RequestPresupuestoApi, RequestPublicApi, ResponsePresupuestos, ResponsePublicApi } from "./interface";
+import { AudienceRequest, AudienceResponse, FormulariosRequest, FormulariosResponse, PersonalRemunerations, PublicDataApiResponse, RequestPersonalApi, RequestPresupuestoApi, RequestPublicApi, ResponsePresupuestos, ResponsePublicApi } from "./interface";
 import { URL_API } from "../../../utils/constans";
 
 
@@ -88,6 +88,26 @@ class PublicDataApi {
     public async getPresupuestoData(body: RequestPresupuestoApi) {
         try {
             const response = await api.post<ResponsePresupuestos[]>(PUBLIC_PATH + '/public/presupuesto', body);
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al obtener los datos');
+        }
+    }
+
+
+    //public/audiencias
+    public async getAudienciasData(body: AudienceRequest) {
+        try {
+            const response = await api.post<AudienceResponse[]>(PUBLIC_PATH + '/public/audiencias', body);
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al obtener los datos');
+        }
+    }
+    //public/solicitudes-y-servicios/
+    public async getSolicitudesData(body: FormulariosRequest) {
+        try {
+            const response = await api.post<FormulariosResponse[]>(PUBLIC_PATH + '/public/solicitudes-y-servicios/', body);
             return response.data;
         } catch (error) {
             throw new Error('Error al obtener los datos');

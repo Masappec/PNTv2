@@ -150,7 +150,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 name="first_name"
                                 value={props.data.first_name}
                                 onChange={props.onChange}
-                                disabled={true}
+                                disabled={!props.solicitySaved.is_manual}
                             />
                         </div>
 
@@ -165,7 +165,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 placeholder='Ingresa el apellido de la persona solicitante'
                                 name="last_name"
                                 onChange={props.onChange}
-                                disabled={true}
+                                disabled={!props.solicitySaved.is_manual}
 
                                 value={props.data.last_name}
                             />
@@ -182,7 +182,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 type="email"
                                 name="email"
                                 onChange={props.onChange}
-                                disabled={true}
+                                disabled={!props.solicitySaved.is_manual}
 
                                 value={props.data.email}
                             />
@@ -200,7 +200,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 onChange={props.onChange}
                                 name="phone"
                                 value={props.data.phone}
-                                disabled={true}
+                                disabled={!props.solicitySaved.is_manual}
                             />
                         </div>
 
@@ -210,7 +210,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 Género
                             </label>
                             <select
-                                disabled
+                                disabled={!props.solicitySaved.is_manual}
                                 className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
                                 onChange={(value) => {
                                     props.onChangeSelect({
@@ -240,7 +240,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 Identificación Cultural
                             </label>
                             <select
-                                disabled
+                                disabled={!props.solicitySaved.is_manual}
                                 className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
                                 onChange={(value) => {
                                     props.onChangeSelect({

@@ -109,26 +109,64 @@ const SolicityEditContainer = (props: Props) => {
         }
 
 
-        if (data.number_saip === ""
-            || data.city === ""
-            || data.text === ""
-            || data.first_name === ""
-            || data.last_name === ""
-            || data.email === ""
-            || data.race_identification === ""
-            || data.gender === ""
-            || data.phone === ""
-            || data.format_receipt === ""
-            || data.format_send === ""
-        ) {
-            toast("Complete todos los campos", {
-                type: "error",
-                autoClose: 2000
-            })
+        if (data.number_saip === ""){
+            setError("El número SAIP es requerido")
+            setIsLoadingSend(false)
+            return
+        }
+        if (data.city === ""){
+            setError("La ciudad es requerida")
+            setIsLoadingSend(false)
+            return
+        }
+        if (data.text === ""){
+            setError("El texto es requerido")
             setIsLoadingSend(false)
             return
         }
 
+        if (data.first_name === ""){
+            setError("El nombre es requerido")
+            setIsLoadingSend(false)
+            return
+        }
+        if (data.last_name === ""){
+            setError("El apellido es requerido")
+            setIsLoadingSend(false)
+            return
+        }
+
+        if (data.email === ""){
+            setError("El correo es requerido")
+            setIsLoadingSend(false)
+            return
+        }
+        data.address = data.city
+        if (data.address === ""){
+            setError("La dirección es requerida")
+            setIsLoadingSend(false)
+            return
+        }
+
+        if (data.phone === ""){
+            setError("El teléfono es requerido")
+            setIsLoadingSend(false)
+            return
+        }
+
+        if (data.format_send === ""){
+            setError("El formato de envío es requerido")
+            setIsLoadingSend(false)
+            return
+        }
+
+        if (data.format_receipt === ""){
+            setError("El formato de recepción es requerido")
+            setIsLoadingSend(false)
+            return
+        }
+
+        
 
         props.usecase.updateSolicity(data, parseInt(id || "0")).then((res) => {
             setSolicitySaved(res)

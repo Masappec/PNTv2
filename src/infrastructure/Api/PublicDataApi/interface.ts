@@ -35,14 +35,7 @@ export interface RequestPublicApi {
     establishment: string; 
 }
 
-/*{
-            "total": Solicity.objects.count(),
-            "responsed": None,
-            "not_responsed": None,
-            "total_not_responsed": None,
-            "total_responsed": None,
-            "users":None
-        }*/
+
 
 export interface PublicDataApiResponse {
     total: number;
@@ -101,4 +94,38 @@ export interface ResponsePresupuestos{
     max_date_to_publish:string;
     establishment:number;
     numeral:number;
+}
+
+export interface AudienceRequest{
+    names:string;
+    month:number;
+    year:number;
+}
+export interface AudienceResponse{
+   institucion:string;
+    nombre:string;
+    puesto:string;
+    asunto:string;
+    fecha:string;
+    modalidad:string;
+    lugar:string;
+    descripcion:string;
+    duracion:string;
+    externa:string;
+    institucion_ext:string;
+    enlace:string;
+}
+
+
+export interface FormulariosRequest{
+    ruc:string;
+}
+
+export interface FormulariosResponse{
+    institucion:string;
+    denominacion:string;
+    enlace:string;
+    numero_personas:string;
+    enlace_descarga_formulario:string;
+    enlace_servicio:string;
 }

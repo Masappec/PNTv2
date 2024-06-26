@@ -52,7 +52,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
 
             </div>
             <section className='grid max-w-2xl grid-cols-1 gap-4 md:grid-cols-2'>
-                <div className='max-w-sm'>
+                <div className='max-w-sm mt-1.5'>
                     <label className='text-sm font-medium text-gray-900'>Institución</label>
 
                     <div className='group relative'>

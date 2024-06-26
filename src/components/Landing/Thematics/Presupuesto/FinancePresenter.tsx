@@ -9,6 +9,8 @@ import axios from "axios";
 import { FaFileCsv } from "react-icons/fa";
 import { URL_API } from "../../../../utils/constans";
 import { PUBLIC_PATH } from "../../../../infrastructure/Api";
+import Spinner from "../../../Common/Spinner";
+import Alert from "../../../Common/Alert";
 
 interface Props {
   loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
@@ -36,8 +38,13 @@ interface Props {
   totalPage: number;
   page: number;
   length:number;
- 
+  loading: boolean;
   data: ResponsePresupuestos[]
+  alert: {
+    type: 'success' | 'error' | 'warning' | 'info';
+    message: string
+  }
+  setAlert: (alert: { type: 'success' | 'error' | 'warning' | 'info'; message: string }) => void;
 
 }
 const FinancePresenter = (props:Props) => {
@@ -96,18 +103,28 @@ const FinancePresenter = (props:Props) => {
               type="month"
               
               className="block w-full rounded-lg  text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
-              required    />
+                />
           </div>
         </section>
-
+          {
+            props.loading ?
+              <Spinner></Spinner> :
         <button
           onClick={()=>{props.onSearch()}}
           type='button'
           className='mt-8 rounded-md bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
           Buscar
         </button>
+}
       </form>
-
+        {
+          props.alert.message && (
+            <Alert
+              type={props.alert.type}
+              message={props.alert.message}
+              onClose={() => { props.setAlert({ type: 'info', message: '' }) }}
+            />)
+        }
       <div className='mt-8 h-min rounded-md bg-gray-100'>
                 <TablePublic
                     

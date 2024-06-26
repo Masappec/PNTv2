@@ -13,6 +13,7 @@ const Sidebar_ = ({ menu, permissions, establishmentName }: Props) => {
 	const [path, setPath] = React.useState("")
 
 	const location = useLocation()
+	const [isOpen, setIsOpen] = React.useState(false);
 
 	React.useEffect(() => {
 		setPath(location.pathname)
@@ -26,6 +27,8 @@ const Sidebar_ = ({ menu, permissions, establishmentName }: Props) => {
 				data-drawer-toggle='default-sidebar'
 				aria-controls='default-sidebar'
 				type='button'
+				onClick={() => setIsOpen(!isOpen)}
+
 				className='fixed left-2 top-2 z-50 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 xl:hidden'>
 				<span className='sr-only'>Open sidebar</span>
 				<svg
@@ -43,7 +46,8 @@ const Sidebar_ = ({ menu, permissions, establishmentName }: Props) => {
 			</button>
 			<aside
 				id='default-sidebar'
-				className='fixed left-0 top-[57.91px] z-40 h-screen w-64 -translate-x-full border-r border-gray-300 bg-gray-200 pb-28 transition-transform xl:translate-x-0'
+				className={`fixed left-0 top-[57.91px] z-40 h-screen w-64 border-r border-gray-300 bg-gray-200 pb-28 transition-transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
+					} xl:translate-x-0`}
 				aria-label='Sidenav'>
 				<div className='flex h-full flex-col justify-between overflow-y-auto px-3 py-5'>
 					<section>
