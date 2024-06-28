@@ -26,14 +26,14 @@ const LoginContainer = ({ useCase }: {
     useCase.execute(email, password)
       .then((user) => {
         setIsLoading(false)
-        if(user === null){
+        if (user === null) {
           history('/admin')
           return
         }
-        const exist = user && user.user_permissions?.map((item) => item.codename).includes('view_solicity')
-        if(exist){
+        const exist = user && user.user_permissions?.map((item) => item.codename).includes('view_solicity') && !user.is_superuser
+        if (exist) {
           history('/admin/solicity')
-        } else{
+        } else {
           history('/admin')
         }
       })

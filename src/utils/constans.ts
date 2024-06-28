@@ -5,8 +5,8 @@ export const USER_PASSWORD_LOCKED = "xJEqAN%*DY#Uf7}W";
 
 export const ROLE_CIUDADANO = "Ciudadano";
 //export const IS_SERVER: 'Y' | 'N' = 'N' //import.meta.env.VITE_IS_SERVER;
-export const IS_SERVER: 'Y' | 'N' = 'Y' //
-//export const IS_SERVER: 'Y' | 'N' = import.meta.env.VITE_IS_SERVER;
+//export const IS_SERVER: 'Y' | 'N' = 'Y' //
+export const IS_SERVER: 'Y' | 'N' = import.meta.env.VITE_IS_SERVER;
 
 //https://transparencia.dpe.gob.ec/transparencia/regCiudadano.php
 export const BASE_URL = '/'

@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useRef } from "react";
-import {  Button, Tabs, Textarea } from 'flowbite-react';
+import { Button, Tabs, Textarea } from 'flowbite-react';
 import { Label } from 'flowbite-react';
 import { TagEntity } from "../../../../domain/entities/TagEntity";
 import { OnChangeValue } from "react-select";
@@ -106,19 +106,18 @@ const SolicityResponsePresenter = (props: Props) => {
     }, [props.isAvaliableToResponse, props.isAvaliableToInsistency, props.isAvaliableToComment])
 
 
-    return(
+    return (
         <form onSubmit={props.handleSubmit}>
-        
+
             {
                 props.timeline?.map((response, index) => (
                     <section key={index} className='mx-auto mb-4 rounded-lg border border-gray-100 bg-custom-orange/10 p-4'>
                         <h2 className={`mb-4 
-                        ${
-                            response.user_id != parseInt(props.solicitySaved.user_created) ?
-                            'bg-custom-orange' :'bg-custom-green'
-                        }
+                        ${response.user_id != parseInt(props.solicitySaved.user_created) ?
+                                'bg-custom-orange' : 'bg-custom-green'
+                            }
                         rounded-md  p-4 text-left text-xl font-bold text-white`}>
-                            
+
                             {response.user_id != parseInt(props.solicitySaved.user_created) ?
                                 response.other_title :
                                 response.title
@@ -129,7 +128,42 @@ const SolicityResponsePresenter = (props: Props) => {
                             {response.text}
                         </p>
                         {
-                            response.attachments.map(file=>(
+                            response.attachments.map(file => (
+
+                                <article
+                                    key={'subido' + index}
+                                    className='grid w-1/4 max-w-2xl mt-5  grid-cols-[max-content,1fr] items-center gap-2 rounded-md border border-gray-300 p-2 text-sm sm:text-base'>
+                                    <svg
+                                        className='h-7 w-7 text-primary'
+                                        xmlns='http://www.w3.org/2000/svg'
+                                        height='24px'
+                                        viewBox='0 -960 960 960'
+                                        width='24px'
+                                        fill='currentColor'
+                                    ><path
+                                        d='M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z'
+                                    ></path>
+                                    </svg>
+                                    <section className='flex items-center justify-between'>
+                                        <label
+                                            className='inline-block text-sm font-semibold text-gray-900'
+                                            data-testid='flowbite-label'>
+                                            {file.description}
+
+                                        </label>
+                                        <a
+                                            href={file.url_download as string}
+                                            className='mx-auto flex items-center gap-2 rounded-md border border-primary-500 px-2 py-1 text-xs font-medium text-primary-500 hover:bg-primary-500 hover:text-white'>
+                                            <BiDownArrowAlt />
+                                            <span>Ver</span>
+                                        </a>
+
+                                    </section>
+                                </article>
+                            ))
+                        }
+                        {
+                            response.files.map(file => (
 
                                 <article
                                     key={'subido' + index}
@@ -153,9 +187,9 @@ const SolicityResponsePresenter = (props: Props) => {
 
                                         </label>
                                         <button
-                                            onClick={() => props.onDownloadFromUrl(file.url_download,file.name)}
+                                            onClick={() => props.onDownloadFromUrl(file.url_download as string, file.name)}
                                             className='mx-auto flex items-center gap-2 rounded-md border border-green-500 px-2 py-1 text-xs font-medium text-green-500 hover:bg-green-500 hover:text-white'>
-                                            <BiDownArrowAlt/>
+                                            <BiDownArrowAlt />
                                             <span>Descargar</span>
                                         </button>
 
@@ -306,9 +340,9 @@ const SolicityResponsePresenter = (props: Props) => {
                         Si desea adjuntar archivos o un enlace como parte de la respuesta, seleccione a continuación
                     </h4>
                     <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800"
-                    theme={themeTabs}
-                    style="underline"
-                    
+                        theme={themeTabs}
+                        style="underline"
+
                     >
 
                         <Tabs.Item title="Subir Archivos">
@@ -339,22 +373,22 @@ const SolicityResponsePresenter = (props: Props) => {
 
 
                                 <div className="flex items-center justify-center mt-4 gap-x-3 w-full">
-                                <button
-                                    type="button"
-                                    onClick={() => props.onAddDataSet("file")}
-                                    className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
-                                    <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        height='24px'
-                                        viewBox='0 -960 960 960'
-                                        width='24px'
-                                        fill='currentColor'
-                                    ><path
-                                        d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
-                                    ></path>
-                                    </svg>
-                                    <span>Agregar adjunto</span>
-                                </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => props.onAddDataSet("file")}
+                                        className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
+                                        <svg
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            height='24px'
+                                            viewBox='0 -960 960 960'
+                                            width='24px'
+                                            fill='currentColor'
+                                        ><path
+                                            d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
+                                        ></path>
+                                        </svg>
+                                        <span>Agregar adjunto</span>
+                                    </button>
                                 </div>
                             </div>
 
@@ -378,22 +412,22 @@ const SolicityResponsePresenter = (props: Props) => {
                                 })
                             }
                             <div className="flex items-center justify-center mt-4 gap-x-3 w-full">
-                            <button
-                                type="button"
-                                onClick={() => props.onAddDataSet("url")}
-                                className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
-                                <svg
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    height='24px'
-                                    viewBox='0 -960 960 960'
-                                    width='24px'
-                                    fill='currentColor'
-                                ><path
-                                    d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
-                                ></path>
-                                </svg>
-                                <span>Agregar adjunto</span>
-                            </button>
+                                <button
+                                    type="button"
+                                    onClick={() => props.onAddDataSet("url")}
+                                    className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
+                                    <svg
+                                        xmlns='http://www.w3.org/2000/svg'
+                                        height='24px'
+                                        viewBox='0 -960 960 960'
+                                        width='24px'
+                                        fill='currentColor'
+                                    ><path
+                                        d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
+                                    ></path>
+                                    </svg>
+                                    <span>Agregar adjunto</span>
+                                </button>
                             </div>
                         </Tabs.Item>
                     </Tabs>
@@ -402,8 +436,8 @@ const SolicityResponsePresenter = (props: Props) => {
             <div className="flex flex-col m-2">
                 {
                     props.error && <Alert message={props.error}
-                    onClose={()=>props.setError('')}
-                    type="error"
+                        onClose={() => props.setError('')}
+                        type="error"
                     >
                     </Alert>
                 }

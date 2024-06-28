@@ -76,7 +76,7 @@ const SolicityResponseContainer = (props: Props) => {
     const [isSaved, setIsSaved] = useState<boolean>(false)
     const [isAvaliableToInsistency, setIsAvaliableToInsistency] = useState<boolean>(false)
     const [isAvaliableToResponse, setIsAvaliableToResponse] = useState<boolean>(false)
-    const [isAvaliableToComment, ] = useState<boolean>(false)
+    const [isAvaliableToComment,] = useState<boolean>(false)
     const [files, SetFiles] = useState<{
         file: File | string | null,
         type: "table" | "file" | "url",
@@ -100,7 +100,7 @@ const SolicityResponseContainer = (props: Props) => {
 
     const [tags, SetTags] = useState<TagEntity[]>([])
 
-    
+
     useEffect(() => {
 
         if (state) {
@@ -420,11 +420,11 @@ const SolicityResponseContainer = (props: Props) => {
         setLoading(true)
         dataResponseSolicity.id_solicitud = solicityToResponse.id
         dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0).filter(
-            e => e!=0
+            e => e != 0
         )
         dataResponseSolicity.attachment = attachs.map((attach) => attach.entity?.id || 0)
         dataResponseSolicity.attachment = []
-        if (dataResponseSolicity.text==''){
+        if (dataResponseSolicity.text == '') {
             setError('Ingresa tu consulta/respuesta')
             setLoading(false);
             return
@@ -509,8 +509,8 @@ const SolicityResponseContainer = (props: Props) => {
         })
     }
     return isSaved ?
-        <ScreenMessage message="Respuesta enviada correctamente"
-            type="se ha enviado tu respuesta correctamente" >
+        <ScreenMessage message=""
+            type="Se ha enviado tu respuesta correctamente" >
             <div className="flex flex-row items-center justify-center  gap-16 mt-8 w-full">
 
 
@@ -529,7 +529,7 @@ const SolicityResponseContainer = (props: Props) => {
             publicusecase={props.publicusecase}
             usecase={props.usecase}
             timeline={solicityToResponse.timeline}
-            
+
         >
             <SolicityResponsePresenter
                 handleSubmit={handleSubmit}

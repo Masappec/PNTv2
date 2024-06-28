@@ -5,6 +5,9 @@ import { PartialTimelineSolicty, Solicity } from "../../../../domain/entities/So
 import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
 import { formatDate } from "../../../../utils/functions";
 import { StatusSolicity } from "../../../../utils/enums";
+import { useEffect, useState } from "react";
+import SessionService from "../../../../infrastructure/Services/SessionService";
+import UserEntity from "../../../../domain/entities/UserEntity";
 
 interface Props {
 
@@ -22,6 +25,14 @@ interface Props {
   children?: React.ReactNode;
 }
 const SolicityDetailPresenter = (props: Props) => {
+
+
+  const [user, setUserSession] = useState<UserEntity | null>(null)
+
+  useEffect(() => {
+    const session = SessionService.getUserData()
+    setUserSession(session)
+  }, [])
   if (props.error) {
     return (
       <ScreenMessage message={"Error al obtener tu solicitud"}
@@ -33,7 +44,7 @@ const SolicityDetailPresenter = (props: Props) => {
   }
 
   return (
-    
+
     <>
       <section className='gap-4 lg:grid lg:grid-cols-[1fr,max-content]'>
         <div>
@@ -102,7 +113,7 @@ const SolicityDetailPresenter = (props: Props) => {
             </div>
           </section>
 
-          {props.solicitySaved.text !="" &&<section className='mx-auto mb-4 rounded-lg border border-gray-100 bg-custom-green/10 p-4'>
+          {props.solicitySaved.text != "" && <section className='mx-auto mb-4 rounded-lg border border-gray-100 bg-custom-green/10 p-4'>
             <h2 className='mb-4 rounded-md bg-custom-green p-4 text-left text-xl font-bold text-white'>
               Petición completa
             </h2>
@@ -120,7 +131,7 @@ const SolicityDetailPresenter = (props: Props) => {
           </section>
           }
           {props.children}
-          
+
         </div>
 
         <div className='mt-6 grow sm:mt-8 lg:mt-0'>
@@ -129,7 +140,7 @@ const SolicityDetailPresenter = (props: Props) => {
 
             <ol className='relative ms-3 border-s border-gray-300'>
               {
-                props.timeline?.map(l =>(
+                props.timeline?.map(l => (
                   <li className='mb-10 ms-6'>
                     <span
                       className='absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-white ring-8 ring-gray-50'>
@@ -150,11 +161,16 @@ const SolicityDetailPresenter = (props: Props) => {
                       </svg>
                     </span>
                     <h4 className='mb-0.5 text-base font-semibold text-gray-900'>{formatDate(l.created_at)}</h4>
-                    <p className='text-sm font-normal text-gray-500'>{StatusSolicity[l.status as keyof typeof StatusSolicity].value}</p>
+                    <p className='text-sm font-normal text-gray-500'>{
+
+                      user && user.group?.find(g => g.name.toLowerCase() == "ciudadano") ?
+                        StatusSolicity[l.status as keyof typeof StatusSolicity].value : StatusSolicity[l.status as keyof typeof StatusSolicity].value_2
+
+                    }</p>
                   </li>
                 ))
               }
-              
+
 
             </ol>
           </div>
