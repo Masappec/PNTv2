@@ -10,7 +10,7 @@ import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
 import { sleep } from "../../../../utils/functions"
 import { IOncalculate } from "../../../Common/PasswordMeter"
 import SessionService from "../../../../infrastructure/Services/SessionService"
-
+import validador from 'ecuador-validator';
 
 const UserCreateContainer = ({
     usecase,
@@ -83,6 +83,19 @@ const UserCreateContainer = ({
             return
         }
 
+
+        if(data.identification==""){
+            setError("La identificacion es obligatoria")
+            setLoadingSubmit(false)
+            return
+        }
+
+        const validIdentification = validador.ci(data.identification||"");
+        if (!validIdentification){
+            setError("La identificacion no es válida")
+            setLoadingSubmit(false)
+            return
+        }
         if (data.group[0].id === 0) {
             setError("El rol es obligatorio")
             setLoadingSubmit(false)

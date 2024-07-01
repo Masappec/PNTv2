@@ -1,5 +1,5 @@
 import api, { PUBLIC_PATH, TRANSPARENCY_PATH } from "..";
-import { AudienceRequest, AudienceResponse, FormulariosRequest, FormulariosResponse, PersonalRemunerations, PublicDataApiResponse, RequestPersonalApi, RequestPresupuestoApi, RequestPublicApi, ResponsePresupuestos, ResponsePublicApi } from "./interface";
+import { AudienceRequest, AudienceResponse, FormulariosRequest, FormulariosResponse, IndicatorRequest, IndicatorResponse, PersonalRemunerations, PublicDataApiResponse, RequestPersonalApi, RequestPresupuestoApi, RequestPublicApi, ResponsePresupuestos, ResponsePublicApi } from "./interface";
 import { URL_API } from "../../../utils/constans";
 
 
@@ -61,14 +61,30 @@ class PublicDataApi {
         }
     }
 
-    public async getPublicDataCount(establishment_id?: number|null,year?:number|null) {
+    public async getPublicDataCount(year:number|null) {
         try {
             const response = await api.get<PublicDataApiResponse>(TRANSPARENCY_PATH + '/stats/citizen', {
                 params: {
-                    establishment_id,
                     year
                 }
             });
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al obtener los datos');
+        }
+    }
+
+
+    public async getEstablishmentData(data:IndicatorRequest) {
+        try {
+            const response = await api.get<IndicatorResponse>(TRANSPARENCY_PATH + '/stats/establishment',
+                {
+                    params:{
+                        ...data
+                    
+                    }
+                }
+            );
             return response.data;
         } catch (error) {
             throw new Error('Error al obtener los datos');

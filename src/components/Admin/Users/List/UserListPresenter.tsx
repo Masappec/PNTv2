@@ -6,6 +6,7 @@ import Modal from "../../../Common/Modal";
 import { FiUserCheck, FiUserX } from "react-icons/fi";
 import CustomButton from "../../../Common/CustomButton"
 import Alert from "../../../Common/Alert";
+import Select from "../../../Common/Select";
 
 
 
@@ -33,6 +34,7 @@ interface Props {
     from: number
     to: number
     total: number
+    onChangeLimit: (limit:string)=>void
 }
 
 export const UserListPresenter = (props: Props) => {
@@ -48,36 +50,83 @@ export const UserListPresenter = (props: Props) => {
             </p>
 
             <section className='mb-4 flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center'>
-                <div className='w-full max-w-md'>
-                    <div className='group relative'>
-                        <svg
-                            className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-focus-within:text-primary group-hover:text-primary'
-                            stroke='currentColor'
-                            fill='currentColor'
-                            stroke-width='0'
-                            viewBox='0 0 24 24'
-                            height='1em'
-                            width='1em'
-                            xmlns='http://www.w3.org/2000/svg'
-                        ><path
-                            d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
-                        ></path>
-                        </svg>
-                        <input
-                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                            type='text'
-                            placeholder='Buscar por nombre o usuario'
-                            name='first_name'
-                            onChange={(e) => props.onSearch(e.target.value)}
-                            value={props.search}
-                        />
+                <div className="flex flex-row gap-6 w-full">
+                    <div className="">
+
+
+                        <label className='text-gray-500 text-sm'>Buscar</label>
+                        <div className='group relative w-full max-w-xs mt-1'>
+
+                            <svg
+                                className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
+                                stroke='currentColor'
+                                fill='currentColor'
+                                stroke-width='0'
+                                viewBox='0 0 24 24'
+                                height='1em'
+                                width='1em'
+                                xmlns='http://www.w3.org/2000/svg'
+                            ><path
+                                d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
+                            ></path>
+                            </svg>
+                            <input
+                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                type='text'
+                                placeholder='Buscar por Nombre o usuario'
+
+                                onChange={(e) => props.onSearch(e.target.value)}
+
+                            />
+
+                        </div>
                     </div>
+                    <div className='flex flex-row gap-2'>
+
+                        <div className='flex flex-col '>
+                            <label className='text-gray-500 text-sm'>
+                                Limite
+                            </label>
+                            <Select
+                                options={[
+                                    {
+                                        label: "5",
+                                        value: 5 + ""
+                                    },
+                                    {
+                                        label:"10",
+                                        value:10+""
+                                    },
+                                    {
+                                        label: "20",
+                                        value: 20 + ""
+                                    },
+                                    {
+                                        label: "50",
+                                        value: 50 + ""
+                                    },
+                                    {
+                                        label: "100",
+                                        value: 100 + ""
+                                    }
+                                ]}
+                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                onChange={(e)=>props.onChangeLimit(e.target.value)}
+                            />
+
+                        </div>
+                        
+                    </div>
+
                 </div>
 
                 <button
                     onClick={props.onAdd}
                     type='button'
-                    className='inline-flex w-max items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
+                    className='inline-flex w-1/6 items-center gap-2 rounded-lg bg-primary px-5 
+                    py-2.5 text-center text-sm 
+                    font-medium text-white hover:opacity-80 focus:outline-none 
+                    focus:ring-4 focus:ring-blue-300'>
                     <div className='inline-flex items-center gap-2'>
                         <svg
                             xmlns='http://www.w3.org/2000/svg'

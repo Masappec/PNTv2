@@ -119,7 +119,18 @@ const UserListContainer = ({
         navigate('/admin/users/import')
     }
 
-
+    const handleLimit = (limit: string) => {
+        usecase.execute(seach, currentPage, limit).then((users) => {
+            setUsers(users.results)
+            setTotalPage(users.total_pages || 0)
+            setCurrentPage(users.current)
+            setFrom(users.from || 1)
+            setTo(users.to || 1)
+            setTotal(users.total)
+        }).catch((error) => {
+            setError(error.message)
+        })
+    }
     return (
         <UserListPresenter
             users={users}
@@ -145,6 +156,7 @@ const UserListContainer = ({
             from={from}
             to={to}
             total={total}
+            onChangeLimit={handleLimit}
         />
     );
 }

@@ -10,6 +10,7 @@ import TransparencyFocusUseCase from "../../../../domain/useCases/TransparencyFo
 import TransparencyCollabUseCase from "../../../../domain/useCases/TransparencyCollabUseCase/TransparencyCollabUseCase";
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import TransparencyCollab from "../../../../domain/entities/TransparencyCollab";
+import { generarQR } from "../../../../utils/options";
 
 interface Props {
     usecase: PublicUseCase;
@@ -42,7 +43,6 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         last_name_committe: "",
         identification: "",
     })
-    const navigation = useNavigate()
     const [publications, setPublications] = useState<AcordionMonthYear<TransparencyActive>[]>([])
     const [publicationsTF, setPublicationsTF] = useState<AcordionMonthYear<TransparencyFocusEntity>[]>([])
     const [publicationsTC, setPublicationsTC] = useState<AcordionMonthYear<TransparencyCollab>[]>([])
@@ -52,22 +52,35 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     const [year, setYear] = useState<number>(new Date().getFullYear())
     const [yearTF, setYearTF] = useState<number>(new Date().getFullYear())
     const [yearTC, setYearTC] = useState<number>(new Date().getFullYear())
-
+    const [UrlQR, setUrlQR] = useState<string>("")
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
     useEffect(() => {
         props.usecase.getEstablishment(slug || "").then((response) => {
             setEntity(response)
             setLoading(false)
+            const imgQR = generarQR(window.location.protocol + "//" + window.location.host + "/entidades/" + slug +"#indicadores")
+            setUrlQR(imgQR)
         }).catch((error) => {
             setError(error.message)
         }).finally(() => {
             setLoading(false)
         })
 
-
+        
     }, [])
 
-
+    useEffect(() => {
+        const hash = location.hash;
+        if (hash) {
+            const element = document.getElementById(hash.substring(1)); // Elimina el '#'
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            // Si no hay hash, hacer scroll al inicio de la página
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }, [location.hash]);
 
 
 
@@ -82,6 +95,8 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         navigate(`/publicaciones/${slug}`)
     }
 
+
+    
 
     const onOpenMonth = (month: number) => {
 
@@ -210,15 +225,27 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
     const handlePageInfo = () => {
         //scroll to bottom
-        window.scrollTo(0, 400);
+        const doc = document.getElementById('publications');
+        window.scrollTo({
+            top: doc?.offsetTop,
+            behavior: "smooth"
+        });
     }
 
     const handlePageSolicity = () => {
-        navigation('/ingreso')
+        const doc = document.getElementById('information');
+        window.scrollTo({
+            top: doc?.offsetTop,
+            behavior: "smooth"
+        });
     }
 
     const handlePageIndicators = () => {
-        navigate('/indicadores')
+        const doc = document.getElementById('indicadores');
+        window.scrollTo({
+            top: doc?.offsetTop,
+            behavior: "smooth"
+        });
     }
 
     return (
@@ -250,6 +277,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             handlePageIndicators={handlePageIndicators}
             handlePageInfo={handlePageInfo}
             handlePageSolicity={handlePageSolicity}
+            qrUrl={UrlQR}
 
 
         />

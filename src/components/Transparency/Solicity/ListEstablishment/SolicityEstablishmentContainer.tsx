@@ -24,7 +24,8 @@ const SolicityListEstablishmentContainer = (props: Props) => {
     const [limit, setLimit] = useState<number>(10)
     const [limitOptions,] = useState<number[]>([5, 10, 20, 40, 50])
     const [columnsSort, setColumnsSort] = useState<string[]>([])
-
+    const [search,setSeach]= useState<string>("");
+    const [status_,setStatus] = useState<string>("");
     useEffect(() => {
         props.useCase.getEstablishmentSolicity("", currentPage, limit).then(response => {
             SetSolicitudes(response.results)
@@ -70,7 +71,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
 
 
     const setPage = (page: number) => {
-        props.useCase.getEstablishmentSolicity("", page, limit).then(response => {
+        props.useCase.getEstablishmentSolicity(search, page, limit, columnsSort, status_).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)
@@ -85,7 +86,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
     const onChangesLimit = (limit: number) => {
         setLimit(limit)
 
-        props.useCase.getEstablishmentSolicity("", currentPage, limit).then(response => {
+        props.useCase.getEstablishmentSolicity(search, currentPage, limit, columnsSort, status_).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)
@@ -98,7 +99,8 @@ const SolicityListEstablishmentContainer = (props: Props) => {
     }
 
     const onSearch = (search: string) => {
-        props.useCase.getEstablishmentSolicity(search, currentPage, limit, columnsSort).then(response => {
+        setSeach(search)
+        props.useCase.getEstablishmentSolicity(search, currentPage, limit, columnsSort, status_).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)
@@ -121,7 +123,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
             copySort = [...copySort, sort]
         }
 
-        props.useCase.getEstablishmentSolicity("", currentPage, limit, copySort).then(response => {
+        props.useCase.getEstablishmentSolicity(search, currentPage, limit, copySort, status_).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)
@@ -133,7 +135,19 @@ const SolicityListEstablishmentContainer = (props: Props) => {
         })
     }
 
-
+    const handleChageStatus = (e:string)=>{
+        setStatus(e)
+        props.useCase.getEstablishmentSolicity(search, currentPage, limit, columnsSort,e).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
 
     return (
         <SolicityEstablishmentPresenter
@@ -166,6 +180,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
             totalPage={totalPage}
             onChangesLimit={onChangesLimit}
             limits={limitOptions}
+            onChangeStatus={handleChageStatus}
         />
     )
 

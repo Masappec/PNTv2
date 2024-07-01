@@ -24,6 +24,7 @@ interface TableProps<T> {
     columns_sort?: string[];
     className?: string;
     showing?: number;
+    Notpaginable?:boolean;
 }
 
 
@@ -143,42 +144,12 @@ function TablePublic<T>(props: TableProps<T>) {
                     }
                     <div className='flex items-center gap-x-4'>
 
-                        <Pagination currentPage={currentPage} totalPages={totalPages}
+                        {!props.Notpaginable || props.Notpaginable==undefined  ?<Pagination currentPage={currentPage} totalPages={totalPages}
                             onPageChange={onPageChange} showIcons
                             nextLabel="Siguiente"
                             previousLabel="Anterior"
-                        />
-                        {/*<a
-          className='group flex items-center gap-x-1 text-sm font-medium text-gray-600 hover:text-gray-400'
-          href='#'>
-          <svg
-            className='size-4'
-            xmlns='http://www.w3.org/2000/svg'
-            height='24px'
-            viewBox='0 -960 960 960'
-            width='24px'
-            fill='currentColor'
-            ><path d='M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z'></path>
-          </svg>
-          <span>Anterior</span>
-        </a>
-
-        
-
-        <a
-          className='group flex items-center gap-x-1 text-sm font-medium text-gray-600 hover:text-gray-400'
-          href='#'>
-          <span>Siguiente</span>
-          <svg
-            className='size-4'
-            xmlns='http://www.w3.org/2000/svg'
-            height='24px'
-            viewBox='0 -960 960 960'
-            width='24px'
-            fill='currentColor'
-            ><path d='m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z'></path>
-          </svg>
-            </a>*/}
+                        />:null
+                }
 
                     </div>
                 </section>

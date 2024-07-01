@@ -11,9 +11,9 @@ class UserService{
     }
 
 
-    async getUserList(search?: string,page?: number) {
+    async getUserList(search?: string,page?: number,limit?:string) {
         try {
-            const response = await this.userApi.getUserList(search,page);
+            const response = await this.userApi.getUserList(search, page, limit);
 
     
             return response;

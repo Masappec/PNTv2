@@ -35,19 +35,64 @@ export interface RequestPublicApi {
     establishment: string; 
 }
 
-
-
 export interface PublicDataApiResponse {
-    total: number;
-    responsed: number[];
-    not_responsed: number[];
-    total_not_responsed: number;
-    total_responsed: number;
-    users: {
-        active: number;
-        inactive: number;
-    }
+    entites_total: EntitesTotal
+    solicities: Solicities
+    top_20: Top20[]
+    top_20_most_visited: Top20MostVisited[]
 }
+
+export interface EntitesTotal {
+    total: number
+    updated: number
+    not_updated: number
+}
+
+export interface Solicities {
+    recibidas: number[]
+    atendidas: number[]
+}
+
+export interface Top20 {
+    establishment: Establishment
+    score: number
+}
+
+export interface Establishment {
+    id: number
+    name: string
+    code: string
+    abbreviation: string
+    logo: string
+    highest_authority: string
+    first_name_authority: string
+    last_name_authority: string
+    job_authority: string
+    email_authority: string
+    is_active: boolean
+    slug: string
+    identification: string
+    visits: number
+}
+
+export interface Top20MostVisited {
+    id: number
+    name: string
+    code: string
+    abbreviation: string
+    logo: string
+    highest_authority: string
+    first_name_authority: string
+    last_name_authority: string
+    job_authority: string
+    email_authority: string
+    is_active: boolean
+    slug: string
+    identification: string
+    visits: number
+}
+
+
 
 
 export interface RequestPersonalApi {
@@ -128,4 +173,19 @@ export interface FormulariosResponse{
     numero_personas:string;
     enlace_descarga_formulario:string;
     enlace_servicio:string;
+}
+
+export interface IndicatorRequest{
+    year:number;
+    establishment_id:number;
+}
+    
+export interface IndicatorResponse {
+    recibidas:number[];
+    atendidas:number[];
+    total_recibidas:number;
+    total_atendidas:number;
+    score_activa:number;
+    score_saip:number;
+    total_score:number;
 }

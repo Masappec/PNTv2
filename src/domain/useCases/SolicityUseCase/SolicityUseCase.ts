@@ -5,14 +5,17 @@ import ResponseSolicity from "../../entities/ResponseSolicity";
 import { Solicity } from "../../entities/Solicity";
 import UserEntity from "../../entities/UserEntity";
 import moment from 'moment';
+import jsPDF from 'jspdf';
+import autotable from  'jspdf-autotable';
 
 class SolicityUseCase {
   constructor(private readonly solicityService: SolicityService) { }
-  async getSolicities(search: string, page: number, limit?: number,sort?:string[]) {
-    return await this.solicityService.getSolicities(search, page, limit,sort);
+  async getSolicities(search: string, page: number, limit?: number,sort?:string[],
+    range_start?: string, range_end?: string) {
+    return await this.solicityService.getSolicities(search, page, limit,sort, range_start, range_end);
   }
-  async getEstablishmentSolicity(search: string, page: number, limit?: number, sort?: string[]) {
-    return await this.solicityService.getEstablishmentSolicity(search, page, limit, sort);
+  async getEstablishmentSolicity(search: string, page: number, limit?: number, sort?: string[],status?:string) {
+    return await this.solicityService.getEstablishmentSolicity(search, page, limit, sort, status);
   }
   async createDraft(data: CreateSolicity) {
     return await this.solicityService.createDraftSolicity(data);
@@ -151,6 +154,53 @@ class SolicityUseCase {
         return 'Solicitar Gestión oficiosa'
       }
       return ''
+  }
+
+
+   generatePdf(data:Solicity){
+    const doc = new jsPDF();
+
+    // Título
+    doc.text('Reporte de Solicitud', 10, 10);
+
+    // Información general
+    doc.text(`ID: ${data.id}`, 10, 20);
+    doc.text(`Nombre del Establecimiento: ${data.estblishment_name}`, 10, 30);
+    doc.text(`Número SAIP: ${data.number_saip}`, 10, 40);
+    doc.text(`Fecha de Creación: ${new Date(data.created_at).toLocaleString()}`, 10, 50);
+    doc.text(`Ciudad: ${data.city}`, 10, 60);
+    doc.text(`Texto: ${data.text}`, 10, 70);
+
+    // Información del usuario
+    doc.text('Información del ciudadano:', 10, 80);
+    doc.text(`Nombre: ${data.first_name} ${data.last_name}`, 10, 90);
+    doc.text(`Email: ${data.email}`, 10, 100);
+    doc.text(`Teléfono: ${data.phone}`, 10, 110);
+    doc.text(`Identificación cultural: ${data.race_identification}`, 10, 120);
+    doc.text(`Género: ${data.gender}`, 10, 130);
+
+    // Timeline
+     if (data.timeline) {
+       autotable(doc,{
+        startY: 140,
+        head: [['Estado', 'Fecha de Creación']],
+        body: data.timeline.map(item => [item.status, new Date(item.created_at).toLocaleString()]),
+      });
+    }
+   
+
+    if(data.responses){
+      // Responses
+      autotable(doc,{
+        startY: 160,
+        head: [[ 'Texto', 'Fecha de Creación']],
+        body: data.responses.map(item => [ item.text, new Date(item.created_at).toLocaleString()]),
+      });
+    }
+    
+
+    // Guardar el PDF
+    doc.save(`Solicitud-${data.number_saip}.pdf`);
   }
 }
 export default SolicityUseCase;

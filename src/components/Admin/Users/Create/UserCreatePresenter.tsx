@@ -1,5 +1,3 @@
-import { LuCheck, LuX } from "react-icons/lu"
-import Input from "../../../Common/Input"
 import Select from "../../../Common/Select"
 import { ChangeEvent, FormEvent } from "react"
 import Alert from "../../../Common/Alert"
@@ -7,7 +5,6 @@ import RoleEntity from "../../../../domain/entities/RoleEntity"
 import UserEntity from "../../../../domain/entities/UserEntity"
 import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
 import Spinner from "../../../Common/Spinner"
-import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5"
 import PasswordMeter, { IOncalculate } from "../../../Common/PasswordMeter"
 
 interface UserCreatePresenterProps {
@@ -35,72 +32,34 @@ interface UserCreatePresenterProps {
 
 const UserCreatePresenter = (props: UserCreatePresenterProps) => {
 
-
-
     return (
-        <div className="container">
-            <div className="flex items-center py-5 justify-center">
+        <>
+            <p className='my-8 max-w-3xl items-center text-sm text-primary'>
+                Completa todos los campos y selecciona "Crear usuario" para añadir un nuevo usuario al portal.
+            </p>
 
+            <form
+                onSubmit={props.handleSubmit}
+                className='mx-auto max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'
+                data-astro-source-loc='19:114'>
+                <section
+                    className='mt-4 grid grid-cols-1 items-start justify-center gap-4 text-start'
+                    data-astro-source-loc='26:92'>
+                    {
+                        props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
+                    }
+                    {
+                        props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
+                    }
+                    {
+                        props.loading && <Spinner />
+                    }
+                    {
+                        props.roles_list.length > 1 &&
+                        <Select placeholder="Rol"
+                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
 
-            </div>
-            <form className="flex  mt-5" onSubmit={props.handleSubmit}>
-                <section className="container px-4 mx-auto">
-                    <div className="sm:flex sm:items-center sm:justify-between">
-                        <div>
-                            <div className="flex items-center gap-x-3">
-                                <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-                                    Crear un nuevo usuario
-                                </h2>
-
-
-                            </div>
-
-                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
-                                Llena los campos para crear un nuevo usuario
-                            </p>
-                        </div>
-                        <div className="flex items-center mt-4 gap-x-3">
-                            <button
-                                type="button"
-                                onClick={props.onCancel}
-                                disabled={props.isDisabled}
-                                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-gray-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-200">
-                                <LuX className="w-5 h-5" />
-                                <span>
-                                    Cancelar
-                                </span>
-                            </button>
-
-                            {
-                                props.loadingSubmit ? <Spinner /> :
-
-                                    <button
-                                        type="submit"
-                                        className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
-                                text-white transition-colors duration-200  bg-primary-400  rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-600">
-                                        <LuCheck className="w-5 h-5" />
-                                        <span>
-                                            Crear
-                                        </span>
-                                    </button>
-                            }
-                        </div>
-                    </div>
-
-                    <div className="mt-10">
-                        {
-                            props.error && <Alert message={props.error} type="error" onClose={() => props.setError('')} />
-                        }
-                        {
-                            props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
-                        }
-                        {
-                            props.loading && <Spinner />
-                        }
-                        {
-                            props.roles_list.length > 1 &&
-                            <Select placeholder="Rol" options={
+                            options={
 
                                 [
                                     {
@@ -114,116 +73,146 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                     }
                                 }))
                             }
-                                onChange={(e) => props.onChangeRole(e)}
-                            />
-                        }
-                        <div className="grid xl:grid-cols-3 grid-cols-1 md:grid-cols-2 gap-4">
-
-                            {
-                                props.fields.map((field) => {
-                                    return (
-                                        field.type_field === "password" ?
-                                            <div className="relative mt-2">
-
-                                                <Input
-                                                    type={props.showPassword ? "text" : field.type_field}
-                                                    placeholder={field.description}
-                                                    className="w-60"
-                                                    value={
-                                                        props.data[field.name as keyof UserEntity] as string || ""
-                                                    }
-                                                    onChange={(e) =>
-                                                        props.setData(field.name, e.target.value)
-                                                    }
-                                                    name={field.name}
-                                                />
-                                                <button
-                                                    type="button"
-                                                    className="absolute left-64 top-12  hover:cursor-pointer text-gray-600"
-                                                    onClick={props.handleShowPassword}
-                                                >
-                                                    {props.showPassword ? (
-                                                        <IoEyeOffOutline />
-                                                    ) : (
-                                                        <IoEyeOutline />
-                                                    )}
-                                                </button>
-                                                {
-                                                    field.name === "password" && (
-
-                                                        <PasswordMeter
-                                                            onCalculate={props.onChangePassword}
-                                                            password={props.data[field.name as keyof UserEntity] as string || ""}
-                                                        />
-                                                    )
+                            onChange={(e) => props.onChangeRole(e)}
+                        />
+                    }
+                    {
+                        props.fields.map((field) => {
+                            return field.type_field === "password" ?
+                                <div className='relative'>
+                                    <div>
+                                        <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                                            {field.description}
+                                        </label>
+                                        <div className='relative'>
+                                            <input
+                                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pr-10 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                                type={field.type_field}
+                                                placeholder={field.description}
+                                                name={field.name}
+                                                onChange={(e) =>
+                                                    props.setData(field.name, e.target.value)
                                                 }
-                                            </div>
+                                            />
+                                            <button
+                                                type='button'
+                                                onClick={props.handleShowPassword}
 
-                                            :
-                                            field.type_field === 'select' ? 
-                                            (
-                                                    field.name === 'establishment_id' && props.isEstablishmentUser ?
-                                                <div className="flex  flex-col m-2">
-                                                            <Select
-                                                                placeholder={field.description}
-                                                                value={props.data[field.name as keyof UserEntity] as string}
-                                                                onChange={(e) => props.setData(field.name, e.target.value)}
-                                                                options={
-                                                                    [{
-                                                                        value: "",
-                                                                        label: "Seleccione una opción"
-                                                                    }].concat(field.options?.map((option) => {
-                                                                        return {
-                                                                            value: option.id + "",
-                                                                            label: option.name
-                                                                        }
-                                                                    }) || [])
-                                                                }
-                                                                disabled={true}
-                                                            />
-                                                </div>
+                                                className='absolute right-0 top-0 p-2 text-gray-600 outline-primary hover:cursor-pointer'
+                                            ><svg
+                                                className='h-6 w-6'
+                                                stroke='currentColor'
+                                                fill='currentColor'
+                                                stroke-width='0'
+                                                viewBox='0 0 512 512'
+                                                height='1em'
+                                                width='1em'
+                                                xmlns='http://www.w3.org/2000/svg'
+                                            ><path
+                                                fill='none'
+                                                stroke-linecap='round'
+                                                stroke-linejoin='round'
+                                                stroke-width='32'
+                                                d='M255.66 112c-77.94 0-157.89 45.11-220.83 135.33a16 16 0 00-.27 17.77C82.92 340.8 161.8 400 255.66 400c92.84 0 173.34-59.38 221.79-135.25a16.14 16.14 0 000-17.47C428.89 172.28 347.8 112 255.66 112z'
+                                            ></path><circle
+                                                cx='256'
+                                                cy='256'
+                                                r='80'
+                                                fill='none'
+                                                stroke-miterlimit='10'
+                                                stroke-width='32'></circle>
+                                                </svg></button>
+                                        </div>
+                                        {
+                                            field.name === "password" && (
 
-                                                : <div className="flex  flex-col m-2 ">
-
-                                                <Select
-                                                    placeholder={field.description}
-                                                    value={props.data[field.name as keyof UserEntity] as string}
-                                                    onChange={(e) => props.setData(field.name, e.target.value)}
-                                                    options={
-                                                        [{
-                                                            value: "",
-                                                            label: "Seleccione una opción"
-                                                        }].concat(field.options?.map((option) => {
-                                                            return {
-                                                                value: option.id + "",
-                                                                label: option.name
-                                                            }
-                                                        }) || [])
-                                                    }
+                                                <PasswordMeter
+                                                    onCalculate={props.onChangePassword}
+                                                    password={props.data[field.name as keyof UserEntity] as string || ""}
                                                 />
-                                            </div>) :
-                                                <div className="flex  flex-col m-2">
-                                                    <Input type={field.type_field}
-                                                        placeholder={field.description} width="w-60"
-                                                        value={props.data[field.name as keyof UserEntity] as string}
-                                                        onChange={(e) => props.setData(field.name, e.target.value)}
-                                                        name={field.name}
-                                                    />
-                                                </div>
-                                    )
-                                })
-                            }
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                                : field.type_field == "select" ?
+                                    <div>
+                                        <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                                            {field.description}
+                                        </label>
+                                        <Select
+                                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                            name={field.name}
 
+                                            value={props.data[field.name as keyof UserEntity] as string}
+                                            onChange={(e) => props.setData(field.name, e.target.value)}
+                                            options={
+                                                [{
+                                                    value: "",
+                                                    label: "Seleccione una opción"
+                                                }].concat(field.options?.map((option) => {
+                                                    return {
+                                                        value: option.id + "",
+                                                        label: option.name
+                                                    }
+                                                }) || [])
+                                            }
+                                            disabled={field.name === 'establishment_id' && props.isEstablishmentUser}
+                                        />
+                                    </div> :
+                                    <div data-astro-source-loc='28:16'>
+                                        <label
+                                            className='text-sm font-medium text-gray-900'
+                                            data-testid='flowbite-label'
+                                            data-astro-source-loc='30:16'>
+                                            {field.description}
+                                        </label>
+                                        <input
+                                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                            type='text'
+                                            onChange={(e) =>
+                                                props.setData(field.name, e.target.value)
+                                            }
+                                            placeholder={"Ingresa " + field.description}
+                                            name={field.name}
+                                            data-astro-source-loc='32:14'
+                                        />
+                                    </div>
 
+                        })
+                    }
 
-                        </div>
-
-                    </div>
 
                 </section>
+                {
+                    props.loadingSubmit ? <Spinner /> :
+                        <button
+                            type='submit'
+                            disabled={props.isDisabled}
+
+                            className='mt-8 w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'
+                            data-astro-source-loc='249:42'>
+                            Crear usuario
+                        </button>
+                }
+
+                <button
+                    type='button'
+                    onClick={props.onCancel}
+
+                    className='mt-8 w-full rounded-full bg-gray-400 px-6 py-3
+                     text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none 
+                     focus:ring-2 focus:ring-blue-100'
+                    data-astro-source-loc='249:42'>
+                    Cancelar
+                </button>
+
+
             </form>
-        </div>
+        </>
     )
+
+
+
 }
 
 export default UserCreatePresenter

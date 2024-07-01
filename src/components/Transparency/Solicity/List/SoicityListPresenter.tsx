@@ -3,6 +3,7 @@ import Table from "../../../Common/Table/index"
 
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
+import Alert from "../../../Common/Alert"
 
 
 
@@ -27,7 +28,7 @@ interface Props {
     onHold: () => void
     onDetail: () => void
 
-
+    setError: (errors: string) => void
     from: number
     to: number
     total: number
@@ -35,7 +36,9 @@ interface Props {
     limits: number[]
     onChangesLimit: (limit: number) => void
     onChangesSort: (sort: string) => void
-    columnsSort: string[]
+    columnsSort: string[];
+    onChangeStart: (start: string) => void
+    onChangeEnd: (end: string) => void
 }
 
 const SolicityListPresenter = (props: Props) => {
@@ -45,29 +48,73 @@ const SolicityListPresenter = (props: Props) => {
                 Solicitudes
 
             </h2>
-            <section className='mb-8 flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center'>
-                <div className='group relative w-full max-w-sm'>
-                    <svg
-                        className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
-                        stroke='currentColor'
-                        fill='currentColor'
-                        stroke-width='0'
-                        viewBox='0 0 24 24'
-                        height='1em'
-                        width='1em'
-                        xmlns='http://www.w3.org/2000/svg'
-                    ><path
-                        d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
-                    ></path>
-                    </svg>
-                    <input
-                        className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                        type='text'
-                        placeholder='Buscar por N° SAIP o Entidad.'
+            {
+                props.error ? <Alert
+                    type="error"
+                    message={props.error}
+                    onClose={() => { props.setError("")}}
+                />: null
+            }
+            <section className='mb-8 flex flex-col items-end 
+            justify-between gap-4 sm:flex-row sm:items-center'>
+                <div className="flex flex-row gap-6 w-full">
+                    <div>
 
-                        onChange={(e) => props.onSearch(e.target.value)}
 
-                    />
+                    <label className='text-gray-500 text-sm'>Buscar</label>
+                    <div className='group relative w-full max-w-xs mt-1'>
+                        
+                        <svg
+                            className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
+                            stroke='currentColor'
+                            fill='currentColor'
+                            stroke-width='0'
+                            viewBox='0 0 24 24'
+                            height='1em'
+                            width='1em'
+                            xmlns='http://www.w3.org/2000/svg'
+                        ><path
+                            d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
+                        ></path>
+                        </svg>
+                        <input
+                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                            type='text'
+                            placeholder='Buscar por N° SAIP o Entidad.'
+
+                            onChange={(e) => props.onSearch(e.target.value)}
+
+                        />
+                     
+                    </div>
+                    </div>
+                    <div className='flex flex-row gap-2'>
+
+                        <div className='flex flex-col gap-2'>
+                            <label className='text-gray-500 text-sm'>
+                                Desde
+                            </label>
+                            <input
+                                type="date"
+                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                placeholder="Desde"
+                                onChange={(e) => props.onChangeStart(e.target.value)}
+                            />
+                            
+                        </div>
+                        <div className='flex flex-col gap-2'>
+                            <label className='text-gray-500 text-sm'>
+                                Hasta
+                            </label>
+                        <input
+                            type="date"
+                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                            placeholder="Hasta"
+                            onChange={(e) => props.onChangeEnd(e.target.value)}
+                        />
+                        </div>
+                    </div>
+
                 </div>
 
                 <button
@@ -159,7 +206,7 @@ const SolicityListPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const status = StatusSolicity[solicity.status as keyof typeof StatusSolicity]
                                 return (
-                                    
+
                                     <p className="text-wrap border rounded-md px-2 py-1     border-primary text-primary bg-primary/10">
 
                                         <span className=' text-xs font-normal  sm:text-sm'>
@@ -167,11 +214,11 @@ const SolicityListPresenter = (props: Props) => {
                                             {status.value}
 
                                         </span>
-                                    </p>   
+                                    </p>
                                 )
                             }
                         },
-                        
+
 
                     ]}
                     currentPage={props.page}

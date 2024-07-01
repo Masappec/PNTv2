@@ -1,5 +1,4 @@
 import UserCreateContainer from "../../../../../components/Admin/Users/Create/UserCreateContainer"
-import Breadcrumb from "../../../../../components/Common/Breadcrumb";
 import ConfigurationUseCase from "../../../../../domain/useCases/Configuration/ConfigurationUseCase";
 import RoleUseCase from "../../../../../domain/useCases/Role/RoleUseCase";
 import UserUseCase from "../../../../../domain/useCases/Users/UserUseCase";
@@ -29,18 +28,7 @@ const UserCreate = () => {
 
     return (
         <>
-            <Breadcrumb
-                items={[
-                    {
-                        name: 'Usuarios',
-                        path: '/admin/est/users/',
-                    },
-                    {
-                        name: 'Nuevo',
-                        path: '#',
-                    }
-                ]}
-            />
+           
             <UserCreateContainer
                 usecase={usecase}
                 roleUseCase={roleUseCase}

@@ -26,6 +26,9 @@ const SolicityListContainer = (props: Props) => {
     const [limitOptions,] = useState<number[]>([5, 10, 20, 40, 50])
     const [columnsSort, setColumnsSort] = useState<string[]>([])
     const [limit, setLimit] = useState<number>(5)
+    const [startDate, setStartDate] = useState<string>("")
+    const [endDate, setEndDate] = useState<string>("")
+    const [search, setSearch] = useState<string>("")
     useEffect(() => {
         props.useCase.getSolicities("", currentPage).then(response => {
             SetSolicitudes(response.results)
@@ -38,6 +41,27 @@ const SolicityListContainer = (props: Props) => {
             SetError(err.message)
         })
     }, [])
+
+
+    useEffect(() => {
+       
+        const date_start = new Date(startDate)
+        const date_end = new Date(endDate)
+        if (date_start > date_end) {
+            SetError("La fecha de inicio no puede ser mayor a la fecha de fin")
+            return
+        }
+        props.useCase.getSolicities(search,currentPage,limit,columnsSort,startDate,endDate).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }, [startDate,endDate])
 
     const handleAdd = () => {
         navigate('/admin/solicity/create')
@@ -80,7 +104,7 @@ const SolicityListContainer = (props: Props) => {
     }
 
     const setPage = (page: number) => {
-        props.useCase.getSolicities("", page).then(response => {
+        props.useCase.getSolicities(search, page).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)
@@ -93,6 +117,7 @@ const SolicityListContainer = (props: Props) => {
     }
 
     const onSearch = (search: string) => {
+        setSearch(search)
         props.useCase.getSolicities(search, currentPage).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
@@ -107,7 +132,7 @@ const SolicityListContainer = (props: Props) => {
 
     const onChangeLimit = (limit: number) => {
         setLimit(limit)
-        props.useCase.getSolicities("", currentPage, limit).then(response => {
+        props.useCase.getSolicities(search, currentPage, limit).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)
@@ -131,7 +156,7 @@ const SolicityListContainer = (props: Props) => {
             copySort = [...copySort, sort]
         }
 
-        props.useCase.getSolicities("", currentPage, limit, copySort).then(response => {
+        props.useCase.getSolicities(search, currentPage, limit, copySort).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)
@@ -171,6 +196,9 @@ const SolicityListContainer = (props: Props) => {
             to={to}
             total={total}
             totalPage={totalPage}
+            onChangeEnd={setEndDate}
+            onChangeStart={setStartDate}
+            setError={SetError}
         />
     )
 

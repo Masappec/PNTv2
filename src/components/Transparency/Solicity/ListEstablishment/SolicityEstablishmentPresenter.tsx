@@ -2,6 +2,7 @@
 import Table from "../../../Common/Table/index"
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
+import Select from "../../../Common/Select"
 
 
 
@@ -35,6 +36,7 @@ interface Props {
     onChangesLimit: (limit: number) => void
     onChangeSort: (sort: string) => void
     columnsSort: string[]
+    onChangeStatus:(value:string)=>void
 }
 
 const SolicityListEstablishmentPresenter = (props: Props) => {
@@ -48,29 +50,66 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
             </h2>
             <section className='mb-8 flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center'>
-                <div className='group relative w-full max-w-sm'>
-                    <svg
-                        className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
-                        stroke='currentColor'
-                        fill='currentColor'
-                        stroke-width='0'
-                        viewBox='0 0 24 24'
-                        height='1em'
-                        width='1em'
-                        xmlns='http://www.w3.org/2000/svg'
-                    ><path
-                        d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
-                    ></path>
-                    </svg>
-                    <input
-                        className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                        type='text'
-                        placeholder='Buscar por N° SAIP o solicitante.'
+                <div className="flex flex-row gap-6 w-full">
+                    <div>
 
-                        onChange={(e) => props.onSearch(e.target.value)}
 
-                    />
+                        <label className='text-gray-500 text-sm'>Buscar</label>
+                        <div className='group relative w-full max-w-xs mt-1'>
+
+                            <svg
+                                className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
+                                stroke='currentColor'
+                                fill='currentColor'
+                                stroke-width='0'
+                                viewBox='0 0 24 24'
+                                height='1em'
+                                width='1em'
+                                xmlns='http://www.w3.org/2000/svg'
+                            ><path
+                                d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
+                            ></path>
+                            </svg>
+                            <input
+                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                type='text'
+                                placeholder='Buscar por N° SAIP o Entidad.'
+
+                                onChange={(e) => props.onSearch(e.target.value)}
+
+                            />
+
+                        </div>
+                    </div>
+                    <div className='flex flex-col'>
+
+                        <label className='text-gray-500 text-sm'>
+                            Filtrar por estado
+                        </label>
+                        <Select
+                        options={[
+                            {
+                                label:"--------",
+                                value:''
+                            },
+                            
+                            ...Object.keys(StatusSolicity).filter(e=>e!='DRAFT').map(e=>{
+                            return{
+                                label:StatusSolicity[e as keyof typeof StatusSolicity].value_2,
+                                value:e
+                            }
+                        })]}
+                        onChange={(e)=>props.onChangeStatus(e.target.value)}
+                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+
+                        >
+
+
+                        </Select>
+                    </div>
+
                 </div>
+                
 
                 <button
                     type='button'

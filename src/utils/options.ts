@@ -1,5 +1,5 @@
 import { ColourOption } from "./interface"
-
+import QRCode from 'qrcode-generator';
 export const genders: ColourOption[] = [
     { value: 'Masculino', label: 'Masculino', color: "#00B8D9" },
     { value: 'Femenino', label: 'Femenino', color: "#00B8D9" },
@@ -27,3 +27,18 @@ export const formart_send: ColourOption[] = [
 export const format_receipt: ColourOption[] = [
     { value: 'formulario web', label: 'formulario web', color: '#00B8D9' },
 ]
+
+
+export const generarQR = (qrText:string) => {
+    
+        // Creamos un objeto QRCode
+        const qr = QRCode(0, 'L');
+        qr.addData(qrText);
+        qr.make();
+
+        // Obtenemos la URL del QR generado
+        const qrUrl = qr.createDataURL();
+
+        // Actualizamos el estado con la URL del QR
+        return qrUrl;    
+};

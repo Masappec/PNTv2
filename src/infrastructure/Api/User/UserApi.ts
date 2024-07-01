@@ -18,13 +18,16 @@ class UserApi {
     
 
 
-    async getUserList(search?: string,page?: number) {
+    async getUserList(search?: string,page?: number,limit?:string) {
         try {
-            const response = await this.apiBaseUrl.get<Pagination<User>>(this.path+'/user/list' + 
-            (search || page ? '?' : '') +
-            (search ? 'search=' + search : '') +
-            (search && page ? '&' : '') +
-            (page ? 'page=' + page : ''));
+            const response = await this.apiBaseUrl.get<Pagination<User>>(this.path+'/user/list',{
+            params:{
+                
+                search,
+                page,
+                limit
+            }
+            });
             
 
             if (response.status !== 200) {

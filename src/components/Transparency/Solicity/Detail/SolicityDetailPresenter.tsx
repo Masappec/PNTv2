@@ -8,6 +8,7 @@ import { StatusSolicity } from "../../../../utils/enums";
 import { useEffect, useState } from "react";
 import SessionService from "../../../../infrastructure/Services/SessionService";
 import UserEntity from "../../../../domain/entities/UserEntity";
+import { FaFilePdf } from "react-icons/fa";
 
 interface Props {
 
@@ -23,6 +24,7 @@ interface Props {
   isLoadingSend: boolean;
   timeline: PartialTimelineSolicty[]
   children?: React.ReactNode;
+  onDownloadPdf: () => void;
 }
 const SolicityDetailPresenter = (props: Props) => {
 
@@ -69,11 +71,19 @@ const SolicityDetailPresenter = (props: Props) => {
             </div>
             <div className='grid sm:grid-cols-[300px,1fr]'>
               <span className='font-bold text-gray-700'>Fecha</span>
-              <span className='text-slate-600'>{new Date(props.solicitySaved.date).toLocaleString()}</span>
+              <span className='text-slate-600'>{new Date(props.solicitySaved.date).toLocaleString('es-ES', {
+                hour12: false,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                
+              })}</span>
             </div>
             <div className='grid sm:grid-cols-[300px,1fr]'>
               <span className='font-bold text-gray-700'>Ciudad</span>
-              <span className='text-slate-600'>{props.solicitySaved.address}</span>
+              <span className='text-slate-600'>{props.solicitySaved.city}</span>
             </div>
           </section>
 
@@ -94,7 +104,7 @@ const SolicityDetailPresenter = (props: Props) => {
 
             <div className='grid sm:grid-cols-[300px,1fr]'>
               <span className='font-bold text-gray-700'>Correo electrónico</span>
-              <span className='text-slate-600'>{props.solicitySaved.address}</span>
+              <span className='text-slate-600'>{props.solicitySaved.email}</span>
             </div>
 
             <div className='grid sm:grid-cols-[300px,1fr]'>
@@ -173,6 +183,16 @@ const SolicityDetailPresenter = (props: Props) => {
 
 
             </ol>
+            {
+              props.onDownloadPdf && <button
+              type="button"
+                className='w-full rounded-md bg-primary text-white font-semibold py-2'
+                onClick={props.onDownloadPdf}
+              >
+                Descargar PDF
+                <FaFilePdf className='ml-2 inline-block' />
+              </button>
+            }
           </div>
         </div>
       </section>

@@ -130,7 +130,7 @@ const DynamicTable = (props: Props) => {
                         }
 
                         {
-                            !props.isSaved && <th scope='col'>Acciones</th>
+                            !props.isSaved && <th scope='col'></th>
                         }
                     </tr>
                 </thead>

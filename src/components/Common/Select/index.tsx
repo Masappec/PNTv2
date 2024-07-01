@@ -14,7 +14,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 const Select = (props: SelectProps) => {
-
+    console.log(props.selected)
 
     return (
         <div className="flex flex-col">

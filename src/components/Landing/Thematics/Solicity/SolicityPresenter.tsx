@@ -76,7 +76,7 @@ const SolicityPresenter = (props: Props) => {
                 )
               },
               {
-                title: "DENOMICACIÓN DEL SERVICIO",
+                title: "DENOMINACIÓN DEL SERVICIO",
                 render: (row) => (
                   <p>{ row.denominacion}</p>
                 )
@@ -85,7 +85,13 @@ const SolicityPresenter = (props: Props) => {
               {
                 title: "ENLACE",
                 render: (row) => (
-                  <p>{ row.enlace}</p>
+                  <p>
+                    <a href={row.enlace} target="_blank" rel="noreferrer"
+
+                      className="text-primary hover:text-primary-dark">
+                      Ver más
+                    </a>
+                  </p>
                 )
               }
 

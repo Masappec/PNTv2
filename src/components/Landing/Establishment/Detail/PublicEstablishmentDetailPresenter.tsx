@@ -1,18 +1,13 @@
-import { Accordion, Badge, Dropdown } from "flowbite-react";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 
-
-
-
-import { FiCalendar } from "react-icons/fi";
 import TransparencyActive from "../../../../domain/entities/TransparencyActive";
-import TA from "../Partial/TA/TA";
 import { AcordionMonthYear } from "../../../../utils/interface";
-import { CalendarYear } from "../../../Common/CalendarYear";
-import TF from "../Partial/TF/TF";
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import TransparencyCollab from "../../../../domain/entities/TransparencyCollab";
-import TC from "../Partial/TC";
+import EstablishmentPublicationsPresenter from "./Publications/PublicationsPresenter";
+import InformationPresenter from "./Information/InformationPresenter";
+import IndicatorsEstablishment from "./Indicators/IndicatorsEstablishment";
+import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
 
 interface Props {
   entity: EstablishmentEntity;
@@ -40,6 +35,7 @@ interface Props {
   handlePageInfo: () => void;
   handlePageSolicity: () => void;
   handlePageIndicators: () => void;
+  qrUrl: string;
 }
 
 const PublicEstablishmentDetailPresenter = (props: Props) => {
@@ -148,229 +144,38 @@ return(
         </article>
       </div>
 
-      <section className='my-16 flex flex-col gap-y-4 md:flex-row md:items-end'>
-        <h2 className='text-balance text-2xl font-normal leading-tight md:text-[40px]'>
-          Información publicada
-        </h2>
-        <div className='h-[1px] w-full bg-gray-400'></div>
-      </section>
-    <Accordion className="mt-28 mb-24" collapseAll>
-      <Accordion.Panel>
-        <Accordion.Title>
-          <p className="text-start text-black text-lg font-medium">
-            Transparencia activa{" "}
-          </p>
-        </Accordion.Title>
-        <Accordion.Content>
-          <>
-            <p className="text-start text-lg font-medium mt-14">
-              Transparencia activa{" "}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-4">
-              {props.entity.name}
-            </h2>
-            <p className=" text-sm xl:w-full w-auto  mt-8 font-medium mb-10">
-              La ley Orgánica de Transparencia y Acceso de la Información Pública
-              (LOTAIP) obliga a todas las instituciones del Estado que conforman
-              el sector público a difundir a través de la página web
-              institucional, información mínima actualizada de naturaleza
-              obligatoria.
-            </p>
-            <Dropdown label={
-              <>
-                <FiCalendar className="w-5 h-5 mr-5 "></FiCalendar>
-
-                Seleccionar año
-                <Badge className="ml-2" color="info">
-                  {props.selectedYear}
-                </Badge>
-              </>
-
-            }
-              size={"md"}
-              arrowIcon={false}
-              dismissOnClick={true}
-              color={"cyan"}
-              
-            >
+          <EstablishmentPublicationsPresenter
+            publications={props.publications}
+            onItemPublicationClick={props.onItemPublicationClick}
+            onChangePage={props.onChangePage}
+            onSearch={props.onSearch}
+            meses={props.meses}
+            years={props.years}
+            onSelectYear={props.onSelectYear}
+            selectedYear={props.selectedYear}
+            onOpenMonth={props.onOpenMonth}
+            entity={props.entity}
+            error={props.error}
+            onOpenMonthTC={props.onOpenMonthTC}
+            loading={props.loading}
+            onOpenMonthTF={props.onOpenMonthTF}
+            onSelectYearTC={props.onSelectYearTC}
+            onSelectedYearTF={props.onSelectedYearTF}
+            publicationsTC={props.publicationsTC}
+            publicationsTF={props.publicationsTF}
+            selectedYearTC={props.selectedYearTC}
+            selectedYearTF={props.selectedYearTF}
+          />
 
 
+      <InformationPresenter/>
 
-              <CalendarYear
-                onSelect={props.onSelectYear}
-
-              />
-            </Dropdown>
-
-
-            <div className="">
-              <Accordion className="mt-14" key={"TA"} >
-                {
-                  props.meses.map((mes, index) => {
-                    return (
-                      <TA
-                        data={props.publications.find(x => x.month == index + 1 && x.year == props.selectedYear)?.data || []}
-                        month={mes}
-                        number_month={index + 1}
-                        year={props.selectedYear}
-                        key={index}
-                        onOpen={(month) => props.onOpenMonth(month)}
-                      />
-                    );
-                  })
-                }
-              </Accordion>
-
-
-            </div>
-
-
-          </>
-        </Accordion.Content>
-      </Accordion.Panel>
-      <Accordion.Panel>
-        <Accordion.Title>
-          <p className="text-start  text-black text-lg font-medium">
-
-            Transparencia focalizada
-
-          </p>
-        </Accordion.Title>
-        <Accordion.Content>
-          <>
-            <p className="text-start text-lg font-medium mt-14">
-              Transparencia focalizada{" "}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-4">
-              {props.entity.name}
-            </h2>
-            <p className=" text-sm xl:w-full mt-8 font-medium mb-10">
-              La ley Orgánica de Transparencia y Acceso de la Información Pública
-              (LOTAIP) obliga a todas las instituciones del Estado que conforman
-              el sector público a difundir a través de la página web
-              institucional, información mínima actualizada de naturaleza
-              obligatoria.
-            </p>
-
-            <Dropdown label={
-              <>
-                <FiCalendar className="w-5 h-5 mr-5 "></FiCalendar>
-
-                Seleccionar año
-                <Badge className="ml-2" color="info">
-                  {props.selectedYearTF}
-                </Badge>
-              </>
-
-            }
-              size={"md"}
-              arrowIcon={false}
-              dismissOnClick={true}
-                color={"cyan"}
-
-            >
-
-
-
-              <CalendarYear onSelect={props.onSelectedYearTF} />
-            </Dropdown>
-
-            <div>
-              <Accordion className="mt-14" key={"TA"}>
-                {
-                  props.meses.map((mes, index) => {
-                    return (
-                      <TF
-                        data={props.publicationsTF.find(x => x.month == index + 1 && x.year == props.selectedYear)?.data || []}
-                        month={mes}
-                        number_month={index + 1}
-                        year={props.selectedYear}
-                        key={index}
-                        onOpen={(month) => props.onOpenMonthTF(month)}
-                      />
-                    );
-                  })
-                }
-              </Accordion>
-            </div>
-          </>
-        </Accordion.Content>
-      </Accordion.Panel>
-      <Accordion.Panel>
-        <Accordion.Title>
-          <p className="text-start text-black text-lg font-medium">
-
-            Transparencia colaborativa
-          </p>
-        </Accordion.Title>
-        <Accordion.Content>
-          <>
-            <p className="text-start text-lg font-medium mt-14">
-              Transparencia colaborativa{" "}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-4">
-              {props.entity.name}
-            </h2>
-            <p className=" text-sm xl:w-full mt-8 font-medium mb-10">
-              La ley Orgánica de Transparencia y Acceso de la Información Pública
-              (LOTAIP) obliga a todas las instituciones del Estado que conforman
-              el sector público a difundir a través de la página web
-              institucional, información mínima actualizada de naturaleza
-              obligatoria.
-            </p>
-            <Dropdown label={
-              <>
-                <FiCalendar className="w-5 h-5 mr-5 "></FiCalendar>
-
-                Seleccionar año
-                <Badge className="ml-2" color="info">
-                  {props.selectedYearTC}
-                </Badge>
-              </>
-
-            }
-              size={"md"}
-              arrowIcon={false}
-              dismissOnClick={true}
-                color={"cyan"}
-
-            >
-
-
-
-              <CalendarYear onSelect={props.onSelectYearTC} />
-            </Dropdown>
-
-            <div >
-
-
-              <div>
-                <Accordion className="mt-14" key={"TA"}>
-                  {
-                    props.meses.map((mes, index) => {
-                      return (
-                        <TC
-                          data={props.publicationsTC.find(x => x.month == index + 1 && x.year == props.selectedYear)?.data || []}
-                          month={mes}
-                          number_month={index + 1}
-                          year={props.selectedYear}
-                          key={index}
-                          onOpen={(month) => props.onOpenMonthTC(month)}
-                        />
-                      );
-                    })
-                  }
-                </Accordion>
-              </div>
-            </div>
-          </>
-        </Accordion.Content>
-      </Accordion.Panel>
-    </Accordion>
-
+      <IndicatorsEstablishment
+        usecase={new PublicDataApi()}
+        establishment_id={props.entity.id || 0}
+        year={new Date().getFullYear()}
+        qrUrl={props.qrUrl}
+      />
     </section>
 
   </main>

@@ -11,7 +11,14 @@ interface ActiveNumeralsPresenterProps {
   error?: string;
   setError?: (error: string) => void;
 }
-
+const getCurrentDate = (): string => {
+  const currentDate = new Date();
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long'
+  };
+  return currentDate.toLocaleDateString(undefined, options);
+};
 const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
   if (props.loading) {
     return <Spinner />
@@ -20,7 +27,7 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
   return(
     <>
       <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
-        Transparencia Activa
+        Transparencia Activa  | {getCurrentDate()}
 
       </h2>
       <section id='list-buttons' className='mb-16 max-w-6xl'>

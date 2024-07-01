@@ -7,8 +7,8 @@ import UserMapper from "../../mappers/UserMapper";
 class UserUseCase {
   constructor(private readonly userRepository: UserService) {}
 
-  async execute(search?: string,page?: number){
-    const users = await this.userRepository.getUserList(search,page);
+  async execute(search?: string, page?: number, limit?:string){
+    const users = await this.userRepository.getUserList(search, page, limit);
 
     return {
       ...users,

@@ -138,7 +138,11 @@ const SolicityDetailContainer = (props: Props) => {
 
 
 
+    const donwloadPdf = () => {
 
+        props.usecase.generatePdf(solicityToResponse)
+
+    }
 
 
     return (
@@ -153,6 +157,7 @@ const SolicityDetailContainer = (props: Props) => {
                 onChange={() => { }}
                 children={props.children}
                 timeline={props.timeline}
+                onDownloadPdf={donwloadPdf}
 
 
             />

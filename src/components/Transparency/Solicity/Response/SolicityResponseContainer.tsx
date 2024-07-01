@@ -508,6 +508,9 @@ const SolicityResponseContainer = (props: Props) => {
             console.log(e)
         })
     }
+
+
+   
     return isSaved ?
         <ScreenMessage message=""
             type="Se ha enviado tu respuesta correctamente" >
