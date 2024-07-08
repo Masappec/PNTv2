@@ -1,10 +1,12 @@
 
-import TablePublic from "../../../Common/TablePublic";
 import { MapIsotipo } from "../../../Common/MapIsotipo";
-import Input from "../../../Common/Input";
 import Alert from "../../../Common/Alert";
 import { AudienceResponse } from "../../../../infrastructure/Api/PublicDataApi/interface";
 import Spinner from "../../../Common/Spinner";
+import Table from "../../../Common/Table";
+import { useState } from "react";
+import { FaCalendarAlt } from "react-icons/fa";
+import { CalendarMonth } from "../../../Common/CalendarYear";
 
 interface Props {
 
@@ -25,8 +27,13 @@ interface Props {
 
 }
 const AudiencePresenter = (props: Props) => {
+
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+
+  const [visible, setVisible] = useState<boolean>(false);
   return (
-    <main>
+    <main className="relative">
       <MapIsotipo />
       <section className='section-container my-16'>
         <header className='mb-8'>
@@ -67,20 +74,54 @@ const AudiencePresenter = (props: Props) => {
             </div>
 
           </div>
+          <label className='text-sm font-medium text-gray-900'>Mes Y Año</label>
 
           <section className='mt-4 flex max-w-max items-center gap-4'>
-            <Input
-              placeholder={"Mes y Año"}
+            <div className="flex items-center space-x-2">
+              <input
+                type="number"
+                placeholder="Mes"
+                className="border rounded-md px-3 py-2 w-20 focus:outline-none focus:ring focus:border-blue-300"
+                value={month}
+                onChange={(e) => {
+                  const month = parseInt(e.target.value);
+                  if (month >= 1 && month <= 12) {
+                    setMonth(month);
+                    props.onSelectDate(year, month);
+                  }
+                }
+              }
+              />
+              <input
+                type="number"
+                placeholder="Año"
+                className="border rounded-md px-3 py-2 w-20 focus:outline-none focus:ring focus:border-blue-300"
+                value={year}
+                onChange={(e) => {
+                  const year = parseInt(e.target.value);
+                  setYear(year);
+                  props.onSelectDate(year, month);
+                }}
+              />
+              <div className="relative">
 
-              onChange={(e) => {
+              <button className="text-primary hover:text-primary-dark
+              focus:outline-none focus:ring-2 focus:ring-primary-dark
+              rounded-md px-3 py-2"
+                onClick={() => setVisible(!visible)}
+              >
+                <FaCalendarAlt />
 
-                const [year, month] = e.target.value.split("-")
-                props.onSelectDate(parseInt(year), parseInt(month))
-              }}
-              type="month"
+              </button>
+              <CalendarMonth
+                visible={visible}
+                onMonthSelect={(month) => setMonth(month)}
+                onYearSelect={(year) => setYear(year)}
+              />
+              </div>
 
-              className="block w-full rounded-lg  text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
-            />
+              {/* You can add a calendar icon for date selection */}
+            </div>
           </section>
 
           {
@@ -106,13 +147,18 @@ const AudiencePresenter = (props: Props) => {
 
 
         <div className='mt-8 h-min rounded-md bg-gray-100'>
-          <TablePublic
+          <Table
+          show={false}
+          
             columns={[
               {
                 title: "INSTITUCIÓN",
                 render: (row) => (
-                  <p>{row.institucion }</p>
-                )
+                  <p className="whitespace-pre-wrap break-words  text-left">
+                  {row.institucion }</p>
+                ),
+                classes: "w-20"
+
               },
               {
                 title:'NOMBRE',
@@ -135,8 +181,11 @@ const AudiencePresenter = (props: Props) => {
               {
                 title: "DESCRIPCIÓN",
                 render: (row) => (
-                  <p>{ row.descripcion}</p>
-                )
+                  <p className="whitespace-pre-wrap  break-words  text-left">
+                  { row.descripcion}</p>
+                ),
+                classes: "w-25"
+                
               },
               {
                 title: "ENLACE",

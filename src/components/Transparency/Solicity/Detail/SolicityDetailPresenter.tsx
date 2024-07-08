@@ -123,8 +123,8 @@ const SolicityDetailPresenter = (props: Props) => {
             </div>
           </section>
 
-          {props.solicitySaved.text != "" && <section className='mx-auto mb-4 rounded-lg border border-gray-100 bg-custom-green/10 p-4'>
-            <h2 className='mb-4 rounded-md bg-custom-green p-4 text-left text-xl font-bold text-white'>
+          {props.solicitySaved.text != "" && <section className='mx-auto mb-4 rounded-lg border border-gray-100 bg-primary-600/10 p-4'>
+            <h2 className='mb-4 rounded-md bg-primary-600 p-4 text-left text-xl font-bold text-white'>
               Petición completa
             </h2>
 

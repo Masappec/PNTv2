@@ -42,13 +42,29 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
             </Alert>
           }
           {
-            props.numerals.map(numeral => (
+            props.numerals.filter(x=>x.isDefault).map(numeral => (
               <Numeral title={numeral.name} text={numeral.description}
                 onClick={() => props.onClickItem(numeral)}
                 isPublished={numeral.published}
               />
             ))
           }
+        </section>
+        <section id='list-buttons' className='mb-16 max-w-6xl'>
+          <h2 className='mb-4 mt-8 rounded-md bg-primary p-4 text-left text-xl font-bold text-white'>
+            Obligaciones Especificas
+          </h2>
+          <section className='flex flex-col items-center justify-center gap-4'>
+            
+            {
+              props.numerals.filter(x => !x.isDefault).map(numeral => (
+                <Numeral title={numeral.name} text={numeral.description}
+                  onClick={() => props.onClickItem(numeral)}
+                  isPublished={numeral.published}
+                />
+              ))
+            }
+          </section>
         </section>
 
       </section>

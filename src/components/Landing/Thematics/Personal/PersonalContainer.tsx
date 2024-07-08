@@ -33,6 +33,8 @@ const PersonalContainer = (props: Props) => {
     const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
 
 
+    const todas = EstablishmentEntity.generateAllEstablishment('Todas')
+
 
     const handleSearch = async () => {
         try {
@@ -45,13 +47,6 @@ const PersonalContainer = (props: Props) => {
                 return
             }
 
-            if (!data.institution) {
-                setAlert({
-                    type: 'error',
-                    message: 'Selecciona una institución'
-                })
-                return
-            }
             SetSearching(true)
             setAlert({
                 type: 'info',
@@ -93,10 +88,16 @@ const PersonalContainer = (props: Props) => {
         }
 
         SetSearching(true)
-        const filter = listEnt.filter((item) => {
+        const filter: EstablishmentEntity[] = []
+        const _filter = listEnt.filter((item) => {
             return item.name.toLowerCase().includes(inputValue.toLowerCase())
         }).slice(0, 3)
+
+
+        filter.push(todas, ..._filter)
+        
         SetSearching(false)
+        
         callback(filter.map((item) => {
             const data: ColourOption = {
                 value: item.identification || "",

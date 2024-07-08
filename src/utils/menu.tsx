@@ -1,4 +1,4 @@
-import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine, RiCheckFill, RiCheckboxMultipleLine } from "react-icons/ri";
+import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine, RiCheckFill, RiCheckboxMultipleLine, RiFileExcel2Line } from "react-icons/ri";
 import UserList from "../interfaces/web/Admin/User/List";
 import UserCreate from "../interfaces/web/Admin/User/Create";
 import RoleList from "../interfaces/web/Admin/Role/List";
@@ -34,6 +34,7 @@ import ActiveEdit from "../interfaces/web/Transparency/Active/Edit";
 import EstablihsmentInSession from "../interfaces/web/Admin/Establishment/InSession/InSession";
 import SolicityManual from "../interfaces/web/Transparency/Solicity/Manual";
 import UserInSessionList from "../interfaces/web/Admin/User/InSession";
+import Reports from "../interfaces/web/Transparency/Reports";
 
 
 export interface MenuItem {
@@ -363,6 +364,14 @@ const menu = [
     permission_required: "view_configuration",
     element: <SolicityDetail />,
   },
+  {
+    name: "Reportes",
+    path: "/admin/reports",
+    visible: true,
+    icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
+    permission_required: "view_solicityresponse",
+    element: <Reports />,
+  }
 
 ];
 

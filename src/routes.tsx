@@ -90,7 +90,7 @@ const Router = createBrowserRouter(
           element: <FAQ />,
         },
         {
-          path: "/area-pedagogica/tutoriales",
+          path: "/tutoriales",
           element: <Tutorials />,
         },
         {

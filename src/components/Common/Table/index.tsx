@@ -59,7 +59,7 @@ function Table<T>({ ...props }: TableProps<T>) {
 
 
                 <table className='w-full divide-y divide-gray-200'>
-                    <thead className='sticky top-0 z-10 w-full bg-gray-100 text-center'>
+                    <thead className='sticky top-0 z-1 w-full bg-gray-100 text-center'>
                         <tr className='text-sm'>
                         {
                             props.columns.map(column => (

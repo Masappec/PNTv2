@@ -17,7 +17,6 @@ const IndicatorsAdminPresenter = (props: Props) => {
   const [chartPieSolicities, setChartPieSolicities] = useState<ApexOptions>({
     chart: {
       id: "donut",
-      width: 500,
     },
     dataLabels: {
       enabled: false,
@@ -80,11 +79,14 @@ const IndicatorsAdminPresenter = (props: Props) => {
         },
         dataLabels: {
           enabled: false,
+          formatter: function (val, opts) {
+            return opts.w.config.series[opts.seriesIndex];
+          }
 
         },
         series: [props.data.entites_total.not_updated, props.data.entites_total.not_updated],
-        labels: ["Cantidad de entidades con archivos de transparencia activa actualizados",
-          "Cantidad de entidades con archivos de transparencia activa no actualizados"],
+        labels: ["Actualizadas",
+          "No actualizadas"],
         colors: ["#1A7290", "#7DBACF"],
       });
 
@@ -131,12 +133,13 @@ const IndicatorsAdminPresenter = (props: Props) => {
         <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
           <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
             <h2 className="text-start font-semibold text-sm">
-             Entidades Cumplimiento
+             Entidades con Transparencia Activa
             </h2>
             <Chart
               options={chartPieSolicities}
               series={chartPieSolicities.series}
               type="donut"
+              width={500}
 
             />
           </div>

@@ -14,7 +14,7 @@ class TemplateFileUseCase {
         return await this.service.validateFile(data)
     }
 
-    async validateLocalFile(data: File, template: Template) {
+    async validateLocalFile(data: File, template: Template,isActive=false) {
         return new Promise<{
             columns: string[],
             rows: string[][],
@@ -64,6 +64,16 @@ class TemplateFileUseCase {
                         }
                     }
 
+                    
+                    // validar que su contenido no contenga las palabras “NO APLICA”, “NO DISPONIBLE”, “N/D”, “ND”, “NA”, “N/A”. 
+                    const invalidWords = ["NO APLICA", "NO DISPONIBLE", "N/D", "ND", "NA", "N/A"];
+                    if (!isActive) {
+                        const invalidCells = rows_.map(row => row.split(delim)).filter(row => row.some(cell => invalidWords.includes(cell.trim().toUpperCase())));
+                        if (invalidCells.length > 0) {
+                            throw new Error('El archivo no cumple con la plantilla, por favor verifique que el archivo no contenga celdas con las palabras: NO APLICA, NO DISPONIBLE, N/D, ND, NA, N/A');
+                        }
+                    }
+                     
 
                     const final_rows = rows_.map(row => {
                         const row_data = row.split(delim);
@@ -85,7 +95,7 @@ class TemplateFileUseCase {
 
     }
 
-    private detectDelimiter(file: File, sampleSize: number = 1024, callback: (delimiter: string, text: string) => void) {
+    public detectDelimiter(file: File, sampleSize: number = 1024, callback: (delimiter: string, text: string) => void) {
         const reader = new FileReader();
 
         reader.onload = function (event: ProgressEvent<FileReader>) {

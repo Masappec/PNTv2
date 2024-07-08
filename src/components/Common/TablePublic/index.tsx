@@ -5,7 +5,7 @@ interface Column<T> {
     title: string
     key?: string
     render: (data: T, index: number) => React.ReactNode,
-
+    className?: string
 
 }
 
@@ -61,9 +61,10 @@ function TablePublic<T>(props: TableProps<T>) {
                             props.columns.map(column => (
 
                                 <TableFlowbite.HeadCell
-                                    key={column.title} className={`text-sm ${props.sorteable ? 'cursor-pointer' : ''}`}
+                                    key={column.title} className={`text-sm ${props.sorteable ? 
+                                        'cursor-pointer' : ''} ${column.className}`}
                                     onClick={() => props.onSort && props.onSort(column.key || "")}
-
+                                    
 
                                 >
                                     <div className={" items-center" + props.className}>

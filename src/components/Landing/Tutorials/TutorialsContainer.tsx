@@ -14,6 +14,11 @@ const TutorialsContainer = (props:Props) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
 
+    //scrool to top
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     useEffect(() => {
         props.usecase.getPedagogyArea().then((res)=>{
             setTutorial(res.tutorials)

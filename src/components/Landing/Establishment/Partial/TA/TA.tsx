@@ -1,9 +1,14 @@
 import { Accordion } from "flowbite-react"
 import TransparencyActive from "../../../../../domain/entities/TransparencyActive";
 import Table from "../../../../Common/Table";
-import { FaFileCsv } from "react-icons/fa";
+import { FaFileCsv, FaFileExcel, FaFilePdf } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
+import TemplateFileUseCase from "../../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
+import TemplateService from "../../../../../infrastructure/Services/TemplateService";
+import TemplateFileApi from "../../../../../infrastructure/Api/TemplateFile/TemplateFileApi";
+import api from "../../../../../infrastructure/Api";
+import { Transform } from "../../../../../utils/transform";
 
 
 interface Props {
@@ -11,11 +16,12 @@ interface Props {
     number_month: number;
     year: number;
     data: TransparencyActive[]
-    onOpen: (month: number) => void
+    onOpen: (month: number) => void;
+    establishment: string;
 }
 const TA = (props: Props) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
-
+    const TemplateUsecase = new TemplateFileUseCase(new TemplateService(new TemplateFileApi(api)))
 
     const handleOpen = () => {
         if (!isOpen) {
@@ -36,6 +42,39 @@ const TA = (props: Props) => {
             a.download = name + '.csv'
             a.click();
             window.URL.revokeObjectURL(blobUrl);
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const onDownLoadPdf = async (url: string, name: string) => {
+        try {
+            const res = await axios.get(url, {
+                responseType: 'blob'
+            })
+
+            const file = new File([res.data], name + '.csv', { type: 'text/csv' })
+            TemplateUsecase.detectDelimiter(file, 1024, (delim, text) => {
+                
+                Transform.fromCsvToPdf(text, name, props.establishment)
+            })
+        } catch (e) {
+            console.log(e)
+        }
+
+
+    }
+
+    const onDonwloadXlsx = async (url: string, name: string) => {
+        try {
+            const res = await axios.get(url, {
+                responseType: 'blob'
+            })
+
+            const file = new File([res.data], name + '.csv', { type: 'text/csv' })
+            TemplateUsecase.detectDelimiter(file, 1024, (delim, text) => {
+                Transform.fromCsvToXlxs(text, name)
+            })
         } catch (e) {
             console.log(e)
         }
@@ -86,18 +125,55 @@ const TA = (props: Props) => {
                                     return <div className="flex flex-row space-x-5">
                                         {
                                             item.files.map((file, i) =>
-                                                <a key={i}
-                                                    href={'#'}
-                                                    onClick={() => onDownloadFile(file.url_download as string,
-                                                        `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                                    )}
-                                                    className="text-primary-500 
-                                                hover:text-primary-600 text-base">
-                                                    <FaFileCsv className="text-primary-500 
-                                                hover:text-primary-600 text-base ml-5" />
-                                                    {file.description}
+                                                <div className="flex flex-col space-y-2" key={i}>
+                                                    <div key={i} className="grid grid-cols-3 ">
+                                                        <a key={i}
+                                                            href={'#'}
+                                                            onClick={() => onDownloadFile(file.url_download as string,
+                                                                `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                            )}
+                                                            className="text-primary-500 
+                                                    hover:text-primary-600 text-base">
+                                                            <FaFileCsv className="text-primary-500 
+                                                    hover:text-primary-600 text-base ml-5"
+                                                                size={30}
+                                                            />
 
-                                                </a>
+
+                                                        </a>
+                                                        <a key={i}
+                                                            href={'#'}
+                                                            onClick={() => onDownLoadPdf(file.url_download as string,
+                                                                `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                            )}
+                                                            className="text-primary-500
+                                                    hover:text-primary-600 text-base">
+                                                            <FaFilePdf className="text-red-500 
+                                                    hover:text-primary-600 text-base ml-5"
+                                                                size={30}
+
+                                                            />
+                                                        </a>
+                                                        <a key={i}
+                                                            href={"#"}
+                                                            onClick={() => onDonwloadXlsx(file.url_download as string,
+                                                                `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                            )}
+                                                            target="_blank"
+                                                            className="text-primary-500
+                                                    hover:text-primary-600 text-base"                                                     
+                                                        >
+                                                            <FaFileExcel className="text-green-500" size={30}
+/>
+                                                        </a>
+
+
+
+                                                    </div>
+                                                    <div key={i} className="w-full justify-center items-center">
+                                                        {file.description}
+                                                    </div>
+                                                </div>
                                             )
                                         }
                                     </div>

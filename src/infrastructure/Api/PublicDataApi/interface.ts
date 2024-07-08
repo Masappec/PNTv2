@@ -173,6 +173,8 @@ export interface FormulariosResponse{
     numero_personas:string;
     enlace_descarga_formulario:string;
     enlace_servicio:string;
+    anio:string;
+    mes:string;
 }
 
 export interface IndicatorRequest{

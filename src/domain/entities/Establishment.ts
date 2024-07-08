@@ -50,6 +50,11 @@ class EstablishmentEntity {
         this.identification = identification
     }
 
+
+
+    static generateAllEstablishment(name:string): EstablishmentEntity{
+        return new EstablishmentEntity(name, 'code', 'abbreviation', 'logo', 'highest_authority', 'first_name_authority', 'last_name_authority', 'job_authority', 'email_authority', '')
+    }
 }
 
 export default EstablishmentEntity;

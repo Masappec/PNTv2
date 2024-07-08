@@ -96,7 +96,7 @@ const LandingContainer = (  ) => {
         }
         if ( index === 1 ) {
             
-            navigate('/area-pedagogica/tutoriales');
+            navigate('/tutoriales');
            }
            
         if (index === 2) {

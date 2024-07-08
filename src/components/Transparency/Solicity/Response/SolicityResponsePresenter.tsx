@@ -112,10 +112,14 @@ const SolicityResponsePresenter = (props: Props) => {
 
             {
                 props.timeline?.map((response, index) => (
-                    <section key={index} className='mx-auto mb-4 rounded-lg border border-gray-100 bg-custom-orange/10 p-4'>
+                    <section key={index} className={`
+                    ${response.user_id != parseInt(props.solicitySaved.user_created) ?
+                            ' bg-primary-200/10 p-4  mx-auto mb-4 rounded-lg border border-gray-100' 
+                        : 'bg-primary-600/10  p-4 mx-auto mb-4 rounded-lg border  border-gray-100'
+                        }`}>
                         <h2 className={`mb-4 
                         ${response.user_id != parseInt(props.solicitySaved.user_created) ?
-                                'bg-custom-orange' : 'bg-custom-green'
+                                'bg-primary-900 ' : 'bg-primary-600'
                             }
                         rounded-md  p-4 text-left text-xl font-bold text-white`}>
 
@@ -234,7 +238,7 @@ const SolicityResponsePresenter = (props: Props) => {
                     </div>
 
 
-                       </> : null
+                    </> : null
             }
 
             {props.isAvaliableToResponse &&
@@ -355,7 +359,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                     <button
                                         type="button"
                                         onClick={() => props.onAddDataSet("file")}
-                                        className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
+                                        className='flex items-center gap-2 rounded-md border border-primary bg-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
                                         <svg
                                             xmlns='http://www.w3.org/2000/svg'
                                             height='24px'
@@ -432,7 +436,7 @@ const SolicityResponsePresenter = (props: Props) => {
                 >
                     <IoClose size={23} className=" mr-2" />
                     Regresar
-                </Button> 
+                </Button>
                 {props.isAvaliableToResponse || props.isAvaliableToInsistency ?
                     props.isLoadingSend ? (
                         <Spinner></Spinner>) : <Button
@@ -444,7 +448,7 @@ const SolicityResponsePresenter = (props: Props) => {
                     </Button> : null
 
                 }
-               
+
 
             </div>
         </form>

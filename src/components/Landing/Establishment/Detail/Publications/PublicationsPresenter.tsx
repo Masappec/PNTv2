@@ -104,6 +104,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                                     year={props.selectedYear}
                                                     key={index}
                                                     onOpen={(month) => props.onOpenMonth(month)}
+                                                    establishment={props.entity.name}
                                                 />
                                             );
                                         })
@@ -177,6 +178,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                                     year={props.selectedYear}
                                                     key={index}
                                                     onOpen={(month) => props.onOpenMonthTF(month)}
+                                                    establishment={props.entity.name}
                                                 />
                                             );
                                         })
@@ -247,6 +249,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                                         year={props.selectedYear}
                                                         key={index}
                                                         onOpen={(month) => props.onOpenMonthTC(month)}
+                                                        establishment={props.entity.name}
                                                     />
                                                 );
                                             })

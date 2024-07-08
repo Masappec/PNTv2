@@ -172,7 +172,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
       props.templateUseCase.validateLocalFile(
         file_ as File,
-        templateDetail
+        templateDetail,
+        true
       ).then((res) => {
         setLoadingFiles(loadingFiles.filter((loading) => {
           return loading.name !== templateFile.name
@@ -275,7 +276,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
     props.templateUseCase.validateLocalFile(
       newTemplates.file as File,
-      templateDetail
+      templateDetail,
+      true
     ).then((res) => {
 
       setError("")
@@ -517,7 +519,7 @@ const ActiveCreateContainer = (props: IProps) => {
     console.log(templateDetail?.name)
     if (!templateDetail) return
 
-    props.templateUseCase.validateLocalFile(file, templateDetail).then((res) => {
+    props.templateUseCase.validateLocalFile(file, templateDetail,true).then((res) => {
       if (!res) {
         setError("El archivo no cumple con el formato")
         return
@@ -687,7 +689,7 @@ const ActiveCreateContainer = (props: IProps) => {
         return response.blob();
       }).then((file_) => {
         const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-        props.templateUseCase.validateLocalFile(blob as File, temDetail).then((res) => {
+        props.templateUseCase.validateLocalFile(blob as File, temDetail,true).then((res) => {
           if (!res) {
             setError("El archivo no cumple con el formato")
             return

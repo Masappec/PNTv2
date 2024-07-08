@@ -76,6 +76,12 @@ const SolicityPresenter = (props: Props) => {
                 )
               },
               {
+                title:"AÑO Y MES",  
+                render:(row)=>(
+                  <p>{row.anio} - {row.mes}</p>
+                )
+              },
+              {
                 title: "DENOMINACIÓN DEL SERVICIO",
                 render: (row) => (
                   <p>{ row.denominacion}</p>

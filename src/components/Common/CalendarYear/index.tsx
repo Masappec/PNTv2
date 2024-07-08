@@ -47,3 +47,36 @@ export const CalendarYear = ({ onSelect }: ICalendarYearProps) => (
         />
     </div>
 );
+
+interface ICalendarMonthProps {
+    onMonthSelect: (value: number) => void;
+    onYearSelect: (value: number) => void;
+    visible?: boolean;
+}
+
+export const CalendarMonth = ({ onMonthSelect , onYearSelect ,visible}: ICalendarMonthProps) => (
+    <div className={`${visible ? 'block' : 'hidden'}
+       absolute z-10 mt-2 bg-white shadow-lg border border-gray-200 rounded-md p-4
+        
+    `}>
+        <PickerPanel<Moment>
+            locale={esMX}
+            generateConfig={momentGenerateConfig}
+            dateRender={dateRender}
+            mode='month'
+            onSelect={(value) => {
+                onMonthSelect(value.month());
+                onYearSelect(value.year());
+            } }
+        />
+        <br />
+        <Picker<Moment>
+            locale={esMX}
+            generateConfig={momentGenerateConfig}
+            dateRender={dateRender}
+            style={{
+                zIndex: 1000
+            }}
+        />
+    </div>
+);

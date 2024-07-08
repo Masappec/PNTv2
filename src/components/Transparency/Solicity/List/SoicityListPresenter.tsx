@@ -205,9 +205,14 @@ const SolicityListPresenter = (props: Props) => {
                             classes: 'flex w-full justify-center',
                             render: (solicity) => {
                                 const status = StatusSolicity[solicity.status as keyof typeof StatusSolicity]
+                                const color = status?.bg || "bg-primary-500"
+                                const border = status?.bg.replace("bg", "border") || "border-primary-500"
                                 return (
-
-                                    <p className="text-wrap border rounded-md px-2 py-1     border-primary text-primary bg-primary/10">
+                                    <p className={`text-wrap border rounded-md px-2 py-1    
+                                        w-5/12
+                                     ${border}
+                                     ${color} text-white text-center
+`}>
 
                                         <span className=' text-xs font-normal  sm:text-sm'>
 

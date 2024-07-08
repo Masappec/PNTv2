@@ -197,8 +197,14 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
                             render: (solicity) => {
                                 const status = StatusSolicity[solicity.status as keyof typeof StatusSolicity]
+                                const color = status?.bg || "bg-primary-500"
+                                const border = color.replace("bg","border") 
                                 return (
-                                    <p className="text-wrap border rounded-md px-2 py-1     border-primary text-primary bg-primary/10">
+                                    <p className={`text-wrap border rounded-md px-2 py-1    
+                                        md:w-5/12 w-full
+                                     ${border}
+                                     ${color} text-white text-center
+`}>
 
                                         <span className=' text-xs font-normal  sm:text-sm'>
 
