@@ -80,6 +80,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
         dataLabels: {
           enabled: false,
           formatter: function (val, opts) {
+            console.log(val, opts);
             return opts.w.config.series[opts.seriesIndex];
           }
 
@@ -133,7 +134,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
         <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
           <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
             <h2 className="text-start font-semibold text-sm">
-             Entidades con Transparencia Activa
+              Entidades con Transparencia Activa
             </h2>
             <Chart
               options={chartPieSolicities}
@@ -165,9 +166,9 @@ const IndicatorsAdminPresenter = (props: Props) => {
                       className='uppercase cursor-pointer text-primary hover:underline hover:underline-offset-2'
 
                     >
-                    {row.name}
+                      {row.name}
                     </Link>
-                    </span>
+                  </span>
                 },
                 {
                   title: 'Visitas',

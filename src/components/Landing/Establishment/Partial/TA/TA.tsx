@@ -55,7 +55,7 @@ const TA = (props: Props) => {
 
             const file = new File([res.data], name + '.csv', { type: 'text/csv' })
             TemplateUsecase.detectDelimiter(file, 1024, (delim, text) => {
-                
+                console.log(delim)
                 Transform.fromCsvToPdf(text, name, props.establishment)
             })
         } catch (e) {
@@ -73,6 +73,8 @@ const TA = (props: Props) => {
 
             const file = new File([res.data], name + '.csv', { type: 'text/csv' })
             TemplateUsecase.detectDelimiter(file, 1024, (delim, text) => {
+                console.log(delim)
+
                 Transform.fromCsvToXlxs(text, name)
             })
         } catch (e) {
@@ -161,10 +163,10 @@ const TA = (props: Props) => {
                                                             )}
                                                             target="_blank"
                                                             className="text-primary-500
-                                                    hover:text-primary-600 text-base"                                                     
+                                                    hover:text-primary-600 text-base"
                                                         >
                                                             <FaFileExcel className="text-green-500" size={30}
-/>
+                                                            />
                                                         </a>
 
 
