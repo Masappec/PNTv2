@@ -27,3 +27,8 @@ export interface PedagogyAreaPublicResponse {
         normative: NormativeResponse[];
     };
 }
+
+
+export interface Month{
+    month: number;
+}

@@ -18,7 +18,9 @@ interface Props {
   onItemPublicationClick: (slug: string) => void;
 
   onSearch: (search: string) => void;
-  meses: string[];
+  mesesTA: string[];
+  mesesTF: string[];
+  mesesTC: string[];
   years: number[];
   onSelectYear: (year: number) => void;
   selectedYear: number;
@@ -149,7 +151,7 @@ return(
             onItemPublicationClick={props.onItemPublicationClick}
             onChangePage={props.onChangePage}
             onSearch={props.onSearch}
-            meses={props.meses}
+            mesesTA={props.mesesTA}
             years={props.years}
             onSelectYear={props.onSelectYear}
             selectedYear={props.selectedYear}
@@ -165,6 +167,9 @@ return(
             publicationsTF={props.publicationsTF}
             selectedYearTC={props.selectedYearTC}
             selectedYearTF={props.selectedYearTF}
+            mesesTC={props.mesesTC}
+            mesesTF={props.mesesTF}
+            
           />
 
 

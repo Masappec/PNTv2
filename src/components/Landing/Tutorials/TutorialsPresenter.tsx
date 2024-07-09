@@ -12,7 +12,27 @@ interface Props {
     
 }
 const TutorialsPresenter = (props:Props) => {
-      console.log(props)
+
+    const formatUrlYoutube = (url: string) => {
+        
+      if (url.includes('embed')) return url;
+
+      if (url.includes('youtube') && !url.includes('embed')) {
+
+          const urlParts = url.split('/');
+
+
+          const videoId = urlParts[urlParts.length - 1];
+          return `https://www.youtube.com/embed/${videoId}`;
+
+      }
+
+      return url;
+
+      
+
+    }
+
         return (
             <main>
                  <MapIsotipo />
@@ -27,8 +47,16 @@ const TutorialsPresenter = (props:Props) => {
               </p>
         
               <div className='space-y-8'>
-            <Iframe title=" YouTube video player" link="https://www.youtube.com/embed/V-gmeM5g_pA?si=IrFwPnhaIH0egXmu"/>
-            <Iframe title=" YouTube video player" link="https://www.youtube.com/embed/vNCI0y2LVwM?si=dns1uLvF6vJZpnE0"/>
+            
+              {
+                props.tutorial.map((data) => {
+                  return (
+                    <>
+                      <Iframe title={data.title} link={formatUrlYoutube(data.url)} />
+                    </>
+                  )
+                })
+              }
             </div>
             </section>
             </main>
@@ -39,46 +67,3 @@ export default TutorialsPresenter;
 
 
 
-
-
-
-// <div className="h-auto">
-        //      <div className="row flex items-center justify-center mt-10 w-full">
-        //         <div className="col-md-12 items-center justify-center w-full">
-        //             <h2 className="text-center
-        //             text-4xl
-        //             font-bold
-        //             text-primary-800
-                    
-        //             ">Tutoriales</h2>
-        //         </div>
-
-        //     </div>
-        //     <div className="row  flex items-center justify-center mt-10 w-full">
-        //         <div className=" flex items-center justify-center w-1/2">
-        //             {
-        //                 props.tutorial.map((item)=>{
-        //                     return (
-        //                         <Card
-        //                         className="col-md-12"
-        //                         renderImage={() => <iframe width="560" height="315" src={item.url} title="YouTube video player"  allowFullScreen></iframe>                            }
-        //                       >
-        //                         <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        //                           {
-        //                                 item.title
-        //                           }
-        //                         </h5>
-        //                         <p className="font-normal text-gray-700 dark:text-gray-400">
-        //                          {
-        //                                 item.description
-                                    
-        //                          }
-        //                         </p>
-        //                       </Card>
-        //                     )
-        //                 })
-        //             }
-        //         </div>
-        //     </div>
-        // </div>
-        

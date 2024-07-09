@@ -21,6 +21,10 @@ class PublicUseCase {
         return await this.service.getEstablishment(slug);
     }
 
+    async getMonthsByTransparency(type:'A'|'F'|'C',establishment_id:number, year:number){
+        return await this.service.getMonthsByTransparency(type,establishment_id,year);
+    }
+
 }
 
 export default PublicUseCase;

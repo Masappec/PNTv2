@@ -40,6 +40,10 @@ class PublicService {
         const response = await this.api.getEstablishment(slug);
         return EstablishmentMapper.apiToDomain(response as EstablishmentListDto);
     }
+
+    async getMonthsByTransparency(type: 'A' | 'F' | 'C', establishment_id: number, year: number) {
+        return await this.api.getMonthsByTransparency(type, establishment_id, year);
+    }
 }
 
 export default PublicService;

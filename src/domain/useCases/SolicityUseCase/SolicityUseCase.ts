@@ -161,30 +161,32 @@ class SolicityUseCase {
     const doc = new jsPDF();
 
     // Título
-    doc.text('Reporte de Solicitud', 10, 10);
+    doc.text('Reporte de Solicitud', 20, 10);
 
-    // Información general
-    doc.text(`ID: ${data.id}`, 10, 20);
-    doc.text(`Nombre del Establecimiento: ${data.estblishment_name}`, 10, 30);
-    doc.text(`Número SAIP: ${data.number_saip}`, 10, 40);
-    doc.text(`Fecha de Creación: ${new Date(data.created_at).toLocaleString()}`, 10, 50);
-    doc.text(`Ciudad: ${data.city}`, 10, 60);
-    doc.text(`Texto: ${data.text}`, 10, 70);
+    
 
-    // Información del usuario
-    doc.text('Información del ciudadano:', 10, 80);
-    doc.text(`Nombre: ${data.first_name} ${data.last_name}`, 10, 90);
-    doc.text(`Email: ${data.email}`, 10, 100);
-    doc.text(`Teléfono: ${data.phone}`, 10, 110);
-    doc.text(`Identificación cultural: ${data.race_identification}`, 10, 120);
-    doc.text(`Género: ${data.gender}`, 10, 130);
+    autotable(doc, {
+      startY: 20,
+      head: [['Nombre del Establecimiento', 'Número SAIP', 'Fecha de Creación', 'Ciudad', 'Texto']],
+      body: [[data.estblishment_name||"", data.number_saip, new Date(data.created_at).toLocaleString(), data.city, data.text]],
+    });
+
+
+    autotable(doc, {
+      startY: 50,
+      head: [['Nombre', 'Email', 'Teléfono', 'Identificación cultural', 'Género']],
+      body: [[data.first_name, data.email, data.phone, data.race_identification, data.gender]],
+    });
+
 
     // Timeline
      if (data.timeline) {
        autotable(doc,{
-        startY: 140,
+        startY: 80,
         head: [['Estado', 'Fecha de Creación']],
-        body: data.timeline.map(item => [item.status, new Date(item.created_at).toLocaleString()]),
+        body: data.timeline.map(item => [
+          StatusSolicity[item.status as keyof typeof StatusSolicity].value,
+           new Date(item.created_at).toLocaleString()]),
       });
     }
    

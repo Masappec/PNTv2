@@ -54,9 +54,19 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     const [yearTC, setYearTC] = useState<number>(new Date().getFullYear())
     const [UrlQR, setUrlQR] = useState<string>("")
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+    
+
+    const [mesesTA,setMesesTA] = useState<string[]>([])
+    const [mesesTF,setMesesTF] = useState<string[]>([])
+    const [mesesTC,setMesesTC] = useState<string[]>([])
+    
     useEffect(() => {
         props.usecase.getEstablishment(slug || "").then((response) => {
             setEntity(response)
+            
+            handleOpenTransparency('A',response.id || 0)
+            handleOpenTransparency('F',response.id || 0)
+            handleOpenTransparency('C',response.id || 0)
             setLoading(false)
             const imgQR = generarQR(window.location.protocol + "//" + window.location.host + "/entidades/" + slug +"#indicadores")
             setUrlQR(imgQR)
@@ -68,6 +78,13 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
         
     }, [])
+
+
+    useEffect(() => {
+        handleOpenTransparency('A',entity.id || 0)
+        handleOpenTransparency('F',entity.id || 0)
+        handleOpenTransparency('C',entity.id || 0)
+    }, [entity,year])
 
     useEffect(() => {
         const hash = location.hash;
@@ -103,6 +120,8 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
         props.transparencyUseCase?.getPublicationsPublics(month, year, entity.id || 0).then((response) => {
 
+
+            console.log(response)
             const numeral = response.sort((a, b) => parseInt(a.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "") || "0") -
                 parseInt(b.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "") || "0"))
 
@@ -129,7 +148,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
                     total: datos.length,
                     year: year
                 }
-
+                
                 setPublications([...publications, data])
 
 
@@ -151,6 +170,35 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             setError(error.message)
         }).finally(() => {
             setLoading(false)
+        })
+    }
+
+
+    const handleOpenTransparency = (type: 'A' | 'F' | 'C',entity_id:number) => {
+        props.usecase.getMonthsByTransparency(type, entity_id || 0, year).then((response) => {
+
+            const numbers = response.map((item) => item.month)
+
+            const filters_months = meses.filter((item) => {
+                const index = numbers.indexOf(meses.indexOf(item) + 1)
+                return index != -1
+            })
+            switch (type) {
+                case 'A':
+                    setMesesTA(filters_months)
+                    break;
+                case 'F':
+                    setMesesTF(filters_months)
+                    break;
+                case 'C':
+                    setMesesTC(filters_months)
+                    break;
+            }
+        }).catch((error) => {
+            console.log(error)
+        }).finally(() => {
+
+
         })
     }
 
@@ -264,7 +312,10 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             onSearch={(type) => {
                 console.log(type)
             }}
-            meses={meses}
+            mesesTA={mesesTA}
+            mesesTF={mesesTF}
+            mesesTC={mesesTC}
+
             onOpenMonth={onOpenMonth}
             onOpenMonthTC={onOpenMonthTC}
             onOpenMonthTF={onOpenMonthTF}
@@ -278,7 +329,6 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             handlePageInfo={handlePageInfo}
             handlePageSolicity={handlePageSolicity}
             qrUrl={UrlQR}
-
 
         />
     )

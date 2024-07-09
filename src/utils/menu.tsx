@@ -371,6 +371,7 @@ const menu = [
     icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
     permission_required: "view_solicityresponse",
     element: <Reports />,
+    visible_for_superadmin: false
   }
 
 ];

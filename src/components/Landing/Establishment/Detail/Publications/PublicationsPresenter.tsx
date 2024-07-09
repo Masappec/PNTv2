@@ -19,7 +19,9 @@ interface Props {
     onItemPublicationClick: (slug: string) => void;
 
     onSearch: (search: string) => void;
-    meses: string[];
+    mesesTA: string[];
+    mesesTF: string[];
+    mesesTC: string[];
     years: number[];
     onSelectYear: (year: number) => void;
     selectedYear: number;
@@ -33,9 +35,14 @@ interface Props {
     selectedYearTF: number;
     onOpenMonthTF: (month: number) => void;
     publicationsTF: AcordionMonthYear<TransparencyFocusEntity>[];
+
 }
 
 const EstablishmentPublicationsPresenter = (props: Props) => {
+    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+    
+
     return (
     <>
             <section className='my-16 flex flex-col gap-y-4 md:flex-row md:items-end' id='publications'>
@@ -44,7 +51,9 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                 </h2>
                 <div className='h-[1px] w-full bg-gray-400'></div>
             </section>
-            <Accordion className="mt-28 mb-24" collapseAll>
+            <Accordion className="mt-28 mb-24" collapseAll
+                
+            >
                 <Accordion.Panel>
                     <Accordion.Title>
                         <p className="text-start text-black text-lg font-medium">
@@ -95,12 +104,13 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                             <div className="">
                                 <Accordion className="mt-14" key={"TA"} >
                                     {
-                                        props.meses.map((mes, index) => {
+                                        props.mesesTA.map((mes, index) => {
+                                            const mesIndex = meses.findIndex(x => x == mes) + 1;
                                             return (
                                                 <TA
-                                                    data={props.publications.find(x => x.month == index + 1 && x.year == props.selectedYear)?.data || []}
+                                                    data={props.publications.find(x => x.month == mesIndex && x.year == props.selectedYear)?.data || []}
                                                     month={mes}
-                                                    number_month={index + 1}
+                                                    number_month={meses.findIndex(x => x == mes) + 1}
                                                     year={props.selectedYear}
                                                     key={index}
                                                     onOpen={(month) => props.onOpenMonth(month)}
@@ -169,12 +179,13 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                             <div>
                                 <Accordion className="mt-14" key={"TA"}>
                                     {
-                                        props.meses.map((mes, index) => {
+                                        props.mesesTF.map((mes, index) => {
+                                            const mesIndex = meses.findIndex(x => x == mes) + 1;
                                             return (
                                                 <TF
-                                                    data={props.publicationsTF.find(x => x.month == index + 1 && x.year == props.selectedYear)?.data || []}
+                                                    data={props.publicationsTF.find(x => x.month == mesIndex && x.year == props.selectedYear)?.data || []}
                                                     month={mes}
-                                                    number_month={index + 1}
+                                                    number_month={meses.findIndex(x => x == mes) + 1}
                                                     year={props.selectedYear}
                                                     key={index}
                                                     onOpen={(month) => props.onOpenMonthTF(month)}
@@ -188,7 +199,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                         </>
                     </Accordion.Content>
                 </Accordion.Panel>
-                <Accordion.Panel>
+                <Accordion.Panel >
                     <Accordion.Title>
                         <p className="text-start text-black text-lg font-medium">
 
@@ -240,12 +251,14 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                 <div>
                                     <Accordion className="mt-14" key={"TA"}>
                                         {
-                                            props.meses.map((mes, index) => {
+                                            props.mesesTC.map((mes, index) => {
+                                                const mesIndex = meses.findIndex(x => x == mes) + 1;
                                                 return (
                                                     <TC
-                                                        data={props.publicationsTC.find(x => x.month == index + 1 && x.year == props.selectedYear)?.data || []}
+                                                        data={props.publicationsTC.find(x => x.month == mesIndex 
+                                                            && x.year == props.selectedYear)?.data || []}
                                                         month={mes}
-                                                        number_month={index + 1}
+                                                        number_month={meses.findIndex(x => x == mes) + 1}
                                                         year={props.selectedYear}
                                                         key={index}
                                                         onOpen={(month) => props.onOpenMonthTC(month)}

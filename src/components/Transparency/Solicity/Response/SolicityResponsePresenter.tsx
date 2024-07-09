@@ -192,6 +192,7 @@ const SolicityResponsePresenter = (props: Props) => {
 
                                         </label>
                                         <button
+                                        type="button"
                                             onClick={() => props.onDownloadFromUrl(file.url_download as string, file.name)}
                                             className='mx-auto flex items-center gap-2 rounded-md border border-green-500 px-2 py-1 text-xs font-medium text-green-500 hover:bg-green-500 hover:text-white'>
                                             <BiDownArrowAlt />

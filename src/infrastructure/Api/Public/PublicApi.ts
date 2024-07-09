@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance } from "axios";
-import { EstablishmentPublicListDto } from "./interface";
-import { ADMIN_PATH, PaginationLetter } from "..";
+import { EstablishmentPublicListDto, Month } from "./interface";
+import { ADMIN_PATH, PaginationLetter, TRANSPARENCY_PATH } from "..";
 import { PedagogyAreaResponse } from "../PedagogyArea/interface";
 import { URL_API } from "../../../utils/constans";
 
@@ -57,6 +57,27 @@ class PublicApi {
         } catch (error) {
             if (error instanceof AxiosError) {
                 const e: string = error.response?.data?.message || 'Error al obtener el establecimiento.';
+                throw new Error(e);
+            } else {
+                throw new Error('Error de conexión');
+            }
+        }
+    }
+
+
+    async getMonthsByTransparency(type:'A'|'F'|'C',establishment_id:number, year:number) {
+        try {
+            const response = await this.api.get<Month[]>(TRANSPARENCY_PATH + "/transparency/months", {
+                params: {
+                    establishment_id,
+                    year,
+                    type
+                }
+            });
+            return response.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                const e: string = error.response?.data?.message || 'Error al obtener los meses.';
                 throw new Error(e);
             } else {
                 throw new Error('Error de conexión');
