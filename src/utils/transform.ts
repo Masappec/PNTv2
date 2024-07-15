@@ -6,62 +6,153 @@ import { DELIMITER } from "./constans";
 
 
 export class Transform {
-    static fromCsvToPdf = (csv: string, name: string,establishment:string) => {
-       
-        csvtojson({
-            delimiter:DELIMITER
-        })
-            .fromString(csv)
-            .then((json) => {
-                console.log(json);
-                const doc = new jsPDF();
-
-                // Extract headers from the JSON data
-                const headers = Object.keys(json[0]);
-
-                // Convert JSON data to an array of arrays
-                const data = json.map(row => headers.map(header => row[header]));
-
-                //aregar un titulo
-                //margen de 10
-                autoTable(doc, {
-                    head: [[establishment]],
-                    startY: 10,
-                    margin: { horizontal: 10 ,vertical: 20},
-                    styles: { overflow: 'linebreak' },
-                    headStyles: { fillColor: [26, 114, 144] }, // Optional: Customize header styles
-                });
-
-                autoTable(doc, {
-                    head: [[name]],
-                    startY: 20,
-                    margin: { horizontal: 10 ,vertical: 20},
-                    styles: { overflow: 'linebreak' },
-                    headStyles: { fillColor: [26, 114, 144] }, // Optional: Customize header styles
-                });
 
 
 
-                // Generate the table
-                autoTable(doc,{
-                    head: [headers],
-                    body: data,
-                    startY: 30,
-                    margin: { horizontal: 10 ,vertical: 20},
-                    styles: { overflow: 'linebreak' },
-                    headStyles: { fillColor: [26, 114, 144] }, // Optional: Customize header styles
-                });
 
-                doc.save(`${name}.pdf`);
-            });
+    static fromCsvToPdfLandScape = (csv: string, name: string, establishment: string) => {
+            
+        csv = csv.replace(/""/g, '"'); // Manejar comillas dobles
+        csv = csv.replace(/;/g, ',');
+        csv = csv.replace(/,/g, ';');
+        csv = csv.replace(/"/g, ''); // Eliminar las comillas
+        const rows = csv.split('\n')
+        let csvContent    = rows.map(row => row.split(DELIMITER).map(cell => cell.trim()));
+
+        if (csvContent[0].length>5){
+            csvContent = csv.split('\n').map(row => row.split(DELIMITER).map(cell => cell.trim()).slice(0,5));
+        }
+
+        const doc = new jsPDF('landscape');
+
+        // Extraer encabezados del CSV
+        const headers = csvContent[0].length > 5 ? csvContent[0].slice(0,5) : csvContent[0];
+
+        // Convertir el contenido del CSV a un array de arrays
+        const data = csvContent.slice(1);
+
+        // Agregar un título con margen de 10
+        autoTable(doc, {
+            head: [[establishment]],
+            startY: 10,
+            margin: { horizontal: 10 },
+            styles: {
+                overflow: 'linebreak',
+                fontSize: 12,
+                cellPadding: 2
+            }, // Reduce el tamaño de la fuente del título si es necesario
+            headStyles: { fillColor: [26, 114, 144] }, // Personaliza los estilos del encabezado
+        });
+
+        // Agregar un subtítulo con margen de 20
+        autoTable(doc, {
+            head: [[name]],
+            startY: doc.previousAutoTable.finalY + 10,
+            margin: { horizontal: 10 },
+            styles: {
+                overflow: 'linebreak',
+                fontSize: 10,
+                cellPadding: 2
+            },
+            headStyles: { fillColor: [26, 114, 144] }, // Personaliza los estilos del encabezado
+        });
+
+        // Generar la tabla con los datos del CSV
+        autoTable(doc, {
+            head: [headers],
+            body: data,
+            startY: doc.previousAutoTable.finalY + 10,
+            margin: { horizontal: 10 },
+            styles: {
+                fontSize: 8,  // Reducir el tamaño de la fuente para las filas
+                cellPadding: 1, // Reducir el relleno de las celdas
+                overflow: 'linebreak',
+                halign: 'center', // Centrar el contenido de las celdas
+                valign: 'middle', // Alinear verticalmente el contenido de las celdas
+                columnWidth: 'wrap' // Ajustar el ancho de las columnas
+            },
+            headStyles: {
+                fillColor: [26, 114, 144],
+                halign: 'center' // Centrar el texto del encabezado
+            }, // Personalizar los estilos del encabezado
+            pageBreak: 'auto',  // Permitir el salto de página automático
+            columnStyles: {
+                0: { columnWidth: 'auto' },
+                1: { columnWidth: 'auto' },
+                2: { columnWidth: 'auto' },
+                3: { columnWidth: 'auto' },
+                4: { columnWidth: 'auto' },
+                5: { columnWidth: 'auto' },
+                6: { columnWidth: 'auto' },
+                7: { columnWidth: 'auto' },
+                8: { columnWidth: 'auto' },
+                9: { columnWidth: 'auto' },
+                10: { columnWidth: 'auto' }
+            }
+        });
+        // Guardar el PDF
+        doc.save(`${name}.pdf`);
+    }
+
+    static fromCsvToPdf = (csv: string, name: string, establishment: string) => {
+
+        //limpiar el csv
+        csv = csv.replace(/"/g, '');
+        csv = csv.replace(/;/g, ',');
+        csv = csv.replace(/,/g, ';');
+
+        const csvContent = csv.split('\n').map(row => row.split(DELIMITER));
+
+        const doc = new jsPDF('landscape');
+
+        // Extraer encabezados del CSV
+        const headers = csvContent[0];
+
+        // Convertir el contenido del CSV a un array de arrays
+        const data = csvContent.slice(1);
+
+        // Agregar un título con margen de 10
+        autoTable(doc, {
+            head: [[establishment]],
+            startY: 10,
+            margin: { horizontal: 10 },
+            styles: { overflow: 'linebreak', fontSize: 12 }, // Reduce el tamaño de la fuente del título si es necesario
+            headStyles: { fillColor: [26, 114, 144] }, // Personaliza los estilos del encabezado
+        });
+
+        // Agregar un subtítulo con margen de 20
+        autoTable(doc, {
+            head: [[name]],
+            startY: doc.previousAutoTable.finalY + 10,
+            margin: { horizontal: 10 },
+            styles: { overflow: 'linebreak', fontSize: 10 },
+            headStyles: { fillColor: [26, 114, 144] }, // Personaliza los estilos del encabezado
+        });
+
+        // Generar la tabla con los datos del CSV
+        autoTable(doc, {
+            head: [headers],
+            body: data,
+            startY: doc.previousAutoTable.finalY + 10,
+            margin: { horizontal: 10 },
+            styles: {
+                fontSize: 8,  // Reduce el tamaño de la fuente para las filas
+                overflow: 'linebreak'
+            },
+            headStyles: { fillColor: [26, 114, 144] }, // Personaliza los estilos del encabezado
+            pageBreak: 'auto'  // Permite el salto de página automático
+        });
+
+        // Guardar el PDF
+        doc.save(`${name}.pdf`);
 
 
     }
 
     static fromCsvToXlxs = (csv: string, name: string) => {
-       
+
         csvtojson({
-            delimiter:DELIMITER
+            delimiter: DELIMITER
         })
             .fromString(csv)
             .then((json) => {

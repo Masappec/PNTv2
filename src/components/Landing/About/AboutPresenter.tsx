@@ -10,19 +10,19 @@ const AboutPresenter = () => {
                 <p>
                     El Portal Nacional de Transparencia surge como respuesta para fortalecer el ejercicio del
                     derecho a la transparencia y el acceso a la información pública consagrados en la
+                    &nbsp;
                     <span className='font-bold text-primary'
                     >Ley Orgánica de Transparencia y Acceso a la Información Pública</span>.
                 </p>
 
                 <p>
-                    Esta herramienta es el resultado de un proceso de cocreación en el que intervino la
+                    Esta herramienta es el resultado de un proceso de cocreación en el que intervino la&nbsp;
                     <span className='font-bold text-primary'>Defensoría del Pueblo</span> como órgano garante, servidores
-                    responsables de los
+                    responsables de los&nbsp;
                     <span className='font-bold text-primary'>Comités de Transparencia</span> de distintas entidades,
-                    representantes de organizaciones de
+                    representantes de organizaciones de&nbsp;
                     <span className='font-bold text-primary'>sociedad civil</span> y <span
-                        className='font-bold text-primary'>academia</span
-                    >, incorporando innovación a la forma tradicional que por más de 15 años se ha
+                        className='font-bold text-primary'>academia</span>, incorporando innovación a la forma tradicional que por más de 15 años se ha
                     implementado desde las distintas instituciones públicas.
                 </p>
 
@@ -35,7 +35,7 @@ const AboutPresenter = () => {
                 </div>
 
                 <p>
-                    Cualquier consulta sobre esta herramienta puede dirigirse a
+                    Cualquier consulta sobre esta herramienta puede dirigirse a&nbsp;
                     <a
                         href='mailto:email@dpe.gob.ec'
                         className='font-bold text-primary underline underline-offset-2'>

@@ -4,7 +4,7 @@ import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/Solicit
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
 import FilePublicationUseCase from "../../../../domain/useCases/FilePublicationUseCase/FilePublicationUseCase";
 import AttachmentUseCase from "../../../../domain/useCases/AttachmentUseCase/AttachmentUseCase";
-import { PartialTimelineSolicty, Solicity } from "../../../../domain/entities/Solicity";
+import {  Solicity, TimeLinePresenter } from "../../../../domain/entities/Solicity";
 import CreateSolicity from "../../../../domain/entities/CreateSolicity";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { useSelector } from "react-redux";
@@ -20,7 +20,6 @@ interface Props {
     fileUseCase: FilePublicationUseCase;
     attachmentUsecase: AttachmentUseCase;
     children?: React.ReactNode;
-    timeline: PartialTimelineSolicty[]
 }
 
 const SolicityDetailContainer = (props: Props) => {
@@ -56,7 +55,7 @@ const SolicityDetailContainer = (props: Props) => {
     const [, setUserSession] = useState<UserEntity>({} as UserEntity)
 
 
-
+    const [timeline, setTimeline] = useState<TimeLinePresenter[]>([])
 
     useEffect(() => {
 
@@ -89,6 +88,8 @@ const SolicityDetailContainer = (props: Props) => {
                     }
                     getSelectedEntity(res.establishment)
                     setData(data_)
+                    setTimeline(Solicity.ordernReponse(res))
+
 
                 }).catch((e) => {
                     setError(e.message)
@@ -112,6 +113,8 @@ const SolicityDetailContainer = (props: Props) => {
                         gender: res.gender,
                         race_identification: res.race_identification
                     }
+                    setTimeline(Solicity.ordernReponse(res))
+
                     setData(data_)
                     setSolicityToResponse(res)
                     getSelectedEntity(res.establishment)
@@ -143,7 +146,31 @@ const SolicityDetailContainer = (props: Props) => {
         props.usecase.generatePdf(solicityToResponse)
 
     }
+    const onDownloadFromUrl = (url: string, name: string) => {
+        props.fileUseCase.downloadFileFromUrl(url).then((file) => {
+            if (file instanceof Blob) {
+                const a = document.createElement("a");
+                const url = URL.createObjectURL(file);
+                a.href = url;
+                a.download = name;
+                document.body.appendChild(a);
+                a.click();
 
+                a.remove();
+            } else if (typeof file === "string") {
+                window.open(file, "_blank")
+            }
+        }).catch(() => {
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = name;
+            a.target = "_blank"
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+        })
+    }
 
     return (
         <>
@@ -156,8 +183,10 @@ const SolicityDetailContainer = (props: Props) => {
                 isLoadingSend={false}
                 onChange={() => { }}
                 children={props.children}
-                timeline={props.timeline}
+                timeline={solicityToResponse.timeline}
                 onDownloadPdf={donwloadPdf}
+                timeline_response={timeline}
+                onDownloadFromUrl={onDownloadFromUrl}
 
 
             />

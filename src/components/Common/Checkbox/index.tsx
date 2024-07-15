@@ -14,7 +14,7 @@ const Checkbox = ({checked, onChange, id, label}: CheckboxProps) => {
       <input type="checkbox" 
       id={id}
       checked={checked}
-      required
+      
       onChange={(e) => onChange(e.target.checked)}
       className="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"/>
       <label htmlFor={id} className="ml-2 text-gray-700">

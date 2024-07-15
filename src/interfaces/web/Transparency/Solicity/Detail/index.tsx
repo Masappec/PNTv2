@@ -49,7 +49,6 @@ children?: React.ReactNode;
             publicusecase={publicusecase}
             fileUseCase={fileusecase}
             attachmentUsecase={attachmentusecase}
-            timeline={[]}
 
         />
     )

@@ -345,7 +345,7 @@ const menu = [
     path: "/admin/solicity/response",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "add_solicityresponse",
+    permission_required: "view_solicityresponse",
     element: <SolicityResponse />,
   },
   {

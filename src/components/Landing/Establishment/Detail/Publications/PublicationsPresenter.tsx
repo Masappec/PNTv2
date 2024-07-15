@@ -9,6 +9,7 @@ import TransparencyCollab from "../../../../../domain/entities/TransparencyColla
 import TransparencyFocusEntity from "../../../../../domain/entities/TransparencyFocus";
 import TransparencyActive from "../../../../../domain/entities/TransparencyActive";
 import EstablishmentEntity from "../../../../../domain/entities/Establishment";
+import Alert from "../../../../Common/Alert";
 
 interface Props {
     entity: EstablishmentEntity;
@@ -103,6 +104,13 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
 
                             <div className="">
                                 <Accordion className="mt-14" key={"TA"} >
+                                    <>
+                                    {
+                                        props.mesesTA.length == 0 && <Alert type="info" 
+                                        message="No hay información publicada en este año" 
+                                        onClose={() => { }} />
+
+                                    }
                                     {
                                         props.mesesTA.map((mes, index) => {
                                             const mesIndex = meses.findIndex(x => x == mes) + 1;
@@ -119,6 +127,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                             );
                                         })
                                     }
+                                    </>
                                 </Accordion>
 
 
@@ -178,22 +187,31 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
 
                             <div>
                                 <Accordion className="mt-14" key={"TA"}>
-                                    {
-                                        props.mesesTF.map((mes, index) => {
-                                            const mesIndex = meses.findIndex(x => x == mes) + 1;
-                                            return (
-                                                <TF
-                                                    data={props.publicationsTF.find(x => x.month == mesIndex && x.year == props.selectedYear)?.data || []}
-                                                    month={mes}
-                                                    number_month={meses.findIndex(x => x == mes) + 1}
-                                                    year={props.selectedYear}
-                                                    key={index}
-                                                    onOpen={(month) => props.onOpenMonthTF(month)}
-                                                    establishment={props.entity.name}
-                                                />
-                                            );
-                                        })
-                                    }
+                                    <>
+                                        {
+                                            props.mesesTF.length == 0 && <Alert type="info"
+                                                message="No hay información publicada en este año"
+                                                onClose={() => { }} />
+
+                                        }
+                                        {
+                                            props.mesesTF.map((mes, index) => {
+                                                const mesIndex = meses.findIndex(x => x == mes) + 1;
+                                                return (
+                                                    <TF
+                                                        data={props.publicationsTF.find(x => x.month == mesIndex && x.year == props.selectedYear)?.data || []}
+                                                        month={mes}
+                                                        number_month={meses.findIndex(x => x == mes) + 1}
+                                                        year={props.selectedYear}
+                                                        key={index}
+                                                        onOpen={(month) => props.onOpenMonthTF(month)}
+                                                        establishment={props.entity.name}
+                                                    />
+                                                );
+                                            })
+                                        }
+                                    </>
+                                    
                                 </Accordion>
                             </div>
                         </>
@@ -250,23 +268,33 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
 
                                 <div>
                                     <Accordion className="mt-14" key={"TA"}>
-                                        {
-                                            props.mesesTC.map((mes, index) => {
-                                                const mesIndex = meses.findIndex(x => x == mes) + 1;
-                                                return (
-                                                    <TC
-                                                        data={props.publicationsTC.find(x => x.month == mesIndex 
-                                                            && x.year == props.selectedYear)?.data || []}
-                                                        month={mes}
-                                                        number_month={meses.findIndex(x => x == mes) + 1}
-                                                        year={props.selectedYear}
-                                                        key={index}
-                                                        onOpen={(month) => props.onOpenMonthTC(month)}
-                                                        establishment={props.entity.name}
-                                                    />
-                                                );
-                                            })
-                                        }
+                                        <>
+                                            {
+                                                props.mesesTC.length == 0 && <Alert type="info"
+                                                    message="No hay información publicada en este año"
+                                                    onClose={() => { }} />
+
+                                            }
+                                            {
+                                                props.mesesTC.map((mes, index) => {
+                                                    const mesIndex = meses.findIndex(x => x == mes) + 1;
+                                                    return (
+                                                        <TC
+                                                            data={props.publicationsTC.find(x => x.month == mesIndex
+                                                                && x.year == props.selectedYear)?.data || []}
+                                                            month={mes}
+                                                            number_month={meses.findIndex(x => x == mes) + 1}
+                                                            year={props.selectedYear}
+                                                            key={index}
+                                                            onOpen={(month) => props.onOpenMonthTC(month)}
+                                                            establishment={props.entity.name}
+                                                        />
+                                                    );
+                                                })
+                                            }
+                                        
+                                        </>
+                                        
                                     </Accordion>
                                 </div>
                             </div>

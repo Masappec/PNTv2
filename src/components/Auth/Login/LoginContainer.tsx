@@ -1,4 +1,5 @@
 import LoginUseCase from "../../../domain/useCases/Authentication/LoginUseCase"
+import SessionService from "../../../infrastructure/Services/SessionService"
 import LoginPresenter from "./LoginPresenter"
 import { FormEvent, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -30,9 +31,18 @@ const LoginContainer = ({ useCase }: {
           history('/admin')
           return
         }
-        const exist = user && user.user_permissions?.map((item) => item.codename).includes('view_solicity') && !user.is_superuser
+        const userSession = SessionService.getUserData()
+        const exist = user &&
+         user.user_permissions?.map((item) => item.codename).includes('view_solicity') 
+         console.log(user)
         if (exist) {
-          history('/admin/solicity')
+          if (!userSession.is_superuser){
+            history('/admin/solicity')
+
+          }else{
+            history('/admin')
+
+          }
         } else {
           history('/admin')
         }

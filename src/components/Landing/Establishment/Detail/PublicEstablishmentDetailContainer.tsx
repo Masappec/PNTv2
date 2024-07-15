@@ -298,7 +298,8 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
     return (
         <PublicEstablishmentDetailPresenter
-            onSelectYear={(year) => setYear(year)}
+            onSelectYear={(year) => {
+                setYear(year)}}
             selectedYear={year}
             years={Array.from({
                 length: 10

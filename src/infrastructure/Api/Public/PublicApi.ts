@@ -1,4 +1,4 @@
-import { AxiosError, AxiosInstance } from "axios";
+import axios, { AxiosError, AxiosInstance } from "axios";
 import { EstablishmentPublicListDto, Month } from "./interface";
 import { ADMIN_PATH, PaginationLetter, TRANSPARENCY_PATH } from "..";
 import { PedagogyAreaResponse } from "../PedagogyArea/interface";
@@ -93,6 +93,21 @@ class PublicApi {
         } catch (error) {
             if (error instanceof AxiosError) {
                 const e: string = error.response?.data?.message || 'Error al obtener las áreas de pedagogía.';
+                throw new Error(e);
+            } else {
+                throw new Error('Error de conexión');
+            }
+        }
+    }
+
+
+    async getCountFiles(){
+        try {
+            const response = await axios.get<{count:number}>(URL_API+TRANSPARENCY_PATH + "/count-files");
+            return response.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                const e: string = error.response?.data?.message || 'Error al obtener el conteo de archivos.';
                 throw new Error(e);
             } else {
                 throw new Error('Error de conexión');

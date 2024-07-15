@@ -38,6 +38,8 @@ const SolicityResponse = () => {
         )
     )
 
+    
+
 
     return (
         <SolicityResponseContainer

@@ -531,9 +531,10 @@ const SolicityResponseContainer = (props: Props) => {
             fileUseCase={props.fileUseCase}
             publicusecase={props.publicusecase}
             usecase={props.usecase}
-            timeline={solicityToResponse.timeline}
-
+            
         >
+            {!userSession.group?.find(x=>x.name=='Monitoreo DPE') ?
+
             <SolicityResponsePresenter
                 handleSubmit={handleSubmit}
                 onCancel={handleCancel}
@@ -580,7 +581,8 @@ const SolicityResponseContainer = (props: Props) => {
                 ChangeStatus={() => { changeStatus() }}
                 isAvaliableForChangeStatus={isChangeStatus()}
                 textForChangeStatus={textChangeStatus()}
-            />
+            />:null
+}
         </SolicityDetailContainer >
         </>
 

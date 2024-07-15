@@ -13,24 +13,24 @@ const PedagogyAreaCreateContainer = (props: Props) => {
     const [data, set_data] = useState<PedagogyAreaEntity>({
         faq: [
             {
-                answer: "Ingrese la respuesta aquí",
-                question: "Ingrese la pregunta aquí",
+                answer: "",
+                question: "",
                 isActive: true,
 
             }
         ],
         normatives: [
             {
-                description: "Ingrese la descripción aquí",
-                title: "Ingrese el título aquí",
-                url: "Ingrese la url aquí",
+                description: "",
+                title: "",
+                url: "",
                 isActive: true,
             }
         ],
         tutorials: [{
-            description: "Ingrese la descripción aquí",
-            title: "Ingrese el título aquí",
-            url: "Ingrese la url aquí",
+            description: "",
+            title: "",
+            url: "",
             isActive: true,
         }],
     });
@@ -54,8 +54,8 @@ const PedagogyAreaCreateContainer = (props: Props) => {
     const handleAddQuestion = () => {
         const newData = { ...data };
         newData.faq.push({
-            answer: "Ingrese la respuesta aquí",
-            question: "Ingrese la pregunta aquí",
+            answer: "",
+            question: "",
             isActive: true,
         });
         set_data(newData);
@@ -132,6 +132,20 @@ const PedagogyAreaCreateContainer = (props: Props) => {
 
     const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        //validar camois vacuis
+        if (data.faq.filter((item) => item.question === "" || item.answer === "").length > 0) {
+            setError("Debe completar todas las preguntas y respuestas");
+            return;
+        }
+        if (data.tutorials.filter((item) => item.title === "" || item.url === "" || item.description === "").length > 0) {
+            setError("Debe completar todos los tutoriales");
+            return;
+        }
+
+        if (data.normatives.filter((item) => item.title === "" || item.url === "" || item.description === "").length > 0) {
+            setError("Debe completar todas las normativas");
+            return;
+        }
         props.usecase.createPedagogyArea(data).then((res) => {
             set_edit(false);
             setSuccess("Se ha guardado correctamente");

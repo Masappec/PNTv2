@@ -87,7 +87,7 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                         <div className='relative'>
                                             <input
                                                 className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pr-10 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                                                type={field.type_field}
+                                                type={props.showPassword ? 'text' : 'password'}
                                                 placeholder={field.description}
                                                 name={field.name}
                                                 onChange={(e) =>
