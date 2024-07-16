@@ -7,10 +7,10 @@ import { IReportRow } from "../../../../infrastructure/Api/Reports/interface"
 interface Props {
     data: IReportRow[]
     error: string | null
-   
+
     page: number
     setPage: (page: number) => void
-   
+
 
 
     from: number
@@ -19,7 +19,7 @@ interface Props {
     totalPage: number
     limits: number[];
     onExport: () => void;
-    
+
 }
 
 const FilePublicationPresenter = (props: Props) => {
@@ -28,19 +28,19 @@ const FilePublicationPresenter = (props: Props) => {
 
     return (
         <>
-        <section className="flex justify-between">
-            <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
-                Archivos Publicados Por Mes / {new Date().getFullYear()}
+            <section className="flex justify-between">
+                <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+                    Archivos Publicados Por Mes / {new Date().getFullYear()}
 
-            </h2>
+                </h2>
 
-            <div className="flex justify-end">
+                <div className="flex justify-end">
                     <button className='inline-flex w-full items-center gap-2 rounded-md border border-primary px-5 py-2.5 text-center text-xs font-medium text-gray-600 transition-colors hover:bg-primary hover:text-white focus:outline-none'
 
-                    onClick={props.onExport}
-                >Exportar</button>
-            </div>
-        </section>
+                        onClick={props.onExport}
+                    >Exportar</button>
+                </div>
+            </section>
 
             <section className='h-min rounded-md bg-gray-100'>
 
@@ -49,13 +49,15 @@ const FilePublicationPresenter = (props: Props) => {
                     show={false}
                     limits={props.limits}
                     sorteable={false}
-                
+
                     columns={[
                         {
                             title: "N°",
-                            render: (row, index) => (
-                                <p>{index + 1}</p>
-                            )
+                            render: (row, index) => {
+                                console.log(row)
+                                return <p>{index + 1}</p>
+
+                            }
                         },
                         {
                             title: "Mes",
@@ -92,7 +94,7 @@ const FilePublicationPresenter = (props: Props) => {
                                 <a href={solicity.enlace} target="_blank" rel="noreferrer" className="text-primary underline">
                                     {solicity.enlace}
                                 </a>
-                                    
+
                             )
                         },
 
