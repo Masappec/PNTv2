@@ -71,9 +71,7 @@ const PedagogyAreaCreatePresenter = (
           theme={themeTabs}
           className='mb-4 mt-8 border-b border-gray-300'
         >
-          <Tabs.Item title="¿Qué información voy a encontrar?"
-
-          >
+          <Tabs.Item title="¿Qué puedo hacer en este portal?">
 
 
             <div className='my-8'>

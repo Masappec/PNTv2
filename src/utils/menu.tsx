@@ -35,6 +35,7 @@ import EstablihsmentInSession from "../interfaces/web/Admin/Establishment/InSess
 import SolicityManual from "../interfaces/web/Transparency/Solicity/Manual";
 import UserInSessionList from "../interfaces/web/Admin/User/InSession";
 import Reports from "../interfaces/web/Transparency/Reports";
+import IndicatorsEst from "../interfaces/web/Dashboard/IndicatorsEst";
 
 
 export interface MenuItem {
@@ -53,7 +54,7 @@ const menu = [
     visible: true,
     icon: <BiPieChart size={25} className="text-slate-500" />,
     permission_required: "",
-    element: <IndicatorsAdmin />,
+    element: <IndicatorsEst />,
   },
   {
     name: 'Usuarios',

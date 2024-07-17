@@ -23,7 +23,7 @@ class EstablishmentApi {
             });
             return response.data;
         } catch (error: any) {
-            const e: string = error.response?.data?.message || 'Error al obtener los establecimientos.';
+            const e: string = error.response?.data?.message || 'Error al obtener las instituciones.';
             throw new Error(e);
         }
     }
@@ -44,7 +44,7 @@ class EstablishmentApi {
             return response.data;
 
         } catch (error: any) {
-            const e: string = error.response?.data?.message || 'Error al crear el establecimiento.';
+            const e: string = error.response?.data?.message || 'Error al crear la institución.';
             throw new Error(e);
         }
 
@@ -66,7 +66,7 @@ class EstablishmentApi {
             return response.data;
 
         } catch (error: any) {
-            const e: string = error.response?.data?.message || 'Error al actualizar el establecimiento.';
+            const e: string = error.response?.data?.message || 'Error al actualizar institución.';
             throw new Error(e);
         }
 
@@ -81,7 +81,7 @@ class EstablishmentApi {
             };
 
         } catch (error: any) {
-            const e: string = error.response?.data?.message || 'Error al obtener el establecimiento.';
+            const e: string = error.response?.data?.message || 'Error al actualizar institución.';
             throw new Error(e);
         }
     }
@@ -91,7 +91,7 @@ class EstablishmentApi {
             const response = await this.api.delete<MessageTranslation<null>>(ADMIN_PATH + '/establishment/delete/' + id);
             return response.data;
         } catch (error: any) {
-            const e: string = error.response?.data?.message || 'Error al eliminar el establecimiento.';
+            const e: string = error.response?.data?.message || 'Error al eliminar institución.';
             throw new Error(e);
         }
     }
@@ -106,7 +106,7 @@ class EstablishmentApi {
         } catch (error) {
             if (error instanceof AxiosError) {
 
-                const e: string = error.response?.data?.message || 'Error al eliminar el establecimiento.';
+                const e: string = error.response?.data?.message || 'Error al eliminar institución.';
                 throw new Error(e);
             } else {
                 throw new Error("Ocurrio un error")
