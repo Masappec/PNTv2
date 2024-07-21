@@ -1,16 +1,16 @@
 import IndicatorsAdminContainer from "../../../../components/Dashboards/IndicatorsAdmin/IndicatorsAdminContainer";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
 
-const IndicatorsAdmin =()=>{
+const IndicatorsAdmin = () => {
 
-return(
+   return (
 
-   < IndicatorsAdminContainer
-   
-   usecase={new PublicDataApi()}
-   />
-   
-)
+      < IndicatorsAdminContainer
+
+         usecase={new PublicDataApi()}
+      />
+
+   )
 }
 
-export default  IndicatorsAdmin;
+export default IndicatorsAdmin;

@@ -26,7 +26,6 @@ import FocalizedCreate from "../interfaces/web/Transparency/Focalized/Create";
 import CollaborativeList from "../interfaces/web/Transparency/Collaborative/List";
 import CollaborativeCreate from "../interfaces/web/Transparency/Collaborative/Create";
 import SolicityListEstablishment from "../interfaces/web/Transparency/Solicity/ListEstablishment";
-import IndicatorsAdmin from "../interfaces/web/Dashboard/IndicatorsAdmin";
 import { BiPieChart } from "react-icons/bi";
 import FocalizedEdit from "../interfaces/web/Transparency/Focalized/Edit";
 import CollaborativeEdit from "../interfaces/web/Transparency/Collaborative/Edit";
@@ -36,6 +35,8 @@ import SolicityManual from "../interfaces/web/Transparency/Solicity/Manual";
 import UserInSessionList from "../interfaces/web/Admin/User/InSession";
 import Reports from "../interfaces/web/Transparency/Reports";
 import IndicatorsEst from "../interfaces/web/Dashboard/IndicatorsEst";
+import { FaTable } from "react-icons/fa";
+import AllPublications from "../interfaces/web/Transparency/AllPublications";
 
 
 export interface MenuItem {
@@ -373,6 +374,15 @@ const menu = [
     permission_required: "view_solicityresponse",
     element: <Reports />,
     visible_for_superadmin: false
+  },
+  {
+    name:'Publicaciones T. Activa',
+    path:'/admin/publicaciones',
+    visible:true,
+    icon: <FaTable size={25} className="text-slate-500"/>,
+    permission_required: 'view_transparencyactive',
+    element: <AllPublications/>,
+    visible_for_superadmin:false
   }
 
 ];

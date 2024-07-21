@@ -86,6 +86,7 @@ interface Props {
     isAvaliableForChangeStatus: boolean;
     ChangeStatus: () => void
     textForChangeStatus: string
+    textForMotiveDescription:string
 }
 /**
  * 
@@ -116,7 +117,7 @@ const SolicityResponsePresenter = (props: Props) => {
                     <Button
                         onClick={() => { props.ChangeStatus() }}
                         type="button"
-                        className="text-white font-bold bg-sky-800 w-[185px] h-[48px] "
+                        className="text-white h-10 font-bold bg-sky-800 w-auto "
                     >
                         <FiCheckSquare size={23} className=" mr-4" />
                         <span>{props.textForChangeStatus}</span>
@@ -127,8 +128,7 @@ const SolicityResponsePresenter = (props: Props) => {
                     <> <div className=" grid grid-cols gap-4 w-auto mt-16">
                         <Label
                             htmlFor=""
-                            value={`Solicitar Insistencia. \n
-                                    Si necesitas consultar alguna aclaración sobre la respuesta recibida, ingresarla a continuación`}
+                            value={props.textForMotiveDescription}
                             className="text-xl font-bold "
                         />
                         <Textarea
@@ -262,7 +262,8 @@ const SolicityResponsePresenter = (props: Props) => {
                                     <button
                                         type="button"
                                         onClick={() => props.onAddDataSet("file")}
-                                        className='flex items-center gap-2 rounded-md border border-primary bg-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
+                                        className='flex items-center gap-2 rounded-md border 
+                                        border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
                                         <svg
                                             xmlns='http://www.w3.org/2000/svg'
                                             height='24px'

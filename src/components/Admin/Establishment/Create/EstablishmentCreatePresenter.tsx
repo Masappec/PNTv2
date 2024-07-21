@@ -206,7 +206,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Título de la autoridad superior"} width="w-60"
+                                    placeholder={"Título de la autoridad Superior"} width="w-60"
                                     value={props.data.highest_authority || ""}
                                     name="highest_authority"
                                     onChange={(e) => props.setData(e)}
@@ -216,7 +216,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Nombre de la autoridad superior"} width="w-60"
+                                    placeholder={"Nombre de la autoridad Superior"} width="w-60"
                                     value={props.data.first_name_authority || ""}
                                     name="first_name_authority"
                                     onChange={(e) => props.setData(e)}
@@ -226,7 +226,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Apellido de la autoridad superior"} width="w-60"
+                                    placeholder={"Apellido de la autoridad Superior"} width="w-60"
                                     value={props.data.last_name_authority || ""}
                                     name="last_name_authority"
                                     onChange={(e) => props.setData(e)}
@@ -237,7 +237,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
 
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Cargo de la autoridad superior"} width="w-60"
+                                    placeholder={"Cargo de la autoridad Superior"} width="w-60"
                                     value={props.data.job_authority || ""}
                                     name="job_authority"
                                     onChange={(e) => props.setData(e)}
@@ -248,7 +248,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
 
                             <div className="flex  flex-col m-2">
                                 <Input type={"email"}
-                                    placeholder={"Correo de la autoridad superior"} width="w-60"
+                                    placeholder={"Correo de la autoridad Superior"} width="w-60"
                                     value={props.data.email_authority || ""}
                                     name="email_authority"
                                     onChange={(e) => props.setData(e)}
@@ -270,7 +270,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
 
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Nombre del comité"} width="w-60"
+                                    placeholder={"Nombre del Responsable del Comité"} width="w-60"
                                     value={props.data.first_name_committe || ""}
                                     name="first_name_committe"
                                     onChange={(e) => props.setData(e)}
@@ -280,7 +280,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Apellido del comité"} width="w-60"
+                                    placeholder={"Apellido del Responsable del Comité "} width="w-60"
                                     value={props.data.last_name_committe || ""}
                                     name="last_name_committe"
                                     onChange={(e) => props.setData(e)}
@@ -291,7 +291,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Cargo del comité"} width="w-60"
+                                    placeholder={"Cargo del Responsable del Comité"} width="w-60"
                                     value={props.data.job_committe || ""}
                                     name="job_committe"
                                     color={props.validateFields('job_committe')}
@@ -301,7 +301,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Correo del comité"} width="w-60"
+                                    placeholder={"Correo del Responsable del Comité"} width="w-60"
                                     value={props.data.email_committe || ""}
                                     name="email_committe"
                                     color={props.validateFields('email_committe')}

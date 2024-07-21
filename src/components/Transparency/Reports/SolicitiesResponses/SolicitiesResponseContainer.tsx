@@ -28,10 +28,12 @@ const SolicitiesResponseContainer = (props: Props) => {
     const [limitOptions,] = useState<number[]>([5, 10, 20, 40, 50])
     const [columnsSort, setColumnsSort] = useState<string[]>([])
     const [search, setSeach] = useState<string>("");
-    const [status_, setStatus] = useState<string>(StatusSolicity.RESPONSED.key);
+    const [status_, setStatus] = useState<string>(StatusSolicity.RESPONSED.key+","+StatusSolicity.INSISTENCY_RESPONSED+","+
+        StatusSolicity.INFORMAL_MANAGMENT_RESPONSED
+    );
     useEffect(() => {
         props.useCase.getEstablishmentSolicity("", currentPage, limit, columnsSort,
-            StatusSolicity.RESPONSED.key).then(response => {
+            status_).then(response => {
                 SetSolicitudes(response.results)
                 setTotalPage(response.total_pages || 0)
                 setFrom(response.from || 0)

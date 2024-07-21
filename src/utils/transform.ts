@@ -1,7 +1,8 @@
+//eslint omit
 import jsPDF from "jspdf";
 import csvtojson from 'csvtojson';
 import * as XLSX from 'xlsx';
-import autoTable from "jspdf-autotable";
+import autoTable, { Styles } from "jspdf-autotable";
 import { DELIMITER } from "./constans";
 
 
@@ -47,7 +48,7 @@ export class Transform {
         // Agregar un subtítulo con margen de 20
         autoTable(doc, {
             head: [[name]],
-            startY: doc.previousAutoTable.finalY + 10,
+            startY:  doc.previousAutoTable?.finalY||0 + 10,
             margin: { horizontal: 10 },
             styles: {
                 overflow: 'linebreak',
@@ -61,7 +62,7 @@ export class Transform {
         autoTable(doc, {
             head: [headers],
             body: data,
-            startY: doc.previousAutoTable.finalY + 10,
+            startY: doc.previousAutoTable?.finalY||0 + 10,
             margin: { horizontal: 10 },
             styles: {
                 fontSize: 8,  // Reducir el tamaño de la fuente para las filas
@@ -70,7 +71,7 @@ export class Transform {
                 halign: 'center', // Centrar el contenido de las celdas
                 valign: 'middle', // Alinear verticalmente el contenido de las celdas
                 columnWidth: 'wrap' // Ajustar el ancho de las columnas
-            },
+            } as Partial<Styles>,
             headStyles: {
                 fillColor: [26, 114, 144],
                 halign: 'center' // Centrar el texto del encabezado
@@ -88,6 +89,8 @@ export class Transform {
                 8: { columnWidth: 'auto' },
                 9: { columnWidth: 'auto' },
                 10: { columnWidth: 'auto' }
+            } as {
+                [key: number]:  Partial<Styles>
             }
         });
         // Guardar el PDF
@@ -123,7 +126,7 @@ export class Transform {
         // Agregar un subtítulo con margen de 20
         autoTable(doc, {
             head: [[name]],
-            startY: doc.previousAutoTable.finalY + 10,
+            startY: (doc.previousAutoTable?.finalY||0) + 10,
             margin: { horizontal: 10 },
             styles: { overflow: 'linebreak', fontSize: 10 },
             headStyles: { fillColor: [26, 114, 144] }, // Personaliza los estilos del encabezado
@@ -133,7 +136,7 @@ export class Transform {
         autoTable(doc, {
             head: [headers],
             body: data,
-            startY: doc.previousAutoTable.finalY + 10,
+            startY: (doc.previousAutoTable?.finalY||0) + 10,
             margin: { horizontal: 10 },
             styles: {
                 fontSize: 8,  // Reduce el tamaño de la fuente para las filas

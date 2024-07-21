@@ -241,7 +241,7 @@ export class Solicity extends BaseEntity {
 
         solicity.comments?.forEach(c => {
             list.push(new TimeLinePresenter(c.user, c.created_at, c.motive, [], [], 
-                "COMMENT", "Comentario del ciudadano",'Comentario de la Entidad'))
+                "COMMENT", "Motivo de Prórroga",'Motivo de Prórroga'))
         })
 
 

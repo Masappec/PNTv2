@@ -57,7 +57,7 @@ const SolicityListPresenter = (props: Props) => {
             }
             <section className='mb-8 flex flex-col items-end 
             justify-between gap-4 sm:flex-row sm:items-center'>
-                <div className="flex flex-row gap-6 w-full">
+                <div className="flex flex-row gap-6 w-auto">
                     <div>
 
 
@@ -209,7 +209,7 @@ const SolicityListPresenter = (props: Props) => {
                                 const border = status?.bg.replace("bg", "border") || "border-primary-500"
                                 return (
                                     <p className={`text-wrap border rounded-md px-2 py-1    
-                                        w-5/12
+                                       w-auto  xl:w-5/12
                                      ${border}
                                      ${color} text-white text-center
 `}>

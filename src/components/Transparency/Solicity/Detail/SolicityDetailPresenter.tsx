@@ -8,7 +8,7 @@ import { StatusSolicity } from "../../../../utils/enums";
 import { useEffect, useState } from "react";
 import SessionService from "../../../../infrastructure/Services/SessionService";
 import UserEntity from "../../../../domain/entities/UserEntity";
-import { FaFilePdf } from "react-icons/fa";
+import { FaEye, FaFilePdf, FaLink } from "react-icons/fa";
 import { BiDownArrowAlt } from "react-icons/bi";
 
 interface Props {
@@ -172,17 +172,9 @@ const SolicityDetailPresenter = (props: Props) => {
                     <article
                       key={'subido' + index}
                       className='grid w-1/4 max-w-2xl mt-5  grid-cols-[max-content,1fr] items-center gap-2 rounded-md border border-gray-300 p-2 text-sm sm:text-base'>
-                      <svg
-                        className='h-7 w-7 text-primary'
-                        xmlns='http://www.w3.org/2000/svg'
-                        height='24px'
-                        viewBox='0 -960 960 960'
-                        width='24px'
-                        fill='currentColor'
-                      ><path
-                        d='M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z'
-                      ></path>
-                      </svg>
+                      <FaLink
+                      className="text-green-500"
+                      />
                       <section className='flex items-center justify-between'>
                         <label
                           className='inline-block text-sm font-semibold text-gray-900'
@@ -192,8 +184,11 @@ const SolicityDetailPresenter = (props: Props) => {
                         </label>
                         <a
                           href={file.url_download as string}
+                          target="_blank"
                           className='mx-auto flex items-center gap-2 rounded-md border border-primary-500 px-2 py-1 text-xs font-medium text-primary-500 hover:bg-primary-500 hover:text-white'>
-                          <BiDownArrowAlt />
+                          <FaEye
+                            className="text-primary hove:text-white "
+                          />
                           <span>Ver</span>
                         </a>
 

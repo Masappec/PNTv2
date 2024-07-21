@@ -77,6 +77,7 @@ const SolicityResponseContainer = (props: Props) => {
     const [isAvaliableToInsistency, setIsAvaliableToInsistency] = useState<boolean>(false)
     const [isAvaliableToResponse, setIsAvaliableToResponse] = useState<boolean>(false)
     const [isAvaliableToComment,] = useState<boolean>(false)
+    const [textDescription,setTextDescription] = useState<string>("");
     const [files, SetFiles] = useState<{
         file: File | string | null,
         type: "table" | "file" | "url",
@@ -132,6 +133,7 @@ const SolicityResponseContainer = (props: Props) => {
                     setData(data_)
                     setIsAvaliableToResponse(props.usecase.availableToResponse(_user, res))
                     getSelectedEntity(res.establishment)
+                    props.usecase.getDescriptionTextStatus(res,_user.id)
                 })
 
             } else {
@@ -156,7 +158,8 @@ const SolicityResponseContainer = (props: Props) => {
                     setData(data_)
                     setSolicityToResponse(res)
                     getSelectedEntity(res.establishment)
-
+                    const DescriptionTextArea = props.usecase.getDescriptionTextStatus(res, _user.id)
+                    setTextDescription(DescriptionTextArea)
                     setIsAvaliableToInsistency(props.usecase.availableToInsistency(_user, res))
 
                 }).catch((e) => {
@@ -423,7 +426,6 @@ const SolicityResponseContainer = (props: Props) => {
             e => e != 0
         )
         dataResponseSolicity.attachment = attachs.map((attach) => attach.entity?.id || 0)
-        dataResponseSolicity.attachment = []
         if (dataResponseSolicity.text == '') {
             setError('Ingresa tu consulta/respuesta')
             setLoading(false);
@@ -490,19 +492,22 @@ const SolicityResponseContainer = (props: Props) => {
         if (userSession.id == parseInt(solicityToResponse.user_created || "0")) {
             return props.usecase.isAvaliableChangeStaus(solicityToResponse)
 
+        }else{
+            return props.usecase.avaliableToProrroga(userSession,solicityToResponse)
         }
-        return false;
     }
     const textChangeStatus = () => {
-        return props.usecase.getTextChangeStatus(solicityToResponse)
+        return props.usecase.getTextChangeStatus(solicityToResponse,userSession.id)
     }
+
+    
 
     const changeStatus = () => {
         props.usecase.changeStatus(solicityToResponse.id).then((res) => {
             setTimeline(Solicity.ordernReponse(res))
             setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
             SetSolicity(res)
-
+            setTextDescription(props.usecase.getDescriptionTextStatus(solicityToResponse, userSession.id))
             setIsAvaliableToInsistency(true)
         }).catch((e) => {
             console.log(e)
@@ -581,6 +586,7 @@ const SolicityResponseContainer = (props: Props) => {
                 ChangeStatus={() => { changeStatus() }}
                 isAvaliableForChangeStatus={isChangeStatus()}
                 textForChangeStatus={textChangeStatus()}
+                textForMotiveDescription={textDescription}
             />:null
 }
         </SolicityDetailContainer >

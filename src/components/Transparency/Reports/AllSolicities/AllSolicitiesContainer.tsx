@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase"
 import { Solicity } from "../../../../domain/entities/Solicity"
-import { StatusSolicity } from "../../../../utils/enums"
 import ReportsApi from "../../../../infrastructure/Api/Reports"
 
 interface Props {
@@ -28,10 +27,9 @@ const AllSolicitiesContainer = (props: Props) => {
     const [limitOptions,] = useState<number[]>([5, 10, 20, 40, 50])
     const [columnsSort, setColumnsSort] = useState<string[]>([])
     const [search, setSeach] = useState<string>("");
-    const [status_, setStatus] = useState<string>(StatusSolicity.SEND.key);
+    const [status_, setStatus] = useState<string>("");
     useEffect(() => {
-        props.useCase.getEstablishmentSolicity("", currentPage, limit,columnsSort,
-            StatusSolicity.SEND.key).then(response => {
+        props.useCase.getEstablishmentSolicity("", currentPage, limit,columnsSort,"").then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)

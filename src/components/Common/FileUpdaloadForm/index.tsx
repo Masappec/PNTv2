@@ -126,7 +126,8 @@ const FileUploadForm = (props: FileUploadFormProps) => {
                             Cancelar
                         </Button>
                         <Button
-                            className='my-5 w-1/6'
+                                className='my-5 w-1/6 bg-primary-500 text-white'
+                                color={'primary'}
 
                             onClick={onSave}
                         >

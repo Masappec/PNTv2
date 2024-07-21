@@ -112,6 +112,33 @@ class SolicityUseCase {
 
   }
 
+
+  avaliableToProrroga(user:UserEntity,solicity:Solicity){
+    const user_citizen_id = parseInt(solicity.user_created);
+    const user_session = user.id
+    if (solicity && user) {
+      if (solicity.status == StatusSolicity.SEND.key){
+        if (user_citizen_id !== user_session) {
+          const expired_date = moment.utc(solicity.expiry_date).toDate()
+          const now = new Date()
+          
+          if (now.getDay() == expired_date.getDay()
+          && now.getMonth() == expired_date.getMonth()
+        && now.getFullYear() == expired_date.getFullYear()
+          ) {
+            return true
+          }
+
+        }
+      }
+        
+      
+
+    }
+
+    return false;
+
+  }
   async createManualSolicity(data: CreateSolicity) {
     console.log(data)
     return await this.solicityService.createManualSolicity(data);
@@ -143,17 +170,44 @@ class SolicityUseCase {
     return false
   }
 
-  getTextChangeStatus(solicity:Solicity){
-    if (solicity.status == StatusSolicity.RESPONSED.key
-      || solicity.status == StatusSolicity.NO_RESPONSED.key){
+  getTextChangeStatus(solicity:Solicity,user_id:number){
+    if (user_id!=solicity.userCreated){
+      if (solicity.status == StatusSolicity.SEND.key) {
+            return 'Prórroga'
+        } 
+    }else{
+      if (solicity.status == StatusSolicity.RESPONSED.key
+        || solicity.status == StatusSolicity.NO_RESPONSED.key) {
         return 'Solicitar Insistencia'
       }
 
-    if (solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
-      || solicity.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key){
+      if (solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
+        || solicity.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key) {
         return 'Solicitar Gestión oficiosa'
       }
       return ''
+    }
+    return ''
+    
+  }
+
+
+  getDescriptionTextStatus(solicity: Solicity, user_id: number) {
+    if (user_id != solicity.userCreated) {
+      if (solicity.status == StatusSolicity.PRORROGA.key) {
+        return 'Solicitar Prórroga. Si necesitas mas tiempo para responder, ingresa a continuación'
+      }
+    } else {
+      if (solicity.status == StatusSolicity.INSISTENCY_PERIOD.key) {
+        return 'Solicitar Insistencia. Si necesitas consultar alguna aclaración sobre la respuesta recibida, ingresarla a continuación'
+      }
+
+      if (solicity.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key) {
+        return 'Solicitar Gestión oficiosa.  Si la entidad no ha respondido, ingresarla a continuación'
+      }
+    }
+    return ''
+
   }
 
 

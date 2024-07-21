@@ -29,10 +29,11 @@ const SolicitiesNoResponseContainer = (props: Props) => {
     const [limitOptions,] = useState<number[]>([5, 10, 20, 40, 50])
     const [columnsSort, setColumnsSort] = useState<string[]>([])
     const [search, setSeach] = useState<string>("");
-    const [status_, setStatus] = useState<string>(StatusSolicity.NO_RESPONSED.key);
+    const [status_, setStatus] = useState<string>(StatusSolicity.NO_RESPONSED.key+","+
+        StatusSolicity.INSISTENCY_NO_RESPONSED.key+","+
+        StatusSolicity.FINISHED_WITHOUT_RESPONSE.key+","+StatusSolicity.INFORMAL_MANAGMENT_NO_RESPONSED.key);
     useEffect(() => {
-        props.useCase.getEstablishmentSolicity("", currentPage, limit, columnsSort,
-            StatusSolicity.NO_RESPONSED.key).then(response => {
+        props.useCase.getEstablishmentSolicity("", currentPage, limit, columnsSort,status_).then(response => {
                 SetSolicitudes(response.results)
                 setTotalPage(response.total_pages || 0)
                 setFrom(response.from || 0)

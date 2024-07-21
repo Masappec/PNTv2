@@ -280,7 +280,7 @@ const EstablishmentEditPresenter = (props: Props) => {
 
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Nombre del comité"} width="w-60"
+                                    placeholder={"Nombre del Responsable del Comité "} width="w-60"
                                     value={props.data.first_name_committe || ""}
                                     name="first_name_committe"
                                     onChange={(e) => props.setData(e)}
@@ -290,7 +290,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Apellido del comité"} width="w-60"
+                                    placeholder={"Apellido del Responsable del Comité "} width="w-60"
                                     value={props.data.last_name_committe || ""}
                                     name="last_name_committe"
                                     onChange={(e) => props.setData(e)}
@@ -301,7 +301,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Cargo del comité"} width="w-60"
+                                    placeholder={"Cargo del Responsable del  Comité"} width="w-60"
                                     value={props.data.job_committe || ""}
                                     name="job_committe"
                                     onChange={(e) => props.setData(e)}
@@ -311,7 +311,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Correo del comité"} width="w-60"
+                                    placeholder={"Correo del Responsable del comité"} width="w-60"
                                     value={props.data.email_committe || ""}
                                     name="email_committe"
                                     onChange={(e) => props.setData(e)}

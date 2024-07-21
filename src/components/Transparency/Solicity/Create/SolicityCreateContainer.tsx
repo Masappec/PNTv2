@@ -110,12 +110,14 @@ const SolicityCreateContainer = (props: Props) => {
             }
 
             data.address = entity.address || "Sin dirección"
-
+            
             if (data.text==""){
                 setError("Ingrese el texto de la solicitud")
                 setIsLoadingSend(false)
                 return
             }
+
+            data.city = entity.address||"sin ciudad";
 
             
 

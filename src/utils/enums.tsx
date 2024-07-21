@@ -114,6 +114,13 @@ export const StatusSolicity = {
         value_2: 'Finalizado sin respuesta'
     },
 
+    PRORROGA: {
+        value: 'Prórroga',
+        key: 'PRORROGA',
+        bg: 'bg-yellow-700',
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'Prórroga'
+    },
 
 
 }

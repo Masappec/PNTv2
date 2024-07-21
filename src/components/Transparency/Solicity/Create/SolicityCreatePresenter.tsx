@@ -126,19 +126,6 @@ const SolicityCreatePresenter = (props: Props) => {
             </div>
 
 
-            <div>
-              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Ciudad
-              </label>
-              <input
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                type='text'
-                placeholder='Ingresa el nombre de la ciudad'
-                onChange={props.onChange}
-                name="city"
-                value={props.data.city}
-              />
-            </div>
 
 
             <div>

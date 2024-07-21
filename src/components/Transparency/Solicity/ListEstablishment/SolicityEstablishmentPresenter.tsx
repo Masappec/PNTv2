@@ -50,7 +50,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
             </h2>
             <section className='mb-8 flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center'>
-                <div className="flex flex-row gap-6 w-full">
+                <div className="flex flex-row gap-6 w-auto">
                     <div>
 
 
@@ -114,7 +114,10 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                 <button
                     type='button'
                     onClick={props.onAdd}
-                    className='inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
+                    className='inline-flex items-center gap-2 rounded-lg 
+                    bg-primary px-5 py-2.5 text-center text-sm font-medium
+                    w-auto
+                     text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
                     <div className='inline-flex items-center gap-2'>
                         <svg
                             xmlns='http://www.w3.org/2000/svg'
@@ -201,7 +204,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                                 const border = color.replace("bg","border") 
                                 return (
                                     <p className={`text-wrap border rounded-md px-2 py-1    
-                                        md:w-5/12 w-full
+                                        w-auto  xl:w-5/12
                                      ${border}
                                      ${color} text-white text-center
 `}>
