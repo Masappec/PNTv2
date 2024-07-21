@@ -105,7 +105,7 @@ class SolicityService {
     const response = await this.api.changeStatus({
       solicity_id: solicity_id,
     });
-    return response;
+    return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   
   }
 }

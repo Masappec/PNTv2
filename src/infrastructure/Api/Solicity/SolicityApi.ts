@@ -221,7 +221,7 @@ class SolicityApi {
 
   async changeStatus(data:{solicity_id:number}) {
     try {
-      const res = await this.api.post(TRANSPARENCY_PATH + '/solicity/change-status', data);
+      const res = await this.api.post<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + '/solicity/change-status', data);
       return res.data;
     } catch (error) {
       if (error instanceof AxiosError) {

@@ -193,6 +193,7 @@ class SolicityUseCase {
 
 
   getDescriptionTextStatus(solicity: Solicity, user_id: number) {
+    console.log('solicity', solicity.status)
     if (user_id != solicity.userCreated) {
       if (solicity.status == StatusSolicity.PRORROGA.key) {
         return 'Solicitar Prórroga. Si necesitas mas tiempo para responder, ingresa a continuación'

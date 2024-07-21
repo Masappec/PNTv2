@@ -507,7 +507,8 @@ const SolicityResponseContainer = (props: Props) => {
             setTimeline(Solicity.ordernReponse(res))
             setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
             SetSolicity(res)
-            setTextDescription(props.usecase.getDescriptionTextStatus(solicityToResponse, userSession.id))
+            console.log(res)
+            setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))
             setIsAvaliableToInsistency(true)
         }).catch((e) => {
             console.log(e)
