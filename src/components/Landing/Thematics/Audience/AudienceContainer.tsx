@@ -32,6 +32,10 @@ const AudienceContainer = (props: Props) => {
         try {
             SetSearching(true)
             console.log(data)
+            setAlert({
+                type: 'info',
+                message: ''
+            })
             const res = await props.usecase.getAudienciasData(data)
             setRes(res)
             if (res.length === 0) {

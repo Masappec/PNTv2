@@ -2,6 +2,7 @@ import TemplateService from "../../../infrastructure/Services/TemplateService";
 import { DELIMITER } from "../../../utils/constans";
 import Template from "../../entities/Template";
 import TemplateFileEntity from "../../entities/TemplateFileEntity";
+import csvtojson from 'csvtojson';
 
 
 class TemplateFileUseCase {
@@ -13,6 +14,53 @@ class TemplateFileUseCase {
     async validateFile(data: TemplateFileEntity) {
         return await this.service.validateFile(data)
     }
+    normalizeString(str:string) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/:/g, "")
+        .replace(/-/g, "")
+        .replace(/,/g, "")
+        .replace(/\./g, "")
+        .replace(/ /g, "")
+        .replace(/_/g, "")
+        .replace(/#/g, "")
+        .replace(/%/g, "")
+        .replace(/&/g, "")
+        .replace(/"/g, "")
+        .replace(/'/g, "")
+        .replace(/!/g, "")
+        .replace(/¡/g, "")
+        .replace(/¿/g, "")
+        .replace(/-/g, "")
+        .replace(/\(\)/g, "")
+        .replace(/\(/g, "")
+        .replace(/\)/g, "")
+        .toLowerCase().trim();
+    }
+
+     cleanCSV(csvContent:string) {
+         // Split the content into lines
+         const lines = csvContent.trim().split('\n');
+         // Clean each line
+         const cleanedLines = lines.map(line => {
+             // Remove leading semicolon and space
+             line = line.replace(/^;\s*/, '');
+
+             // Remove trailing semicolons
+             line = line.replace(/;+\s*$/, '');
+
+             // Remove consecutive semicolons within the line
+             line = line.replace(/;{2,}/g, ';');
+
+                //remplazar \r
+                line = line.replace(/\r/g, '');
+
+
+
+             return line;
+         });
+
+         // Join cleaned lines into a single string with line breaks
+         return cleanedLines.join('\r\n');
+    }
 
     async validateLocalFile(data: File, template: Template,isActive=false) {
         return new Promise<{
@@ -22,12 +70,19 @@ class TemplateFileUseCase {
             valid: boolean
 
         }>((resolve, reject) => {
-            this.detectDelimiter(data, 1024, (delim, text) => {
+            this.detectDelimiter(data, async (delim, text) => {
                 try {
+                    
+                    const cleanedCSV = this.cleanCSV(text);
+                    
+                    const json = await csvtojson({
+                        delimiter: DELIMITER,
+                        noheader: template.verticalTemplate,
+                    }).fromString(cleanedCSV)
 
-                    let rows = text.split('\r\n');
-                    let columns = rows[0].split(delim);
-
+                    console.log(json, cleanedCSV, template.verticalTemplate)
+                    let rows = json.map(row => Object.values(row).join(delim));
+                    let columns = json.length > 0 ? Object.keys(json[0]) : [];
                     if (template.verticalTemplate) {
                         columns = rows.map(row => row.split(delim)[0]);
                         rows = rows.map(row => row.split(delim).slice(1).join(delim));
@@ -40,28 +95,27 @@ class TemplateFileUseCase {
                     }
 
                     columns = columns.filter(col => col.trim() !== '');
-
-
+                    
                     if (columns.length !== template.columns.length) {
                         throw new Error('El archivo no coincide con la plantilla, la cantidad de columnas no coincide');
 
                     }
 
                     columns.forEach(element => {
-                        if (!template.columns.find(col => col.name.toLowerCase().trim() === element.toLowerCase().trim())) {
-                            throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden');
+                        console.log(element);
+                        if (!template.columns.find(col => this.normalizeString(col.name) === this.normalizeString(element))) {
+                            throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden, Columan de nombre: ' + element + ' no encontrada en la plantilla');
                         }
                     });
-                    let rows_ = rows.slice(1);
+                    let rows_ = rows;
                     rows_ = rows_.filter(row => row.trim() !== '');
                     if (!template.verticalTemplate) {
                         if (rows_.filter(row => row.trim() !== '').length === 0) {
                             throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
                         }
-                        const datacell = rows_.map(row => row.split(delim));
-                        if (datacell.some(row => row.some(cell => cell.trim() == ''))) {
-                            throw new Error('El archivo no contiene datos, por favor verifique que el archivo no tenga celdas vacias');
-                        }
+
+                       
+                        
                     }
 
                     
@@ -79,9 +133,8 @@ class TemplateFileUseCase {
                         const row_data = row.split(delim);
                         return row_data.filter(col => col.trim() !== '');
                     });
-
                     resolve({
-                        columns,
+                        columns: template.columns.map(col => col.name),
                         rows: final_rows,
                         verticalTemplate: template.verticalTemplate,
                         valid: true
@@ -95,12 +148,14 @@ class TemplateFileUseCase {
 
     }
 
-    public detectDelimiter(file: File, sampleSize: number = 1024, callback: (delimiter: string, text: string) => void) {
+    public detectDelimiter(file: File,callback: (delimiter: string, text: string) => void) {
         const reader = new FileReader();
 
-        reader.onload = function (event: ProgressEvent<FileReader>) {
+        reader.onloadend = function (event: ProgressEvent<FileReader>) {
+            
             const fileData = event.target?.result as string;
-            const sample = fileData.slice(0, sampleSize);
+            console.log(fileData);
+            const sample = fileData;
 
             const delimiters = [',', ';', '\t'];
 
@@ -114,7 +169,7 @@ class TemplateFileUseCase {
             callback(sortedDelimiters[0].delimiter || ",", sample);
         };
 
-        reader.readAsText(file.slice(0, sampleSize), 'ISO-8859-1');
+        reader.readAsText(file, 'ISO-8859-1');
     }
 
 

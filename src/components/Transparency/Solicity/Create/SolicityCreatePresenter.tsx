@@ -176,7 +176,20 @@ const SolicityCreatePresenter = (props: Props) => {
                 value={props.data.email}
               />
             </div>
+            <div>
+              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                Ciudad
+              </label>
+              <input
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
+                placeholder='Ciudad'
+                type="text"
+                name="city"
+                onChange={props.onChange}
 
+                value={props.data.city}
+              />
+            </div>
 
             <div>
               <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
@@ -339,17 +352,17 @@ const SolicityCreatePresenter = (props: Props) => {
                 props.isLoadingSaved ? <Spinner></Spinner> :
                   props.isSaved ? <button
                     type='button'
-                    className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
-                    <IoCheckmarkCircle size={22} className=" mr-4 text-green-500 " />
+                    className='w-full rounded-full bg-WHITE
+                     px-6  text-base font-medium text-primary transition-opacity
+                      hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                   
                     <span>Guardada</span>
                   </button> :
                     <button
                       type='button'
                       onClick={props.handleSave}
-                      className='w-full rounded-full bg-white px-6 py-3 text-base 
-                    font-medium text-primary-500 transition-opacity hover:opacity-80 
-                    border border-primary-500
-                    focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                      className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+
                       Guardar
                     </button>
               }
@@ -364,7 +377,7 @@ const SolicityCreatePresenter = (props: Props) => {
                 </button> :
                   <button
                     type='submit'
-                    className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                      className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
                     Enviar solicitud
                   </button>
             }

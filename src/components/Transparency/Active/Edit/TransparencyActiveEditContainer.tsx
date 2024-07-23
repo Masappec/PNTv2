@@ -136,7 +136,7 @@ const ActiveEditContainer = (props: Props) => {
 
 
     const buildRowFromTemplateAnData = (templates: Template,rows:Row[][]) => {
-        
+        console.log(rows)
         let template_mod = templateTable.find((template) => {
             return template.id === templates.id
         })
@@ -209,6 +209,8 @@ const ActiveEditContainer = (props: Props) => {
                 templateDetail,
                 true
             ).then((res) => {
+                const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
+
                 setLoadingFiles(loadingFiles.filter((file) => {
                     return file.name !== newTemplates?.name
                 }))
@@ -218,7 +220,7 @@ const ActiveEditContainer = (props: Props) => {
                 newTemplates = {
                     ...newTemplates,
                     isValid: res.valid,
-                    file: file_
+                    file: newFile
                 } as TemplateFileEntity
 
 
@@ -363,6 +365,7 @@ const ActiveEditContainer = (props: Props) => {
 
 
     const handleChanngeFile = (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
+        if (e.target.files?.length === 0) return
 
         let newTemplates = templates.find((template) => {
             return template.id === templateFile.id
@@ -389,11 +392,15 @@ const ActiveEditContainer = (props: Props) => {
             templateDetail,
             true
         ).then((res) => {
+            const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
+
+        
 
             setError("")
             newTemplates = {
                 ...newTemplates,
-                isValid: res.valid
+                isValid: res.valid,
+                file: newFile
             } as TemplateFileEntity
 
 
@@ -435,16 +442,9 @@ const ActiveEditContainer = (props: Props) => {
             } as TemplateFileEntity
 
 
-            //reemplazar el template
-            setTemplates(templates.map((template) => {
-                if (template.id === newTemplates?.id) {
-                    return newTemplates
-                }
-                return template
-            }))
 
             setError(e.message)
-            sleep(2000).then(() => {
+            sleep(5000).then(() => {
                 setError("")
             })
         })
@@ -647,7 +647,9 @@ const ActiveEditContainer = (props: Props) => {
                 setError("El archivo no cumple con el formato")
                 return
             }
-            newTemplates.file = file
+            const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
+
+            newTemplates.file = newFile
             newTemplates.isValid = true
             setTemplates(templates.map((template) => {
                 if (template.id === newTemplates?.id) {
@@ -771,7 +773,7 @@ const ActiveEditContainer = (props: Props) => {
             return response.blob();
         }).then((file_) => {
             const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-            props.templateUseCase.validateLocalFile(blob as File, temDetail,true ).then((res) => {
+            props.templateUseCase.validateLocalFile(blob as File, temDetail,true).then((res) => {
                 if (!res) {
                     setError("El archivo no cumple con el formato")
                     return

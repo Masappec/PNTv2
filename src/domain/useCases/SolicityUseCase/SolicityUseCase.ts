@@ -144,8 +144,8 @@ class SolicityUseCase {
     return await this.solicityService.createManualSolicity(data);
   }
 
-  async changeStatus(solicityId:number){
-    return await this.solicityService.changeStatus(solicityId)
+  async changeStatus(solicityId:number,text:string){
+    return await this.solicityService.changeStatus(solicityId,text);
   }
 
   isAvaliableChangeStaus(solicity: Solicity) {

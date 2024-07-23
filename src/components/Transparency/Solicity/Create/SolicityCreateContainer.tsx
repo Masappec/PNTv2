@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../infrastructure/Store";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import SessionService from "../../../../infrastructure/Services/SessionService";
-import { toast } from 'react-toastify';
 import { Solicity } from "../../../../domain/entities/Solicity";
 import { sleep } from "../../../../utils/functions";
 import { useNavigate } from "react-router-dom";
@@ -116,8 +115,11 @@ const SolicityCreateContainer = (props: Props) => {
                 setIsLoadingSend(false)
                 return
             }
-
-            data.city = entity.address||"sin ciudad";
+            if(data.city === ""){
+                setError("Ingrese la ciudad")
+                setIsLoadingSend(false)
+                return
+            }
 
             
 
@@ -260,15 +262,25 @@ const SolicityCreateContainer = (props: Props) => {
         data.establishment = entity.id || 0
         data.address = entity.address || "Sin dirección"
         data.format_receipt = 'formulario web'
-        if (data.text === "" || data.city === ""
-            || data.first_name === "" || data.last_name === ""
-            || data.email === "" || data.race_identification === ""
-            || data.gender === ""
-            || data.phone === "" || data.format_send === "") {
-            setError("Complete todos los campos")
+        if (data.text === "" ){
+            setError("Ingrese el texto de la solicitud")
             setIsLoadingSave(false)
             return
         }
+
+        if(data.city === ""){
+            setError("Ingrese la ciudad")
+            setIsLoadingSave(false)
+            return
+        }
+
+        if (data.format_send === ""){
+            setError("Seleccione el formato de envio")
+            setIsLoadingSave(false)
+            return
+        }
+
+        
         props.usecase.createDraft(data).then((res) => {
             setError("")
             setIsChanged(false)
@@ -278,10 +290,7 @@ const SolicityCreateContainer = (props: Props) => {
         }).catch((err) => {
             setSuccess("")
             setIsLoadingSave(false)
-            toast(err.message, {
-                type: "error",
-                autoClose: 2000
-            })
+            setError(err.message)
         })
     }
 

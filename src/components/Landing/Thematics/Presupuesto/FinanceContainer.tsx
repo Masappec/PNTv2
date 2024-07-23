@@ -1,12 +1,5 @@
 
 
-/*import { useEffect, useState } from "react"
-import { ColourOption, Row } from "../../../../utils/interface"
-import EstablishmentEntity from "../../../../domain/entities/Establishment"
-import { useSelector } from "react-redux"
-import { RootState } from "../../../../infrastructure/Store"
-import { RequestPublicApi, ResponsePublicApi } from "../../../../infrastructure/Api/PublicDataApi/interface"
-import { sleep } from "../../../../utils/functions"*/
 import { useEffect, useState } from "react";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi"
 import FinancePresenter from "./FinancePresenter"
@@ -67,6 +60,10 @@ const FinanceContainer = (props: Props) => {
     }
  
     const handleSearch=()=>{
+        setAlert({
+            type: 'info',
+            message: ''
+        })
         if(ruc==""){
             setAlert({
                 type: 'error',

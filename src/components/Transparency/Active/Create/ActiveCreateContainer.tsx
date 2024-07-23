@@ -98,7 +98,6 @@ const ActiveCreateContainer = (props: IProps) => {
   }, [])
 
   useEffect(() => {
-    console.log(templates, filesPublication)
     setIsDisabled(_isDisabled())
   }, [templates, filesPublication])
 
@@ -135,7 +134,6 @@ const ActiveCreateContainer = (props: IProps) => {
       }
 
     })
-    console.log(data)
 
 
     setTemplateTable(data)
@@ -175,15 +173,20 @@ const ActiveCreateContainer = (props: IProps) => {
         templateDetail,
         true
       ).then((res) => {
+
+        const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
         setLoadingFiles(loadingFiles.filter((loading) => {
           return loading.name !== templateFile.name
         }))
         setError("")
 
+        
+
+
         newTemplates = {
           ...newTemplates,
           isValid: res.valid,
-          file: file_
+          file: newFile
         } as TemplateFileEntity
 
 
@@ -254,6 +257,9 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const handleChanngeFile = (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
 
+    if(e.target.files?.length === 0) return
+    
+
     let newTemplates = templates.find((template) => {
       return template.id === templateFile.id
     })
@@ -279,11 +285,13 @@ const ActiveCreateContainer = (props: IProps) => {
       templateDetail,
       true
     ).then((res) => {
+      const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
 
       setError("")
       newTemplates = {
         ...newTemplates,
-        isValid: res.valid
+        isValid: res.valid,
+        file: newFile
       } as TemplateFileEntity
 
 
@@ -319,19 +327,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
 
     }).catch((e) => {
-      newTemplates = {
-        ...newTemplates,
-        isValid: false
-      } as TemplateFileEntity
-
-
-      //reemplazar el template
-      setTemplates(templates.map((template) => {
-        if (template.id === newTemplates?.id) {
-          return newTemplates
-        }
-        return template
-      }))
+ 
+      
 
       setError(e.message)
       sleep(2000).then(() => {
@@ -393,9 +390,9 @@ const ActiveCreateContainer = (props: IProps) => {
 
     publish().then(() => {
       setLoading(false)
-      setLoading(false)
       setSuccess("Se ha subido correctamente la publicación")
       setTimeout(() => {
+        
         navigate("/admin/transparency/active")
       }, 2000)
     }).catch((e) => {
@@ -435,7 +432,6 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const handleSaveDataTable = (data: Row[][], template: TemplateFileEntity) => {
 
-    console.log(data, "Datos")
     if (data.length === 0) {
       return;
     }
@@ -449,7 +445,6 @@ const ActiveCreateContainer = (props: IProps) => {
 
     let blob;
     if (templateDetail.verticalTemplate) {
-      console.log(' es vertical')
 
       blob = props.usecase.generateContentCsvVertical(data);
       //descargar archivo
@@ -516,7 +511,6 @@ const ActiveCreateContainer = (props: IProps) => {
     const templateDetail = detail?.templates.find((_template) => {
       return template.id === _template.id
     })
-    console.log(templateDetail?.name)
     if (!templateDetail) return
 
     props.templateUseCase.validateLocalFile(file, templateDetail,true).then((res) => {
@@ -524,7 +518,9 @@ const ActiveCreateContainer = (props: IProps) => {
         setError("El archivo no cumple con el formato")
         return
       }
-      newTemplates.file = file
+      const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
+
+      newTemplates.file = newFile
       newTemplates.isValid = true
       setTemplates(templates.map((template) => {
         if (template.id === newTemplates?.id) {
@@ -577,7 +573,6 @@ const ActiveCreateContainer = (props: IProps) => {
     const name = name_template?.name || ""
 
 
-    console.log(data_template, name_template)
 
     if (!data_template) {
       setError("No se ha encontrado el template")
@@ -610,7 +605,6 @@ const ActiveCreateContainer = (props: IProps) => {
 
 
   const buildRowFromTemplateAnData = (templates: Template, rows: Row[][]) => {
-
     let template_mod = templateTable.find((template) => {
       return template.id === templates.id
     })

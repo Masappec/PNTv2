@@ -32,6 +32,10 @@ const SolicityContainer = (props: Props) => {
 
     const handleSearch = async () => {
         try {
+            setAlert({
+                type: 'info',
+                message: ''
+            })
             if (data.ruc=="") {
                 setAlert({
                     type: 'error',

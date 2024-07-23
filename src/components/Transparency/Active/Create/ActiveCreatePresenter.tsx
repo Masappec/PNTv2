@@ -93,7 +93,7 @@ const ActiveCreatePresenter = (props: Props) => {
               return (
                 <article
                   key={'subido' + index}
-                  className='grid w-1/4 max-w-2xl mt-5  grid-cols-[max-content,1fr] items-center gap-2 rounded-md border border-gray-300 p-2 text-sm sm:text-base'>
+                  className='grid w-auto md:w-1/4 lg:w-1/5  mt-5  grid-cols-[max-content,1fr] items-center gap-2 rounded-md border border-gray-300 p-2 text-sm sm:text-base'>
                   <svg
                     className='h-7 w-7 text-primary'
                     xmlns='http://www.w3.org/2000/svg'
@@ -318,10 +318,12 @@ const ActiveCreatePresenter = (props: Props) => {
                   <span>Cancelar</span>
                 </div>
               </button>
-
+              {
+                props.loading ? 
+                  <Spinner />:
               <button
                 type='button'
-                onClick={()=>props.handleSubmit()}
+                onClick={() => props.handleSubmit()}
                 className='inline-flex w-max items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -335,6 +337,8 @@ const ActiveCreatePresenter = (props: Props) => {
                 </svg>
                 <span>Guardar</span>
               </button>
+              }
+              
             </div>
           </div>
         </section>

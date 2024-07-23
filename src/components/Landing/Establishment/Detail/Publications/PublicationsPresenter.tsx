@@ -112,12 +112,14 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
 
                                     }
                                     {
-                                        props.mesesTA.map((mes, index) => {
+                                        meses.map((mes, index) => {
                                             const mesIndex = meses.findIndex(x => x == mes) + 1;
                                             return (
                                                 <TA
                                                     data={props.publications.find(x => x.month == mesIndex && x.year == props.selectedYear)?.data || []}
-                                                    month={mes}
+                                                    month={
+                                                        props.mesesTA.find(x => x == mes) ? mes : mes+ " (No publicado)"
+                                                    }
                                                     number_month={meses.findIndex(x => x == mes) + 1}
                                                     year={props.selectedYear}
                                                     key={index}
@@ -195,12 +197,14 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
 
                                         }
                                         {
-                                            props.mesesTF.map((mes, index) => {
+                                            meses.map((mes, index) => {
                                                 const mesIndex = meses.findIndex(x => x == mes) + 1;
                                                 return (
                                                     <TF
                                                         data={props.publicationsTF.find(x => x.month == mesIndex && x.year == props.selectedYear)?.data || []}
-                                                        month={mes}
+                                                        month={
+                                                            props.mesesTF.find(x => x == mes) ? mes : mes + " (No publicado)"
+                                                        }
                                                         number_month={meses.findIndex(x => x == mes) + 1}
                                                         year={props.selectedYear}
                                                         key={index}
@@ -276,13 +280,15 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
 
                                             }
                                             {
-                                                props.mesesTC.map((mes, index) => {
+                                                meses.map((mes, index) => {
                                                     const mesIndex = meses.findIndex(x => x == mes) + 1;
                                                     return (
                                                         <TC
                                                             data={props.publicationsTC.find(x => x.month == mesIndex
                                                                 && x.year == props.selectedYear)?.data || []}
-                                                            month={mes}
+                                                            month={
+                                                                props.mesesTC.find(x => x == mes) ? mes : mes + " (No publicado)"
+                                                            }
                                                             number_month={meses.findIndex(x => x == mes) + 1}
                                                             year={props.selectedYear}
                                                             key={index}

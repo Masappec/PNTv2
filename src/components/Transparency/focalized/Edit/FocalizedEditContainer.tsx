@@ -358,6 +358,7 @@ const FocalizedEditContainer = (props: Props) => {
 
 
   const handleChanngeFile = (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
+    if (e.target.files?.length === 0) return
 
     let newTemplates = templates.find((template) => {
       return template.id === templateFile.id

@@ -85,7 +85,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
           }
 
         },
-        series: [props.data.entites_total.not_updated, props.data.entites_total.not_updated],
+        series: [props.data.entites_total.updated, props.data.entites_total.not_updated],
         labels: ["Actualizadas",
           "No actualizadas"],
         colors: ["#1A7290", "#7DBACF"],

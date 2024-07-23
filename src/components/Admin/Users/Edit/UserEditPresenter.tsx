@@ -169,7 +169,6 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                                     }
                                                 }) || [])
                                             }
-                                            disabled={field.name === 'establishment_id' && props.isEstablishmentUser}
                                         />
                                     </div> :
                                     <div data-astro-source-loc='28:16'>

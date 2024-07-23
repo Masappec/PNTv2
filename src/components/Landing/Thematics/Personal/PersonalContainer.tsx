@@ -22,7 +22,7 @@ const PersonalContainer = (props: Props) => {
         type: 'info',
         message: ''
     })
-    const [isSearching, SetSearching] = useState<boolean>()
+    const [isSearching, SetSearching] = useState<boolean>(false)
 
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
     const [data, setData] = useState<RequestPersonalApi>({
@@ -38,7 +38,10 @@ const PersonalContainer = (props: Props) => {
 
     const handleSearch = async () => {
         try {
-           
+           setAlert({
+            message:"",
+            type:'info'
+           })
             if (!data.names) {
                 setAlert({
                     type: 'error',
@@ -87,7 +90,6 @@ const PersonalContainer = (props: Props) => {
             return;
         }
 
-        SetSearching(true)
         const filter: EstablishmentEntity[] = []
         const _filter = listEnt.filter((item) => {
             return item.name.toLowerCase().includes(inputValue.toLowerCase())
@@ -96,7 +98,6 @@ const PersonalContainer = (props: Props) => {
 
         filter.push(todas, ..._filter)
         
-        SetSearching(false)
         
         callback(filter.map((item) => {
             const data: ColourOption = {
@@ -117,6 +118,7 @@ const PersonalContainer = (props: Props) => {
             data={res}
             alert={alert}
             setAlert={setAlert}
+            isSearching={isSearching}
             
         />
 

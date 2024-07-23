@@ -40,7 +40,6 @@ const DataTablePartial = (props: IDataTablePartial) => {
                 return false
             })
         })
-        console.log("error", list)
         setErrorCell(list)
         return error
     }

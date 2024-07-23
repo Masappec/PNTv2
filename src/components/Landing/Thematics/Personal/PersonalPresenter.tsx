@@ -5,6 +5,7 @@ import { PersonalRemunerations } from "../../../../infrastructure/Api/PublicData
 import CustomInputSearch from "../../../Common/CustomInputSearch";
 import { ColourOption } from "../../../../utils/interface";
 import Alert from "../../../Common/Alert";
+import Spinner from "../../../Common/Spinner";
 interface Props {
 
   onSearch: () => void;
@@ -17,6 +18,7 @@ interface Props {
     message: string
   }
   setAlert: (e: { type: 'info' | 'success' | 'warning' | 'error', message: string}) => void;
+  isSearching: boolean;
 }
 const PersonalPresenter = (props: Props) => {
   return (
@@ -72,15 +74,17 @@ const PersonalPresenter = (props: Props) => {
                 onSelect={(e) => props.onInstitutionChange(e.value)}
               />
           </div>
+          {
+            props.isSearching ? <Spinner /> : <button
+              type='button'
+              onClick={() => { props.onSearch() }}
+              className='mt-8 rounded-md bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
 
-          <button
-            type='button'
-            onClick={() => { props.onSearch() } }
-            className='mt-8 rounded-md bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+              Buscar
 
-            Buscar
-
-          </button>
+            </button>
+          }
+          
         </form>
         {
           props.alert.message ? (

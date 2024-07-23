@@ -323,7 +323,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
 
                         </div>
                         <hr />
-                        <div className="flex-col items-center justify-between mt-5 pb-20">
+                        <div className="flex-col items-center justify-between  mb-52">
 
                             <h4 className="text-lg font-medium text-gray-800 dark:text-white">
                                 Obligaciones específicas

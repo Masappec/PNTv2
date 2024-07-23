@@ -36,7 +36,12 @@ class FilePublicationUseCase {
     generateContentCsv(data: Row[][]) {
         return this.filePublicationRepository.generateContentCsv(data);
     }
-
+    csvContentToFile(data: string, filename: string) {
+        return this.filePublicationRepository.csvContentToFile(data, filename);
+    }
+    csvContentFromColumsAndRows(columns: string[], rows: string[][], filename: string,isVertical:boolean) {
+        return this.filePublicationRepository.csvContentFromColumnsAndRows(columns, rows, filename,isVertical);
+    }
     generateContentCsvVertical(data: Row[][]) {
         return this.filePublicationRepository.generateContentCsvVertical(data);
     }

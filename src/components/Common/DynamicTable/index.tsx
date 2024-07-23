@@ -82,7 +82,6 @@ const DynamicTable = (props: Props) => {
 
     const handleChanged = (row: number, column: number, value: string) => {
 
-        console.log(row, column, value)
         const copy_data = [...data]
         copy_data[row][column].value = value
         setData(copy_data)

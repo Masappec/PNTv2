@@ -219,7 +219,10 @@ class SolicityApi {
 
   }
 
-  async changeStatus(data:{solicity_id:number}) {
+  async changeStatus(data:{solicity_id:number,
+    text:string,
+
+  }) {
     try {
       const res = await this.api.post<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + '/solicity/change-status', data);
       return res.data;

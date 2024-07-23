@@ -22,6 +22,7 @@ import SolicityDetailContainer from "../Detail/SolicityDetailContainer";
 import { AxiosProgressEvent } from "axios";
 import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
 import SolicityOnHoldContainer from "../OnHold/SolicityOnHoldContainer";
+import { StatusSolicity } from "../../../../utils/enums";
 
 
 interface Props {
@@ -421,6 +422,26 @@ const SolicityResponseContainer = (props: Props) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
+        if(solicityToResponse.status == StatusSolicity.INSISTENCY_PERIOD.key||
+            solicityToResponse.status == StatusSolicity.PRORROGA.key||
+            solicityToResponse.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key){
+            props.usecase.changeStatus(solicityToResponse.id, solicityToResponse.text).then((res) => {
+                setTimeline(Solicity.ordernReponse(res))
+                setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
+                SetSolicity(res)
+                console.log(res)
+                setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))
+                setIsAvaliableToInsistency(true)
+                setLoading(false)
+            }).catch((e) => {
+                console.log(e)
+                setLoading(false)
+
+            })
+            handleCancel()
+            return
+        }
+            
         dataResponseSolicity.id_solicitud = solicityToResponse.id
         dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0).filter(
             e => e != 0
@@ -436,11 +457,15 @@ const SolicityResponseContainer = (props: Props) => {
             setSuccess("Solicitud enviada correctamente")
             SetSolicity(_solicity)
             setIsSaved(true)
+            handleCancel()
+
             //toast.success("Solicitud enviada correctamente")
         }).catch((err) => {
             setError(err.message)
             setLoading(false)
             setIsSaved(false)
+            handleCancel()
+
         })
 
     }
@@ -503,16 +528,36 @@ const SolicityResponseContainer = (props: Props) => {
     
 
     const changeStatus = () => {
-        props.usecase.changeStatus(solicityToResponse.id).then((res) => {
-            setTimeline(Solicity.ordernReponse(res))
-            setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
-            SetSolicity(res)
-            console.log(res)
-            setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))
-            setIsAvaliableToInsistency(true)
-        }).catch((e) => {
-            console.log(e)
-        })
+
+        let new_status = '';
+        if(userSession.id == parseInt(solicityToResponse.user_created || "0")){
+            if(solicityToResponse.status == StatusSolicity.RESPONSED.key){
+                new_status = StatusSolicity.INSISTENCY_PERIOD.key
+            }else if(solicityToResponse.status == StatusSolicity.NO_RESPONSED.key){
+                new_status = StatusSolicity.INSISTENCY_PERIOD.key
+            }else if (solicityToResponse.status == StatusSolicity.INSISTENCY_RESPONSED.key){
+                new_status = StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
+            }
+        }else{
+            if (solicityToResponse.status == StatusSolicity.SEND.key) {
+                new_status = StatusSolicity.PRORROGA.key
+            }
+        }
+        if (new_status == '') {
+            return
+        }
+        const res = {
+            ...solicityToResponse,
+            status: new_status
+        }
+        setTimeline(Solicity.ordernReponse(res))
+        setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
+        SetSolicity(res)
+        setSolicityToResponse(res)
+        
+        setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))
+        setIsAvaliableToInsistency(true)
+        
     }
 
 

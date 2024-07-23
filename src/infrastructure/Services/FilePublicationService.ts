@@ -3,6 +3,7 @@ import { Row } from "../../utils/interface";
 import { FilePublicationApi } from "../Api/FilePublication/FilePublicationApi";
 import { FilePublicationEntity } from "../../domain/entities/PublicationEntity";
 import FilePublicationMapper from "../../domain/mappers/FilePublicationMapper";
+import { DELIMITER } from "../../utils/constans";
 
 
 
@@ -84,6 +85,45 @@ class FilePublicationService {
     }
 
 
+    csvContentToFile = (csvContent: string,name:string) => {
+
+        const csvContentnew = '\uFEFF' + csvContent; // Agregamos la marca de orden de bytes UTF-8 al inicio
+
+        // Crear un nuevo Blob con el contenido y el tipo MIME adecuados
+        const blob_ = new Blob([csvContentnew], { type: 'text/csv;charset=utf-8' });
+
+        // Crear un objeto File a partir del Blob
+        const file = new File([blob_], name, { type: 'text/csv;charset=utf-8' });
+
+        return file;
+    }
+
+     csvContentFromColumnsAndRows = (columns: string[], rows: string[][], name: string,isVertical:boolean) => {
+    let csvContent = '';
+
+
+         if (isVertical) {
+             // Escribir columnas
+             csvContent += columns.map(column => `"${column}"`).join(DELIMITER) + '\r\n';
+
+             // Escribir filas
+             for (let i = 0; i < rows[0].length; i++) {
+                 const row = columns.map((_, colIndex) => `"${rows[colIndex][i]}"`).join(DELIMITER);
+                 csvContent += row + '\r\n';
+             }
+         } else {
+             // Escribir columnas
+             csvContent += columns.map(column => `"${column}"`).join(DELIMITER) + '\r\n';
+
+             // Escribir filas
+             rows.forEach(row => {
+                 csvContent += row.map(cell => `"${cell}"`).join(DELIMITER) + '\r\n';
+             });
+         }
+
+        return this.csvContentToFile(csvContent,name);
+    }
+
     generateContentCsvVertical = (data: Row[][]) => {
         let csvContent = "";
         const transposedData = data[0].map((_, colIndex) => data.map(row => row[colIndex]));
@@ -98,13 +138,13 @@ class FilePublicationService {
         transposedData.forEach((column) => { 
             column.forEach((cell, rowIndex) => {
                if(cell!=undefined|| cell!=null){
-                csvContent += (rowIndex === 0) ? (cell.value ? cell.value + ";" : ";") : (cell.value ? cell.value:"") +";"
+                csvContent += (rowIndex === 0) ? (cell.value ? cell.value + ";" : ";") : (cell.value ? cell.value+" ":" ")
                }else{
-                csvContent += (rowIndex === 0) ? ";" : ";"
+                csvContent += (rowIndex === 0) ? ";" : " "
                }
                
             });
-            csvContent += "\r\n"; // Agregar un salto de línea después de cada columna
+            csvContent += "\r\n "; // Agregar un salto de línea después de cada columna
         });
         console.log(csvContent)
         return csvContent;

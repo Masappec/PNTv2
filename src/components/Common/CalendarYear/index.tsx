@@ -1,9 +1,10 @@
 import './index.css';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import Picker from 'rc-picker';
 import PickerPanel from 'rc-picker/lib/PickerPanel';
 import momentGenerateConfig from 'rc-picker/lib/generate/moment';
 import esMX from 'rc-picker/lib/locale/es_MX';
+import React from 'react';
 
 function dateRender(date: Moment, today: Moment) {
     return (
@@ -54,20 +55,53 @@ interface ICalendarMonthProps {
     visible?: boolean;
 }
 
-export const CalendarMonth = ({ onMonthSelect , onYearSelect ,visible}: ICalendarMonthProps) => (
-    <div className={`${visible ? 'block' : 'hidden'}
+const meses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+];
+export const CalendarMonth = ({ onMonthSelect , onYearSelect ,visible}: ICalendarMonthProps) => {
+    const [monthSelected, setMonthSelected] = React.useState<number>(new Date().getMonth());
+    return <div className={`${visible ? 'block' : 'hidden'}
        absolute z-10 mt-2 bg-white shadow-lg border border-gray-200 rounded-md p-4
         
     `}>
         <PickerPanel<Moment>
             locale={esMX}
             generateConfig={momentGenerateConfig}
-            dateRender={dateRender}
+            
             mode='month'
             onSelect={(value) => {
                 onMonthSelect(value.month());
                 onYearSelect(value.year());
+                setMonthSelected(value.month());
             } }
+
+            cellRender={(date) => {
+                const number = date instanceof moment ? date.month():0;
+                return (
+                    <div
+                        style={{
+                            borderTop: '3px solid #CCC',
+                            cursor: 'pointer',
+                            borderTopColor: number === monthSelected ? '#8cc3dd' : '#CCC',
+                            
+                        }}
+                    >
+                        {meses[number]}
+                    </div>
+                );
+            }}
+            
         />
         <br />
         <Picker<Moment>
@@ -79,4 +113,4 @@ export const CalendarMonth = ({ onMonthSelect , onYearSelect ,visible}: ICalenda
             }}
         />
     </div>
-);
+};
