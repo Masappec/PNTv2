@@ -88,8 +88,9 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                           if(field.name === "confirm_password"){
                             setShowConfirmPassword(!showConfirmPassword)
                           }else{
-                          props.handleShowPassword
-                        }}}
+                            props.handleShowPassword()
+                          }
+                        }}
                       >
                         {props.showPassword ? (
                           <IoEyeOffOutline size={22} className=" font-bold text-gray-600" />
