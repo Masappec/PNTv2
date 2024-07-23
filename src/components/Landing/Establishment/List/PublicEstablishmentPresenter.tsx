@@ -6,10 +6,7 @@ import Table from "../../../Common/Table";
 
 
 interface Props {
-    entities: {
-        letter: string,
-        data: EstablishmentEntity[]
-    }[];
+    entities: EstablishmentEntity[]
     error: string;
     onPageChange: (letter: string) => void;
     total: number;
@@ -92,13 +89,13 @@ const PublicEstablishmentPresenter = (props: Props) => {
                                 label: "Todos"
                             },
                             ...props.options.functions.map((item) => {
-                            return {
-                                value: item.name,
-                                label: item.name
-                            }
-                        })]}
+                                return {
+                                    value: item.name,
+                                    label: item.name
+                                }
+                            })]}
                         onChange={(e) => props.onSelectType(e.target.value)}
-                        selected={{value:props.selectedType}}
+                        selected={{ value: props.selectedType }}
 
                     />
                 </div>
@@ -112,7 +109,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                 <Table
 
                     show={props.entities.length > 0}
-                    
+
                     columns={
                         [
                             {
@@ -141,7 +138,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
                             }
                         ]
                     }
-                    data={props.entities.map((entity) => entity.data).flat()}
+                    data={props.entities}
 
                 />
 

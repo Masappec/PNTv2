@@ -51,8 +51,8 @@ interface Props {
 const FinancePresenter = (props: Props) => {
 
 
-  const [year, setYear] = useState<number>(new Date().getFullYear());
-  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+  const [year, setYear] = useState<number>(props.selectedYear);
+  const [month, setMonth] = useState<number>(props.month);
   const [visible, setVisible] = useState<boolean>(false);
   const onDownloadFile = async (url: string, name: string) => {
     try {
@@ -122,6 +122,7 @@ const FinancePresenter = (props: Props) => {
                     onChange={(e) => {
                       const year = parseInt(e.target.value);
                       setYear(year);
+                      props.onSelectYear(year);
                     }}
                   />
                   <div className="relative">
@@ -138,8 +139,17 @@ const FinancePresenter = (props: Props) => {
                     </button>
                     <CalendarMonth
                       visible={visible}
-                      onMonthSelect={(month) => setMonth(month+1)}
-                      onYearSelect={(year) => setYear(year)}
+                      onMonthSelect={(month) => {
+                        props.onSelectMonth(month + 1)
+                        setMonth(month + 1)
+
+
+                      }}
+                      onYearSelect={(year) => {
+                        setYear(year)
+
+                        props.onSelectYear(year)
+                      }}
                     />
                   </div>
 

@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { LogoDefensoria } from "../LogoDefensoria";
+import { useState } from "react";
 
 
 
 const Header = () => {
-
+  const [visible, setVisible] = useState(false);
 
   return (
     <header className='w-full border-b border-gray-300'>
@@ -22,6 +23,7 @@ const Header = () => {
           className='inline-flex h-11 w-11 items-center justify-center rounded-md bg-gray-100 p-2 text-sm text-gray-700 focus:bg-primary focus:text-white focus:outline-none focus:ring-1 lg:hidden'
           aria-controls='navbar-sticky'
           aria-expanded='false'
+          onClick={() => setVisible(!visible)}
         ><span className='sr-only'>abrir menú de navegación</span><svg
           width='24'
           height='24'
@@ -36,7 +38,7 @@ const Header = () => {
         </button>
         {/* Navigation Links */}
         <nav
-          className='hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto'
+          className={`${visible && 'hidden'} w-full items-center justify-between lg:order-1 lg:flex lg:w-auto`}
           id='navbar-sticky'>
           <ul className='flex flex-col gap-x-8 gap-y-4 p-4 pt-8 font-medium md:mt-0 lg:flex-row lg:p-0'>
             {/* Navigation Link */}

@@ -12,16 +12,16 @@ import EstablishmentUseCase from "../../../../domain/useCases/Establishment/Esta
 
 interface Props {
     usecase: PublicUseCase,
-    usecaseEst:EstablishmentUseCase
+    usecaseEst: EstablishmentUseCase
 }
 const PublicEstablishmentContainer = (props: Props) => {
 
 
     //get query param tipo
-    
-    const [searchParams, ] = useSearchParams();
 
-    const params:[string,string][] = [];
+    const [searchParams,] = useSearchParams();
+
+    const params: [string, string][] = [];
 
     for (const entry of searchParams.entries()) {
         params.push(entry);
@@ -29,10 +29,11 @@ const PublicEstablishmentContainer = (props: Props) => {
 
 
     const [load, setLoad] = useState(true)
-    const [entities, setEntities] = useState<{
+    const [, setEntities] = useState<{
         letter: string,
         data: EstablishmentEntity[]
     }[]>([])
+    const [copyEntities, setCopyEntities] = useState<EstablishmentEntity[]>([])
     const [originalEntities, setOriginalEntities] = useState<{
         letter: string,
         data: EstablishmentEntity[]
@@ -62,13 +63,14 @@ const PublicEstablishmentContainer = (props: Props) => {
     }
 
 
-    useEffect(()=>{
-        if(params.length>0){
-            const search = params.find(e=>e[0] == 'tipo')
-            const valor = search ? search[1]:''
-            const data = originalEntities.filter((entity) => entity.data.some((item) => 
+    useEffect(() => {
+        if (params.length > 0) {
+            const search = params.find(e => e[0] == 'tipo')
+            const valor = search ? search[1] : ''
+            const data = originalEntities.filter((entity) => entity.data.some((item) =>
                 item.function_organization?.toLowerCase() === valor.toLowerCase()))
             setEntities(data)
+            setCopyEntities(data.map((entity) => entity.data).flat())
         }
 
     }, [_entities])
@@ -93,18 +95,19 @@ const PublicEstablishmentContainer = (props: Props) => {
                 if (index >= 0) {
                     list_by_letters[index].data.push(entity)
                     return;
-                }else{
+                } else {
                     list_by_letters.push({
                         letter: entity.name[0].toUpperCase(),
                         data: [entity]
                     })
                 }
-                
+
             })
 
 
             setOriginalEntities(list_by_letters)
             setEntities(list_by_letters)
+            setCopyEntities(_entities)
             setLoad(false)
             return;
         }
@@ -156,17 +159,27 @@ const PublicEstablishmentContainer = (props: Props) => {
         setSelectedType(type)
         if (type === "") {
             setEntities(originalEntities)
+            setCopyEntities(originalEntities.map((entity) => entity.data).flat())
             return;
         }
-        const data = originalEntities.filter((entity) => entity.data.some((item) => item.function_organization === type))
-        setEntities(data)
+        console.log("type", type)
+        const list_filted: EstablishmentEntity[] = [];
+        originalEntities.forEach(element => {
+            element.data.forEach(item => {
+                if (item.function_organization === type) {
+                    list_filted.push(item)
+                }
+            })
+        });
+
+        setCopyEntities(list_filted)
 
     }
 
     return (
         <PublicEstablishmentPresenter
             error={error}
-            entities={entities}
+            entities={copyEntities}
             onPageChange={onPageChange}
             onSearch={onSearch}
             total={total}

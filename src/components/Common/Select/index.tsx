@@ -1,4 +1,4 @@
-import { Label,  } from "flowbite-react";
+import { Label, } from "flowbite-react";
 import { SelectHTMLAttributes } from "react";
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -10,28 +10,27 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     }[];
     selected?: {
         value: string;
-}
+    }
 }
 
 const Select = (props: SelectProps) => {
-    console.log(props.selected)
 
     return (
         <div className="flex flex-col">
 
             <div className="mb-2 block">
-                <Label value={props.placeholder}  data-testid="flowbite-label" />
+                <Label value={props.placeholder} data-testid="flowbite-label" />
             </div>
-            <select  
+            <select
                 {...props}
             >
 
                 {
                     props.options?.map((option) => (
                         <option value={option.value}
-                        selected={
-                            option.value == props.selected?.value
-                        }
+                            selected={
+                                option.value == props.selected?.value
+                            }
                         >{option.label}</option>
                     ))
                 }

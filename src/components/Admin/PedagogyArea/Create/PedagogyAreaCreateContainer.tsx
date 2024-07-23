@@ -146,6 +146,31 @@ const PedagogyAreaCreateContainer = (props: Props) => {
             setError("Debe completar todas las normativas");
             return;
         }
+
+        if (data.faq.length === 0) {
+            data.faq.push({
+                answer: "",
+                question: "",
+                isActive: true,
+            });
+        }
+        if (data.tutorials.length === 0) {
+            data.tutorials.push({
+                title: "",
+                url: "",
+                isActive: true,
+                description: "",
+            });
+        }
+        if (data.normatives.length === 0) {
+            data.normatives.push({
+                title: "",
+                url: "",
+                isActive: true,
+                description: "",
+            });
+        }
+
         props.usecase.createPedagogyArea(data).then((res) => {
             set_edit(false);
             setSuccess("Se ha guardado correctamente");

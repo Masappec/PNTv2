@@ -17,8 +17,8 @@ const FinanceContainer = (props: Props) => {
 
     const [isSearching, SetSearching] = useState<boolean>(false)
     const [year, setYear] = useState<number>(new Date().getFullYear())
-    const [month, setMonth] = useState<number>(new Date().getMonth())
-    const [ruc,setRuc] = useState<string>("")
+    const [month, setMonth] = useState<number>(new Date().getMonth() + 1)
+    const [ruc, setRuc] = useState<string>("")
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
     const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
     const [data, setData] = useState<ResponsePresupuestos[]>([])
@@ -33,7 +33,7 @@ const FinanceContainer = (props: Props) => {
     useEffect(() => {
         setListEnt(_establishments)
     }, [_establishments])
-    
+
     const loadOptions = (inputValue: string, callback: (options: ColourOption[]) => void) => {
         if (!inputValue) {
             return;
@@ -58,13 +58,13 @@ const FinanceContainer = (props: Props) => {
             return data;
         }))
     }
- 
-    const handleSearch=()=>{
+
+    const handleSearch = () => {
         setAlert({
             type: 'info',
             message: ''
         })
-        if(ruc==""){
+        if (ruc == "") {
             setAlert({
                 type: 'error',
                 message: 'Selecciona un establecimiento'
@@ -91,7 +91,7 @@ const FinanceContainer = (props: Props) => {
             month: month,
             ruc: ruc,
             year: year
-        }).then((data)=>{
+        }).then((data) => {
             setData(data)
             if (data.length == 0) {
                 setAlert({
@@ -100,7 +100,7 @@ const FinanceContainer = (props: Props) => {
                 })
             }
             setLoading(false)
-        }).catch(()=>{
+        }).catch(() => {
             setAlert({
                 type: 'error',
                 message: 'Error al obtener los datos'
@@ -121,10 +121,10 @@ const FinanceContainer = (props: Props) => {
             length={0}
             loadOptions={loadOptions}
             month={month}
-            onChangeEstablishment={(e)=>setRuc(e)}
+            onChangeEstablishment={(e) => setRuc(e)}
             onSearch={handleSearch}
-            onSelectMonth={(e)=>setMonth(e)}
-            onSelectYear={(e)=>setYear(e)}
+            onSelectMonth={(e) => setMonth(e)}
+            onSelectYear={(e) => setYear(e)}
             selectedYear={year}
             data={data}
             loading={loading}
