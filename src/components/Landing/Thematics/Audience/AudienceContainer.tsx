@@ -20,9 +20,9 @@ const AudienceContainer = (props: Props) => {
     const [isSearching, SetSearching] = useState<boolean>(false)
 
     const [data, setData] = useState<AudienceRequest>({
-        month:0,
+        month:new Date().getMonth()+1,
         names: "",
-        year:0
+        year:new Date().getFullYear()
     })
     const [res, setRes] = useState<AudienceResponse[]>([])
 

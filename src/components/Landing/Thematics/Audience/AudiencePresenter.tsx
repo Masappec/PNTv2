@@ -116,7 +116,7 @@ const AudiencePresenter = (props: Props) => {
               </button>
               <CalendarMonth
                 visible={visible}
-                onMonthSelect={(month) => setMonth(month)}
+                onMonthSelect={(month) => setMonth(month+1)}
                 onYearSelect={(year) => setYear(year)}
               />
               </div>

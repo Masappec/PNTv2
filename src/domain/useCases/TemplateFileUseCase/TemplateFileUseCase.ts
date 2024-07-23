@@ -80,13 +80,11 @@ class TemplateFileUseCase {
                         noheader: template.verticalTemplate,
                     }).fromString(cleanedCSV)
 
-                    console.log(json, cleanedCSV, template.verticalTemplate)
                     let rows = json.map(row => Object.values(row).join(delim));
                     let columns = json.length > 0 ? Object.keys(json[0]) : [];
                     if (template.verticalTemplate) {
-                        columns = rows.map(row => row.split(delim)[0]);
-                        rows = rows.map(row => row.split(delim).slice(1).join(delim));
-
+                        columns = json.length > 0 ? json.map(row => Object.values(row)[0]) as string[]: [];
+                        rows = json.length > 0 ? json.map(row => Object.values(row)[1]) as string[]: [];
                     } else {
                         if (delim !== DELIMITER) {
                             throw new Error('El archivo no coincide con la plantilla, el delimitador debe ser: ' + DELIMITER);
@@ -95,7 +93,6 @@ class TemplateFileUseCase {
                     }
 
                     columns = columns.filter(col => col.trim() !== '');
-                    
                     if (columns.length !== template.columns.length) {
                         throw new Error('El archivo no coincide con la plantilla, la cantidad de columnas no coincide');
 
@@ -107,17 +104,16 @@ class TemplateFileUseCase {
                             throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden, Columan de nombre: ' + element + ' no encontrada en la plantilla');
                         }
                     });
-                    let rows_ = rows;
-                    rows_ = rows_.filter(row => row.trim() !== '');
-                    if (!template.verticalTemplate) {
-                        if (rows_.filter(row => row.trim() !== '').length === 0) {
-                            throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
-                        }
-
-                       
-                        
+                    const rows_ = rows;
+                    
+                   
+                    if (rows_.filter(row => row == undefined).length > 0) {
+                        throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
                     }
+                    if (rows_.filter(row => row.trim() == '').length > 0) {
+                        throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
 
+                    }
                     
                     // validar que su contenido no contenga las palabras “NO APLICA”, “NO DISPONIBLE”, “N/D”, “ND”, “NA”, “N/A”. 
                     const invalidWords = ["NO APLICA", "NO DISPONIBLE", "N/D", "ND", "NA", "N/A"];

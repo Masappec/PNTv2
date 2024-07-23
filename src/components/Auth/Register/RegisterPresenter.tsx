@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import Alert from "../../Common/Alert";
 import FormFieldsEntity from "../../../domain/entities/FormFieldsEntity";
 import Select from "../../Common/Select";
@@ -29,6 +29,7 @@ interface RegisterPresenterProps {
 const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
 
 
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 
   return (
@@ -64,7 +65,11 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                     <div className='relative'>
 
                       <input
-                        type={props.showPassword ? "text" : field.type_field}
+                        type={
+                          field.name === "confirm_password" ?
+                           (showConfirmPassword ? "text" : field.type_field)
+                          : (props.showPassword ? "text" : field.type_field)
+                        }
                         placeholder={field.description}
                         className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
                         value={
@@ -79,7 +84,12 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                       <button
                         type='button'
                         className='absolute right-0 top-0 p-2 text-gray-600 outline-primary hover:cursor-pointer'
-                        onClick={props.handleShowPassword}
+                        onClick={()=>{
+                          if(field.name === "confirm_password"){
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }else{
+                          props.handleShowPassword
+                        }}}
                       >
                         {props.showPassword ? (
                           <IoEyeOffOutline size={22} className=" font-bold text-gray-600" />

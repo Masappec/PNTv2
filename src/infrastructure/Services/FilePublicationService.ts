@@ -99,18 +99,23 @@ class FilePublicationService {
     }
 
      csvContentFromColumnsAndRows = (columns: string[], rows: string[][], name: string,isVertical:boolean) => {
-    let csvContent = '';
+        let csvContent = '';
 
-
+        
          if (isVertical) {
              // Escribir columnas
-             csvContent += columns.map(column => `"${column}"`).join(DELIMITER) + '\r\n';
+             const temporalRows = [columns, rows.map(row=>row.length>0?row[0]:"")];
 
-             // Escribir filas
-             for (let i = 0; i < rows[0].length; i++) {
-                 const row = columns.map((_, colIndex) => `"${rows[colIndex][i]}"`).join(DELIMITER);
-                 csvContent += row + '\r\n';
-             }
+             const objectRow:Row[][] = temporalRows.map((row,index) => {
+                    return row.map((cell) => {
+                        return {value: cell,key:cell,
+
+                            is_header: index === 0 ? true : false,
+                        } as Row
+                    })
+                });
+             console.log(objectRow, rows)
+             csvContent = this.generateContentCsvVertical(objectRow);
          } else {
              // Escribir columnas
              csvContent += columns.map(column => `"${column}"`).join(DELIMITER) + '\r\n';
@@ -120,7 +125,6 @@ class FilePublicationService {
                  csvContent += row.map(cell => `"${cell}"`).join(DELIMITER) + '\r\n';
              });
          }
-
         return this.csvContentToFile(csvContent,name);
     }
 
@@ -138,7 +142,7 @@ class FilePublicationService {
         transposedData.forEach((column) => { 
             column.forEach((cell, rowIndex) => {
                if(cell!=undefined|| cell!=null){
-                csvContent += (rowIndex === 0) ? (cell.value ? cell.value + ";" : ";") : (cell.value ? cell.value+" ":" ")
+                csvContent += (rowIndex === 0) ? (cell.value ? cell.value + ";" : ";") : (cell.value ? cell.value+";":" ")
                }else{
                 csvContent += (rowIndex === 0) ? ";" : " "
                }

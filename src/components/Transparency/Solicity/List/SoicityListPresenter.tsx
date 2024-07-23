@@ -209,7 +209,7 @@ const SolicityListPresenter = (props: Props) => {
                                 const border = status?.bg.replace("bg", "border") || "border-primary-500"
                                 return (
                                     <p className={`text-wrap border rounded-md px-2 py-1    
-                                       w-auto  xl:w-5/12
+                                       w-auto 
                                      ${border}
                                      ${color} text-white text-center
 `}>
