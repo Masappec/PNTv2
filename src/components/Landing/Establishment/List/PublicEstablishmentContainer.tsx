@@ -135,11 +135,13 @@ const PublicEstablishmentContainer = (props: Props) => {
         if (page === selectedLetter) {
             setEntities(originalEntities)
             setSelectedLetter("")
+            setCopyEntities(originalEntities.map((entity) => entity.data).flat())
             return;
         }
         setSelectedLetter(page)
         const data = originalEntities.filter((entity) => entity.letter.toUpperCase() === page)
         setEntities(data)
+        setCopyEntities(data.map((entity) => entity.data).flat())
     }
 
     const onItemClicked = (slug: string) => {
@@ -152,6 +154,7 @@ const PublicEstablishmentContainer = (props: Props) => {
     const onSearch = (search: string) => {
         const data = originalEntities.filter((entity) => entity.data.some((item) => item.name.toLowerCase().includes(search.toLowerCase())))
         setEntities(data)
+        setCopyEntities(data.map((entity) => entity.data).flat())
     }
 
 

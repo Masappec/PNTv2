@@ -206,7 +206,7 @@ const FinancePresenter = (props: Props) => {
                   return <div className="flex flex-row justify-center">
                     <a key={row.id} href="#"
                       onClick={() => onDownloadFile(URL_API + TRANSPARENCY_PATH + "/media/" + file?.url_download as string,
-                        `transparencia-focalizada-${props.selectedYear}-${props.month}-${file?.description}`
+                        `transparencia-activa-${props.selectedYear}-${props.month}-${file?.description}`
                       )}
                       className="text-primary-500 
                                                 hover:text-primary-600 text-base">

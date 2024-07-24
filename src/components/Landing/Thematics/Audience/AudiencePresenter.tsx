@@ -171,7 +171,8 @@ const AudiencePresenter = (props: Props) => {
                 title: "ASUNTO",
                 render: (row) => (
                   <p>{row.asunto }</p>
-                )
+                ),
+                classes:'h-20 text-wrap'
               },
               {
                 title: "FECHA",
