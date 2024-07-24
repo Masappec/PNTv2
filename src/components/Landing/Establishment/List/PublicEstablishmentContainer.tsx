@@ -151,10 +151,19 @@ const PublicEstablishmentContainer = (props: Props) => {
         navigate(`/entidades/${slug}`)
     }
 
+    const normalize = (str: string) => {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    }
+
     const onSearch = (search: string) => {
-        const data = originalEntities.filter((entity) => entity.data.some((item) => item.name.toLowerCase().includes(search.toLowerCase())))
+        const data = originalEntities.filter((entity) =>
+            entity.data.some((item) =>
+                normalize(item.name.toLowerCase()).includes(normalize(search.toLowerCase()))))
         setEntities(data)
-        setCopyEntities(data.map((entity) => entity.data).flat())
+
+        setCopyEntities(data.map((entity) => entity.data.filter((item) =>
+            normalize(item.name.toLowerCase()).includes(normalize(search.toLowerCase())))).flat())
+
     }
 
 

@@ -82,7 +82,7 @@ const SolicityDetailPresenter = (props: Props) => {
                 day: '2-digit',
                 hour: '2-digit',
                 minute: '2-digit',
-                
+
               })}</span>
             </div>
             <div className='grid sm:grid-cols-[300px,1fr]'>
@@ -173,12 +173,12 @@ const SolicityDetailPresenter = (props: Props) => {
                       key={'subido' + index}
                       className='grid w-1/4 max-w-2xl mt-5  grid-cols-[max-content,1fr] items-center gap-2 rounded-md border border-gray-300 p-2 text-sm sm:text-base'>
                       <FaLink
-                      className="text-green-500"
+                        className="text-green-500"
                       />
                       <section className='flex items-center justify-between'>
                         <label
                           className='inline-block text-sm font-semibold text-gray-900'
-                          data-testid='flowbite-label'>
+                          data-testid='flowbite-label text-wrap'>
                           {file.description}
 
                         </label>
@@ -201,7 +201,11 @@ const SolicityDetailPresenter = (props: Props) => {
 
                     <article
                       key={'subido' + index}
-                      className='grid w-1/4 max-w-2xl mt-5  grid-cols-[max-content,1fr] items-center gap-2 rounded-md border border-gray-300 p-2 text-sm sm:text-base'>
+                      className='grid xl:w-1/4
+                      sm:w-1/2
+                      max-w-3xl mt-5 w-auto 
+                      grid-cols-[max-content,1fr]
+                       items-center gap-2 rounded-md border border-gray-300 p-2 text-sm sm:text-base'>
                       <svg
                         className='h-7 w-7 text-primary'
                         xmlns='http://www.w3.org/2000/svg'
@@ -215,7 +219,7 @@ const SolicityDetailPresenter = (props: Props) => {
                       </svg>
                       <section className='flex items-center justify-between'>
                         <label
-                          className='inline-block text-sm font-semibold text-gray-900'
+                          className='inline-block text-sm font-semibold text-gray-900 text-wrap'
                           data-testid='flowbite-label'>
                           {file.description}
 
@@ -282,7 +286,7 @@ const SolicityDetailPresenter = (props: Props) => {
             </ol>
             {
               props.onDownloadPdf && <button
-              type="button"
+                type="button"
                 className='w-full rounded-md bg-primary text-white font-semibold py-2'
                 onClick={props.onDownloadPdf}
               >
@@ -294,7 +298,7 @@ const SolicityDetailPresenter = (props: Props) => {
         </div>
       </section>
 
-      
+
     </>
   )
 };

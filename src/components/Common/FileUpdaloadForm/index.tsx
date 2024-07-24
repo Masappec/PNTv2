@@ -62,13 +62,20 @@ const FileUploadForm = (props: FileUploadFormProps) => {
         if (!e.target.files || e.target.files.length === 0) {
             return;
         }
+
+        //validar tamaño de archivo
+        if (e.target.files[0].size > 1048576) {
+            setError('El archivo no puede superar 1MB');
+            return;
+        }
+
         onFileUpload(e.target.files[0]);
     }
 
     return (
         <div className='flex flex-col w-full gap-y-5'>
             <p>
-                Se aceptan archivos de hasta 500KB
+                Se aceptan archivos de hasta 1MB
             </p>
             {
                 error ? (
@@ -126,8 +133,8 @@ const FileUploadForm = (props: FileUploadFormProps) => {
                             Cancelar
                         </Button>
                         <Button
-                                className='my-5 w-1/6 bg-primary-500 text-white'
-                                color={'primary'}
+                            className='my-5 w-1/6 bg-primary-500 text-white'
+                            color={'primary'}
 
                             onClick={onSave}
                         >

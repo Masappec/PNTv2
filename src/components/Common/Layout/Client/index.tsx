@@ -37,7 +37,7 @@ const LayouClient = (props: Props) => {
 
   return (
     <>
-      <Header/>
+      <Header />
       {/* <main className='relative'>
         <div className='absolute left-8 hidden h-full w-[1px] bg-gray-900 lg:block'></div> */}
       <>

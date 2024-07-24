@@ -78,7 +78,7 @@ const SolicityResponseContainer = (props: Props) => {
     const [isAvaliableToInsistency, setIsAvaliableToInsistency] = useState<boolean>(false)
     const [isAvaliableToResponse, setIsAvaliableToResponse] = useState<boolean>(false)
     const [isAvaliableToComment,] = useState<boolean>(false)
-    const [textDescription,setTextDescription] = useState<string>("");
+    const [textDescription, setTextDescription] = useState<string>("");
     const [files, SetFiles] = useState<{
         file: File | string | null,
         type: "table" | "file" | "url",
@@ -134,7 +134,7 @@ const SolicityResponseContainer = (props: Props) => {
                     setData(data_)
                     setIsAvaliableToResponse(props.usecase.availableToResponse(_user, res))
                     getSelectedEntity(res.establishment)
-                    props.usecase.getDescriptionTextStatus(res,_user.id)
+                    props.usecase.getDescriptionTextStatus(res, _user.id)
                 })
 
             } else {
@@ -422,9 +422,9 @@ const SolicityResponseContainer = (props: Props) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
-        if(solicityToResponse.status == StatusSolicity.INSISTENCY_PERIOD.key||
-            solicityToResponse.status == StatusSolicity.PRORROGA.key||
-            solicityToResponse.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key){
+        if (solicityToResponse.status == StatusSolicity.INSISTENCY_PERIOD.key ||
+            solicityToResponse.status == StatusSolicity.PRORROGA.key ||
+            solicityToResponse.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key) {
             props.usecase.changeStatus(solicityToResponse.id, solicityToResponse.text).then((res) => {
                 setTimeline(Solicity.ordernReponse(res))
                 setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
@@ -441,7 +441,7 @@ const SolicityResponseContainer = (props: Props) => {
             handleCancel()
             return
         }
-            
+
         dataResponseSolicity.id_solicitud = solicityToResponse.id
         dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0).filter(
             e => e != 0
@@ -517,28 +517,30 @@ const SolicityResponseContainer = (props: Props) => {
         if (userSession.id == parseInt(solicityToResponse.user_created || "0")) {
             return props.usecase.isAvaliableChangeStaus(solicityToResponse)
 
-        }else{
-            return props.usecase.avaliableToProrroga(userSession,solicityToResponse)
+        } else {
+            return props.usecase.avaliableToProrroga(userSession, solicityToResponse)
         }
     }
     const textChangeStatus = () => {
-        return props.usecase.getTextChangeStatus(solicityToResponse,userSession.id)
+        return props.usecase.getTextChangeStatus(solicityToResponse, userSession.id)
     }
 
-    
+
 
     const changeStatus = () => {
 
         let new_status = '';
-        if(userSession.id == parseInt(solicityToResponse.user_created || "0")){
-            if(solicityToResponse.status == StatusSolicity.RESPONSED.key){
+        if (userSession.id == parseInt(solicityToResponse.user_created || "0")) {
+            if (solicityToResponse.status == StatusSolicity.RESPONSED.key) {
                 new_status = StatusSolicity.INSISTENCY_PERIOD.key
-            }else if(solicityToResponse.status == StatusSolicity.NO_RESPONSED.key){
+            } else if (solicityToResponse.status == StatusSolicity.NO_RESPONSED.key) {
                 new_status = StatusSolicity.INSISTENCY_PERIOD.key
-            }else if (solicityToResponse.status == StatusSolicity.INSISTENCY_RESPONSED.key){
+            } else if (solicityToResponse.status == StatusSolicity.INSISTENCY_RESPONSED.key) {
+                new_status = StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
+            } else if (solicityToResponse.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key) {
                 new_status = StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
             }
-        }else{
+        } else {
             if (solicityToResponse.status == StatusSolicity.SEND.key) {
                 new_status = StatusSolicity.PRORROGA.key
             }
@@ -554,14 +556,14 @@ const SolicityResponseContainer = (props: Props) => {
         setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
         SetSolicity(res)
         setSolicityToResponse(res)
-        
+
         setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))
         setIsAvaliableToInsistency(true)
-        
+
     }
 
 
-   
+
     return isSaved ?
         <ScreenMessage message=""
             type="Se ha enviado tu respuesta correctamente" >
@@ -582,59 +584,59 @@ const SolicityResponseContainer = (props: Props) => {
             fileUseCase={props.fileUseCase}
             publicusecase={props.publicusecase}
             usecase={props.usecase}
-            
-        >
-            {!userSession.group?.find(x=>x.name=='Monitoreo DPE') ?
 
-            <SolicityResponsePresenter
-                handleSubmit={handleSubmit}
-                onCancel={handleCancel}
-                data={[[]]}
-                commentForm={commentComponent()}
-                handleSaveDataFile={handleSaveDataFile}
-                files={files}
-                error={error}
-                loading={loading}
-                success={success}
-                setError={setError}
-                setSuccess={setSuccess}
-                typeSolicity={typeSolicity}
-                onChageTypeSolicity={setTypeSolicity}
-                onCreateTag={onCreateTag}
-                onFilterTag={onFilterTag}
-                tags={tags}
-                onSelectedTag={onChangeTagSelection}
-                onSaveTable={handleSaveDataTable}
-                onAddDataSet={onAddDataSet}
-                onSaveDateUrl={handleSaveDataUrl}
-                onDownloadFile={onDownloadFile}
-                onRemoveFile={() => { }}
-                onSaveFile={onSaveFile}
-                onSaveAttachment={onSaveAttachment}
-                solicity={_data}
-                solicitySaved={solicityToResponse}
-                onChangeDescription={(description) => SetSolicity({ ...solicity, description: description })}
-                onChangeTitle={(title) => SetSolicity({ ...solicity, name: title })}
-                onChangeEvent={(event) => SetSolicity({ ...solicity, notes: event })}
-                onRemoveFileFromSolicity={onRemoveFileFromPublication}
-                entitySelected={entity}
-                key={0}
-                onChangeTextResponse={(text) => setResponseSolicity({ ...dataResponseSolicity, text: text })}
-                getSelectedItems={getSelectedItem}
-                onDownloadFromUrl={onDownloadFromUrl}
-                userSession={userSession}
-                isAvaliableToResponse={isAvaliableToResponse}
-                isLoadingSend={loading}
-                attachs={attachs}
-                isAvaliableToInsistency={isAvaliableToInsistency}
-                timeline={timeline}
-                isAvaliableToComment={isAvaliableToComment}
-                ChangeStatus={() => { changeStatus() }}
-                isAvaliableForChangeStatus={isChangeStatus()}
-                textForChangeStatus={textChangeStatus()}
-                textForMotiveDescription={textDescription}
-            />:null
-}
+        >
+            {!userSession.group?.find(x => x.name == 'Monitoreo DPE') ?
+
+                <SolicityResponsePresenter
+                    handleSubmit={handleSubmit}
+                    onCancel={handleCancel}
+                    data={[[]]}
+                    commentForm={commentComponent()}
+                    handleSaveDataFile={handleSaveDataFile}
+                    files={files}
+                    error={error}
+                    loading={loading}
+                    success={success}
+                    setError={setError}
+                    setSuccess={setSuccess}
+                    typeSolicity={typeSolicity}
+                    onChageTypeSolicity={setTypeSolicity}
+                    onCreateTag={onCreateTag}
+                    onFilterTag={onFilterTag}
+                    tags={tags}
+                    onSelectedTag={onChangeTagSelection}
+                    onSaveTable={handleSaveDataTable}
+                    onAddDataSet={onAddDataSet}
+                    onSaveDateUrl={handleSaveDataUrl}
+                    onDownloadFile={onDownloadFile}
+                    onRemoveFile={() => { }}
+                    onSaveFile={onSaveFile}
+                    onSaveAttachment={onSaveAttachment}
+                    solicity={_data}
+                    solicitySaved={solicityToResponse}
+                    onChangeDescription={(description) => SetSolicity({ ...solicity, description: description })}
+                    onChangeTitle={(title) => SetSolicity({ ...solicity, name: title })}
+                    onChangeEvent={(event) => SetSolicity({ ...solicity, notes: event })}
+                    onRemoveFileFromSolicity={onRemoveFileFromPublication}
+                    entitySelected={entity}
+                    key={0}
+                    onChangeTextResponse={(text) => setResponseSolicity({ ...dataResponseSolicity, text: text })}
+                    getSelectedItems={getSelectedItem}
+                    onDownloadFromUrl={onDownloadFromUrl}
+                    userSession={userSession}
+                    isAvaliableToResponse={isAvaliableToResponse}
+                    isLoadingSend={loading}
+                    attachs={attachs}
+                    isAvaliableToInsistency={isAvaliableToInsistency}
+                    timeline={timeline}
+                    isAvaliableToComment={isAvaliableToComment}
+                    ChangeStatus={() => { changeStatus() }}
+                    isAvaliableForChangeStatus={isChangeStatus()}
+                    textForChangeStatus={textChangeStatus()}
+                    textForMotiveDescription={textDescription}
+                /> : null
+            }
         </SolicityDetailContainer >
         </>
 

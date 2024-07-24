@@ -25,17 +25,17 @@ const ActivateAccountPresenter = (props: IProps) => {
 
     const textColor = {
         error: "text-red-500",
-        success: "text-green-500"
+        success: "text-primary-500"
     }
 
     const bgColor = {
         error: "bg-primary-400",
-        success: "bg-green-50"
+        success: "bg-primary-500"
     }
 
     const bgHoverColor = {
         error: "hover:bg-red-100",
-        success: "hover:bg-green-100"
+        success: "hover:bg-primary-400"
     }
 
     const bgRingColor = {
@@ -56,8 +56,8 @@ const ActivateAccountPresenter = (props: IProps) => {
                         {props.title}
                     </h5>
                     <img src={props.error ? error : image}
-                    alt={props.error ? "Cuenta no activada" : "Cuenta activada"}
-                    className="mx-auto w-1/2" />
+                        alt={props.error ? "Cuenta no activada" : "Cuenta activada"}
+                        className="mx-auto w-1/2" />
                     <p className="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">
                         {props.subtitle}
                     </p>

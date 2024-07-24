@@ -115,23 +115,37 @@ const PublicEstablishmentPresenter = (props: Props) => {
                             {
                                 render: (entity: EstablishmentEntity) => {
                                     return (
-                                        <a
-                                            className='uppercase cursor-pointer text-primary hover:underline hover:underline-offset-2'
-                                            onClick={() => props.onItemClicked(entity.slug || "")}>
-                                            {entity.name}
-                                        </a>
+                                        <span className="flex items-center">
+                                            <a
+                                                className='uppercase 
+                                                text-wrap
+                                                cursor-pointer text-primary hover:underline
+                                            justify-start
+                                            hover:underline-offset-2'
+                                                onClick={() => props.onItemClicked(entity.slug || "")}>
+                                                {entity.name}
+                                            </a>
+
+                                        </span>
                                     )
+
                                 },
                                 title: 'Institución',
+                                classes: 'justify-start'
                             },
                             {
                                 render: (entity: EstablishmentEntity) => {
                                     return (
-                                        <a
-                                            className='uppercase cursor-pointer text-primary hover:underline hover:underline-offset-2'
-                                            onClick={() => props.onItemClicked(entity.slug || "")}>
-                                            {entity.function_organization}
-                                        </a>
+                                        <span className="flex items-center">
+
+                                            <a
+                                                className='uppercase cursor-pointer text-primary 
+                                            justify-start text-wrap
+                                            hover:underline hover:underline-offset-2'
+                                                onClick={() => props.onItemClicked(entity.slug || "")}>
+                                                {entity.function_organization}
+                                            </a>
+                                        </span>
                                     )
                                 },
                                 title: 'Tipo de Institución'

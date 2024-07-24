@@ -6,15 +6,15 @@ import { Solicity } from "../../entities/Solicity";
 import UserEntity from "../../entities/UserEntity";
 import moment from 'moment';
 import jsPDF from 'jspdf';
-import autotable from  'jspdf-autotable';
+import autotable from 'jspdf-autotable';
 
 class SolicityUseCase {
   constructor(private readonly solicityService: SolicityService) { }
-  async getSolicities(search: string, page: number, limit?: number,sort?:string[],
+  async getSolicities(search: string, page: number, limit?: number, sort?: string[],
     range_start?: string, range_end?: string) {
-    return await this.solicityService.getSolicities(search, page, limit,sort, range_start, range_end);
+    return await this.solicityService.getSolicities(search, page, limit, sort, range_start, range_end);
   }
-  async getEstablishmentSolicity(search: string, page: number, limit?: number, sort?: string[],status?:string) {
+  async getEstablishmentSolicity(search: string, page: number, limit?: number, sort?: string[], status?: string) {
     return await this.solicityService.getEstablishmentSolicity(search, page, limit, sort, status);
   }
   async createDraft(data: CreateSolicity) {
@@ -71,12 +71,12 @@ class SolicityUseCase {
           || solicity.status == StatusSolicity.RESPONSED.key
           || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_RESPONSED.key
       }
-    }else{
+    } else {
       return solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
         || solicity.status == StatusSolicity.RESPONSED.key
         || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_RESPONSED.key
     }
-    
+
 
   }
 
@@ -85,7 +85,8 @@ class SolicityUseCase {
     if (solicity && user) {
       if (user.id == solicity.userCreated) {
 
-        return solicity.status == StatusSolicity.INSISTENCY_PERIOD.key || solicity.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
+        return solicity.status == StatusSolicity.INSISTENCY_PERIOD.key
+          || solicity.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
       }
 
     }
@@ -97,7 +98,7 @@ class SolicityUseCase {
     const user_citizen_id = parseInt(solicity.user_created);
     const user_session = user.id
     if (solicity && user) {
-      if(solicity.is_manual){
+      if (solicity.is_manual) {
         return true;
       }
       if (user_citizen_id !== user_session) {
@@ -113,26 +114,26 @@ class SolicityUseCase {
   }
 
 
-  avaliableToProrroga(user:UserEntity,solicity:Solicity){
+  avaliableToProrroga(user: UserEntity, solicity: Solicity) {
     const user_citizen_id = parseInt(solicity.user_created);
     const user_session = user.id
     if (solicity && user) {
-      if (solicity.status == StatusSolicity.SEND.key){
+      if (solicity.status == StatusSolicity.SEND.key) {
         if (user_citizen_id !== user_session) {
           const expired_date = moment.utc(solicity.expiry_date).toDate()
           const now = new Date()
-          
+
           if (now.getDay() == expired_date.getDay()
-          && now.getMonth() == expired_date.getMonth()
-        && now.getFullYear() == expired_date.getFullYear()
+            && now.getMonth() == expired_date.getMonth()
+            && now.getFullYear() == expired_date.getFullYear()
           ) {
             return true
           }
 
         }
       }
-        
-      
+
+
 
     }
 
@@ -144,15 +145,15 @@ class SolicityUseCase {
     return await this.solicityService.createManualSolicity(data);
   }
 
-  async changeStatus(solicityId:number,text:string){
-    return await this.solicityService.changeStatus(solicityId,text);
+  async changeStatus(solicityId: number, text: string) {
+    return await this.solicityService.changeStatus(solicityId, text);
   }
 
   isAvaliableChangeStaus(solicity: Solicity) {
     const expired_date = moment.utc(solicity.expiry_date).toDate()
     const now = new Date()
-    
-    
+
+
     if (solicity.status == StatusSolicity.RESPONSED.key
       || solicity.status == StatusSolicity.NO_RESPONSED.key
       || solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key
@@ -161,21 +162,21 @@ class SolicityUseCase {
         return true
       }
 
-      if(solicity.status == StatusSolicity.RESPONSED.key){
+      if (solicity.status == StatusSolicity.RESPONSED.key) {
         return true
       }
     }
-    
+
 
     return false
   }
 
-  getTextChangeStatus(solicity:Solicity,user_id:number){
-    if (user_id!=solicity.userCreated){
+  getTextChangeStatus(solicity: Solicity, user_id: number) {
+    if (user_id != solicity.userCreated) {
       if (solicity.status == StatusSolicity.SEND.key) {
-            return 'Prórroga'
-        } 
-    }else{
+        return 'Prórroga'
+      }
+    } else {
       if (solicity.status == StatusSolicity.RESPONSED.key
         || solicity.status == StatusSolicity.NO_RESPONSED.key) {
         return 'Solicitar Insistencia'
@@ -188,7 +189,7 @@ class SolicityUseCase {
       return ''
     }
     return ''
-    
+
   }
 
 
@@ -212,18 +213,18 @@ class SolicityUseCase {
   }
 
 
-   generatePdf(data:Solicity){
+  generatePdf(data: Solicity) {
     const doc = new jsPDF();
 
     // Título
     doc.text('Reporte de Solicitud', 20, 10);
 
-    
+
 
     autotable(doc, {
       startY: 20,
       head: [['Nombre del Establecimiento', 'Número SAIP', 'Fecha de Creación', 'Ciudad', 'Texto']],
-      body: [[data.estblishment_name||"", data.number_saip, new Date(data.created_at).toLocaleString(), data.city, data.text]],
+      body: [[data.estblishment_name || "", data.number_saip, new Date(data.created_at).toLocaleString(), data.city, data.text]],
     });
 
 
@@ -235,26 +236,26 @@ class SolicityUseCase {
 
 
     // Timeline
-     if (data.timeline) {
-       autotable(doc,{
+    if (data.timeline) {
+      autotable(doc, {
         startY: 80,
         head: [['Estado', 'Fecha de Creación']],
         body: data.timeline.map(item => [
           StatusSolicity[item.status as keyof typeof StatusSolicity].value,
-           new Date(item.created_at).toLocaleString()]),
+          new Date(item.created_at).toLocaleString()]),
       });
     }
-   
 
-    if(data.responses){
+
+    if (data.responses) {
       // Responses
-      autotable(doc,{
+      autotable(doc, {
         startY: 160,
-        head: [[ 'Texto', 'Fecha de Creación']],
-        body: data.responses.map(item => [ item.text, new Date(item.created_at).toLocaleString()]),
+        head: [['Texto', 'Fecha de Creación']],
+        body: data.responses.map(item => [item.text, new Date(item.created_at).toLocaleString()]),
       });
     }
-    
+
 
     // Guardar el PDF
     doc.save(`Solicitud-${data.number_saip}.pdf`);
