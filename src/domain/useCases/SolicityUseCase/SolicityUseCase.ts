@@ -223,8 +223,8 @@ class SolicityUseCase {
 
     autotable(doc, {
       startY: 20,
-      head: [['Nombre del Establecimiento', 'Número SAIP', 'Fecha de Creación', 'Ciudad', 'Texto']],
-      body: [[data.estblishment_name || "", data.number_saip, new Date(data.created_at).toLocaleString(), data.city, data.text]],
+      head: [['Nombre de la Institución', 'Número SAIP', 'Fecha de Creación', 'Ciudad']],
+      body: [[data.estblishment_name || "", data.number_saip, new Date(data.created_at).toLocaleString(), data.city, ]],
     });
 
 
@@ -252,7 +252,13 @@ class SolicityUseCase {
       autotable(doc, {
         startY: 160,
         head: [['Texto', 'Fecha de Creación']],
-        body: data.responses.map(item => [item.text, new Date(item.created_at).toLocaleString()]),
+        body: [
+          [
+            data.text,
+            new Date(data.created_at).toLocaleString()
+          ],
+          ...data.responses.map(item => [item.text, new Date(item.created_at).toLocaleString()]),
+        ],
       });
     }
 

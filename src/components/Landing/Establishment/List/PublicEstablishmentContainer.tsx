@@ -70,7 +70,8 @@ const PublicEstablishmentContainer = (props: Props) => {
             const data = originalEntities.filter((entity) => entity.data.some((item) =>
                 item.function_organization?.toLowerCase() === valor.toLowerCase()))
             setEntities(data)
-            setCopyEntities(data.map((entity) => entity.data).flat())
+            
+            onSelectType(valor)
         }
 
     }, [_entities])
@@ -168,23 +169,15 @@ const PublicEstablishmentContainer = (props: Props) => {
 
 
     const onSelectType = (type: string) => {
-        setSelectedType(type)
+        setSelectedType(type.toUpperCase())
         if (type === "") {
             setEntities(originalEntities)
             setCopyEntities(originalEntities.map((entity) => entity.data).flat())
             return;
         }
-        console.log("type", type)
-        const list_filted: EstablishmentEntity[] = [];
-        originalEntities.forEach(element => {
-            element.data.forEach(item => {
-                if (item.function_organization === type) {
-                    list_filted.push(item)
-                }
-            })
-        });
-
-        setCopyEntities(list_filted)
+      
+        setCopyEntities(originalEntities.map((entity) => entity.data.filter((item) =>
+            item.function_organization?.toLowerCase() === type.toLowerCase())).flat())
 
     }
 

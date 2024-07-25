@@ -45,6 +45,10 @@ const FileUploadForm = (props: FileUploadFormProps) => {
             setError('Debe seleccionar un archivo');
             return;
         }
+        if (file.size > 1048576){
+            setError('El archivo debe ser menor a 1MB');
+            return;
+        }
         if (!name) {
             setError('Debe ingresar un nombre');
             return;
@@ -63,11 +67,6 @@ const FileUploadForm = (props: FileUploadFormProps) => {
             return;
         }
 
-        //validar tamaño de archivo
-        if (e.target.files[0].size > 1048576) {
-            setError('El archivo no puede superar 1MB');
-            return;
-        }
 
         onFileUpload(e.target.files[0]);
     }
@@ -90,6 +89,7 @@ const FileUploadForm = (props: FileUploadFormProps) => {
             <FileInput
                 onChange={onChangeFile}
                 className='my-5'
+               
             />
             <Label htmlFor="" value="Nombre del archivo" />
 
@@ -113,8 +113,9 @@ const FileUploadForm = (props: FileUploadFormProps) => {
                 size="lg"
                 labelProgress
                 labelText
+                color='primary'
 
-                className={loading ? 'my-5' : 'hidden'}
+                className={loading ? 'my-5 bg-primary-600' : 'hidden'}
             />
             {
                 props.isSaved ? (

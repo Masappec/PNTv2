@@ -253,7 +253,7 @@ const LandingPresenter = (props: Props) => {
 
             <div className='flex  max-w-[332px] flex-col items-end justify-between'>
             <p className=''>
-              Este <strong>"Portal Nacional de Transparencia"</strong> es uno de los compromisos del Segundo
+              Este <strong className="font-semibold">"Portal Nacional de Transparencia"</strong> es uno de los compromisos del Segundo
               Plan de {" "}
               <a
                 className='hover:underline hover:underline-offset-2'

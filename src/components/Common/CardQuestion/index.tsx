@@ -31,12 +31,12 @@ const CardQuestion = (props: Props) => {
             <h2 className='text-2xl  mb-4 text-balance font-bold transition'>
                 {props.title}
             </h2>
-            <p className='mb-8 text-pretty text-lg font-medium leading-7 transition'>
+            <p className='mb-8 text-pretty text-lg font-medium leading-7 transition 2xl:text-xl'>
                 {props.content}
             </p>
         </div>
 
-        <div className='inline-flex items-center justify-start gap-x-4 text-lg font-semibold'>
+        <div className='inline-flex items-center justify-start gap-x-4 text-lg font-semibold 2xl:text-xl'>
             <span>Ir a la Sección</span>
 
             <svg

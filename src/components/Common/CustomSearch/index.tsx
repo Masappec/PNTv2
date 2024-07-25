@@ -70,7 +70,7 @@ const CustomSearch = (props: Props) => {
             <button
                 type='button'
                 onClick={props.onSearch}
-                className='flex w-1/4 items-center justify-center gap-x-4 rounded-r-full border border-primary bg-primary px-6 py-3 text-base font-semibold text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'>
+                className='flex w-1/4 items-center justify-center gap-x-4 rounded-r-full border border-primary bg-primary px-6 py-3 text-base font-semibold text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400 2xl:text-lg'>
                 <span className='hidden sm:block'>Buscar</span>
                 <svg
                     className='size-4'
