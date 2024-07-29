@@ -3,7 +3,7 @@ import RoleEditPresenter from "./RoleEditPresenter";
 import { useNavigate, useParams } from "react-router-dom";
 import RoleUseCase from "../../../../domain/useCases/Role/RoleUseCase";
 import PermissionUseCase from "../../../../domain/useCases/PermissionUseCase/PermissionUseCase";
-import PermissionEntity from "../../../../domain/entities/PermissionEntity";
+import PermissionEntity, { AllPermissions } from "../../../../domain/entities/PermissionEntity";
 import RoleEntity from "../../../../domain/entities/RoleEntity";
 
 
@@ -57,12 +57,34 @@ const RoleEditContainer = ({
 
         usecase.detail(id||"").then((data) => {
             setRole(data)
-            setSelected(data.permission?.map((item) => item) || [])
+            setSelected(configurePermissions(data))
         }).catch((error:any) => {
             setError(error.message)
             navigate('/admin/roles')
         })
     }, [])
+
+
+    const configurePermissions = (permissions: Pick<RoleEntity, 'permission'>) => {
+        const selecteds:PermissionEntity[] = [];
+
+        AllPermissions.forEach((item) => {
+            item.list.forEach((permission) => {
+                if (permissions?.permission?.some((item) => item.codename === permission.codename)) {
+                    const newPermission = { ...permission, id: 0 }
+                    permissions.permission.forEach((perm) => {
+                        if (perm.codename === permission.codename) {
+                            newPermission.id = perm.id
+                        }
+                    })
+                    selecteds.push(newPermission)
+                    
+                }
+            })
+        })
+        console.log(selecteds)
+        return selecteds;
+    }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -91,24 +113,39 @@ const RoleEditContainer = ({
     }
 
     const handleSelected = (checked:boolean, permission: PermissionEntity) => {
+        const newPermission = { ...permission , id: 0 }
+        listPer.forEach((item) => {
+            item.list.forEach((perm) => {
+                if (perm.codename === permission.codename) {
+                    newPermission.id = perm.id
+                }
+            })
+        })
+        console.log(newPermission)
         if(checked) {
-            setSelected([...selected, permission])
+            setSelected([...selected, newPermission])
             setRole({
                 ...role,
-                permission: [...selected, permission]
+                permission: [...selected, newPermission]
             })
         } else {
-            setSelected(selected.filter((item) => item.id !== permission.id))
+            setSelected(selected.filter((item) => item.codename !== newPermission.codename))
             setRole({
                 ...role,
-                permission: selected.filter((item) => item.id !== permission.id)
+                permission: selected.filter((item) => item.codename !== newPermission.codename)
             })
         }
 
     }
 
     const isSelected = (permission: PermissionEntity) => {
-        return selected.some((item) => item.id === permission.id)
+        let IsSelected = false;
+        selected.forEach((item) => {
+            if (item.codename === permission.codename) {
+                IsSelected = true;
+            }
+        })
+        return IsSelected;
     }
 
     return(
@@ -119,7 +156,7 @@ const RoleEditContainer = ({
             setError={setError}
             setSuccess={setSuccess}
             success={success}
-            permissions={listPer}
+            permissions={AllPermissions}
             onSelected={handleSelected}
             isSelected={isSelected}
             role={role}

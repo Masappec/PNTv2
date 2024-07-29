@@ -24,7 +24,6 @@ import ActivePreviewData from "../interfaces/web/Transparency/Active/PreviewData
 import FocalizedList from "../interfaces/web/Transparency/Focalized/List";
 import FocalizedCreate from "../interfaces/web/Transparency/Focalized/Create";
 import CollaborativeList from "../interfaces/web/Transparency/Collaborative/List";
-import CollaborativeCreate from "../interfaces/web/Transparency/Collaborative/Create";
 import SolicityListEstablishment from "../interfaces/web/Transparency/Solicity/ListEstablishment";
 import { BiPieChart } from "react-icons/bi";
 import FocalizedEdit from "../interfaces/web/Transparency/Focalized/Edit";
@@ -37,6 +36,12 @@ import Reports from "../interfaces/web/Transparency/Reports";
 import IndicatorsEst from "../interfaces/web/Dashboard/IndicatorsEst";
 import { FaTable } from "react-icons/fa";
 import AllPublications from "../interfaces/web/Transparency/AllPublications";
+import AllTA from "../interfaces/web/Transparency/Active/All";
+import AllTF from "../interfaces/web/Transparency/Focalized/All";
+import AllTC from "../interfaces/web/Transparency/Collaborative/All";
+import CollaborativeCreate from "../interfaces/web/Transparency/Collaborative/Create";
+import AllMonitorSolicities from "../interfaces/web/Transparency/Solicity/All";
+import { IndicatorsMonitoring } from "../interfaces/web/Dashboard/IndicatorMonitoring";
 
 
 export interface MenuItem {
@@ -58,6 +63,14 @@ const menu = [
     element: <IndicatorsEst />,
   },
   {
+    name: 'Indicadores Por Entidad',
+    path: '/admin/indicators',
+    visible: true,
+    icon: <BiPieChart size={25} className="text-slate-500" />,
+    permission_required: 'view_monitoring_indicators',
+    element: <IndicatorsMonitoring/>
+  },
+  {
     name: 'Usuarios',
     path: '/admin/users',
     permission_required: 'view_user',
@@ -68,7 +81,7 @@ const menu = [
   {
     name: 'Usuarios',
     path: '/admin/est/users/',
-    permission_required: 'view_users_internal',
+    permission_required: 'view_user_establishment',
     visible: true,
     icon: <RiUser3Line size={25} className="text-slate-500" />,
     element: <UserInSessionList />,
@@ -78,7 +91,7 @@ const menu = [
   {
     name: 'Crear Usuario',
     path: '/admin/est/users/create',
-    permission_required: 'view_users_internal',
+    permission_required: 'add_user_establishment',
     visible: false,
     icon: <RiUser3Line size={25} className="text-slate-500" />,
     element: <UserCreate />
@@ -88,10 +101,11 @@ const menu = [
     name: 'Editar Usuario',
     path: '/admin/est/users/:id',
     visible: false,
-    permission_required: 'view_users_internal',
+    permission_required: 'update_user_establishment',
     icon: <RiUser3Line size={25} className="text-slate-500" />,
     element: <UserEdit />
   },
+  
   {
     name: 'Crear Usuario',
     path: '/admin/users/create',
@@ -203,6 +217,15 @@ const menu = [
 
   },
   {
+    name: 'T.Activa',
+    path: '/admin/active/all',
+    visible: true,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: "view_all_transparencyactive",
+    element: <AllTA/>,
+    visible_for_superadmin: false
+  },
+  {
     name: 'Crear T.Activa',
     path: '/admin/active/create',
     visible: false,
@@ -237,17 +260,26 @@ const menu = [
     path: '/admin/transparency/focalized',
     visible: true,
     icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
-    permission_required: "view_transparencyactive",
+    permission_required: "view_transparencyfocal",
     element: <FocalizedList />,
     visible_for_superadmin: false
 
   },
   {
     name: 'T.Focalizada',
+    path: '/admin/focalized/all',
+    visible: true,
+    icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
+    permission_required: "view_all_transparencyfocal",
+    element: <AllTF/>,
+    visible_for_superadmin: false
+  },
+  {
+    name: 'T.Focalizada',
     path: '/admin/focalized/create',
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "view_transparencyactive",
+    permission_required: "add_transparencyfocal",
     element: <FocalizedCreate />,
     visible_for_superadmin: false
 
@@ -257,7 +289,7 @@ const menu = [
     path: '/admin/focalized/Edit',
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "view_transparencyactive",
+    permission_required: "change_transparencyfocal",
     element: <FocalizedEdit />
   },
   {
@@ -265,7 +297,7 @@ const menu = [
     path: '/admin/transparency/collaborative',
     visible: true,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
-    permission_required: "view_transparencyactive",
+    permission_required: "view_transparencycolab",
     element: <CollaborativeList />,
     visible_for_superadmin: false
 
@@ -275,8 +307,19 @@ const menu = [
     path: '/admin/collaborative/create',
     visible: false,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
-    permission_required: "view_transparencyactive",
-    element: <CollaborativeCreate />
+    permission_required: "add_transparencycollab",
+    element: <CollaborativeCreate />,
+    visible_for_superadmin: false
+  },
+  {
+    name: 'T.Colaborativa',
+    path: '/admin/collaborative/all',
+    visible: true,
+    icon: <RiCheckFill size={25} className="text-slate-500" />,
+    permission_required: "view_all_transparencycollab",
+    element: <AllTC />,
+    visible_for_superadmin: false
+
   },
   {
     name: 'T.Colaborativa',
@@ -298,6 +341,16 @@ const menu = [
     element: <SolicityList />,
     visible_for_superadmin: false
 
+  },
+
+  {
+    name: "Solicitudes",
+    path: "/admin/solicity/all",
+    visible: true,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
+    permission_required: "view_all_solicities",
+    element: <AllMonitorSolicities />,
+    visible_for_superadmin: false
   },
 
   {
@@ -347,7 +400,8 @@ const menu = [
     path: "/admin/solicity/response",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_solicityresponse",
+    permission_required: "view_solicityresponse,view_solicity,view_all_solicities",
+
     element: <SolicityResponse />,
   },
   {
@@ -363,7 +417,7 @@ const menu = [
     path: "/admin/solicity/detail",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_configuration",
+    permission_required: "view_solicityresponse,view_solicity,view_all_solicities",
     element: <SolicityDetail />,
   },
   {

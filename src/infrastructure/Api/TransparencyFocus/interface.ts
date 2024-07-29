@@ -1,4 +1,5 @@
 import { BaseObject } from "..";
+import EstablishmentEntity from "../../../domain/entities/Establishment";
 import { FilePublicationResponse } from "../FilePublication/interface";
 
 export interface TransparencyFocusListDto extends BaseObject {
@@ -17,7 +18,7 @@ export interface TransparencyFocusListDto extends BaseObject {
     published: boolean,
     published_at: string,
     max_date_to_publish: string,
-    establishment: number,
+    establishment: EstablishmentEntity,
 
 
 }

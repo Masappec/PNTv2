@@ -41,12 +41,17 @@ const handleLoade = () => {
 };
 
 const handleLoadeAdmin = (permissions: string) => {
+  const permissionSplit = permissions.split(",");
   const user = SessionService.getUserData();
+  console.log(permissionSplit);
+  const busqueda = user.user_permissions?.some((item) =>
+    permissionSplit.includes(item.codename)
+  );
   if (permissions == '') {
     return null;
   }
   if (
-    !user.user_permissions?.map((item) => item.codename).includes(permissions)
+    !busqueda
   ) {
     return redirect("/");
   }

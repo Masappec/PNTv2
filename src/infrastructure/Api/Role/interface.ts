@@ -16,7 +16,7 @@ export interface RoleDetailResponse {
         id: number;
         name: string;
         codename: string;
-        content_type: number;
+        content_type: number|string;
     }[]
 }
 

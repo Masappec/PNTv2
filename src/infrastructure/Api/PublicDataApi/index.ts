@@ -1,5 +1,8 @@
-import api, { PUBLIC_PATH, TRANSPARENCY_PATH } from "..";
-import { AudienceRequest, AudienceResponse, FormulariosRequest, FormulariosResponse, IndicatorRequest, IndicatorResponse, PersonalRemunerations, PublicDataApiResponse, RequestPersonalApi, RequestPresupuestoApi, RequestPublicApi, ResponsePresupuestos, ResponsePublicApi } from "./interface";
+import api, { Pagination, PUBLIC_PATH, TRANSPARENCY_PATH } from "..";
+import { AudienceRequest, AudienceResponse, FormulariosRequest, FormulariosResponse,
+     IndicatorRequest, IndicatorResponse, PersonalRemunerations, PublicDataApiResponse, 
+     RequestPersonalApi, RequestPresupuestoApi, RequestPublicApi, ResponsePresupuestos, 
+     ResponsePublicApi, Top20 } from "./interface";
 import { URL_API } from "../../../utils/constans";
 
 
@@ -61,11 +64,12 @@ class PublicDataApi {
         }
     }
 
-    public async getPublicDataCount(year:number|null) {
+    public async getPublicDataCount(year:number|null,month:number|null) {
         try {
             const response = await api.get<PublicDataApiResponse>(TRANSPARENCY_PATH + '/stats/citizen', {
                 params: {
-                    year
+                    year,
+                    month
                 }
             });
             return response.data;
@@ -91,7 +95,20 @@ class PublicDataApi {
         }
     }
 
-
+    /////establishment/table-stats
+    public async getEstablishmentTableStats(page?: number,limit?: number) {
+        try {
+            const response = await api.get <Pagination<Top20>>(TRANSPARENCY_PATH + '/establishment/table-stats',{
+                params:{
+                    page,
+                    limit
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error('Error al obtener los datos');
+        }
+    }
     public async getPersonalData(body: RequestPersonalApi) {
         try {
             const response = await api.post<PersonalRemunerations[]>(PUBLIC_PATH + '/public/personal-remuneraciones/', body);
@@ -129,6 +146,7 @@ class PublicDataApi {
             throw new Error('Error al obtener los datos');
         }
     }
+    
 }
 
 

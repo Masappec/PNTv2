@@ -103,7 +103,7 @@ function TablePublic<T>(props: TableProps<T>) {
                             ))
                         }
                         {
-                            props.data.length === 0 && (
+                            props.data?.length === 0 && (
                                 <TableFlowbite.Row>
                                     <TableFlowbite.Cell className="text-center" colSpan={props.columns.length}>
                                         No hay datos para mostrar

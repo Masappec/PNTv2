@@ -54,7 +54,7 @@ const FocalizedEditContainer = (props: Props) => {
     id: 0,
     description: "",
     name: "",
-  }, [], "", 0, 0, "", false, "", "", 0
+  }, [], "", 0, 0, "", false, "", "", {} as EstablishmentEntity
 
   ));
   const navigate = useNavigate()

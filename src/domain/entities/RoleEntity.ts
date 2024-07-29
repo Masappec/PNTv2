@@ -6,7 +6,7 @@ class RoleEntity{
         id: number;
         name: string;
         codename: string;
-        content_type: number;
+        content_type: string|number;
     }[];
 
     permission_required?: string;
@@ -15,7 +15,7 @@ class RoleEntity{
         id: number;
         name: string;
         codename: string;
-        content_type: number;
+        content_type: string;
     }[],
     permission_required?: string
 

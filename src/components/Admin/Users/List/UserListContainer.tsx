@@ -13,7 +13,7 @@ const UserListContainer = ({
 
     const [users, setUsers] = useState<UserEntity[]>([])
     const [error, setError] = useState(null)
-    const [seach, setSearch] = useState("")
+    const [seach, setSearch] = useState<string|undefined>(undefined)
 
     const [selectedUser, setSelectedUser] = useState<UserEntity | null>(null)
     const [visibleModal, setVisibleModal] = useState<boolean>(false)
@@ -55,7 +55,7 @@ const UserListContainer = ({
     }
 
     const handlePage = (page: number) => {
-        usecase.execute("", page).then((users) => {
+        usecase.execute(seach, page).then((users) => {
             setUsers(users.results)
             setTotalPage(users.total_pages || 0)
             setCurrentPage(users.current)
@@ -138,7 +138,7 @@ const UserListContainer = ({
             onImport={handleImport}
             onSearch={handleSearch}
             key={users.length}
-            search={seach}
+            search={seach?seach:""}
             setSeach={setSearch}
             page={currentPage}
             setPage={handlePage}

@@ -74,7 +74,7 @@ export const UserListPresenter = (props: Props) => {
                                 className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
                                 type='text'
                                 placeholder='Buscar por Nombre o usuario'
-
+                                value={props.search}
                                 onChange={(e) => props.onSearch(e.target.value)}
 
                             />

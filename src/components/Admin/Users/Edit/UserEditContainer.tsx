@@ -184,7 +184,7 @@ const UserEditContainer = ({
         let route = '/admin/users'
         if (!userSession.is_superuser) {
 
-            const user = userSession.user_permissions?.find(x => x.codename == 'view_users_internal')
+            const user = userSession.user_permissions?.find(x => x.codename == 'view_user_establishment')
             if (user) {
                 route = '/admin/est/users'
             }

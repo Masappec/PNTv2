@@ -7,6 +7,8 @@ interface Props {
     onSelect: (value: ColourOption) => void;
     onSearch: () => void;
     value?: ColourOption | null;
+    NoVisibleLabel?: boolean;
+
 }
 const CustomInputSearch = (props: Props) => {
     const [_value, setValue] = useState<ColourOption | null>(null);
@@ -49,7 +51,9 @@ const CustomInputSearch = (props: Props) => {
 
     return (
         <>
-         <label className='text-sm font-medium text-gray-900'>Institución</label>
+         
+            {!props.NoVisibleLabel&& 
+            <label className='text-sm font-medium text-gray-900'>Institución</label>}
           <div className='group relative'>
             <svg
               className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'

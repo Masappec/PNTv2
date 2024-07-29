@@ -22,8 +22,8 @@ class SolicityService {
     };
   }
 
-  async getEstablishmentSolicity(search?: string, page?: number, limit?: number, sort?: string[], status?:string) {
-    const response = await this.api.getEstablishmentSolicity(search, page, limit, sort,status);
+  async getEstablishmentSolicity(search?: string, page?: number, limit?: number, sort?: string[], status?:string,establishment_id?: number) {
+    const response = await this.api.getEstablishmentSolicity(search, page, limit, sort,status, establishment_id);
     return {
       ...response,
       results:

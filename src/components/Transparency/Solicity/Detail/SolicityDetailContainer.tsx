@@ -67,7 +67,7 @@ const SolicityDetailContainer = (props: Props) => {
             const _user = SessionService.getUserData()
             setUserSession(_user)
 
-            const is_Est = _user.user_permissions?.find(x => x.codename === 'view_solicityresponse')
+            const is_Est = _user.user_permissions?.find(x => x.codename === 'view_solicityresponse' || x.codename === 'view_all_solicities')
             if (is_Est) {
                 props.usecase.getSolicityBiIdEstablishment(parseInt(state?.data?.id + "" || "0")).then((res) => {
                     setSolicityToResponse(res)

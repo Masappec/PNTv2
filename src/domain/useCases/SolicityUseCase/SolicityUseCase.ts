@@ -14,8 +14,9 @@ class SolicityUseCase {
     range_start?: string, range_end?: string) {
     return await this.solicityService.getSolicities(search, page, limit, sort, range_start, range_end);
   }
-  async getEstablishmentSolicity(search: string, page: number, limit?: number, sort?: string[], status?: string) {
-    return await this.solicityService.getEstablishmentSolicity(search, page, limit, sort, status);
+  async getEstablishmentSolicity(search: string, page: number, limit?: number, sort?: string[], status?: string,
+    establishment_id?: number) {
+    return await this.solicityService.getEstablishmentSolicity(search, page, limit, sort, status, establishment_id);
   }
   async createDraft(data: CreateSolicity) {
     return await this.solicityService.createDraftSolicity(data);

@@ -1,3 +1,5 @@
+import SessionService from "../../infrastructure/Services/SessionService";
+
 class UserEntity {
   id: number;
   username: string;
@@ -74,7 +76,8 @@ class UserEntity {
 
   static isUserEntity(data: UserEntity): boolean {
     if (!data) return false;
-    return data.user_permissions?.find(x => x.codename === 'view_users_internal') !== undefined && !data.is_superuser
+    const establishment = SessionService.getEstablishmentData();
+    return establishment  && !data.is_superuser
   }
 }
 

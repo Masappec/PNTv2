@@ -29,15 +29,16 @@ const IndicatorsEst = () => {
 
 
     return(
-        user.user_permissions?.find((p) => p.codename === "view_solicityresponse") && !user.is_superuser ?
-        
-        <IndicatorsEstablishment
-        establishment_id={est.id||0}
-        qrUrl={qr}
-            usecase={publicApi}
-        year={new Date().getFullYear()}
+        user.is_superuser? <IndicatorsAdmin /> :
+        user.user_permissions?.find((p) => p.codename === "view_general_indicators")
+        ?
+            <IndicatorsEstablishment
+                establishment_id={est.id || 0}
+                qrUrl={qr}
+                usecase={publicApi}
+                year={new Date().getFullYear()}
 
-        />: <IndicatorsAdmin />
+            /> :<IndicatorsAdmin />
     )
 }
 

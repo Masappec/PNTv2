@@ -41,6 +41,8 @@ const UserCreateContainer = ({
     const [userSession, SetUserSession] = useState<UserEntity>({} as UserEntity)
 
 
+
+
     useEffect(() => {
         const user = SessionService.getUserData()
         SetUserSession(user)
@@ -175,7 +177,7 @@ const UserCreateContainer = ({
         let route = '/admin/users'
         if (!userSession.is_superuser) {
 
-            const user = userSession.user_permissions?.find(x => x.codename == 'view_users_internal')
+            const user = userSession.user_permissions?.find(x => x.codename == 'view_user_establishment')
             if (user) {
                 route = '/admin/est/users'
             }

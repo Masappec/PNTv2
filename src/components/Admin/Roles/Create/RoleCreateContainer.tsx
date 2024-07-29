@@ -3,7 +3,7 @@ import RoleCreatePresenter from "./RoleCreatePresenter";
 import { useNavigate } from "react-router-dom";
 import RoleUseCase from "../../../../domain/useCases/Role/RoleUseCase";
 import PermissionUseCase from "../../../../domain/useCases/PermissionUseCase/PermissionUseCase";
-import PermissionEntity from "../../../../domain/entities/PermissionEntity";
+import PermissionEntity, { AllPermissions } from "../../../../domain/entities/PermissionEntity";
 import RoleEntity from "../../../../domain/entities/RoleEntity";
 
 
@@ -27,6 +27,7 @@ const RoleCreateContainer = ({
     const [listPer,setListPermissions] = useState<{type:string,list:PermissionEntity[]}[]>([]);
 
     const navigate = useNavigate();
+
 
     
 
@@ -81,24 +82,33 @@ const RoleCreateContainer = ({
     }
 
     const handleSelected = (checked:boolean, permission: PermissionEntity) => {
+
+        const newPermission = {...permission}
+        listPer.forEach((item) => {
+            item.list.forEach((perm) => {
+                if(perm.codename === permission.codename) {
+                    newPermission.id = perm.id
+                }
+            })
+        })
         if(checked) {
-            setSelected([...selected, permission])
+            setSelected([...selected, newPermission])
             setRole({
                 ...role,
-                permission: [...selected, permission]
+                permission: [...selected, newPermission]
             })
         } else {
-            setSelected(selected.filter((item) => item.id !== permission.id))
+            setSelected(selected.filter((item) => item.id !== newPermission.id))
             setRole({
                 ...role,
-                permission: selected.filter((item) => item.id !== permission.id)
+                permission: selected.filter((item) => item.id !== newPermission.id)
             })
         }
 
     }
 
     const isSelected = (permission: PermissionEntity) => {
-        return selected.some((item) => item.id === permission.id)
+        return selected.some((item) => item.codename === permission.codename)
     }
 
     return(
@@ -109,7 +119,7 @@ const RoleCreateContainer = ({
             setError={setError}
             setSuccess={setSuccess}
             success={success}
-            permissions={listPer}
+            permissions={AllPermissions}
             onSelected={handleSelected}
             isSelected={isSelected}
             role_name={role_name}

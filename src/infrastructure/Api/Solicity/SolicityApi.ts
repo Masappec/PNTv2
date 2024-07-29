@@ -32,7 +32,7 @@ class SolicityApi {
     }
   }
 
-  async getEstablishmentSolicity(search?: string, page?: number, limit?: number, sort?: string[],status?:string) {
+  async getEstablishmentSolicity(search?: string, page?: number, limit?: number, sort?: string[],status?:string,establishment_id?:number) {
     try {
       const response = await this.api.get<Pagination<SolicityResponseDto>>(
         TRANSPARENCY_PATH + `/solicity_response/list`,
@@ -42,7 +42,8 @@ class SolicityApi {
             page: page ? page : null,
             limit: limit ? limit : null,
             sort: sort ? sort : null,
-            status:status?status:null
+            status:status?status:null,
+            establishment_id:establishment_id?establishment_id:null
 
           }
         }

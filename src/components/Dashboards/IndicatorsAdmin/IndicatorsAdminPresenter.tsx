@@ -1,14 +1,28 @@
 import { ApexOptions } from "apexcharts";
 import Chart from "react-apexcharts";
-import { PublicDataApiResponse } from "../../../infrastructure/Api/PublicDataApi/interface";
+import { PublicDataApiResponse, Top20 } from "../../../infrastructure/Api/PublicDataApi/interface";
 import { useEffect, useState } from "react";
-import TablePublic from "../../Common/TablePublic";
 import { Link } from "react-router-dom";
+import Table from "../../Common/Table";
+import { CalendarMonth } from "../../Common/CalendarYear";
+import { FaCalendarAlt } from "react-icons/fa";
 
 
 interface Props {
 
   data: PublicDataApiResponse;
+  top_20: Top20[];
+  current: number;
+  pageSize: number;
+  from : number;
+  to : number;
+  total: number;
+  total_pages: number;
+  onPaginate: (page: number) => void;
+  onSelectedMonth: (month: number) => void;
+  year: number;
+  month: number;
+  onSelectedYear: (year: number) => void;
 }
 const IndicatorsAdminPresenter = (props: Props) => {
 
@@ -28,11 +42,24 @@ const IndicatorsAdminPresenter = (props: Props) => {
   });
 
 
+const [visible, setVisible] = useState<boolean>(false);
 
 
 
-
-
+  const meses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ]
   const [chartLine, setChartLine] = useState<ApexOptions>({
     chart: {
       id: "line",
@@ -85,9 +112,9 @@ const IndicatorsAdminPresenter = (props: Props) => {
           }
 
         },
-        series: [props.data.entites_total.updated, props.data.entites_total.not_updated],
+        series: [props.data.entites_total.updated, props.data.entites_total.not_updated, props.data.entites_total.nearly_updated],
         labels: ["Actualizadas",
-          "No actualizadas"],
+          "No actualizadas", "Incompletas"],
         colors: ["#1A7290", "#7DBACF"],
       });
 
@@ -136,6 +163,35 @@ const IndicatorsAdminPresenter = (props: Props) => {
             <h2 className="text-start font-semibold text-sm">
               Entidades con Transparencia Activa
             </h2>
+            <div className="relative">
+
+              <button className="text-primary hover:text-primary-dark
+              focus:outline-none focus:ring-2 focus:ring-primary-dark
+              rounded-md px-3 py-2"
+                type="button"
+                onClick={() => setVisible(!visible)}
+              >
+                <span className="text-sm font-semibold">
+                  {
+                    meses[props.month - 1]
+                  }
+                </span>
+                &nbsp;
+                <span className="text-sm font-semibold">
+                  {props.year}
+                </span>
+                
+                <FaCalendarAlt />
+                
+
+              </button>
+              <CalendarMonth
+                visible={visible}
+                onMonthSelect={(month) => props.onSelectedMonth(month + 1)}
+                onYearSelect={(year) => props.onSelectedYear(year)}
+              />
+            </div>
+
             <Chart
               options={chartPieSolicities}
               series={chartPieSolicities.series}
@@ -152,23 +208,29 @@ const IndicatorsAdminPresenter = (props: Props) => {
             <Chart options={chartLine} series={chartLine.series} type="line" />
           </div>
         </div>
-        <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5 shadow-lg">
-          <div className="flex flex-col w-full md:w-1/2 bg-white p-5 rounded-lg shadow-md">
+        <div className="grid grid-cols-1 mt-10 w-full rounded-2xl justify-center gap-5 p-5 shadow-lg">
+          <div className="flex flex-col w-full  bg-white p-5 rounded-lg shadow-md">
             <h4 className="text-xl font-semibold mb-4 text-center">
               Top 20 Entidades más visitadas
             </h4>
-            <TablePublic
+            <Table
               columns={[
                 {
                   title: 'Institución',
-                  render: (row) => <span className="text-gray-700 font-medium">
-                    <Link to={`/entidades/${row.slug}`}
-                      className='uppercase cursor-pointer text-primary hover:underline hover:underline-offset-2'
-
-                    >
+                  render: (row) => <span className="flex items-center">
+                    <Link
+                      to={`/entidades/${row.slug}`}
+                      className='uppercase 
+                                                text-wrap
+                                                cursor-pointer text-primary hover:underline
+                                            justify-start
+                                            hover:underline-offset-2'>
                       {row.name}
                     </Link>
+
                   </span>
+                  ,
+                  classes: 'justify-start'
                 },
                 {
                   title: 'Visitas',
@@ -180,38 +242,90 @@ const IndicatorsAdminPresenter = (props: Props) => {
                 }
               ]}
               data={props.data.top_20_most_visited}
-              Notpaginable={true}
+              show={props.data.top_20_most_visited.length > 0}
             />
           </div>
 
-          <div className="flex flex-col w-full md:w-1/2 bg-white p-5 rounded-lg shadow-md">
+          <div className="flex flex-col w-full  bg-white p-5 rounded-lg shadow-md">
             <h4 className="text-xl font-semibold mb-4 text-center">
-              Top 20 de entidades que están al día
+              Entidades y su cumplimiento
             </h4>
-            <TablePublic
+            <Table<Top20>
+
               columns={[
                 {
                   title: 'Institución',
-                  render: (row) => <span className="text-gray-700 font-medium">
-                    <Link to={`/entidades/${row.establishment.slug}`}
-                      className='uppercase cursor-pointer text-primary hover:underline hover:underline-offset-2'
-
-                    >
+                  render: (row) => <span className="flex items-center">
+                    <Link
+                      to={`/entidades/${row.establishment.slug}`}
+                      className='uppercase 
+                                                text-wrap
+                                                cursor-pointer text-primary hover:underline
+                                            justify-start
+                                            hover:underline-offset-2'>
                       {row.establishment.name}
                     </Link>
+
                   </span>
+                  ,
                 },
                 {
-                  title: 'Puntaje',
+                  title: 'Score SAIP',
                   render(row) {
                     return (
                       <span className="text-gray-500">{row.score}/100</span>
                     );
                   }
+                },
+                {
+                  title: 'Total Solicitudes Recibidas',
+                  render(row) {
+                    return (
+                      <span className="text-gray-500">{row.recibidas}</span>
+                    );
+                  }
+                },
+                {
+                  title: 'Total Solicitudes Atendidas',
+                  render(row) {
+                    return (
+                      <span className="text-gray-500">{row.atendidas}</span>
+                    );
+                  }
+                },
+                {
+                  title:'Total Prórrogas Solicitadas',
+                  render(row){
+                    return(
+                      <span className="text-gray-500">{row.prorrogas}</span>
+                    )
+                  }
+                },
+                {
+                  title:'Total Insistencias de Solicitudes',
+                  render(row){
+                    return(
+                      <span className="text-gray-500">{row.insistencias}</span>
+                    )
+                  }
+                },
+                {
+                  title:'Total Solicitudes sin Respuesta',
+                  render(row){
+                    return(
+                      <span className="text-gray-500">{row.no_respuestas}</span>
+                    )
+                  }
                 }
               ]}
-              data={props.data.top_20}
-              Notpaginable={true}
+              data={props.top_20}
+              show={true}
+              currentPage={props.current}
+              from={props.from}
+              onChangePage={props.onPaginate}
+              to={props.to}
+              total={props.total}
+              totalPages={props.total_pages}
             />
           </div>
         </div>

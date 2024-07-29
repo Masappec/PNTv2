@@ -1,5 +1,6 @@
 
 
+import EstablishmentEntity from "./Establishment";
 import { FilePublicationEntity } from "./PublicationEntity";
 
 class TransparencyCollab {
@@ -17,7 +18,7 @@ class TransparencyCollab {
     published: boolean;
     published_at: string;
     max_date_to_publish: string;
-    establishment: number;
+    establishment: EstablishmentEntity;
 
 
     constructor(id: number,
@@ -34,7 +35,7 @@ class TransparencyCollab {
         published: boolean,
         published_at: string,
         max_date_to_publish: string,
-        establishment: number,
+        establishment: EstablishmentEntity,
 
     ) {
         this.id = id;
