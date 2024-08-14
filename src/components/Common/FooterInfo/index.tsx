@@ -5,7 +5,7 @@ import logodatalat from '../../../assets/Footer/logodatalat.png';
 import logofcd from '../../../assets/Footer/logofcd.png';
 import logofundapi from '../../../assets/Footer/logofundapi.png';
 
-const FooterInfo = () => {   
+const FooterInfo = () => {
   return (
 
     <footer className='bg-[#333333]'>
@@ -20,7 +20,6 @@ const FooterInfo = () => {
                 <a
                   className='text-gray-300 hover:underline hover:underline-offset-2'
                   href='/entidades?tipo=Función Ejecutiva'
-                  target='_blank'
                   rel='noopener noreferrer'>
                   Función Ejecutiva
                 </a>
@@ -29,7 +28,6 @@ const FooterInfo = () => {
                 <a
                   className='text-gray-300 hover:underline hover:underline-offset-2'
                   href='/entidades?tipo=Función Legislativa'
-                  target='_blank'
                   rel='noopener noreferrer'>
                   Función Legislativa
                 </a>
@@ -37,8 +35,7 @@ const FooterInfo = () => {
               <li>
                 <a
                   className='text-gray-300 hover:underline hover:underline-offset-2'
-                  href='https://transparencia.ec/entidades?tipo=Funci%C3%B3n%20Judicial'
-                  target='_blank'
+                  href='/entidades?tipo=Funcion Judicial'
                   rel='noopener noreferrer'>
                   Función Judicial
                 </a>
@@ -47,7 +44,6 @@ const FooterInfo = () => {
                 <a
                   className='text-gray-300 hover:underline hover:underline-offset-2'
                   href='/entidades?tipo=Funcion de Transparencia y Control social'
-                  target='_blank'
                   rel='noopener noreferrer'>
                   Función de Transparencia
                 </a>
@@ -56,7 +52,6 @@ const FooterInfo = () => {
                 <a
                   className='text-gray-300 hover:underline hover:underline-offset-2'
                   href='/entidades?tipo=Gobiernos Autónomos Descentralizados'
-                  target='_blank'
                   rel='noopener noreferrer'>
                   Gobiernos Autónomos Descentralizados
                 </a>
@@ -65,7 +60,6 @@ const FooterInfo = () => {
                 <a
                   className='text-gray-300 hover:underline hover:underline-offset-2'
                   href='/entidades?tipo=OTRAS INSTITUCIONES PÚBLICAS'
-                  target='_blank'
                   rel='noopener noreferrer'>
                   Empresas Públicas
                 </a>

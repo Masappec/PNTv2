@@ -8,10 +8,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../infrastructure/Store";
 import api from "../../../infrastructure/Api";
 import PublicApi from "../../../infrastructure/Api/Public/PublicApi";
+import { slugtext } from "../../../utils/functions";
 
 
 
-const LandingContainer = (  ) => {
+const LandingContainer = () => {
 
     const _public = new PublicApi(api)
     const [faq,] = useState<FrequencyAsked[]>([
@@ -58,7 +59,7 @@ const LandingContainer = (  ) => {
             return;
         }
 
-        if (inputValue.length < 3) {
+        if (inputValue.length < 1) {
             return;
         }
 
@@ -68,7 +69,7 @@ const LandingContainer = (  ) => {
 
         SetSearching(true)
         const filter = listEnt.filter((item) => {
-            return item.name.toLowerCase().includes(inputValue.toLowerCase())
+            return slugtext(item.name).includes(slugtext(inputValue))
         }).slice(0, 3)
         SetSearching(false)
         callback(filter.map((item) => {
@@ -96,34 +97,34 @@ const LandingContainer = (  ) => {
     }
 
 
-    const onQuestion =( index: number )=>{
-    
-        if ( index === 0 ) {
-            
-         navigate('/area-pedagogica');
+    const onQuestion = (index: number) => {
+
+        if (index === 0) {
+
+            navigate('/area-pedagogica');
         }
-        if ( index === 1 ) {
-            
+        if (index === 1) {
+
             navigate('/tutoriales');
-           }
-           
+        }
+
         if (index === 2) {
 
-    
-        navigate('/normativa');
-        
+
+            navigate('/normativa');
+
         }
-       
+
     }
-    
-        
-        
-    
+
+
+
+
 
 
     const onFollow = () => {
         navigate('/presupuesto')
-        
+
     }
 
     const onPersonal = () => {

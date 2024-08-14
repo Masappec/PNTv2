@@ -7,6 +7,8 @@ import { useState } from "react";
 const Header = () => {
   const [visible, setVisible] = useState(false);
 
+
+
   return (
     <header className='w-full border-b border-gray-300'>
       <div className='section-container flex flex-wrap items-center justify-between py-2'>
@@ -42,6 +44,19 @@ const Header = () => {
           id='navbar-sticky'>
           <ul className='flex flex-col gap-x-8 gap-y-4 p-4 pt-8 font-medium md:mt-0 lg:flex-row lg:p-0'>
             {/* Navigation Link */}
+            <li className='m-0 w-max'>
+              <Link
+                to='/'
+                className='group relative inline-block cursor-pointer rounded-t-md p-2 text-lg transition hover:bg-primary/20'>
+                <span className='text-pretty text-base font-medium'>Inicio</span>
+                <span
+                  className='absolute -bottom-1 left-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+                <span
+                  className='absolute -bottom-1 right-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+              </Link>
+            </li>
             <li className='m-0 w-max'>
               <Link
                 to='/entidades'

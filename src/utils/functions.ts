@@ -1,4 +1,14 @@
 
+import slug from 'slugify';
+
+export function slugtext(text: string) {
+        return slug(text, {
+                replacement: '-',
+                remove: /[*+~.()'"!:@]/g,
+                lower: true
+        })
+
+}
 
 export function url_build(name: string) {
         let name_ = name.replace(/ /g, "-")
@@ -62,7 +72,7 @@ export function b64_to_utf8(str: string) {
 }
 
 
-export function formatDate(dateString:string) {
+export function formatDate(dateString: string) {
         const date = new Date(dateString);
 
         const options = {

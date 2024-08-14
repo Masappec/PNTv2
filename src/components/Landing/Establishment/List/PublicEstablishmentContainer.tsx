@@ -9,6 +9,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../../../infrastructure/Store"
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
+import { slugtext } from "../../../../utils/functions"
 
 interface Props {
     usecase: PublicUseCase,
@@ -68,9 +69,10 @@ const PublicEstablishmentContainer = (props: Props) => {
             const search = params.find(e => e[0] == 'tipo')
             const valor = search ? search[1] : ''
             const data = originalEntities.filter((entity) => entity.data.some((item) =>
-                item.function_organization?.toLowerCase() === valor.toLowerCase()))
+                slugtext(item.name.toLowerCase()).includes(slugtext(valor.toLowerCase()))))
+
             setEntities(data)
-            
+
             onSelectType(valor)
         }
 
@@ -152,18 +154,16 @@ const PublicEstablishmentContainer = (props: Props) => {
         navigate(`/entidades/${slug}`)
     }
 
-    const normalize = (str: string) => {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    }
+
 
     const onSearch = (search: string) => {
         const data = originalEntities.filter((entity) =>
             entity.data.some((item) =>
-                normalize(item.name.toLowerCase()).includes(normalize(search.toLowerCase()))))
+                slugtext(item.name.toLowerCase()).includes(slugtext(search.toLowerCase()))))
         setEntities(data)
 
         setCopyEntities(data.map((entity) => entity.data.filter((item) =>
-            normalize(item.name.toLowerCase()).includes(normalize(search.toLowerCase())))).flat())
+            slugtext(item.name.toLowerCase()).includes(slugtext(search.toLowerCase())))).flat())
 
     }
 
@@ -175,7 +175,7 @@ const PublicEstablishmentContainer = (props: Props) => {
             setCopyEntities(originalEntities.map((entity) => entity.data).flat())
             return;
         }
-      
+
         setCopyEntities(originalEntities.map((entity) => entity.data.filter((item) =>
             item.function_organization?.toLowerCase() === type.toLowerCase())).flat())
 

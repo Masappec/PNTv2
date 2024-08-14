@@ -115,13 +115,13 @@ const PublicEstablishmentPresenter = (props: Props) => {
                             {
                                 render: (entity: EstablishmentEntity) => {
                                     return (
-                                        <span className="flex items-center">
+                                        <span className="flex  max-w-[500px] justify-start ">
                                             <a
                                                 className='uppercase 
                                                 text-wrap
                                                 cursor-pointer text-primary hover:underline
-                                            justify-start
-                                            hover:underline-offset-2'
+                                                justify-start
+                                                hover:underline-offset-2'
                                                 onClick={() => props.onItemClicked(entity.slug || "")}>
                                                 {entity.name}
                                             </a>
@@ -131,7 +131,7 @@ const PublicEstablishmentPresenter = (props: Props) => {
 
                                 },
                                 title: 'Institución',
-                                classes: 'justify-start'
+                                classes: 'justify-start flex-wrap'
                             },
                             {
                                 render: (entity: EstablishmentEntity) => {
