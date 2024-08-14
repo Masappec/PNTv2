@@ -189,6 +189,7 @@ const [visible, setVisible] = useState<boolean>(false);
                 visible={visible}
                 onMonthSelect={(month) => props.onSelectedMonth(month + 1)}
                 onYearSelect={(year) => props.onSelectedYear(year)}
+                setVisible={setVisible}
               />
             </div>
 

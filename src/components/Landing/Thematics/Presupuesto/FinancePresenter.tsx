@@ -128,8 +128,8 @@ const FinancePresenter = (props: Props) => {
                   <div className="relative">
 
                     <button className="text-primary hover:text-primary-dark
-              focus:outline-none focus:ring-2 focus:ring-primary-dark
-              rounded-md px-3 py-2"
+                      focus:outline-none focus:ring-2 focus:ring-primary-dark
+                      rounded-md px-3 py-2"
                       type="button"
 
                       onClick={() => setVisible(!visible)}
@@ -142,14 +142,13 @@ const FinancePresenter = (props: Props) => {
                       onMonthSelect={(month) => {
                         props.onSelectMonth(month + 1)
                         setMonth(month + 1)
-
-
                       }}
                       onYearSelect={(year) => {
                         setYear(year)
 
                         props.onSelectYear(year)
                       }}
+                      setVisible={setVisible}
                     />
                   </div>
 
@@ -179,13 +178,15 @@ const FinancePresenter = (props: Props) => {
         }
         <div className='mt-8 h-min rounded-md bg-gray-100'>
           <Table
-            show={false}
+            show={true}
             columns={[
               {
                 title: "INSTITUCIÓN",
                 render: (row) => (
-                  <p>{row.establishment_name}</p>
-                )
+                  <p className="text-wrap text-left justify-start xl:max-w-[200px]">
+                    {row.establishment_name}</p>
+                ),
+                classes:'text-left'
               },
               {
                 title: "AÑO",
@@ -256,16 +257,7 @@ const FinancePresenter = (props: Props) => {
 
             ]
             }
-            currentPage={props.page}
             data={props.data}
-            length={0}
-
-            key={"roles-table"}
-
-            from={props.from}
-            to={props.to}
-            total={props.total}
-            totalPages={props.totalPage}
 
 
           />

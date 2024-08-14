@@ -118,12 +118,19 @@ const LoginPresenter = ({ ...props }: LoginPresenterProps) => {
             }
 
           <p className='mt-4 text-center text-sm text-gray-900'>
-            ¿Aún no has creado tu cuenta?
+            ¿Aún no has creado tu cuenta? &nbsp;
              <a
               className='font-medium text-primary hover:underline hover:underline-offset-2'
               href='/registro'>Regístrate
               </a>
           </p>
+            <p className='mt-4 text-center text-sm text-gray-900'>
+              ¿Cómo creas una cuenta y para qué la necesitas? &nbsp;
+              <a
+                className='font-medium text-primary hover:underline hover:underline-offset-2'
+                href='/tutoriales'>Revisa nuestros tutoriales
+              </a>
+            </p>
         </section>
       </form>
     </section>

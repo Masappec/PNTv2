@@ -29,7 +29,7 @@ const PasswordMeter = ({ password, onCalculate }: IProps) => {
 
         // Longitud mínima
         if (password.length < 8) {
-            feedback.push('La contraseña debe tener al menos 8 caracteres');
+            feedback.push('Debe tener al menos 8 letras de longitud.');
         } else {
             score += 20;
         }
@@ -38,21 +38,21 @@ const PasswordMeter = ({ password, onCalculate }: IProps) => {
         if (/[a-z]/.test(password) && /[A-Z]/.test(password)) {
             score += 20;
         } else {
-            feedback.push('La contraseña debe tener al menos una letra minúscula y una mayúscula');
+            feedback.push('Al menos una de las letras que elijas debe ser mayúscula y otra minúscula.');
         }
 
         // Al menos un número
         if (/\d/.test(password)) {
             score += 20;
         } else {
-            feedback.push('La contraseña debe tener al menos un número');
+            feedback.push('No solo debes utilizar letras sino al menos un número.');
         }
 
         // Al menos un carácter especial
         if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
             score += 20;
         } else {
-            feedback.push('La contraseña debe tener al menos un carácter especial');
+            feedback.push('Además, te recomendamos agregar un símbolo como $%&* para que sea más difícil adivinar para personas no autorizadas.');
         }
 
         // Evitar caracteres repetidos
@@ -92,7 +92,7 @@ const PasswordMeter = ({ password, onCalculate }: IProps) => {
 
 
     return (
-        <div className="w-min">
+        <div className="w-auto">
             <div className=" mt-2">
 
                 <div className="w-[200px] bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700">
@@ -101,7 +101,9 @@ const PasswordMeter = ({ password, onCalculate }: IProps) => {
                 </div>
 
             </div>
-
+            {
+                calculatePasswordStrength(passwordState).strength != "" && <>Para precautelar tu seguridad, la contraseña que definas debe cumplir con las siguientes características:</>
+            }
             {
                 passwordState != "" && calculatePasswordStrength(passwordState).feedback.map((item, index) => (
                     <li key={index} className="text-sm text-red-500">

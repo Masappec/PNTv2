@@ -53,6 +53,7 @@ interface ICalendarMonthProps {
     onMonthSelect: (value: number) => void;
     onYearSelect: (value: number) => void;
     visible?: boolean;
+    setVisible?: (value: boolean) => void;
 }
 
 const meses = [
@@ -69,8 +70,9 @@ const meses = [
     "Noviembre",
     "Diciembre"
 ];
-export const CalendarMonth = ({ onMonthSelect , onYearSelect ,visible}: ICalendarMonthProps) => {
+export const CalendarMonth = ({ onMonthSelect, onYearSelect, visible, setVisible }: ICalendarMonthProps) => {
     const [monthSelected, setMonthSelected] = React.useState<number>(new Date().getMonth());
+   
     return <div className={`${visible ? 'block' : 'hidden'}
        absolute z-10 mt-2 bg-white shadow-lg border border-gray-200 rounded-md p-4
         
@@ -84,6 +86,7 @@ export const CalendarMonth = ({ onMonthSelect , onYearSelect ,visible}: ICalenda
                 onMonthSelect(value.month());
                 onYearSelect(value.year());
                 setMonthSelected(value.month());
+                setVisible && setVisible(false);
             } }
 
             cellRender={(date) => {

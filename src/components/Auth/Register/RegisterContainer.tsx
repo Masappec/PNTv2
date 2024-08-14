@@ -187,7 +187,7 @@ const RegisterContainer = ({ usecase, configUseCase }: {
 
           }}
           className=" text-xl text-white font-medium hover:bg-primary-200 bg-primary-500 w-[300px]  py-2 rounded-lg shadow-xl">
-          Continuar
+          Ir a la página de ingreso a tu cuenta
         </button>
 
       </div>

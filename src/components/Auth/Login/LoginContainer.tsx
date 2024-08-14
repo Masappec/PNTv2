@@ -24,6 +24,11 @@ const LoginContainer = ({ useCase }: {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true)
+    if (email === '' || password === '') {
+      setError('Favor ingresa tu usuario y contraseña')
+      setIsLoading(false)
+      return
+    }
     useCase.execute(email, password)
       .then((user) => {
         setIsLoading(false)

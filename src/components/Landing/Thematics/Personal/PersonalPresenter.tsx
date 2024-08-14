@@ -1,11 +1,11 @@
 
-import TablePublic from "../../../Common/TablePublic";
 import { MapIsotipo } from "../../../Common/MapIsotipo";
 import { PersonalRemunerations } from "../../../../infrastructure/Api/PublicDataApi/interface";
 import CustomInputSearch from "../../../Common/CustomInputSearch";
 import { ColourOption } from "../../../../utils/interface";
 import Alert from "../../../Common/Alert";
 import Spinner from "../../../Common/Spinner";
+import TablePublic from "../../../Common/TablePublic";
 interface Props {
 
   onSearch: () => void;
@@ -14,10 +14,10 @@ interface Props {
   loadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
   data: PersonalRemunerations[];
   alert: {
-    type: 'info'|'success'|'warning'|'error',
+    type: 'info' | 'success' | 'warning' | 'error',
     message: string
   }
-  setAlert: (e: { type: 'info' | 'success' | 'warning' | 'error', message: string}) => void;
+  setAlert: (e: { type: 'info' | 'success' | 'warning' | 'error', message: string }) => void;
   isSearching: boolean;
 }
 const PersonalPresenter = (props: Props) => {
@@ -35,7 +35,7 @@ const PersonalPresenter = (props: Props) => {
             público.
           </p>
         </header>
-        
+
         <form className='mb-4 w-full'>
           <div className='mb-4 max-w-2xl'>
             <label className='text-sm font-medium text-gray-900'>Apellidos y nombres</label>
@@ -59,20 +59,20 @@ const PersonalPresenter = (props: Props) => {
                 placeholder='Escribe apellidos y nombres de la persona a consultar.'
                 name='first_name'
                 onChange={(e) => props.onNameChange(e.target.value)}
-                
+
                 required
               />
             </div>
           </div>
 
           <div className='max-w-2xl'>
-            
-              <CustomInputSearch
 
-                loadOptions={props.loadOptions}
-                onSearch={props.onSearch}
-                onSelect={(e) => props.onInstitutionChange(e.value)}
-              />
+            <CustomInputSearch
+
+              loadOptions={props.loadOptions}
+              onSearch={props.onSearch}
+              onSelect={(e) => props.onInstitutionChange(e.value)}
+            />
           </div>
           {
             props.isSearching ? <Spinner /> : <button
@@ -84,64 +84,74 @@ const PersonalPresenter = (props: Props) => {
 
             </button>
           }
-          
+
         </form>
         {
           props.alert.message ? (
-            <Alert type={props.alert.type} message={props.alert.message} 
-              onClose={() => props.setAlert({type: 'info', message: ''})}
+            <Alert type={props.alert.type} message={props.alert.message}
+              onClose={() => props.setAlert({ type: 'info', message: '' })}
             />
-          
+
           ) : null
         }
         <div className="mt-8 h-min rounded-md bg-gray-100">
           <TablePublic<PersonalRemunerations>
+            
             columns={[
               {
                 title: "APELLIDOS Y NOMBRES",
                 render: (row) => (
-                  <p>{row.nombre}</p>
-                )
+                  <p className="text-wrap text-left justify-start xl:max-w-[200px]">
+                    {row.nombre}
+                  </p>
+                ),
               },
               {
                 title: "PUESTO INSTITUCIONAL",
                 render: (row) => (
-                  <p>{row.puesto}</p>
-                )
+                  <p className="text-wrap text-left justify-start xl:max-w-[200px]">
+                    {row.puesto}</p>
+                ),
+
               },
               {
                 title: "UNIDAD A LA QUE PERTENECE",
                 render: (row) => (
-                  <p>{row.unidad}</p>
-                )
+                  <p className="text-wrap text-left justify-start xl:max-w-[200px]">
+                    {row.unidad}</p>
+                ),
+
               },
               {
                 title: "REGÍMEN LABORAL",
                 render: (row) => (
-                  <p>{row.regimen}</p>
-                )
+                  <p className="text-wrap text-left justify-start xl:max-w-[200px]">
+                    {row.regimen}</p>
+                ),
+
               },
               {
                 title: "GRADO O ESCALA",
                 render: (row) => (
-                  <p>{row.grado}</p>
-                )
+                  <p className="text-wrap text-left justify-start xl:max-w-[200px]">
+                    {row.grado}</p>
+                ),
+
               },
               {
 
                 title: "REMUNERACIÓN MENSUAL",
                 render: (row) => (
                   <p>{row.remuneracion}</p>
-                )
+                ),
+
               }
             ]}
 
             data={props.data}
-            length={0}
 
-            key={"roles-table"}
 
-            
+
 
 
           />

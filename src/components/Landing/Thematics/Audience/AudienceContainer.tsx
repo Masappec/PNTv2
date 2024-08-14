@@ -24,6 +24,8 @@ const AudienceContainer = (props: Props) => {
         names: "",
         year:new Date().getFullYear()
     })
+    const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+    const [year, setYear] = useState<number>(new Date().getFullYear());
     const [res, setRes] = useState<AudienceResponse[]>([])
 
 
@@ -31,7 +33,8 @@ const AudienceContainer = (props: Props) => {
     const handleSearch = async () => {
         try {
             SetSearching(true)
-            console.log(data)
+            data.month = month
+            data.year = year
             setAlert({
                 type: 'info',
                 message: ''
@@ -64,9 +67,20 @@ const AudienceContainer = (props: Props) => {
             data={res}
             loading={isSearching}
             onSearch={handleSearch}
-            onSelectDate={(year, month) => setData({ ...data, year, month })}
             setAlert={setAlert}
-            setName={(names) => setData({ ...data, names })}
+            setName={(names) => {
+                setData({ 
+                    ...data,
+                    names
+                })
+            }}
+            onSelectMonth={(month) => {
+                
+                setMonth(month)
+            }}
+            onSelectYear={(year) => {
+                setYear(year)
+            }}
 
         />
 

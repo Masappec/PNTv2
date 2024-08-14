@@ -14,8 +14,8 @@ interface Props {
 
 
   setName: (name: string) => void;
-  onSelectDate: (year: number, month: number) => void;
-
+  onSelectYear: (year: number) => void;
+  onSelectMonth: (month: number) => void;
   alert: {
     type: 'success' | 'error' | 'warning' | 'info';
     message: string
@@ -90,7 +90,7 @@ const AudiencePresenter = (props: Props) => {
                     const month = parseInt(e.target.value);
                     if (month >= 1 && month <= 12) {
                       setMonth(month);
-                      props.onSelectDate(year, month);
+                      props.onSelectMonth(month);
                     }
                   }
                   }
@@ -103,7 +103,7 @@ const AudiencePresenter = (props: Props) => {
                   onChange={(e) => {
                     const year = parseInt(e.target.value);
                     setYear(year);
-                    props.onSelectDate(year, month);
+                    props.onSelectYear(year);
                   }}
                 />
                 <div className="relative">
@@ -119,8 +119,17 @@ const AudiencePresenter = (props: Props) => {
                   </button>
                   <CalendarMonth
                     visible={visible}
-                    onMonthSelect={(month) => setMonth(month + 1)}
-                    onYearSelect={(year) => setYear(year)}
+                    onMonthSelect={(month) => {
+                      props.onSelectMonth(month + 1)
+                      setMonth(month + 1)
+                    
+                    }}
+                    onYearSelect={(year) => {
+                      props.onSelectYear(year)
+                      setYear(year)
+                    }
+                    }
+                    setVisible={setVisible}
                   />
                 </div>
 

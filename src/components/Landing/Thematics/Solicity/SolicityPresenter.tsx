@@ -72,19 +72,22 @@ const SolicityPresenter = (props: Props) => {
               {
                 title: "INSTITUCIÓN",
                 render: (row) => (
-                  <p>{ row.institucion}</p>
-                )
+                  <p className="text-wrap text-left justify-start xl:max-w-[200px]">
+                    { row.institucion}</p>
+                ),
               },
               {
                 title:"AÑO Y MES",  
                 render:(row)=>(
-                  <p>{row.anio} - {row.mes}</p>
+                  <p>
+                    {row.anio} - {row.mes}</p>
                 )
               },
               {
                 title: "DENOMINACIÓN DEL SERVICIO",
                 render: (row) => (
-                  <p>{ row.denominacion}</p>
+                  <p className="text-wrap text-left justify-start xl:max-w-[400px]">
+                    { row.denominacion}</p>
                 )
               },
 
@@ -105,6 +108,7 @@ const SolicityPresenter = (props: Props) => {
             ]
             }
             data={props.data}
+            Notpaginable={props.data.length < 10}
 
 
           />
