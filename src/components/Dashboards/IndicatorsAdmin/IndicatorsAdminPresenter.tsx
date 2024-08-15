@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import Table from "../../Common/Table";
 import { CalendarMonth } from "../../Common/CalendarYear";
 import { FaCalendarAlt } from "react-icons/fa";
+import { Tabs } from "flowbite-react";
+import { BiChart, BiStats, BiTable } from "react-icons/bi";
+import { themeTabs } from "../../Common/Tabs/Theme";
 
 
 interface Props {
@@ -62,7 +65,7 @@ const [visible, setVisible] = useState<boolean>(false);
   ]
   const [chartLine, setChartLine] = useState<ApexOptions>({
     chart: {
-      id: "line",
+      id: "bar",
     },
 
     xaxis: {
@@ -113,9 +116,16 @@ const [visible, setVisible] = useState<boolean>(false);
 
         },
         series: [props.data.entites_total.updated, props.data.entites_total.not_updated, props.data.entites_total.nearly_updated],
-        labels: ["Actualizadas",
-          "No actualizadas", "Incompletas"],
+        labels: ["Instituciones que han publicado \n todos sus archivos",
+                "Instituciones que no han publicado ningún archivo", 
+                "Instituciones que solo han publicado parte de los archivos"],
         colors: ["#1A7290", "#7DBACF"],
+        legend: {
+          position: 'bottom',  // Positions the legend below the chart
+          horizontalAlign: 'left', // Centers the legend
+          floating: false,
+          offsetY: 10,  // Adjusts the distance from the chart
+        }
       });
 
 
@@ -132,7 +142,7 @@ const [visible, setVisible] = useState<boolean>(false);
           {
             name: "Recibidas",
             data: [...props.data.solicities.recibidas],
-            color: "#337FA6",
+            color: "#7DBACF",
           },
         ],
       });
@@ -149,70 +159,68 @@ const [visible, setVisible] = useState<boolean>(false);
 
 
   return (
-    <div className="h-full overflow-y-hidden bg-white">
-      <div className="border-gray-300 py-5 flex  justify-center w-full">
-        <h2 className="text-2xl font-semibold text-black ml-2 justify-center">Indicadores</h2>
-      </div>
+    <div className="h-full overflow-y-hidden bg-white p-5">
+      <Tabs aria-label="Default tabs" style="underline" theme={themeTabs}>
+        <Tabs.Item active title="Graficos" icon={BiChart}>
+          <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
+            <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
+              <h2 className="text-start font-semibold text-base px-2">
+                Instituciones que han publicado sus datos<br></br>de transparencia en el Portal
+              </h2>
 
-      <div className="mt-16">
 
+              <div className="relative">
 
-
-        <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
-          <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
-            <h2 className="text-start font-semibold text-sm">
-              Entidades con Transparencia Activa
-            </h2>
-            <div className="relative">
-
-              <button className="text-primary hover:text-primary-dark
+                <button className="text-primary hover:text-primary-dark
               focus:outline-none focus:ring-2 focus:ring-primary-dark
               rounded-md px-3 py-2"
-                type="button"
-                onClick={() => setVisible(!visible)}
-              >
-                <span className="text-sm font-semibold">
-                  {
-                    meses[props.month - 1]
-                  }
-                </span>
-                &nbsp;
-                <span className="text-sm font-semibold">
-                  {props.year}
-                </span>
-                
-                <FaCalendarAlt />
-                
+                  type="button"
+                  onClick={() => setVisible(!visible)}
+                >
 
-              </button>
-              <CalendarMonth
-                visible={visible}
-                onMonthSelect={(month) => props.onSelectedMonth(month + 1)}
-                onYearSelect={(year) => props.onSelectedYear(year)}
-                setVisible={setVisible}
+                  <span className="text-sm font-semibold">
+                    Escoge el mes: {
+                      meses[props.month - 1]
+                    }
+                  </span>
+                  &nbsp;
+                  <span className="text-sm font-semibold">
+                    {props.year}
+                  </span>
+
+                  <FaCalendarAlt />
+
+
+                </button>
+                <CalendarMonth
+                  visible={visible}
+                  onMonthSelect={(month) => props.onSelectedMonth(month + 1)}
+                  onYearSelect={(year) => props.onSelectedYear(year)}
+                  setVisible={setVisible}
+                />
+              </div>
+
+              <Chart
+                options={chartPieSolicities}
+                series={chartPieSolicities.series}
+                type="donut"
+                width={500}
+
               />
             </div>
+            <div className="container border   w-1/2 rounded-2xl  ">
+              <h2 className="text-start font-semibold text-sm px-5 py-5">
+                Cantidad total de solicitudes recibidas vs atendidas
+              </h2>
 
-            <Chart
-              options={chartPieSolicities}
-              series={chartPieSolicities.series}
-              type="donut"
-              width={500}
-
-            />
+              <Chart options={chartLine} series={chartLine.series} type="bar" />
+            </div>
           </div>
-          <div className="container border   w-1/2 rounded-2xl  ">
-            <h2 className="text-start font-semibold text-sm px-5 py-5">
-              Cantidad total de solicitudes recibidas vs atendidas
-            </h2>
-
-            <Chart options={chartLine} series={chartLine.series} type="line" />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 mt-10 w-full rounded-2xl justify-center gap-5 p-5 shadow-lg">
+        </Tabs.Item>
+        <Tabs.Item title="Visitas Entidades" icon={BiStats}>
           <div className="flex flex-col w-full  bg-white p-5 rounded-lg shadow-md">
             <h4 className="text-xl font-semibold mb-4 text-center">
-              Top 20 Entidades más visitadas
+              Lista de entidades ordenadas según la cantidad de consultas sobre transparencia que reciben en el  Portal
             </h4>
             <Table
               columns={[
@@ -234,7 +242,7 @@ const [visible, setVisible] = useState<boolean>(false);
                   classes: 'justify-start'
                 },
                 {
-                  title: 'Visitas',
+                  title: 'Total de consultas recibidas',
                   render(row) {
                     return (
                       <span className="text-gray-500">{row.visits}</span>
@@ -246,10 +254,12 @@ const [visible, setVisible] = useState<boolean>(false);
               show={props.data.top_20_most_visited.length > 0}
             />
           </div>
+        </Tabs.Item>
+        <Tabs.Item title="Cumplimiento Entidades" icon={BiTable}>
 
           <div className="flex flex-col w-full  bg-white p-5 rounded-lg shadow-md">
             <h4 className="text-xl font-semibold mb-4 text-center">
-              Entidades y su cumplimiento
+              Listado de instituciones según su cumplimiento de atención de solicitudes de acceso a la información pública
             </h4>
             <Table<Top20>
 
@@ -295,25 +305,25 @@ const [visible, setVisible] = useState<boolean>(false);
                   }
                 },
                 {
-                  title:'Total Prórrogas Solicitadas',
-                  render(row){
-                    return(
+                  title: 'Total Prórrogas Solicitadas',
+                  render(row) {
+                    return (
                       <span className="text-gray-500">{row.prorrogas}</span>
                     )
                   }
                 },
                 {
-                  title:'Total Insistencias de Solicitudes',
-                  render(row){
-                    return(
+                  title: 'Total Insistencias de Solicitudes',
+                  render(row) {
+                    return (
                       <span className="text-gray-500">{row.insistencias}</span>
                     )
                   }
                 },
                 {
-                  title:'Total Solicitudes sin Respuesta',
-                  render(row){
-                    return(
+                  title: 'Total Solicitudes sin Respuesta',
+                  render(row) {
+                    return (
                       <span className="text-gray-500">{row.no_respuestas}</span>
                     )
                   }
@@ -329,10 +339,11 @@ const [visible, setVisible] = useState<boolean>(false);
               totalPages={props.total_pages}
             />
           </div>
-        </div>
+        </Tabs.Item>
+        
+      </Tabs>
+      
 
-
-      </div>
     </div>
   );
 };
