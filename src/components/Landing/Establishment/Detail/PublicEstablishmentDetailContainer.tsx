@@ -59,6 +59,8 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     const [mesesTA,setMesesTA] = useState<string[]>([])
     const [mesesTF,setMesesTF] = useState<string[]>([])
     const [mesesTC,setMesesTC] = useState<string[]>([])
+
+  
     
     useEffect(() => {
         props.usecase.getEstablishment(slug || "").then((response) => {

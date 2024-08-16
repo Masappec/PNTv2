@@ -36,12 +36,12 @@ interface Props {
     selectedYearTF: number;
     onOpenMonthTF: (month: number) => void;
     publicationsTF: AcordionMonthYear<TransparencyFocusEntity>[];
-
+    
 }
 
 const EstablishmentPublicationsPresenter = (props: Props) => {
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-
+   
     
 
     return (
@@ -77,7 +77,9 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                             </p>
                             <Dropdown label={
                                 <>
-                                    <FiCalendar className="w-5 h-5 mr-5 "></FiCalendar>
+                                    <FiCalendar className="w-5 h-5 mr-5 ">
+                                        
+                                    </FiCalendar>
 
                                     Seleccionar año
                                     <Badge className="ml-2" color="info">
