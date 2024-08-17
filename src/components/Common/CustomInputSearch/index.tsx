@@ -54,6 +54,8 @@ const CustomInputSearch = (props: Props) => {
          
             {!props.NoVisibleLabel&& 
             <label className='text-sm font-medium text-gray-900'>Institución</label>}
+
+            <h2 className='text-xs mb-3 text-gray-500'>Escribe el nombre de la institución a la cual deseas solicitar información.</h2>
           <div className='group relative'>
             <svg
               className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'

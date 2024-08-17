@@ -8,6 +8,7 @@ import Alert from "../../../Common/Alert"
 
 
 interface Props {
+    
     data: Solicity[]
     error: string | null
     onSearch: (search: string) => void
@@ -44,7 +45,11 @@ interface Props {
 const SolicityListPresenter = (props: Props) => {
     return (
         <div className="">
-            <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+            <h3 className="text-xs text-primary">¡Hola!
+            
+Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta sección podrás consultar todas las  Solicitudes de Acceso a la Información Pública (SAIP) que envíes a las instituciones que requieras. Para crear una nueva SAIP, selecciona <span className="font-bold">“Crear solicitud”</span> y sigue los pasos indicados.
+</h3>
+            <h2 className='mt-6 mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
                 Solicitudes
 
             </h2>
@@ -61,7 +66,7 @@ const SolicityListPresenter = (props: Props) => {
                     <div>
 
 
-                    <label className='text-gray-500 text-sm'>Buscar</label>
+                    <label className='text-gray-500 text-sm'>Buscar solicitud enviada:</label>
                     <div className='group relative w-full max-w-xs mt-1'>
                         
                         <svg
@@ -78,9 +83,9 @@ const SolicityListPresenter = (props: Props) => {
                         ></path>
                         </svg>
                         <input
-                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                            className='block w-96 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-xs text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
                             type='text'
-                            placeholder='Buscar por N° SAIP o Entidad.'
+                            placeholder='Ingresa el número de la SAIP o el nombre de la institución'
 
                             onChange={(e) => props.onSearch(e.target.value)}
 
@@ -90,7 +95,7 @@ const SolicityListPresenter = (props: Props) => {
                     </div>
                     <div className='flex flex-row gap-2'>
 
-                        <div className='flex flex-col gap-2'>
+                        <div className='flex flex-col gap-2 ml-12 '>
                             <label className='text-gray-500 text-sm'>
                                 Desde
                             </label>
@@ -132,13 +137,14 @@ const SolicityListPresenter = (props: Props) => {
                             d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
                         ></path>
                         </svg>
-                        <span>Nueva solicitud</span>
+                        <span>Crear solicitud</span>
                     </div>
                 </button>
             </section>
             <div className="">
                 <Table
                     show={false}
+                    text=" Al momento no hay ninguna solicitud enviada. Para enviar una, escoge en el menú “Crear Solicitud”"
                     sorteable={true}
                     limits={props.limits}
                     onSort={props.onChangesSort}

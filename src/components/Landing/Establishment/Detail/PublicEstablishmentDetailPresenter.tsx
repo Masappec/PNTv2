@@ -68,14 +68,14 @@ return(
             props.entity.highest_authority
           }</h3>
         </li>
-        <li className='flex flex-col items-start justify-start gap-x-2 sm:flex-row'>
+        {/* <li className='flex flex-col items-start justify-start gap-x-2 sm:flex-row'>
           <span className='font-medium text-gray-600'>Correo electrónico:</span>
           <a href='#' className='group flex items-center gap-x-2 hover:text-primary'>
             <span className='text-pretty text-base font-medium underline underline-offset-2'>
               {props.entity.email_authority}
             </span>
           </a>
-        </li>
+        </li> */}
       </ul>
 
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>

@@ -36,12 +36,12 @@ interface Props {
     selectedYearTF: number;
     onOpenMonthTF: (month: number) => void;
     publicationsTF: AcordionMonthYear<TransparencyFocusEntity>[];
-
+    
 }
 
 const EstablishmentPublicationsPresenter = (props: Props) => {
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-
+    
     
 
     return (
@@ -57,7 +57,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
             >
                 <Accordion.Panel>
                     <Accordion.Title>
-                        <p className="text-start text-black text-lg font-medium">
+                        <p className="text-start text-primary  text-lg font-medium ">
                             Transparencia activa{" "}
                         </p>
                     </Accordion.Title>
@@ -77,7 +77,9 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                             </p>
                             <Dropdown label={
                                 <>
-                                    <FiCalendar className="w-5 h-5 mr-5 "></FiCalendar>
+                                    <FiCalendar className="w-5 h-5 mr-5 ">
+                                        
+                                    </FiCalendar>
 
                                     Seleccionar año
                                     <Badge className="ml-2" color="info">
@@ -141,7 +143,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                 </Accordion.Panel>
                 <Accordion.Panel>
                     <Accordion.Title>
-                        <p className="text-start  text-black text-lg font-medium">
+                        <p className="text-start  text-[#F15A31]/80 text-lg font-medium">
 
                             Transparencia focalizada
 
@@ -149,7 +151,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                     </Accordion.Title>
                     <Accordion.Content>
                         <>
-                            <p className="text-start text-lg font-medium mt-14">
+                            <p className="text-start text-lg font-bold mt-14  ">
                                 Transparencia focalizada{" "}
                             </p>
 
@@ -223,7 +225,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                 </Accordion.Panel>
                 <Accordion.Panel >
                     <Accordion.Title>
-                        <p className="text-start text-black text-lg font-medium">
+                        <p className="text-start text-[#F7941D]/80 text-lg font-medium">
 
                             Transparencia colaborativa
                         </p>

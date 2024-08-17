@@ -6,7 +6,9 @@ import momentGenerateConfig from 'rc-picker/lib/generate/moment';
 import esMX from 'rc-picker/lib/locale/es_MX';
 import React from 'react';
 
+
 function dateRender(date: Moment, today: Moment) {
+    
     return (
         <div
             style={{
@@ -25,6 +27,8 @@ interface ICalendarYearProps {
     onSelect: (value: number) => void;
 }
 export const CalendarYear = ({ onSelect }: ICalendarYearProps) => (
+    
+
     <div>
         <PickerPanel<Moment>
             locale={esMX}

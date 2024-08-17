@@ -12,6 +12,7 @@ interface Column<T> {
 
 interface TableProps<T> {
     columns: Column<T>[]
+    text?:string;
     title?: string;
     description?: string;
     onAdd?: () => void;
@@ -39,6 +40,7 @@ interface TableProps<T> {
 }
 
 function Table<T>({ ...props }: TableProps<T>) {
+    const defaultMessage = "No hay datos";
 
     return (
         <div className="container w-full mx-auto">
@@ -115,7 +117,7 @@ function Table<T>({ ...props }: TableProps<T>) {
                             props.data.length === 0 && (
                                 <tr>
                                     <td colSpan={props.columns.length}>
-                                        No hay datos
+                                    {props.text || defaultMessage}
                                     </td>
                                 </tr>
                             )
@@ -126,6 +128,8 @@ function Table<T>({ ...props }: TableProps<T>) {
 
 
             </div>
+            {
+            props.data.length === 10 && (
             <nav className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
                 {props.totalPages && (<span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                     Mostrando
@@ -157,6 +161,7 @@ function Table<T>({ ...props }: TableProps<T>) {
 
                                     }}
                                 />
+                                
                             </div>
                         )
                     }
@@ -164,6 +169,8 @@ function Table<T>({ ...props }: TableProps<T>) {
 
                 </ul>
             </nav>
+            )
+        }
 
 
         </div >
