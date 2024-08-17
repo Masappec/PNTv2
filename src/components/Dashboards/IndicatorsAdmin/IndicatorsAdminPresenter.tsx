@@ -26,7 +26,9 @@ interface Props {
 }
 const IndicatorsAdminPresenter = (props: Props) => {
 
-
+  const fecha = new Date();
+  const opciones: Intl.DateTimeFormatOptions = { month: 'long' };
+  const mesActual = new Intl.DateTimeFormat('es-ES', opciones).format(fecha);
 
   const [chartPieSolicities, setChartPieSolicities] = useState<ApexOptions>({
     chart: {
@@ -140,14 +142,6 @@ const [visible, setVisible] = useState<boolean>(false);
   }, [props.data]);
 
 
-
-
-
-
-
-
-
-
   return (
     <div className="h-full overflow-y-hidden bg-white">
       <div className="border-gray-300 py-5 flex  justify-center w-full">
@@ -161,7 +155,10 @@ const [visible, setVisible] = useState<boolean>(false);
         <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
           <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
             <h2 className="text-start font-semibold text-sm">
-              Entidades con Transparencia Activa
+            Instituciones que han publicado sus datos de transparencia en el Portal
+            </h2>
+            <h2 className="text-start font-semibold text-primary text-sm mt-2 ml-3">
+            Escoge el mes 
             </h2>
             <div className="relative">
 
@@ -211,9 +208,13 @@ const [visible, setVisible] = useState<boolean>(false);
         </div>
         <div className="grid grid-cols-1 mt-10 w-full rounded-2xl justify-center gap-5 p-5 shadow-lg">
           <div className="flex flex-col w-full  bg-white p-5 rounded-lg shadow-md">
-            <h4 className="text-xl font-semibold mb-4 text-center">
-              Top 20 Entidades más visitadas
+            <h4 className="text-xl font-semibold mb-2 text-center">
+            Lista de entidades ordenadas según la cantidad de consultas sobre transparencia que reciben en el  Portal
             </h4>
+            <br />
+            <h4 className="text-xl font-semibold mb-4 text-center">
+            Listado de todas
+            </h4>            
             <Table
               columns={[
                 {
@@ -234,7 +235,7 @@ const [visible, setVisible] = useState<boolean>(false);
                   classes: 'justify-start'
                 },
                 {
-                  title: 'Visitas',
+                  title: 'Total de consultas '  + mesActual ,
                   render(row) {
                     return (
                       <span className="text-gray-500">{row.visits}</span>
@@ -248,6 +249,9 @@ const [visible, setVisible] = useState<boolean>(false);
           </div>
 
           <div className="flex flex-col w-full  bg-white p-5 rounded-lg shadow-md">
+          <h4 className="text-xl font-semibold mb-4 text-center">
+          Listado de instituciones según su cumplimiento de atención de solicitudes de acceso a la información pública
+            </h4>
             <h4 className="text-xl font-semibold mb-4 text-center">
               Entidades y su cumplimiento
             </h4>
