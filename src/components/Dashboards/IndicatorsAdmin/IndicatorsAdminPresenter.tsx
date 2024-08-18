@@ -156,23 +156,16 @@ const IndicatorsAdminPresenter = (props: Props) => {
     <div className="h-full overflow-y-hidden bg-white p-5">
       <Tabs aria-label="Default tabs" style="underline" theme={themeTabs}>
         <Tabs.Item active title="Graficos" icon={BiChart}>
-          <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
-            <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
-              <h2 className="text-start font-semibold text-base px-2">
-                Instituciones que han publicado sus datos<br></br>de transparencia en el Portal
-              </h2>
+              
 
 
-              <div className="relative">
 
                 <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
                   <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
                     <h2 className="text-start font-semibold text-sm">
                       Instituciones que han publicado sus datos de transparencia en el Portal
                     </h2>
-                    <h2 className="text-start font-semibold text-primary text-sm mt-2 ml-3">
-                      Escoge el mes
-                    </h2>
+                   
                     <div className="relative">
 
                       <button className="text-primary hover:text-primary-dark
@@ -220,9 +213,6 @@ const IndicatorsAdminPresenter = (props: Props) => {
                     <Chart options={chartLine} series={chartLine.series} type="bar" />
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
 
         </Tabs.Item>
         <Tabs.Item title="Visitas Entidades" icon={BiStats}>
@@ -273,9 +263,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
             <h4 className="text-xl font-semibold mb-4 text-center">
               Listado de instituciones según su cumplimiento de atención de solicitudes de acceso a la información pública
             </h4>
-            <h4 className="text-xl font-semibold mb-4 text-center">
-              Listado de instituciones según su cumplimiento de atención de solicitudes de acceso a la información pública
-            </h4>
+            
             <Table<Top20>
 
               columns={[
