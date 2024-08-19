@@ -117,7 +117,8 @@ const IndicatorsAdminPresenter = (props: Props) => {
           }
 
         },
-        series: [props.data.entites_total.updated, props.data.entites_total.not_updated, props.data.entites_total.nearly_updated],
+        series: [props.data.entites_total.updated||0, 
+          props.data.entites_total.not_updated||0, props.data.entites_total.nearly_updated||0],
         labels: ["Instituciones que han publicado \n todos sus archivos",
           "Instituciones que no han publicado ningún archivo",
           "Instituciones que solo han publicado parte de los archivos"],

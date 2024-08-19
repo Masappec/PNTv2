@@ -174,15 +174,15 @@ const IndicatorsEstablishment = (props:Props) => {
 
             setChartPieSolicities({
                 ...chartPieSolicities,
-                series: [response.total_atendidas,response.total_recibidas],
+                series: [response.total_atendidas,response.total_recibidas||0],
                 labels: ["Atendidas", "Recibidas"],
             })
 
             setScore({
                 ...score,
-                series: [response.total_score],
-                colors: [getColorBasedOnScore(response.total_score)],
-                labels: [labelScore(response.total_score)],
+                series: [response.total_score||0],
+                colors: [getColorBasedOnScore(response.total_score||0)],
+                labels: [labelScore(response.total_score||0)],
                 //set color value
                 plotOptions: {
                     ...score.plotOptions,
