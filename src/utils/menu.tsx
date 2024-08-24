@@ -213,7 +213,7 @@ const menu = [
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
     element: <ActiveNumerals />,
-    visible_for_superadmin: false
+    visible_for_superadmin: true
 
   },
   {
