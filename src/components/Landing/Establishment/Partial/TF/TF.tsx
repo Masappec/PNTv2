@@ -102,6 +102,14 @@ const TF = (props: Props) => {
                                 },
                                 title: "#"
                             },
+                            {
+                                render: (item) => {
+                                    return (
+                                        <p className="text-gray-900 dark:text-white text-base">{item.numeral.name}</p>
+                                    )
+                                },
+                                title: "Titulo"
+                            },
 
                             {
                                 render: (item) => {
@@ -130,7 +138,7 @@ const TF = (props: Props) => {
                                                             className="text-primary-500 
                                                     hover:text-primary-600 text-base">
                                                             <FaFileCsv className="text-primary-500 
-                                                    hover:text-primary-600 text-base ml-5"
+                                                    hover:text-primary-600 text-base"
                                                                 size={30}
                                                             />
 
@@ -144,7 +152,7 @@ const TF = (props: Props) => {
                                                             className="text-primary-500
                                                     hover:text-primary-600 text-base">
                                                             <FaFilePdf className="text-red-500 
-                                                    hover:text-primary-600 text-base ml-5"
+                                                    hover:text-primary-600 text-base"
                                                                 size={30}
 
                                                             />

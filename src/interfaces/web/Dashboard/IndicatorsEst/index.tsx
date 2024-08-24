@@ -6,6 +6,7 @@ import { generarQR } from "../../../../utils/options";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
 import IndicatorsAdmin from "../IndicatorsAdmin";
 import UserEntity from "../../../../domain/entities/UserEntity";
+import { Navigate } from "react-router-dom";
 
 
 
@@ -28,17 +29,20 @@ const IndicatorsEst = () => {
     }, [])
 
 
-    return(
-        user.is_superuser? <IndicatorsAdmin /> :
-        user.user_permissions?.find((p) => p.codename === "view_general_indicators")
-        ?
-            <IndicatorsEstablishment
-                establishment_id={est.id || 0}
-                qrUrl={qr}
-                usecase={publicApi}
-                year={new Date().getFullYear()}
+    return (
+        user.is_superuser ? <IndicatorsAdmin /> :
+            user.user_permissions?.find((p) => p.codename === "view_general_indicators")
+                ?
+                <IndicatorsEstablishment
+                    establishment_id={est.id || 0}
+                    qrUrl={qr}
+                    usecase={publicApi}
+                    year={new Date().getFullYear()}
 
-            /> :<IndicatorsAdmin />
+                /> : user.group?.find(x => x.name.toLowerCase() == 'ciudadano') ?
+                    <Navigate
+                        to="/admin/solicity"
+                    /> : <IndicatorsAdmin />
     )
 }
 

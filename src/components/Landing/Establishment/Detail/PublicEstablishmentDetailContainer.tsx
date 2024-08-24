@@ -54,23 +54,23 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     const [yearTC, setYearTC] = useState<number>(new Date().getFullYear())
     const [UrlQR, setUrlQR] = useState<string>("")
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-    
 
-    const [mesesTA,setMesesTA] = useState<string[]>([])
-    const [mesesTF,setMesesTF] = useState<string[]>([])
-    const [mesesTC,setMesesTC] = useState<string[]>([])
 
-  
-    
+    const [mesesTA, setMesesTA] = useState<string[]>([])
+    const [mesesTF, setMesesTF] = useState<string[]>([])
+    const [mesesTC, setMesesTC] = useState<string[]>([])
+
+
+
     useEffect(() => {
         props.usecase.getEstablishment(slug || "").then((response) => {
             setEntity(response)
-            
-            handleOpenTransparency('A',response.id || 0)
-            handleOpenTransparency('F',response.id || 0)
-            handleOpenTransparency('C',response.id || 0)
+
+            handleOpenTransparency('A', response.id || 0)
+            handleOpenTransparency('F', response.id || 0)
+            handleOpenTransparency('C', response.id || 0)
             setLoading(false)
-            const imgQR = generarQR(window.location.protocol + "//" + window.location.host + "/entidades/" + slug +"#indicadores")
+            const imgQR = generarQR(window.location.protocol + "//" + window.location.host + "/entidades/" + slug + "#indicadores")
             setUrlQR(imgQR)
         }).catch((error) => {
             setError(error.message)
@@ -78,15 +78,15 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             setLoading(false)
         })
 
-        
+
     }, [])
 
 
     useEffect(() => {
-        handleOpenTransparency('A',entity.id || 0)
-        handleOpenTransparency('F',entity.id || 0)
-        handleOpenTransparency('C',entity.id || 0)
-    }, [entity,year])
+        handleOpenTransparency('A', entity.id || 0)
+        handleOpenTransparency('F', entity.id || 0)
+        handleOpenTransparency('C', entity.id || 0)
+    }, [entity, year])
 
     useEffect(() => {
         const hash = location.hash;
@@ -115,7 +115,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     }
 
 
-    
+
 
     const onOpenMonth = (month: number) => {
 
@@ -133,7 +133,14 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             if (!searchPub) {
 
                 const datos = numeral.map((item) => {
-                    const files = item.files;
+                    const files = item.files.map((file) => {
+                        const description = file.description.replace(/\d/g, '').replace(".", '').trim();
+
+                        return {
+                            ...file,
+                            description: description
+                        }
+                    })
 
                     files.sort((a, b) => {
                         const order = ["Conjunto de datos", "Metadatos", "Diccionario"];
@@ -150,7 +157,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
                     total: datos.length,
                     year: year
                 }
-                
+
                 setPublications([...publications, data])
 
 
@@ -176,7 +183,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     }
 
 
-    const handleOpenTransparency = (type: 'A' | 'F' | 'C',entity_id:number) => {
+    const handleOpenTransparency = (type: 'A' | 'F' | 'C', entity_id: number) => {
         props.usecase.getMonthsByTransparency(type, entity_id || 0, year).then((response) => {
 
             const numbers = response.map((item) => item.month)
@@ -219,7 +226,19 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
             const searchPub = publicationsTF.find(x => x.year == yearTF && x.month == month)
             if (!searchPub) {
-                setPublicationsTF([...publicationsTF, data])
+                const datosOrdenados = response.map((item) => {
+                    item.files.sort((a, b) => {
+                        const order = ["Conjunto de datos", "Metadatos", "Diccionario"];
+                        return order.indexOf(a.description) - order.indexOf(b.description);
+                    });
+
+                    return item;
+                })
+                data.data = datosOrdenados;
+                setPublicationsTF([
+                    ...publicationsTF,
+                    data
+                ])
             } else {
                 const index = publicationsTF.indexOf(searchPub);
                 if (index != -1) {
@@ -252,6 +271,24 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
             const searchPub = publicationsTC.find(x => x.year == yearTC && x.month == month)
             if (!searchPub) {
+                const datosOrdenados = response.map((item) => {
+
+                    item.files = item.files.map((file) => {
+                        const description = file.description.replace(/\d/g, '').replace(".", '').trim();
+
+                        return {
+                            ...file,
+                            description: description
+                        }
+                    })
+                    item.files.sort((a, b) => {
+                        const order = ["Conjunto de datos", "Metadatos", "Diccionario"];
+                        return order.indexOf(a.description) - order.indexOf(b.description);
+                    });
+
+                    return item;
+                })
+                data.data = datosOrdenados;
                 setPublicationsTC([...publicationsTC, data])
             } else {
                 const index = publicationsTC.indexOf(searchPub);
@@ -301,7 +338,8 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     return (
         <PublicEstablishmentDetailPresenter
             onSelectYear={(year) => {
-                setYear(year)}}
+                setYear(year)
+            }}
             selectedYear={year}
             years={Array.from({
                 length: 10
