@@ -65,6 +65,10 @@ const TA = (props: Props) => {
 
     }
 
+    const textFormat = (text: string) => {
+        return text.replace(/_/g, " ");
+    }
+
     const onDonwloadXlsx = async (url: string, name: string) => {
         try {
             const res = await axios.get(url, {
@@ -97,15 +101,30 @@ const TA = (props: Props) => {
                             {
                                 render: (item) => {
                                     return (
-                                        <p className="text-gray-900 dark:text-white text-base">{item.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "")}</p>
+                                        <p
+                                            className="text-gray-900 
+                                        text-wrap
+                                        flex-wrap
+                                        text-left
+                                        dark:text-white 
+                                        text-base">
+                                            {
+                                                textFormat(item.numeralPartial?.name || "")
+                                            }</p>
                                     )
                                 },
-                                title: "#"
+                                title: "#",
+                                classes: "w-1/4"
                             },
                             {
                                 render: (item) => {
                                     return (
-                                        <p className="text-gray-900 dark:text-white text-base">{item.numeralPartial?.description}</p>
+                                        <p className="text-gray-900
+                                         dark:text-white 
+                                         text-left
+                                         text-wrap
+                                            flex-wrap
+                                         text-base">{textFormat(item.numeralPartial?.description || "")}</p>
                                     )
                                 },
                                 title: "Numeral"
@@ -124,7 +143,7 @@ const TA = (props: Props) => {
                             },
                             {
                                 render: (item) => {
-                                    return <div className="flex flex-row space-x-5">
+                                    return <div className="flex flex-row space-x-5 w-full">
                                         {
                                             item.files.map((file, i) =>
                                                 <div className="flex flex-col space-y-2" key={i}>
@@ -137,7 +156,7 @@ const TA = (props: Props) => {
                                                             className="text-primary-500 
                                                     hover:text-primary-600 text-base">
                                                             <FaFileCsv className="text-primary-500 
-                                                    hover:text-primary-600 text-base ml-5"
+                                                    hover:text-primary-600 text-base"
                                                                 size={30}
                                                             />
 
@@ -151,7 +170,7 @@ const TA = (props: Props) => {
                                                             className="text-primary-500
                                                     hover:text-primary-600 text-base">
                                                             <FaFilePdf className="text-red-500 
-                                                    hover:text-primary-600 text-base ml-5"
+                                                    hover:text-primary-600 text-base "
                                                                 size={30}
 
                                                             />
