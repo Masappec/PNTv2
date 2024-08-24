@@ -342,6 +342,7 @@ const menu = [
     visible_for_superadmin: false
 
   },
+  
 
   {
     name: "Solicitudes",
@@ -365,7 +366,7 @@ const menu = [
   {
     name: " Crear Solicitudes",
     path: "/admin/solicity/create",
-    visible: false,
+    visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "add_solicity",
     element: <SolicityCreate />,

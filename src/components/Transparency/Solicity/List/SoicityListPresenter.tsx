@@ -122,7 +122,7 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
 
                 </div>
 
-                <button
+                {/* <button
                     type='button'
                     onClick={props.onAdd}
                     className='inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
@@ -139,7 +139,7 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
                         </svg>
                         <span>Crear solicitud</span>
                     </div>
-                </button>
+                </button> */}
             </section>
             <div className="">
                 <Table
@@ -195,7 +195,7 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
                         },
 
                         {
-                            title: "Días transcurridos",
+                            title: "Días/Horas transcurridos",
                             key: "date",
 
                             render: (solicity) => (

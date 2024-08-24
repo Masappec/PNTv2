@@ -152,7 +152,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                     <Accordion.Content>
                         <>
                             <p className="text-start text-lg font-bold mt-14  ">
-                                Transparencia focalizada{" "}
+                            Consulta la información temática recopilada por la institución 
                             </p>
 
                             <h2 className="text-2xl font-semibold mt-4">
@@ -233,7 +233,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                     <Accordion.Content>
                         <>
                             <p className="text-start text-lg font-medium mt-14">
-                                Transparencia colaborativa{" "}
+                                Consulta la información recopilada colaborativamente por la institución 
                             </p>
 
                             <h2 className="text-2xl font-semibold mt-4">
