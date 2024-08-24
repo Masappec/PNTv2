@@ -117,15 +117,7 @@ const FooterInfo = () => {
       </section>
       <section className='bg-white pb-8 pt-4'>
         <div className='section-container flex w-full flex-wrap items-center justify-around gap-8'>
-          <div className='flex h-[98px] w-full max-w-max flex-col items-center justify-between gap-2'>
-            <p className='text-sm text-slate-600 2xl:text-base'>Con el apoyo de</p>
-            <img
-              className='w-full max-w-52 object-cover object-center'
-              loading='lazy'
-              src={logocooperacionalemana}
-              alt='Logo de cooperación alemana'
-            />
-          </div>
+
 
           <section className='flex h-[98px] items-center justify-center gap-12'>
             <div className='flex h-full w-full max-w-max flex-col items-center justify-between gap-2'>
@@ -157,6 +149,15 @@ const FooterInfo = () => {
               />
             </div>
           </section>
+          <div className='flex h-[98px] w-full max-w-max flex-col items-center justify-between gap-2'>
+            <p className='text-sm text-slate-600 2xl:text-base'>Con el apoyo de</p>
+            <img
+              className='w-full max-w-52 object-cover object-center'
+              loading='lazy'
+              src={logocooperacionalemana}
+              alt='Logo de cooperación alemana'
+            />
+          </div>
         </div>
       </section>
     </footer>
