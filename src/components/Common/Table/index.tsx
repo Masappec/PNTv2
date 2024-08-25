@@ -41,6 +41,7 @@ interface TableProps<T> {
 
 function Table<T>({ ...props }: TableProps<T>) {
     const defaultMessage = "No hay datos";
+    
 
     return (
         <div className="container w-full mx-auto">
