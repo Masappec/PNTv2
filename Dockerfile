@@ -16,7 +16,7 @@ COPY . .
 RUN npm run build
 
 # Path: Dockerfile
-FROM nginx:1.27-alpine
+FROM nginx:1.27
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
