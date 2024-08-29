@@ -11,8 +11,8 @@ services:
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf 
-      #- ./certs/fullchain.pem:/etc/nginx/ssl/certificates/fullchain.pem
-      #- ./certs/privkey.pem:/etc/nginx/ssl/certificates/privkey.pem
+      #- ./cert/fullchain.pem:/etc/nginx/ssl/certificates/fullchain.pem
+      #- ./cert/privkey.pem:/etc/nginx/ssl/certificates/privkey.pem
     networks:
       - pntv2-back_pnt_network
 
