@@ -52,8 +52,8 @@ const SolicityDetailPresenter = (props: Props) => {
   return (
 
     <>
-      <section className='gap-4 lg:grid lg:grid-cols-[1fr,max-content]'>
-        <div>
+      <section className='w-full flex sm:flex-row gap-4 flex-col'>
+        <div className="sm:w-4/6 w-full">
           <section className='mx-auto mb-4 space-y-4 rounded-lg border border-gray-100 bg-primary/10 p-4'>
             <h2 className='rounded-md bg-primary p-4 text-left text-xl font-bold text-white'>
               Información de la Entidad
@@ -245,7 +245,7 @@ const SolicityDetailPresenter = (props: Props) => {
 
         </div>
 
-        <div className='mt-6 grow sm:mt-8 lg:mt-0'>
+        <div className='mt-6 grow sm:mt-8 lg:mt-0 w-full sm:w-2/6'>
           <div className='space-y-6 rounded-lg border border-gray-300 p-6'>
             <h3 className='text-xl font-semibold text-gray-900'>Estado de la Solicitud</h3>
 
@@ -272,10 +272,10 @@ const SolicityDetailPresenter = (props: Props) => {
                       </svg>
                     </span>
                     <h4 className='mb-0.5 text-base font-semibold text-gray-900'>{formatDate(l.created_at)}</h4>
-                    <p className='text-sm font-normal text-gray-500'>{
+                    <p className='text-sm font-normal text-gray-500 text-wrap '>{
 
                       user && user.group?.find(g => g.name.toLowerCase() == "ciudadano") ?
-                        StatusSolicity[l.status as keyof typeof StatusSolicity].value : StatusSolicity[l.status as keyof typeof StatusSolicity].value_2
+                        StatusSolicity[l.status as keyof typeof StatusSolicity].text : StatusSolicity[l.status as keyof typeof StatusSolicity].text
 
                     }</p>
                   </li>
@@ -304,3 +304,5 @@ const SolicityDetailPresenter = (props: Props) => {
 };
 
 export default SolicityDetailPresenter;
+
+//<section className='gap-4 lg:grid lg:grid-cols-[1fr,max-content]'>

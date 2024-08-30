@@ -1,4 +1,4 @@
-import {  FaCheck, FaSave } from "react-icons/fa";
+import { FaCheck, FaSave } from "react-icons/fa";
 
 /*class Status(models.TextChoices):
     DRAFT = 'DRAFT', 'BORRADOR'
@@ -16,6 +16,26 @@ import {  FaCheck, FaSave } from "react-icons/fa";
     FINISHED_WITHOUT_RESPONSE = 'FINISHED_WITHOUT_RESPONSE', 'FINALIZADO SIN RESPUESTA'
     FINISHED = 'FINISHED', 'FINALIZADO'
 */
+/*
+Solicitud enviada
+
+
+
+Se cumplió el plazo que la Institución tenía para responder y no se recibió.
+
+
+
+Solicitud de insistencia enviada.
+
+
+
+Se cumplió el plazo que la Institución tenía para responder insistencia y solicitud, y no respondió.
+
+
+Solicitud de Gestión Oficiosa enviada a la Defensoría del Pueblo (DPE). Proceso concluido en el Portal. El seguimiento posterior a esta etapa debe realizarse directamente con la DPE.
+
+Quitar el estado de Gestión oficiosa no respondida. El proceso terminaría en el paso anterior. Se va a mostrar el proceso que debe seguir el usuario posterior a esta etapa (Básicamente un enlace a otro sitio web).
+*/
 export const StatusSolicity = {
 
     DRAFT: {
@@ -24,77 +44,88 @@ export const StatusSolicity = {
         bg: 'bg-gray-500',
         icon: <FaSave />,
         value_2: 'Borrador',
+        text: 'Borrador'
     },
     SEND: {
         value: 'Enviado',
         key: 'SEND',
         bg: 'bg-primary-500',
         icon: <FaSave />,
-        value_2: 'Recibido'
+        value_2: 'Recibido',
+        text: 'Solicitud enviada'
     },
     RESPONSED: {
         value: 'Respondida',
         key: 'RESPONSED',
         bg: 'bg-custom-green',
         icon: <FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Respondido'
+        value_2: 'Respondido',
+        text: 'Respondido'
     },
     NO_RESPONSED: {
         value: 'No respondida',
         key: 'NO_RESPONSED',
         bg: 'bg-red-500',
-        icon:<FaCheck className="text-primary-500 text-center" />,
-        value_2: 'No respondido'
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'No respondido',
+        text: 'Se cumplió el plazo que la Institución tenía para responder y no se recibió.'
     },
     INSISTENCY_PERIOD: {
         value: 'Periodo de insistencia',
         key: 'INSISTENCY_PERIOD',
         bg: 'bg-yellow-500',
-        icon:<FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Periodo de insistencia'
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'Periodo de insistencia',
+        text: 'Periodo de insistencia'
     },
     INSISTENCY_SEND: {
         value: 'Insistencia enviada',
         key: 'INSISTENCY_SEND',
-        bg: 'bg-yellow-600',	
-        icon:<FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Insistencia Recibida'
+        bg: 'bg-yellow-600',
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'Insistencia Recibida',
+        text: 'Insistencia enviada'
     },
     INSISTENCY_RESPONSED: {
         value: 'Insistencia respondida',
         key: 'INSISTENCY_RESPONSED',
         bg: 'bg-custom-green',
-        icon:<FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Insistencia respondida'
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'Insistencia respondida',
+        text: 'Insistencia respondida'
     },
     INSISTENCY_NO_RESPONSED: {
         value: 'Insistencia no respondida',
         key: 'INSISTENCY_NO_RESPONSED',
         bg: 'bg-red-700',
-        icon:<FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Insistencia no respondida'
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'Insistencia no respondida',
+        text: 'Se cumplió el plazo que la Institución tenía para responder insistencia y solicitud, y no respondió.'
     },
     PERIOD_INFORMAL_MANAGEMENT: {
         value: 'Periodo de gestión oficiosa',
         key: 'PERIOD_INFORMAL_MANAGEMENT',
         bg: 'bg-yellow-500',
-        icon:<FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Periodo de gestión oficiosa'
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'Periodo de gestión oficiosa',
+        text: 'Periodo de gestión oficiosa'
     },
     INFORMAL_MANAGMENT_SEND: {
         value: 'Gestión oficiosa enviada',
         key: 'INFORMAL_MANAGMENT_SEND',
         bg: 'bg-yellow-600',
-        icon:<FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Gestión oficiosa Recibida'
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'Gestión oficiosa Recibida',
+        text: 'Gestión oficiosa enviada'
     },
 
     INFORMAL_MANAGMENT_RESPONSED: {
         value: 'Gestión oficiosa respondida',
         key: 'INFORMAL_MANAGMENT_RESPONSED',
         bg: 'bg-custom-green',
-        icon:<FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Gestión oficiosa respondida'
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'Gestión oficiosa respondida',
+        text: 'Solicitud de Gestión Oficiosa enviada a la Defensoría del Pueblo (DPE). Proceso concluido en el Portal. El seguimiento posterior a esta etapa debe realizarse directamente con la DPE.'
 
 
     },
@@ -102,16 +133,18 @@ export const StatusSolicity = {
         value: 'Gestión oficiosa no respondida',
         key: 'INFORMAL_MANAGMENT_NO_RESPONSED',
         bg: 'bg-red-700',
-        icon:<FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Gestión oficiosa no respondida'
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'Gestión oficiosa no respondida',
+        text: 'El proceso que debe seguir el usuario posterior a esta etapa (Básicamente un enlace a otro sitio web).'
     },
 
     FINISHED_WITHOUT_RESPONSE: {
         value: 'Finalizado sin respuesta',
         key: 'FINISHED_WITHOUT_RESPONSE',
         bg: 'bg-red-700',
-        icon:<FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Finalizado sin respuesta'
+        icon: <FaCheck className="text-primary-500 text-center" />,
+        value_2: 'Finalizado sin respuesta',
+        text: 'Finalizado sin respuesta'
     },
 
     PRORROGA: {
@@ -119,7 +152,8 @@ export const StatusSolicity = {
         key: 'PRORROGA',
         bg: 'bg-yellow-700',
         icon: <FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Prórroga'
+        value_2: 'Prórroga',
+        text: 'Prórroga'
     },
 
 
@@ -158,13 +192,13 @@ export const StatusStageSolicity = {
         value: 'Pendiente',
         key: 'PENDING',
         bg: 'info',
-        icon:<FaCheck className="text-primary-500 text-center" />
+        icon: <FaCheck className="text-primary-500 text-center" />
     },
     RESPONSE: {
         value: 'Respuesta',
         key: 'RESPONSE',
         bg: 'success',
-        icon:<FaCheck className="text-primary-500 text-center" />
+        icon: <FaCheck className="text-primary-500 text-center" />
     },
     INSISTENCY: {
         value: 'Insistencia',
@@ -176,19 +210,19 @@ export const StatusStageSolicity = {
         value: 'Pendiente respuesta insistencia',
         key: 'PENDING_RESPONSE_INSISTENCY',
         bg: 'info',
-        icon:<FaCheck className="text-primary-500 text-center" />
+        icon: <FaCheck className="text-primary-500 text-center" />
     },
     RESPONSE_INSISTENCY: {
         value: 'Respuesta insistencia',
         key: 'RESPONSE_INSISTENCY',
         bg: 'info',
-        icon:<FaCheck className="text-primary-500 text-center" />
+        icon: <FaCheck className="text-primary-500 text-center" />
     },
     INFORMAL_MANAGEMENT: {
         value: 'Gestión oficiosa',
         key: 'INFORMAL_MANAGEMENT',
         bg: 'info',
-        icon:<FaCheck className="text-primary-500 text-center" />
+        icon: <FaCheck className="text-primary-500 text-center" />
     }
 }
 
