@@ -4,11 +4,12 @@ import Table from "../../../Common/Table/index"
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
 import Alert from "../../../Common/Alert"
+import { elapsedTime, formatDate2 } from "../../../../utils/functions"
 
 
 
 interface Props {
-    
+
     data: Solicity[]
     error: string | null
     onSearch: (search: string) => void
@@ -46,9 +47,9 @@ const SolicityListPresenter = (props: Props) => {
     return (
         <div className="">
             <h3 className="text-xs text-primary">¡Hola!
-            
-Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta sección podrás consultar todas las  Solicitudes de Acceso a la Información Pública (SAIP) que envíes a las instituciones que requieras. Para crear una nueva SAIP, selecciona <span className="font-bold">“Crear solicitud”</span> y sigue los pasos indicados.
-</h3>
+
+                Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta sección podrás consultar todas las  Solicitudes de Acceso a la Información Pública (SAIP) que envíes a las instituciones que requieras. Para crear una nueva SAIP, selecciona <span className="font-bold">“Crear solicitud”</span> y sigue los pasos indicados.
+            </h3>
             <h2 className='mt-6 mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
                 Solicitudes
 
@@ -57,8 +58,8 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
                 props.error ? <Alert
                     type="error"
                     message={props.error}
-                    onClose={() => { props.setError("")}}
-                />: null
+                    onClose={() => { props.setError("") }}
+                /> : null
             }
             <section className='mb-8 flex flex-col items-end 
             justify-between gap-4 sm:flex-row sm:items-center'>
@@ -66,32 +67,32 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
                     <div>
 
 
-                    <label className='text-gray-500 text-sm'>Buscar solicitud enviada:</label>
-                    <div className='group relative w-full max-w-xs mt-1'>
-                        
-                        <svg
-                            className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
-                            stroke='currentColor'
-                            fill='currentColor'
-                            stroke-width='0'
-                            viewBox='0 0 24 24'
-                            height='1em'
-                            width='1em'
-                            xmlns='http://www.w3.org/2000/svg'
-                        ><path
-                            d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
-                        ></path>
-                        </svg>
-                        <input
-                            className='block w-96 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-xs text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                            type='text'
-                            placeholder='Ingresa el número de la SAIP o el nombre de la institución'
+                        <label className='text-gray-500 text-sm'>Buscar solicitud enviada:</label>
+                        <div className='group relative w-full max-w-xs mt-1'>
 
-                            onChange={(e) => props.onSearch(e.target.value)}
+                            <svg
+                                className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
+                                stroke='currentColor'
+                                fill='currentColor'
+                                stroke-width='0'
+                                viewBox='0 0 24 24'
+                                height='1em'
+                                width='1em'
+                                xmlns='http://www.w3.org/2000/svg'
+                            ><path
+                                d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
+                            ></path>
+                            </svg>
+                            <input
+                                className='block w-96 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-xs text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                type='text'
+                                placeholder='Ingresa el número de la SAIP o el nombre de la institución'
 
-                        />
-                     
-                    </div>
+                                onChange={(e) => props.onSearch(e.target.value)}
+
+                            />
+
+                        </div>
                     </div>
                     <div className='flex flex-row gap-2'>
 
@@ -105,21 +106,34 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
                                 placeholder="Desde"
                                 onChange={(e) => props.onChangeStart(e.target.value)}
                             />
-                            
+
                         </div>
                         <div className='flex flex-col gap-2'>
                             <label className='text-gray-500 text-sm'>
                                 Hasta
                             </label>
-                        <input
-                            type="date"
-                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                            placeholder="Hasta"
-                            onChange={(e) => props.onChangeEnd(e.target.value)}
-                        />
+                            <input
+                                type="date"
+                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                placeholder="Hasta"
+                                onChange={(e) => props.onChangeEnd(e.target.value)}
+                            />
                         </div>
                     </div>
-
+                    <div className="flex flex-col gap-2">
+                        <label className='text-gray-500 text-sm'>
+                            limite
+                        </label>
+                        <select
+                            onChange={(e) => props.onChangesLimit(parseInt(e.target.value))}
+                            className='block w-40 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'>
+                            {
+                                props.limits.map((limit) => (
+                                    <option key={limit} value={limit}>{limit}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
                 </div>
 
                 <button
@@ -144,7 +158,7 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
             <div className="">
                 <Table
                     show={false}
-                    text=" Al momento no hay ninguna solicitud enviada. Para enviar una, escoge en el menú “Crear Solicitud”"
+                    text="No se encontraron solicitudes que coincidan con lo que buscas."
                     sorteable={true}
                     limits={props.limits}
                     onSort={props.onChangesSort}
@@ -166,10 +180,12 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
                             key: "estblishment__name",
                             render: (solicity) => (
                                 <a
-                                    className="text-blue-500 hover:courser-pointer hover:underline"
+                                    className="text-blue-500 text-wrap 
+                                     hover:courser-pointer hover:underline"
                                     onClick={() => props.onEdit(solicity)}
                                 >{solicity.estblishment_name}</a>
                             ),
+                            classes: 'w-1/4'
                         },
                         {
                             title: "No. SAIP",
@@ -189,7 +205,8 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
 
                             render: (solicity) => (
                                 <p>{
-                                    solicity.date ? new Date(solicity.date).toLocaleString() : ""
+                                    solicity.date ? formatDate2(solicity.date)
+                                        : ""
                                 }</p>
                             )
                         },
@@ -200,7 +217,7 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
 
                             render: (solicity) => (
                                 <p>{
-                                    solicity.date ? Math.floor((new Date().getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) : ""
+                                    solicity.date ? elapsedTime(solicity.date) : ""
                                 }</p>
                             )
                         },

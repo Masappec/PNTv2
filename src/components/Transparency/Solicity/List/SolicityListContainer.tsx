@@ -44,14 +44,14 @@ const SolicityListContainer = (props: Props) => {
 
 
     useEffect(() => {
-       
+
         const date_start = new Date(startDate)
         const date_end = new Date(endDate)
         if (date_start > date_end) {
             SetError("La fecha de inicio no puede ser mayor a la fecha de fin")
             return
         }
-        props.useCase.getSolicities(search,currentPage,limit,columnsSort,startDate,endDate).then(response => {
+        props.useCase.getSolicities(search, currentPage, limit, columnsSort, startDate, endDate).then(response => {
             SetSolicitudes(response.results)
             setTotalPage(response.total_pages || 0)
             setFrom(response.from || 0)
@@ -61,7 +61,7 @@ const SolicityListContainer = (props: Props) => {
         }).catch((err) => {
             SetError(err.message)
         })
-    }, [startDate,endDate])
+    }, [startDate, endDate])
 
     const handleAdd = () => {
         navigate('/admin/solicity/create')
