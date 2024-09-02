@@ -93,6 +93,8 @@ const TF = (props: Props) => {
                 <Accordion.Content>
                     <Table<TransparencyFocusEntity>
                         show={true}
+                        text="La institución no ha publicado datos para este mes."
+
                         columns={[
                             {
                                 render: (_item, index) => {

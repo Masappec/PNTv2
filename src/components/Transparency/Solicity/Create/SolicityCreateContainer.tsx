@@ -320,8 +320,7 @@ const SolicityCreateContainer = (props: Props) => {
         <>
             {
                 isSend ?
-                    <ScreenMessage message="Solicitud enviada."
-                        type={`
+                    <ScreenMessage message={`
                         Fecha y hora de envío registrada: ${formatDate2(solicitySaved.created_at)}
 
                         La solicitud que acabas de enviar ya fue entregada a la institución quienes también la revisarán desde el Portal Nacional de Transparencia. Según lo establecido en la LOTAIP, a partir de ahora cuentan con hasta 10 días para responderte. Sigue el proceso indicado en el portal por si necesitas enviar una Insistencia o Gestión Oficiosa en caso de no recibir respuesta.
@@ -329,6 +328,7 @@ const SolicityCreateContainer = (props: Props) => {
                         Regresar a Solicitudes
                         
                         `}
+                        type="Solicitud enviada."
                     >
                         <div className="flex items-center gap-16 mt-8 justify-center ">
 

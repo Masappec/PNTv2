@@ -94,6 +94,8 @@ const TC = (props: Props) => {
                 <Accordion.Content>
                     <Table<TransparencyCollab>
                         show={true}
+                        text="La institución no ha publicado datos para este mes."
+
                         columns={[
                             {
                                 render: (_item, index) => {
