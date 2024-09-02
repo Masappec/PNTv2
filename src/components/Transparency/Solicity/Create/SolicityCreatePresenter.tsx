@@ -122,8 +122,8 @@ const SolicityCreatePresenter = (props: Props) => {
                 name="identification"
                 value={props.entitySelected.identification}
 
-              />
-            </div> */}
+              /> 
+            </div>*/}
           </section>
 
 

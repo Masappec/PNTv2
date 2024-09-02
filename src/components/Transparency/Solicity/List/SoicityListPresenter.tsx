@@ -136,7 +136,7 @@ const SolicityListPresenter = (props: Props) => {
                     </div>
                 </div>
 
-                <button
+                {/* <button
                     type='button'
                     onClick={props.onAdd}
                     className='inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
@@ -153,7 +153,7 @@ const SolicityListPresenter = (props: Props) => {
                         </svg>
                         <span>Crear solicitud</span>
                     </div>
-                </button>
+                </button> */}
             </section>
             <div className="">
                 <Table
@@ -212,7 +212,7 @@ const SolicityListPresenter = (props: Props) => {
                         },
 
                         {
-                            title: "Días transcurridos",
+                            title: "Días/Horas transcurridos",
                             key: "date",
 
                             render: (solicity) => (

@@ -21,6 +21,13 @@ const RoleListContainer = ({
 
     const navigate = useNavigate()
 
+
+    useEffect(() => {
+     const sortedRoleEntity = [...roles].sort((a, b) => a.name.localeCompare(b.name));
+    setRoles(sortedRoleEntity);
+    }, [roles]);
+    
+
     useEffect(() => {
         usecase.execute().then((data) => {
             setRoles(data)

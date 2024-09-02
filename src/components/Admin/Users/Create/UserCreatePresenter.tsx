@@ -34,6 +34,9 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
 
     return (
         <>
+          <h2 className="mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary">
+        {"Crear Usuario"}
+      </h2>
             <p className='my-8 max-w-3xl items-center text-sm text-primary'>
                 Completa todos los campos y selecciona "Crear usuario" para añadir un nuevo usuario al portal.
             </p>
@@ -64,7 +67,7 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                 [
                                     {
                                         value: "",
-                                        label: "Seleccione un rol"
+                                        label: "Selecciona un rol"
                                     }
                                 ].concat(props.roles_list.map((role) => {
                                     return {
