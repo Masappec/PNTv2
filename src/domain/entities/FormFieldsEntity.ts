@@ -11,6 +11,7 @@ class FormFieldsEntity {
   form_type: string;
   model: string;
   is_active: boolean;
+  helptext: string;
   role: string;
   type_field: string;
 
@@ -35,7 +36,8 @@ class FormFieldsEntity {
     options?: {
       id: number;
       name: string;
-    }[] | null
+    }[] | null,
+    helptext: string = ""
   ) {
     this.id = id;
     this.created_at = created_at;
@@ -50,6 +52,7 @@ class FormFieldsEntity {
     this.role = role;
     this.type_field = type_field;
     this.options = options;
+    this.helptext = helptext;
   }
 }
 

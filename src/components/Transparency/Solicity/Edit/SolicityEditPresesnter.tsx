@@ -43,21 +43,10 @@ interface Props {
 }
 const SolicityEditPresenter = (props: Props) => {
 
-    const formatDate = (date: Date) => {
-        const padTo2Digits = (num: number) => num.toString().padStart(2, '0');
-
-        return [
-            date.getFullYear(),
-            padTo2Digits(date.getMonth() + 1),
-            padTo2Digits(date.getDate()),
-        ].join('-') + 'T' + [
-            padTo2Digits(date.getHours()),
-            padTo2Digits(date.getMinutes())
-        ].join(':');
-    };
 
 
-    return(
+
+    return (
         <>
             <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
                 Formulario de Solicitud de Acceso a la Información Pública (SAIP)
@@ -67,7 +56,7 @@ const SolicityEditPresenter = (props: Props) => {
             <section className='mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center'>
                 <form
                     onSubmit={props.handleSubmit}
-                    className='mx-auto w-full max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
+                    className='mx-auto w-full  items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
                     <section className='grid grid-cols-1 items-start justify-center gap-4 text-start'>
                         <h2 className='mx-auto w-full text-balance text-lg font-semibold text-gray-900'>
                             Datos de la Entidad
@@ -88,44 +77,6 @@ const SolicityEditPresenter = (props: Props) => {
                         </div>
                         <div>
                             <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                                Ruc
-                            </label>
-                            <input
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                                type='text'
-                                placeholder='Aqui va el RUC de la entidad seleccionada'
-                                onChange={props.onChange}
-                                name="identification"
-                                value={props.entitySelected.identification}
-
-                            />
-                        </div>
-                    </section>
-
-
-                    <section className='mt-5 grid grid-cols-1 items-start justify-center gap-4 text-start'>
-                        <h2 className='mx-auto w-full text-balance text-lg font-semibold text-gray-900'>
-                            Persona Solicitante
-                        </h2>
-
-
-                        <div>
-                            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                                Fecha
-                            </label>
-                            <input
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                                type='datetime-local'
-                                onChange={(e) => props.onChange(e)}
-                                value={formatDate(new Date())}
-                                name="date"
-                                disabled={true}
-                            />
-                        </div>
-
-
-                        <div>
-                            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
                                 Ciudad
                             </label>
                             <input
@@ -138,143 +89,70 @@ const SolicityEditPresenter = (props: Props) => {
                             />
                         </div>
 
+                    </section>
+
+
+                    <section className='mt-5 grid grid-cols-1 items-start justify-center gap-4 text-start'>
+
+
+                        <h2 className='mx-auto w-full text-balance text-lg font-semibold text-gray-900'>
+                            Persona que Solicita
+                        </h2>
+
+                        <span className="text-xs  text-gray-500">Los datos que se mostrarán a la institución serán los que ingresaste cuando creaste la cuenta en este Portal</span>
+                        <ul className='mb-2 mt-2 text-sm'>
+
+                            <li className='flex flex-col items-start justify-start gap-x-2 sm:flex-row'>
+                                <h2 className='font-medium text-gray-900'>Nombre:</h2>
+                                <h3 className='font-medium text-gray-600'>{
+                                    props.data.first_name +
+                                    " " +
+                                    props.data.last_name
+                                }</h3>
+                            </li>
+
+                            <li className='flex flex-col items-start justify-start gap-x-2 sm:flex-row'>
+                                <span className='font-medium text-gray-900'>Correo electrónico:</span>
+                                <a href='#' className='group flex items-center gap-x-2 hover:text-primary'>
+                                    <span className=' text-gray-600 text-pretty  font-medium underline underline-offset-2'>
+                                        {props.data.email}
+                                    </span>
+                                </a>
+                            </li>
+                            <li className='flex flex-col items-start justify-start gap-x-2 sm:flex-row'>
+                                <h2 className='font-medium text-gray-900'>Teléfono:</h2>
+                                <h3 className='font-medium  text-gray-600'>{
+                                    props.data.phone
+                                }</h3>
+                            </li>
+                            <li className='flex flex-col items-start justify-start gap-x-2 sm:flex-row'>
+                                <h2 className='font-medium text-gray-900'>Género:</h2>
+                                <h3 className='font-medium  text-gray-600'>{
+                                    props.data.gender
+                                }</h3>
+                            </li>
+
+
+                        </ul>
 
                         <div>
                             <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                                Nombre
+                                Solicitud de información
                             </label>
-                            <input
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                                type='text'
-                                placeholder='Ingresa el nombre de la persona solicitante'
-                                name="first_name"
-                                value={props.data.first_name}
-                                onChange={props.onChange}
-                                disabled={!props.solicitySaved.is_manual}
-                            />
-                        </div>
-
-
-                        <div>
-                            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                                Apellido
-                            </label>
-                            <input
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                                type='text'
-                                placeholder='Ingresa el apellido de la persona solicitante'
-                                name="last_name"
-                                onChange={props.onChange}
-                                disabled={!props.solicitySaved.is_manual}
-
-                                value={props.data.last_name}
-                            />
-                        </div>
-
-
-                        <div>
-                            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                                Correo Electrónico
-                            </label>
-                            <input
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                                placeholder='Correo electrónico del solicitante'
-                                type="email"
-                                name="email"
-                                onChange={props.onChange}
-                                disabled={!props.solicitySaved.is_manual}
-
-                                value={props.data.email}
-                            />
-                        </div>
-
-
-                        <div>
-                            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                                Teléfono
-                            </label>
-                            <input
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                                type='text'
-                                placeholder='Teléfono del solicitante'
-                                onChange={props.onChange}
-                                name="phone"
-                                value={props.data.phone}
-                                disabled={!props.solicitySaved.is_manual}
-                            />
-                        </div>
-
-
-                        <div>
-                            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                                Género
-                            </label>
-                            <select
-                                disabled={!props.solicitySaved.is_manual}
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                                onChange={(value) => {
-                                    props.onChangeSelect({
-                                        color: '',
-                                        label: value.target.value,
-                                        value: value.target.value
-                                    }, 'gender')
-                                }}
-                            >
-                                <option value="">Seleccione una opción</option>
-
-                                {
-                                    props.genders.map(e => {
-
-                                        return <option value={e.value} selected={props.data.gender == e.value}>{e.label}</option>
-
-                                    })
-                                }
-
-                            </select>
-
-                        </div>
-
-
-                        <div>
-                            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                                Identificación Cultural
-                            </label>
-                            <select
-                                disabled={!props.solicitySaved.is_manual}
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                                onChange={(value) => {
-                                    props.onChangeSelect({
-                                        color: '',
-                                        label: value.target.value,
-                                        value: value.target.value
-                                    }, 'race_identification')
-                                }}
-                            >
-                                <option value="">Seleccione una opción</option>
-                                {
-                                    props.race_indentification.map(e => {
-
-                                        return <option value={e.value} selected={props.data.race_identification == e.value}>{e.label}</option>
-
-                                    })
-                                }
-                            </select>
-                        </div>
-
-
-                        <div>
-                            <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                                Petición
-                            </label>
+                            <br />
+                            <span className="text-xs  text-gray-500">Escribe a continuación con detalle la información que necesites consultar a la institución seleccionada.</span>
                             <textarea
-                                className='block w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500'
-                                placeholder='Escribir motivo de la solicitud'
+                                className=' mt-2 block w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500'
+                                placeholder='Escribe la información que necesitas solicitar'
                                 rows={4}
 
                                 name="text"
                                 onChange={props.onChange}
                                 value={props.data.text}
                             ></textarea>
+                            <span className="text-xs">
+                                {props.data.text.length}/3000
+                            </span>
                         </div>
 
 
@@ -306,7 +184,7 @@ const SolicityEditPresenter = (props: Props) => {
                                 }
                             </select>
                         </div>
-                        
+
                         {
                             props.error ? (
                                 <Alert
@@ -317,7 +195,7 @@ const SolicityEditPresenter = (props: Props) => {
                             ) : null
                         }
                         <div className="flex flex-row gap-5 justify-between">
-                            
+
                             {
 
                                 props.isLoadingSend ? <Spinner></Spinner> :

@@ -7,7 +7,7 @@ import { RegisterDto } from "../../../infrastructure/Api/Auth/interface";
 import Spinner from "../../Common/Spinner";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import PasswordMeter, { IOncalculate } from "../../Common/PasswordMeter";
-import {LogoPortal} from "../../Common/LogoPortal";
+import { LogoPortal } from "../../Common/LogoPortal";
 
 
 
@@ -48,7 +48,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                 className='font-medium text-primary hover:underline hover:underline-offset-2'
                 href='/tutoriales'>Revisa nuestro tutorial.
               </a>
-               
+
             </p>
 
             {props.error && (
@@ -73,10 +73,10 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                       <input
                         type={
                           field.name === "confirm_password" ?
-                           (showConfirmPassword ? "text" : field.type_field)
-                          : (props.showPassword ? "text" : field.type_field)
+                            (showConfirmPassword ? "text" : field.type_field)
+                            : (props.showPassword ? "text" : field.type_field)
                         }
-                        placeholder={field.description}
+                        placeholder={field.helptext}
                         className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
                         value={
                           props.data[field.name as keyof RegisterDto] as string
@@ -85,15 +85,15 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                           props.setData(field.name, e.target.value)
                         }
                         name={field.name}
-                        
+
                       />
                       <button
                         type='button'
                         className='absolute right-0 top-0 p-2 text-gray-600 outline-primary hover:cursor-pointer'
-                        onClick={()=>{
-                          if(field.name === "confirm_password"){
+                        onClick={() => {
+                          if (field.name === "confirm_password") {
                             setShowConfirmPassword(!showConfirmPassword)
-                          }else{
+                          } else {
                             props.handleShowPassword()
                           }
                         }}
@@ -137,7 +137,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                         options={[
                           {
                             value: "",
-                            label: "Seleccione una opción",
+                            label: field.helptext,
                           },
 
                           ...(field.options?.map((option) => {
@@ -147,7 +147,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                             };
                           }) as { value: string; label: string }[]),
                         ]}
-                        
+
                       />
 
                     </div>
@@ -176,7 +176,7 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                       </label>
                       <input
                         type={field.type_field}
-                        placeholder={field.description}
+                        placeholder={field.helptext}
                         className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50 "
                         value={
                           props.data[field.name as keyof RegisterDto] as string
@@ -186,6 +186,13 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
                         }
                         name={field.name}
                       />
+                      {
+                        field.name == "username" && (
+                          <p className="text-xs text-gray-500">
+                            Tu nombre de usuario no puede contener espacios en blanco ni símbolos. Es indistinto que lo escribas con mayúsculas o minúsculas.
+                          </p>
+                        )
+                      }
 
 
 
@@ -197,28 +204,28 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
               <Spinner />
             ) : (
 
-        <button
-          type='submit'
-          className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'
-          disabled={!props.isEnable}
-          >
-          Registrarse
-        </button>
+              <button
+                type='submit'
+                className='w-full rounded-full bg-primary px-6 py-3 text-base font-medium text-white transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-blue-400'
+                disabled={!props.isEnable}
+              >
+                Registrarse
+              </button>
             )
             }
 
-        <p className='mt-8 text-sm text-gray-900'>
-          ¿Tienes una cuenta? <a
-            className='font-medium text-primary hover:underline hover:underline-offset-2'
-            href='/ingreso'>Inicia sesión
-            </a >
-            
-        </p>
-      </form>
-        
-      
-    </section>
-  </main>
+            <p className='mt-8 text-sm text-gray-900'>
+              ¿Tienes una cuenta? <a
+                className='font-medium text-primary hover:underline hover:underline-offset-2'
+                href='/ingreso'>Inicia sesión
+              </a >
+
+            </p>
+          </form>
+
+
+        </section>
+      </main>
     </>
   );
 };

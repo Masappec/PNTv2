@@ -160,11 +160,27 @@ const SolicityCreateContainer = (props: Props) => {
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setIsChanged(true)
-        setData({
-            ...data,
-            [e.target.name]: e.target.value
-        })
+        if (e.target.name == 'text') {
+            const value = e.target.value;
+
+            if (value.length < 3000) {
+                setData({
+                    ...data,
+                    [e.target.name]: e.target.value
+                })
+            }
+
+        } else {
+            setIsChanged(true)
+
+            setData({
+                ...data,
+                [e.target.name]: e.target.value
+            })
+        }
+
+
+
     }
 
 
@@ -229,9 +245,7 @@ const SolicityCreateContainer = (props: Props) => {
             return callback([])
         }
 
-        if (inputValue.length < 3) {
-            return
-        }
+
         const filter = _establishments.filter((item) => {
             return item.name.toLowerCase().includes(inputValue.toLowerCase())
         })

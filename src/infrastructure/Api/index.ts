@@ -37,6 +37,7 @@ api.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             SessionService.clearSession();
+            window.location.href = '/401'
         }
         return Promise.reject(error);
     }

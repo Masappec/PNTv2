@@ -51,6 +51,7 @@ export interface MenuItem {
   icon: JSX.Element;
   visible: boolean;
   visible_for_superadmin?: boolean;
+  hidden_for_citicen?: boolean;
 }
 
 const menu = [
@@ -61,6 +62,7 @@ const menu = [
     icon: <BiPieChart size={25} className="text-slate-500" />,
     permission_required: "",
     element: <IndicatorsEst />,
+    hidden_for_citicen: true
   },
   {
     name: 'Indicadores Por Entidad',
@@ -68,7 +70,7 @@ const menu = [
     visible: true,
     icon: <BiPieChart size={25} className="text-slate-500" />,
     permission_required: 'view_monitoring_indicators',
-    element: <IndicatorsMonitoring/>
+    element: <IndicatorsMonitoring />
   },
   {
     name: 'Usuarios',
@@ -105,7 +107,7 @@ const menu = [
     icon: <RiUser3Line size={25} className="text-slate-500" />,
     element: <UserEdit />
   },
-  
+
   {
     name: 'Crear Usuario',
     path: '/admin/users/create',
@@ -222,7 +224,7 @@ const menu = [
     visible: true,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "view_all_transparencyactive",
-    element: <AllTA/>,
+    element: <AllTA />,
     visible_for_superadmin: false
   },
   {
@@ -271,7 +273,7 @@ const menu = [
     visible: true,
     icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
     permission_required: "view_all_transparencyfocal",
-    element: <AllTF/>,
+    element: <AllTF />,
     visible_for_superadmin: false
   },
   {
@@ -342,7 +344,7 @@ const menu = [
     visible_for_superadmin: false
 
   },
-  
+
 
   {
     name: "Solicitudes",
@@ -384,7 +386,7 @@ const menu = [
     path: "/admin/solicity/edit/:id",
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "change_solicity",
+    permission_required: "add_solicity",
     element: <SolicityEdit />,
   },
 
@@ -431,13 +433,13 @@ const menu = [
     visible_for_superadmin: false
   },
   {
-    name:'Publicaciones T. Activa',
-    path:'/admin/publicaciones',
-    visible:true,
-    icon: <FaTable size={25} className="text-slate-500"/>,
+    name: 'Publicaciones T. Activa',
+    path: '/admin/publicaciones',
+    visible: true,
+    icon: <FaTable size={25} className="text-slate-500" />,
     permission_required: 'view_transparencyactive',
-    element: <AllPublications/>,
-    visible_for_superadmin:false
+    element: <AllPublications />,
+    visible_for_superadmin: false
   }
 
 ];

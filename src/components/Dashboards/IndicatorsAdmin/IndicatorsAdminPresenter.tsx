@@ -117,7 +117,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
           }
 
         },
-        series: [props.data.entites_total.updated, props.data.entites_total.not_updated, props.data.entites_total.nearly_updated],
+        series: [props.data.entites_total.updated || 0, props.data.entites_total.not_updated || 0, props.data.entites_total.nearly_updated || 0],
         labels: ["Instituciones que han publicado \n todos sus archivos",
           "Instituciones que no han publicado ningún archivo",
           "Instituciones que solo han publicado parte de los archivos"],
@@ -156,63 +156,63 @@ const IndicatorsAdminPresenter = (props: Props) => {
     <div className="h-full overflow-y-hidden bg-white p-5">
       <Tabs aria-label="Default tabs" style="underline" theme={themeTabs}>
         <Tabs.Item active title="Graficos" icon={BiChart}>
-              
 
 
 
-                <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
-                  <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
-                    <h2 className="text-start font-semibold text-sm">
-                      Instituciones que han publicado sus datos de transparencia en el Portal
-                    </h2>
-                   
-                    <div className="relative">
 
-                      <button className="text-primary hover:text-primary-dark
+          <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
+            <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
+              <h2 className="text-start font-semibold text-sm">
+                Instituciones que han publicado sus datos de transparencia en el Portal
+              </h2>
+
+              <div className="relative">
+
+                <button className="text-primary hover:text-primary-dark
               focus:outline-none focus:ring-2 focus:ring-primary-dark
               rounded-md px-3 py-2"
-                        type="button"
-                        onClick={() => setVisible(!visible)}
-                      >
+                  type="button"
+                  onClick={() => setVisible(!visible)}
+                >
 
-                        <span className="text-sm font-semibold">
-                          Escoge el mes: {
-                            meses[props.month - 1]
-                          }
-                        </span>
-                        &nbsp;
-                        <span className="text-sm font-semibold">
-                          {props.year}
-                        </span>
+                  <span className="text-sm font-semibold">
+                    Escoge el mes: {
+                      meses[props.month - 1]
+                    }
+                  </span>
+                  &nbsp;
+                  <span className="text-sm font-semibold">
+                    {props.year}
+                  </span>
 
-                        <FaCalendarAlt />
+                  <FaCalendarAlt />
 
 
-                      </button>
-                      <CalendarMonth
-                        visible={visible}
-                        onMonthSelect={(month) => props.onSelectedMonth(month + 1)}
-                        onYearSelect={(year) => props.onSelectedYear(year)}
-                        setVisible={setVisible}
-                      />
-                    </div>
+                </button>
+                <CalendarMonth
+                  visible={visible}
+                  onMonthSelect={(month) => props.onSelectedMonth(month + 1)}
+                  onYearSelect={(year) => props.onSelectedYear(year)}
+                  setVisible={setVisible}
+                />
+              </div>
 
-                    <Chart
-                      options={chartPieSolicities}
-                      series={chartPieSolicities.series}
-                      type="donut"
-                      width={500}
+              <Chart
+                options={chartPieSolicities}
+                series={chartPieSolicities.series}
+                type="donut"
+                width={500}
 
-                    />
-                  </div>
-                  <div className="container border   w-1/2 rounded-2xl  ">
-                    <h2 className="text-start font-semibold text-sm px-5 py-5">
-                      Cantidad total de solicitudes recibidas vs atendidas
-                    </h2>
+              />
+            </div>
+            <div className="container border   w-1/2 rounded-2xl  ">
+              <h2 className="text-start font-semibold text-sm px-5 py-5">
+                Cantidad total de solicitudes recibidas vs atendidas
+              </h2>
 
-                    <Chart options={chartLine} series={chartLine.series} type="bar" />
-                  </div>
-                </div>
+              <Chart options={chartLine} series={chartLine.series} type="bar" />
+            </div>
+          </div>
 
         </Tabs.Item>
         <Tabs.Item title="Visitas Entidades" icon={BiStats}>
@@ -263,7 +263,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
             <h4 className="text-xl font-semibold mb-4 text-center">
               Listado de instituciones según su cumplimiento de atención de solicitudes de acceso a la información pública
             </h4>
-            
+
             <Table<Top20>
 
               columns={[

@@ -80,7 +80,7 @@ const SolicityCreatePresenter = (props: Props) => {
       <section className='mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center'>
         <form
           onSubmit={props.handleSubmit}
-          className='mx-auto w-full max-w-2xl items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
+          className='mx-auto w-full items-center rounded-lg border border-gray-100 px-6 py-10 text-center shadow-md'>
           <section className='grid grid-cols-1 items-start justify-center gap-4 text-start'>
             <h2 className='mx-auto w-full text-balance text-lg font-semibold text-gray-900'>
               Datos de la Entidad
@@ -110,20 +110,20 @@ const SolicityCreatePresenter = (props: Props) => {
                 onSearch={() => { }}
               />
             </div>
-            {/* <div>
+            <div>
               <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Ruc
+                Ciudad
               </label>
               <input
                 className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                type='text'
-                placeholder='Aqui va el RUC de la entidad seleccionada'
+                placeholder='Ciudad'
+                type="text"
+                name="city"
                 onChange={props.onChange}
-                name="identification"
-                value={props.entitySelected.identification}
 
-              /> 
-            </div>*/}
+                value={props.data.city}
+              />
+            </div>
           </section>
 
 
@@ -168,154 +168,8 @@ const SolicityCreatePresenter = (props: Props) => {
 
             </ul>
 
-            {/* <div>
-              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Fecha
-              </label>
-              <input
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                type='datetime-local'
-                onChange={(e) => props.onChange(e)}
-                value={formatDate(new Date())}
-                name="date"
-                disabled={props.disabledDate}
-              />
-            </div> */}
-
-            {/* <div>
-              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Nombre
-              </label>
-              <input
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                type='text'
-                placeholder='Ingresa el nombre de la persona solicitante'
-                name="first_name"
-                value={props.data.first_name}
-                onChange={props.onChange}
-                disabled={props.disabledDate}
-              />
-            </div> */}
 
 
-            {/* <div>
-              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Apellido
-              </label>
-              <input
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                type='text'
-                placeholder='Ingresa el apellido de la persona solicitante'
-                name="last_name"
-                onChange={props.onChange}
-                disabled={props.disabledDate}
-
-                value={props.data.last_name}
-              />
-            </div> */}
-
-
-            {/* <div>
-              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Correo Electrónico
-              </label>
-              <input
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                placeholder='Correo electrónico del solicitante'
-                type="email"
-                name="email"
-                onChange={props.onChange}
-                disabled={props.disabledDate}
-
-                value={props.data.email}
-              /> 
-            </div>*/}
-            <div>
-              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Ciudad
-              </label>
-              <input
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                placeholder='Ciudad'
-                type="text"
-                name="city"
-                onChange={props.onChange}
-
-                value={props.data.city}
-              />
-            </div>
-
-            {/* <div>
-              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Teléfono
-              </label>
-              <input
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                type='text'
-                placeholder='Teléfono del solicitante'
-                onChange={props.onChange}
-                name="phone"
-                value={props.data.phone}
-                disabled={props.disabledDate}
-              />
-            </div> */}
-
-
-            {/* <div>
-              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Género
-              </label>
-              <select
-                disabled
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                onChange={(value) => {
-                  props.onChangeSelect({
-                    color: '',
-                    label: value.target.value,
-                    value: value.target.value
-                  }, 'gender')
-                }}
-              >
-                <option value="">Seleccione una opción</option>
-
-                {
-                  props.genders.map(e => {
-
-                    return <option value={e.value} selected={props.data.gender == e.value}>{e.label}</option>
-
-                  })
-                }
-
-              </select>
-
-            </div> */}
-
-
-            {/* <div>
-              <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Identificación Cultural
-              </label>
-              <select
-              disabled
-                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                onChange={(value) => {
-                  props.onChangeSelect({
-                    color: '',
-                    label: value.target.value,
-                    value: value.target.value
-                  }, 'race_identification')
-                }}
-              >
-                <option value="">Seleccione una opción</option>
-                {
-                  props.race_indentification.map(e => {
-
-                    return <option value={e.value} selected={props.data.race_identification == e.value}>{e.label}</option>
-
-                  })
-                }
-              </select>
-            </div> */}
 
 
             <div>
@@ -333,6 +187,9 @@ const SolicityCreatePresenter = (props: Props) => {
                 onChange={props.onChange}
                 value={props.data.text}
               ></textarea>
+              <span className="text-xs">
+                {props.data.text.length}/3000
+              </span>
             </div>
 
 
