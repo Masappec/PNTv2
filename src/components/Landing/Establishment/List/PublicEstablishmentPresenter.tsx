@@ -1,3 +1,4 @@
+import { FaFileCsv, FaFileExcel, FaFilePdf } from "react-icons/fa";
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface";
 import Select from "../../../Common/Select";
@@ -17,6 +18,9 @@ interface Props {
     options: OptionsSelectCreate;
     onSelectType: (type: string) => void;
     selectedType: string;
+    onDownloadExcel: () => void;
+    onDownloadPdf: () => void;
+    onDownloadCsv: () => void;
 }
 
 const PublicEstablishmentPresenter = (props: Props) => {
@@ -98,6 +102,33 @@ const PublicEstablishmentPresenter = (props: Props) => {
                         selected={{ value: props.selectedType }}
 
                     />
+                </div>
+                <div className='max-w-sm flex flex-row gap-4'>
+                   <button
+                        onClick={props.onDownloadExcel}
+                   className='flex items-center justify-center w-full h-10 bg-white
+                   border-primary border-2
+                   text-white rounded-lg'>
+                    <FaFileExcel className='text-2xl text-primary' />
+                   </button>
+                   
+                   <button
+                        onClick={props.onDownloadPdf}
+                     className='flex items-center justify-center w-full h-10 bg-white   
+                        border-primary border-2
+                        text-white rounded-lg'>
+
+                    <FaFilePdf className='text-2xl text-primary' />
+                   </button>
+                   
+                   <button 
+                        onClick={props.onDownloadCsv}
+                   className='flex items-center justify-center w-full h-10 bg-white
+                     border-primary border-2
+                        text-white rounded-lg'>
+                    <FaFileCsv className='text-2xl text-primary' />
+                   </button>
+
                 </div>
             </section>
             <section className='mt-8 grid gap-4 sm:grid-cols-1 lg:grid-cols-1'>

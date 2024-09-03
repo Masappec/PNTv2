@@ -48,7 +48,7 @@ const SolicityListContainer = (props: Props) => {
         const date_start = new Date(startDate)
         const date_end = new Date(endDate)
         if (date_start > date_end) {
-            SetError("La fecha de inicio no puede ser mayor a la fecha de fin")
+            SetError("“Recuerda, la fecha Desde no puede ser posterior a la fecha Hasta. Favor reintenta.")
             return
         }
         props.useCase.getSolicities(search, currentPage, limit, columnsSort, startDate, endDate).then(response => {
