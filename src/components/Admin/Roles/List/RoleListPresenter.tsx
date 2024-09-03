@@ -29,7 +29,7 @@ interface Props {
 }
 const RoleListPresenter = (props: Props) => {
 
-    return(
+    return (
         <>
             <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
                 {"Gestión de Roles"}
@@ -108,7 +108,7 @@ const RoleListPresenter = (props: Props) => {
                         <span>Nuevo rol</span>
                     </div>
                 </button>
-                
+
             </section>
             <section className='h-min rounded-md bg-gray-100'>
                 <Table
@@ -117,7 +117,7 @@ const RoleListPresenter = (props: Props) => {
                         {
                             title: "Nombre",
                             render: (row: RoleEntity) => (
-                                <p>{row.name}</p>
+                                <p className="text-left">{row.name}</p>
                             )
                         },
                         {
@@ -125,27 +125,27 @@ const RoleListPresenter = (props: Props) => {
                             classes: 'flex w-full items-center justify-center gap-2',
                             render: (row: RoleEntity) => (
                                 <>
-                                <button 
-                                onClick={() => {
-                                    props.onEdit(row)
-                                }}
-                                className='flex w-full max-w-24 items-center gap-2 rounded-md border border-primary px-2 py-1 text-xs font-medium text-primary hover:bg-primary hover:text-white'>
-                                    <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        height='20px'
-                                        viewBox='0 -960 960 960'
-                                        width='20px'
-                                        fill='currentColor'>
-                                        <path d='M216-216h51l375-375-51-51-375 375v51Zm-72 72v-153l498-498q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L297-144H144Zm600-549-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z' />
-                                    </svg>
-                                    <span>Editar</span>
-                                </button>
+                                    <button
+                                        onClick={() => {
+                                            props.onEdit(row)
+                                        }}
+                                        className='flex w-full max-w-24 items-center gap-2 rounded-md border border-primary px-2 py-1 text-xs font-medium text-primary hover:bg-primary hover:text-white'>
+                                        <svg
+                                            xmlns='http://www.w3.org/2000/svg'
+                                            height='20px'
+                                            viewBox='0 -960 960 960'
+                                            width='20px'
+                                            fill='currentColor'>
+                                            <path d='M216-216h51l375-375-51-51-375 375v51Zm-72 72v-153l498-498q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L297-144H144Zm600-549-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z' />
+                                        </svg>
+                                        <span>Editar</span>
+                                    </button>
 
-                                    <button 
-                                    onClick={() => {
-                                        props.onDelete(row)
-                                    }}
-                                    className='flex w-full max-w-24 items-center gap-2 rounded-md border border-custom-red px-2 py-1 text-xs font-medium text-custom-red hover:bg-custom-red hover:text-white'>
+                                    <button
+                                        onClick={() => {
+                                            props.onDelete(row)
+                                        }}
+                                        className='flex w-full max-w-24 items-center gap-2 rounded-md border border-custom-red px-2 py-1 text-xs font-medium text-custom-red hover:bg-custom-red hover:text-white'>
                                         <svg
                                             xmlns='http://www.w3.org/2000/svg'
                                             height='20px'

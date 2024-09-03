@@ -127,14 +127,14 @@ export const UserListPresenter = (props: Props) => {
         </button>
       </section>
 
-      <Modal isvisible={props.visibleModal} onClose={() => {}}>
+      <Modal isvisible={props.visibleModal} onClose={() => { }}>
         {props.error && (
-          <Alert type="error" message={props.error} onClose={() => {}} />
+          <Alert type="error" message={props.error} onClose={() => { }} />
         )}
 
         <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
         <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-          {`¿Desea ${props.selectedUser?.is_active?"inactivar":"activar"} este usuario "${props.selectedUser?.email}" ?`}
+          {`¿Desea ${props.selectedUser?.is_active ? "inactivar" : "activar"} este usuario "${props.selectedUser?.email}" ?`}
         </h3>
         <div className="flex justify-center gap-4">
           <button
@@ -158,23 +158,25 @@ export const UserListPresenter = (props: Props) => {
           columns={[
             {
               render: (row: UserEntity) => (
-                <p>{row.first_name + " " + row.last_name}</p>
+                <p
+                  className="text-left"
+                >{row.first_name + " " + row.last_name}</p>
               ),
               title: "Nombre",
             },
             {
-              render: (row: UserEntity) => <p>{row.email}</p>,
+              render: (row: UserEntity) => <p className="text-left">{row.email}</p>,
               title: "Correo",
             },
             {
               render: (row: UserEntity) =>
                 row.group?.map((group) => (
-                  <p className="text-primary">{group.name}</p>
+                  <p className="text-primary text-left">{group.name}</p>
                 )),
               title: "Rol",
             },
             {
-              render: (row: UserEntity) => <p>{row.username}</p>,
+              render: (row: UserEntity) => <p className="text-left">{row.username}</p>,
               title: "Usuario",
             },
             {
@@ -223,7 +225,7 @@ export const UserListPresenter = (props: Props) => {
           }
           length={props.users.length}
           onAdd={props.onAdd}
-          onFilter={() => {}}
+          onFilter={() => { }}
           isImport={false}
           onImport={props.onImport}
           textAdd="Agregar usuario"

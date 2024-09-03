@@ -56,6 +56,15 @@ export interface MenuItem {
 
 const menu = [
   {
+    name: "Inicio",
+    path: "/admin/reports",
+    visible: true,
+    icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
+    permission_required: "view_solicityresponse",
+    element: <Reports />,
+    visible_for_superadmin: false
+  },
+  {
     name: "Indicadores",
     path: "/admin",
     visible: true,
@@ -423,15 +432,7 @@ const menu = [
     permission_required: "view_solicityresponse,view_solicity,view_all_solicities",
     element: <SolicityDetail />,
   },
-  {
-    name: "Reportes",
-    path: "/admin/reports",
-    visible: true,
-    icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
-    permission_required: "view_solicityresponse",
-    element: <Reports />,
-    visible_for_superadmin: false
-  },
+
   {
     name: 'Publicaciones T. Activa',
     path: '/admin/publicaciones',

@@ -1,4 +1,4 @@
-import {  Tabs, TabsRef } from "flowbite-react";
+import { Tabs, TabsRef } from "flowbite-react";
 import Spinner from "../../../Common/Spinner";
 import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
 import { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
@@ -66,15 +66,13 @@ const ActiveCreatePresenter = (props: Props) => {
       </h2>
       <section className='mb-8 flex flex-col items-center justify-center gap-8'>
         <h1 className='w-full text-left text-lg font-semibold text-gray-900'>
+
           {props.title}
         </h1>
 
         <section className='w-full'>
           <p className='max-w-max items-center text-sm text-primary'>
-            Para actualizar la información de Transparencia Activa, primero seleccione la forma de
-            publicación de los archivos haciendo clic en una de las pestañas para crear o cargar el
-            conjunto de datos, metadatos y diccionario. Luego, confirme el contenido en la
-            previsualización y presione el botón Guardar. Si no lo hace, los archivos no se almacenarán.
+            Para realizar la carga de los archivos de Transparencia Activa que corresponden a este numeral, primero selecciona la forma de carga que vas a utilizar seleccionando la pestaña que corresponda (Subir archivos, Agregar enlaces, Crear archivos, Reutilizar archivos del mes anterior, Descargar plantillas). Asegúrate que los archivos cumplen con las columnas que requiere este numeral, confirma su contenido en la previsualización y presiona el botón “Guardar”. Recuerda que si no presionas “Guardar” los archivos no se cargarán al portal.
           </p>
           {
             props.error && (
@@ -175,7 +173,7 @@ const ActiveCreatePresenter = (props: Props) => {
                 </section>
 
               </Tabs.Item>
-              <Tabs.Item title="Agregar enlances"
+              <Tabs.Item title="Agregar enlaces"
 
               >
                 <div className='mb-8 ' id='dashboard' role='tabpanel' aria-labelledby='dashboard-tab'>
@@ -302,7 +300,7 @@ const ActiveCreatePresenter = (props: Props) => {
             <div className='flex items-center gap-4'>
               <button
                 type='button'
-                onClick={()=>props.onCancel()}
+                onClick={() => props.onCancel()}
                 className='inline-flex w-max items-center gap-2 rounded-md bg-gray-300 px-5 py-2.5 text-center text-sm font-medium text-gray-600 hover:opacity-80'>
                 <div className='inline-flex items-center gap-2'>
                   <svg
@@ -319,33 +317,33 @@ const ActiveCreatePresenter = (props: Props) => {
                 </div>
               </button>
               {
-                props.loading ? 
-                  <Spinner />:
-              <button
-                type='button'
-                onClick={() => props.handleSubmit()}
-                className='inline-flex w-max items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  height='24px'
-                  viewBox='0 -960 960 960'
-                  width='24px'
-                  fill='currentColor'
-                ><path
-                  d='M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM480-240q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z'
-                ></path>
-                </svg>
-                <span>Guardar</span>
-              </button>
+                props.loading ?
+                  <Spinner /> :
+                  <button
+                    type='button'
+                    onClick={() => props.handleSubmit()}
+                    className='inline-flex w-max items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      height='24px'
+                      viewBox='0 -960 960 960'
+                      width='24px'
+                      fill='currentColor'
+                    ><path
+                      d='M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM480-240q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z'
+                    ></path>
+                    </svg>
+                    <span>Guardar</span>
+                  </button>
               }
-              
+
             </div>
           </div>
         </section>
       </section>
     </>
   )
-  
+
 };
 
 export default ActiveCreatePresenter;
