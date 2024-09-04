@@ -263,7 +263,13 @@ const SolicityEditContainer = (props: Props) => {
 
 
 
-
+    const onDelete = () => {
+        props.usecase.deleteSolicity(parseInt(id || "0")).then(() => {
+            navigate('/admin/solicity')
+        }).catch((e) => {
+            setError(e.message)
+        })
+    }
     const onCancel = () => {
         navigate('/admin/solicity')
     }
@@ -288,6 +294,7 @@ const SolicityEditContainer = (props: Props) => {
                 onCancel={onCancel}
                 onChange={handleChange}
                 key={0}
+                onDelete={onDelete}
                 loadOptions={loadOptions}
                 error={error}
                 setError={setError}

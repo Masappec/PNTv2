@@ -11,6 +11,11 @@ import logo from '../../../assets/Home/logo-dpe 2.png';
 
 class SolicityUseCase {
   constructor(private readonly solicityService: SolicityService) { }
+
+
+  async deleteSolicity(id: number) {
+    return await this.solicityService.deleteSolicity(id);
+  }
   async getSolicities(search: string, page: number, limit?: number, sort?: string[],
     range_start?: string, range_end?: string) {
     return await this.solicityService.getSolicities(search, page, limit, sort, range_start, range_end);

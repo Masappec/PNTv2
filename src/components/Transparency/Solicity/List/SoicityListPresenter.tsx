@@ -49,7 +49,7 @@ const SolicityListPresenter = (props: Props) => {
         <div className="">
             <h3 className="text-sm text-primary">
                 ¡Hola!
-               {" "}{SessionService.getPersonData().first_name}{" "}
+                {" "}{SessionService.getPersonData().first_name}{" "}
                 Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta sección podrás consultar todas las  Solicitudes de Acceso a la Información Pública (SAIP) que envíes a las instituciones que requieras. Para crear una nueva SAIP, selecciona <span className="font-bold">“Crear solicitud”</span> y sigue los pasos indicados.
             </h3>
             <h2 className='mt-6 mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
@@ -64,13 +64,14 @@ const SolicityListPresenter = (props: Props) => {
                 /> : null
             }
             <section className='mb-8 flex  items-end 
-            justify-between gap-4 flex-row md:items-center'>
-                <div className="flex flex-col md:flex-row gap-6 w-auto">
-                    <div>
+            w-full
+                    justify-between gap-4 flex-row md:items-center'>
+                <div className="flex flex-col md:flex-row gap-6  w-fit">
+                    <div className="flex flex-col gap-2 mt-4">
 
 
                         <label className='text-gray-500 text-sm'>Buscar solicitud enviada:</label>
-                        <div className='group relative w-full max-w-xs mt-1'>
+                        <div className='group relative sm:w-96 max-w-xs mt-1'>
 
                             <svg
                                 className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
@@ -86,7 +87,7 @@ const SolicityListPresenter = (props: Props) => {
                             ></path>
                             </svg>
                             <input
-                                className='block w-96 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-xs text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-xs text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
                                 type='text'
                                 placeholder='Ingresa el número de la SAIP o el nombre de la institución'
 
@@ -96,12 +97,13 @@ const SolicityListPresenter = (props: Props) => {
 
                         </div>
                     </div>
-                        <div className="flex flex-col gap-2">
-                            <p className="text-gray-500 text-sm">
-                                Si requieres consultar en un rango de fechas
-                                escógelas a continuación
-                            </p>
-                            <div className='flex flex-col gap-2 md:ml-12 '>
+                    <div className="flex flex-col">
+                        <p className="text-gray-500 text-xs text-wrap -mt-4 w-10/12">
+                            Si requieres consultar en un rango de fechas
+                            escógelas a continuación
+                        </p>
+                        <div className="flex flex-row gap-4">
+                            <div className='flex flex-col gap-2'>
                                 <label className='text-gray-500 text-sm'>
                                     Desde
                                 </label>
@@ -123,9 +125,21 @@ const SolicityListPresenter = (props: Props) => {
                                     onChange={(e) => props.onChangeEnd(e.target.value)}
                                 />
                             </div>
-                        
+                            <div className="flex flex-col gap-2 mt-7">
+                                <button
+                                    className="inline-flex items-center rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                                    onClick={props.onFilter}
+                                >
+                                    Buscar
+                                </button>
+
+                            </div>
+                        </div>
+
+
                     </div>
-                    <div className="flex flex-col gap-2">
+                   
+                    <div className="flex flex-col gap-2 mt-4">
                         <label className='text-gray-500 text-sm'>
                             limite
                         </label>
