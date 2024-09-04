@@ -127,19 +127,19 @@ const EstablishmentListPresenter = (props: Props) => {
                         {
                             title: "Nombre",
                             render: (row: EstablishmentEntity) => (
-                                <p>{row.name}</p>
+                                <p className="text-left text-wrap">{row.name}</p>
                             )
                         },
                         {
                             title: "Abreviatura",
                             render: (row: EstablishmentEntity) => (
-                                <p>{row.abbreviation}</p>
+                                <p className="text-left">{row.abbreviation}</p>
                             )
                         },
                         {
                             title: "Maxima autoridad",
                             render: (row: EstablishmentEntity) => (
-                                <p>{row.highest_authority + " " + row.first_name_authority + " " + row.last_name_authority}</p>
+                                <p className="text-left" >{row.highest_authority + " " + row.first_name_authority + " " + row.last_name_authority}</p>
                             )
                         },
                         {

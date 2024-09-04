@@ -5,6 +5,7 @@ import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
 import Alert from "../../../Common/Alert"
 import { elapsedTime, formatDate2 } from "../../../../utils/functions"
+import SessionService from "../../../../infrastructure/Services/SessionService"
 
 
 
@@ -46,8 +47,9 @@ interface Props {
 const SolicityListPresenter = (props: Props) => {
     return (
         <div className="">
-            <h3 className="text-xs text-primary">¡Hola!
-
+            <h3 className="text-sm text-primary">
+                ¡Hola!
+               {" "}{SessionService.getPersonData().first_name}{" "}
                 Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta sección podrás consultar todas las  Solicitudes de Acceso a la Información Pública (SAIP) que envíes a las instituciones que requieras. Para crear una nueva SAIP, selecciona <span className="font-bold">“Crear solicitud”</span> y sigue los pasos indicados.
             </h3>
             <h2 className='mt-6 mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
@@ -61,9 +63,9 @@ const SolicityListPresenter = (props: Props) => {
                     onClose={() => { props.setError("") }}
                 /> : null
             }
-            <section className='mb-8 flex flex-col items-end 
-            justify-between gap-4 sm:flex-row sm:items-center'>
-                <div className="flex flex-row gap-6 w-auto">
+            <section className='mb-8 flex  items-end 
+            justify-between gap-4 flex-row md:items-center'>
+                <div className="flex flex-col md:flex-row gap-6 w-auto">
                     <div>
 
 
@@ -94,31 +96,34 @@ const SolicityListPresenter = (props: Props) => {
 
                         </div>
                     </div>
-                    <div className='flex flex-row gap-2'>
-
-                        <div className='flex flex-col gap-2 ml-12 '>
-                            <label className='text-gray-500 text-sm'>
-                                Desde
-                            </label>
-                            <input
-                                type="date"
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                                placeholder="Desde"
-                                onChange={(e) => props.onChangeStart(e.target.value)}
-                            />
-
-                        </div>
-                        <div className='flex flex-col gap-2'>
-                            <label className='text-gray-500 text-sm'>
-                                Hasta
-                            </label>
-                            <input
-                                type="date"
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                                placeholder="Hasta"
-                                onChange={(e) => props.onChangeEnd(e.target.value)}
-                            />
-                        </div>
+                        <div className="flex flex-col gap-2">
+                            <p className="text-gray-500 text-sm">
+                                Si requieres consultar en un rango de fechas
+                                escógelas a continuación
+                            </p>
+                            <div className='flex flex-col gap-2 md:ml-12 '>
+                                <label className='text-gray-500 text-sm'>
+                                    Desde
+                                </label>
+                                <input
+                                    type="date"
+                                    className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                    placeholder="Desde"
+                                    onChange={(e) => props.onChangeStart(e.target.value)}
+                                />
+                            </div>
+                            <div className='flex flex-col gap-2'>
+                                <label className='text-gray-500 text-sm'>
+                                    Hasta
+                                </label>
+                                <input
+                                    type="date"
+                                    className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                    placeholder="Hasta"
+                                    onChange={(e) => props.onChangeEnd(e.target.value)}
+                                />
+                            </div>
+                        
                     </div>
                     <div className="flex flex-col gap-2">
                         <label className='text-gray-500 text-sm'>
