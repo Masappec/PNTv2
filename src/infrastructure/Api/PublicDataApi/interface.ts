@@ -15,8 +15,8 @@ export interface Metadata {
     user_upload: string;
     date_upload: string;
     path: string;
-    establishment_name:string;
-    numeral_description:string;
+    establishment_name: string;
+    numeral_description: string;
 }
 
 export interface ResponsePublicApi {
@@ -32,7 +32,7 @@ export interface RequestPublicApi {
     month: string;
     search: string;
     fields: string[];
-    establishment: string; 
+    establishment: string;
 }
 
 export interface PublicDataApiResponse {
@@ -112,87 +112,90 @@ export interface PersonalRemunerations {
     remuneracion: string;
     grado: string;
     nombre: string;
-    regimen:string;
+    regimen: string;
+    institucion: string;
+    mes: number;
+    anio: number
 }
 
 
 
-export interface RequestPresupuestoApi{
-    
-    ruc:string;
-    year:number;
-    month:number;
+export interface RequestPresupuestoApi {
+
+    ruc: string;
+    year: number;
+    month: number;
 }
 
-export interface ResponsePresupuestos{
+export interface ResponsePresupuestos {
 
-    id:number;
+    id: number;
     files: {
-      id:number;
-      name:string;
-      description:string;
-      url_download:string;
+        id: number;
+        name: string;
+        description: string;
+        url_download: string;
 
     }[];
-    establishment_name:string;
-    slug:string;
-    month:number;
-    year:number;
-    status:string;
-    published:boolean;
-    published_at:string;
-    max_date_to_publish:string;
-    establishment:number;
-    numeral:number;
+    establishment_name: string;
+    slug: string;
+    month: number;
+    year: number;
+    status: string;
+    published: boolean;
+    published_at: string;
+    max_date_to_publish: string;
+    establishment: number;
+    numeral: number;
 }
 
-export interface AudienceRequest{
-    names:string;
-    month:number;
-    year:number;
+export interface AudienceRequest {
+    names: string;
+    month: number;
+    year: number;
 }
-export interface AudienceResponse{
-   institucion:string;
-    nombre:string;
-    puesto:string;
-    asunto:string;
-    fecha:string;
-    modalidad:string;
-    lugar:string;
-    descripcion:string;
-    duracion:string;
-    externa:string;
-    institucion_ext:string;
-    enlace:string;
-}
-
-
-export interface FormulariosRequest{
-    ruc:string;
+export interface AudienceResponse {
+    institucion: string;
+    nombre: string;
+    puesto: string;
+    asunto: string;
+    fecha: string;
+    modalidad: string;
+    lugar: string;
+    descripcion: string;
+    duracion: string;
+    externa: string;
+    institucion_ext: string;
+    enlace: string;
 }
 
-export interface FormulariosResponse{
-    institucion:string;
-    denominacion:string;
-    enlace:string;
-    numero_personas:string;
-    enlace_descarga_formulario:string;
-    enlace_servicio:string;
-    anio:string;
-    mes:string;
+
+export interface FormulariosRequest {
+    ruc: string;
 }
 
-export interface IndicatorRequest{
-    year:number;
-    establishment_id:number;
+export interface FormulariosResponse {
+    institucion: string;
+    denominacion: string;
+    enlace: string;
+    numero_personas: string;
+    enlace_descarga_formulario: string;
+    enlace_servicio: string;
+    anio: string;
+    mes: string;
 }
-    
+
+export interface IndicatorRequest {
+    year: number;
+    establishment_id: number;
+}
+
 export interface IndicatorResponse {
-    recibidas:number[];
-    atendidas:number[];
-    total_recibidas:number;
-    total_atendidas:number;
-    score_activa:number;
-    score_saip:number;
-    total_score:number;
+    recibidas: number[];
+    atendidas: number[];
+    total_recibidas: number;
+    total_atendidas: number;
+    score_activa: number;
+    score_saip: number;
+    total_score: number;
 }

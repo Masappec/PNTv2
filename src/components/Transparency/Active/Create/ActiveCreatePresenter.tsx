@@ -139,12 +139,13 @@ const ActiveCreatePresenter = (props: Props) => {
               ref={props.tabRef} style="underline"
               theme={themeTabs}
             >
-              <Tabs.Item title="Subir Archivos"
+              <Tabs.Item title="Subir archivos"
 
               >
                 <section className='flex flex-col gap-4'>
-                  <p className='max-w-3xl items-center text-sm text-primary'>
-                    Utilice esta opción si tiene los archivos creados en formato CSV.
+                  <p className='max-w-3xl items-center text-md text-primary'>
+                    Utiliza esta forma de publicación si ya cuentas con el archivo creado y almacenado en tu computadora, en formato CSV con las columnas esperadas para este numeral.
+
                   </p>
                   {
                     props.templates.map((template, index) => {
@@ -178,9 +179,8 @@ const ActiveCreatePresenter = (props: Props) => {
               >
                 <div className='mb-8 ' id='dashboard' role='tabpanel' aria-labelledby='dashboard-tab'>
                   <section className='flex flex-col gap-4'>
-                    <p className='max-w-3xl items-center text-sm text-primary'>
-                      Utilice esta opción si tiene los archivos publicados en un repositorio digital o en un
-                      sitio web institucional.
+                    <p className='max-w-3xl items-center text-md text-primary'>
+                      Utiliza esta forma de publicación si ya cuentas con los archivos creados, pero almacenados en un repositorio institucional o en la nube, en formato CSV con las columnas esperadas para este numeral. Recuerda que la dirección que ingreses debe ser la dirección directa del archivo y no de una página intermedia.
                     </p>
 
                     {
@@ -216,7 +216,11 @@ const ActiveCreatePresenter = (props: Props) => {
                 </div>
 
               </Tabs.Item>
-              <Tabs.Item title="Crear documentos">
+              <Tabs.Item title="Crear archivos">
+                <p className='max-w-3xl items-center text-md text-primary'>
+                  Utiliza esta forma de publicación si no cuentas con los archivos creados, y deseas crearlos directamente aquí en el portal.
+
+                </p>
                 {
                   props.templates.map((file, index) => {
 
@@ -242,11 +246,10 @@ const ActiveCreatePresenter = (props: Props) => {
                   })
                 }
               </Tabs.Item>
-              <Tabs.Item title="Usar archivos Anteriores">
+              <Tabs.Item title="Reutilizar archivos del mes anterior">
                 <section className='flex flex-col gap-4'>
-                  <p className='max-w-2xl items-center text-sm text-primary'>
-                    Utilice esta opción si desea reutilizar archivos cargados en el último mes para crear el
-                    archivo del mes actual.
+                  <p className='max-w-2xl items-center text-md text-primary'>
+                    Utiliza esta opción si no cuentas con los archivos creados, y deseas ahorrar tiempo reutilizando los del mes anterior, para editarlos y solo cambiar lo que sea necesario. Recuerda que solo puedes reutilizar archivos del mes inmediato anterior para publicarlos en el mes actual.
                   </p>
 
                 </section>
@@ -260,10 +263,10 @@ const ActiveCreatePresenter = (props: Props) => {
 
                 />
               </Tabs.Item>
-              <Tabs.Item title="Descargar Plantilla">
-                <p className='max-w-3xl items-center text-sm text-primary'>
-                  Si no tiene los formatos para los archivos, puede descargarlos desde esta opción. Se
-                  proporcionarán plantillas vacías para que pueda crear y subir los archivos necesarios.
+              <Tabs.Item title="Descargar plantillas">
+                <p className='max-w-3xl items-center text-md text-primary'>
+                  Si no cuentas con los formatos que se deben utilizar para este numeral, puedes descargar las plantillas en esta opción. Una vez descargadas, podrás editarlas en tu computadora para completar la información requerida y proceder luego a cargarlos al portal.
+
                 </p>
                 <section className='mt-4 grid max-w-xs grid-cols-1 gap-4'>
                   {
@@ -294,8 +297,8 @@ const ActiveCreatePresenter = (props: Props) => {
 
           <div
             className='flex w-full flex-col flex-wrap items-end justify-end gap-4 border-t border-gray-300 pt-8'>
-            <p className='max-w-3xl items-center text-sm text-primary'>
-              Recuerde que si no presiona "Guardar", los archivos no se guardarán en el sistema.
+            <p className='max-w-3xl items-center text-md text-primary'>
+              Recuerda, que que si no presionas "Guardar" luego de subir los archivos al portal, estos no se almacenarán en el sistema y no se publicarán.
             </p>
             <div className='flex items-center gap-4'>
               <button

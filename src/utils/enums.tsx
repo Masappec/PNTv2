@@ -67,7 +67,7 @@ export const StatusSolicity = {
         key: 'NO_RESPONSED',
         bg: 'bg-red-500',
         icon: <FaCheck className="text-primary-500 text-center" />,
-        value_2: 'No respondido',
+        value_2: 'No respondida',
         text: 'Se cumplió el plazo que la Institución tenía para responder y no se recibió.'
     },
     INSISTENCY_PERIOD: {
