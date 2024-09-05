@@ -24,6 +24,7 @@ import Solicity from "./interfaces/web/Landing/Thematics/Solicity";
 import Finance from "./interfaces/web/Landing/Thematics/Presupuesto";
 import IndicatorsAdmin from "./interfaces/web/Dashboard/IndicatorsAdmin";
 import { InvalidSession } from "./interfaces/web/Auth/401";
+import Politics from "./interfaces/web/Landing/Politics";
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged();
@@ -136,6 +137,11 @@ const Router = createBrowserRouter(
         {
           path: "/formularios-solicitudes",
           element: <Solicity />,
+        },
+
+        {
+          path: "/politicas-condiciones",
+          element: <Politics />
         },
 
 
