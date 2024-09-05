@@ -102,7 +102,7 @@ const ActiveEditContainer = (props: Props) => {
 
 
     useEffect(() => {
-       
+
     }, [numeral])
 
 
@@ -135,7 +135,7 @@ const ActiveEditContainer = (props: Props) => {
     }
 
 
-    const buildRowFromTemplateAnData = (templates: Template,rows:Row[][]) => {
+    const buildRowFromTemplateAnData = (templates: Template, rows: Row[][]) => {
         console.log(rows)
         let template_mod = templateTable.find((template) => {
             return template.id === templates.id
@@ -153,28 +153,28 @@ const ActiveEditContainer = (props: Props) => {
                     })
                 ] as Row[][]
             }
-        }else{
+        } else {
             template_mod.data = rows
 
         }
 
-        if(
+        if (
             templateTable.filter((template) => {
                 return template.id === templates.id
             }).length === 0
-        ){
-            setTemplateTable([...templateTable,template_mod])
-        }else{
+        ) {
+            setTemplateTable([...templateTable, template_mod])
+        } else {
             setTemplateTable(templateTable.map((template) => {
-                if(template.id === templates.id){
+                if (template.id === templates.id) {
                     return template_mod !== undefined ? template_mod : template
                 }
                 return template
             }))
         }
 
-        
-        
+
+
     }
 
 
@@ -394,7 +394,7 @@ const ActiveEditContainer = (props: Props) => {
         ).then((res) => {
             const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
 
-        
+
 
             setError("")
             newTemplates = {
@@ -557,7 +557,7 @@ const ActiveEditContainer = (props: Props) => {
     const handleSaveDataTable = (data: Row[][], template: TemplateFileEntity) => {
 
 
-        if (data==undefined) {
+        if (data == undefined) {
             return;
         }
         if (data.length === 0) {
@@ -642,7 +642,7 @@ const ActiveEditContainer = (props: Props) => {
         })
         if (!templateDetail) return
 
-        props.templateUseCase.validateLocalFile(file, templateDetail,true).then((res) => {
+        props.templateUseCase.validateLocalFile(file, templateDetail, true).then((res) => {
             if (!res) {
                 setError("El archivo no cumple con el formato")
                 return
@@ -773,7 +773,7 @@ const ActiveEditContainer = (props: Props) => {
             return response.blob();
         }).then((file_) => {
             const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-            props.templateUseCase.validateLocalFile(blob as File, temDetail,true).then((res) => {
+            props.templateUseCase.validateLocalFile(blob as File, temDetail, true).then((res) => {
                 if (!res) {
                     setError("El archivo no cumple con el formato")
                     return
@@ -785,18 +785,18 @@ const ActiveEditContainer = (props: Props) => {
                         is_header: true
                     }
                 })
-                if(temDetail.verticalTemplate){
+                if (temDetail.verticalTemplate) {
                     const rows = res.rows.map((row) => {
-                        return{
+                        return {
                             key: row[0] as string,
                             value: row[0] as string
                         }
                     })
 
-                    buildRowFromTemplateAnData(temDetail, [columns,[...rows]])
+                    buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
                     tabsRef.current?.setActiveTab(2)
                     return
-                }else{
+                } else {
                     const rows = res.rows.map((row) => {
                         return row.map((value, index) => {
                             return {
@@ -805,7 +805,7 @@ const ActiveEditContainer = (props: Props) => {
                             }
                         })
                     })
-                    buildRowFromTemplateAnData(temDetail, [columns,...rows])
+                    buildRowFromTemplateAnData(temDetail, [columns, ...rows])
                     tabsRef.current?.setActiveTab(2)
                 }
             }).catch((e) => {
@@ -842,7 +842,7 @@ const ActiveEditContainer = (props: Props) => {
             })
             .then(blob => {
 
-                
+
 
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -857,9 +857,17 @@ const ActiveEditContainer = (props: Props) => {
             .catch(error => console.error('Ocurrió un error al descargar el archivo:', error));
     }
 
+    const formatNumeral = () => {
+        const format = numeral?.description
+            .replace(new RegExp("_"), " ")
+            .replace(new RegExp("-"), " ")
+
+
+        return numeral?.name + " " + format
+    }
     return (
         <ActiveCreatePresenter
-            title={numeral?.description || ""}
+            title={formatNumeral()}
             error={error || ""}
             handleSubmit={uploadFile}
             loading={loading}

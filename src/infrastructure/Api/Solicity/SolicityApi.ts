@@ -236,6 +236,23 @@ class SolicityApi {
       }
     }
   }
+
+  async deleteSolicity(id: number) {
+
+    //solicity/draft/delete/
+
+    try {
+      const response = await this.api.delete(TRANSPARENCY_PATH + `/solicity/draft/delete/${id}`);
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const e: string = error.response?.data?.message || "Error al eliminar la solicitud.";
+        throw new Error(e);
+      } else {
+        throw new Error("Error al eliminar la solicitud.");
+      }
+    }
+  }
 }
 
 export default SolicityApi;

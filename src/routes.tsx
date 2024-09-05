@@ -1,4 +1,4 @@
-import { createBrowserRouter,  redirect } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import SessionService from "./infrastructure/Services/SessionService";
 import Login from "./interfaces/web/Auth/Login";
 import Admin from "./interfaces/web/Admin";
@@ -23,6 +23,7 @@ import Audience from "./interfaces/web/Landing/Thematics/Audience";
 import Solicity from "./interfaces/web/Landing/Thematics/Solicity";
 import Finance from "./interfaces/web/Landing/Thematics/Presupuesto";
 import IndicatorsAdmin from "./interfaces/web/Dashboard/IndicatorsAdmin";
+import { InvalidSession } from "./interfaces/web/Auth/401";
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged();
@@ -83,6 +84,10 @@ const Router = createBrowserRouter(
           element: <Home />,
         },
         {
+          path: '/401',
+          element: <InvalidSession />
+        },
+        {
           path: "/normativa",
           element: <Normative />,
         },
@@ -114,10 +119,10 @@ const Router = createBrowserRouter(
           path: "/publicaciones/:slug",
           element: <PublicationDetail />,
         },
-        
+
         {
           path: "/presupuesto",
-          element: <Finance/>,
+          element: <Finance />,
         },
 
         {
@@ -130,7 +135,7 @@ const Router = createBrowserRouter(
         },
         {
           path: "/formularios-solicitudes",
-          element: <Solicity/>,
+          element: <Solicity />,
         },
 
 

@@ -13,17 +13,18 @@
     "type_field": "text"
   },*/
 
-  export interface FormFieldsList {
-    id: number;
-    created_at: string;
-    updated_at: string;
-    deleted: boolean;
-    deleted_at: string;
-    name: string;
-    description: string;
-    form_type: string;
-    model: string;
-    is_active: boolean;
-    role: string;
-    type_field: string;
-  }
+export interface FormFieldsList {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  deleted: boolean;
+  deleted_at: string;
+  name: string;
+  description: string;
+  form_type: string;
+  model: string;
+  is_active: boolean;
+  role: string;
+  type_field: string;
+  helptext: string;
+}

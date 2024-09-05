@@ -180,7 +180,7 @@ const ActiveCreateContainer = (props: IProps) => {
         }))
         setError("")
 
-        
+
 
 
         newTemplates = {
@@ -257,8 +257,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const handleChanngeFile = (e: React.ChangeEvent<HTMLInputElement>, templateFile: TemplateFileEntity) => {
 
-    if(e.target.files?.length === 0) return
-    
+    if (e.target.files?.length === 0) return
+
 
     let newTemplates = templates.find((template) => {
       return template.id === templateFile.id
@@ -327,8 +327,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
 
     }).catch((e) => {
- 
-      
+
+
 
       setError(e.message)
       sleep(2000).then(() => {
@@ -392,7 +392,7 @@ const ActiveCreateContainer = (props: IProps) => {
       setLoading(false)
       setSuccess("Se ha subido correctamente la publicación")
       setTimeout(() => {
-        
+
         navigate("/admin/transparency/active")
       }, 2000)
     }).catch((e) => {
@@ -513,7 +513,7 @@ const ActiveCreateContainer = (props: IProps) => {
     })
     if (!templateDetail) return
 
-    props.templateUseCase.validateLocalFile(file, templateDetail,true).then((res) => {
+    props.templateUseCase.validateLocalFile(file, templateDetail, true).then((res) => {
       if (!res) {
         setError("El archivo no cumple con el formato")
         return
@@ -635,11 +635,11 @@ const ActiveCreateContainer = (props: IProps) => {
     } else {
       setTemplateTable(
         templateTable.map((template) => {
-        if (template.id === templates.id) {
-          return template_mod!==undefined? template_mod : template
-        }
-        return template
-      }))
+          if (template.id === templates.id) {
+            return template_mod !== undefined ? template_mod : template
+          }
+          return template
+        }))
     }
 
 
@@ -647,86 +647,86 @@ const ActiveCreateContainer = (props: IProps) => {
   }
 
 
-    const addFileFromList = (file: FilePublicationEntity) => {
+  const addFileFromList = (file: FilePublicationEntity) => {
 
-      const files = filesPublication.find((file_) => {
-        return file_.description.trim() === file.description.trim()
-      })
+    const files = filesPublication.find((file_) => {
+      return file_.description.trim() === file.description.trim()
+    })
 
-      const template = templates.find((template) => {
-        return template.name.trim() === file.description.trim()
-      })
-      if (!template) {
-        setError("No se ha encontrado el template")
-        return;
-      }
-      const temDetail = detail?.templates.find((template_) => {
-        return template_.id === template.id
-      })
-      if (!temDetail) {
-        setError("No se ha encontrado el template")
-        return;
-      }
+    const template = templates.find((template) => {
+      return template.name.trim() === file.description.trim()
+    })
+    if (!template) {
+      setError("No se ha encontrado el template")
+      return;
+    }
+    const temDetail = detail?.templates.find((template_) => {
+      return template_.id === template.id
+    })
+    if (!temDetail) {
+      setError("No se ha encontrado el template")
+      return;
+    }
 
-      if (files) {
-        setError("Ya existe un archivo de " + file.description)
-        sleep(2000).then(() => {
-          setError("")
-        })
-        return
+    if (files) {
+      setError("Ya existe un archivo de " + file.description)
+      sleep(2000).then(() => {
+        setError("")
+      })
+      return
+    }
+    setError("")
+    fetch(file.url_download as string).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-      setError("")
-      fetch(file.url_download as string).then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+      return response.blob();
+    }).then((file_) => {
+      const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
+      props.templateUseCase.validateLocalFile(blob as File, temDetail, true).then((res) => {
+        if (!res) {
+          setError("El archivo no cumple con el formato")
+          return
         }
-        return response.blob();
-      }).then((file_) => {
-        const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-        props.templateUseCase.validateLocalFile(blob as File, temDetail,true).then((res) => {
-          if (!res) {
-            setError("El archivo no cumple con el formato")
-            return
+        const columns = res.columns.map((column) => {
+          return {
+            key: column,
+            value: column,
+            is_header: true
           }
-          const columns = res.columns.map((column) => {
+        })
+        if (temDetail.verticalTemplate) {
+          const rows = res.rows.map((row) => {
             return {
-              key: column,
-              value: column,
-              is_header: true
+              key: row[0] as string,
+              value: row[0] as string
             }
           })
-          if (temDetail.verticalTemplate) {
-            const rows = res.rows.map((row) => {
+
+          buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
+          tabsRef.current?.setActiveTab(2)
+          return
+        } else {
+          const rows = res.rows.map((row) => {
+            return row.map((value, index) => {
               return {
-                key: row[0] as string,
-                value: row[0] as string
+                key: index.toString(),
+                value: value
               }
             })
-
-            buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
-            tabsRef.current?.setActiveTab(2)
-            return
-          } else {
-            const rows = res.rows.map((row) => {
-              return row.map((value, index) => {
-                return {
-                  key: index.toString(),
-                  value: value
-                }
-              })
-            })
-            buildRowFromTemplateAnData(temDetail, [columns, ...rows])
-            tabsRef.current?.setActiveTab(2)
-          }
-        }).catch((e) => {
-          setError(e.message)
-        })
+          })
+          buildRowFromTemplateAnData(temDetail, [columns, ...rows])
+          tabsRef.current?.setActiveTab(2)
+        }
       }).catch((e) => {
         setError(e.message)
       })
+    }).catch((e) => {
+      setError(e.message)
+    })
 
 
-    
+
   }
   const onRemoveFileFromPublication = (index: number) => {
     const copyFiles = [...filesPublication]
@@ -765,9 +765,18 @@ const ActiveCreateContainer = (props: IProps) => {
       })
       .catch(error => console.error('Ocurrió un error al descargar el archivo:', error));
   }
+
+  const formatNumeral = () => {
+    const format = numeral?.description
+      .replace(new RegExp("_"), " ")
+      .replace(new RegExp("-"), " ")
+
+
+    return numeral?.name + " " + format
+  }
   return (
     <ActiveCreatePresenter
-      title={numeral?.description || ""}
+      title={formatNumeral()}
       error={error || ""}
       handleSubmit={uploadFile}
       loading={loading}

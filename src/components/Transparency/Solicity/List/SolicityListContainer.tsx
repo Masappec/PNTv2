@@ -43,25 +43,6 @@ const SolicityListContainer = (props: Props) => {
     }, [])
 
 
-    useEffect(() => {
-       
-        const date_start = new Date(startDate)
-        const date_end = new Date(endDate)
-        if (date_start > date_end) {
-            SetError("La fecha de inicio no puede ser mayor a la fecha de fin")
-            return
-        }
-        props.useCase.getSolicities(search,currentPage,limit,columnsSort,startDate,endDate).then(response => {
-            SetSolicitudes(response.results)
-            setTotalPage(response.total_pages || 0)
-            setFrom(response.from || 0)
-            setTo(response.to)
-            setTotal(response.total)
-            setCurrentPage(response.current)
-        }).catch((err) => {
-            SetError(err.message)
-        })
-    }, [startDate,endDate])
 
     const handleAdd = () => {
         navigate('/admin/solicity/create')
@@ -167,6 +148,26 @@ const SolicityListContainer = (props: Props) => {
             SetError(err.message)
         })
     }
+
+
+    const onFilter = ()=>{
+        const date_start = new Date(startDate)
+        const date_end = new Date(endDate)
+        if (date_start > date_end) {
+            SetError("Recuerda, la fecha Desde no puede ser posterior a la fecha Hasta. Favor reintenta.")
+            return
+        }
+        props.useCase.getSolicities(search, currentPage, limit, columnsSort, startDate, endDate).then(response => {
+            SetSolicitudes(response.results)
+            setTotalPage(response.total_pages || 0)
+            setFrom(response.from || 0)
+            setTo(response.to)
+            setTotal(response.total)
+            setCurrentPage(response.current)
+        }).catch((err) => {
+            SetError(err.message)
+        })
+    }
     return (
         <SolicityListPresenter
             columnsSort={columnsSort}
@@ -183,7 +184,7 @@ const SolicityListContainer = (props: Props) => {
             onHold={handleOnHold}
             onResponse={handleResponse}
             onDetail={handleDetail}
-            onFilter={() => { }}
+            onFilter={onFilter}
             onImport={() => { }}
             onSearch={onSearch}
             page={currentPage}

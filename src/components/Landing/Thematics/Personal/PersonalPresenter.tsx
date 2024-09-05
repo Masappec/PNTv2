@@ -96,8 +96,25 @@ const PersonalPresenter = (props: Props) => {
         }
         <div className="mt-8 h-min rounded-md bg-gray-100">
           <TablePublic<PersonalRemunerations>
-            
+
             columns={[
+              {
+                title: "INSTITUCIÓN EN LA QUE LABORA",
+                render: (row) => (
+                  <p className="text-wrap text-left justify-start xl:max-w-[200px]">
+                    {row.institucion}
+                  </p>
+                ),
+              },
+              {
+                title: "MES Y AÑO",
+                render: (row) => (
+                  <p className="text-wrap text-left justify-start xl:max-w-[200px]">
+                    {row.mes}/{row.anio}
+                  </p>
+                ),
+              },
+
               {
                 title: "APELLIDOS Y NOMBRES",
                 render: (row) => (

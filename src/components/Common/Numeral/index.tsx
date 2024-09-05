@@ -8,10 +8,10 @@ interface Props {
 
 const Numeral = ({ title, text, onClick, isPublished }: Props) => {
 
-  return(
-    <button 
-    onClick={() => onClick()}
-    className='flex w-full  items-center gap-4 rounded-md bg-gray-100 p-4 transition-colors hover:bg-gray-200'>
+  return (
+    <button
+      onClick={() => onClick()}
+      className='flex w-full  items-center gap-4 rounded-md bg-gray-100 p-4 transition-colors hover:bg-gray-200'>
       {isPublished ? (
         <div className='flex w-max items-center gap-2 rounded-lg text-xs font-normal text-white'>
           <svg
@@ -48,7 +48,7 @@ const Numeral = ({ title, text, onClick, isPublished }: Props) => {
             </span>
           ) : (
             <span className='h-max rounded-md bg-custom-red px-2 py-1 text-xs font-normal text-white'>
-              Cargar Información
+              Sin publicar
             </span>
           )}
         </div>

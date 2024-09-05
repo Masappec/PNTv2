@@ -35,8 +35,10 @@ api.interceptors.response.use(
         return response;
     },
     (error) => {
-        if (error.response?.status === 401) {
+        const url = error.config.url;
+        if (error.response?.status === 401 && !url.includes('login')) {
             SessionService.clearSession();
+            window.location.href = '/401'
         }
         return Promise.reject(error);
     }

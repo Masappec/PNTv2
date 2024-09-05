@@ -12,7 +12,7 @@ interface Column<T> {
 
 interface TableProps<T> {
     columns: Column<T>[]
-    text?:string;
+    text?: string;
     title?: string;
     description?: string;
     onAdd?: () => void;
@@ -41,6 +41,7 @@ interface TableProps<T> {
 
 function Table<T>({ ...props }: TableProps<T>) {
     const defaultMessage = "No hay datos";
+    
 
     return (
         <div className="container w-full mx-auto">
@@ -117,7 +118,7 @@ function Table<T>({ ...props }: TableProps<T>) {
                             props.data.length === 0 && (
                                 <tr>
                                     <td colSpan={props.columns.length}>
-                                    {props.text || defaultMessage}
+                                        {props.text ? props.text : defaultMessage}
                                     </td>
                                 </tr>
                             )
@@ -129,48 +130,48 @@ function Table<T>({ ...props }: TableProps<T>) {
 
             </div>
             {
-               ( props.totalPages||0) > 1 && (
-            <nav className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
-                {props.totalPages && (<span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                    Mostrando
-                    {
+                (props.totalPages || 0) > 1 && (
+                    <nav className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
+                        {props.totalPages && (<span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                            Mostrando
+                            {
 
-                        props.from ?
-                            <> <span className="font-semibold text-gray-500 dark:text-white mr-2">
-                                {props.from} - {props.to}
-                            </span>
-                                <span className=" text-gray-500 dark:text-white mr-2">
-                                    de
-                                </span>
-                            </> : <></>
-                    }
-                    <span className="font-semibold text-gray-500 dark:text-white">{props.total}</span>
-                </span>)}
+                                props.from ?
+                                    <> <span className="font-semibold text-gray-500 dark:text-white mr-2">
+                                        {props.from} - {props.to}
+                                    </span>
+                                        <span className=" text-gray-500 dark:text-white mr-2">
+                                            de
+                                        </span>
+                                    </> : <></>
+                            }
+                            <span className="font-semibold text-gray-500 dark:text-white">{props.total}</span>
+                        </span>)}
 
-                <ul className="inline-flex items-stretch -space-x-px">
-                    {
-                        props.totalPages && (
-                            <div className="flex overflow-x-auto sm:justify-center">
-                                <Pagination currentPage={props.currentPage || 1
-                                } totalPages={props.totalPages}
-                                    onPageChange={props.onChangePage || (() => { })}
-                                    nextLabel="Siguiente"
-                                    previousLabel="Anterior"
-                                    className="bg-transparent"
-                                    style={{
+                        <ul className="inline-flex items-stretch -space-x-px">
+                            {
+                                props.totalPages && (
+                                    <div className="flex overflow-x-auto sm:justify-center">
+                                        <Pagination currentPage={props.currentPage || 1
+                                        } totalPages={props.totalPages}
+                                            onPageChange={props.onChangePage || (() => { })}
+                                            nextLabel="Siguiente"
+                                            previousLabel="Anterior"
+                                            className="bg-transparent"
+                                            style={{
 
-                                    }}
-                                />
-                                
-                            </div>
-                        )
-                    }
+                                            }}
+                                        />
+
+                                    </div>
+                                )
+                            }
 
 
-                </ul>
-            </nav>
-            )
-        }
+                        </ul>
+                    </nav>
+                )
+            }
 
 
         </div >

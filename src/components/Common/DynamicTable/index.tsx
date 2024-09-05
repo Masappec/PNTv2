@@ -11,7 +11,7 @@ interface Props {
     isSaved: boolean;
     onSaveTable: (data: Row[][]) => void
     limitRows?: number
-    errors?: { row: number, column: number }[] 
+    errors?: { row: number, column: number }[]
 
 }
 
@@ -217,18 +217,22 @@ const DynamicTable = (props: Props) => {
             </footer>
 
 
+            {
+                props.limitRows && props.limitRows < limit ? null :
+                    <>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                            Página {currentPage} de {totalPages}
+                        </p>
+                        <div className="flex overflow-x-auto sm:justify-center">
 
-            <p className="text-sm text-gray-700 dark:text-gray-300">
-                Página {currentPage} de {totalPages}
-            </p>
-            <div className="flex overflow-x-auto sm:justify-center">
+                            <Pagination currentPage={currentPage} totalPages={totalPages}
+                                onPageChange={onPageChange} showIcons
+                                nextLabel="Siguiente"
+                                previousLabel="Anterior"
+                            />
+                        </div></>
+            }
 
-                <Pagination currentPage={currentPage} totalPages={totalPages}
-                    onPageChange={onPageChange} showIcons
-                    nextLabel="Siguiente"
-                    previousLabel="Anterior"
-                />
-            </div>
         </div >
     );
 };

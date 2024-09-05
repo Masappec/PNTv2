@@ -38,7 +38,7 @@ const RoleEditPresenter = (props: RoleEditPresenterProps) => {
                         <div>
                             <div className="flex items-center gap-x-3">
                                 <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-                                    Crear un nuevo Rol
+                                    Editar Rol
                                 </h2>
 
 
@@ -66,7 +66,7 @@ const RoleEditPresenter = (props: RoleEditPresenterProps) => {
                  text-white transition-colors duration-200 bg-green-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                                 <LuCheck className="w-5 h-5" />
                                 <span>
-                                    Crear
+                                    Guardar
                                 </span>
                             </button>
                         </div>

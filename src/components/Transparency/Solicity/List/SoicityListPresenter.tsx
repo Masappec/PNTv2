@@ -4,11 +4,13 @@ import Table from "../../../Common/Table/index"
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
 import Alert from "../../../Common/Alert"
+import { elapsedTime, formatDate2 } from "../../../../utils/functions"
+import SessionService from "../../../../infrastructure/Services/SessionService"
 
 
 
 interface Props {
-    
+
     data: Solicity[]
     error: string | null
     onSearch: (search: string) => void
@@ -45,10 +47,11 @@ interface Props {
 const SolicityListPresenter = (props: Props) => {
     return (
         <div className="">
-            <h3 className="text-xs text-primary">¡Hola!
-            
-Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta sección podrás consultar todas las  Solicitudes de Acceso a la Información Pública (SAIP) que envíes a las instituciones que requieras. Para crear una nueva SAIP, selecciona <span className="font-bold">“Crear solicitud”</span> y sigue los pasos indicados.
-</h3>
+            <h3 className="text-sm text-primary">
+                ¡Hola!
+                {" "}{SessionService.getPersonData().first_name}{" "}
+                Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta sección podrás consultar todas las  Solicitudes de Acceso a la Información Pública (SAIP) que envíes a las instituciones que requieras. Para crear una nueva SAIP, selecciona <span className="font-bold">“Crear solicitud”</span> y sigue los pasos indicados.
+            </h3>
             <h2 className='mt-6 mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
                 Solicitudes
 
@@ -57,72 +60,102 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
                 props.error ? <Alert
                     type="error"
                     message={props.error}
-                    onClose={() => { props.setError("")}}
-                />: null
+                    onClose={() => { props.setError("") }}
+                /> : null
             }
-            <section className='mb-8 flex flex-col items-end 
-            justify-between gap-4 sm:flex-row sm:items-center'>
-                <div className="flex flex-row gap-6 w-auto">
-                    <div>
+            <section className='mb-8 flex  items-end 
+            w-full
+                    justify-between gap-4 flex-row md:items-center'>
+                <div className="flex flex-col md:flex-row gap-6  w-fit">
+                    <div className="flex flex-col gap-2 mt-4">
 
 
-                    <label className='text-gray-500 text-sm'>Buscar solicitud enviada:</label>
-                    <div className='group relative w-full max-w-xs mt-1'>
-                        
-                        <svg
-                            className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
-                            stroke='currentColor'
-                            fill='currentColor'
-                            stroke-width='0'
-                            viewBox='0 0 24 24'
-                            height='1em'
-                            width='1em'
-                            xmlns='http://www.w3.org/2000/svg'
-                        ><path
-                            d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
-                        ></path>
-                        </svg>
-                        <input
-                            className='block w-96 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-xs text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                            type='text'
-                            placeholder='Ingresa el número de la SAIP o el nombre de la institución'
+                        <label className='text-gray-500 text-sm'>Buscar solicitud enviada:</label>
+                        <div className='group relative sm:w-96 max-w-xs mt-1'>
 
-                            onChange={(e) => props.onSearch(e.target.value)}
-
-                        />
-                     
-                    </div>
-                    </div>
-                    <div className='flex flex-row gap-2'>
-
-                        <div className='flex flex-col gap-2 ml-12 '>
-                            <label className='text-gray-500 text-sm'>
-                                Desde
-                            </label>
+                            <svg
+                                className='absolute left-2 top-3 mt-auto h-5 w-5 text-gray-300 group-hover:text-primary'
+                                stroke='currentColor'
+                                fill='currentColor'
+                                stroke-width='0'
+                                viewBox='0 0 24 24'
+                                height='1em'
+                                width='1em'
+                                xmlns='http://www.w3.org/2000/svg'
+                            ><path
+                                d='M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z'
+                            ></path>
+                            </svg>
                             <input
-                                type="date"
-                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                                placeholder="Desde"
-                                onChange={(e) => props.onChangeStart(e.target.value)}
+                                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-xs text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                type='text'
+                                placeholder='Ingresa el número de la SAIP o el nombre de la institución'
+
+                                onChange={(e) => props.onSearch(e.target.value)}
+
                             />
-                            
-                        </div>
-                        <div className='flex flex-col gap-2'>
-                            <label className='text-gray-500 text-sm'>
-                                Hasta
-                            </label>
-                        <input
-                            type="date"
-                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                            placeholder="Hasta"
-                            onChange={(e) => props.onChangeEnd(e.target.value)}
-                        />
+
                         </div>
                     </div>
+                    <div className="flex flex-col">
+                        <p className="text-gray-500 text-xs text-wrap -mt-4 w-10/12">
+                            Si requieres consultar en un rango de fechas
+                            escógelas a continuación
+                        </p>
+                        <div className="flex flex-row gap-4">
+                            <div className='flex flex-col gap-2'>
+                                <label className='text-gray-500 text-sm'>
+                                    Desde
+                                </label>
+                                <input
+                                    type="date"
+                                    className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                    placeholder="Desde"
+                                    onChange={(e) => props.onChangeStart(e.target.value)}
+                                />
+                            </div>
+                            <div className='flex flex-col gap-2'>
+                                <label className='text-gray-500 text-sm'>
+                                    Hasta
+                                </label>
+                                <input
+                                    type="date"
+                                    className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                    placeholder="Hasta"
+                                    onChange={(e) => props.onChangeEnd(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex flex-col gap-2 mt-7">
+                                <button
+                                    className="inline-flex items-center rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                                    onClick={props.onFilter}
+                                >
+                                    Buscar
+                                </button>
 
+                            </div>
+                        </div>
+
+
+                    </div>
+                   
+                    <div className="flex flex-col gap-2 mt-4">
+                        <label className='text-gray-500 text-sm'>
+                            limite
+                        </label>
+                        <select
+                            onChange={(e) => props.onChangesLimit(parseInt(e.target.value))}
+                            className='block w-40 rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'>
+                            {
+                                props.limits.map((limit) => (
+                                    <option key={limit} value={limit}>{limit}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
                 </div>
 
-                <button
+                {/* <button
                     type='button'
                     onClick={props.onAdd}
                     className='inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
@@ -139,12 +172,12 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
                         </svg>
                         <span>Crear solicitud</span>
                     </div>
-                </button>
+                </button> */}
             </section>
             <div className="">
                 <Table
                     show={false}
-                    text=" Al momento no hay ninguna solicitud enviada. Para enviar una, escoge en el menú “Crear Solicitud”"
+                    text="No se encontraron solicitudes que coincidan con lo que buscas."
                     sorteable={true}
                     limits={props.limits}
                     onSort={props.onChangesSort}
@@ -166,10 +199,12 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
                             key: "estblishment__name",
                             render: (solicity) => (
                                 <a
-                                    className="text-blue-500 hover:courser-pointer hover:underline"
+                                    className="text-blue-500 text-wrap 
+                                     hover:courser-pointer hover:underline"
                                     onClick={() => props.onEdit(solicity)}
                                 >{solicity.estblishment_name}</a>
                             ),
+                            classes: 'w-1/4'
                         },
                         {
                             title: "No. SAIP",
@@ -189,18 +224,19 @@ Te damos la cordial bienvenida al Portal Nacional de Transparencia. En esta secc
 
                             render: (solicity) => (
                                 <p>{
-                                    solicity.date ? new Date(solicity.date).toLocaleString() : ""
+                                    solicity.date ? formatDate2(solicity.date)
+                                        : ""
                                 }</p>
                             )
                         },
 
                         {
-                            title: "Días transcurridos",
+                            title: "Días/Horas transcurridos",
                             key: "date",
 
                             render: (solicity) => (
                                 <p>{
-                                    solicity.date ? Math.floor((new Date().getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) : ""
+                                    solicity.date ? elapsedTime(solicity.date) : ""
                                 }</p>
                             )
                         },

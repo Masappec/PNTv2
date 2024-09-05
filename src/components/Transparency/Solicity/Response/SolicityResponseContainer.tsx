@@ -447,7 +447,7 @@ const SolicityResponseContainer = (props: Props) => {
             e => e != 0
         )
         dataResponseSolicity.attachment = attachs.map((attach) => attach.entity?.id || 0)
-        if (dataResponseSolicity.text == '') {
+        if (dataResponseSolicity.text == '' || dataResponseSolicity.text == null) {
             setError('Ingresa tu consulta/respuesta')
             setLoading(false);
             return
@@ -563,6 +563,13 @@ const SolicityResponseContainer = (props: Props) => {
     }
 
 
+    const handleonChangeTextResponse = (text: string) => {
+        if (text.length < 3000) {
+            setResponseSolicity({ ...dataResponseSolicity, text: text })
+        }
+
+    }
+
 
     return isSaved ?
         <ScreenMessage message=""
@@ -621,7 +628,7 @@ const SolicityResponseContainer = (props: Props) => {
                     onRemoveFileFromSolicity={onRemoveFileFromPublication}
                     entitySelected={entity}
                     key={0}
-                    onChangeTextResponse={(text) => setResponseSolicity({ ...dataResponseSolicity, text: text })}
+                    onChangeTextResponse={handleonChangeTextResponse}
                     getSelectedItems={getSelectedItem}
                     onDownloadFromUrl={onDownloadFromUrl}
                     userSession={userSession}

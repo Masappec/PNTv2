@@ -20,7 +20,7 @@ const Sidebar_ = ({ menu, permissions, establishmentName }: Props) => {
 
 	}, [location.pathname])
 
-	return(
+	return (
 		<>
 			<button
 				data-drawer-target='default-sidebar'
@@ -55,52 +55,57 @@ const Sidebar_ = ({ menu, permissions, establishmentName }: Props) => {
 							{
 								menu.filter((item) => item.visible).
 									map((item, index) => (
-										item.permission_required == "" ? <li key={index}>
-											<Link
-												className={`group flex items-center rounded-lg p-2 text-base 
+										item.permission_required == "" ?
+											permissions.find(
+												permission => permission == 'view_solicity'
+											) && item.hidden_for_citicen ?
+												<></> :
+												<li key={index}>
+													<Link
+														className={`group flex items-center rounded-lg p-2 text-base 
 												font-normal text-gray-900 hover:bg-gray-300
 												${path === item.path ? "bg-gray-300" : ""}
 												`}
-												to={item.path}>
-												{item.icon}
-												<span className='ml-3'>{item.name}</span>
-											</Link>
-										</li> : permissions.includes(item.permission_required) &&
-										<li key={index}>
-											<Link
-												className={`group flex items-center rounded-lg p-2 
+														to={item.path}>
+														{item.icon}
+														<span className='ml-3'>{item.name}</span>
+													</Link>
+												</li> : permissions.includes(item.permission_required) &&
+											<li key={index}>
+												<Link
+													className={`group flex items-center rounded-lg p-2 
 												text-base font-normal text-gray-900 hover:bg-gray-300
 												${path === item.path ? "bg-gray-300" : ""}
 												`}
-												to={item.path}>
-												{item.icon}
-												<span className='ml-3'>{item.name}</span>
-											</Link>
-										</li>
+													to={item.path}>
+													{item.icon}
+													<span className='ml-3'>{item.name}</span>
+												</Link>
+											</li>
 									))
 							}
 						</ul>
 					</section>
 					{
 						establishmentName &&
-					
-					<article
-						className='max-w-xs text-balance rounded bg-primary/5 p-2 text-sm font-medium text-primary'>
-						<svg
-							xmlns='http://www.w3.org/2000/svg'
-							height='24px'
-							viewBox='0 -960 960 960'
-							width='24px'
-							fill='currentColor'
-						><path
-							d='M80-120v-720h400v160h400v560H80Zm80-80h240v-80H160v80Zm0-160h240v-80H160v80Zm0-160h240v-80H160v80Zm0-160h240v-80H160v80Zm320 480h320v-400H480v400Zm80-240v-80h160v80H560Zm0 160v-80h160v80H560Z'
-						></path>
-						</svg>
-						<p className='mt-2'>
-							{establishmentName}
-						</p>
-					</article>
-}
+
+						<article
+							className='max-w-xs text-balance rounded bg-primary/5 p-2 text-sm font-medium text-primary'>
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								height='24px'
+								viewBox='0 -960 960 960'
+								width='24px'
+								fill='currentColor'
+							><path
+								d='M80-120v-720h400v160h400v560H80Zm80-80h240v-80H160v80Zm0-160h240v-80H160v80Zm0-160h240v-80H160v80Zm0-160h240v-80H160v80Zm320 480h320v-400H480v400Zm80-240v-80h160v80H560Zm0 160v-80h160v80H560Z'
+							></path>
+							</svg>
+							<p className='mt-2'>
+								{establishmentName}
+							</p>
+						</article>
+					}
 				</div>
 			</aside>
 		</>

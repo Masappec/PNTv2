@@ -7,9 +7,15 @@ import UserEntity from "../../entities/UserEntity";
 import moment from 'moment';
 import jsPDF from 'jspdf';
 import autotable from 'jspdf-autotable';
+import logo from '../../../assets/Home/logo-dpe 2.png';
 
 class SolicityUseCase {
   constructor(private readonly solicityService: SolicityService) { }
+
+
+  async deleteSolicity(id: number) {
+    return await this.solicityService.deleteSolicity(id);
+  }
   async getSolicities(search: string, page: number, limit?: number, sort?: string[],
     range_start?: string, range_end?: string) {
     return await this.solicityService.getSolicities(search, page, limit, sort, range_start, range_end);
@@ -202,7 +208,7 @@ class SolicityUseCase {
       }
     } else {
       if (solicity.status == StatusSolicity.INSISTENCY_PERIOD.key) {
-        return 'Solicitar Insistencia. Si necesitas consultar alguna aclaración sobre la respuesta recibida, ingresarla a continuación'
+        return 'Escribe a continuación la explicación por la cual solicitas la insistencia a esta solicitud. De acuerdo a lo establecido en la LOTAIP, la entidad tiene un tiempo de 10 días adicionales, para responder a esta insistencia y a su vez a la solicitud original. Si deseas conocer más sobre este proceso revisa la sección '
       }
 
       if (solicity.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key) {
@@ -218,40 +224,29 @@ class SolicityUseCase {
     const doc = new jsPDF();
 
     // Título
-    doc.text('Reporte de Solicitud', 20, 10);
+    doc.addImage(logo, 'PNG', 10, 5, 50, 20);
+    doc.text('Impresión de Solicitud Enviada', 70, 20).setFontSize(20);
 
 
 
     autotable(doc, {
-      startY: 20,
-      head: [['Nombre de la Institución', 'Número SAIP', 'Fecha de Creación', 'Ciudad']],
-      body: [[data.estblishment_name || "", data.number_saip, new Date(data.created_at).toLocaleString(), data.city, ]],
-    });
-
-
-    autotable(doc, {
-      startY: 50,
+      startY: 30,
       head: [['Nombre', 'Email', 'Teléfono', 'Identificación cultural', 'Género']],
       body: [[data.first_name, data.email, data.phone, data.race_identification, data.gender]],
     });
 
+    autotable(doc, {
+      startY: 50,
+      head: [['Nombre de la Institución', 'Número SAIP', 'Fecha de Creación', 'Ciudad']],
+      body: [[data.estblishment_name || "", data.number_saip, new Date(data.created_at).toLocaleString(), data.city,]],
+    });
 
-    // Timeline
-    if (data.timeline) {
-      autotable(doc, {
-        startY: 80,
-        head: [['Estado', 'Fecha de Creación']],
-        body: data.timeline.map(item => [
-          StatusSolicity[item.status as keyof typeof StatusSolicity].value,
-          new Date(item.created_at).toLocaleString()]),
-      });
-    }
 
 
     if (data.responses) {
       // Responses
       autotable(doc, {
-        startY: 160,
+        startY: 80,
         head: [['Texto', 'Fecha de Creación']],
         body: [
           [
@@ -263,6 +258,28 @@ class SolicityUseCase {
       });
     }
 
+    // Timeline
+    if (data.timeline) {
+      doc.text('Estados', 10, 155, { align: 'left' }).setFontSize(12);
+      autotable(doc, {
+        startY: 160,
+        head: [['Estado', 'Fecha de Creación']],
+        body: data.timeline.map(item => [
+          StatusSolicity[item.status as keyof typeof StatusSolicity].value,
+          new Date(item.created_at).toLocaleString()]),
+      });
+    }
+
+
+
+    // Obtener la fecha y hora actual
+    const now = new Date();
+    const fechaHoraImpresion = now.toLocaleString();
+
+    doc.setFontSize(10);
+    // Agregar la fecha y hora de impresión al final de la página
+    const pageHeight = doc.internal.pageSize.height;
+    doc.text(`Fecha de impresión: ${fechaHoraImpresion}`, 10, pageHeight - 10);
 
     // Guardar el PDF
     doc.save(`Solicitud-${data.number_saip}.pdf`);

@@ -181,6 +181,18 @@ const PublicEstablishmentContainer = (props: Props) => {
 
     }
 
+    const onDownloadExcel = () => {
+        props.usecase.donwloadExcel(copyEntities)
+    }
+
+    const onDonwloadPdf = () => {
+        props.usecase.donwloadPdf(copyEntities)
+    }
+
+    const onDonwloadCsv = () => {
+        props.usecase.donwloadCsv(copyEntities)
+    }
+
     return (
         <PublicEstablishmentPresenter
             error={error}
@@ -194,6 +206,9 @@ const PublicEstablishmentContainer = (props: Props) => {
             options={typeInstitution}
             onSelectType={onSelectType}
             selectedType={selectedType}
+            onDownloadExcel={onDownloadExcel}
+            onDownloadPdf={onDonwloadPdf}
+            onDownloadCsv={onDonwloadCsv}
 
         />
     )
