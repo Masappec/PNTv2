@@ -3,7 +3,7 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import 'react-toastify/dist/ReactToastify.css';
 import { PartialTimelineSolicty, Solicity, TimeLinePresenter } from "../../../../domain/entities/Solicity";
 import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
-import { formatDate } from "../../../../utils/functions";
+import { formatDate, formatDate2 } from "../../../../utils/functions";
 import { StatusSolicity } from "../../../../utils/enums";
 import { useEffect, useState } from "react";
 import SessionService from "../../../../infrastructure/Services/SessionService";
@@ -129,16 +129,15 @@ const SolicityDetailPresenter = (props: Props) => {
 
           {props.solicitySaved.text != "" && <section className='mx-auto mb-4 rounded-lg border border-gray-100 bg-primary-600/10 p-4'>
             <h2 className='mb-4 rounded-md bg-primary-600 p-4 text-left text-xl font-bold text-white'>
-            Información solicitada
+              Información solicitada
             </h2>
 
-            <p className='mb-4 text-slate-600'>
+            <p className='mb-4 text-slate-600 break-words'>
               {props.solicitySaved.text}
             </p>
-
             <div className='flex items-center justify-start gap-4'>
               <p className='text-slate-600'>
-              Formato solicitado: <span className='font-medium'>{props.solicitySaved.format_send}</span>
+                Formato solicitado: <span className='font-medium'>{props.solicitySaved.format_send}</span>
               </p>
               <p className='text-slate-600'>Canal de recepción de solicitud: <span className='font-medium'>{props.solicitySaved.format_receipt}</span></p>
             </div>
@@ -163,7 +162,7 @@ const SolicityDetailPresenter = (props: Props) => {
                   }
                 </h2>
 
-                <p className='mb-4 text-slate-600'>
+                <p className='mb-4 text-slate-600 break-words'>
                   {response.text}
                 </p>
                 {
@@ -221,7 +220,7 @@ const SolicityDetailPresenter = (props: Props) => {
                         <label
                           className='inline-block text-sm font-semibold text-gray-900 text-wrap'
 
-data-testid='flowbite-label'>
+                          data-testid='flowbite-label'>
                           {file.description}
 
                         </label>
@@ -238,7 +237,7 @@ data-testid='flowbite-label'>
                   ))
                 }
 
-                <p className='text-right font-medium text-slate-600'>{new Date(response.created_at).toLocaleString()}</p>
+                <p className='text-right font-medium text-slate-600'>{formatDate2(response.created_at)}</p>
               </section>
             ))
           }

@@ -69,11 +69,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                 {props.entity.name}
                             </h2>
                             <p className=" text-sm xl:w-full w-auto  mt-8 font-medium mb-10">
-                                La ley Orgánica de Transparencia y Acceso de la Información Pública
-                                (LOTAIP) obliga a todas las instituciones del Estado que conforman
-                                el sector público a difundir a través de la página web
-                                institucional, información mínima actualizada de naturaleza
-                                obligatoria.
+                                Consulta los archivos publicados mensualmente por la institución en cumplimiento de la Ley (Transparencia activa)
                             </p>
                             <Dropdown label={
                                 <>
@@ -159,11 +155,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                 {props.entity.name}
                             </h2>
                             <p className=" text-sm xl:w-full mt-8 font-medium mb-10">
-                                La ley Orgánica de Transparencia y Acceso de la Información Pública
-                                (LOTAIP) obliga a todas las instituciones del Estado que conforman
-                                el sector público a difundir a través de la página web
-                                institucional, información mínima actualizada de naturaleza
-                                obligatoria.
+                                Consulta los archivos publicados mensualmente por la institución en cumplimiento de la Ley (Transparencia activa)
                             </p>
 
                             <Dropdown label={
@@ -240,11 +232,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                 {props.entity.name}
                             </h2>
                             <p className=" text-sm xl:w-full mt-8 font-medium mb-10">
-                                La ley Orgánica de Transparencia y Acceso de la Información Pública
-                                (LOTAIP) obliga a todas las instituciones del Estado que conforman
-                                el sector público a difundir a través de la página web
-                                institucional, información mínima actualizada de naturaleza
-                                obligatoria.
+                                Consulta los archivos publicados mensualmente por la institución en cumplimiento de la Ley (Transparencia activa)
                             </p>
                             <Dropdown label={
                                 <>

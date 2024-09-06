@@ -425,7 +425,11 @@ const SolicityResponseContainer = (props: Props) => {
         if (solicityToResponse.status == StatusSolicity.INSISTENCY_PERIOD.key ||
             solicityToResponse.status == StatusSolicity.PRORROGA.key ||
             solicityToResponse.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key) {
-            props.usecase.changeStatus(solicityToResponse.id, solicityToResponse.text).then((res) => {
+            if (dataResponseSolicity.text == "") {
+                setError("Favor Ingresa la descripción de tu solicitud")
+                return;
+            }
+            props.usecase.changeStatus(solicityToResponse.id, dataResponseSolicity.text).then((res) => {
                 setTimeline(Solicity.ordernReponse(res))
                 setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
                 SetSolicity(res)
@@ -564,7 +568,7 @@ const SolicityResponseContainer = (props: Props) => {
 
 
     const handleonChangeTextResponse = (text: string) => {
-        if (text.length < 3000) {
+        if (text.length <= 3000) {
             setResponseSolicity({ ...dataResponseSolicity, text: text })
         }
 

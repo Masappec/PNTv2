@@ -41,6 +41,8 @@ interface Props {
     isSend: boolean;
     isLoadingSend: boolean;
     children?: React.ReactNode;
+    onSaveWithoutSend: () => void;
+    loadingSave: boolean;
 }
 const SolicityEditPresenter = (props: Props) => {
 
@@ -196,6 +198,22 @@ const SolicityEditPresenter = (props: Props) => {
                             ) : null
                         }
                         <div className="flex flex-row gap-5 justify-between">
+                            {
+                                props.loadingSave ? <Spinner></Spinner> :
+
+                                    <button
+                                        type='button'
+                                        onClick={props.onSaveWithoutSend}
+                                        className='w-full rounded-full bg-white px-6 py-3
+                                            border-primary border-primary border-2 text-primary font-medium
+                                            text-base  transition-opacity hover:opacity-80 focus:outline-none focus:ring-2
+                                            focus:ring-blue-400'>
+                                        Guardar Sin Enviar
+                                    </button>
+                            }
+
+                        </div>
+                        <div className="flex flex-row gap-5 justify-between">
 
                             {
 
@@ -214,6 +232,7 @@ const SolicityEditPresenter = (props: Props) => {
                             }
 
                         </div>
+
                         <div className="flex flex-row gap-5 justify-center">
                             <button
                                 type='button'
