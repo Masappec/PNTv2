@@ -1,4 +1,5 @@
 import PublicService from "../../../infrastructure/Services/PublicService";
+import EstablishmentEntity from "../../entities/Establishment";
 
 
 
@@ -23,6 +24,18 @@ class PublicUseCase {
 
     async getMonthsByTransparency(type:'A'|'F'|'C',establishment_id:number, year:number){
         return await this.service.getMonthsByTransparency(type,establishment_id,year);
+    }
+
+
+    async donwloadPdf(establishments:EstablishmentEntity[]){
+        return await this.service.downloadPdf(establishments);
+    }
+    async donwloadExcel(establishments:EstablishmentEntity[]){
+        return await this.service.donwloadExcel(establishments);
+    }
+
+    async donwloadCsv(establishments:EstablishmentEntity[]){
+        return await this.service.donwloadCsv(establishments);
     }
 
 }

@@ -1,43 +1,24 @@
-import EstablishmentEntity from "../../../../domain/entities/Establishment"
-import Alert from "../../../Common/Alert"
-import Modal from "../../../Common/Modal"
-import Table from "../../../Common/Table/index"
-import { Button } from "flowbite-react"
-import { HiOutlineExclamationCircle } from "react-icons/hi"
+import EstablishmentEntity from "../../../domain/entities/Establishment"
+import Table from "../../Common/Table"
 
-import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
-
-
-
-interface Props {
+interface EntitiesCompliancePresenterProps {
     establishments: EstablishmentEntity[]
-    error: string | null
-    onSearch: (search: string) => void
+    onEdit: (establishment: EstablishmentEntity) => void
+    onDelete: (establishment: EstablishmentEntity) => void
     onAdd: () => void
+    onFilter: (filter: string) => void
     onImport: () => void
-    onFilter: () => void
-    onEdit: (role: EstablishmentEntity) => void
+    onSearch: (search: string) => void
     search: string
-    setSeach: (search: string) => void
     page: number
     setPage: (page: number) => void
-    setVisibleModal: (visible: boolean) => void
-    visibleModal: boolean
-    onConfirmDelete: () => void
-    onCancelDelete: () => void
-    onDelete: (RoleEntity: EstablishmentEntity) => void
-    selectedEstablishment: EstablishmentEntity | null
     from: number
     to: number
     total: number
-    totalPage: number,
-    options: OptionsSelectCreate;
-    onChangeFilter: (name: string) => void;
-    functionSelected: string;
+    totalPage: number
 }
 
-const EstablishmentListPresenter = (props: Props) => {
-
+const EntitiesCompliancePresenter = (props: EntitiesCompliancePresenterProps) => {
 
     return (
         <>
@@ -49,33 +30,7 @@ const EstablishmentListPresenter = (props: Props) => {
                 En esta sección podrás visualizar, editar, activar e inactivar las instituciones del portal, así
                 como crear nuevas instituciones.
             </p>
-            <div className="flex items-center py-5 justify-center">
 
-
-                <Modal
-                    isvisible={props.visibleModal}
-                    onClose={() => { }}
-                >
-                    {
-                        props.error && <Alert type="error" message={props.error} onClose={() => { }} />
-                    }
-
-
-                    <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                    <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        {`¿Desea ${props.selectedEstablishment?.is_active ? "desactivar" : "activar"
-                            } esta Entidad "${props.selectedEstablishment?.name}" ?`}
-                    </h3>
-                    <div className="flex justify-center gap-4">
-                        <Button color="failure" onClick={() => props.onConfirmDelete()}>
-                            {"Si, Estoy seguro"}
-                        </Button>
-                        <Button color="gray" onClick={() => props.onCancelDelete()}>
-                            No, Cancelar
-                        </Button>
-                    </div>
-                </Modal>
-            </div>
             <section className='mb-4 flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center'>
                 <div className='w-full max-w-md'>
                     <div className='group relative'>
@@ -101,24 +56,7 @@ const EstablishmentListPresenter = (props: Props) => {
                     </div>
                 </div>
 
-                <button
-                    type='button'
-                    onClick={props.onAdd}
-                    className='inline-flex w-max items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
-                    <div className='inline-flex items-center gap-2'>
-                        <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            height='24px'
-                            viewBox='0 -960 960 960'
-                            width='24px'
-                            fill='currentColor'
-                        ><path
-                            d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
-                        ></path>
-                        </svg>
-                        <span>Nueva institución</span>
-                    </div>
-                </button>
+
             </section>
             <section className='h-min rounded-md bg-gray-100'>
                 <Table
@@ -127,19 +65,19 @@ const EstablishmentListPresenter = (props: Props) => {
                         {
                             title: "Nombre",
                             render: (row: EstablishmentEntity) => (
-                                <p className="text-left text-wrap">{row.name}</p>
+                                <p>{row.name}</p>
                             )
                         },
                         {
                             title: "Abreviatura",
                             render: (row: EstablishmentEntity) => (
-                                <p className="text-left">{row.abbreviation}</p>
+                                <p>{row.abbreviation}</p>
                             )
                         },
                         {
                             title: "Maxima autoridad",
                             render: (row: EstablishmentEntity) => (
-                                <p className="text-left" >{row.highest_authority + " " + row.first_name_authority + " " + row.last_name_authority}</p>
+                                <p>{row.highest_authority + " " + row.first_name_authority + " " + row.last_name_authority}</p>
                             )
                         },
                         {
@@ -247,6 +185,6 @@ const EstablishmentListPresenter = (props: Props) => {
             </section>
         </>
     )
-
 }
-export default EstablishmentListPresenter
+
+export default EntitiesCompliancePresenter;

@@ -97,25 +97,9 @@ const TA = (props: Props) => {
                 <Accordion.Content>
                     <Table<TransparencyActive>
                         show={true}
+                        text="La institución no ha publicado datos para este mes."
                         columns={[
-                            {
-                                render: (item) => {
-                                    return (
-                                        <p
-                                            className="text-gray-900 
-                                        text-wrap
-                                        flex-wrap
-                                        text-left
-                                        dark:text-white 
-                                        text-base">
-                                            {
-                                                textFormat(item.numeralPartial?.name || "")
-                                            }</p>
-                                    )
-                                },
-                                title: "#",
-                                classes: "w-1/4"
-                            },
+
                             {
                                 render: (item) => {
                                     return (
@@ -124,7 +108,13 @@ const TA = (props: Props) => {
                                          text-left
                                          text-wrap
                                             flex-wrap
-                                         text-base">{textFormat(item.numeralPartial?.description || "")}</p>
+                                         text-base">
+                                            {
+                                                textFormat(item.numeralPartial?.name || "")
+                                                    .replace("Numeral", "")
+                                                    .replace("Art. ", "")
+                                            }
+                                            {" " + textFormat(item.numeralPartial?.description || "")}</p>
                                     )
                                 },
                                 title: "Numeral"

@@ -1,28 +1,29 @@
-import { createBrowserRouter, redirect } from 'react-router-dom'
-import SessionService from './infrastructure/Services/SessionService'
-import Admin from './interfaces/web/Admin'
-import ActivateAccount from './interfaces/web/Auth/ActivateAccount'
-import ConfirmPassword from './interfaces/web/Auth/ConfirmPassword'
-import Entry from './interfaces/web/Auth/Entry'
-import ForgotPassword from './interfaces/web/Auth/ForgotPassword'
-import Login from './interfaces/web/Auth/Login'
-import Register from './interfaces/web/Auth/Register'
-import IndicatorsAdmin from './interfaces/web/Dashboard/IndicatorsAdmin'
-import Landing from './interfaces/web/Landing'
-import About from './interfaces/web/Landing/About'
-import PublicEstablishmentDetail from './interfaces/web/Landing/Establishment/Detail/PublicEstablishmentDetail'
-import PublicEstablishment from './interfaces/web/Landing/Establishment/List/PublicEstablshment'
-import FAQ from './interfaces/web/Landing/FAQ'
-import Home from './interfaces/web/Landing/Home'
-import Normative from './interfaces/web/Landing/Normative'
-import PublicationDetail from './interfaces/web/Landing/Publication/Detail'
-import Audience from './interfaces/web/Landing/Thematics/Audience'
-import Personal from './interfaces/web/Landing/Thematics/Personal'
-import Finance from './interfaces/web/Landing/Thematics/Presupuesto'
-import Solicity from './interfaces/web/Landing/Thematics/Solicity'
-import Tutorials from './interfaces/web/Landing/Tutorials'
-import { BASE_URL, IS_SERVER } from './utils/constans'
-import menu from './utils/menu'
+import { createBrowserRouter, redirect } from "react-router-dom";
+import SessionService from "./infrastructure/Services/SessionService";
+import Login from "./interfaces/web/Auth/Login";
+import Admin from "./interfaces/web/Admin";
+import Register from "./interfaces/web/Auth/Register";
+import menu from "./utils/menu";
+import Landing from "./interfaces/web/Landing";
+import ForgotPassword from "./interfaces/web/Auth/ForgotPassword";
+import ConfirmPassword from "./interfaces/web/Auth/ConfirmPassword";
+import ActivateAccount from "./interfaces/web/Auth/ActivateAccount";
+import Home from "./interfaces/web/Landing/Home";
+import Normative from "./interfaces/web/Landing/Normative";
+import FAQ from "./interfaces/web/Landing/FAQ";
+import PublicEstablishment from "./interfaces/web/Landing/Establishment/List/PublicEstablshment";
+import PublicEstablishmentDetail from "./interfaces/web/Landing/Establishment/Detail/PublicEstablishmentDetail";
+import PublicationDetail from "./interfaces/web/Landing/Publication/Detail";
+import Entry from "./interfaces/web/Auth/Entry";
+import { BASE_URL, IS_SERVER } from "./utils/constans";
+import About from "./interfaces/web/Landing/About";
+import Tutorials from "./interfaces/web/Landing/Tutorials";
+import Personal from "./interfaces/web/Landing/Thematics/Personal";
+import Audience from "./interfaces/web/Landing/Thematics/Audience";
+import Solicity from "./interfaces/web/Landing/Thematics/Solicity";
+import Finance from "./interfaces/web/Landing/Thematics/Presupuesto";
+import IndicatorsAdmin from "./interfaces/web/Dashboard/IndicatorsAdmin";
+import { InvalidSession } from "./interfaces/web/Auth/401";
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged()
@@ -80,6 +81,10 @@ const Router = createBrowserRouter(
           element: <Home />
         },
         {
+          path: '/401',
+          element: <InvalidSession />
+        },
+        {
           path: '/normativa',
           element: <Normative />
         },
@@ -113,8 +118,8 @@ const Router = createBrowserRouter(
         },
 
         {
-          path: '/presupuesto',
-          element: <Finance />
+          path: "/presupuesto",
+          element: <Finance/>,
         },
 
         {
@@ -126,8 +131,8 @@ const Router = createBrowserRouter(
           element: <Audience />
         },
         {
-          path: '/formularios-solicitudes',
-          element: <Solicity />
+          path: "/formularios-solicitudes",
+          element: <Solicity/>,
         },
 
         {

@@ -10,6 +10,11 @@ class SolicityService {
     this.api = api;
   }
 
+
+  async deleteSolicity(id: number) {
+    const response = await this.api.deleteSolicity(id);
+    return response;
+  }
   async getSolicities(search?: string, page?: number, limit?: number, sort?: string[],
     range_start?: string, range_end?: string) {
     const response = await this.api.getSolicity(search, page, limit,sort, range_start, range_end);

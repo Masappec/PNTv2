@@ -95,7 +95,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                         {
                             props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
                         }
-                        <div className="grid xl:grid-cols-3 gap-4">
+                        <div className="grid xl:grid-cols-1 gap-4">
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Nombre"} width="w-60"

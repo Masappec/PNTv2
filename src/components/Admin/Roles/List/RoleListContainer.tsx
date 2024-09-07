@@ -21,9 +21,13 @@ const RoleListContainer = ({
 
     const navigate = useNavigate()
 
+
+
+
     useEffect(() => {
         usecase.execute().then((data) => {
-            setRoles(data)
+            const sortedRoleEntity = [...data].sort((a, b) => a.name.localeCompare(b.name));
+            setRoles(sortedRoleEntity);
         }).catch((error) => {
             setError(error.message)
         })
@@ -39,11 +43,11 @@ const RoleListContainer = ({
     }
 
 
-    const handleDelete = (Role:RoleEntity) => {
+    const handleDelete = (Role: RoleEntity) => {
         setVisibleModal(true)
         setSelectedRole(Role)
     }
-    
+
     const handleCancelDelete = () => {
         setVisibleModal(false)
         setSelectedRole(null)
@@ -51,7 +55,7 @@ const RoleListContainer = ({
 
 
     const handleConfirmDelete = () => {
-        usecase.deleteRole(selectedRole?.id+"").then(() => {
+        usecase.deleteRole(selectedRole?.id + "").then(() => {
             setVisibleModal(false)
             setSelectedRole(null)
             setRoles(roles.filter((role) => role.id !== selectedRole?.id))

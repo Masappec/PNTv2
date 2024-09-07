@@ -52,29 +52,29 @@ const SolicityDetailPresenter = (props: Props) => {
   return (
 
     <>
-      <section className='gap-4 lg:grid lg:grid-cols-[1fr,max-content]'>
-        <div>
+      <section className='w-full flex sm:flex-row gap-4 flex-col'>
+        <div className="sm:w-4/6 w-full">
           <section className='mx-auto mb-4 space-y-4 rounded-lg border border-gray-100 bg-primary/10 p-4'>
             <h2 className='rounded-md bg-primary p-4 text-left text-xl font-bold text-white'>
               Información de la Entidad
             </h2>
 
             <div className='grid sm:grid-cols-[300px,1fr]'>
-              <span className='font-bold text-gray-700'>N° SAIP</span>
+              <span className='font-bold text-gray-700'>N° SAIP:</span>
               <span className='text-slate-600'>{props.solicitySaved.number_saip}</span>
             </div>
             <div className='grid sm:grid-cols-[300px,1fr]'>
-              <span className='font-bold text-gray-700'>Nombre de la Entidad</span>
+              <span className='font-bold text-gray-700'>Nombre de la Entidad:</span>
               <span className='text-slate-600'>
                 {props.entitySelected.name}
               </span>
             </div>
-            <div className='grid sm:grid-cols-[300px,1fr]'>
+            {/* <div className='grid sm:grid-cols-[300px,1fr]'>
               <span className='font-bold text-gray-700'>RUC de la Entidad</span>
               <span className='text-slate-600'>{props.entitySelected.identification}</span>
-            </div>
+            </div> */}
             <div className='grid sm:grid-cols-[300px,1fr]'>
-              <span className='font-bold text-gray-700'>Fecha</span>
+              <span className='font-bold text-gray-700'>Fecha y hora de envío de solicitud:</span>
               <span className='text-slate-600'>{new Date(props.solicitySaved.date).toLocaleString('es-ES', {
                 hour12: false,
                 year: 'numeric',
@@ -86,7 +86,7 @@ const SolicityDetailPresenter = (props: Props) => {
               })}</span>
             </div>
             <div className='grid sm:grid-cols-[300px,1fr]'>
-              <span className='font-bold text-gray-700'>Ciudad</span>
+              <span className='font-bold text-gray-700'>Ciudad:</span>
               <span className='text-slate-600'>{props.solicitySaved.city}</span>
             </div>
           </section>
@@ -97,22 +97,22 @@ const SolicityDetailPresenter = (props: Props) => {
             </h2>
 
             <div className='grid sm:grid-cols-[300px,1fr]'>
-              <span className='font-bold text-gray-700'>Nombre</span>
+              <span className='font-bold text-gray-700'>Nombre:</span>
               <span className='text-slate-600'>{props.solicitySaved.first_name}</span>
             </div>
 
             <div className='grid sm:grid-cols-[300px,1fr]'>
-              <span className='font-bold text-gray-700'>Apellido</span>
+              <span className='font-bold text-gray-700'>Apellido:</span>
               <span className='text-slate-600'>{props.solicitySaved.last_name}</span>
             </div>
 
             <div className='grid sm:grid-cols-[300px,1fr]'>
-              <span className='font-bold text-gray-700'>Correo electrónico</span>
+              <span className='font-bold text-gray-700'>Correo electrónico:</span>
               <span className='text-slate-600'>{props.solicitySaved.email}</span>
             </div>
 
             <div className='grid sm:grid-cols-[300px,1fr]'>
-              <span className='font-bold text-gray-700'>Teléfono de Contacto</span>
+              <span className='font-bold text-gray-700'>Teléfono de Contacto:</span>
               <span className='text-slate-600'>{props.solicitySaved.phone}</span>
             </div>
 
@@ -121,26 +121,26 @@ const SolicityDetailPresenter = (props: Props) => {
               <span className='text-slate-600'>{props.solicitySaved.gender}</span>
             </div>
 
-            <div className='grid sm:grid-cols-[300px,1fr]'>
+            {/* <div className='grid sm:grid-cols-[300px,1fr]'>
               <span className='font-bold text-gray-700'>Identificación Cultural</span>
               <span className='text-slate-600'>{props.solicitySaved.race_identification}</span>
-            </div>
+            </div> */}
           </section>
 
           {props.solicitySaved.text != "" && <section className='mx-auto mb-4 rounded-lg border border-gray-100 bg-primary-600/10 p-4'>
             <h2 className='mb-4 rounded-md bg-primary-600 p-4 text-left text-xl font-bold text-white'>
-              Petición completa
+            Información solicitada
             </h2>
 
             <p className='mb-4 text-slate-600'>
               {props.solicitySaved.text}
             </p>
 
-            <div className='flex items-center justify-end gap-4'>
+            <div className='flex items-center justify-start gap-4'>
               <p className='text-slate-600'>
-                Envio: <span className='font-medium'>{props.solicitySaved.format_send}</span>
+              Formato solicitado: <span className='font-medium'>{props.solicitySaved.format_send}</span>
               </p>
-              <p className='text-slate-600'>Recepción: <span className='font-medium'>{props.solicitySaved.format_receipt}</span></p>
+              <p className='text-slate-600'>Canal de recepción de solicitud: <span className='font-medium'>{props.solicitySaved.format_receipt}</span></p>
             </div>
           </section>
           }
@@ -220,7 +220,8 @@ const SolicityDetailPresenter = (props: Props) => {
                       <section className='flex items-center justify-between'>
                         <label
                           className='inline-block text-sm font-semibold text-gray-900 text-wrap'
-                          data-testid='flowbite-label'>
+
+data-testid='flowbite-label'>
                           {file.description}
 
                         </label>
@@ -245,7 +246,7 @@ const SolicityDetailPresenter = (props: Props) => {
 
         </div>
 
-        <div className='mt-6 grow sm:mt-8 lg:mt-0'>
+        <div className='mt-6 grow sm:mt-8 lg:mt-0 w-full sm:w-2/6'>
           <div className='space-y-6 rounded-lg border border-gray-300 p-6'>
             <h3 className='text-xl font-semibold text-gray-900'>Estado de la Solicitud</h3>
 
@@ -272,10 +273,10 @@ const SolicityDetailPresenter = (props: Props) => {
                       </svg>
                     </span>
                     <h4 className='mb-0.5 text-base font-semibold text-gray-900'>{formatDate(l.created_at)}</h4>
-                    <p className='text-sm font-normal text-gray-500'>{
+                    <p className='text-sm font-normal text-gray-500 text-wrap '>{
 
                       user && user.group?.find(g => g.name.toLowerCase() == "ciudadano") ?
-                        StatusSolicity[l.status as keyof typeof StatusSolicity].value : StatusSolicity[l.status as keyof typeof StatusSolicity].value_2
+                        StatusSolicity[l.status as keyof typeof StatusSolicity].text : StatusSolicity[l.status as keyof typeof StatusSolicity].text
 
                     }</p>
                   </li>
@@ -304,3 +305,5 @@ const SolicityDetailPresenter = (props: Props) => {
 };
 
 export default SolicityDetailPresenter;
+
+//<section className='gap-4 lg:grid lg:grid-cols-[1fr,max-content]'>

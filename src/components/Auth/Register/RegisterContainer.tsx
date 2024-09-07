@@ -106,8 +106,15 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       return
     }
 
-    if (data.username === '*') {
-      setError('Debe ingresar un correo electrónico')
+    if (data.username === '') {
+      setError('Debe ingresar un usuario')
+      setLoading(false)
+      return
+    }
+
+    //validar que el username no tenga espacios
+    if (data.username.includes(' ')) {
+      setError('El usuario no puede contener espacios')
       setLoading(false)
       return
     }
@@ -176,11 +183,9 @@ const RegisterContainer = ({ usecase, configUseCase }: {
       isEnable={isEnable}
       onChangePassword={onChangePassword}
 
-    /> : <ScreenMessage message="¡Tu cuenta ha sido creada!" type="
-Para poderla utilizar, solo revisa los mensajes recibidos en tu correo electrónico (el que escribiste en el formulario de registro) para encontrar un mensaje de este portal. Dentro de este mensaje encontrarás un enlace que debes presionar para activar tu cuenta. Una vez que lo hayas realizado, podrás ingresar con tu usuario y clave al Portal de Transparencia.
-
-Si no encuentras el correo enviado, favor revisa en tu carpeta de mensajes no deseados o spam. =)
-" >
+    /> : <ScreenMessage message="Para poderla utilizar, solo revisa los mensajes recibidos en tu correo electrónico (el que escribiste en el formulario de registro) para encontrar un mensaje de este portal. Dentro de este mensaje encontrarás un enlace que debes presionar para activar tu cuenta. Una vez que lo hayas realizado, podrás ingresar con tu usuario y clave al Portal de Transparencia.
+      Si no encuentras el correo enviado, favor revisa en tu carpeta de mensajes no deseados o spam. ☺"
+      type="¡Tu cuenta ha sido creada!" >
 
       <div className="flex flex-row items-center justify-center  gap-16 mt-8 w-full">
 

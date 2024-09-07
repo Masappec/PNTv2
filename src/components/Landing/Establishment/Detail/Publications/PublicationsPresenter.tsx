@@ -36,16 +36,16 @@ interface Props {
     selectedYearTF: number;
     onOpenMonthTF: (month: number) => void;
     publicationsTF: AcordionMonthYear<TransparencyFocusEntity>[];
-    
+
 }
 
 const EstablishmentPublicationsPresenter = (props: Props) => {
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-    
-    
+
+
 
     return (
-    <>
+        <>
             <section className='my-16 flex flex-col gap-y-4 md:flex-row md:items-end' id='publications'>
                 <h2 className='text-balance text-2xl font-normal leading-tight md:text-[40px]'>
                     Información publicada
@@ -53,7 +53,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                 <div className='h-[1px] w-full bg-gray-400'></div>
             </section>
             <Accordion className="mt-28 mb-24" collapseAll
-                
+
             >
                 <Accordion.Panel>
                     <Accordion.Title>
@@ -78,7 +78,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                             <Dropdown label={
                                 <>
                                     <FiCalendar className="w-5 h-5 mr-5 ">
-                                        
+
                                     </FiCalendar>
 
                                     Seleccionar año
@@ -107,30 +107,30 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                             <div className="">
                                 <Accordion className="mt-14" key={"TA"} >
                                     <>
-                                    {
-                                        props.mesesTA.length == 0 && <Alert type="info" 
-                                        message="No hay información publicada en este año" 
-                                        onClose={() => { }} />
+                                        {
+                                            props.mesesTA.length == 0 && <Alert type="info"
+                                                message="No hay información publicada en este año"
+                                                onClose={() => { }} />
 
-                                    }
-                                    {
-                                        meses.map((mes, index) => {
-                                            const mesIndex = meses.findIndex(x => x == mes) + 1;
-                                            return (
-                                                <TA
-                                                    data={props.publications.find(x => x.month == mesIndex && x.year == props.selectedYear)?.data || []}
-                                                    month={
-                                                        props.mesesTA.find(x => x == mes) ? mes : mes+ " (No publicado)"
-                                                    }
-                                                    number_month={meses.findIndex(x => x == mes) + 1}
-                                                    year={props.selectedYear}
-                                                    key={index}
-                                                    onOpen={(month) => props.onOpenMonth(month)}
-                                                    establishment={props.entity.name}
-                                                />
-                                            );
-                                        })
-                                    }
+                                        }
+                                        {
+                                            meses.map((mes, index) => {
+                                                const mesIndex = meses.findIndex(x => x == mes) + 1;
+                                                return (
+                                                    <TA
+                                                        data={props.publications.find(x => x.month == mesIndex && x.year == props.selectedYear)?.data || []}
+                                                        month={
+                                                            props.mesesTA.find(x => x == mes) ? mes : mes + " (No publicado)"
+                                                        }
+                                                        number_month={meses.findIndex(x => x == mes) + 1}
+                                                        year={props.selectedYear}
+                                                        key={index}
+                                                        onOpen={(month) => props.onOpenMonth(month)}
+                                                        establishment={props.entity.name}
+                                                    />
+                                                );
+                                            })
+                                        }
                                     </>
                                 </Accordion>
 
@@ -152,7 +152,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                     <Accordion.Content>
                         <>
                             <p className="text-start text-lg font-bold mt-14  ">
-                                Transparencia focalizada{" "}
+                                Consulta la información temática recopilada por la institución
                             </p>
 
                             <h2 className="text-2xl font-semibold mt-4">
@@ -217,7 +217,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                             })
                                         }
                                     </>
-                                    
+
                                 </Accordion>
                             </div>
                         </>
@@ -233,7 +233,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                     <Accordion.Content>
                         <>
                             <p className="text-start text-lg font-medium mt-14">
-                                Transparencia colaborativa{" "}
+                                Consulta la información recopilada colaborativamente por la institución
                             </p>
 
                             <h2 className="text-2xl font-semibold mt-4">
@@ -300,9 +300,9 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                                     );
                                                 })
                                             }
-                                        
+
                                         </>
-                                        
+
                                     </Accordion>
                                 </div>
                             </div>
@@ -311,7 +311,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                 </Accordion.Panel>
             </Accordion>
 
-    </>
+        </>
     )
 }
 

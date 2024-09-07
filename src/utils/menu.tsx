@@ -55,22 +55,41 @@ import SolicityOnHold from '../interfaces/web/Transparency/Solicity/OnHold'
 import SolicityResponse from '../interfaces/web/Transparency/Solicity/Response'
 
 export interface MenuItem {
-  name: string
-  path: string
-  permission_required: string
-  icon: JSX.Element
-  visible: boolean
-  visible_for_superadmin?: boolean
+  name: string;
+  path: string;
+  permission_required: string;
+  icon: JSX.Element;
+  visible: boolean;
+  visible_for_superadmin?: boolean;
 }
 
 const menu = [
+  {
+    name: "Inicio",
+    path: "/admin/reports",
+    visible: true,
+    icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
+    permission_required: "view_solicityresponse",
+    element: <Reports />,
+    visible_for_superadmin: false
+  },
+  {
+    name: "Inicio",
+    path: "/admin/reports",
+    visible: true,
+    icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
+    permission_required: "view_solicityresponse",
+    element: <Reports />,
+    visible_for_superadmin: false
+  },
   {
     name: 'Indicadores',
     path: '/admin',
     visible: true,
     icon: <BiPieChart size={25} className="text-slate-500" />,
-    permission_required: '',
-    element: <IndicatorsEst />
+    permission_required: "",
+    element: <IndicatorsEst />,
+    hidden_for_citicen: true
   },
   {
     name: 'Indicadores Por Entidad',
@@ -221,14 +240,15 @@ const menu = [
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: 'view_transparencyactive',
     element: <ActiveNumerals />,
-    visible_for_superadmin: false
+    visible_for_superadmin: true
+
   },
   {
     name: 'T.Activa',
     path: '/admin/active/all',
     visible: true,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: 'view_all_transparencyactive',
+    permission_required: "view_all_transparencyactive",
     element: <AllTA />,
     visible_for_superadmin: false
   },
@@ -274,7 +294,7 @@ const menu = [
     path: '/admin/focalized/all',
     visible: true,
     icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
-    permission_required: 'view_all_transparencyfocal',
+    permission_required: "view_all_transparencyfocal",
     element: <AllTF />,
     visible_for_superadmin: false
   },
@@ -341,6 +361,7 @@ const menu = [
     visible_for_superadmin: false
   },
 
+
   {
     name: 'Solicitudes',
     path: '/admin/solicity/all',
@@ -361,9 +382,9 @@ const menu = [
     visible_for_superadmin: false
   },
   {
-    name: ' Crear Solicitudes',
-    path: '/admin/solicity/create',
-    visible: false,
+    name: " Crear Solicitudes",
+    path: "/admin/solicity/create",
+    visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: 'add_solicity',
     element: <SolicityCreate />
@@ -381,8 +402,8 @@ const menu = [
     path: '/admin/solicity/edit/:id',
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: 'change_solicity',
-    element: <SolicityEdit />
+    permission_required: "add_solicity",
+    element: <SolicityEdit />,
   },
 
   {
@@ -418,22 +439,23 @@ const menu = [
     permission_required: 'view_solicityresponse,view_solicity,view_all_solicities',
     element: <SolicityDetail />
   },
+
   {
-    name: 'Reportes',
-    path: '/admin/reports',
+    name: "Reportes",
+    path: "/admin/reports",
     visible: true,
     icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
-    permission_required: 'view_solicityresponse',
+    permission_required: "view_solicityresponse",
     element: <Reports />,
     visible_for_superadmin: false
   },
   {
-    name: 'Publicaciones T. Activa',
-    path: '/admin/publicaciones',
-    visible: true,
-    icon: <FaTable size={25} className="text-slate-500" />,
+    name:'Publicaciones T. Activa',
+    path:'/admin/publicaciones',
+    visible:true,
+    icon: <FaTable size={25} className="text-slate-500"/>,
     permission_required: 'view_transparencyactive',
-    element: <AllPublications />,
+    element: <AllPublications  />,
     visible_for_superadmin: false
   },
   {
@@ -443,7 +465,7 @@ const menu = [
     icon: <FaRegUser size={25} className="text-slate-500" />,
     permission_required: '',
     element: <VerPerfil />,
-    visible_for_superadmin: false
+    visible_for_superadmin:  false
   }
 ]
 

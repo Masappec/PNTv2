@@ -1,4 +1,4 @@
-import {  Tabs, TabsRef } from "flowbite-react";
+import { Tabs, TabsRef } from "flowbite-react";
 import Spinner from "../../../Common/Spinner";
 import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
 import { FilePublicationEntity } from "../../../../domain/entities/PublicationEntity";
@@ -66,15 +66,13 @@ const ActiveCreatePresenter = (props: Props) => {
       </h2>
       <section className='mb-8 flex flex-col items-center justify-center gap-8'>
         <h1 className='w-full text-left text-lg font-semibold text-gray-900'>
+
           {props.title}
         </h1>
 
         <section className='w-full'>
           <p className='max-w-max items-center text-sm text-primary'>
-            Para actualizar la información de Transparencia Activa, primero seleccione la forma de
-            publicación de los archivos haciendo clic en una de las pestañas para crear o cargar el
-            conjunto de datos, metadatos y diccionario. Luego, confirme el contenido en la
-            previsualización y presione el botón Guardar. Si no lo hace, los archivos no se almacenarán.
+            Para realizar la carga de los archivos de Transparencia Activa que corresponden a este numeral, primero selecciona la forma de carga que vas a utilizar seleccionando la pestaña que corresponda (Subir archivos, Agregar enlaces, Crear archivos, Reutilizar archivos del mes anterior, Descargar plantillas). Asegúrate que los archivos cumplen con las columnas que requiere este numeral, confirma su contenido en la previsualización y presiona el botón “Guardar”. Recuerda que si no presionas “Guardar” los archivos no se cargarán al portal.
           </p>
           {
             props.error && (
@@ -141,12 +139,13 @@ const ActiveCreatePresenter = (props: Props) => {
               ref={props.tabRef} style="underline"
               theme={themeTabs}
             >
-              <Tabs.Item title="Subir Archivos"
+              <Tabs.Item title="Subir archivos"
 
               >
                 <section className='flex flex-col gap-4'>
-                  <p className='max-w-3xl items-center text-sm text-primary'>
-                    Utilice esta opción si tiene los archivos creados en formato CSV.
+                  <p className='max-w-3xl items-center text-md text-primary'>
+                    Utiliza esta forma de publicación si ya cuentas con el archivo creado y almacenado en tu computadora, en formato CSV con las columnas esperadas para este numeral.
+
                   </p>
                   {
                     props.templates.map((template, index) => {
@@ -175,14 +174,13 @@ const ActiveCreatePresenter = (props: Props) => {
                 </section>
 
               </Tabs.Item>
-              <Tabs.Item title="Agregar enlances"
+              <Tabs.Item title="Agregar enlaces"
 
               >
                 <div className='mb-8 ' id='dashboard' role='tabpanel' aria-labelledby='dashboard-tab'>
                   <section className='flex flex-col gap-4'>
-                    <p className='max-w-3xl items-center text-sm text-primary'>
-                      Utilice esta opción si tiene los archivos publicados en un repositorio digital o en un
-                      sitio web institucional.
+                    <p className='max-w-3xl items-center text-md text-primary'>
+                      Utiliza esta forma de publicación si ya cuentas con los archivos creados, pero almacenados en un repositorio institucional o en la nube, en formato CSV con las columnas esperadas para este numeral. Recuerda que la dirección que ingreses debe ser la dirección directa del archivo y no de una página intermedia.
                     </p>
 
                     {
@@ -218,7 +216,11 @@ const ActiveCreatePresenter = (props: Props) => {
                 </div>
 
               </Tabs.Item>
-              <Tabs.Item title="Crear documentos">
+              <Tabs.Item title="Crear archivos">
+                <p className='max-w-3xl items-center text-md text-primary'>
+                  Utiliza esta forma de publicación si no cuentas con los archivos creados, y deseas crearlos directamente aquí en el portal.
+
+                </p>
                 {
                   props.templates.map((file, index) => {
 
@@ -244,11 +246,10 @@ const ActiveCreatePresenter = (props: Props) => {
                   })
                 }
               </Tabs.Item>
-              <Tabs.Item title="Usar archivos Anteriores">
+              <Tabs.Item title="Reutilizar archivos del mes anterior">
                 <section className='flex flex-col gap-4'>
-                  <p className='max-w-2xl items-center text-sm text-primary'>
-                    Utilice esta opción si desea reutilizar archivos cargados en el último mes para crear el
-                    archivo del mes actual.
+                  <p className='max-w-2xl items-center text-md text-primary'>
+                    Utiliza esta opción si no cuentas con los archivos creados, y deseas ahorrar tiempo reutilizando los del mes anterior, para editarlos y solo cambiar lo que sea necesario. Recuerda que solo puedes reutilizar archivos del mes inmediato anterior para publicarlos en el mes actual.
                   </p>
 
                 </section>
@@ -262,10 +263,10 @@ const ActiveCreatePresenter = (props: Props) => {
 
                 />
               </Tabs.Item>
-              <Tabs.Item title="Descargar Plantilla">
-                <p className='max-w-3xl items-center text-sm text-primary'>
-                  Si no tiene los formatos para los archivos, puede descargarlos desde esta opción. Se
-                  proporcionarán plantillas vacías para que pueda crear y subir los archivos necesarios.
+              <Tabs.Item title="Descargar plantillas">
+                <p className='max-w-3xl items-center text-md text-primary'>
+                  Si no cuentas con los formatos que se deben utilizar para este numeral, puedes descargar las plantillas en esta opción. Una vez descargadas, podrás editarlas en tu computadora para completar la información requerida y proceder luego a cargarlos al portal.
+
                 </p>
                 <section className='mt-4 grid max-w-xs grid-cols-1 gap-4'>
                   {
@@ -296,13 +297,13 @@ const ActiveCreatePresenter = (props: Props) => {
 
           <div
             className='flex w-full flex-col flex-wrap items-end justify-end gap-4 border-t border-gray-300 pt-8'>
-            <p className='max-w-3xl items-center text-sm text-primary'>
-              Recuerde que si no presiona "Guardar", los archivos no se guardarán en el sistema.
+            <p className='max-w-3xl items-center text-md text-primary'>
+              Recuerda, que que si no presionas "Guardar" luego de subir los archivos al portal, estos no se almacenarán en el sistema y no se publicarán.
             </p>
             <div className='flex items-center gap-4'>
               <button
                 type='button'
-                onClick={()=>props.onCancel()}
+                onClick={() => props.onCancel()}
                 className='inline-flex w-max items-center gap-2 rounded-md bg-gray-300 px-5 py-2.5 text-center text-sm font-medium text-gray-600 hover:opacity-80'>
                 <div className='inline-flex items-center gap-2'>
                   <svg
@@ -319,33 +320,33 @@ const ActiveCreatePresenter = (props: Props) => {
                 </div>
               </button>
               {
-                props.loading ? 
-                  <Spinner />:
-              <button
-                type='button'
-                onClick={() => props.handleSubmit()}
-                className='inline-flex w-max items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  height='24px'
-                  viewBox='0 -960 960 960'
-                  width='24px'
-                  fill='currentColor'
-                ><path
-                  d='M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM480-240q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z'
-                ></path>
-                </svg>
-                <span>Guardar</span>
-              </button>
+                props.loading ?
+                  <Spinner /> :
+                  <button
+                    type='button'
+                    onClick={() => props.handleSubmit()}
+                    className='inline-flex w-max items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      height='24px'
+                      viewBox='0 -960 960 960'
+                      width='24px'
+                      fill='currentColor'
+                    ><path
+                      d='M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM480-240q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z'
+                    ></path>
+                    </svg>
+                    <span>Guardar</span>
+                  </button>
               }
-              
+
             </div>
           </div>
         </section>
       </section>
     </>
   )
-  
+
 };
 
 export default ActiveCreatePresenter;
