@@ -45,7 +45,6 @@ import EntityComplianceV2 from "../interfaces/web/Dashboard/EntityComplianceV2";
 import { GrCompliance } from "react-icons/gr";
 import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
 import VerPerfil from "../interfaces/web/Transparency/Perfil";
-import EntidadesAll from "../interfaces/web/Transparency/EntidadesyCumplimiento/all";
 
 
 export interface MenuItem {
@@ -448,24 +447,7 @@ const menu = [
 
   },
 
-  {
-    name: " Cumplimiento de Entidades",
-    path: "/admin/entitycompliance",
-    visible: true,
-    icon: <GrCompliance size={25} className="text-slate-500" />,
-    permission_required: "view_establishment",
-    element: <EntityComplianceV2 />,
-
-  },
-  {
-    name: 'Entidades y Cumplimiento',
-    path: '/admin/entitycompliance/all',
-    visible: true,
-    icon: <GrCompliance size={25} className="text-slate-500" />,
-
-    permission_required: '',
-    element: <EntidadesAll />
-  }
+ 
 
 ]
 

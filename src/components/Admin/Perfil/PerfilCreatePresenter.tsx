@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent } from 'react'
+import Alert from '../../Common/Alert'
 
 interface User {
   username: string
@@ -11,10 +12,17 @@ interface perfilProps {
   userData: User
   currentPassword: string
   newPassword: string
-  success: string
   handleCurrentPasswordChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleNewPasswordChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void
+  visible: boolean
+  visible2: boolean
+  setVisible: (value: boolean) => void
+  setVisible2: (value: boolean) => void
+  error: string
+  setError: (value: string) => void
+  setSuccess: (value: string) => void
+  success: string
 }
 
 const PerfilCreatePresenter = ({ userData, ...props }: perfilProps) => {
@@ -36,6 +44,8 @@ const PerfilCreatePresenter = ({ userData, ...props }: perfilProps) => {
               Correo
             </label>
             <input disabled={true} value={userData?.email} className="rounded-md border-gray-300" id="email" type="text" />
+           
+          
           </div>
         </div>
 
@@ -56,18 +66,94 @@ const PerfilCreatePresenter = ({ userData, ...props }: perfilProps) => {
 
         <h1 className="font-medium text-[20px] text-primary-500 mt-10">Cambiar Contraseña</h1>
         <hr className="border-t-2 border-gray-200" />
+        {
+          props.error && <Alert message={props.error} type='error' onClose={() => props.setError('')} />
+        }
+        {
+          props.success &&
+            <Alert message={props.success} type='success' onClose={() => props.setSuccess('')} />
+          }
         <div className="flex w-full gap-4 mb-4 mt-8">
           <div className="flex flex-col w-1/2">
             <label htmlFor="current" className="text-gray-600">
               Constraseña Actual
             </label>
-            <input className="rounded-md border-gray-300" id="current" type="text" value={props.currentPassword} onChange={props.handleCurrentPasswordChange} />
+            <div className='relative'>
+              <input className="rounded-md w-full border-gray-300" id="current" 
+            
+            type={props.visible ? 'text' : 'password'}
+             value={props.currentPassword} onChange={props.handleCurrentPasswordChange} />
+            <button
+              type='button'
+              onClick={() => props.setVisible(!props.visible)}
+              className='absolute right-0 top-0 p-2 text-gray-600 outline-primary hover:cursor-pointer'
+            ><svg
+              className='h-6 w-6'
+              stroke='currentColor'
+              fill='currentColor'
+              stroke-width='0'
+              viewBox='0 0 512 512'
+              height='1em'
+              width='1em'
+              xmlns='http://www.w3.org/2000/svg'
+            ><path
+              fill='none'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='32'
+              d='M255.66 112c-77.94 0-157.89 45.11-220.83 135.33a16 16 0 00-.27 17.77C82.92 340.8 161.8 400 255.66 400c92.84 0 173.34-59.38 221.79-135.25a16.14 16.14 0 000-17.47C428.89 172.28 347.8 112 255.66 112z'
+            ></path><circle
+              cx='256'
+              cy='256'
+              r='80'
+              fill='none'
+              stroke-miterlimit='10'
+              stroke-width='32'></circle>
+              </svg></button>
+            </div>
+
           </div>
           <div className="flex flex-col w-1/2">
             <label htmlFor="newPass" className="text-gray-600">
               Nueva Constraseña
             </label>
-            <input className="rounded-md border-gray-300" id="newPass" type="text" value={props.newPassword} onChange={props.handleNewPasswordChange} />
+            <div className='relative'>
+
+            <input className="rounded-md w-full border-gray-300" id="newPass"
+            
+            type={props.visible2 ? 'text' : 'password'}
+            
+            value={props.newPassword} onChange={props.handleNewPasswordChange} />
+          
+            <button
+              type='button'
+              onClick={() => props.setVisible2(!props.visible2)}
+
+              className='absolute right-0 top-0 p-2 text-gray-600 outline-primary hover:cursor-pointer'
+            ><svg
+              className='h-6 w-6'
+              stroke='currentColor'
+              fill='currentColor'
+              stroke-width='0'
+              viewBox='0 0 512 512'
+              height='1em'
+              width='1em'
+              xmlns='http://www.w3.org/2000/svg'
+            ><path
+              fill='none'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='32'
+              d='M255.66 112c-77.94 0-157.89 45.11-220.83 135.33a16 16 0 00-.27 17.77C82.92 340.8 161.8 400 255.66 400c92.84 0 173.34-59.38 221.79-135.25a16.14 16.14 0 000-17.47C428.89 172.28 347.8 112 255.66 112z'
+            ></path><circle
+              cx='256'
+              cy='256'
+              r='80'
+              fill='none'
+              stroke-miterlimit='10'
+              stroke-width='32'></circle>
+              </svg></button>
+            </div>
           </div>
         </div>
 
