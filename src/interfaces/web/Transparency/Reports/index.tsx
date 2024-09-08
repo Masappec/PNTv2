@@ -4,6 +4,8 @@ import SolicitiesResponse from "./SolicitiesResponse";
 import { themeTabs } from "../../../../components/Common/Tabs/Theme";
 import SolicitiesNoResponse from "./SolicitiesNoResponse";
 import FilePublications from "./FilePublications";
+import SolicityListEstablishment from "../Solicity/ListEstablishment";
+import AllPublications from "../AllPublications";
 
 
 
@@ -13,7 +15,7 @@ const Reports = () => {
     return (
         <Tabs theme={themeTabs} style="underline">
             <Tabs.Item title="Todas las solicitudes"  >
-            <AllSolicities />
+            <SolicityListEstablishment />
             </Tabs.Item>
             <Tabs.Item title="Solicitudes respondidas" >
                 <SolicitiesResponse />
@@ -22,7 +24,7 @@ const Reports = () => {
                 <SolicitiesNoResponse />
             </Tabs.Item>
             <Tabs.Item title="Archivos publicados por mes " >
-                <FilePublications />
+                <AllPublications  />
             </Tabs.Item>
         </Tabs>
     )

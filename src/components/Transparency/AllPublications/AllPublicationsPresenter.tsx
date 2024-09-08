@@ -148,7 +148,7 @@ const AllPublicationsPresenter = (props:Props)=>{
                     {
                         render: (item) => {
                             return (
-                                <p className="text-gray-900 dark:text-white text-base">{item.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "")}</p>
+                                <p className="text-gray-900 dark:text-white text-base ">{item.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "")}</p>
                             )
                         },
                         title: "#"

@@ -371,7 +371,7 @@ const menu = [
   {
     name: "Solicitudes",
     path: "/admin/establishment/solicity",
-    visible: true,
+    visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_solicityresponse",
     element: <SolicityListEstablishment />,
@@ -414,7 +414,7 @@ const menu = [
   {
     name: " Responder Solicitudes",
     path: "/admin/solicity/response",
-    visible: false,
+    visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "view_solicityresponse,view_solicity,view_all_solicities",
 
@@ -440,7 +440,7 @@ const menu = [
   {
     name: 'Publicaciones T. Activa',
     path: '/admin/publicaciones',
-    visible: true,
+    visible: false,
     icon: <FaTable size={25} className="text-slate-500" />,
     permission_required: 'view_transparencyactive',
     element: <AllPublications />,
