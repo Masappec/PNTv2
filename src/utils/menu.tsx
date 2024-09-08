@@ -41,6 +41,7 @@ import AllTC from '../interfaces/web/Transparency/Collaborative/All'
 import CollaborativeCreate from '../interfaces/web/Transparency/Collaborative/Create'
 import CollaborativeEdit from '../interfaces/web/Transparency/Collaborative/Edit'
 import CollaborativeList from '../interfaces/web/Transparency/Collaborative/List'
+import EntidadesAll from '../interfaces/web/Transparency/EntidadesyCumplimiento/all'
 import AllTF from '../interfaces/web/Transparency/Focalized/All'
 import FocalizedCreate from '../interfaces/web/Transparency/Focalized/Create'
 import FocalizedEdit from '../interfaces/web/Transparency/Focalized/Edit'
@@ -489,6 +490,14 @@ const menu = [
     permission_required: '',
     element: <VerPerfil />,
     visible_for_superadmin: false
+  },
+  {
+    name: 'Entidades y Cumplimiento',
+    path: '/admin/entitycompliance/all',
+    visible: true,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: '',
+    element: <EntidadesAll />
   }
 ]
 
