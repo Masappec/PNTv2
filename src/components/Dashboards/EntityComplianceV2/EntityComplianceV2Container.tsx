@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import EntityComplianceV2Presenter from './EntityComplianceV2Presenter'
 import { Pagination } from '../../../infrastructure/Api'
 import { ComplianceEstablisment } from '../../../infrastructure/Api/PublicDataApi/interface'

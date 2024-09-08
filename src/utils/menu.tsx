@@ -54,6 +54,7 @@ export interface MenuItem {
   icon: JSX.Element
   visible: boolean
   visible_for_superadmin?: boolean
+  hidden_for_citicen?: boolean
 }
 
 const menu = [

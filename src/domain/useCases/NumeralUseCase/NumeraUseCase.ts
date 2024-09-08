@@ -9,7 +9,7 @@ class NumeralUseCase {
         private readonly serviceEstablishment: EstablishmentService
     ) { }
 
-    async getNumeralByEstablishment(id: number,year:number,month:number){
+    async getNumeralByEstablishment(id: number,year?:number,month?:number){
         return await this.service.getNumeralByEstablishment(id,year,month)
     }
 
