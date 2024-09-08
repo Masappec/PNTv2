@@ -42,6 +42,8 @@ import AllTC from "../interfaces/web/Transparency/Collaborative/All";
 import CollaborativeCreate from "../interfaces/web/Transparency/Collaborative/Create";
 import AllMonitorSolicities from "../interfaces/web/Transparency/Solicity/All";
 import { IndicatorsMonitoring } from "../interfaces/web/Dashboard/IndicatorMonitoring";
+import EntityComplianceV2 from "../interfaces/web/Dashboard/EntityComplianceV2";
+import { GrCompliance } from "react-icons/gr";
 
 
 export interface MenuItem {
@@ -441,7 +443,15 @@ const menu = [
     permission_required: 'view_transparencyactive',
     element: <AllPublications />,
     visible_for_superadmin: false
-  }
+  },
+  {
+    name: " Cumplimiento de Entidades",
+    path: "/admin/entitycompliance",
+    visible: true,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: "view_establishment",
+    element: <EntityComplianceV2 />,
+  },
 
 ];
 

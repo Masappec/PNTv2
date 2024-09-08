@@ -70,6 +70,7 @@ function Table<T>({ ...props }: TableProps<T>) {
                                     <th scope='col'>
                                         <span className="flex text-center justify-center">
                                             {column.title}
+                                            
                                             {
                                                 props.sorteable && column.key ?
                                                     <a href='#'
