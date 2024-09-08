@@ -8,13 +8,15 @@ class NumeralApi {
 
     constructor(private readonly api: AxiosInstance) { }
 
-    async getNumeralByEstablishment(id: number) {
+    async getNumeralByEstablishment(id: number,year?:number,month?:number){
 
         try {
 
             const response = await this.api.get<NumeralDTO[]>(TRANSPARENCY_PATH + "/numerals/", {
                 params: {
-                    establishtment_id: id
+                    establishtment_id: id,
+                    year,
+                    month
                 }
             });
             return response.data;

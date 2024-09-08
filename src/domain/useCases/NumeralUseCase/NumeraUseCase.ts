@@ -9,13 +9,13 @@ class NumeralUseCase {
         private readonly serviceEstablishment: EstablishmentService
     ) { }
 
-    async getNumeralByEstablishment(id: number) {
-        return await this.service.getNumeralByEstablishment(id)
+    async getNumeralByEstablishment(id: number,year:number,month:number){
+        return await this.service.getNumeralByEstablishment(id,year,month)
     }
 
-    async getNumeralByUserInSession() {
+    async getNumeralByUserInSession(year?:number,month?:number){
         const establisment = await this.serviceEstablishment.getByUserSession()
-        return await this.service.getNumeralByEstablishment(establisment.id || 0)
+        return await this.service.getNumeralByEstablishment(establisment.id || 0,year,month)
 
     }
 

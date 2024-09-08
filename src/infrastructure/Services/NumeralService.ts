@@ -8,8 +8,8 @@ class NumeralService {
     constructor(private readonly api: NumeralApi) { }
 
 
-    async getNumeralByEstablishment(establishment_id: number) {
-        const res = await this.api.getNumeralByEstablishment(establishment_id)
+    async getNumeralByEstablishment(establishment_id: number,year?:number,month?:number){
+        const res = await this.api.getNumeralByEstablishment(establishment_id,year,month)
         return res.map(r => NumeralMapper.fromApiToDomain(r))
     }
 

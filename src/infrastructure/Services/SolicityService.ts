@@ -17,7 +17,7 @@ class SolicityService {
   }
   async getSolicities(search?: string, page?: number, limit?: number, sort?: string[],
     range_start?: string, range_end?: string) {
-    const response = await this.api.getSolicity(search, page, limit,sort, range_start, range_end);
+    const response = await this.api.getSolicity(search, page, limit, sort, range_start, range_end);
     return {
       ...response,
       results:
@@ -27,8 +27,8 @@ class SolicityService {
     };
   }
 
-  async getEstablishmentSolicity(search?: string, page?: number, limit?: number, sort?: string[], status?:string,establishment_id?: number) {
-    const response = await this.api.getEstablishmentSolicity(search, page, limit, sort,status, establishment_id);
+  async getEstablishmentSolicity(search?: string, page?: number, limit?: number, sort?: string[], status?: string, establishment_id?: number) {
+    const response = await this.api.getEstablishmentSolicity(search, page, limit, sort, status, establishment_id);
     return {
       ...response,
       results:
@@ -79,11 +79,12 @@ class SolicityService {
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }
 
-  async updateSolicity(data: CreateSolicity, id: number) {
+  async updateSolicity(data: CreateSolicity, id: number, is_send: boolean) {
     const response = await this.api.updateSolicity(
       {
         ...SolicityMappers.domainToApi(data),
         id,
+        is_send
       }
     );
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
@@ -105,14 +106,14 @@ class SolicityService {
     return response;
   }
 
-  async changeStatus(solicity_id:number, text:string) {
-    
+  async changeStatus(solicity_id: number, text: string) {
+
     const response = await this.api.changeStatus({
       solicity_id: solicity_id,
-      text:text
+      text: text
     });
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
-  
+
   }
 }
 export default SolicityService;

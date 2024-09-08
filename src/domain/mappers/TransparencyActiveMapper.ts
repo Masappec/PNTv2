@@ -37,7 +37,10 @@ class TransparencyActiveMapper {
         return {
             establishment_id: domainModel.establishment.id || 0,
             numeral_id: domainModel.numeral as number,
-            files: domainModel.files.map(file => file.id)
+            files: domainModel.files.map(file => file.id),
+            year:domainModel.year,
+            month:domainModel.month
+
         }
 
     }

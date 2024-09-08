@@ -42,6 +42,9 @@ import AllTC from "../interfaces/web/Transparency/Collaborative/All";
 import CollaborativeCreate from "../interfaces/web/Transparency/Collaborative/Create";
 import AllMonitorSolicities from "../interfaces/web/Transparency/Solicity/All";
 import { IndicatorsMonitoring } from "../interfaces/web/Dashboard/IndicatorMonitoring";
+import EntityComplianceV2 from "../interfaces/web/Dashboard/EntityComplianceV2";
+import { GrCompliance } from "react-icons/gr";
+import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
 
 
 export interface MenuItem {
@@ -224,7 +227,7 @@ const menu = [
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
     element: <ActiveNumerals />,
-    visible_for_superadmin: true
+    visible_for_superadmin: false
 
   },
   {
@@ -318,7 +321,7 @@ const menu = [
     path: '/admin/collaborative/create',
     visible: false,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
-    permission_required: "add_transparencycollab",
+    permission_required: "add_transparencycolab",
     element: <CollaborativeCreate />,
     visible_for_superadmin: false
   },
@@ -381,6 +384,7 @@ const menu = [
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: "add_solicity",
     element: <SolicityCreate />,
+    visible_for_superadmin: false
   },
   {
     name: " Crear Solicitudes",
@@ -441,7 +445,24 @@ const menu = [
     permission_required: 'view_transparencyactive',
     element: <AllPublications />,
     visible_for_superadmin: false
-  }
+  },
+  {
+    name: " Cumplimiento de Entidades",
+    path: "/admin/entitycompliance",
+    visible: true,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: "view_establishment",
+    element: <EntityComplianceV2 />,
+  },
+  {
+    name: " Detalle de Entidades",
+    path: "/admin/entitycompliance/detail",
+    visible: false,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: "view_establishment",
+    element: <DetailEntity />,
+  },
+
 
 ];
 

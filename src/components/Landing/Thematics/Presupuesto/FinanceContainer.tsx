@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../infrastructure/Store";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { ResponsePresupuestos } from "../../../../infrastructure/Api/PublicDataApi/interface";
+import axios from "axios";
+import { Transform } from "../../../../utils/transform";
 
 interface Props {
     usecase: PublicDataApi;
@@ -109,6 +111,61 @@ const FinanceContainer = (props: Props) => {
         })
 
     }
+
+
+    const onDownloadPDF = async (url: string, name: string) => {
+        try {
+            const res = await axios.get(url, {
+                responseType: 'blob'
+            });
+
+            // Crear un Blob a partir de la respuesta del archivo CSV
+            const blob = new Blob([res.data], { type: 'application/csv' });
+
+            // Crear un FileReader para leer el contenido del blob
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const text = event.target?.result as string;
+
+                // Aquí puedes procesar el texto del CSV
+
+                Transform.fromCsvToPdf(text, name, 'Presupuesto');
+            };
+
+            reader.readAsText(blob);
+
+        } catch (error) {
+            console.error('Error al descargar el CSV:', error);
+        }
+    };
+
+
+    const onDownloadExcel = async (url: string, name: string) => {
+        try {
+            const res = await axios.get(url, {
+                responseType: 'blob'
+            });
+
+            // Crear un Blob a partir de la respuesta del archivo CSV
+            const blob = new Blob([res.data], { type: 'application/csv' });
+
+            // Crear un FileReader para leer el contenido del blob
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const text = event.target?.result as string;
+
+                // Aquí puedes procesar el texto del CSV
+
+                Transform.fromCsvToXlxs(text, name);
+            };
+
+            reader.readAsText(blob);
+
+        } catch (error) {
+            console.error('Error al descargar el CSV:', error);
+        }
+    }
+
     return (
 
         <FinancePresenter
@@ -130,6 +187,8 @@ const FinanceContainer = (props: Props) => {
             loading={loading}
             alert={alert}
             setAlert={(alert) => setAlert(alert)}
+            onDownloadExcel={(url, name) => onDownloadExcel(url, name)}
+            onDownloadPDF={(url, name) => onDownloadPDF(url, name)}
 
         />
 

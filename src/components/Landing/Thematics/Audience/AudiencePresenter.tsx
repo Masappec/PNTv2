@@ -122,7 +122,7 @@ const AudiencePresenter = (props: Props) => {
                     onMonthSelect={(month) => {
                       props.onSelectMonth(month + 1)
                       setMonth(month + 1)
-                    
+
                     }}
                     onYearSelect={(year) => {
                       props.onSelectYear(year)
@@ -200,6 +200,13 @@ const AudiencePresenter = (props: Props) => {
                   ),
                   classes: "w-25"
 
+                },
+                {
+                  title: "Nombres de personas externas".toUpperCase(),
+                  render: (row) => (
+                    <p className="whitespace-pre-wrap  break-words  text-left">{row.externa}</p>
+                  ),
+                  classes: "w-20"
                 },
                 {
                   title: "ENLACE",

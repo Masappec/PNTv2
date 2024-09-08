@@ -137,12 +137,6 @@ const EstablishmentListPresenter = (props: Props) => {
                             )
                         },
                         {
-                            title: "Maxima autoridad",
-                            render: (row: EstablishmentEntity) => (
-                                <p className="text-left" >{row.highest_authority + " " + row.first_name_authority + " " + row.last_name_authority}</p>
-                            )
-                        },
-                        {
                             title: "Estado",
                             render: (row: EstablishmentEntity) => (
 
