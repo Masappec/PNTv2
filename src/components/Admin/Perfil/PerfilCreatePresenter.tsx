@@ -11,6 +11,7 @@ interface perfilProps {
   userData: User
   currentPassword: string
   newPassword: string
+  success: string
   handleCurrentPasswordChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleNewPasswordChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void

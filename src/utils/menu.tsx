@@ -1,53 +1,61 @@
-
-import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine, RiCheckFill, RiCheckboxMultipleLine, RiFileExcel2Line } from "react-icons/ri";
-import UserList from "../interfaces/web/Admin/User/List";
-import UserCreate from "../interfaces/web/Admin/User/Create";
-import RoleList from "../interfaces/web/Admin/Role/List";
-import RoleCreate from "../interfaces/web/Admin/Role/Create";
-import RoleEdit from "../interfaces/web/Admin/Role/Edit";
-import EstablishmentList from "../interfaces/web/Admin/Establishment/List";
-import UserEdit from "../interfaces/web/Admin/User/Edit";
-import EstablishmentCreate from "../interfaces/web/Admin/Establishment/Create";
-import EstablishmentEdit from "../interfaces/web/Admin/Establishment/Edit";
-import SmtpCreate from "../interfaces/web/Admin/Smtp/Create";
-import PedagodyAreaCreate from "../interfaces/web/Admin/PedagogyArea/Create";
-import UserImport from "../interfaces/web/Admin/User/Import";
-import SolicityList from "../interfaces/web/Transparency/Solicity/List";
-import SolicityCreate from "../interfaces/web/Transparency/Solicity/Create";
-import SolicityEdit from "../interfaces/web/Transparency/Solicity/Edit";
-import SolicityResponse from "../interfaces/web/Transparency/Solicity/Response";
-import SolicityOnHold from "../interfaces/web/Transparency/Solicity/OnHold";
-import SolicityDetail from "../interfaces/web/Transparency/Solicity/Detail";
-import { HiOutlineChartSquareBar } from "react-icons/hi";
-import ActiveNumerals from "../interfaces/web/Transparency/Active/Numerals";
-import ActiveCreate from "../interfaces/web/Transparency/Active/Create";
-import ActivePreviewData from "../interfaces/web/Transparency/Active/PreviewData";
-import FocalizedList from "../interfaces/web/Transparency/Focalized/List";
-import FocalizedCreate from "../interfaces/web/Transparency/Focalized/Create";
-import CollaborativeList from "../interfaces/web/Transparency/Collaborative/List";
-import SolicityListEstablishment from "../interfaces/web/Transparency/Solicity/ListEstablishment";
-import { BiPieChart } from "react-icons/bi";
-import FocalizedEdit from "../interfaces/web/Transparency/Focalized/Edit";
-import CollaborativeEdit from "../interfaces/web/Transparency/Collaborative/Edit";
-import ActiveEdit from "../interfaces/web/Transparency/Active/Edit";
-import EstablihsmentInSession from "../interfaces/web/Admin/Establishment/InSession/InSession";
-import SolicityManual from "../interfaces/web/Transparency/Solicity/Manual";
-import UserInSessionList from "../interfaces/web/Admin/User/InSession";
-import Reports from "../interfaces/web/Transparency/Reports";
-import IndicatorsEst from "../interfaces/web/Dashboard/IndicatorsEst";
-import { FaRegUser, FaTable } from "react-icons/fa";
-import AllPublications from "../interfaces/web/Transparency/AllPublications";
-import AllTA from "../interfaces/web/Transparency/Active/All";
-import AllTF from "../interfaces/web/Transparency/Focalized/All";
-import AllTC from "../interfaces/web/Transparency/Collaborative/All";
-import CollaborativeCreate from "../interfaces/web/Transparency/Collaborative/Create";
-import AllMonitorSolicities from "../interfaces/web/Transparency/Solicity/All";
-import { IndicatorsMonitoring } from "../interfaces/web/Dashboard/IndicatorMonitoring";
-import EntityComplianceV2 from "../interfaces/web/Dashboard/EntityComplianceV2";
-import { GrCompliance } from "react-icons/gr";
-import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
-import VerPerfil from "../interfaces/web/Transparency/Perfil";
-
+import { BiPieChart } from 'react-icons/bi'
+import { FaRegUser, FaTable } from 'react-icons/fa'
+import { GrCompliance } from 'react-icons/gr'
+import { HiOutlineChartSquareBar } from 'react-icons/hi'
+import {
+  RiBuilding4Line,
+  RiCheckFill,
+  RiCheckboxMultipleLine,
+  RiFileExcel2Line,
+  RiFileVideoLine,
+  RiMailCheckLine,
+  RiMailSettingsLine,
+  RiShieldUserLine,
+  RiUser3Line
+} from 'react-icons/ri'
+import EstablishmentCreate from '../interfaces/web/Admin/Establishment/Create'
+import EstablishmentEdit from '../interfaces/web/Admin/Establishment/Edit'
+import EstablihsmentInSession from '../interfaces/web/Admin/Establishment/InSession/InSession'
+import EstablishmentList from '../interfaces/web/Admin/Establishment/List'
+import PedagodyAreaCreate from '../interfaces/web/Admin/PedagogyArea/Create'
+import RoleCreate from '../interfaces/web/Admin/Role/Create'
+import RoleEdit from '../interfaces/web/Admin/Role/Edit'
+import RoleList from '../interfaces/web/Admin/Role/List'
+import SmtpCreate from '../interfaces/web/Admin/Smtp/Create'
+import UserCreate from '../interfaces/web/Admin/User/Create'
+import UserEdit from '../interfaces/web/Admin/User/Edit'
+import UserImport from '../interfaces/web/Admin/User/Import'
+import UserInSessionList from '../interfaces/web/Admin/User/InSession'
+import UserList from '../interfaces/web/Admin/User/List'
+import DetailEntity from '../interfaces/web/Dashboard/DetailEntityComplianceV2'
+import EntityComplianceV2 from '../interfaces/web/Dashboard/EntityComplianceV2'
+import { IndicatorsMonitoring } from '../interfaces/web/Dashboard/IndicatorMonitoring'
+import IndicatorsEst from '../interfaces/web/Dashboard/IndicatorsEst'
+import AllTA from '../interfaces/web/Transparency/Active/All'
+import ActiveCreate from '../interfaces/web/Transparency/Active/Create'
+import ActiveEdit from '../interfaces/web/Transparency/Active/Edit'
+import ActiveNumerals from '../interfaces/web/Transparency/Active/Numerals'
+import ActivePreviewData from '../interfaces/web/Transparency/Active/PreviewData'
+import AllPublications from '../interfaces/web/Transparency/AllPublications'
+import AllTC from '../interfaces/web/Transparency/Collaborative/All'
+import CollaborativeCreate from '../interfaces/web/Transparency/Collaborative/Create'
+import CollaborativeEdit from '../interfaces/web/Transparency/Collaborative/Edit'
+import CollaborativeList from '../interfaces/web/Transparency/Collaborative/List'
+import AllTF from '../interfaces/web/Transparency/Focalized/All'
+import FocalizedCreate from '../interfaces/web/Transparency/Focalized/Create'
+import FocalizedEdit from '../interfaces/web/Transparency/Focalized/Edit'
+import FocalizedList from '../interfaces/web/Transparency/Focalized/List'
+import VerPerfil from '../interfaces/web/Transparency/Perfil'
+import Reports from '../interfaces/web/Transparency/Reports'
+import AllMonitorSolicities from '../interfaces/web/Transparency/Solicity/All'
+import SolicityCreate from '../interfaces/web/Transparency/Solicity/Create'
+import SolicityDetail from '../interfaces/web/Transparency/Solicity/Detail'
+import SolicityEdit from '../interfaces/web/Transparency/Solicity/Edit'
+import SolicityList from '../interfaces/web/Transparency/Solicity/List'
+import SolicityListEstablishment from '../interfaces/web/Transparency/Solicity/ListEstablishment'
+import SolicityManual from '../interfaces/web/Transparency/Solicity/Manual'
+import SolicityOnHold from '../interfaces/web/Transparency/Solicity/OnHold'
+import SolicityResponse from '../interfaces/web/Transparency/Solicity/Response'
 
 export interface MenuItem {
   name: string
@@ -237,7 +245,6 @@ const menu = [
     element: <ActiveNumerals />,
 
     visible_for_superadmin: false
-
   },
   {
     name: 'T.Activa',
@@ -326,7 +333,7 @@ const menu = [
     visible: false,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
 
-    permission_required: "add_transparencycolab",
+    permission_required: 'add_transparencycolab',
 
     element: <CollaborativeCreate />,
     visible_for_superadmin: false
@@ -384,10 +391,9 @@ const menu = [
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
 
-    permission_required: "add_solicity",
+    permission_required: 'add_solicity',
     element: <SolicityCreate />,
     visible_for_superadmin: false
-
   },
   {
     name: ' Crear Solicitudes',
@@ -459,7 +465,23 @@ const menu = [
     visible_for_superadmin: false
   },
   {
-<<<<<<<<< Temporary merge branch 1
+    name: ' Cumplimiento de Entidades',
+    path: '/admin/entitycompliance',
+    visible: true,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: 'view_establishment',
+    element: <EntityComplianceV2 />
+  },
+  {
+    name: ' Detalle de Entidades',
+    path: '/admin/entitycompliance/detail',
+    visible: false,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: 'view_establishment',
+    element: <DetailEntity />
+  },
+
+  {
     name: 'Perfil',
     path: '/admin/perfil',
     visible: false,
@@ -469,33 +491,5 @@ const menu = [
     visible_for_superadmin: false
   }
 ]
-=========
-    name: " Cumplimiento de Entidades",
-    path: "/admin/entitycompliance",
-    visible: true,
-    icon: <GrCompliance size={25} className="text-slate-500" />,
-    permission_required: "view_establishment",
-    element: <EntityComplianceV2 />,
-  },
-  {
-    name: " Detalle de Entidades",
-    path: "/admin/entitycompliance/detail",
-    visible: false,
-    icon: <GrCompliance size={25} className="text-slate-500" />,
-    permission_required: "view_establishment",
-    element: <DetailEntity />,
-  },
-
-
-  {
-    name: 'Perfil',
-    path: '/admin/perfil',
-    visible: false,
-    icon: <FaRegUser size={25} className="text-slate-500" />,
-    permission_required: '',
-    element: <VerPerfil />,
-    visible_for_superadmin: false
-  }
-];
 
 export default menu

@@ -36,6 +36,7 @@ const PerfilCreateContainer = () => {
 
   return (
     <PerfilCreatePresenter
+      success="completado"
       currentPassword={currentPassword}
       newPassword={newPassword}
       handleSubmit={handleChangePassword}
