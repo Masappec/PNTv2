@@ -1,3 +1,4 @@
+
 import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine, RiCheckFill, RiCheckboxMultipleLine, RiFileExcel2Line } from "react-icons/ri";
 import UserList from "../interfaces/web/Admin/User/List";
 import UserCreate from "../interfaces/web/Admin/User/Create";
@@ -46,33 +47,40 @@ import EntityComplianceV2 from "../interfaces/web/Dashboard/EntityComplianceV2";
 import { GrCompliance } from "react-icons/gr";
 import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
 
-
 export interface MenuItem {
-  name: string;
-  path: string;
-  permission_required: string;
-  icon: JSX.Element;
-  visible: boolean;
-  visible_for_superadmin?: boolean;
-  hidden_for_citicen?: boolean;
+  name: string
+  path: string
+  permission_required: string
+  icon: JSX.Element
+  visible: boolean
+  visible_for_superadmin?: boolean
 }
 
 const menu = [
   {
-    name: "Inicio",
-    path: "/admin/reports",
+    name: 'Inicio',
+    path: '/admin/reports',
     visible: true,
     icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
-    permission_required: "view_solicityresponse",
+    permission_required: 'view_solicityresponse',
     element: <Reports />,
     visible_for_superadmin: false
   },
   {
-    name: "Indicadores",
-    path: "/admin",
+    name: 'Inicio',
+    path: '/admin/reports',
+    visible: true,
+    icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
+    permission_required: 'view_solicityresponse',
+    element: <Reports />,
+    visible_for_superadmin: false
+  },
+  {
+    name: 'Indicadores',
+    path: '/admin',
     visible: true,
     icon: <BiPieChart size={25} className="text-slate-500" />,
-    permission_required: "",
+    permission_required: '',
     element: <IndicatorsEst />,
     hidden_for_citicen: true
   },
@@ -100,7 +108,6 @@ const menu = [
     icon: <RiUser3Line size={25} className="text-slate-500" />,
     element: <UserInSessionList />,
     visible_for_superadmin: false
-
   },
   {
     name: 'Crear Usuario',
@@ -175,7 +182,7 @@ const menu = [
     path: '/admin/entities',
     visible: true,
     icon: <RiBuilding4Line size={25} className="text-slate-500" />,
-    permission_required: "view_establishment",
+    permission_required: 'view_establishment',
     element: <EstablishmentList />
   },
   {
@@ -183,7 +190,7 @@ const menu = [
     path: '/admin/entities/create',
     visible: false,
     icon: <RiBuilding4Line size={25} className="text-slate-500" />,
-    permission_required: "add_establishment",
+    permission_required: 'add_establishment',
     element: <EstablishmentCreate />
   },
   {
@@ -202,14 +209,13 @@ const menu = [
     icon: <RiBuilding4Line size={25} className="text-slate-500" />,
     visible: true,
     visible_for_superadmin: false
-
   },
   {
     name: 'Área pedagógica',
     path: '/admin/pedagogy-area',
     visible: true,
     icon: <RiFileVideoLine size={25} className="text-slate-500" />,
-    permission_required: "view_pedagogyarea",
+    permission_required: 'view_pedagogyarea',
     element: <PedagodyAreaCreate />
   },
   {
@@ -217,7 +223,7 @@ const menu = [
     path: '/admin/smtp',
     visible: true,
     icon: <RiMailSettingsLine size={25} className="text-slate-500" />,
-    permission_required: "view_configuration",
+    permission_required: 'view_configuration',
     element: <SmtpCreate />
   },
   {
@@ -225,8 +231,9 @@ const menu = [
     path: '/admin/transparency/active',
     visible: true,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "view_transparencyactive",
+    permission_required: 'view_transparencyactive',
     element: <ActiveNumerals />,
+
     visible_for_superadmin: false
 
   },
@@ -235,7 +242,7 @@ const menu = [
     path: '/admin/active/all',
     visible: true,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "view_all_transparencyactive",
+    permission_required: 'view_all_transparencyactive',
     element: <AllTA />,
     visible_for_superadmin: false
   },
@@ -244,18 +251,17 @@ const menu = [
     path: '/admin/active/create',
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "add_transparencyactive",
+    permission_required: 'add_transparencyactive',
     element: <ActiveCreate />,
     visible_for_superadmin: false
-
   },
   {
     name: 'Editar T.Activa',
     path: '/admin/active/edit',
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "change_transparencyactive",
-    element: <ActiveEdit />,
+    permission_required: 'change_transparencyactive',
+    element: <ActiveEdit />
   },
 
   {
@@ -263,10 +269,9 @@ const menu = [
     path: '/admin/active/previewdata',
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "view_transparencyactive",
+    permission_required: 'view_transparencyactive',
     element: <ActivePreviewData />,
     visible_for_superadmin: false
-
   },
 
   {
@@ -274,17 +279,16 @@ const menu = [
     path: '/admin/transparency/focalized',
     visible: true,
     icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
-    permission_required: "view_transparencyfocal",
+    permission_required: 'view_transparencyfocal',
     element: <FocalizedList />,
     visible_for_superadmin: false
-
   },
   {
     name: 'T.Focalizada',
     path: '/admin/focalized/all',
     visible: true,
     icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
-    permission_required: "view_all_transparencyfocal",
+    permission_required: 'view_all_transparencyfocal',
     element: <AllTF />,
     visible_for_superadmin: false
   },
@@ -293,17 +297,16 @@ const menu = [
     path: '/admin/focalized/create',
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "add_transparencyfocal",
+    permission_required: 'add_transparencyfocal',
     element: <FocalizedCreate />,
     visible_for_superadmin: false
-
   },
   {
     name: 'T.Focalizada',
     path: '/admin/focalized/Edit',
     visible: false,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: "change_transparencyfocal",
+    permission_required: 'change_transparencyfocal',
     element: <FocalizedEdit />
   },
   {
@@ -311,17 +314,18 @@ const menu = [
     path: '/admin/transparency/collaborative',
     visible: true,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
-    permission_required: "view_transparencycolab",
+    permission_required: 'view_transparencycolab',
     element: <CollaborativeList />,
     visible_for_superadmin: false
-
   },
   {
     name: 'T.Colaborativa',
     path: '/admin/collaborative/create',
     visible: false,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
+
     permission_required: "add_transparencycolab",
+
     element: <CollaborativeCreate />,
     visible_for_superadmin: false
   },
@@ -330,113 +334,119 @@ const menu = [
     path: '/admin/collaborative/all',
     visible: true,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
-    permission_required: "view_all_transparencycollab",
+    permission_required: 'view_all_transparencycollab',
     element: <AllTC />,
     visible_for_superadmin: false
-
   },
   {
     name: 'T.Colaborativa',
     path: '/admin/collaborative/Edit',
     visible: false,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
-    permission_required: "view_transparencyactive",
+    permission_required: 'view_transparencyactive',
     element: <CollaborativeEdit />
   },
 
-
-
   {
-    name: "Solicitudes",
-    path: "/admin/solicity",
+    name: 'Solicitudes',
+    path: '/admin/solicity',
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_solicity",
+    permission_required: 'view_solicity',
     element: <SolicityList />,
     visible_for_superadmin: false
-
   },
 
-
   {
-    name: "Solicitudes",
-    path: "/admin/solicity/all",
+    name: 'Solicitudes',
+    path: '/admin/solicity/all',
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_all_solicities",
+    permission_required: 'view_all_solicities',
     element: <AllMonitorSolicities />,
     visible_for_superadmin: false
   },
 
   {
-    name: "Solicitudes",
-    path: "/admin/establishment/solicity",
+    name: 'Solicitudes',
+    path: '/admin/establishment/solicity',
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_solicityresponse",
+    permission_required: 'view_solicityresponse',
     element: <SolicityListEstablishment />,
     visible_for_superadmin: false
   },
   {
-    name: " Crear Solicitudes",
-    path: "/admin/solicity/create",
+    name: ' Crear Solicitudes',
+    path: '/admin/solicity/create',
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
+
     permission_required: "add_solicity",
     element: <SolicityCreate />,
     visible_for_superadmin: false
+
   },
   {
-    name: " Crear Solicitudes",
-    path: "/admin/solicity/create/manual",
+    name: ' Crear Solicitudes',
+    path: '/admin/solicity/create/manual',
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "add_manual_solicity",
-    element: <SolicityManual />,
+    permission_required: 'add_manual_solicity',
+    element: <SolicityManual />
   },
   {
-    name: " Editar Solicitudes",
-    path: "/admin/solicity/edit/:id",
+    name: ' Editar Solicitudes',
+    path: '/admin/solicity/edit/:id',
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "add_solicity",
-    element: <SolicityEdit />,
+    permission_required: 'add_solicity',
+    element: <SolicityEdit />
   },
 
   {
-    name: " Responder Solicitudes",
-    path: "/admin/solicity/response/citizen",
+    name: ' Responder Solicitudes',
+    path: '/admin/solicity/response/citizen',
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_solicity",
-    element: <SolicityResponse />,
+    permission_required: 'view_solicity',
+    element: <SolicityResponse />
   },
   {
-    name: " Responder Solicitudes",
-    path: "/admin/solicity/response",
+    name: ' Responder Solicitudes',
+    path: '/admin/solicity/response',
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_solicityresponse,view_solicity,view_all_solicities",
+    permission_required: 'view_solicityresponse,view_solicity,view_all_solicities',
 
-    element: <SolicityResponse />,
+    element: <SolicityResponse />
   },
   {
-    name: " Prórroga",
-    path: "/admin/solicity/onhold",
+    name: ' Prórroga',
+    path: '/admin/solicity/onhold',
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "add_solicityresponse",
-    element: <SolicityOnHold />,
+    permission_required: 'add_solicityresponse',
+    element: <SolicityOnHold />
   },
   {
-    name: " Detalles de Solicitud",
-    path: "/admin/solicity/detail",
+    name: ' Detalles de Solicitud',
+    path: '/admin/solicity/detail',
     visible: false,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: "view_solicityresponse,view_solicity,view_all_solicities",
-    element: <SolicityDetail />,
+    permission_required: 'view_solicityresponse,view_solicity,view_all_solicities',
+    element: <SolicityDetail />
   },
 
+  {
+    name: 'Reportes',
+    path: '/admin/reports',
+    visible: true,
+    icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
+    permission_required: 'view_solicityresponse',
+    element: <Reports />,
+    visible_for_superadmin: false
+  },
   {
     name: 'Publicaciones T. Activa',
     path: '/admin/publicaciones',
@@ -447,6 +457,17 @@ const menu = [
     visible_for_superadmin: false
   },
   {
+
+    name: 'Perfil',
+    path: '/admin/perfil',
+    visible: false,
+    icon: <FaRegUser size={25} className="text-slate-500" />,
+    permission_required: '',
+    element: <VerPerfil />,
+    visible_for_superadmin: false
+  }
+
+
     name: " Cumplimiento de Entidades",
     path: "/admin/entitycompliance",
     visible: true,
@@ -464,6 +485,4 @@ const menu = [
   },
 
 
-];
-
-export default menu;
+export default menu
