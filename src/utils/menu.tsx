@@ -44,6 +44,7 @@ import AllMonitorSolicities from "../interfaces/web/Transparency/Solicity/All";
 import { IndicatorsMonitoring } from "../interfaces/web/Dashboard/IndicatorMonitoring";
 import EntityComplianceV2 from "../interfaces/web/Dashboard/EntityComplianceV2";
 import { GrCompliance } from "react-icons/gr";
+import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
 
 
 export interface MenuItem {
@@ -453,6 +454,15 @@ const menu = [
     permission_required: "view_establishment",
     element: <EntityComplianceV2 />,
   },
+  {
+    name: " Detalle de Entidades",
+    path: "/admin/entitycompliance/detail",
+    visible: false,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: "view_establishment",
+    element: <DetailEntity />,
+  },
+
 
 ];
 

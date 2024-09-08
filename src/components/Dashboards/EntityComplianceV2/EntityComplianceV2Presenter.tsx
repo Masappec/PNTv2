@@ -16,7 +16,7 @@ interface Props {
     total_pages: number;
     onPaginate: (page: number) => void;
     onSearch: (search: string) => void
-    onAdd: () => void
+
     
     month: number;
     onSelectedMonth: (month: number) => void;  

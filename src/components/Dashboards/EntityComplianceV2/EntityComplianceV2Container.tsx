@@ -10,7 +10,7 @@ function EntityComplianceV2Container() {
     data={[]}
     current={0}
     from={0}
-    onPaginate={0}
+    onPaginate={()=>{}}
     pageSize={0}
     to={0}
     total={0}
