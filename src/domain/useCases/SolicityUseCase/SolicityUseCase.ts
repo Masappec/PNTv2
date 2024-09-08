@@ -51,8 +51,8 @@ class SolicityUseCase {
     return await this.solicityService.getLastDraftSolicity();
   }
 
-  async updateSolicity(data: CreateSolicity, id: number) {
-    return await this.solicityService.updateSolicity(data, id);
+  async updateSolicity(data: CreateSolicity, id: number, is_send: boolean) {
+    return await this.solicityService.updateSolicity(data, id, is_send);
 
   }
 

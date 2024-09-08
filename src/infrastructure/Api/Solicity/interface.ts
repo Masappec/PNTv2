@@ -151,6 +151,7 @@ export interface SendDraftSolicity {
   format_send: string;
   format_receipt: string;
   establishment: number;
+  is_send: boolean;
 
 }
 
@@ -165,7 +166,7 @@ export interface SolicityResult {
 
 
 
-export interface CommentDto{
-  solicity_id:number;
-  motive:string;
+export interface CommentDto {
+  solicity_id: number;
+  motive: string;
 }

@@ -32,7 +32,7 @@ const IndicatorsEstablishment = (props: Props) => {
 
     const [line, setLine] = useState<ApexOptions>({
         chart: {
-            id: "line",
+            id: "bar",
         },
 
         xaxis: {
@@ -306,7 +306,7 @@ const IndicatorsEstablishment = (props: Props) => {
                         Solicitudes Recibidas vs Solicitudes Atendidas
                     </h2>
 
-                    <Chart options={line} series={line.series} type="line" />
+                    <Chart options={line} series={line.series} type="bar" />
                 </div>
             </div>
 

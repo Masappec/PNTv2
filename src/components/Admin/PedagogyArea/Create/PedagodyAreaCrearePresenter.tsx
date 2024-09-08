@@ -89,26 +89,32 @@ const PedagogyAreaCreatePresenter = (
                     <tbody className='divide-y divide-gray-200 bg-white'>
                       {props.data.faq.map((e, i) => (<tr>
                         <td>
-                          <input
+                          <textarea
                             className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                            type='text'
                             placeholder='Ingresa la pregunta'
                             name='data'
                             value={e.question}
+                            rows={4}
                             onChange={(e) => props.onChangeValue("faq", "question", e.target.value, i)}
                           />
+                          <span className='text-xs text-gray-400 flex justify-end'>
+                            {e.question.length}/3000
+                          </span>
                         </td>
                         <td>
-                          <input
+                          <textarea
                             className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                            type='text'
                             placeholder='Ingresa la respuesta'
                             name='data'
                             value={e.answer}
+                            rows={4}
 
                             onChange={(e) => props.onChangeValue("faq", "answer", e.target.value, i)}
 
                           />
+                          <span className='text-xs text-gray-400 flex justify-end'>
+                            {e.answer.length}/3000
+                          </span>
                         </td>
 
                         <td className='text-center'>
@@ -178,9 +184,8 @@ const PedagogyAreaCreatePresenter = (
                       {props.data.tutorials.map((e, i) => (
                         <tr>
                           <td>
-                            <input
+                            <textarea
                               className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                              type='text'
                               placeholder='Ingresar Titulo'
                               name='data'
                               required
@@ -190,14 +195,19 @@ const PedagogyAreaCreatePresenter = (
                                 value.target.value,
                                 i
                               )}
+                              rows={4}
                               value={e.title}
                             />
+                            <span className='text-xs text-gray-400 flex justify-end'>
+                              {e.title.length}/3000
+                            </span>
                           </td>
+                          
                           <td>
-                            <input
+                            <textarea
                               className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                              type='text'
                               placeholder='Ingresar unidad'
+                              rows={4}
                               name='data'
                               required
                               onChange={(value) => props.onChangeValue(
@@ -208,14 +218,17 @@ const PedagogyAreaCreatePresenter = (
                               )}
                               value={e.description}
                             />
+                            <span className='text-xs text-gray-400 flex justify-end'>
+                              {e.description.length}/3000
+                            </span>
                           </td>
                           <td>
-                            <input
+                            <textarea
                               className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                              type='text'
                               placeholder='Ingresar nivel de los procesos de la estructura'
                               name='data'
                               required
+                              rows={4}
                               onChange={(value) => props.onChangeValue(
                                 "tutorials",
                                 "url",
@@ -224,6 +237,9 @@ const PedagogyAreaCreatePresenter = (
                               )}
                               value={e.url}
                             />
+                            <span className='text-xs text-gray-400 flex justify-end'>
+                              {e.url.length}/3000
+                            </span>
                           </td>
                           <td className='text-center'>
                             <button
@@ -294,9 +310,8 @@ const PedagogyAreaCreatePresenter = (
                       {props.data.normatives.map((e, i) => (
                         <tr>
                           <td>
-                            <input
+                            <textarea
                               className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                              type='text'
                               placeholder='Ingresa el título de la normativa'
                               name='data'
                               onChange={(value) => props.onChangeValue(
@@ -305,13 +320,16 @@ const PedagogyAreaCreatePresenter = (
                                 value.target.value,
                                 i
                               )}
+                              rows={4}
                               value={e.title}
                             />
+                            <span className='text-xs text-gray-400 flex justify-end'>
+                              {e.title.length}/3000
+                            </span>
                           </td>
                           <td>
-                            <input
+                            <textarea
                               className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                              type='text'
                               placeholder='Ingresa la descripción de la normativa'
                               name='data'
                               onChange={(value) => props.onChangeValue(
@@ -320,13 +338,16 @@ const PedagogyAreaCreatePresenter = (
                                 value.target.value,
                                 i
                               )}
+                              rows={4}
                               value={e.description}
                             />
+                            <span className='text-xs text-gray-400 flex justify-end'>
+                            {e.description.length}/3000
+                            </span>
                           </td>
                           <td>
-                            <input
+                            <textarea
                               className='w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
-                              type='text'
                               placeholder='Ingresa la URL donde se encuentra la normativa'
                               name='data'
                               onChange={(value) => props.onChangeValue(
@@ -336,7 +357,11 @@ const PedagogyAreaCreatePresenter = (
                                 i
                               )}
                               value={e.url}
+                              rows={4}
                             />
+                            <span className='text-xs text-gray-400 flex justify-end'>
+                              {e.url.length}/3000
+                            </span>
                           </td>
                           <td className='text-center'>
                             <button
