@@ -1,4 +1,3 @@
-import React from 'react'
 import Table from '../../Common/Table';
 import NumeralEntity from '../../../domain/entities/NumeralEntity';
 import { formatDate2 } from '../../../utils/functions';

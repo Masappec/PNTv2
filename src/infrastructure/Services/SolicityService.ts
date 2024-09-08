@@ -50,10 +50,11 @@ class SolicityService {
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }
 
-  async sendDraftSolicity(data: CreateSolicity, id: number) {
+  async sendDraftSolicity(data: CreateSolicity, id: number,is_send:boolean) {
     const response = await this.api.sendDraftSolicity({
       ...SolicityMappers.domainToApi(data),
       id,
+      is_send
     });
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }

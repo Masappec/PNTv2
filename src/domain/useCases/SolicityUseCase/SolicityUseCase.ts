@@ -28,8 +28,8 @@ class SolicityUseCase {
     return await this.solicityService.createDraftSolicity(data);
   }
 
-  async sendDraftSolicity(data: CreateSolicity, id: number) {
-    return await this.solicityService.sendDraftSolicity(data, id);
+  async sendDraftSolicity(data: CreateSolicity, id: number,is_send:boolean) {
+    return await this.solicityService.sendDraftSolicity(data, id,is_send);
   }
 
   async getSolicityById(id: number) {

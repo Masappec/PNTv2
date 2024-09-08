@@ -9,7 +9,6 @@ import Entry from './interfaces/web/Auth/Entry'
 import ForgotPassword from './interfaces/web/Auth/ForgotPassword'
 import Login from './interfaces/web/Auth/Login'
 import Register from './interfaces/web/Auth/Register'
-import { NotFount404 } from './interfaces/web/Dashboard/404'
 import IndicatorsAdmin from './interfaces/web/Dashboard/IndicatorsAdmin'
 import Landing from './interfaces/web/Landing'
 import About from './interfaces/web/Landing/About'
@@ -27,6 +26,7 @@ import Tutorials from './interfaces/web/Landing/Tutorials'
 import { BASE_URL, IS_SERVER } from './utils/constans'
 import menu from './utils/menu'
 import Politics from "./interfaces/web/Landing/Politics";
+import { NotFount404 } from './interfaces/web/Dashboard/404'
 
 
 const handleLoadeAuth = () => {

@@ -83,7 +83,7 @@ const SolicityCreateContainer = (props: Props) => {
         console.log(data)
 
         if (solicitySaved?.id) {
-            const draft_send = props.usecase.sendDraftSolicity(data, solicitySaved.id || 0)
+            const draft_send = props.usecase.sendDraftSolicity(data, solicitySaved.id || 0,false)
 
             draft_send.then((res) => {
                 setSuccess("Solicitud Guardada como borrador")
