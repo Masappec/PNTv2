@@ -45,6 +45,8 @@ import EntityComplianceV2 from "../interfaces/web/Dashboard/EntityComplianceV2";
 import { GrCompliance } from "react-icons/gr";
 import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
 import VerPerfil from "../interfaces/web/Transparency/Perfil";
+import EntidadesAll from "../interfaces/web/Transparency/EntidadesyCumplimiento/all";
+
 
 export interface MenuItem {
   name: string
@@ -227,7 +229,6 @@ const menu = [
     element: <ActiveNumerals />,
 
     visible_for_superadmin: false
-
   },
   {
     name: 'T.Activa',
@@ -316,7 +317,7 @@ const menu = [
     visible: false,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
 
-    permission_required: "add_transparencycolab",
+    permission_required: 'add_transparencycolab',
 
     element: <CollaborativeCreate />,
     visible_for_superadmin: false
@@ -364,10 +365,9 @@ const menu = [
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
 
-    permission_required: "add_solicity",
+    permission_required: 'add_solicity',
     element: <SolicityCreate />,
     visible_for_superadmin: false
-
   },
   {
     name: ' Crear Solicitudes',
@@ -420,8 +420,24 @@ const menu = [
     element: <SolicityDetail />
   },
 
+  
   {
-
+    name: ' Cumplimiento de Entidades',
+    path: '/admin/entitycompliance',
+    visible: true,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: 'view_establishment',
+    element: <EntityComplianceV2 />
+  },
+  {
+    name: ' Detalle de Entidades',
+    path: '/admin/entitycompliance/detail',
+    visible: false,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: 'view_establishment',
+    element: <DetailEntity />
+  },
+  {
     name: 'Perfil',
     path: '/admin/perfil',
     visible: false,
@@ -429,6 +445,7 @@ const menu = [
     permission_required: '',
     element: <VerPerfil />,
     visible_for_superadmin: false
+
   },
 
   {
@@ -438,15 +455,18 @@ const menu = [
     icon: <GrCompliance size={25} className="text-slate-500" />,
     permission_required: "view_establishment",
     element: <EntityComplianceV2 />,
+
   },
   {
-    name: " Detalle de Entidades",
-    path: "/admin/entitycompliance/detail",
-    visible: false,
+    name: 'Entidades y Cumplimiento',
+    path: '/admin/entitycompliance/all',
+    visible: true,
     icon: <GrCompliance size={25} className="text-slate-500" />,
-    permission_required: "view_establishment",
-    element: <DetailEntity />,
-  },
+
+    permission_required: '',
+    element: <EntidadesAll />
+  }
+
 ]
 
 export default menu

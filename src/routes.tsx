@@ -27,7 +27,7 @@ import Tutorials from './interfaces/web/Landing/Tutorials'
 import { BASE_URL, IS_SERVER } from './utils/constans'
 import menu from './utils/menu'
 import Politics from "./interfaces/web/Landing/Politics";
-
+import { NotFount404 } from "./interfaces/web/Dashboard/404";
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged()
