@@ -1,3 +1,4 @@
+
 import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine, RiCheckFill, RiCheckboxMultipleLine, RiFileExcel2Line } from "react-icons/ri";
 import UserList from "../interfaces/web/Admin/User/List";
 import UserCreate from "../interfaces/web/Admin/User/Create";
@@ -234,6 +235,7 @@ const menu = [
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: 'view_transparencyactive',
     element: <ActiveNumerals />,
+
     visible_for_superadmin: false
 
   },
@@ -323,7 +325,9 @@ const menu = [
     path: '/admin/collaborative/create',
     visible: false,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
+
     permission_required: "add_transparencycolab",
+
     element: <CollaborativeCreate />,
     visible_for_superadmin: false
   },
@@ -379,9 +383,11 @@ const menu = [
     path: '/admin/solicity/create',
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
+
     permission_required: "add_solicity",
     element: <SolicityCreate />,
     visible_for_superadmin: false
+
   },
   {
     name: ' Crear Solicitudes',
@@ -453,6 +459,17 @@ const menu = [
     visible_for_superadmin: false
   },
   {
+<<<<<<<<< Temporary merge branch 1
+    name: 'Perfil',
+    path: '/admin/perfil',
+    visible: false,
+    icon: <FaRegUser size={25} className="text-slate-500" />,
+    permission_required: '',
+    element: <VerPerfil />,
+    visible_for_superadmin: false
+  }
+]
+=========
     name: " Cumplimiento de Entidades",
     path: "/admin/entitycompliance",
     visible: true,
