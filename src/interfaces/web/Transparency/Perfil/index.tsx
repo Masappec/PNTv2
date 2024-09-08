@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
+import SessionService from '../../../../infrastructure/Services/SessionService'
 
-const userData = JSON.parse(localStorage.getItem('user_data')!)
+const userData = SessionService.getUserData()
 const VerPerfil = () => {
   const [currentPassword, setCurrentPassword] = useState<string>('')
   const [newPassword, setNewPassword] = useState<string>('')

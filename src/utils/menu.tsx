@@ -35,7 +35,7 @@ import SolicityManual from "../interfaces/web/Transparency/Solicity/Manual";
 import UserInSessionList from "../interfaces/web/Admin/User/InSession";
 import Reports from "../interfaces/web/Transparency/Reports";
 import IndicatorsEst from "../interfaces/web/Dashboard/IndicatorsEst";
-import { FaTable } from "react-icons/fa";
+import { FaRegUser, FaTable } from "react-icons/fa";
 import AllPublications from "../interfaces/web/Transparency/AllPublications";
 import AllTA from "../interfaces/web/Transparency/Active/All";
 import AllTF from "../interfaces/web/Transparency/Focalized/All";
@@ -46,6 +46,7 @@ import { IndicatorsMonitoring } from "../interfaces/web/Dashboard/IndicatorMonit
 import EntityComplianceV2 from "../interfaces/web/Dashboard/EntityComplianceV2";
 import { GrCompliance } from "react-icons/gr";
 import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
+import VerPerfil from "../interfaces/web/Transparency/Perfil";
 
 export interface MenuItem {
   name: string
@@ -465,9 +466,9 @@ const menu = [
     permission_required: '',
     element: <VerPerfil />,
     visible_for_superadmin: false
-  }
+  },
 
-
+  {
     name: " Cumplimiento de Entidades",
     path: "/admin/entitycompliance",
     visible: true,
@@ -483,6 +484,6 @@ const menu = [
     permission_required: "view_establishment",
     element: <DetailEntity />,
   },
-
+]
 
 export default menu
