@@ -42,26 +42,34 @@ interface Props {
   DownloadFileFromUrl: (url: string) => void;
   loadingFiles: { name: string }[]
   tabRef?: React.RefObject<TabsRef>;
+  month: number;
+  year:number;
 }
 
 
-const getCurrentDate = (): string => {
-  const currentDate = new Date();
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long'
-  };
-  return currentDate.toLocaleDateString(undefined, options);
-};
+
+const meses = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre"
+];
 const ActiveCreatePresenter = (props: Props) => {
 
-  const currentDate = getCurrentDate();
 
 
   return (
     <>
       <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
-        {props.type} | {currentDate}
+        {props.type} | {meses[props.month]} {props.year}
 
       </h2>
       <section className='mb-8 flex flex-col items-center justify-center gap-8'>

@@ -7,6 +7,9 @@ export interface TransparencyActivePublish {
     establishment_id: number;
     numeral_id: number;
     files: number[];
+
+    month: number;
+    year: number;
 }
 
 

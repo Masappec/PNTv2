@@ -322,7 +322,7 @@ const CollabCreateContainer = (props: Props) => {
     ).then(() => {
       setSuccess("Publicación creada correctamente")
       setLoading(false)
-      navigation("/admin/transparency/focalized")
+      navigation("/admin/transparency/collaborative")
     }).catch((error) => {
       setError(error.message)
       
@@ -736,6 +736,9 @@ const CollabCreateContainer = (props: Props) => {
       onChangePage={onChangePage}
       loadingFiles={loadingFiles}
       tabRef={tabsRef}
+
+      year={new Date().getFullYear()}
+      month={new Date().getMonth()}
     />
   )
 }

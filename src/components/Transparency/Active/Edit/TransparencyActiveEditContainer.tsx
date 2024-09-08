@@ -21,6 +21,8 @@ import { TabsRef } from "flowbite-react";
 
 export interface INeedProps {
     numeral: NumeralEntity,
+    year:number;
+    month:number;
 }
 
 interface Props {
@@ -38,6 +40,9 @@ const ActiveEditContainer = (props: Props) => {
     const navigate = useNavigate()
 
     const state = location.state as INeedProps;
+
+    const [year,setYear] = useState(new Date().getFullYear())
+    const [month,setMonth] = useState(new Date().getMonth())
 
     const [numeral, setNumeral] = useState<NumeralEntity>();
     const [detail, setDetail] = useState<NumeralDetail | null>(null)
@@ -69,6 +74,8 @@ const ActiveEditContainer = (props: Props) => {
     }[]>([])
     useEffect(() => {
         if (state) {
+            setMonth(state.month)
+            setYear(state.year)
             setNumeral(state.numeral)
             setTemplates(state.numeral.templates.map((template) => {
                 return new TemplateFileEntity(template.id, template.file, template.name, template.isValid, template.link)
@@ -277,82 +284,6 @@ const ActiveEditContainer = (props: Props) => {
         })
 
 
-        /*props.usecase.downloadFileFromUrl(e.target.value).then((file) => {
-    
-          if (file instanceof Blob) {
-            const file_ = new File([file], "data.csv", {
-              type: "text/csv;charset=utf-8;",
-            });
-            props.templateUseCase.validateLocalFile(
-              file_ as File,
-              templateDetail
-            ).then((res) => {
-    
-              setError("")
-              newTemplates = {
-                ...newTemplates,
-                isValid: res,
-                file: file_
-              } as TemplateFileEntity
-    
-    
-              //reemplazar el template
-              setTemplates(templates.map((template) => {
-                if (template.id === newTemplates?.id) {
-                  return newTemplates
-                }
-                return template
-              }))
-    
-    
-    
-              //reemplazar el filePublication
-              const name = newTemplates.file?.name || ""
-    
-              let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
-              const index = filesPublication.indexOf(filePub as FilePublicationEntity)
-    
-    
-    
-              if (!filePub) {
-                filePub = new FilePublicationEntity(0, name, newTemplates.name, newTemplates.file as File)
-                setFilesPublication([...filesPublication, filePub])
-              } else {
-                filePub.url_download = newTemplates.file as File
-                const newFiles = [
-                  ...filesPublication as FilePublicationEntity[],
-                ]
-                newFiles[index] = filePub
-                setFilesPublication(newFiles)
-              }
-    
-    
-            }).catch((e) => {
-              newTemplates = {
-                ...newTemplates,
-                isValid: false
-              } as TemplateFileEntity
-    
-    
-              //reemplazar el template
-              setTemplates(templates.map((template) => {
-                if (template.id === newTemplates?.id) {
-                  return newTemplates
-                }
-                return template
-              }))
-    
-              setError(e.message)
-            })
-    
-          } else if (typeof file === "string") {
-            setError("No se ha podido descargar el archivo")
-    
-          }
-        }).catch((error) => {
-          setError(error.message)
-        })*/
-
 
     }
 
@@ -536,7 +467,9 @@ const ActiveEditContainer = (props: Props) => {
         const newTransparency = TransparencyActive.buildForPubish(
             filesPublication,
             establishment,
-            numeral?.id || 0
+            numeral?.id || 0,
+            year,
+            month+1
         )
         await props.transparencyActiveUseCase.updatePublication(newTransparency)
 
@@ -895,6 +828,8 @@ const ActiveEditContainer = (props: Props) => {
             DownloadFileFromUrl={Download}
             loadingFiles={loadingFiles}
             tabRef={tabsRef}
+            month={month}
+            year={year}
         />
     )
 }

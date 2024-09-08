@@ -51,6 +51,8 @@ class TransparencyActive extends BaseEntity {
         filesPublication: FilePublicationEntity[],
         establishment: EstablishmentEntity,
         numeral: number,
+        year:number,
+        month:number
     ) {
         return new TransparencyActive(
             0,
@@ -61,8 +63,8 @@ class TransparencyActive extends BaseEntity {
             new Date(),
             "",
             "",
-            0,
-            0,
+            month,
+            year,
             "pending",
             false,
             "",

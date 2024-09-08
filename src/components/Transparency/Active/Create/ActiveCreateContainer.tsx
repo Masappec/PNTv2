@@ -22,6 +22,8 @@ import { TabsRef } from "flowbite-react";
 export interface INeedProps {
   numeral: NumeralEntity,
   childs: NumeralEntity[]
+  month:number;
+  year:number
 }
 
 interface IProps {
@@ -40,6 +42,9 @@ const ActiveCreateContainer = (props: IProps) => {
   const navigate = useNavigate()
 
   const state = location.state as INeedProps;
+
+  const [month,setMonth] = useState(new Date().getMonth()+1)
+  const [year,setYear] = useState(new Date().getFullYear())
 
   const [numeral, setNumeral] = useState<NumeralEntity>();
   const [detail, setDetail] = useState<NumeralDetail | null>(null)
@@ -76,6 +81,8 @@ const ActiveCreateContainer = (props: IProps) => {
   useEffect(() => {
     if (state) {
       setNumeral(state.numeral)
+      setMonth(state.month)
+      setYear(state.year)
       setTemplates(state.numeral.templates.map((template) => {
         return new TemplateFileEntity(template.id, template.file, template.name, template.isValid, template.link)
       }))
@@ -412,7 +419,9 @@ const ActiveCreateContainer = (props: IProps) => {
     const newTransparency = TransparencyActive.buildForPubish(
       filesPublication,
       establishment,
-      numeral?.id || 0
+      numeral?.id || 0,
+      year,
+      month+1
     )
     await props.transparencyActiveUseCase.publish(newTransparency)
 
@@ -804,6 +813,8 @@ const ActiveCreateContainer = (props: IProps) => {
       DownloadFileFromUrl={Download}
       loadingFiles={loadingFiles}
       tabRef={tabsRef}
+      month={month}
+      year={year}
     />
   )
 }
