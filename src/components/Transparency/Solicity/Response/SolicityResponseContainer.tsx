@@ -210,7 +210,7 @@ const SolicityResponseContainer = (props: Props) => {
         //return back
         const is_Est = userSession.user_permissions?.find(x => x.codename === 'view_solicityresponse')
         if (is_Est) {
-            navigation("/admin/establishment/solicity")
+            navigation("/admin/reports")
         } else {
             navigation("/admin/solicity")
         }

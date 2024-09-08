@@ -1,5 +1,5 @@
 
-import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine, RiCheckFill, RiCheckboxMultipleLine, RiFileExcel2Line } from "react-icons/ri";
+import { RiUser3Line, RiShieldUserLine, RiBuilding4Line, RiFileVideoLine, RiMailSettingsLine, RiMailCheckLine, RiCheckFill, RiCheckboxMultipleLine, RiHome2Fill } from "react-icons/ri";
 import UserList from "../interfaces/web/Admin/User/List";
 import UserCreate from "../interfaces/web/Admin/User/Create";
 import RoleList from "../interfaces/web/Admin/Role/List";
@@ -25,7 +25,6 @@ import ActivePreviewData from "../interfaces/web/Transparency/Active/PreviewData
 import FocalizedList from "../interfaces/web/Transparency/Focalized/List";
 import FocalizedCreate from "../interfaces/web/Transparency/Focalized/Create";
 import CollaborativeList from "../interfaces/web/Transparency/Collaborative/List";
-import SolicityListEstablishment from "../interfaces/web/Transparency/Solicity/ListEstablishment";
 import { BiPieChart } from "react-icons/bi";
 import FocalizedEdit from "../interfaces/web/Transparency/Focalized/Edit";
 import CollaborativeEdit from "../interfaces/web/Transparency/Collaborative/Edit";
@@ -58,20 +57,12 @@ export interface MenuItem {
 }
 
 const menu = [
+ 
   {
     name: 'Inicio',
     path: '/admin/reports',
     visible: true,
-    icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
-    permission_required: 'view_solicityresponse',
-    element: <Reports />,
-    visible_for_superadmin: false
-  },
-  {
-    name: 'Inicio',
-    path: '/admin/reports',
-    visible: true,
-    icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
+    icon: <RiHome2Fill size={25} className="text-slate-500" />,
     permission_required: 'view_solicityresponse',
     element: <Reports />,
     visible_for_superadmin: false
@@ -79,11 +70,12 @@ const menu = [
   {
     name: 'Indicadores',
     path: '/admin',
-    visible: true,
+    visible: false,
     icon: <BiPieChart size={25} className="text-slate-500" />,
     permission_required: '',
     element: <IndicatorsEst />,
-    hidden_for_citicen: true
+    hidden_for_citicen: true,
+    
   },
   {
     name: 'Indicadores Por Entidad',
@@ -367,16 +359,6 @@ const menu = [
     element: <AllMonitorSolicities />,
     visible_for_superadmin: false
   },
-
-  {
-    name: 'Solicitudes',
-    path: '/admin/establishment/solicity',
-    visible: true,
-    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: 'view_solicityresponse',
-    element: <SolicityListEstablishment />,
-    visible_for_superadmin: false
-  },
   {
     name: ' Crear Solicitudes',
     path: '/admin/solicity/create',
@@ -439,24 +421,6 @@ const menu = [
     element: <SolicityDetail />
   },
 
-  {
-    name: 'Reportes',
-    path: '/admin/reports',
-    visible: true,
-    icon: <RiFileExcel2Line size={25} className="text-slate-500" />,
-    permission_required: 'view_solicityresponse',
-    element: <Reports />,
-    visible_for_superadmin: false
-  },
-  {
-    name: 'Publicaciones T. Activa',
-    path: '/admin/publicaciones',
-    visible: true,
-    icon: <FaTable size={25} className="text-slate-500" />,
-    permission_required: 'view_transparencyactive',
-    element: <AllPublications />,
-    visible_for_superadmin: false
-  },
   {
 
     name: 'Perfil',

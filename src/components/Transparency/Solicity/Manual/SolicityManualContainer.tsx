@@ -374,7 +374,7 @@ const SolicityManualContainer = (props: Props) => {
 
                         <button
                             type='button'
-                            onClick={() => navigate('/admin/establishment/solicity')}
+                            onClick={() => navigate('/admin/reports')}
 
                             className='w-full rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80'>
                             Ver SAIP

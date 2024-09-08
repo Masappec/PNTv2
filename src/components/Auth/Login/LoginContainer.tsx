@@ -49,7 +49,7 @@ const LoginContainer = ({ useCase }: {
 
           }
         } else {
-          history('/admin')
+          history('/admin/reports')
         }
       })
       .catch((e) => {

@@ -149,13 +149,14 @@ class PublicDataApi {
         }
     }
 
-    public async getComplianceEstablishment(year:number,month:number,page:number){
+    public async getComplianceEstablishment(year:number,month:number,page:number,search?:string){
         try {
         const res = await api.get<Pagination<ComplianceEstablisment>>(TRANSPARENCY_PATH +'/reports/establishments/compliance',{
             params:{
                 year,
                 month,
-                page
+                page,
+                search
             }
         })
         return res.data;

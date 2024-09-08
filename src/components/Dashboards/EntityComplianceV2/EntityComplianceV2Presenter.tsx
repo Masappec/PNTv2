@@ -24,6 +24,7 @@ interface Props {
     onSelectedMonth: (month: number) => void;
     onSelectedYear: (year: number) => void;
     year: number;
+    onDetail: (data:ComplianceEstablisment,type:'TA'|'TF'|'TC')=>void
 
 }
 const EntityComplianceV2Presenter = (props: Props) => {
@@ -123,7 +124,12 @@ const EntityComplianceV2Presenter = (props: Props) => {
                         {
                             title: "Transparencia Activa Publicados/Total",
                             render: (row) => (
-                                <p >{row.total_published_ta }/{row.total_numeral_ta}</p>
+                                <a className="text-left text-primary hover:text-primary-dark cursor-pointer"
+                                    onClick={()=>props.onDetail(row,'TA')}
+                                    href="#">
+                                    {row.total_published_ta }/{row.total_numeral_ta}
+                                
+                                </a>
                             )
                         },
                         {
@@ -135,13 +141,19 @@ const EntityComplianceV2Presenter = (props: Props) => {
                         {
                             title: "Transparencia Focalizada Publicados",
                             render: (row) => (
-                                <p >{row.total_tf }</p>
+                                <a className="text-left text-primary hover:text-primary-dark cursor-pointer"
+                                    onClick={()=>props.onDetail(row,'TF')}
+                                    href="#">
+                                    {row.total_tf }</a>
                             )
                         },
                         {
                             title: "Transparencia Colaborativa Publicados",
                             render: (row) => (
-                                <p  >{row.total_tc }</p>
+                                <a className="text-left text-primary hover:text-primary-dark cursor-pointer"
+                                    onClick={()=>props.onDetail(row,'TC')}
+                                    href="#">
+                                    {row.total_tc }</a>
                             )
                         },
 
