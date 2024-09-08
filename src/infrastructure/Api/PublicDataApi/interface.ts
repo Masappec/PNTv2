@@ -201,3 +201,14 @@ export interface IndicatorResponse {
     day_frencuency_response:number;
     ta_published:number
 }
+
+
+
+export interface ComplianceEstablisment extends Establishment{
+    total_published_ta:number;
+    total_numeral_ta:number;
+    total_solicities_res:number;
+    total_solicities_rec:number;
+    total_tf:number;
+    total_tc:number;
+}

@@ -1,5 +1,5 @@
 import api, { Pagination, PUBLIC_PATH, TRANSPARENCY_PATH } from "..";
-import { AudienceRequest, AudienceResponse, FormulariosRequest, FormulariosResponse,
+import { AudienceRequest, AudienceResponse, ComplianceEstablisment, FormulariosRequest, FormulariosResponse,
      IndicatorRequest, IndicatorResponse, PersonalRemunerations, PublicDataApiResponse, 
      RequestPersonalApi, RequestPresupuestoApi, RequestPublicApi, ResponsePresupuestos, 
      ResponsePublicApi, Top20 } from "./interface";
@@ -144,6 +144,21 @@ class PublicDataApi {
         try {
             const response = await api.post<FormulariosResponse[]>(PUBLIC_PATH + '/public/solicitudes-y-servicios/', body);
             return response.data;
+        } catch (error) {
+            throw new Error('Error al obtener los datos');
+        }
+    }
+
+    public async getComplianceEstablishment(year:number,month:number,page:number){
+        try {
+        const res = await api.get<Pagination<ComplianceEstablisment>>(TRANSPARENCY_PATH +'/reports/establishments/compliance',{
+            params:{
+                year,
+                month,
+                page
+            }
+        })
+        return res.data;
         } catch (error) {
             throw new Error('Error al obtener los datos');
         }
