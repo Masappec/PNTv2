@@ -1,5 +1,4 @@
 import EstablishmentEditContainer from "../../../../../components/Admin/Establishment/Edit/EstablishmentEditContainer"
-import Breadcrumb from "../../../../../components/Common/Breadcrumb"
 import EstablishmentUseCase from "../../../../../domain/useCases/Establishment/EstablishmentUseCase"
 import NumeralUseCase from "../../../../../domain/useCases/NumeralUseCase/NumeraUseCase"
 import api from "../../../../../infrastructure/Api"
@@ -17,18 +16,7 @@ const EstablishmentEdit = () => {
 
     return (
         <>
-            <Breadcrumb
-                items={[
-                    {
-                        name: 'Instituciones',
-                        path: '/admin/entities',
-                    },
-                    {
-                        name: 'Editar',
-                        path: '#',
-                    }
-                ]}
-            />
+           
             <EstablishmentEditContainer
                 usecase={usecase}
                 numeralUsecase={numeralUsecase}

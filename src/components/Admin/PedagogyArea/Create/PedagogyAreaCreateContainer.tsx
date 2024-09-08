@@ -101,6 +101,10 @@ const PedagogyAreaCreateContainer = (props: Props) => {
     }
 
     const handleChange = (root: string, name: string, value: string, index: number) => {
+
+        if(value.length > 3000){
+            return;
+        }
         const newData = { ...data };
         if (root === "faq") {
             newData.faq[index] = {

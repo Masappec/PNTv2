@@ -18,6 +18,7 @@ import { themeTabs } from "../../../Common/Tabs/Theme";
 import Alert from "../../../Common/Alert";
 import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { StatusSolicity } from "../../../../utils/enums";
 
 
 interface Props {
@@ -88,6 +89,7 @@ interface Props {
     ChangeStatus: () => void
     textForChangeStatus: string
     textForMotiveDescription: string
+    onCancelChangeStatus:()=>void
 }
 /**
  * 
@@ -111,17 +113,24 @@ const SolicityResponsePresenter = (props: Props) => {
     const [count, setCount] = React.useState(0);
 
     return (
-        <section className='mx-auto mb-4 space-y-4 rounded-lg border border-gray-100 bg-primary/10 p-4'>
+        <section className={`mx-auto mb-4 space-y-4 rounded-lg border border-gray-100 ${props.solicitySaved.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key ? "bg-yellow-200" : "bg-primary/10"} p-4`}>
             <form onSubmit={props.handleSubmit}>
 
 
                 {
                     props.isAvaliableForChangeStatus ?
                         <><p className="text-gray-800 dark:text-white text-xs py-5">
-                            De acuerdo a lo establecido en la LOTAIP, si transcurridos 10  días no recibes respuesta,
+                            {
+                                props.solicitySaved.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key ?
+                                    `Escribe a continuación la explicación por la cual solicitas la Gestión Oficiosa a la Defensoría del Pueblo con relación a esta solicitud. De acuerdo a lo establecido en la LOTAIP, la entidad tiene un plazo de 10 días para responder una Gestión Oficiosa y a su vez a la solicitud original. Si deseas conocer más sobre este proceso revisa la sección`
+                                    :
+                                    `De acuerdo a lo establecido en la LOTAIP, si transcurridos 10  días no recibes respuesta,
                             a partir del día 11 puedes insistir con esta solicitud, para lo cual puedes presionar
                             el botón a continuación y completar la información indicada.
-                            Si deseas conocer más sobre este proceso revisa la sección
+                            Si deseas conocer más sobre este proceso revisa la sección`
+
+                            }
+
 
                             <Link
                                 className="text-primary-600"
@@ -151,7 +160,9 @@ const SolicityResponsePresenter = (props: Props) => {
                                     className="text-primary-600"
                                     to="/normativa">“¿Deben las entidades responder mis solicitudes?”</Link>
                                 <Textarea
-                                    placeholder="Escribe la explicación por la que solicitas la insistencia"
+                                    placeholder={props.solicitySaved.status !== StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key ?
+                                        "Escribe la explicación por la que solicitas la insistencia" :
+                                        "Escribe la explicación por la que solicitas la Gestión Oficiosa"}
                                     name="description"
                                     rows={5}
                                     onChange={(e) => {
@@ -163,6 +174,15 @@ const SolicityResponsePresenter = (props: Props) => {
                                 <span>
                                     {count} / 3000
                                 </span>
+                                <Button
+                                    type="button"
+                                    color="danger"
+                                    className="text-white font-bold bg-gray-500 hover:bg-gray-700 "
+                                    onClick={props.onCancelChangeStatus}
+                                >
+                                    <IoClose size={23} className=" mr-2" />
+                                    Cancelar
+                                </Button>
                             </div>
 
 
@@ -375,7 +395,10 @@ const SolicityResponsePresenter = (props: Props) => {
                             <span>
                                 {
                                     props.isAvaliableToResponse ?
-                                        "Enviar" : "Enviar solicitud de Insistencia"
+                                        "Enviar" :
+                                        props.solicitySaved.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key ?
+
+                                            "Enviar solicitud de Gestión Oficiosa" : "Enviar solicitud de Insistencia"
                                 }
                             </span>
                         </Button> : null

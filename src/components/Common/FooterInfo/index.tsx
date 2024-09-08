@@ -1,5 +1,4 @@
 
-
 import logocooperacionalemana from '../../../assets/Footer/logocooperacionalemana.png';
 import logodatalat from '../../../assets/Footer/logodatalat.png';
 import logofcd from '../../../assets/Footer/logofcd.png';
@@ -109,10 +108,11 @@ const FooterInfo = () => {
           <span className='text-balance text-gray-400'>Portal Nacional de Transparencia 2024 </span>
 
           <div className='flex items-center gap-4 text-gray-300'>
-            <a className='hover:underline hover:underline-offset-2' href='#'>
+            <a className='hover:underline hover:underline-offset-2' href="/politicas-condiciones">
               Políticas y Condiciones de Uso del Sitio
             </a>
           </div>
+        
         </div>
       </section>
       <section className='bg-white pb-8 pt-4'>
