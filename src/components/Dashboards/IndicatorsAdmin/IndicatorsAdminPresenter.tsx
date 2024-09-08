@@ -9,12 +9,26 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { Tabs } from "flowbite-react";
 import { BiChart, BiStats, BiTable } from "react-icons/bi";
 import { themeTabs } from "../../Common/Tabs/Theme";
+import { Pagination } from "../../../infrastructure/Api";
 
 
 interface Props {
 
   data: PublicDataApiResponse;
   top_20: Top20[];
+  visit:Pagination<Top20>;
+  paramsVisit: {
+    sort: string[],
+    search?: string,
+    page: number,
+    limit: number
+  }
+  setParamsVisit: (props:{
+    sort: string[],
+    search?: string,
+    page: number,
+    limit: number
+  }) => void
   current: number;
   pageSize: number;
   from: number;
@@ -230,30 +244,35 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Institución',
                   render: (row) => <span className="flex items-center">
                     <Link
-                      to={`/entidades/${row.slug}`}
+                      to={`/entidades/${row.establishment.slug}`}
                       className='uppercase 
                                                 text-wrap
                                                 cursor-pointer text-primary hover:underline
                                             justify-start
                                             hover:underline-offset-2'>
-                      {row.name}
+                      {row.establishment.name}
                     </Link>
 
                   </span>
                   ,
-                  classes: 'justify-start'
+                  classes: 'justify-start',
                 },
                 {
                   title: 'Total de consultas ' + mesActual,
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.visits}</span>
+                      <span className="text-gray-500">{row.establishment.visits}</span>
                     );
-                  }
+                  },
+                  key:'visits'
                 }
               ]}
-              data={props.data.top_20_most_visited}
-              show={props.data.top_20_most_visited.length > 0}
+              onSearch={(e)=>props.setParamsVisit({...props.paramsVisit,search:e})}
+              data={props.visit.results}
+              show={true}
+              totalPages={props.visit.total_pages}
+              currentPage={props.visit.current}
+              onChangePage={(e) => props.setParamsVisit({ ...props.paramsVisit, page: e })}
             />
           </div>
         </Tabs.Item>
@@ -287,7 +306,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Score SAIP',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.score}/100</span>
+                      <span className="text-gray-500">{row.score_saip}/100</span>
                     );
                   }
                 },
@@ -295,7 +314,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Total Solicitudes Recibidas',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.recibidas}</span>
+                      <span className="text-gray-500">{row.total_recibidas}</span>
                     );
                   }
                 },
@@ -303,7 +322,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Total Solicitudes Atendidas',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.atendidas}</span>
+                      <span className="text-gray-500">{row.total_atendidas}</span>
                     );
                   }
                 },
@@ -311,7 +330,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Total Prórrogas Solicitadas',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.prorrogas}</span>
+                      <span className="text-gray-500">{row.total_prorroga}</span>
                     )
                   }
                 },
@@ -319,7 +338,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Total Insistencias de Solicitudes',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.insistencias}</span>
+                      <span className="text-gray-500">{row.total_insistencia}</span>
                     )
                   }
                 },
@@ -327,7 +346,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Total Solicitudes sin Respuesta',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.no_respuestas}</span>
+                      <span className="text-gray-500">{row.total_no_respuesta}</span>
                     )
                   }
                 }

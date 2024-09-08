@@ -361,7 +361,11 @@ const IndicatorsMonitoringPresenter = (props: Props) => {
                 </div>
             </div>
 
+        
+        
         </>
+
+        
 
     );
 

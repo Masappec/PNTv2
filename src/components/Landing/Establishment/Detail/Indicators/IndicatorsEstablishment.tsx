@@ -3,7 +3,6 @@ import { ApexOptions } from "apexcharts";
 import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import PublicDataApi from "../../../../../infrastructure/Api/PublicDataApi";
-import Insignia from "../../../../Common/Insignia";
 import { IndicatorResponse } from "../../../../../infrastructure/Api/PublicDataApi/interface";
 
 
@@ -25,14 +24,17 @@ const IndicatorsEstablishment = (props: Props) => {
         atendidas: [],
         recibidas: [],
         score_activa: 0,
-        score_saip: 0
+        score_saip: 0,
+        day_frencuency_publish:0,
+        day_frencuency_response:0,
+        ta_published:0
     });
     const date = new Date();
     const monthName = date.toLocaleString('es-ES', { month: 'long' });
 
     const [line, setLine] = useState<ApexOptions>({
         chart: {
-            id: "line",
+            id: "bar",
         },
 
         xaxis: {
@@ -239,15 +241,9 @@ const IndicatorsEstablishment = (props: Props) => {
 
             <div className="flex flex-row gap-1">
 
-                <div className="container h-fit px-3 relative w-3/5">
-                    <div className="absolute -top-10 -right-5">
-                        {
-                            res.total_score >= 75 ? <Insignia />
-                                : null
-                        }
-
-                    </div>
-                    <div className=" border rounded-2xl  p-6">
+                <div className="container px-3 relative w-3/5">
+                   
+                    <div className="h-full border rounded-2xl  p-6">
                         <h2 className="text-start font-semibold text-sm">
                             Estado de cumplimiento actual
                         </h2>
@@ -284,21 +280,7 @@ const IndicatorsEstablishment = (props: Props) => {
 
                         </div>
                     </div>
-                    <div className=" border rounded-2xl p-6 mt-2" >
-                        <h2 className="text-start font-semibold text-sm">
-                            Número de solicitudes de información
-                        </h2>
-                        <h2 className="text-2xl mt-2 font-extrabold">
-
-                        </h2>
-                        <Chart
-                            options={chartPieSolicities}
-                            series={chartPieSolicities.series}
-                            type="donut"
-                            width={330}
-
-                        />
-                    </div>
+                  
 
                 </div>
                 <div className="container border  rounded-2xl  ">
@@ -306,7 +288,58 @@ const IndicatorsEstablishment = (props: Props) => {
                         Solicitudes Recibidas vs Solicitudes Atendidas
                     </h2>
 
-                    <Chart options={line} series={line.series} type="line" />
+                    <Chart options={line} series={line.series} type="bar" />
+                </div>
+            </div>
+            <div className="flex flex-row gap-1 ">
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Cantidad total de solicitudes de información recibidas en {new Date().getFullYear()}
+                        </h2>
+                        <div className="bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.total_recibidas}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Tiempo promedio de respuesta de solicitudes recibidas:
+                        </h2>
+                        <div className="mt-11 bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.day_frencuency_response}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Cantidad total de archivos de transparencia publicados en {new Date().getFullYear()}
+                        </h2>
+                        <div className="bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.ta_published}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Día del mes donde frecuentemente se publican los archivos de transparencia: 
+                        </h2>
+                        
+                        <div className="bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.day_frencuency_publish}
+                            </h4>
+                        </div>
+                    </div>
                 </div>
             </div>
 

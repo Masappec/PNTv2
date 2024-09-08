@@ -4,7 +4,7 @@ import { ColourOption } from "../../../../utils/interface";
 import CustomInputSearch from "../../../Common/CustomInputSearch";
 import { MapIsotipo } from "../../../Common/MapIsotipo";
 import axios from "axios";
-import { FaCalendarAlt, FaFileCsv } from "react-icons/fa";
+import { FaCalendarAlt, FaFileCsv, FaFileExcel, FaFilePdf } from "react-icons/fa";
 import { URL_API } from "../../../../utils/constans";
 import { TRANSPARENCY_PATH } from "../../../../infrastructure/Api";
 import Spinner from "../../../Common/Spinner";
@@ -46,7 +46,8 @@ interface Props {
     message: string
   }
   setAlert: (alert: { type: 'success' | 'error' | 'warning' | 'info'; message: string }) => void;
-
+  onDownloadPDF: (url: string, name: string) => void;
+  onDownloadExcel: (url: string, name: string) => void;
 }
 const FinancePresenter = (props: Props) => {
 
@@ -186,7 +187,7 @@ const FinancePresenter = (props: Props) => {
                   <p className="text-wrap text-left justify-start xl:max-w-[200px]">
                     {row.establishment_name}</p>
                 ),
-                classes:'text-left'
+                classes: 'text-left'
               },
               {
                 title: "AÑO",
@@ -211,14 +212,38 @@ const FinancePresenter = (props: Props) => {
                       )}
                       className="text-primary-500 
                                                 hover:text-primary-600 text-base">
-                      <FaFileCsv className="text-primary-500 
+                      <FaFileCsv
+                        size={20}
+                        className="text-primary-500 
                                                 hover:text-primary-600 text-base ml-5"
 
                       />
-                      Descargar
 
 
-                    </a></div>
+                    </a>
+                    <a key={row.id} href="#"
+                      onClick={() => props.onDownloadExcel(URL_API + TRANSPARENCY_PATH + "/media/" + file?.url_download as string,
+                        `conjunto-de-datos-${props.selectedYear}-${props.month}-${file?.description}`
+                      )}
+                      className="text-primary-500 
+                                                hover:text-primary-600 text-base ml-5">
+                      <FaFileExcel size={20}
+                        className="text-primary-500
+                                                hover:text-primary-600 text-base ml-5" />
+                    </a>
+
+                    <a key={row.id} href="#"
+                      onClick={() => props.onDownloadPDF(URL_API + TRANSPARENCY_PATH + "/media/" + file?.url_download as string,
+                        `conjunto-de-datos-${props.selectedYear}-${props.month}-${file?.description}`
+                      )}
+                      className="text-primary-500 
+                                                hover:text-primary-600 text-base ml-5">
+                      <FaFilePdf size={20}
+                        className="text-primary-500
+                                                hover:text-primary-600 text-base ml-5" />
+                    </a>
+
+                  </div>
                 }
               },
               {
@@ -230,11 +255,35 @@ const FinancePresenter = (props: Props) => {
                   )}
                     className="text-primary-500 
                                                 hover:text-primary-600 text-base">
-                    <FaFileCsv className="text-primary-500 
+                    <FaFileCsv size={20}
+                      className="text-primary-500 
                                                 hover:text-primary-600 text-base ml-5" />
-                    Descargar
 
-                  </a></div>
+                  </a>
+                    <a key={row.id} href="#"
+                      onClick={() => props.onDownloadExcel(URL_API + TRANSPARENCY_PATH + "/media/" + file?.url_download as string,
+                        `metadatos-${props.selectedYear}-${props.month}-${file?.description}`
+                      )}
+
+                      className="text-primary-500 
+                                                hover:text-primary-600 text-base ml-5">
+                      <FaFileExcel
+                        size={20}
+                        className="text-primary-500
+                                                hover:text-primary-600 text-md ml-5" />
+                    </a>
+                    <a key={row.id} href="#"
+                      onClick={() => props.onDownloadPDF(URL_API + TRANSPARENCY_PATH + "/media/" + file?.url_download as string,
+                        `metadatos-${props.selectedYear}-${props.month}-${file?.description}`
+                      )}
+                      className="text-primary-500 
+                                                hover:text-primary-600 text-base ml-5">
+                      <FaFilePdf size={20}
+                        className="text-primary-500
+                                                hover:text-primary-600 text-base ml-5" />
+                    </a>
+
+                  </div>
                 }
               },
               {
@@ -246,11 +295,33 @@ const FinancePresenter = (props: Props) => {
                   )}
                     className="text-primary-500 
                                                 hover:text-primary-600 text-base">
-                    <FaFileCsv className="text-primary-500 
+                    <FaFileCsv size={20}
+                      className="text-primary-500 
                                                 hover:text-primary-600 text-base ml-5" />
 
-                    Descargar
-                  </a></div>
+                  </a>
+                    <a key={row.id} href="#"
+                      onClick={() => props.onDownloadPDF(URL_API + TRANSPARENCY_PATH + "/media/" + file?.url_download as string,
+                        `diccionario-${props.selectedYear}-${props.month}-${file?.description}`
+                      )}
+                      className="text-primary-500 
+                                                hover:text-primary-600 text-base ml-5">
+                      <FaFilePdf size={20}
+                        className="text-primary-500
+                                                hover:text-primary-600 text-base ml-5" />
+                    </a>
+                    <a key={row.id} href="#"
+                      onClick={() => props.onDownloadPDF(URL_API + TRANSPARENCY_PATH + "/media/" + file?.url_download as string,
+                        `diccionario-${props.selectedYear}-${props.month}-${file?.description}`
+                      )}
+                      className="text-primary-500 
+                                                hover:text-primary-600 text-base ml-5">
+                      <FaFilePdf size={20}
+                        className="text-primary-500
+                                                hover:text-primary-600 text-base ml-5" />
+                    </a>
+
+                  </div>
                 }
               }
 

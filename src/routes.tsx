@@ -1,3 +1,4 @@
+
 import { createBrowserRouter, redirect } from 'react-router-dom'
 import SessionService from './infrastructure/Services/SessionService'
 import Admin from './interfaces/web/Admin'
@@ -25,6 +26,8 @@ import Solicity from './interfaces/web/Landing/Thematics/Solicity'
 import Tutorials from './interfaces/web/Landing/Tutorials'
 import { BASE_URL, IS_SERVER } from './utils/constans'
 import menu from './utils/menu'
+import Politics from "./interfaces/web/Landing/Politics";
+
 
 const handleLoadeAuth = () => {
   const isLogged = SessionService.isLogged()
@@ -134,6 +137,11 @@ const Router = createBrowserRouter(
         {
           path: '/formularios-solicitudes',
           element: <Solicity />
+        },
+
+        {
+          path: "/politicas-condiciones",
+          element: <Politics />
         },
 
         {
