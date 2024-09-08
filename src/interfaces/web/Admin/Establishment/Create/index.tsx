@@ -1,5 +1,4 @@
 import EstablishmentCreateContainer from "../../../../../components/Admin/Establishment/Create/EstablishmentCreateContainer"
-import Breadcrumb from "../../../../../components/Common/Breadcrumb"
 import EstablishmentUseCase from "../../../../../domain/useCases/Establishment/EstablishmentUseCase"
 import NumeralUseCase from "../../../../../domain/useCases/NumeralUseCase/NumeraUseCase"
 import api from "../../../../../infrastructure/Api"
@@ -21,19 +20,7 @@ const EstablishmentCreate = () => {
 
     return (
         <>
-            <Breadcrumb
-                items={[
-                    {
-                        name: 'Instituciones',
-                        path: '/admin/entities',
-                    },
-                    {
-                        name: 'Crear',
-                        path: '#',
-                    }
-                ]}
-            />
-
+            
             <EstablishmentCreateContainer
                 usecase={usecase}
                 numeralUsecase={numeralUsecase}

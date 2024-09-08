@@ -89,6 +89,7 @@ interface Props {
     ChangeStatus: () => void
     textForChangeStatus: string
     textForMotiveDescription: string
+    onCancelChangeStatus:()=>void
 }
 /**
  * 
@@ -173,6 +174,15 @@ const SolicityResponsePresenter = (props: Props) => {
                                 <span>
                                     {count} / 3000
                                 </span>
+                                <Button
+                                    type="button"
+                                    color="danger"
+                                    className="text-white font-bold bg-gray-500 hover:bg-gray-700 "
+                                    onClick={props.onCancelChangeStatus}
+                                >
+                                    <IoClose size={23} className=" mr-2" />
+                                    Cancelar
+                                </Button>
                             </div>
 
 

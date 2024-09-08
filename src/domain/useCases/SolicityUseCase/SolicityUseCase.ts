@@ -160,7 +160,7 @@ class SolicityUseCase {
     const expired_date = moment.utc(solicity.expiry_date).toDate()
     const now = new Date()
 
-
+    console.log(solicity.status)
     if (solicity.status == StatusSolicity.RESPONSED.key
       || solicity.status == StatusSolicity.NO_RESPONSED.key
       || solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key

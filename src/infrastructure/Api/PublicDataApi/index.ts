@@ -96,12 +96,14 @@ class PublicDataApi {
     }
 
     /////establishment/table-stats
-    public async getEstablishmentTableStats(page?: number,limit?: number) {
+    public async getEstablishmentTableStats(page?: number,limit?: number,search?:string,sort?:string[]){
         try {
             const response = await api.get <Pagination<Top20>>(TRANSPARENCY_PATH + '/establishment/table-stats',{
                 params:{
                     page,
-                    limit
+                    limit,
+                    search,
+                    sort
                 }
             });
             return response.data;

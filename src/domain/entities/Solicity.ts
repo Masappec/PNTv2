@@ -102,7 +102,7 @@ export class PartialTimelineSolicty {
     "address": "",
     "phone": "+593959998855",
     "format_send": "formato fisico: copia en papel",
-    "format_receipt": "formulario web",
+    "format_receipt": "Portal Web",
     "user_created": 3,
     "user_updated": 3,
     "user_deleted": null,

@@ -38,7 +38,6 @@ export interface RequestPublicApi {
 export interface PublicDataApiResponse {
     entites_total: EntitesTotal
     solicities: Solicities
-    top_20_most_visited: Top20MostVisited[]
 }
 
 export interface EntitesTotal {
@@ -55,12 +54,12 @@ export interface Solicities {
 
 export interface Top20 {
     establishment: Establishment
-    score: number
-    recibidas: number
-    atendidas: number
-    prorrogas: number
-    insistencias: number
-    no_respuestas: number
+    score_saip: number
+    total_recibidas: number
+    total_atendidas: number
+    total_prorroga: number
+    total_insistencia: number
+    total_no_respuesta: number
 }
 
 export interface Establishment {
@@ -198,4 +197,7 @@ export interface IndicatorResponse {
     score_activa: number;
     score_saip: number;
     total_score: number;
+    day_frencuency_publish:number,
+    day_frencuency_response:number;
+    ta_published:number
 }
