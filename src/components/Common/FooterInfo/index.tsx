@@ -127,14 +127,14 @@ const FooterInfo = () => {
                   className='w-full max-w-[140px] object-cover object-center'
                   loading='lazy'
                   src={logofcd}
-                  alt='Logo de transparencia internacional Ecuador'
+                  alt='Logo de Transparencia Internacional Ecuador'
                 />
 
                 <img
                   className='w-full max-w-[140px] object-cover object-center'
                   loading='lazy'
                   src={logodatalat}
-                  alt='Logo de datalat'
+                  alt='Logo de Datalat'
                 />
               </section>
             </div>
@@ -155,7 +155,7 @@ const FooterInfo = () => {
               className='w-full max-w-52 object-cover object-center'
               loading='lazy'
               src={logocooperacionalemana}
-              alt='Logo de cooperación alemana'
+              alt='Logo de GIZ'
             />
           </div>
         </div>

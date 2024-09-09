@@ -260,7 +260,7 @@ const IndicatorsEstablishment = (props: Props) => {
                         <div className="flex flex-row mt-4 border-2 border-black ">
 
                             <div className="flex-col border-r-2 border-black">
-                                <img src={props.qrUrl} alt="insignia" />
+                                <img src={props.qrUrl} alt="Insignia Digital de Transparencia" />
 
                             </div>
                             <div className="flex-col ml-2 ">
