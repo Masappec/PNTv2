@@ -9,12 +9,26 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { Tabs } from "flowbite-react";
 import { BiChart, BiStats, BiTable } from "react-icons/bi";
 import { themeTabs } from "../../Common/Tabs/Theme";
+import { Pagination } from "../../../infrastructure/Api";
 
 
 interface Props {
 
   data: PublicDataApiResponse;
   top_20: Top20[];
+  visit:Pagination<Top20>;
+  paramsVisit: {
+    sort: string[],
+    search?: string,
+    page: number,
+    limit: number
+  }
+  setParamsVisit: (props:{
+    sort: string[],
+    search?: string,
+    page: number,
+    limit: number
+  }) => void
   current: number;
   pageSize: number;
   from: number;
@@ -117,8 +131,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
           }
 
         },
-        series: [props.data.entites_total.updated||0, 
-          props.data.entites_total.not_updated||0, props.data.entites_total.nearly_updated||0],
+        series: [props.data.entites_total.updated || 0, props.data.entites_total.not_updated || 0, props.data.entites_total.nearly_updated || 0],
         labels: ["Instituciones que han publicado \n todos sus archivos",
           "Instituciones que no han publicado ningún archivo",
           "Instituciones que solo han publicado parte de los archivos"],
@@ -157,63 +170,63 @@ const IndicatorsAdminPresenter = (props: Props) => {
     <div className="h-full overflow-y-hidden bg-white p-5">
       <Tabs aria-label="Default tabs" style="underline" theme={themeTabs}>
         <Tabs.Item active title="Graficos" icon={BiChart}>
-              
 
 
 
-                <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
-                  <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
-                    <h2 className="text-start font-semibold text-sm">
-                      Instituciones que han publicado sus datos de transparencia en el Portal
-                    </h2>
-                   
-                    <div className="relative">
 
-                      <button className="text-primary hover:text-primary-dark
+          <div className="flex flex-col md:flex-row mt-10 w-full rounded-2xl justify-center gap-5 p-5shadow-lg">
+            <div className="container w-auto border  h-fit px-3 py-6 rounded-3xl">
+              <h2 className="text-start font-semibold text-sm">
+                Instituciones que han publicado sus datos de transparencia en el Portal
+              </h2>
+
+              <div className="relative">
+
+                <button className="text-primary hover:text-primary-dark
               focus:outline-none focus:ring-2 focus:ring-primary-dark
               rounded-md px-3 py-2"
-                        type="button"
-                        onClick={() => setVisible(!visible)}
-                      >
+                  type="button"
+                  onClick={() => setVisible(!visible)}
+                >
 
-                        <span className="text-sm font-semibold">
-                          Escoge el mes: {
-                            meses[props.month - 1]
-                          }
-                        </span>
-                        &nbsp;
-                        <span className="text-sm font-semibold">
-                          {props.year}
-                        </span>
+                  <span className="text-sm font-semibold">
+                    Escoge el mes: {
+                      meses[props.month - 1]
+                    }
+                  </span>
+                  &nbsp;
+                  <span className="text-sm font-semibold">
+                    {props.year}
+                  </span>
 
-                        <FaCalendarAlt />
+                  <FaCalendarAlt />
 
 
-                      </button>
-                      <CalendarMonth
-                        visible={visible}
-                        onMonthSelect={(month) => props.onSelectedMonth(month + 1)}
-                        onYearSelect={(year) => props.onSelectedYear(year)}
-                        setVisible={setVisible}
-                      />
-                    </div>
+                </button>
+                <CalendarMonth
+                  visible={visible}
+                  onMonthSelect={(month) => props.onSelectedMonth(month + 1)}
+                  onYearSelect={(year) => props.onSelectedYear(year)}
+                  setVisible={setVisible}
+                />
+              </div>
 
-                    <Chart
-                      options={chartPieSolicities}
-                      series={chartPieSolicities.series}
-                      type="donut"
-                      width={500}
+              <Chart
+                options={chartPieSolicities}
+                series={chartPieSolicities.series}
+                type="donut"
+                width={500}
 
-                    />
-                  </div>
-                  <div className="container border   w-1/2 rounded-2xl  ">
-                    <h2 className="text-start font-semibold text-sm px-5 py-5">
-                      Cantidad total de solicitudes recibidas vs atendidas
-                    </h2>
+              />
+            </div>
+            <div className="container border   w-1/2 rounded-2xl  ">
+              <h2 className="text-start font-semibold text-sm px-5 py-5">
+                Cantidad total de solicitudes recibidas vs atendidas
+              </h2>
 
-                    <Chart options={chartLine} series={chartLine.series} type="bar" />
-                  </div>
-                </div>
+              <Chart options={chartLine} series={chartLine.series} type="bar" />
+            </div>
+          </div>
 
         </Tabs.Item>
         <Tabs.Item title="Visitas Entidades" icon={BiStats}>
@@ -231,30 +244,35 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Institución',
                   render: (row) => <span className="flex items-center">
                     <Link
-                      to={`/entidades/${row.slug}`}
+                      to={`/entidades/${row.establishment.slug}`}
                       className='uppercase 
                                                 text-wrap
                                                 cursor-pointer text-primary hover:underline
                                             justify-start
                                             hover:underline-offset-2'>
-                      {row.name}
+                      {row.establishment.name}
                     </Link>
 
                   </span>
                   ,
-                  classes: 'justify-start'
+                  classes: 'justify-start',
                 },
                 {
                   title: 'Total de consultas ' + mesActual,
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.visits}</span>
+                      <span className="text-gray-500">{row.establishment.visits}</span>
                     );
-                  }
+                  },
+                  key:'visits'
                 }
               ]}
-              data={props.data.top_20_most_visited}
-              show={props.data.top_20_most_visited.length > 0}
+              onSearch={(e)=>props.setParamsVisit({...props.paramsVisit,search:e})}
+              data={props.visit.results}
+              show={true}
+              totalPages={props.visit.total_pages}
+              currentPage={props.visit.current}
+              onChangePage={(e) => props.setParamsVisit({ ...props.paramsVisit, page: e })}
             />
           </div>
         </Tabs.Item>
@@ -264,7 +282,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
             <h4 className="text-xl font-semibold mb-4 text-center">
               Listado de instituciones según su cumplimiento de atención de solicitudes de acceso a la información pública
             </h4>
-            
+
             <Table<Top20>
 
               columns={[
@@ -288,7 +306,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Score SAIP',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.score}/100</span>
+                      <span className="text-gray-500">{row.score_saip}/100</span>
                     );
                   }
                 },
@@ -296,7 +314,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Total Solicitudes Recibidas',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.recibidas}</span>
+                      <span className="text-gray-500">{row.total_recibidas}</span>
                     );
                   }
                 },
@@ -304,7 +322,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Total Solicitudes Atendidas',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.atendidas}</span>
+                      <span className="text-gray-500">{row.total_atendidas}</span>
                     );
                   }
                 },
@@ -312,7 +330,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Total Prórrogas Solicitadas',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.prorrogas}</span>
+                      <span className="text-gray-500">{row.total_prorroga}</span>
                     )
                   }
                 },
@@ -320,7 +338,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Total Insistencias de Solicitudes',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.insistencias}</span>
+                      <span className="text-gray-500">{row.total_insistencia}</span>
                     )
                   }
                 },
@@ -328,7 +346,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   title: 'Total Solicitudes sin Respuesta',
                   render(row) {
                     return (
-                      <span className="text-gray-500">{row.no_respuestas}</span>
+                      <span className="text-gray-500">{row.total_no_respuesta}</span>
                     )
                   }
                 }

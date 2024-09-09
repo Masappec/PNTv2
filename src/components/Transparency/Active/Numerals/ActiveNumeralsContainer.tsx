@@ -17,18 +17,19 @@ const ActiveNumeralsContainer = (props: IProps) => {
     const [loading, setLoading] = useState<boolean>(true)
     const navigate = useNavigate()
 
+    const [month,setMonth] = useState<number>(new Date().getMonth())
 
     
 
     useEffect(() => {
-        props.usecase.getNumeralByUserInSession().then(_numerals => {
+        props.usecase.getNumeralByUserInSession(new Date().getFullYear(),month+1).then(_numerals => {
             setNumerals(_numerals.sort((a, b) => parseInt(a.name.replace("Numeral", "")) - parseInt(b.name.replace("Numeral", ""))))
             setLoading(false)
         }).catch((e) => {
             setError(e.message)
             setLoading(false)
         })
-    }, [])
+    }, [month])
 
     
 
@@ -38,14 +39,18 @@ const ActiveNumeralsContainer = (props: IProps) => {
             navigate('/admin/active/create', {
                 state: {
                     numeral: numeral,
-                    childs: numerals.filter(x => x.parent == numeral.id)
+                    childs: numerals.filter(x => x.parent == numeral.id),
+                    month:month,
+                    year: new Date().getFullYear()
                 } as INeedProps
             })
         } else {
             navigate('/admin/active/edit', {
                 state: {
                     numeral: numeral,
-                    childs: numerals.filter(x => x.parent == numeral.id)
+                    childs: numerals.filter(x => x.parent == numeral.id),
+                    month: month,
+                    year: new Date().getFullYear()
                 } as INeedProps
             })
 
@@ -60,6 +65,8 @@ const ActiveNumeralsContainer = (props: IProps) => {
             onAdd={() => { }}
             onClickItem={handleClickItem}
             error={error}
+            OnselectedMonth={setMonth}
+            selectedMonth={month}
         />
     )
 }

@@ -8,11 +8,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../infrastructure/Store";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import SessionService from "../../../../infrastructure/Services/SessionService";
-import { toast } from 'react-toastify';
 import { Solicity } from "../../../../domain/entities/Solicity";
 import { useNavigate, useParams } from "react-router-dom";
 import { formart_send, format_receipt, genders, race_indentification } from "../../../../utils/options";
 import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
+import { formatDate2 } from "../../../../utils/functions";
 
 
 interface Props {
@@ -37,7 +37,7 @@ const SolicityEditContainer = (props: Props) => {
         format_receipt: "",
         establishment: 0
     })
-
+    const [loadingSave, setLoadingSave] = useState<boolean>(false)
     const [solicitySaved, setSolicitySaved] = useState<Solicity>({} as Solicity)
     const { id } = useParams()
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
@@ -100,80 +100,77 @@ const SolicityEditContainer = (props: Props) => {
 
 
         if (data.establishment === 0) {
-            toast("Seleccione un establecimiento", {
-                type: "error",
-                autoClose: 2000
-            })
+
             setIsLoadingSend(false)
             return
         }
 
 
-        if (data.number_saip === ""){
+        if (data.number_saip === "") {
             setError("El número SAIP es requerido")
             setIsLoadingSend(false)
             return
         }
-        if (data.city === ""){
+        if (data.city === "") {
             setError("La ciudad es requerida")
             setIsLoadingSend(false)
             return
         }
-        if (data.text === ""){
+        if (data.text === "") {
             setError("El texto es requerido")
             setIsLoadingSend(false)
             return
         }
 
-        if (data.first_name === ""){
+        if (data.first_name === "") {
             setError("El nombre es requerido")
             setIsLoadingSend(false)
             return
         }
-        if (data.last_name === ""){
+        if (data.last_name === "") {
             setError("El apellido es requerido")
             setIsLoadingSend(false)
             return
         }
 
-        if (data.email === ""){
+        if (data.email === "") {
             setError("El correo es requerido")
             setIsLoadingSend(false)
             return
         }
         data.address = data.city
-        if (data.address === ""){
+        if (data.address === "") {
             setError("La dirección es requerida")
             setIsLoadingSend(false)
             return
         }
 
-        if (data.phone === ""){
+        if (data.phone === "") {
             setError("El teléfono es requerido")
             setIsLoadingSend(false)
             return
         }
 
-        if (data.format_send === ""){
+        if (data.format_send === "") {
             setError("El formato de envío es requerido")
             setIsLoadingSend(false)
             return
         }
 
-        if (data.format_receipt === ""){
+        if (data.format_receipt === "") {
             setError("El formato de recepción es requerido")
             setIsLoadingSend(false)
             return
         }
 
-        
 
-        props.usecase.updateSolicity(data, parseInt(id || "0")).then((res) => {
+
+        props.usecase.updateSolicity(data, parseInt(id || "0"), true).then((res) => {
             setSolicitySaved(res)
             setIsLoadingSend(false)
             setIsSend(true)
-            
-            
+
+
         }).catch((e) => {
             setIsLoadingSend(false)
             setError(e.message)
@@ -181,6 +178,90 @@ const SolicityEditContainer = (props: Props) => {
 
 
 
+
+    }
+
+    const onSaveWithoutSend = () => {
+        setLoadingSave(true)
+        data.establishment = entity.id || 0
+
+
+        if (data.establishment === 0) {
+
+            setLoadingSave(false)
+            return
+        }
+
+
+        if (data.number_saip === "") {
+            setError("El número SAIP es requerido")
+            setLoadingSave(false)
+            return
+        }
+        if (data.city === "") {
+            setError("La ciudad es requerida")
+            setLoadingSave(false)
+            return
+        }
+        if (data.text === "") {
+            setError("El texto es requerido")
+            setLoadingSave(false)
+            return
+        }
+
+        if (data.first_name === "") {
+            setError("El nombre es requerido")
+            setLoadingSave(false)
+            return
+        }
+        if (data.last_name === "") {
+            setError("El apellido es requerido")
+            setLoadingSave(false)
+            return
+        }
+
+        if (data.email === "") {
+            setError("El correo es requerido")
+            setLoadingSave(false)
+            return
+        }
+        data.address = data.city
+        if (data.address === "") {
+            setError("La dirección es requerida")
+            setLoadingSave(false)
+            return
+        }
+
+        if (data.phone === "") {
+            setError("El teléfono es requerido")
+            setLoadingSave(false)
+            return
+        }
+
+        if (data.format_send === "") {
+            setError("El formato de envío es requerido")
+            setLoadingSave(false)
+            return
+        }
+
+        if (data.format_receipt === "") {
+            setError("El formato de recepción es requerido")
+            setLoadingSave(false)
+            return
+        }
+
+
+
+        props.usecase.updateSolicity(data, parseInt(id || "0"), false).then((res) => {
+            setSolicitySaved(res)
+            setLoadingSave(false)
+            setError("")
+            setSuccess("Borrador de Solicitud de Acceso a Información Pública guardada con éxito")
+
+        }).catch((e) => {
+            setLoadingSave(false)
+            setError(e.message)
+        })
 
     }
 
@@ -263,15 +344,28 @@ const SolicityEditContainer = (props: Props) => {
 
 
 
-
+    const onDelete = () => {
+        props.usecase.deleteSolicity(parseInt(id || "0")).then(() => {
+            navigate('/admin/solicity')
+        }).catch((e) => {
+            setError(e.message)
+        })
+    }
     const onCancel = () => {
         navigate('/admin/solicity')
     }
 
     return (
         <>
-            {isSend ? <ScreenMessage message="Solicitud de Acceso a Información Pública ingresada con éxito"
-                type="Se ha enviado la solicitud con exito"
+            {isSend ? <ScreenMessage message={`
+                        Fecha y hora de envío registrada: ${formatDate2(solicitySaved.created_at)}
+
+                        La solicitud que acabas de enviar ya fue entregada a la institución quienes también la revisarán desde el Portal Nacional de Transparencia. Según lo establecido en la LOTAIP, a partir de ahora cuentan con hasta 10 días para responderte. Sigue el proceso indicado en el portal por si necesitas enviar una Insistencia o Gestión Oficiosa en caso de no recibir respuesta.
+
+                        Regresar a Solicitudes
+                        
+                        `}
+                type="Solicitud enviada."
             >
                 <div className="flex items-center gap-16 mt-8 justify-center ">
 
@@ -282,32 +376,35 @@ const SolicityEditContainer = (props: Props) => {
                         Ver SAIP
                     </button>
                 </div>
-            </ScreenMessage>:
-            <SolicityEditPresenter
-                handleSubmit={handleSubmit}
-                onCancel={onCancel}
-                onChange={handleChange}
-                key={0}
-                loadOptions={loadOptions}
-                error={error}
-                setError={setError}
-                setSuccess={setSuccess}
-                success={success}
-                onChangeSelectEstablishment={onChangeSelectEstablishment}
-                data={data}
-                race_indentification={race_indentification}
-                genders={genders}
-                format_receipt={format_receipt}
-                format_send={formart_send}
-                entitySelected={entity}
-                onChangeSelect={onChangeSelect}
-                solicitySaved={solicitySaved}
-                getSelectedItems={getSelectedItem}
-                isChanged={isChanged}
-                isLoadingSend={isLoadingSend}
-                isSaved={solicitySaved.id ? true : false}
-                isSend={isSend}
-            />}
+            </ScreenMessage> :
+                <SolicityEditPresenter
+                    handleSubmit={handleSubmit}
+                    onCancel={onCancel}
+                    onChange={handleChange}
+                    key={0}
+                    onDelete={onDelete}
+                    loadOptions={loadOptions}
+                    error={error}
+                    setError={setError}
+                    setSuccess={setSuccess}
+                    success={success}
+                    onChangeSelectEstablishment={onChangeSelectEstablishment}
+                    data={data}
+                    race_indentification={race_indentification}
+                    genders={genders}
+                    format_receipt={format_receipt}
+                    format_send={formart_send}
+                    entitySelected={entity}
+                    onChangeSelect={onChangeSelect}
+                    solicitySaved={solicitySaved}
+                    getSelectedItems={getSelectedItem}
+                    isChanged={isChanged}
+                    isLoadingSend={isLoadingSend}
+                    isSaved={solicitySaved.id ? true : false}
+                    isSend={isSend}
+                    loadingSave={loadingSave}
+                    onSaveWithoutSend={onSaveWithoutSend}
+                />}
         </>
     )
 

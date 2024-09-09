@@ -102,7 +102,7 @@ export class PartialTimelineSolicty {
     "address": "",
     "phone": "+593959998855",
     "format_send": "formato fisico: copia en papel",
-    "format_receipt": "formulario web",
+    "format_receipt": "Portal Web",
     "user_created": 3,
     "user_updated": 3,
     "user_deleted": null,
@@ -120,7 +120,7 @@ export class TimeLinePresenter {
         public attachments: AttachmentEntity[],
         public type: 'RESPONSE' | 'INSISTENCY' | 'COMMENT',
         public title: string,
-        public other_title:string
+        public other_title: string
     ) { }
 }
 
@@ -224,24 +224,24 @@ export class Solicity extends BaseEntity {
         solicity.responses?.forEach(r => {
             list.push(new TimeLinePresenter(
                 r.user.id, r.created_at, r.text, r.files, r.attachments, "RESPONSE",
-                "Respuesta de la entidad",'Respuesta de la entidad'))
+                "Respuesta de la entidad", 'Respuesta de la entidad'))
         })
 
         solicity.insistency?.forEach(i => {
-            if(i.status==StatusSolicity.INFORMAL_MANAGMENT_SEND.key){
+            if (i.status == StatusSolicity.INFORMAL_MANAGMENT_SEND.key) {
 
                 list.push(new TimeLinePresenter(i.user_created, i.created_at, i.motive, [], [],
-                    "INSISTENCY", "Gestión Oficiosa", 'Gestión Oficiosa'))
-            }else{
+                    "INSISTENCY", "Solicitud de Gestión Oficiosa Enviada", 'Gestión Oficiosa'))
+            } else {
 
                 list.push(new TimeLinePresenter(i.user_created, i.created_at, i.motive, [], [],
-                    "INSISTENCY", "Insistencia del ciudadano", 'Insistencia del ciudadano'))
+                    "INSISTENCY", "Solicitud de Insistencia Enviada", 'Insistencia del ciudadano'))
             }
         })
 
         solicity.comments?.forEach(c => {
-            list.push(new TimeLinePresenter(c.user, c.created_at, c.motive, [], [], 
-                "COMMENT", "Motivo de Prórroga",'Motivo de Prórroga'))
+            list.push(new TimeLinePresenter(c.user, c.created_at, c.motive, [], [],
+                "COMMENT", "Motivo de Prórroga", 'Motivo de Prórroga'))
         })
 
 

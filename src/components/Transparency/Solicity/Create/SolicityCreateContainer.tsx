@@ -9,7 +9,7 @@ import { RootState } from "../../../../infrastructure/Store";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import SessionService from "../../../../infrastructure/Services/SessionService";
 import { Solicity } from "../../../../domain/entities/Solicity";
-import { sleep } from "../../../../utils/functions";
+import { formatDate2, sleep } from "../../../../utils/functions";
 import { useNavigate } from "react-router-dom";
 import UserEntity from "../../../../domain/entities/UserEntity";
 import ScreenMessage from "../../../Common/ScreenMessage/ScreenMessage";
@@ -58,7 +58,7 @@ const SolicityCreateContainer = (props: Props) => {
 
     useEffect(() => {
 
-        
+
         const user = SessionService.getUserData()
         const person = SessionService.getPersonData()
         setUserSession(user)
@@ -77,13 +77,13 @@ const SolicityCreateContainer = (props: Props) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setIsLoadingSend(true)
-        data.format_receipt = "formulario web"
+        data.format_receipt = "Portal Web"
         data.address = entity.address || "Sin dirección"
         data.address = entity.address || "Sin Ciudad"
         console.log(data)
 
         if (solicitySaved?.id) {
-            const draft_send = props.usecase.sendDraftSolicity(data, solicitySaved.id || 0)
+            const draft_send = props.usecase.sendDraftSolicity(data, solicitySaved.id || 0,false)
 
             draft_send.then((res) => {
                 setSuccess("Solicitud Guardada como borrador")
@@ -102,28 +102,28 @@ const SolicityCreateContainer = (props: Props) => {
         } else {
             data.establishment = entity.id || 0
 
-            if(data.establishment === 0){
+            if (data.establishment === 0) {
                 setError("Seleccione una entidad")
                 setIsLoadingSend(false)
                 return
             }
 
             data.address = entity.address || "Sin dirección"
-            
-            if (data.text==""){
+
+            if (data.text == "") {
                 setError("Ingrese el texto de la solicitud")
                 setIsLoadingSend(false)
                 return
             }
-            if(data.city === ""){
+            if (data.city === "") {
                 setError("Ingrese la ciudad")
                 setIsLoadingSend(false)
                 return
             }
 
-            
 
-            if (data.format_send === ""){
+
+            if (data.format_send === "") {
                 setError("Seleccione el formato de envio")
                 setIsLoadingSend(false)
                 return
@@ -160,11 +160,27 @@ const SolicityCreateContainer = (props: Props) => {
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setIsChanged(true)
-        setData({
-            ...data,
-            [e.target.name]: e.target.value
-        })
+        if (e.target.name == 'text') {
+            const value = e.target.value;
+
+            if (value.length < 3000) {
+                setData({
+                    ...data,
+                    [e.target.name]: e.target.value
+                })
+            }
+
+        } else {
+            setIsChanged(true)
+
+            setData({
+                ...data,
+                [e.target.name]: e.target.value
+            })
+        }
+
+
+
     }
 
 
@@ -219,7 +235,7 @@ const SolicityCreateContainer = (props: Props) => {
     ]
 
     const format_receipt: ColourOption[] = [
-        { value: 'formulario web', label: 'formulario web', color: '#00B8D9' },
+        { value: 'Portal Web', label: 'Portal Web', color: '#00B8D9' },
     ]
 
 
@@ -229,9 +245,7 @@ const SolicityCreateContainer = (props: Props) => {
             return callback([])
         }
 
-        if (inputValue.length < 3) {
-            return
-        }
+
         const filter = _establishments.filter((item) => {
             return item.name.toLowerCase().includes(inputValue.toLowerCase())
         })
@@ -261,26 +275,26 @@ const SolicityCreateContainer = (props: Props) => {
         }
         data.establishment = entity.id || 0
         data.address = entity.address || "Sin dirección"
-        data.format_receipt = 'formulario web'
-        if (data.text === "" ){
+        data.format_receipt = 'Portal Web'
+        if (data.text === "") {
             setError("Ingrese el texto de la solicitud")
             setIsLoadingSave(false)
             return
         }
 
-        if(data.city === ""){
+        if (data.city === "") {
             setError("Ingrese la ciudad")
             setIsLoadingSave(false)
             return
         }
 
-        if (data.format_send === ""){
+        if (data.format_send === "") {
             setError("Seleccione el formato de envio")
             setIsLoadingSave(false)
             return
         }
 
-        
+
         props.usecase.createDraft(data).then((res) => {
             setError("")
             setIsChanged(false)
@@ -306,8 +320,15 @@ const SolicityCreateContainer = (props: Props) => {
         <>
             {
                 isSend ?
-                    <ScreenMessage message="Solicitud de Acceso a Información Pública ingresada con éxito"
-                        type="Se ha enviado la solicitud con exito"
+                    <ScreenMessage message={`
+                        Fecha y hora de envío registrada: ${formatDate2(solicitySaved.created_at)}
+
+                        La solicitud que acabas de enviar ya fue entregada a la institución quienes también la revisarán desde el Portal Nacional de Transparencia. Según lo establecido en la LOTAIP, a partir de ahora cuentan con hasta 10 días para responderte. Sigue el proceso indicado en el portal por si necesitas enviar una Insistencia o Gestión Oficiosa en caso de no recibir respuesta.
+
+                        Regresar a Solicitudes
+                        
+                        `}
+                        type="Solicitud enviada."
                     >
                         <div className="flex items-center gap-16 mt-8 justify-center ">
 

@@ -27,6 +27,8 @@ const PasswordMeter = ({ password, onCalculate }: IProps) => {
         let score = 0;
         const feedback = [];
 
+        const warnings = [];
+
         // Longitud mínima
         if (password.length < 8) {
             feedback.push('Debe tener al menos 8 letras de longitud.');
@@ -43,16 +45,16 @@ const PasswordMeter = ({ password, onCalculate }: IProps) => {
 
         // Al menos un número
         if (/\d/.test(password)) {
-            score += 20;
+            score += 40;
         } else {
             feedback.push('No solo debes utilizar letras sino al menos un número.');
         }
 
         // Al menos un carácter especial
         if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-            score += 20;
+            //score += 20;
         } else {
-            feedback.push('Además, te recomendamos agregar un símbolo como $%&* para que sea más difícil adivinar para personas no autorizadas.');
+            warnings.push('Además, te recomendamos agregar un símbolo como $%&* para que sea más difícil adivinar para personas no autorizadas.');
         }
 
         // Evitar caracteres repetidos
@@ -86,7 +88,7 @@ const PasswordMeter = ({ password, onCalculate }: IProps) => {
         }
         onCalculate && onCalculate({ percentage, strength, feedback, colorClass });
 
-        return { percentage, strength, feedback, colorClass };
+        return { percentage, strength, feedback, colorClass, warnings };
     };
 
 
@@ -112,6 +114,14 @@ const PasswordMeter = ({ password, onCalculate }: IProps) => {
                     </li>
                 ))
 
+            }
+            {
+                passwordState != "" && calculatePasswordStrength(passwordState).warnings.map((item, index) => (
+                    <li key={index} className="text-sm text-yellow-500">
+                        {item}
+
+                    </li>
+                ))
             }
 
         </div>

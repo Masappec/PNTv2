@@ -3,6 +3,7 @@ import Table from "../../../Common/Table/index"
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
 import Select from "../../../Common/Select"
+import { elapsedTime, formatDate2 } from "../../../../utils/functions"
 
 
 
@@ -36,7 +37,7 @@ interface Props {
     onChangesLimit: (limit: number) => void
     onChangeSort: (sort: string) => void
     columnsSort: string[]
-    onChangeStatus:(value:string)=>void
+    onChangeStatus: (value: string) => void
 }
 
 const SolicityListEstablishmentPresenter = (props: Props) => {
@@ -87,19 +88,19 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             Filtrar por estado
                         </label>
                         <Select
-                        options={[
-                            {
-                                label:"--------",
-                                value:''
-                            },
-                            
-                            ...Object.keys(StatusSolicity).filter(e=>e!='DRAFT').map(e=>{
-                            return{
-                                label:StatusSolicity[e as keyof typeof StatusSolicity].value_2,
-                                value:e
-                            }
-                        })]}
-                        onChange={(e)=>props.onChangeStatus(e.target.value)}
+                            options={[
+                                {
+                                    label: "--------",
+                                    value: ''
+                                },
+
+                                ...Object.keys(StatusSolicity).filter(e => e != 'DRAFT').map(e => {
+                                    return {
+                                        label: StatusSolicity[e as keyof typeof StatusSolicity].value_2,
+                                        value: e
+                                    }
+                                })]}
+                            onChange={(e) => props.onChangeStatus(e.target.value)}
                             className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
 
                         >
@@ -109,7 +110,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                     </div>
 
                 </div>
-                
+
 
                 <button
                     type='button'
@@ -148,7 +149,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         {
                             title: "N°",
                             render: (solicity, index) => (
-                                <a className="text-blue-500 hover:underline cursor-pointer"
+                                <a className="text-blue-500 hover:underline cursor-pointer text-left"
                                     onClick={() => props.onResponse(solicity)}
                                 >{index + 1}</a>
                             )
@@ -158,7 +159,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             key: "number_saip",
                             render: (solicity) => (
                                 <a onClick={() => props.onResponse(solicity)} className="text-blue-500
-                            hover:underline cursor-pointer">
+                                            hover:underline cursor-pointer text-left">
                                     {solicity.number_saip}
                                 </a>
                             )
@@ -167,7 +168,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             title: "Solicitante",
                             key: "first_name",
                             render: (solicity) => (
-                                <a className="text-blue-500 hover:underline cursor-pointer"
+                                <a className="text-blue-500 hover:underline cursor-pointer text-left"
                                     onClick={() => props.onResponse(solicity)}
 
                                 > {solicity.first_name} {solicity.last_name}</a>
@@ -177,18 +178,18 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             title: "Fecha de envío",
                             key: "date",
                             render: (solicity) => (
-                                <p>{
-                                    solicity.date ? new Date(solicity.date).toLocaleString() : ""
+                                <p className="text-left">{
+                                    solicity.date ? formatDate2(solicity.date).toLocaleString() : ""
                                 }</p>
                             )
                         },
 
                         {
                             title: "Días transcurridos",
-                            key: "date",
+                            key: "-date",
                             render: (solicity) => (
-                                <p>{
-                                    solicity.date ? Math.floor((new Date().getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) : ""
+                                <p className="text-left">{
+                                    solicity.date ? elapsedTime(solicity.date) : ""
                                 }</p>
                             )
                         },
@@ -201,7 +202,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                             render: (solicity) => {
                                 const status = StatusSolicity[solicity.status as keyof typeof StatusSolicity]
                                 const color = status?.bg || "bg-primary-500"
-                                const border = color.replace("bg","border") 
+                                const border = color.replace("bg", "border")
                                 return (
                                     <p className={`text-wrap border rounded-md px-2 py-1    
                                         w-auto 
@@ -218,9 +219,9 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                                 )
                             }
                         },
-                       
 
-                        
+
+
                     ]}
                     currentPage={props.page}
                     data={props.data}

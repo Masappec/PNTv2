@@ -92,16 +92,11 @@ const TF = (props: Props) => {
                 </Accordion.Title>
                 <Accordion.Content>
                     <Table<TransparencyFocusEntity>
-                        show={true}
+                        show={false}
+                        text="La institución no ha publicado datos para este mes."
+
                         columns={[
-                            {
-                                render: (_item, index) => {
-                                    return (
-                                        <p className="text-gray-900 dark:text-white text-base">{index}</p>
-                                    )
-                                },
-                                title: "#"
-                            },
+                            
                             {
                                 render: (item) => {
                                     return (

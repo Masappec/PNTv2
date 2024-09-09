@@ -3,34 +3,38 @@ import { ApexOptions } from "apexcharts";
 import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import PublicDataApi from "../../../../../infrastructure/Api/PublicDataApi";
-import Insignia from "../../../../Common/Insignia";
 import { IndicatorResponse } from "../../../../../infrastructure/Api/PublicDataApi/interface";
-import { BiCopyAlt } from "react-icons/bi";
-import { Tooltip } from "flowbite-react";
 
 
-interface Props{
-    usecase:PublicDataApi,
-    establishment_id:number,
-    year:number,
-    qrUrl:string
+interface Props {
+    usecase: PublicDataApi,
+    establishment_id: number,
+    year: number,
+    qrUrl: string,
+    establishment_name: string
 }
 
-const IndicatorsEstablishment = (props:Props) => {
+const IndicatorsEstablishment = (props: Props) => {
 
-   
-    const [res,setRes] = useState<IndicatorResponse>({
-        total_atendidas:0,
-        total_recibidas:0,
-        total_score:0,
-        atendidas:[],
-        recibidas:[],
-        score_activa:0,
-        score_saip:0
+
+    const [res, setRes] = useState<IndicatorResponse>({
+        total_atendidas: 0,
+        total_recibidas: 0,
+        total_score: 0,
+        atendidas: [],
+        recibidas: [],
+        score_activa: 0,
+        score_saip: 0,
+        day_frencuency_publish:0,
+        day_frencuency_response:0,
+        ta_published:0
     });
+    const date = new Date();
+    const monthName = date.toLocaleString('es-ES', { month: 'long' });
+
     const [line, setLine] = useState<ApexOptions>({
         chart: {
-            id: "line",
+            id: "bar",
         },
 
         xaxis: {
@@ -134,10 +138,10 @@ const IndicatorsEstablishment = (props:Props) => {
             lineCap: "round",
         },
         labels: ["Cumplimiento"],
-        
+
     });
 
-    const getColorBasedOnScore = (score:number) => {
+    const getColorBasedOnScore = (score: number) => {
         const baseColor = "#6FC5E2"; // Gris para puntajes bajos
         if (score >= 75) {
             return "#28a745"; // Verde para puntajes altos
@@ -150,9 +154,9 @@ const IndicatorsEstablishment = (props:Props) => {
     useEffect(() => {
 
         props.usecase.getEstablishmentData({
-            establishment_id:props.establishment_id,
-            year:props.year
-        }).then((response)=>{
+            establishment_id: props.establishment_id,
+            year: props.year
+        }).then((response) => {
             console.log(response);
             setRes(response);
             setLine({
@@ -169,20 +173,20 @@ const IndicatorsEstablishment = (props:Props) => {
                         color: "#1A7290",
                     }
                 ]
-            
+
             })
 
             setChartPieSolicities({
                 ...chartPieSolicities,
-                series: [response.total_atendidas,response.total_recibidas||0],
+                series: [response.total_atendidas, response.total_recibidas],
                 labels: ["Atendidas", "Recibidas"],
             })
 
             setScore({
                 ...score,
-                series: [response.total_score||0],
-                colors: [getColorBasedOnScore(response.total_score||0)],
-                labels: [labelScore(response.total_score||0)],
+                series: [response.total_score || 0],
+                colors: [getColorBasedOnScore(response.total_score || 0)],
+                labels: [labelScore(response.total_score || 0)],
                 //set color value
                 plotOptions: {
                     ...score.plotOptions,
@@ -202,14 +206,14 @@ const IndicatorsEstablishment = (props:Props) => {
                     }
                 }
             })
-        }).catch((error)=>{
+        }).catch((error) => {
             console.error('Error durante la solicitud:', error);
         });
 
-    }, [props.establishment_id,props.year]);
+    }, [props.establishment_id, props.year]);
 
-  
-    const labelScore = (score:number) => {
+
+    const labelScore = (score: number) => {
         if (score >= 75) {
             return "Excelente";
         } else if (score >= 50) {
@@ -218,34 +222,28 @@ const IndicatorsEstablishment = (props:Props) => {
             return "Regular";
         }
     };
-    
+
 
     return (
         <>
-        
+
             <section className='my-16 flex flex-col gap-y-4 md:flex-row md:items-end' id="indicadores">
                 <h2 className='text-balance text-2xl font-normal leading-tight md:text-[40px]'>
                     Indicadores
                 </h2>
                 <div className='h-[1px] w-full bg-gray-400'>
-                    
+
 
 
                 </div>
 
             </section>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-1">
+            <div className="flex flex-row gap-1">
 
-                <div className="container h-fit px-3 relative">
-                    <div className="absolute -top-10 -right-5">
-                        {
-                            res.total_score >= 75 ? <Insignia />
-                            : null
-                        }
-                        
-                    </div>
-                    <div className=" border rounded-2xl  p-6">
+                <div className="container px-3 relative w-3/5">
+                   
+                    <div className="h-full border rounded-2xl  p-6">
                         <h2 className="text-start font-semibold text-sm">
                             Estado de cumplimiento actual
                         </h2>
@@ -258,47 +256,93 @@ const IndicatorsEstablishment = (props:Props) => {
                             type="radialBar"
                             width={330}
 
-                        />  
-                        <div className="flexmt-4">
-                        <img src={props.qrUrl} alt="insignia" />
-                        <Tooltip content="QR copiado" trigger="click">
-                        <button
-                        onClick={() => {
-                            navigator.clipboard.writeText(props.qrUrl);
-                        }}
-                            className="border border-primary text-white rounded-lg px-2 py-1 ml-2"
-                        >
-                            <BiCopyAlt className="text-primary" />
-                        </button>
-                        </Tooltip>
+                        />
+                        <div className="flex flex-row mt-4 border-2 border-black ">
+
+                            <div className="flex-col border-r-2 border-black">
+                                <img src={props.qrUrl} alt="insignia" />
+
+                            </div>
+                            <div className="flex-col ml-2 ">
+                                <p className="text-sm">
+                                    {props.establishment_name}
+                                </p>
+                                <p className="text-sm text-primary font-bold">
+                                    Cumplimiento LOTAIP - {monthName} {new Date().getFullYear()}
+                                </p>
+                                <p className="text-cyan-800 text-sm  font-bold">
+                                    {res.total_score}/100
+                                </p>
+                                <p className="text-sm">
+                                    Fecha: {new Date().toLocaleDateString()}
+                                </p>
+                            </div>
+
                         </div>
                     </div>
-                    <div className=" border rounded-2xl p-6 mt-2" >
-                        <h2 className="text-start font-semibold text-sm">
-                            Número de solicitudes de información
-                        </h2>
-                        <h2 className="text-2xl mt-2 font-extrabold">
+                  
 
-                        </h2>
-                        <Chart
-                            options={chartPieSolicities}
-                            series={chartPieSolicities.series}
-                            type="donut"
-                            width={330}
-
-                        />
-                    </div>
-                    
                 </div>
-                <div className="container border col-span-2  rounded-2xl  ">
+                <div className="container border  rounded-2xl  ">
                     <h2 className="text-start font-semibold text-sm px-5 py-5">
                         Solicitudes Recibidas vs Solicitudes Atendidas
                     </h2>
 
-                    <Chart options={line} series={line.series} type="line"  />
+                    <Chart options={line} series={line.series} type="bar" />
                 </div>
             </div>
-            
+            <div className="flex flex-row gap-1 ">
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Cantidad total de solicitudes de información recibidas en {new Date().getFullYear()}
+                        </h2>
+                        <div className="bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.total_recibidas}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Tiempo promedio de respuesta de solicitudes recibidas:
+                        </h2>
+                        <div className="mt-11 bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.day_frencuency_response}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Cantidad total de archivos de transparencia publicados en {new Date().getFullYear()}
+                        </h2>
+                        <div className="bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.ta_published}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Día del mes donde frecuentemente se publican los archivos de transparencia: 
+                        </h2>
+                        
+                        <div className="bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.day_frencuency_publish}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </>
 
     );

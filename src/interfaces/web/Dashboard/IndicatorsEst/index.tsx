@@ -38,6 +38,7 @@ const IndicatorsEst = () => {
                     qrUrl={qr}
                     usecase={publicApi}
                     year={new Date().getFullYear()}
+                    establishment_name={est.name}
 
                 /> : user.group?.find(x => x.name.toLowerCase() == 'ciudadano') ?
                     <Navigate

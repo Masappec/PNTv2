@@ -42,11 +42,12 @@ const SolicityResponseContainer = (props: Props) => {
         attachment: [],
         category_id: 0
     })
-
     const location = useLocation()
 
     const state = location.state as { data: Solicity }
     const [solicityToResponse, setSolicityToResponse] = useState<Solicity>({} as Solicity)
+    const [oldStatus, setOldStatus] = useState<string>("")
+
     const [_data, setData] = useState<CreateSolicity>({
         number_saip: "",
         city: "",
@@ -101,7 +102,7 @@ const SolicityResponseContainer = (props: Props) => {
     }[]>([])
 
     const [tags, SetTags] = useState<TagEntity[]>([])
-
+    const [IsChangeStatus,SetIsChangeStatus]=useState(false);
 
     useEffect(() => {
 
@@ -114,6 +115,7 @@ const SolicityResponseContainer = (props: Props) => {
             if (is_Est) {
                 props.usecase.getSolicityBiIdEstablishment(parseInt(state?.data?.id + "" || "0")).then((res) => {
                     setSolicityToResponse(res)
+                    setOldStatus(res.status)
                     setTimeline(Solicity.ordernReponse(res))
                     const data_ = {
                         number_saip: res.number_saip,
@@ -140,6 +142,7 @@ const SolicityResponseContainer = (props: Props) => {
             } else {
                 props.usecase.getSolicityById(parseInt(state?.data?.id + "" || "0")).then((res) => {
                     setTimeline(Solicity.ordernReponse(res))
+                    setOldStatus(res.status)
 
                     const data_ = {
                         number_saip: res.number_saip,
@@ -179,7 +182,12 @@ const SolicityResponseContainer = (props: Props) => {
 
     }, [state])
 
+    
 
+    useEffect(()=>{
+        const _isChangeStatus = isChangeStatus()
+        SetIsChangeStatus(_isChangeStatus);
+    },[solicityToResponse,solicity])
     const getSelectedEntity = (id: number) => {
         const entity = _establishments.find((item) => item.id === id)
         setEntity(entity || {} as EstablishmentEntity)
@@ -202,7 +210,7 @@ const SolicityResponseContainer = (props: Props) => {
         //return back
         const is_Est = userSession.user_permissions?.find(x => x.codename === 'view_solicityresponse')
         if (is_Est) {
-            navigation("/admin/establishment/solicity")
+            navigation("/admin/reports")
         } else {
             navigation("/admin/solicity")
         }
@@ -422,10 +430,16 @@ const SolicityResponseContainer = (props: Props) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
+        setError("")
         if (solicityToResponse.status == StatusSolicity.INSISTENCY_PERIOD.key ||
             solicityToResponse.status == StatusSolicity.PRORROGA.key ||
             solicityToResponse.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key) {
-            props.usecase.changeStatus(solicityToResponse.id, solicityToResponse.text).then((res) => {
+            if (dataResponseSolicity.text == "") {
+                setError("Favor Ingresa la descripción de tu solicitud")
+                setLoading(false)
+                return;
+            }
+            props.usecase.changeStatus(solicityToResponse.id, dataResponseSolicity.text).then((res) => {
                 setTimeline(Solicity.ordernReponse(res))
                 setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
                 SetSolicity(res)
@@ -447,7 +461,7 @@ const SolicityResponseContainer = (props: Props) => {
             e => e != 0
         )
         dataResponseSolicity.attachment = attachs.map((attach) => attach.entity?.id || 0)
-        if (dataResponseSolicity.text == '') {
+        if (dataResponseSolicity.text == '' || dataResponseSolicity.text == null) {
             setError('Ingresa tu consulta/respuesta')
             setLoading(false);
             return
@@ -563,6 +577,27 @@ const SolicityResponseContainer = (props: Props) => {
     }
 
 
+    const handleonChangeTextResponse = (text: string) => {
+        if (text.length <= 3000) {
+            setResponseSolicity({ ...dataResponseSolicity, text: text })
+        }
+
+    }
+
+    const onCancelChangeStatus = ()=>{
+       
+       
+        const res = {
+            ...solicityToResponse,
+            status: oldStatus
+        }
+        SetSolicity(res)
+        setSolicityToResponse(res)
+        setIsAvaliableToInsistency(false)
+
+        
+    }
+
 
     return isSaved ?
         <ScreenMessage message=""
@@ -589,6 +624,7 @@ const SolicityResponseContainer = (props: Props) => {
             {!userSession.group?.find(x => x.name == 'Monitoreo DPE') ?
 
                 <SolicityResponsePresenter
+                    onCancelChangeStatus={onCancelChangeStatus}
                     handleSubmit={handleSubmit}
                     onCancel={handleCancel}
                     data={[[]]}
@@ -621,7 +657,7 @@ const SolicityResponseContainer = (props: Props) => {
                     onRemoveFileFromSolicity={onRemoveFileFromPublication}
                     entitySelected={entity}
                     key={0}
-                    onChangeTextResponse={(text) => setResponseSolicity({ ...dataResponseSolicity, text: text })}
+                    onChangeTextResponse={handleonChangeTextResponse}
                     getSelectedItems={getSelectedItem}
                     onDownloadFromUrl={onDownloadFromUrl}
                     userSession={userSession}
@@ -632,7 +668,7 @@ const SolicityResponseContainer = (props: Props) => {
                     timeline={timeline}
                     isAvaliableToComment={isAvaliableToComment}
                     ChangeStatus={() => { changeStatus() }}
-                    isAvaliableForChangeStatus={isChangeStatus()}
+                    isAvaliableForChangeStatus={IsChangeStatus}
                     textForChangeStatus={textChangeStatus()}
                     textForMotiveDescription={textDescription}
                 /> : null

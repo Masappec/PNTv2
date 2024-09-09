@@ -60,25 +60,13 @@ const SolicityManualContainer = (props: Props) => {
 
 
         const user = SessionService.getUserData()
-        const person = SessionService.getPersonData()
         const saip = props.usecase.buildSaipCode().toString()
         console.log(saip)
         setUserSession(user)
         const est = SessionService.getEstablishmentData();
         setEntity(est)
 
-        setData({
-            ...data,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-            number_saip: saip,
-            phone: person.phone,
-            gender: person.gender,
-            race_identification: person.race,
-            establishment: est.id || 0,
 
-        })
 
     }, [])
 
@@ -88,70 +76,70 @@ const SolicityManualContainer = (props: Props) => {
 
         data.establishment = entity.id || 0
         if (entity.id === 0) {
-            setError("Seleccione una entidad")
+            setError("Favor Selecciona una entidad")
             setIsLoadingSend(false)
             return
         }
         data.establishment = entity.id || 0
         data.address = entity.address || "Sin dirección"
         if (data.date === "") {
-            setError("Seleccione una fecha")
+            setError("Favor Selecciona una fecha")
             setIsLoadingSend(false)
             return
         }
 
         if (data.text == "") {
-            setError("Ingresa la petición de la solicitud")
+            setError("Favor Ingresa la petición de la solicitud")
             setIsLoadingSend(false)
             return
         }
         if (data.city === "") {
-            setError("Ingresa la ciudad")
+            setError("Favor Ingresa la ciudad")
             setIsLoadingSend(false)
             return
         }
         if (data.first_name === "") {
-            setError("Ingresa el nombre")
+            setError("Favor Ingresa el nombre")
             setIsLoadingSend(false)
             return
         }
 
         if (data.last_name === "") {
-            setError("Ingresa el apellido")
+            setError("Favor Ingresa el apellido")
             setIsLoadingSend(false)
             return
         }
 
         if (data.email === "") {
-            setError("Ingresa el correo")
+            setError("Favor Ingresa el correo")
             setIsLoadingSend(false)
             return
         }
 
         if (!data.race_identification) {
-            setError("Selecciona la raza")
+            setError("Favor Selecciona la raza")
             setIsLoadingSend(false)
             return
         }
 
         if (!data.gender) {
 
-            setError("Selecciona el género")
+            setError("Favor Selecciona el género")
             setIsLoadingSend(false)
             return
         }
         if (data.phone === "") {
-            setError("Ingresa el teléfono")
+            setError("Favor Ingresa el teléfono")
             setIsLoadingSend(false)
             return
         }
         if (!data.format_send) {
-            setError("Selecciona el formato de envío")
+            setError("Favor Selecciona el formato de envío")
             setIsLoadingSend(false)
             return
         }
         if (!data.format_receipt) {
-            setError("Selecciona el formato de recepción")
+            setError("Favor Selecciona el formato de recepción")
             setIsLoadingSend(false)
             return
         }
@@ -246,7 +234,7 @@ const SolicityManualContainer = (props: Props) => {
     ]
 
     const format_receipt: ColourOption[] = [
-        { value: 'formulario web', label: 'formulario web', color: '#00B8D9' },
+        // { value: 'Portal Web', label: 'Portal Web', color: '#00B8D9' },
         { value: 'Presencial', label: 'Presencial', color: '#00B8D9' },
         { value: 'Correo Electrónico', label: 'Correo Electrónico', color: '#00B8D9' },
         { value: 'Otro', label: 'Otro', color: '#00B8D9' },
@@ -298,64 +286,64 @@ const SolicityManualContainer = (props: Props) => {
             return
         }
 
-        if (data.text == ""){
+        if (data.text == "") {
             setError("Ingresa la petición de la solicitud")
             setIsLoadingSave(false)
             return
         }
-        if (data.city === ""){
+        if (data.city === "") {
             setError("Ingresa la ciudad")
             setIsLoadingSave(false)
             return
         }
-        if (data.first_name === ""){
+        if (data.first_name === "") {
             setError("Ingresa el nombre")
             setIsLoadingSave(false)
             return
         }
 
-        if (data.last_name === ""){
+        if (data.last_name === "") {
             setError("Ingresa el apellido")
             setIsLoadingSave(false)
             return
         }
 
-        if (data.email === ""){
+        if (data.email === "") {
             setError("Ingresa el correo")
             setIsLoadingSave(false)
             return
         }
 
-        if (!data.race_identification){
+        if (!data.race_identification) {
             setError("Selecciona la raza")
             setIsLoadingSave(false)
             return
         }
 
-        if (!data.gender){
+        if (!data.gender) {
 
             setError("Selecciona el género")
             setIsLoadingSave(false)
             return
         }
-        if (data.phone === ""){
+        if (data.phone === "") {
             setError("Ingresa el teléfono")
             setIsLoadingSave(false)
             return
         }
-        if (!data.format_send){
+        if (!data.format_send) {
             setError("Selecciona el formato de envío")
             setIsLoadingSave(false)
             return
         }
-        if (!data.format_receipt){
+        if (!data.format_receipt) {
             setError("Selecciona el formato de recepción")
             setIsLoadingSave(false)
             return
         }
 
 
-        
+
         props.usecase.createManualSolicity(data).then((res) => {
             setError("")
             setIsChanged(false)
@@ -366,7 +354,7 @@ const SolicityManualContainer = (props: Props) => {
             setSuccess("")
             setIsLoadingSave(false)
             setError(err.message)
-            
+
         })
     }
 
@@ -382,11 +370,11 @@ const SolicityManualContainer = (props: Props) => {
                     <ScreenMessage message="Solicitud de Acceso a Información Pública ingresada con éxito"
                         type="Se ha enviado la solicitud con exito"
                     >
-                      
+
 
                         <button
                             type='button'
-                            onClick={() => navigate('/admin/establishment/solicity')}
+                            onClick={() => navigate('/admin/reports')}
 
                             className='w-full rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80'>
                             Ver SAIP

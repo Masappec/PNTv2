@@ -9,7 +9,37 @@ export function slugtext(text: string) {
         })
 
 }
+export const formatDate2 = (dateString: string) => {
+        const date = new Date(dateString);
 
+        // Options for formatting the date
+        const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'numeric', year: 'numeric' };
+        const formattedDate = date.toLocaleDateString('es-ES', options);
+
+        // Extract hours and minutes
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+
+        // Format time as HHhMM
+        const formattedTime = `${hours}h${minutes}`;
+
+        return `${formattedDate} - ${formattedTime}`;
+};
+export const elapsedTime = (dateString: string) => {
+        if (!dateString) return "";
+
+        const now = new Date();
+        const pastDate = new Date(dateString);
+
+        // Calculate the difference in milliseconds
+        const diffInMs = now.getTime() - pastDate.getTime();
+
+        // Convert milliseconds to total days and remaining hours
+        const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+        const remainingHours = Math.floor((diffInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        return `${diffInDays} Días / ${remainingHours} Horas transcurridas`;
+};
 export function url_build(name: string) {
         let name_ = name.replace(/ /g, "-")
         name_ = name_.toLowerCase()

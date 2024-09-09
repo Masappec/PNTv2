@@ -30,7 +30,10 @@ const IndicatorsMonitoringPresenter = (props: Props) => {
         atendidas: [],
         recibidas: [],
         score_activa: 0,
-        score_saip: 0
+        score_saip: 0,
+        day_frencuency_publish: 0,
+        day_frencuency_response: 0,
+        ta_published: 0,
     });
     const todas = EstablishmentEntity.generateAllEstablishment('')
 
@@ -361,7 +364,11 @@ const IndicatorsMonitoringPresenter = (props: Props) => {
                 </div>
             </div>
 
+        
+        
         </>
+
+        
 
     );
 

@@ -10,6 +10,7 @@ import axios from "axios";
 import Spinner from "../../Common/Spinner";
 import Alert from "../../Common/Alert";
 import { useEffect, useState } from "react";
+import { formatDate2 } from "../../../utils/functions";
 
 
 interface Props{
@@ -145,18 +146,11 @@ const AllPublicationsPresenter = (props:Props)=>{
             <Table<TransparencyActive>
                 show={true}
                 columns={[
+                  
                     {
                         render: (item) => {
                             return (
-                                <p className="text-gray-900 dark:text-white text-base">{item.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "")}</p>
-                            )
-                        },
-                        title: "#"
-                    },
-                    {
-                        render: (item) => {
-                            return (
-                                <p className="text-gray-900 dark:text-white text-base">{item.numeralPartial?.description}</p>
+                                <p className="text-left text-gray-900 dark:text-white text-base">{item.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "")} {item.numeralPartial?.description}</p>
                             )
                         },
                         title: "Numeral"
@@ -164,9 +158,9 @@ const AllPublicationsPresenter = (props:Props)=>{
                     {
                         render: (item) => {
                             return (
-                                <p className="text-gray-900 dark:text-white text-base">
+                                <p className=" text-gray-900 dark:text-white text-base">
 
-                                    {new Date(item.published_at).toLocaleDateString()}
+                                    {formatDate2(item.published_at)}
 
                                 </p>
                             )
@@ -175,9 +169,21 @@ const AllPublicationsPresenter = (props:Props)=>{
                     },
                     {
                         render: (item) => {
+                            let files = item.files.map((file) => {
+                                const description = file.description.replace(/\d/g, '').replace(".", '').trim();
+
+                                return {
+                                    ...file,
+                                    description: description
+                                }
+                            })
+                            files = files.sort((a, b) => {
+                                const order = ["Conjunto de datos", "Metadatos", "Diccionario"];
+                                return order.indexOf(a.description) - order.indexOf(b.description);
+                            });
                             return <div className="flex flex-row space-x-5">
                                 {
-                                    item.files.map((file, i) =>
+                                    files.map((file, i) =>
                                         <div className="flex flex-col space-y-2" key={i}>
                                             <div key={i} className="grid grid-cols-3 ">
                                                 <a key={i}
