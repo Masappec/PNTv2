@@ -83,7 +83,7 @@ export default ForgotPasswordPresenter;
 {/* <div className='bg-primary-700 h-screen flex'>
                 <div className='items-center lg:flex xl:flex 2xl:flex justify-center h-auto flex-col flex-auto justify-items-start hidden' >
                     <Title title="Recupera tu cuenta" text="Para ingresar tus solicitudes necesitas acceder a tu cuenta" color='white' />
-                    <img src={img} alt='imagen' className='w-1/2 h-1/2' />
+                    <img src={img} alt='Recupera tu contraseña' className='w-1/2 h-1/2' />
                 </div>
 
                 <div className="bg-white flex xl:w-2/6 2xl:w-2/6 lg:w-2/6 w-full  text-center  items-center ">
