@@ -127,7 +127,7 @@ const FooterInfo = () => {
                   className='w-full max-w-[140px] object-cover object-center'
                   loading='lazy'
                   src={logofcd}
-                  alt='Logo de Transparencia Internacional Ecuador'
+                  alt='Logo FCD'
                 />
 
                 <img
