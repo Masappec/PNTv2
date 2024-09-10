@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  pnt_app:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./fullchain.pem:/etc/letsencrypt/live/transparencia.ec/fullchain.pem
+      - ./privkey.pem:/etc/letsencrypt/live/transparencia.ec/privkey.pem
+      - ./dist:/etc/nginx/html
+      - ./dist:/usr/share/nginx/html
+    networks:
+      - fundapi-backend_pnt_network
+
+networks:
+  fundapi-backend_pnt_network:
+    external: true
