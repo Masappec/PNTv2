@@ -19,7 +19,7 @@ const MenuMobile = (props: Props) => {
                     <img
                         src={logo}
                         className="mr-3  h-15 "
-                        alt="Logo de la defensoria del pueblo"
+                        alt="Logo de la Defensoria del Pueblo"
                         tabIndex={1}
                     />
                     <button onClick={props.onClose} className="focus:outline-none">

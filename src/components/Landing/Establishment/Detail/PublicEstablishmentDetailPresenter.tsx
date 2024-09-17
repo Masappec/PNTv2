@@ -76,7 +76,7 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
           <div className="flex-col">
             <img
               src={props.entity.logo ? props.entity.logo as string: logo}
-              alt='Logo'
+              alt='Logo Entidad'
               className='w-48 h-48 object-cover'
             />
           </div>

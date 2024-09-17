@@ -121,26 +121,26 @@ const FooterInfo = () => {
 
           <section className='flex h-[98px] items-center justify-center gap-12'>
             <div className='flex h-full w-full max-w-max flex-col items-center justify-between gap-2'>
-              <p className='text-sm text-slate-600 2xl:text-base'>Acompañamiento de</p>
+              <p className='text-sm text-slate-600 2xl:text-base'></p>
               <section className='flex items-center justify-center gap-8'>
                 <img
                   className='w-full max-w-[140px] object-cover object-center'
                   loading='lazy'
                   src={logofcd}
-                  alt='Logo de transparencia internacional Ecuador'
+                  alt='Logo FCD'
                 />
 
                 <img
                   className='w-full max-w-[140px] object-cover object-center'
                   loading='lazy'
                   src={logodatalat}
-                  alt='Logo de datalat'
+                  alt='Logo de Datalat'
                 />
               </section>
             </div>
 
             <div className='flex h-[98px] w-full max-w-max flex-col items-center justify-between gap-2'>
-              <p className='text-sm text-slate-600 2xl:text-base'>Asistencia técnica de</p>
+              <p className='text-sm text-slate-600 2xl:text-base'></p>
               <img
                 className='w-full max-w-[110px] object-cover object-center'
                 loading='lazy'
@@ -155,7 +155,7 @@ const FooterInfo = () => {
               className='w-full max-w-52 object-cover object-center'
               loading='lazy'
               src={logocooperacionalemana}
-              alt='Logo de cooperación alemana'
+              alt='Logo de GIZ'
             />
           </div>
         </div>
