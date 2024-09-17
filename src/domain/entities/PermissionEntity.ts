@@ -103,25 +103,25 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
         type: 'Usuarios de Entidad  (De la Entidad a la que pertenece)',
         list: [
             {
-                codename: 'view_internal_user',
+                codename: 'view_user_establishment',
                 name: 'Ver Usuarios de mi Institución',
                 content_type: 'Usuarios',
                 id: 5
             },
             {
-                codename: 'update_user_establishment',
+                codename: 'add_user_establishment',
                 name: 'Crear Usuario de mi Institución',
                 content_type: 'Usuarios',
                 id: 7
             },
             {
-                codename: 'delete_user_establishment',
+                codename: 'update_user_establishment',
                 name: 'Editar Usuario de mi Institución',
                 content_type: 'Usuarios',
                 id: 8
             },
             {
-                codename: 'view_user_establishment',
+                codename: 'delete_user_establishment',
                 name: 'Eliminar Usuario de mi Institución',
                 content_type: 'Usuarios',
                 id: 9
