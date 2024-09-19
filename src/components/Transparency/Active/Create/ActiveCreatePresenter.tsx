@@ -80,7 +80,7 @@ const ActiveCreatePresenter = (props: Props) => {
 
         <section className='w-full'>
           <p className='max-w-max items-center text-sm text-primary'>
-            Para realizar la carga de los archivos de Transparencia Activa que corresponden a este numeral, primero selecciona la forma de carga que vas a utilizar seleccionando la pestaña que corresponda (Subir archivos, Agregar enlaces, Crear archivos, Reutilizar archivos del mes anterior, Descargar plantillas). Asegúrate que los archivos cumplen con las columnas que requiere este numeral, confirma su contenido en la previsualización y presiona el botón “Guardar”. Recuerda que si no presionas “Guardar” los archivos no se cargarán al portal.
+            Para realizar la carga de los archivos que corresponden, primero selecciona la forma de carga que vas a utilizar seleccionando la pestaña que corresponda (Subir archivos, Agregar enlaces, Crear archivos, Reutilizar archivos del mes anterior, Descargar plantillas). Asegúrate que los archivos cumplen con las columnas que requiere este numeral, confirma su contenido en la previsualización y presiona el botón “Guardar”. Recuerda que si no presionas “Guardar” los archivos no se cargarán al portal.
           </p>
           {
             props.error && (
@@ -204,7 +204,7 @@ const ActiveCreatePresenter = (props: Props) => {
                             <input
                               className='block w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80'
                               type='text'
-                              placeholder='Ingresar enlace'
+                              placeholder='Ingresar dirección'
                               name={template.name}
                               onChange={(e) => props.onChageLink(e, template)}
                               disabled={
