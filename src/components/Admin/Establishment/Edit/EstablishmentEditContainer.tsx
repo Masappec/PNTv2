@@ -89,16 +89,160 @@ const EstablishmentEditContainer = ({
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
+        data.highest_authority = "NINGUNO"
+        data.highest_committe = "NINGUNO" 
         data.extra_numerals = selectedExtraNumeral.join(',')
-        if (data.abbreviation === "" ||
-            data.email_authority === "" || data.first_name_authority === "" ||
-            data.highest_authority === "" || data.last_name_authority === "" ||
-            data.job_authority === "" || data.name === "" ||
-            data.email_accesstoinformation === "" || data.email_committe === "" ||
-            data.first_name_committe === "" || data.highest_committe === "" ||
-            data.job_committe === "" || data.last_name_committe === "" ||
-            data.identification === "") {
-            setError("Ingrese los campos requeridos")
+        console.log(data)
+
+        if (data.name === "") {
+            setError("Ingrese el nombre")
+            setLoading(false)
+            return
+        }
+        if(data.abbreviation ===""){
+            setError("Ingrese la abreviatura")
+            setLoading(false)
+            return
+        }
+        if(data.email_authority ===""){
+            setError("Ingrese el correo de la autoridad")
+            setLoading(false)
+            return
+        }
+        if(data.first_name_authority ===""){
+            setError("Ingrese el nombre de la autoridad")
+            setLoading(false)
+            return
+        }
+        if(data.highest_authority ===""){
+            setError("Ingrese el cargo de la autoridad")
+            setLoading(false)
+            return
+        }
+        if(data.last_name_authority ===""){
+            setError("Ingrese el apellido de la autoridad")
+            setLoading(false)
+            return
+        }
+        if(data.job_authority ===""){
+            setError("Ingrese el trabajo de la autoridad")
+            setLoading(false)
+            return
+        }
+        
+        if(data.email_accesstoinformation ===""){
+            setError("Ingrese el correo de acceso a la información")
+            setLoading(false)
+            return
+        }
+        if(data.email_committe ===""){
+            setError("Ingrese el correo del comité")
+            setLoading(false)
+            return
+        }
+        if(data.first_name_committe ===""){
+            setError("Ingrese el nombre del comité")
+            setLoading(false)
+            return
+        }
+        
+        if(data.job_committe ===""){
+            setError("Ingrese el trabajo del comité")
+            setLoading(false)
+            return
+        }
+        if(data.last_name_committe ===""){
+            setError("Ingrese el apellido del comité")
+            setLoading(false)
+            return
+        }
+
+        if (data.identification === "") {
+            setError("Ingrese la identificación")
+            setLoading(false)
+            return
+        }
+
+        if (data.name.length < 3) {
+            setError("El nombre debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.abbreviation.length < 3) {
+            setError("La abreviatura debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.email_authority.length < 3) {
+            setError("El correo de la autoridad debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.first_name_authority.length < 3) {
+            setError("El nombre de la autoridad debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.highest_authority.length < 3) {
+            setError("El cargo de la autoridad debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.last_name_authority.length < 3) {
+            setError("El apellido de la autoridad debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.job_authority.length < 3) {
+            setError("El trabajo de la autoridad debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.email_accesstoinformation == undefined || data.email_accesstoinformation.length < 3) {
+            setError("El correo de acceso a la información debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.email_committe == undefined || data.email_committe.length < 3) {
+            setError("El correo del comité debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.first_name_committe == undefined || data.first_name_committe.length < 3) {
+            setError("El nombre del comité debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.highest_committe.length < 3) {
+            setError("El cargo del comité debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.job_committe == undefined || data.job_committe.length < 3) {
+            setError("El trabajo del comité debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.last_name_committe == undefined || data.last_name_committe.length < 3) {
+            setError("El apellido del comité debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.identification.length < 3) {
+            setError("La identificación debe tener al menos 3 caracteres")
             setLoading(false)
             return
         }

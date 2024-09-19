@@ -103,6 +103,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="name"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('name')}
+                                    obligatorio
 
                                 />
                             </div>
@@ -113,6 +114,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="abbreviation"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('abbreviation')}
+                                    obligatorio
 
                                 />
                             </div>
@@ -121,9 +123,9 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     placeholder={"RUC"} width="w-60"
                                     value={props.data.identification || ""}
                                     name="identification"
-                                    onChange={(e) => props.setData(e)}
                                     color={props.validateFields('identification')}
-
+                                    obligatorio
+                                    disabled
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -157,7 +159,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                         }))
                                     ]}
                                     color={props.validateFields('type_institution')}
-
+                                    obligatorio
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -175,7 +177,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                         }))
                                     ]}
                                     color={props.validateFields('function_organization')}
-
+                                    obligatorio
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -192,7 +194,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                         }))
                                     ]}
                                     color={props.validateFields('type_organization')}
-
+                                    obligatorio
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -213,16 +215,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                         }`}
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
-                                <Input type={"text"}
-                                    placeholder={"Título de la autoridad superior"} width="w-60"
-                                    value={props.data.highest_authority || ""}
-                                    name="highest_authority"
-                                    onChange={(e) => props.setData(e)}
-                                    color={props.validateFields('highest_authority')}
-
-                                />
-                            </div>
+                           
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Nombre de la autoridad superior"} width="w-60"
@@ -230,7 +223,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="first_name_authority"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('first_name_authority')}
-
+                                obligatorio
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -240,7 +233,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="last_name_authority"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('last_name_authority')}
-
+                                obligatorio
                                 />
                             </div>
 
@@ -251,32 +244,23 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="job_authority"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('job_authority')}
-
+                                    obligatorio
 
                                 />
                             </div>
 
                             <div className="flex  flex-col m-2">
-                                <Input type={"text"}
+                                <Input type={"email"}
                                     placeholder={"Correo de la autoridad superior"} width="w-60"
                                     value={props.data.email_authority || ""}
                                     name="email_authority"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('email_authority')}
-
+                                    obligatorio
                                 />
                             </div>
 
-                            <div className="flex  flex-col m-2">
-                                <Input type={"text"}
-                                    placeholder={"Título del Responsable del Comité"} width="w-60"
-                                    value={props.data.highest_committe || ""}
-                                    name="highest_committe"
-                                    onChange={(e) => props.setData(e)}
-                                    color={props.validateFields('highest_committe')}
-
-                                />
-                            </div>
+                           
 
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
@@ -285,7 +269,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="first_name_committe"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('first_name_committe')}
-
+                                obligatorio
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -295,7 +279,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="last_name_committe"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('first_name_committe')}
-
+                                obligatorio
                                 />
 
                             </div>
@@ -306,27 +290,27 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="job_committe"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('job_committe')}
-
+                                obligatorio
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
-                                <Input type={"text"}
+                                <Input type={"email"}
                                     placeholder={"Correo del Responsable del comité"} width="w-60"
                                     value={props.data.email_committe || ""}
                                     name="email_committe"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('email_committe')}
-
+                                obligatorio
                                 />
 
                             </div>
                             <div className="flex  flex-col m-2">
-                                <Input type={"text"}
+                                <Input type={"email"}
                                     placeholder={"Correo de acceso a la información"} width="w-60"
                                     value={props.data.email_accesstoinformation || ""}
                                     name="email_accesstoinformation"
                                     color={props.validateFields('email_accesstoinformation')}
-
+                                obligatorio
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>

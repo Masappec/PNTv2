@@ -9,6 +9,8 @@ import { ListUploadsFiles } from "../../Partial/CreateFilePublication/ListUpload
 import { Pagination } from "../../../../infrastructure/Api";
 import { themeTabs } from "../../../Common/Tabs/Theme";
 import Alert from "../../../Common/Alert";
+import { useEffect } from "react";
+import { sleep } from "../../../../utils/functions";
 
 
 
@@ -65,6 +67,19 @@ const meses = [
 const ActiveCreatePresenter = (props: Props) => {
 
 
+  useEffect(() => {
+    if(props.error!==""){
+      sleep(15000).then(() => {
+        props.setError("")
+      })
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth" 
+      });
+
+    }
+  }, [props.error])
+
 
   return (
     <>
@@ -80,7 +95,9 @@ const ActiveCreatePresenter = (props: Props) => {
 
         <section className='w-full'>
           <p className='max-w-max items-center text-sm text-primary'>
-            Para realizar la carga de los archivos de Transparencia Activa que corresponden a este numeral, primero selecciona la forma de carga que vas a utilizar seleccionando la pestaña que corresponda (Subir archivos, Agregar enlaces, Crear archivos, Reutilizar archivos del mes anterior, Descargar plantillas). Asegúrate que los archivos cumplen con las columnas que requiere este numeral, confirma su contenido en la previsualización y presiona el botón “Guardar”. Recuerda que si no presionas “Guardar” los archivos no se cargarán al portal.
+            Para realizar la carga de los archivos de {props.type}{" "} 
+            que corresponden a este numeral, primero selecciona la forma de carga que 
+            vas a utilizar seleccionando la pestaña que corresponda (Subir archivos, Agregar enlaces, Crear archivos, Reutilizar archivos del mes anterior, Descargar plantillas). Asegúrate que los archivos cumplen con las columnas que requiere este numeral, confirma su contenido en la previsualización y presiona el botón “Guardar”. Recuerda que si no presionas “Guardar” los archivos no se cargarán al portal.
           </p>
           {
             props.error && (

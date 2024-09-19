@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Solicity } from "../../../../domain/entities/Solicity";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
+import { formatDate2 } from "../../../../utils/functions";
 
 interface Props {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -73,11 +74,12 @@ const SolicityManualPresenter = (props: Props) => {
               </label>
               <input
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
-                type="date"
+                type="text"
                 onChange={(e) => props.onChange(e)}
                 contentEditable={false}
                 name="date"
-                disabled={props.disabledDate}
+                value={formatDate2(new Date().toString())}
+                disabled={true}
               />
             </div>
 
