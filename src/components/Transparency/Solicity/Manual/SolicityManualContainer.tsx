@@ -82,11 +82,8 @@ const SolicityManualContainer = (props: Props) => {
         }
         data.establishment = entity.id || 0
         data.address = entity.address || "Sin dirección"
-        if (data.date === "") {
-            setError("Favor Selecciona una fecha")
-            setIsLoadingSend(false)
-            return
-        }
+        data.date = new Date().toISOString()
+
 
         if (data.text == "") {
             setError("Favor Ingresa la petición de la solicitud")
