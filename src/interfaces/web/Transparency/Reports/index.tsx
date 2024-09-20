@@ -3,7 +3,6 @@ import SolicitiesResponse from "./SolicitiesResponse";
 import { themeTabs } from "../../../../components/Common/Tabs/Theme";
 import SolicitiesNoResponse from "./SolicitiesNoResponse";
 import SolicitiesResponse3 from '../Solicity/ListEstablishment'
-import AllPublications from "../AllPublications";
 import SessionService from "../../../../infrastructure/Services/SessionService";
 
 
