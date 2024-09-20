@@ -38,18 +38,18 @@ const LoginContainer = ({ useCase }: {
         }
         const userSession = SessionService.getUserData()
         const exist = user &&
-         user.user_permissions?.map((item) => item.codename).includes('view_solicity') 
-         console.log(user)
+          user.user_permissions?.map((item) => item.codename).includes('view_solicity')
+        console.log(user)
         if (exist) {
-          if (!userSession.is_superuser){
+          if (!userSession.is_superuser) {
             history('/admin/solicity')
 
-          }else{
+          } else {
             history('/admin')
 
           }
         } else {
-          history('/admin/reports')
+          history('/admin/reports/active')
         }
       })
       .catch((e) => {

@@ -45,6 +45,7 @@ import EntityComplianceV2 from "../interfaces/web/Dashboard/EntityComplianceV2";
 import { GrCompliance } from "react-icons/gr";
 import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
 import VerPerfil from "../interfaces/web/Transparency/Perfil";
+import AllPublications from "../interfaces/web/Transparency/AllPublications";
 
 
 export interface MenuItem {
@@ -58,12 +59,21 @@ export interface MenuItem {
 }
 
 const menu = [
- 
+
+
   {
-    name: 'Inicio',
-    path: '/admin/reports',
+    name: 'Reportes T. Activa',
+    path: '/admin/reports/active',
     visible: true,
     icon: <RiHome2Fill size={25} className="text-slate-500" />,
+    permission_required: 'view_transparencyactive',
+    element: <AllPublications />
+  },
+  {
+    name: 'T. Pasiva',
+    path: '/admin/reports',
+    visible: true,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: 'view_solicityresponse',
     element: <Reports />,
     visible_for_superadmin: false
@@ -76,7 +86,7 @@ const menu = [
     permission_required: '',
     element: <IndicatorsEst />,
     hidden_for_citicen: true,
-    
+
   },
   {
     name: 'Indicadores Por Entidad',
@@ -420,7 +430,7 @@ const menu = [
     element: <SolicityDetail />
   },
 
-  
+
   {
     name: ' Cumplimiento de Entidades',
     path: '/admin/entitycompliance',
@@ -448,7 +458,7 @@ const menu = [
 
   },
 
- 
+
 
 ]
 
