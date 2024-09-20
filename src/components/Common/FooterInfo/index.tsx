@@ -128,7 +128,7 @@ const FooterInfo = () => {
           <section className='flex h-[98px] items-center justify-center gap-12'>
             <div className='flex h-full w-full max-w-max flex-col items-center justify-between gap-2'>
               <p className='text-sm text-slate-600 2xl:text-base'>
-                Colaboración y Cocreación:
+                Colaboración y cocreación:
               </p>
               <section className='flex items-center justify-center gap-8'>
                 <img

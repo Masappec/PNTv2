@@ -19,7 +19,7 @@ const Hero = (props: Props) => {
       <LogoPortal className='max-w-64' />
 
       <article className='max-w-3xl'>
-        <h1 className='mb-4 text-balance text-3xl font-normal leading-tight md:text-[40px] 2xl:text-5xl'>
+        <h1 className='mb-4 text-balance text-3xl font-normal leading-tight md:text-[36px] 2xl:text-4xl'>
           Accede a la información que publican las entidades del estado ecuatoriano en cumplimiento
           de la LOTAIP
         </h1>
