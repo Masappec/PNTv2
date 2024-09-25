@@ -41,7 +41,7 @@ const AudiencePresenter = (props: Props) => {
         <section className='section-container my-16'>
           <header className='mb-8'>
             <h1 className='mb-4 text-balance text-2xl font-normal leading-tight md:text-[40px]'>
-              Audiencias y Reuniones
+              Audiencias y reuniones
             </h1>
             <p className='text-balance text-gray-600'>
               Revisa las audiencias y reuniones sostenidas por autoridades y servidores del jerárquico superior.

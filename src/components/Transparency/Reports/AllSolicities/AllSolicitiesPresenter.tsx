@@ -47,16 +47,16 @@ const AllSolicitiesPresenter = (props: Props) => {
         <>
             <section className="flex justify-between">
 
-            <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
-                Solicitudes Recibidas
+                <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+                    Solicitudes Recibidas
 
-            </h2>
-            <div className="flex justify-end">
-                <button className='inline-flex w-full items-center gap-2 rounded-md border border-primary px-5 py-2.5 text-center text-xs font-medium text-gray-600 transition-colors hover:bg-primary hover:text-white focus:outline-none'
+                </h2>
+                <div className="flex justify-end">
+                    <button className='inline-flex w-full items-center gap-2 rounded-md border border-primary px-5 py-2.5 text-center text-xs font-medium text-gray-600 transition-colors hover:bg-primary hover:text-white focus:outline-none'
 
-                    onClick={props.onExport}
-                >Exportar</button>
-            </div>
+                        onClick={props.onExport}
+                    >Exportar</button>
+                </div>
             </section>
 
             <section className='h-min rounded-md bg-gray-100'>
