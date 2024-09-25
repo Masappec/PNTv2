@@ -10,7 +10,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf 
       - ./cert/fullchain.pem:/etc/nginx/ssl/certificates/fullchain.pem
-      - ./cert/privkey.pem:/etc/nginx/ssl/certificates/privkey.key
+      - ./cert/privkey.key:/etc/nginx/ssl/certificates/privkey.key
     networks:
       - pntv2-back_pnt_network
 
