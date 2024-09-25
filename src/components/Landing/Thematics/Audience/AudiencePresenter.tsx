@@ -44,7 +44,7 @@ const AudiencePresenter = (props: Props) => {
               Audiencias y Reuniones
             </h1>
             <p className='text-balance text-gray-600'>
-              Revisa las audiencias y reuniones sostenidas por autoridades y servidores del jerarquíco superior.
+              Revisa las audiencias y reuniones sostenidas por autoridades y servidores del jerárquico superior.
             </p>
           </header>
 

@@ -168,7 +168,7 @@ const PedagogyAreaCreatePresenter = (
           >
 
             <div className='my-8'>
-              <h4 className='my-4 text-sm font-semibold text-gray-900'>Vídeo Tutoriales</h4>
+              <h4 className='my-4 text-sm font-semibold text-gray-900'>videotutoriales</h4>
               <section className='h-min rounded-md bg-gray-100'>
                 <section className='scrollbar w-full overflow-auto'>
                   <table className='w-full divide-y divide-gray-200'>

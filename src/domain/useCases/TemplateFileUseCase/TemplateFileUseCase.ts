@@ -47,8 +47,8 @@ class TemplateFileUseCase {
              // Remove trailing semicolons
              line = line.replace(/;+\s*$/, '');
 
-             // Remove consecutive semicolons within the line
-             line = line.replace(/;{2,}/g, ';');
+                // Remove consecutive semicolons within the line
+                line = line.replace(/;{2,}/g, ';');
 
                 //remplazar \r
                 line = line.replace(/\r/g, '');
@@ -74,12 +74,13 @@ class TemplateFileUseCase {
                 try {
                     
                     const cleanedCSV = this.cleanCSV(text);
-                    
+                    console.log(cleanedCSV)
                     const json = await csvtojson({
                         delimiter: DELIMITER,
                         noheader: template.verticalTemplate,
+                        flatKeys: true, 
                     }).fromString(cleanedCSV)
-
+                    console.log(json)
                     let rows = json.map(row => Object.values(row).join(delim));
                     let columns = json.length > 0 ? Object.keys(json[0]) : [];
                     if (template.verticalTemplate) {
@@ -97,11 +98,9 @@ class TemplateFileUseCase {
                         throw new Error('El archivo no coincide con la plantilla, la cantidad de columnas no coincide');
 
                     }
-
                     columns.forEach(element => {
-                        console.log(element);
                         if (!template.columns.find(col => this.normalizeString(col.name) === this.normalizeString(element))) {
-                            throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden, Columan de nombre: ' + element + ' no encontrada en la plantilla');
+                            throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden, Columna de nombre: "' + element + '" no encontrada en la plantilla');
                         }
                     });
                     const rows_ = rows;

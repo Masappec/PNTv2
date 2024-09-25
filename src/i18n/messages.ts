@@ -16,7 +16,7 @@ export const messages = {
         subtitle_search_entities: '{total} total de entidades públicas y {total_files} total de archivos publicados ',
 
         //ejes 
-        search_by_tematic: 'Buscar por eje temático',
+        search_by_tematic: 'Buscar por ejes temáticos',
 
         //footer landing
 

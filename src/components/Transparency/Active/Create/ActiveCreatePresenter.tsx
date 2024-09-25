@@ -69,7 +69,7 @@ const ActiveCreatePresenter = (props: Props) => {
 
   useEffect(() => {
     if (props.error !== "") {
-      sleep(15000).then(() => {
+      sleep(25000).then(() => {
         props.setError("")
       })
       window.scrollTo({
