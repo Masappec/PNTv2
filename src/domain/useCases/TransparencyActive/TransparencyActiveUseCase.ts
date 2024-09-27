@@ -1,3 +1,4 @@
+import { TransparencyActiveTypeResponse } from "../../../infrastructure/Api/TansparencyActive/interface";
 import TransparencyActiveService from "../../../infrastructure/Services/TransparencyActiveService";
 import TransparencyActive from "../../entities/TransparencyActive";
 
@@ -19,7 +20,9 @@ class TransparencyActiveUseCase {
     public async updatePublication(data: TransparencyActive) {
         return this.service.updatePublication(data);
     }
-
+    public async approvePublication(data: TransparencyActiveTypeResponse) {
+        return this.service.approvePublication(data);
+    }
 }
 
 export default TransparencyActiveUseCase;
