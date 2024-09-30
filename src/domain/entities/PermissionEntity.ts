@@ -265,6 +265,12 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
                 content_type: 'Transparencia Activa',
                 name: 'Ver T.A de todas las entidades',
                 id: 23
+            },
+            {
+                codename: 'approve_numeral_ta',
+                content_type: 'Transparencia Activa',
+                name: 'Aprobar Numerales Transparencia Activa',
+                id: 24
             }
         ]
     },

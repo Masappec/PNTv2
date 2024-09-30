@@ -99,7 +99,7 @@ class TransparencyActiveApi {
     async approvePublication(data: TransparencyActiveTypeResponse) {
         try {
             const res = await this.api.post<MessageTranslation<TransparencyActivePublishResponse>>(
-                TRANSPARENCY_PATH + `/transparency/active/approve/`, data
+                TRANSPARENCY_PATH + `/transparency/approve`, data
             );
 
             return res.data;
