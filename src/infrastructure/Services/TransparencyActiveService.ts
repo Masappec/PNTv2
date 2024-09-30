@@ -30,6 +30,11 @@ class TransparencyActiveService {
 
         return res
     }
+
+    public async getPublicationsAll(month: number, year: number, establishment_id: number) {
+        const res = await this.api.getPublicationsAll(month, year, establishment_id);
+        return res.map((item) => TransparencyActiveMapper.fromApiPublicToDomain(item));
+    }
 }
 
 export default TransparencyActiveService;

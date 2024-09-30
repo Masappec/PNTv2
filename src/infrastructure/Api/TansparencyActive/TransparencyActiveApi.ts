@@ -69,6 +69,31 @@ class TransparencyActiveApi {
             }
         }
     }
+    //transparency/active/all
+    async getPublicationsAll(month: number, year: number, establishment_id: number) {
+        try {
+            const res = await this.api.get<TransparencyActivePublicResponse[]>(
+                TRANSPARENCY_PATH + `/transparency/active/all`,
+                {
+                    params: {
+                        month,
+                        year,
+                        establishment_id
+                    }
+                }
+            );
+
+            return res.data;
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                const message = e.response?.data.message || e.message || 'Error desconocido';
+                throw new Error(message);
+            } else {
+                throw new Error('Error desconocido');
+            }
+        }
+    }
+
 
     //transparency/approve"
     async approvePublication(data: TransparencyActiveTypeResponse) {

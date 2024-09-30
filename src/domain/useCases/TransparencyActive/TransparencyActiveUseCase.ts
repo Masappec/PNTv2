@@ -23,6 +23,11 @@ class TransparencyActiveUseCase {
     public async approvePublication(data: TransparencyActiveTypeResponse) {
         return this.service.approvePublication(data);
     }
+
+    //getPublicationsAll
+    public async getPublicationsAll(month: number, year: number, establishment_id: number) {
+        return this.service.getPublicationsAll(month, year, establishment_id);
+    }
 }
 
 export default TransparencyActiveUseCase;

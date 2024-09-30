@@ -35,7 +35,7 @@ const AllPublicationsContainer = (props:Props)=>{
     }, [entity,month,year])
 
     const getDataTA =()=>{
-        props.transparencyUseCase?.getPublicationsPublics(month, year, entity.id || 0).then((response) => {
+        props.transparencyUseCase?.getPublicationsAll(month, year, entity.id || 0).then((response) => {
 
 
             console.log(response)
