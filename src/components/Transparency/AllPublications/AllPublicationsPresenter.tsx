@@ -1,5 +1,5 @@
-import TransparencyActive from "../../../domain/entities/TransparencyActive"
-import { FaFileCsv, FaFileExcel, FaFilePdf } from "react-icons/fa"
+import TransparencyActive, { StatusTransparency } from "../../../domain/entities/TransparencyActive"
+import { FaCheck, FaFileCsv, FaFileExcel, FaFilePdf } from "react-icons/fa"
 import Table from "../../Common/Table"
 import TemplateFileUseCase from "../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
 import TemplateService from "../../../infrastructure/Services/TemplateService";
@@ -13,20 +13,21 @@ import { useEffect, useState } from "react";
 import { formatDate2 } from "../../../utils/functions";
 
 
-interface Props{
+interface Props {
     data: TransparencyActive[];
-    establishment:string;
-    month:number;
-    year:number;
-    onChangeDate:(date:string)=>void
+    establishment: string;
+    month: number;
+    year: number;
+    onChangeDate: (date: string) => void
     loading: boolean;
-    error:string;
-    onCloseError:()=>void
+    error: string;
+    onCloseError: () => void
+    approvePublication : (ta: TransparencyActive) =>void
 }
-const AllPublicationsPresenter = (props:Props)=>{
+const AllPublicationsPresenter = (props: Props) => {
     const [current, setCurrent] = useState<string>("")
 
-    const getCurrentDate = (month:number,year:number): string => {
+    const getCurrentDate = (month: number, year: number): string => {
         const currentDate = new Date();
         currentDate.setFullYear(year);
         currentDate.setMonth(month);
@@ -37,17 +38,17 @@ const AllPublicationsPresenter = (props:Props)=>{
         return currentDate.toLocaleDateString(undefined, options);
     };
 
-    useEffect(()=>{
-        setCurrent(getCurrentDate(props.month-1,props.year))
-    },[props.month,props.year])
+    useEffect(() => {
+        setCurrent(getCurrentDate(props.month - 1, props.year))
+    }, [props.month, props.year])
 
-    if (props.loading){
-        return <Spinner/>
-    }   
+    if (props.loading) {
+        return <Spinner />
+    }
 
 
 
-    
+
 
 
     const TemplateUsecase = new TemplateFileUseCase(new TemplateService(new TemplateFileApi(api)))
@@ -77,7 +78,7 @@ const AllPublicationsPresenter = (props:Props)=>{
             })
 
             const file = new File([res.data], name + '.csv', { type: 'text/csv' })
-            TemplateUsecase.detectDelimiter(file,  (delim, text) => {
+            TemplateUsecase.detectDelimiter(file, (delim, text) => {
                 console.log(delim)
                 Transform.fromCsvToPdfLandScape(text, name, props.establishment)
             })
@@ -95,7 +96,7 @@ const AllPublicationsPresenter = (props:Props)=>{
             })
 
             const file = new File([res.data], name + '.csv', { type: 'text/csv' })
-            TemplateUsecase.detectDelimiter(file,(delim, text) => {
+            TemplateUsecase.detectDelimiter(file, (delim, text) => {
                 console.log(delim)
 
                 Transform.fromCsvToXlxs(text, name)
@@ -112,7 +113,7 @@ const AllPublicationsPresenter = (props:Props)=>{
                     Publicaciones T. Activa | {current}
 
                 </h2>
-               
+
             </section>
             <section className='mb-8 m-2 flex flex-col gap-4 sm:flex-row sm:items-center'>
 
@@ -136,17 +137,17 @@ const AllPublicationsPresenter = (props:Props)=>{
 
             </section>
             {
-                props.error!=""&&
+                props.error != "" &&
                 <Alert
-                message={props.error}
-                onClose={props.onCloseError}
-                type="error"
+                    message={props.error}
+                    onClose={props.onCloseError}
+                    type="error"
                 />
             }
             <Table<TransparencyActive>
                 show={true}
                 columns={[
-                  
+
                     {
                         render: (item) => {
                             return (
@@ -240,6 +241,28 @@ const AllPublicationsPresenter = (props:Props)=>{
                         },
                         title: "Archivos Publicados"
                     },
+                    {
+
+                        render: (item) => {
+                            return item.status == StatusTransparency.APROVED ?
+                                (
+                                    <></>
+                                ) : (
+                                    <button
+                                        type='button'
+                                        onClick={() => props.approvePublication(item)} 
+                                        className='inline-flex w-max items-center gap-2 rounded-md bg-white border border-primary 
+                                    px-5 py-2.5 text-center text-sm font-medium text-primary hover:bg-primary hover:text-white'
+                                    >
+                                        <FaCheck className='text-primary ' />
+                                        <span>
+                                            Aprobar
+                                        </span>
+                                    </button>
+                                )
+                        },
+                        title: ""
+                    }
                 ]}
                 data={props.data}
                 description="No se encontraron resultados"

@@ -35,7 +35,9 @@ const AllPublicationsContainer = (props:Props)=>{
     }, [entity,month,year])
 
     const getDataTA =()=>{
-        props.transparencyUseCase?.getPublicationsPublics(month, year, entity.id || 0).then((response) => {
+        if (entity.id === undefined) return;
+        
+        props.transparencyUseCase?.getPublicationsAll(month, year, entity.id || 0).then((response) => {
 
 
             console.log(response)
@@ -77,6 +79,18 @@ const AllPublicationsContainer = (props:Props)=>{
         setYear(parseInt(Y));
     }
 
+    const approvePublication=(ta:TransparencyActive)=>{
+        props.transparencyUseCase?.approvePublication({
+            establishment_id: ta.establishment.id||0,
+            id: ta.id,
+            type: "TA"
+        }).then(()=>{
+            getDataTA()
+        }).catch((error)=>{
+            setError(error.message)
+        })
+    }
+
     return (
         <>
           
@@ -89,6 +103,7 @@ const AllPublicationsContainer = (props:Props)=>{
                 loading={loading}
                 error={error}
                 onCloseError={()=>setError("")}
+                approvePublication={approvePublication}
             />
         </>
         

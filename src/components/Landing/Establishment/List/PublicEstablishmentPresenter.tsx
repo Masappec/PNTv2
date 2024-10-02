@@ -150,8 +150,10 @@ const PublicEstablishmentPresenter = (props: Props) => {
                                             <a
                                                 className='uppercase 
                                                 text-wrap
+                                                text-left
                                                 cursor-pointer text-primary hover:underline
                                                 justify-start
+                                                
                                                 hover:underline-offset-2'
                                                 onClick={() => props.onItemClicked(entity.slug || "")}>
                                                 {entity.name}

@@ -5,6 +5,12 @@ import { FilePublicationEntity } from "./PublicationEntity";
 
 
 
+export enum StatusTransparency {
+    APROVED = 'aproved',
+    REJECTED = 'rejected',
+    INGRESS = 'ingress'
+}
+
 
 class TransparencyActive extends BaseEntity {
     constructor(

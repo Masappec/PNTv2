@@ -235,18 +235,14 @@ const ActiveCreateContainer = (props: IProps) => {
           ...newTemplates,
           isValid: false
         } as TemplateFileEntity
-        sleep(2000).then(() => {
-          setError("")
-        })
+       
       })
     }).catch((error) => {
       setLoadingFiles(loadingFiles.filter((loading) => {
         return loading.name !== templateFile.name
       }))
       setError(error.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+     
     })
 
 

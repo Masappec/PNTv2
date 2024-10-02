@@ -177,7 +177,7 @@ const LandingPresenter = (props: Props) => {
         <CardQuestion
 
           title="¿Qué información voy a encontrar?"
-          content="Revisa nuestros vídeo tutoriales que explican paso a paso cómo utilizar este sitio."
+            content="Revisa nuestros videotutoriales que explican paso a paso cómo utilizar este sitio."
           backgroundColor="bg-custom-green"
           color="text-black"
           onFollow={() => props.onQuestion(1)}
@@ -199,7 +199,7 @@ const LandingPresenter = (props: Props) => {
       </section>
       <section className='section-container my-16 flex flex-col gap-y-4 md:flex-row md:items-end'>
         <h2 className='text-balance text-2xl font-normal leading-tight md:text-[40px]'>
-          Buscar por eje temático
+          Buscar por ejes temáticos
         </h2>
         <div className='h-[1px] w-full bg-gray-300'></div>
       </section>
@@ -227,7 +227,7 @@ const LandingPresenter = (props: Props) => {
           backgroundColor="bg-custom-pink-light  hover:bg-custom-pink"
           icon={IconsConsulta[2]}
           title="Audiencias y Reuniones"
-          content={'Revisa las audiencias y reuniones sostenidas por autoridades y servidores del jerarquíco superior.'}
+          content={'Revisa las audiencias y reuniones sostenidas por autoridades y servidores del jerárquico superior.'}
           onFollow={props.onAudience}
 
         />
