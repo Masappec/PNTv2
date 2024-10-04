@@ -12,6 +12,7 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { IOncalculate } from "../../../Common/PasswordMeter"
 import { sleep } from "../../../../utils/functions"
 import SessionService from "../../../../infrastructure/Services/SessionService"
+import { ColourOption } from "../../../../utils/interface"
 
 
 const UserEditContainer = ({
@@ -104,6 +105,9 @@ const UserEditContainer = ({
         data.group = [{ id: roleSelected?.id || 0, name: roleSelected?.name || "" }]
         e.preventDefault()
         setLoadingSubmit(true)
+        if(data.identification==""){
+            data.identification="NO"
+        }
         if (data.group === undefined || data.group.length === 0) {
             setError("El rol es obligatorio")
             setLoadingSubmit(false)
@@ -202,6 +206,14 @@ const UserEditContainer = ({
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
     }
+    const loadOption = (name: string, callback: (data: ColourOption[]) => void) => {
+        const establishmentField = config.find(x => x.name ==  "establishment_id")
+        if (establishmentField) {
+            const filtered = establishmentField.options?.filter(x => x.name.toLowerCase().includes(name.toLowerCase())).slice(0, 10)
+            
+            callback(filtered?.map  (x => ({label:x.name,value:x.id.toString()||""} as ColourOption)) || [])
+        }
+    }
     return (
         <UserEditPresenter
             data={data as UserEntity}
@@ -223,6 +235,7 @@ const UserEditContainer = ({
             onChangePassword={onChangePassword}
             showPassword={showPassword}
             isEstablishmentUser={isUserEntity}
+            onLoadOptions={loadOption}
         />
     )
 }

@@ -8,6 +8,8 @@ import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
 import Spinner from "../../../Common/Spinner"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import PasswordMeter, { IOncalculate } from "../../../Common/PasswordMeter"
+import CustomInputSearch from "../../../Common/CustomInputSearch"
+import { ColourOption } from "../../../../utils/interface"
 
 interface UserEditPresenterProps {
 
@@ -30,6 +32,7 @@ interface UserEditPresenterProps {
     onChangePassword: (data: IOncalculate) => void;
     loadingSubmit: boolean;
     isEstablishmentUser: boolean;
+    onLoadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
 }
 
 const UserEditPresenter = (props: UserEditPresenterProps) => {
@@ -142,7 +145,16 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                         }
                                     </div>
                                 </div>
-                                : field.type_field == "select" ?
+                                :field.name === 'establishment_id' && !props.isEstablishmentUser ? 
+                                <CustomInputSearch
+                                    loadOptions={props.onLoadOptions}
+                                    onSearch={() => {}}
+                                    onSelect={(e) => props.setData(field.name, e.value)}
+                                    
+                                    
+                                />
+                                
+                                :field.type_field == "select" ?
                                     <div>
                                         <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
                                             {field.description}
@@ -155,7 +167,10 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                                     props.establishment ?
                                                         {
                                                             value: props.establishment.id + "",
-                                                        } : undefined : undefined
+                                                        } : undefined : 
+                                                        {
+                                                            value: props.data[field.name as keyof UserEntity] as string
+                                                        }
                                             }
                                             onChange={(e) => props.setData(field.name, e.target.value)}
                                             options={
@@ -169,6 +184,22 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                                     }
                                                 }) || [])
                                             }
+                                        />
+                                    </div> :
+                                    field.type_field == "checkbox" ?
+                                    <div >
+                                        <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
+                                            {field.description}
+                                        </label>
+                                        <input
+                                            className='block w-5 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
+                                            type='checkbox'
+                                            onChange={(e) =>
+                                                props.setData(field.name, e.target.checked)
+                                            }
+                                            name={field.name}
+                                            checked={props.data[field.name as keyof UserEntity] as boolean}
+
                                         />
                                     </div> :
                                     <div data-astro-source-loc='28:16'>
