@@ -56,13 +56,13 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
         type: 'Mi Institución',
         list: [
             {
-                codename: 'view_my_establishment',
+                codename: 'view_establishment_internal',
                 content_type: 'Instituciones',
                 name: 'Ver Información de Mi Institución',
                 id: 18
             },
             {
-                codename: 'change_my_establishment',
+                codename: 'update_establishment_internal',
                 content_type: 'Instituciones',
                 name: 'Actualizar Información de Mi Institución',
                 id: 19
