@@ -191,7 +191,6 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                                     }
                                                 }) || [])
                                             }
-                                            disabled={field.name === 'establishment_id' && props.isEstablishmentUser}
                                         />
                                     </div> :
                                     field.type_field == "checkbox" ?

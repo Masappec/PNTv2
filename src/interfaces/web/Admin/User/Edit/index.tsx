@@ -1,5 +1,4 @@
 import UserEditContainer from "../../../../../components/Admin/Users/Edit/UserEditContainer"
-import Breadcrumb from "../../../../../components/Common/Breadcrumb";
 import ConfigurationUseCase from "../../../../../domain/useCases/Configuration/ConfigurationUseCase";
 import EstablishmentUseCase from "../../../../../domain/useCases/Establishment/EstablishmentUseCase";
 import RoleUseCase from "../../../../../domain/useCases/Role/RoleUseCase";
