@@ -114,7 +114,7 @@ const SolicityManualContainer = (props: Props) => {
         }
 
         if (!data.race_identification) {
-            setError("Favor Selecciona la raza")
+            setError("Falta autoidentificación cultural")
             setIsLoadingSend(false)
             return
         }
@@ -312,7 +312,7 @@ const SolicityManualContainer = (props: Props) => {
         }
 
         if (!data.race_identification) {
-            setError("Selecciona la raza")
+            setError("Falta autoidentificación cultural")
             setIsLoadingSave(false)
             return
         }
