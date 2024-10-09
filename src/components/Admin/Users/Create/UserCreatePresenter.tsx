@@ -6,6 +6,8 @@ import UserEntity from "../../../../domain/entities/UserEntity"
 import FormFieldsEntity from "../../../../domain/entities/FormFieldsEntity"
 import Spinner from "../../../Common/Spinner"
 import PasswordMeter, { IOncalculate } from "../../../Common/PasswordMeter"
+import CustomInputSearch from "../../../Common/CustomInputSearch"
+import { ColourOption } from "../../../../utils/interface"
 
 interface UserCreatePresenterProps {
 
@@ -27,6 +29,9 @@ interface UserCreatePresenterProps {
     onChangePassword: (data: IOncalculate) => void;
     loadingSubmit: boolean;
     isEstablishmentUser: boolean;
+    onEstablishmentSelect: (option: ColourOption) => void
+    establishmentSelected: ColourOption
+    onLoadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
 
 }
 
@@ -137,7 +142,16 @@ const UserCreatePresenter = (props: UserCreatePresenterProps) => {
                                         }
                                     </div>
                                 </div>
-                                : field.type_field == "select" ?
+                                : field.name === 'establishment_id' && !props.isEstablishmentUser ?
+                                    <CustomInputSearch
+                                        loadOptions={props.onLoadOptions}
+                                        onSearch={() => { }}
+                                        onSelect={props.onEstablishmentSelect}
+                                        value={props.establishmentSelected}
+
+
+                                    />:
+                                    field.type_field == "select" ?
                                     <div>
                                         <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
                                             {field.description}

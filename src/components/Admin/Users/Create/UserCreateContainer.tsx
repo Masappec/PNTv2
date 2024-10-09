@@ -11,6 +11,7 @@ import { sleep } from "../../../../utils/functions"
 import { IOncalculate } from "../../../Common/PasswordMeter"
 import SessionService from "../../../../infrastructure/Services/SessionService"
 import validador from 'ecuador-validator';
+import { ColourOption } from "../../../../utils/interface"
 
 const UserCreateContainer = ({
     usecase,
@@ -35,7 +36,11 @@ const UserCreateContainer = ({
     const [isDisabled, setIsDisabled] = useState(false)
     const [loadingSubmit, setLoadingSubmit] = useState(false)
     const navigate = useNavigate()
-
+    const [selectedEstablishment, SetSelectedEstablishment] = useState<ColourOption>({
+        color: "",
+        label: "",
+        value: ""
+    })
 
     const [isUserEntity, setIsUserEntity] = useState<boolean>(false)
     const [userSession, SetUserSession] = useState<UserEntity>({} as UserEntity)
@@ -197,8 +202,18 @@ const UserCreateContainer = ({
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
     }
+    const loadOption = (name: string, callback: (data: ColourOption[]) => void) => {
+        const establishmentField = config.find(x => x.name == "establishment_id")
+        if (establishmentField) {
+            const filtered = establishmentField.options?.filter(x => x.name.toLowerCase().includes(name.toLowerCase())).slice(0, 10)
 
-    
+            callback(filtered?.map(x => ({ label: x.name, value: x.id.toString() || "" } as ColourOption)) || [])
+        }
+    }
+    const handleSelect = (option: ColourOption) => {
+        SetSelectedEstablishment(option)
+        setData({ ...data, establishment_id: parseInt(option.value) })
+    }
     return (
         <UserCreatePresenter
             data={data as UserEntity}
@@ -219,6 +234,9 @@ const UserCreateContainer = ({
             showPassword={showPassword}
             loadingSubmit={loadingSubmit}
             isEstablishmentUser={isUserEntity}
+            onLoadOptions={loadOption}
+            establishmentSelected={selectedEstablishment}
+            onEstablishmentSelect={handleSelect}
         />
     )
 }
