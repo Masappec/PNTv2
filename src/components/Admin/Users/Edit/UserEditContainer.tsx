@@ -47,6 +47,11 @@ const UserEditContainer = ({
     const [isDisabled, setIsDisabled] = useState(false)
     const [loadingSubmit, setLoadingSubmit] = useState(false)
     const [isUserEntity, setIsUserEntity] = useState<boolean>(false)
+    const [selectedEstablishment,SetSelectedEstablishment] = useState<ColourOption>({
+        color:"",
+        label:"",
+        value:""
+    })
 
     useEffect(() => {
         const user = SessionService.getUserData()
@@ -56,6 +61,11 @@ const UserEditContainer = ({
             const establishment = SessionService.getEstablishmentData();
 
             setIsUserEntity(is)
+            SetSelectedEstablishment({
+                value:establishment.id+"",
+                color:"",
+                label:establishment.name
+            })
             setData({ ...data, establishment_id: establishment?.id })
 
         }
@@ -65,6 +75,11 @@ const UserEditContainer = ({
 
         establishmentUseCase.getEstablishmentsByUser(id || "").then((res) => {
             setEstablishment(res)
+            SetSelectedEstablishment({
+                color:"",
+                label:res.name,
+                value:res.id?.toString()||""
+            })
         }).catch(() => {
             setEstablishment(null)
         })
@@ -84,9 +99,6 @@ const UserEditContainer = ({
             setRoleList(roles)
             if (roles.length == 1) {
                 handleConfigFields(roles[0].name)
-            }
-            if (roles.length == 0) {
-                navigate("/admin/users")
             }
             setLoading(false)
 
@@ -149,7 +161,7 @@ const UserEditContainer = ({
             target.reset()
             setLoadingSubmit(false)
             sleep(2000).then(() => {
-                navigate("/admin/users")
+                onCancel()
             })
 
         }).catch((error) => {
@@ -160,8 +172,13 @@ const UserEditContainer = ({
     }
 
     const handleChange = (name: string, value: string | boolean) => {
-        console.log(name, value)
+        
         setData({ ...data, [name]: value })
+    }
+
+    const handleSelect = (option:ColourOption)=>{
+        SetSelectedEstablishment(option)
+        setData({...data,establishment_id:parseInt(option.value)})
     }
 
 
@@ -236,6 +253,8 @@ const UserEditContainer = ({
             showPassword={showPassword}
             isEstablishmentUser={isUserEntity}
             onLoadOptions={loadOption}
+            establishmentSelected={selectedEstablishment}
+            onEstablishmentSelect={handleSelect}
         />
     )
 }

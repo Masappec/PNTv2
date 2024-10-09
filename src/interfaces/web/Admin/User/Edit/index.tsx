@@ -32,18 +32,7 @@ const UserEdit = () => {
     const configUseCase = new ConfigurationUseCase(configService)
     return (
         <>
-            <Breadcrumb
-                items={[
-                    {
-                        name: 'Usuarios',
-                        path: '/admin/users',
-                    },
-                    {
-                        name: 'Editar',
-                        path: '#',
-                    }
-                ]}
-            />
+           
 
             <UserEditContainer
 

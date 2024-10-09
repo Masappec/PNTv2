@@ -3,6 +3,7 @@ import { Pagination } from "flowbite-react";
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 
 import Numeral from "../../../Common/Numeral";
+import { StatusTransparency } from "../../../../domain/entities/TransparencyActive";
 
 interface Props {
 
@@ -28,7 +29,8 @@ interface Props {
   totalPage: number,
   selectedItem: TransparencyFocusEntity | null,
   type_alert: "success" | "warning" | "info" | "error"
-
+  hasPermApp: boolean
+  onApproved: (item: TransparencyFocusEntity) => void
 }
 const FocalizedListPresenter = (props: Props) => {
 
@@ -53,6 +55,10 @@ const FocalizedListPresenter = (props: Props) => {
               text={new Date(transparency.published_at).toLocaleString()}
               onClick={() => props.onEdit(transparency)}
               isPublished={transparency.published}
+              isApprobation={
+                transparency.status !== StatusTransparency.APROVED && props.hasPermApp
+              }
+              onApproved={() => props.onApproved(transparency)}
             />
           ))
         }

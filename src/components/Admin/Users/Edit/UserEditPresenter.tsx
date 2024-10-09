@@ -26,6 +26,8 @@ interface UserEditPresenterProps {
     fields: FormFieldsEntity[];
     loading: boolean;
     establishment: EstablishmentEntity | null;
+    onEstablishmentSelect : (option:ColourOption)=>void
+    establishmentSelected: ColourOption
     isDisabled: boolean;
     showPassword: boolean;
     handleShowPassword: () => void;
@@ -83,6 +85,9 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                 }))
                             }
                             onChange={(e) => props.onChangeRole(e)}
+                            selected={{
+                                value: props.data.group && props.data.group?.length > 0 ? props.data.group[0].id+"":""
+                            }}
                         />
                     }
                     {
@@ -149,7 +154,8 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                 <CustomInputSearch
                                     loadOptions={props.onLoadOptions}
                                     onSearch={() => {}}
-                                    onSelect={(e) => props.setData(field.name, e.value)}
+                                        onSelect={props.onEstablishmentSelect}
+                                        value={props.establishmentSelected}
                                     
                                     
                                 />
@@ -172,7 +178,8 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                                             value: props.data[field.name as keyof UserEntity] as string
                                                         }
                                             }
-                                            onChange={(e) => props.setData(field.name, e.target.value)}
+                                                onChange={(e) => (field.name !== 'establishment_id' || !props.isEstablishmentUser)
+                                                    && props.setData(field.name, e.target.value)}
                                             options={
                                                 [{
                                                     value: "",
@@ -184,6 +191,7 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                                     }
                                                 }) || [])
                                             }
+                                            disabled={field.name === 'establishment_id' && props.isEstablishmentUser}
                                         />
                                     </div> :
                                     field.type_field == "checkbox" ?

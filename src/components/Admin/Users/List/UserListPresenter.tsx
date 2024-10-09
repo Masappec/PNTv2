@@ -163,6 +163,7 @@ export const UserListPresenter = (props: Props) => {
                 >{row.first_name + " " + row.last_name}</p>
               ),
               title: "Nombre",
+              classes:"text-wrap"
             },
             {
               render: (row: UserEntity) => <p className="text-left">{row.email}</p>,

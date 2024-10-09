@@ -24,9 +24,20 @@ const AllPublicationsContainer = (props:Props)=>{
     const [entity, setEntity] = useState<EstablishmentEntity>(EstablishmentEntity.generateAllEstablishment(""));
     const [loading,setLoading] = useState<boolean>(false);
 
+    const [hasPermApp,setHasPermApp] = useState(false);
+
     useEffect(()=>{
         const _est = SessionService.getEstablishmentData();
         setEntity(_est)
+       
+    },[])
+
+    useEffect(()=>{
+        const user = SessionService.getUserData();
+        if (user && user.user_permissions){
+            const hasPerm = user.user_permissions?.findIndex(x => x.codename == 'approve_numeral_ta')
+            setHasPermApp(hasPerm !== -1)
+        }
        
     },[])
 
@@ -104,6 +115,7 @@ const AllPublicationsContainer = (props:Props)=>{
                 error={error}
                 onCloseError={()=>setError("")}
                 approvePublication={approvePublication}
+                hasPermApp={hasPermApp}
             />
         </>
         
