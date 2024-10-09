@@ -14,10 +14,10 @@ interface Props {
 const TutorialsPresenter = (props:Props) => {
 
     const formatUrlYoutube = (url: string) => {
-        
+      
       if (url.includes('embed')) return url;
 
-      if (url.includes('youtube') && !url.includes('embed')) {
+      if (url.includes('youtube') || url.includes('youtu.be') && !url.includes('embed')) {
 
           const urlParts = url.split('/');
 
@@ -26,6 +26,7 @@ const TutorialsPresenter = (props:Props) => {
           return `https://www.youtube.com/embed/${videoId}`;
 
       }
+      console.log(url)
 
       return url;
 
@@ -52,6 +53,7 @@ const TutorialsPresenter = (props:Props) => {
                 props.tutorial.map((data) => {
                   return (
                     <>
+                   
                       <Iframe title={data.title} link={formatUrlYoutube(data.url)} />
                     </>
                   )
