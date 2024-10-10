@@ -212,9 +212,12 @@ const UserEditContainer = ({
         }
         navigate(route)
     }
-    const onChangePassword = (data: IOncalculate) => {
-
-        if (data.percentage === 100) {
+    const onChangePassword = (_data: IOncalculate) => {
+        if(data.password=="" || data.password==null){
+            setIsDisabled(false)
+            return
+        }
+        if (_data.percentage === 100) {
             setIsDisabled(false)
         } else {
             setIsDisabled(true)
