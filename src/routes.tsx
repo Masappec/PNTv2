@@ -183,6 +183,10 @@ const Router = createBrowserRouter(
         }
       })
     },
+    {
+      path: '*',
+      element: <NotFount404 />
+    }
   ],
   {
     basename: BASE_URL
