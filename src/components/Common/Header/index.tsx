@@ -71,8 +71,8 @@ const Header = () => {
               </Link>
             </li>
             <li className='m-0 w-max'>
-              <Link
-                to='/backend/v1/public/swagger/'
+              <a
+                href='/backend/v1/public/swagger/'
                 className='group relative inline-block cursor-pointer rounded-t-md p-2 text-lg transition hover:bg-primary/20'>
                 <span className='text-pretty text-base font-medium'>API</span>
                 <span
@@ -81,7 +81,7 @@ const Header = () => {
                 <span
                   className='absolute -bottom-1 right-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
                 </span>
-              </Link>
+              </a>
             </li>
             {/* Navigation Link */}
             <li className='m-0 w-max'>
