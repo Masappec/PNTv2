@@ -3,10 +3,14 @@ import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFoc
 import TransparencyFocusUseCase from "../../../../domain/useCases/TransparencyFocusUseCase/TransparencyFocusUseCase";
 import FocalizedListPresenter from "./FocalizedListPresenter";
 import { useNavigate } from "react-router-dom";
+import SessionService from "../../../../infrastructure/Services/SessionService";
+import TransparencyActiveUseCase from "../../../../domain/useCases/TransparencyActive/TransparencyActiveUseCase";
 
-const FocalizedListContainer = ({ usecase
+const FocalizedListContainer = ({ usecase, transparencyUseCase
 }: {
-    usecase: TransparencyFocusUseCase
+    usecase: TransparencyFocusUseCase,
+        transparencyUseCase?: TransparencyActiveUseCase;
+
 }) => {
 
 
@@ -20,9 +24,16 @@ const FocalizedListContainer = ({ usecase
     const [to, setTo] = useState(0)
     const [selectedItem, setSelectedItem] = useState<TransparencyFocusEntity | null>(null)
     const [typeAlert, setTypeAlert] = useState<"success" | "warning" | "info" | "error">("success")
+    const [hasPermApp, setHasPermApp] = useState(false)
 
     const navigate = useNavigate()
-
+    useEffect(() => {
+        const user = SessionService.getUserData();
+        if (user && user.user_permissions) {
+            const hasPerm = user.user_permissions?.findIndex(x => x.codename == 'approve_numeral_tc')
+            setHasPermApp(hasPerm !== -1)
+        }
+    }, [])
     useEffect(() => {
         usecase.getTransparencyFocusList()
             .then((response) => {
@@ -32,7 +43,6 @@ const FocalizedListContainer = ({ usecase
                 setTo(response.to || 1)
                 setTotal(response.total)
                 setTotalPage(response.total_pages || 0)
-
             })
             .catch((error) => {
                 setError(error.message)
@@ -108,6 +118,29 @@ const FocalizedListContainer = ({ usecase
     const onCancelDelete = () => {
         setVisibleModal(false)
     }
+    const approvePublication = (ta: TransparencyFocusEntity) => {
+        transparencyUseCase?.approvePublication({
+            establishment_id: ta.establishment.id || 0,
+            id: ta.id,
+            type: "TF"
+        }).then(() => {
+            usecase.getTransparencyFocusList()
+                .then((response) => {
+                    setTransparencyFocus(response.results)
+                    setCurrentPage(response.current)
+                    setFrom(response.from || 1)
+                    setTo(response.to || 1)
+                    setTotal(response.total)
+                    setTotalPage(response.total_pages || 0)
+                })
+                .catch((error) => {
+                    setError(error.message)
+                })
+        }).catch((error) => {
+            setError(error.message)
+        })
+    }
+
     return (
         <FocalizedListPresenter
             error={error}
@@ -132,6 +165,8 @@ const FocalizedListContainer = ({ usecase
             totalPage={totalPage}
             selectedItem={selectedItem}
             type_alert={typeAlert}
+            hasPermApp={hasPermApp}
+            onApproved={approvePublication}
         />
 
     )

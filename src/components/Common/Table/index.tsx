@@ -2,7 +2,7 @@
 import HeaderTable from "./header";
 
 import { Pagination } from "flowbite-react";
-interface Column<T> {
+export interface Column<T> {
     title: string
     key?: string
     render: (data: T, index: number) => React.ReactNode,

@@ -47,8 +47,8 @@ const handleLoade = () => {
 const handleLoadeAdmin = (permissions: string) => {
   const permissionSplit = permissions.split(',')
   const user = SessionService.getUserData()
-  console.log(permissionSplit)
   const busqueda = user.user_permissions?.some(item => permissionSplit.includes(item.codename))
+  console.log(permissionSplit,busqueda)
   if (permissions == '') {
     return null
   }

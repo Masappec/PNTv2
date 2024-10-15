@@ -1,15 +1,18 @@
+import { FaCheck } from "react-icons/fa";
 
 interface Props {
   title: string;
   text: string;
   onClick: () => void
   isPublished?: boolean;
+  isApprobation?: boolean;
+  onApproved?: () => void;
 }
 
-const Numeral = ({ title, text, onClick, isPublished }: Props) => {
+const Numeral = ({ title, text, onClick, isPublished, isApprobation, onApproved }: Props) => {
 
   return (
-    <button
+    <div
       onClick={() => onClick()}
       className='flex w-full  items-center gap-4 rounded-md bg-gray-100 p-4 transition-colors hover:bg-gray-200'>
       {isPublished ? (
@@ -42,6 +45,7 @@ const Numeral = ({ title, text, onClick, isPublished }: Props) => {
             {title}
           </p>
 
+        <div>
           {isPublished ? (
             <span className='h-max rounded-md bg-custom-green px-2 py-1 text-xs font-normal text-white'>
               Información Cargada
@@ -51,31 +55,29 @@ const Numeral = ({ title, text, onClick, isPublished }: Props) => {
               Sin publicar
             </span>
           )}
+          {
+            isApprobation && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent click event from reaching the div
+                  onApproved && onApproved()
+                }}
+
+                className='flex border border-custom-green items-center gap-2 rounded-md  p-2 
+                transition-colors mt-3 text-custom-green text-sm hover:text-white hover:bg-custom-green
+                '>
+                  Aprobar
+                  <FaCheck className="text-custom-green  hover:text-white" />
+              </button>
+            )
+          }
+          </div>
         </div>
 
         <p className='text-left align-middle text-gray-900'>{text}</p>
       </section>
-    </button>
-  )
-  /*return (
-    <div className="flex bg-stone-100  px-4  py-2.5 dark:bg-gray-800  h-auto rounded-lg"
-
-      onClick={() => onClick()}>
-      <div className="flex flex-row gap-5 items-center">
-        <div>
-          <div className={`${isPublished == true ? "bg-green-600" : "bg-amber-500 hover:bg-amber-300"} text-white font-bold py-2 px-2 rounded-lg mt-2 cursor-pointer`}>
-
-            {
-              isPublished == false ? <FaArrowUp size={30} /> : <BiCheckCircle size={30} />
-            }
-          </div>
-        </div>
-        <div className="text-base font-medium text-gray-500 my-2 whitespace-nowrap">{title}</div>
-
-        <div className="border-l-2 border-gray-300 h-6 my-2 "></div>
-        <div className="text-base font-medium my-2 ">{text}</div>
-      </div>
     </div>
-  );*/
+  )
+
 };
 export default Numeral;

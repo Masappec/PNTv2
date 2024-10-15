@@ -300,6 +300,12 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
                 content_type: 'Transparencia Colaborativa',
                 name: 'Ver T.C de todas las entidades',
                 id: 26
+            },
+            {
+                codename: 'approve_numeral_tc',
+                content_type: 'Transparencia Colaborativa',
+                name: 'Aprobar Numerales Transparencia Colaborativa',
+                id: 24
             }
         ]
     },
@@ -329,6 +335,12 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
                 content_type: 'Transparencia Focalizada',
                 id: 29,
                 name: 'Ver T.F de todas las entidades'
+            },
+            {
+                codename: 'approve_numeral_tf',
+                content_type: 'Transparencia Colaborativa',
+                name: 'Aprobar Numerales Transparencia Focalizada',
+                id: 24
             }
         ]
     },
