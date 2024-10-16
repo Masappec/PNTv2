@@ -45,7 +45,8 @@ const EstablishmentEditContainer = ({
         job_committe: "",
         last_name_committe: "",
         identification: "",
-        extra_numerals: ''
+        extra_numerals: '',
+        address:""
     })
     const [options, setOptions] = useState<OptionsSelectCreate>({
         functions: [],

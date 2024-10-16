@@ -55,8 +55,14 @@ const CollaborativeEditContainer = (props: Props) => {
     id: 0,
     description: "",
     name: "",
-  }, [], "", 0, 0, "", false, "", "", {} as EstablishmentEntity
-
+  }, [], "", 0, 0, "", false, "", "", {} as EstablishmentEntity,
+  new Date(),
+  new Date(),
+  false,
+  new Date(),
+  "",
+  "",
+  ""
   ));
   const tabsRef = useRef<TabsRef>(null);
 

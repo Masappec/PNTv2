@@ -20,9 +20,9 @@ export interface INeedProps {
   year: number
   establishment_id: number
   type: string
-  establishment_name: string 
+  establishment_name: string
 }
-const DetailEntityContainer =(props:IProps)=> {
+const DetailEntityContainer = (props: IProps) => {
 
 
   const location = useLocation()
@@ -32,8 +32,8 @@ const DetailEntityContainer =(props:IProps)=> {
   const [establishment_name, setEstablishment_name] = React.useState<string>("")
   const [type, setType] = React.useState<string>("")
   const [data, setData] = React.useState<NumeralEntity[]>([])
-  const [dataF,setDataF] = React.useState<TransparencyFocusEntity[]>([])
-  const [dataC,setDataC] = React.useState<TransparencyCollab[]>([])
+  const [dataF, setDataF] = React.useState<TransparencyFocusEntity[]>([])
+  const [dataC, setDataC] = React.useState<TransparencyCollab[]>([])
   const state = location.state as INeedProps;
 
 
@@ -48,16 +48,16 @@ const DetailEntityContainer =(props:IProps)=> {
   }, [])
 
   useEffect(() => {
-    if(type === "TA"){
+    if (type === "TA") {
       props.usecase.getNumeralByEstablishment(establishment_id, year, month).then((data) => {
         setData(data.sort((a, b) => parseInt(a.name.replace("Numeral", "")) - parseInt(b.name.replace("Numeral", ""))))
       }).catch((error) => {
         console.log(error)
       })
     }
-    if(type=="TF"){
-      props.tfusecase.getTransparencyFocusPublics(month,year,establishment_id).then((data) => {
-        if(data.length==0){
+    if (type == "TF") {
+      props.tfusecase.getTransparencyFocusPublics(month, year, establishment_id).then((data) => {
+        if (data.length == 0) {
           setDataF([
             {
               establishment: {} as EstablishmentEntity,
@@ -66,7 +66,7 @@ const DetailEntityContainer =(props:IProps)=> {
               max_date_to_publish: "",
               month: 0,
               numeral: {
-                description:"Transparencia Focalizada",
+                description: "Transparencia Focalizada",
                 id: 0,
                 name: "Transparencia Focalizada"
               },
@@ -75,9 +75,16 @@ const DetailEntityContainer =(props:IProps)=> {
               published_at: "",
               slug: "",
               status: "",
+              created_at: new Date(),
+              deleted: false,
+              deleted_at: new Date(),
+              updated_at: new Date(),
+              user_created: "",
+              user_deleted: "",
+              user_updated: "",
             } as TransparencyFocusEntity
           ])
-        }else{
+        } else {
           setDataF(data)
         }
       }).catch((error) => {
@@ -105,6 +112,13 @@ const DetailEntityContainer =(props:IProps)=> {
               published_at: "",
               slug: "",
               status: "",
+              created_at: new Date(),
+              deleted: false,
+              deleted_at: new Date(),
+              updated_at: new Date(),
+              user_created: "",
+              user_deleted: "",
+              user_updated: "",
             } as TransparencyCollab
           ])
         } else {
@@ -117,13 +131,13 @@ const DetailEntityContainer =(props:IProps)=> {
   }, [month, year, establishment_id])
 
 
-  const isRezagado = (date: string|null, month: number, year: number) => {
+  const isRezagado = (date: string | null, month: number, year: number) => {
 
     if (date == null) {
       return true
     }
     const formatExpired = new Date();
-    formatExpired.setFullYear(year, month - 1, 10)
+    formatExpired.setFullYear(year, month - 1, 15)
 
     if (new Date(date) > formatExpired) {
       return true
@@ -137,7 +151,7 @@ const DetailEntityContainer =(props:IProps)=> {
       data={data}
       current={0}
       from={0}
-      onPaginate={()=>{}}
+      onPaginate={() => { }}
       pageSize={0}
       to={0}
       total={0}
@@ -149,9 +163,9 @@ const DetailEntityContainer =(props:IProps)=> {
       type={type}
       establishment_name={establishment_name}
       isRezagado={isRezagado}
-        
 
-      
+
+
     />
   )
 }

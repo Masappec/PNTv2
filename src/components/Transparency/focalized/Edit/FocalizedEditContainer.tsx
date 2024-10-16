@@ -54,8 +54,14 @@ const FocalizedEditContainer = (props: Props) => {
     id: 0,
     description: "",
     name: "",
-  }, [], "", 0, 0, "", false, "", "", {} as EstablishmentEntity
-
+  }, [], "", 0, 0, "", false, "", "", {} as EstablishmentEntity,
+    new Date(),
+    new Date(),
+    false,
+    new Date(),
+    "",
+    "",
+    ""
   ));
   const navigate = useNavigate()
 
@@ -529,10 +535,10 @@ const FocalizedEditContainer = (props: Props) => {
     if (establishment === undefined) {
       throw new Error("No se ha encontrado el establecimiento")
     }
-    
+
     await props.tfocalizedUseCase.updateTransparencyFocus(
-      establishment.id||0,
-      filesPublication.map(x=>x.id),
+      establishment.id || 0,
+      filesPublication.map(x => x.id),
       numeral.id
     )
 
