@@ -141,7 +141,6 @@ const FocalizedEditContainer = (props: Props) => {
   }, [numeral])
 
   useEffect(() => {
-    console.log(templates, filesPublication)
     setIsDisabled(_isDisabled())
   }, [templates, filesPublication])
 
@@ -162,7 +161,6 @@ const FocalizedEditContainer = (props: Props) => {
       }
 
     })
-    console.log(data)
 
 
     setTemplateTable(data)
@@ -270,9 +268,7 @@ const FocalizedEditContainer = (props: Props) => {
         return file.name !== newTemplates?.name
       }))
       setError(error.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
 
 
@@ -388,7 +384,9 @@ const FocalizedEditContainer = (props: Props) => {
 
     props.templateUseCase.validateLocalFile(
       newTemplates.file as File,
-      templateDetail
+      templateDetail,
+      false,
+      true
     ).then((res) => {
 
       setError("")
@@ -445,9 +443,7 @@ const FocalizedEditContainer = (props: Props) => {
       }))
 
       setError(e.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
 
 
@@ -472,7 +468,6 @@ const FocalizedEditContainer = (props: Props) => {
       return
     }
 
-    console.log(filesPublication)
 
     if (filesPublication.filter(file => file.id === 0).length > 0) {
       const promise_array = filesPublication?.filter(x => x.id === 0).map((file) => {
@@ -573,7 +568,6 @@ const FocalizedEditContainer = (props: Props) => {
 
     let blob;
     if (templateDetail.verticalTemplate) {
-      console.log(' es vertical')
 
       blob = props.fileUseCase.generateContentCsvVertical(data);
       //descargar archivo
@@ -640,10 +634,9 @@ const FocalizedEditContainer = (props: Props) => {
     const templateDetail = numeral?.templates.find((_template) => {
       return template.id === _template.id
     })
-    console.log(templateDetail?.name)
     if (!templateDetail) return
 
-    props.templateUseCase.validateLocalFile(file, templateDetail).then((res) => {
+    props.templateUseCase.validateLocalFile(file, templateDetail, false, true).then((res) => {
       if (!res) {
         setError("El archivo no cumple con el formato")
         return
@@ -676,9 +669,7 @@ const FocalizedEditContainer = (props: Props) => {
       setSuccess("Se ha guardado correctamente el archivo")
     }).catch((e) => {
       setError(e.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
   }
 
@@ -701,7 +692,6 @@ const FocalizedEditContainer = (props: Props) => {
     const name = name_template?.name || ""
 
 
-    console.log(data_template, name_template)
 
     if (!data_template) {
       setError("No se ha encontrado el template")
@@ -742,6 +732,12 @@ const FocalizedEditContainer = (props: Props) => {
     let template_mod = templateTable.find((template) => {
       return template.id === templates.id
     })
+    if (templates.verticalTemplate) {
+      if (rows.length < 2) {
+        setError("El archivo no cumple con el formato")
+        return
+      }
+    }
     if (!template_mod) {
       template_mod = {
         id: templates.id,
@@ -803,9 +799,7 @@ const FocalizedEditContainer = (props: Props) => {
 
     if (files) {
       setError("Ya existe un archivo de " + file.description)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
       return
     }
     setError("")
@@ -838,6 +832,13 @@ const FocalizedEditContainer = (props: Props) => {
 
           buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
           tabsRef.current?.setActiveTab(2)
+          const element = document.getElementById(temDetail.name)
+          if (element) {
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
           return
         } else {
           const rows = res.rows.map((row) => {
@@ -850,6 +851,13 @@ const FocalizedEditContainer = (props: Props) => {
           })
           buildRowFromTemplateAnData(temDetail, [columns, ...rows])
           tabsRef.current?.setActiveTab(2)
+          const element = document.getElementById(temDetail.name)
+          if (element) {
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
         }
       }).catch((e) => {
         setError(e.message)
@@ -877,7 +885,6 @@ const FocalizedEditContainer = (props: Props) => {
   const Download = (url: string) => {
 
 
-    console.log(url)
     fetch(url)
       .then(response => {
         if (!response.ok) {
@@ -932,6 +939,7 @@ const FocalizedEditContainer = (props: Props) => {
       loadingFiles={loadingFiles}
       year={new Date().getFullYear()}
       month={new Date().getMonth()}
+      tabRef={tabsRef}
     />
   )
 }

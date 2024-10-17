@@ -39,7 +39,7 @@ const CollabCreateContainer = (props: Props) => {
   const [success, setSuccess] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
- 
+
   const navigate = useNavigate()
 
   const [numeral, setNumeral] = useState<NumeralDetail>(new NumeralDetail(0, [], new Date(), new Date(), false, null, "", "", "", false, "", "", "", 0))
@@ -241,9 +241,7 @@ const CollabCreateContainer = (props: Props) => {
 
     if (files) {
       setError("Ya existe un archivo de " + file.description)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
       return
     }
     setError("")
@@ -254,7 +252,7 @@ const CollabCreateContainer = (props: Props) => {
       return response.blob();
     }).then((file_) => {
       const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-      props.templateUseCase.validateLocalFile(blob as File, temDetail).then((res) => {
+      props.templateUseCase.validateLocalFile(blob as File, temDetail, false, true).then((res) => {
         if (!res) {
           setError("El archivo no cumple con el formato")
           return
@@ -325,7 +323,7 @@ const CollabCreateContainer = (props: Props) => {
       navigation("/admin/transparency/collaborative")
     }).catch((error) => {
       setError(error.message)
-      
+
       setLoading(false)
     })
 
@@ -358,7 +356,9 @@ const CollabCreateContainer = (props: Props) => {
 
     props.templateUseCase.validateLocalFile(
       newTemplates.file as File,
-      templateDetail
+      templateDetail,
+      false,
+      true
     ).then((res) => {
 
       setError("")
@@ -553,7 +553,9 @@ const CollabCreateContainer = (props: Props) => {
 
       props.templateUseCase.validateLocalFile(
         file_ as File,
-        templateDetail
+        templateDetail,
+        false,
+        true
       ).then((res) => {
         setLoadingFiles(loadingFiles.filter((loading) => {
           return loading.name !== templateFile.name
@@ -616,9 +618,7 @@ const CollabCreateContainer = (props: Props) => {
         return loading.name !== templateFile.name
       }))
       setError(error.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
 
 
@@ -739,6 +739,7 @@ const CollabCreateContainer = (props: Props) => {
 
       year={new Date().getFullYear()}
       month={new Date().getMonth()}
+
     />
   )
 }

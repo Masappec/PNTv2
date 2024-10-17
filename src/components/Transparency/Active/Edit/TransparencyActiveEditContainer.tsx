@@ -21,8 +21,8 @@ import { TabsRef } from "flowbite-react";
 
 export interface INeedProps {
     numeral: NumeralEntity,
-    year:number;
-    month:number;
+    year: number;
+    month: number;
 }
 
 interface Props {
@@ -41,8 +41,8 @@ const ActiveEditContainer = (props: Props) => {
 
     const state = location.state as INeedProps;
 
-    const [year,setYear] = useState(new Date().getFullYear())
-    const [month,setMonth] = useState(new Date().getMonth())
+    const [year, setYear] = useState(new Date().getFullYear())
+    const [month, setMonth] = useState(new Date().getMonth())
 
     const [numeral, setNumeral] = useState<NumeralEntity>();
     const [detail, setDetail] = useState<NumeralDetail | null>(null)
@@ -214,6 +214,7 @@ const ActiveEditContainer = (props: Props) => {
             props.templateUseCase.validateLocalFile(
                 file_ as File,
                 templateDetail,
+                true,
                 true
             ).then((res) => {
                 const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
@@ -321,6 +322,7 @@ const ActiveEditContainer = (props: Props) => {
         props.templateUseCase.validateLocalFile(
             newTemplates.file as File,
             templateDetail,
+            true,
             true
         ).then((res) => {
             const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
@@ -469,7 +471,7 @@ const ActiveEditContainer = (props: Props) => {
             establishment,
             numeral?.id || 0,
             year,
-            month+1
+            month + 1
         )
         await props.transparencyActiveUseCase.updatePublication(newTransparency)
 
@@ -575,7 +577,7 @@ const ActiveEditContainer = (props: Props) => {
         })
         if (!templateDetail) return
 
-        props.templateUseCase.validateLocalFile(file, templateDetail, true).then((res) => {
+        props.templateUseCase.validateLocalFile(file, templateDetail, true, true).then((res) => {
             if (!res) {
                 setError("El archivo no cumple con el formato")
                 return
@@ -706,7 +708,7 @@ const ActiveEditContainer = (props: Props) => {
             return response.blob();
         }).then((file_) => {
             const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-            props.templateUseCase.validateLocalFile(blob as File, temDetail, true).then((res) => {
+            props.templateUseCase.validateLocalFile(blob as File, temDetail, true, true).then((res) => {
                 if (!res) {
                     setError("El archivo no cumple con el formato")
                     return
