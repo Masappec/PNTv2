@@ -1,6 +1,6 @@
 // AuthApi.js
 
-import { AxiosInstance } from 'axios'
+import { AxiosInstance, isAxiosError } from 'axios'
 import { AUTH_PATH } from '..'
 import { LoginResponseDto, RegisterDto } from './interface'
 
@@ -124,7 +124,14 @@ class AuthApi {
       // Devuelve los datos de la respuesta
       return response.data
     } catch (error: any) {
-      console.error('Error al cambiar clave:', error.response.data)
+        if (isAxiosError(error)) {
+          const _error = error.response
+            ? error.response.data.error
+            : error.message;
+          throw new Error(_error);
+        } else {
+          throw new Error(error?.message || "Error al cambiar contraseña.");
+        }
     }
   }
 }
