@@ -48,7 +48,7 @@ class TemplateFileUseCase {
             line = line.replace(/;+\s*$/, '');
 
             // Remove consecutive semicolons within the line
-            line = line.replace(/;{2,}/g, ';');
+            line = line.replace(/;{3,}/g, ';');
 
             //remplazar \r
             line = line.replace(/\r/g, '');
@@ -79,19 +79,22 @@ class TemplateFileUseCase {
                         const lines = cleanedCSV.split('\n');
 
                         // Dividir cada línea en columnas (en base a ';' como separador)
-                        const rows = lines.map(line => line.split(';'));
-
+                        const rows = lines.map(line => line.split(DELIMITER));
                         // Verificar si el CSV ya está transpuesto
-                        const isTransposed = rows.every(row => row.length === rows.length);
+                        const _isTransposed = template.columns.length === rows.length;
 
-                        if (!isTransposed) {
-                            // Si no está transpuesto, realizar la transposición
-                            const transposed = rows[0].map((_, colIndex) => rows.map(row => row[colIndex]));
+                        if (_isTransposed) {
+                          // Si no está transpuesto, realizar la transposición
+                          const transposed = rows[0].map((_, colIndex) =>
+                            rows.map((row) => row[colIndex])
+                          );
 
-                            // Unir la matriz transpuesta de nuevo en formato CSV
-                            const cleanedCSV_ = transposed.map(row => row.join(';')).join('\n');
+                          // Unir la matriz transpuesta de nuevo en formato CSV
+                          const cleanedCSV_ = transposed
+                            .map((row) => row.join(";"))
+                            .join("\n");
 
-                            cleanedCSV = cleanedCSV_;
+                          cleanedCSV = cleanedCSV_;
                         }
                     }
                     const json = await csvtojson({
@@ -112,7 +115,6 @@ class TemplateFileUseCase {
                     }
 
                     columns = columns.filter(col => col.trim() !== '');
-                    console.log(rows)
                     if (columns.length !== template.columns.length) {
                         throw new Error('El archivo no coincide con la plantilla, la cantidad de columnas no coincide');
 
@@ -122,8 +124,10 @@ class TemplateFileUseCase {
                             throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden, Columna de nombre: "' + element + '" no encontrada en la plantilla');
                         }
                     });
-                    const rows_ = rows;
-
+                    const rows_ = rows || [];
+                    if(rows_.length === 0){
+                        throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
+                    }
 
                     if (rows_.filter(row => row == undefined).length > 0) {
                         throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
