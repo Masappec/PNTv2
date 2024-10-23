@@ -14,55 +14,55 @@ class TemplateFileUseCase {
     async validateFile(data: TemplateFileEntity) {
         return await this.service.validateFile(data)
     }
-    normalizeString(str:string) {
+    normalizeString(str: string) {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/:/g, "")
-        .replace(/-/g, "")
-        .replace(/,/g, "")
-        .replace(/\./g, "")
-        .replace(/ /g, "")
-        .replace(/_/g, "")
-        .replace(/#/g, "")
-        .replace(/%/g, "")
-        .replace(/&/g, "")
-        .replace(/"/g, "")
-        .replace(/'/g, "")
-        .replace(/!/g, "")
-        .replace(/¡/g, "")
-        .replace(/¿/g, "")
-        .replace(/-/g, "")
-        .replace(/\(\)/g, "")
-        .replace(/\(/g, "")
-        .replace(/\)/g, "")
-        .toLowerCase().trim();
+            .replace(/-/g, "")
+            .replace(/,/g, "")
+            .replace(/\./g, "")
+            .replace(/ /g, "")
+            .replace(/_/g, "")
+            .replace(/#/g, "")
+            .replace(/%/g, "")
+            .replace(/&/g, "")
+            .replace(/"/g, "")
+            .replace(/'/g, "")
+            .replace(/!/g, "")
+            .replace(/¡/g, "")
+            .replace(/¿/g, "")
+            .replace(/-/g, "")
+            .replace(/\(\)/g, "")
+            .replace(/\(/g, "")
+            .replace(/\)/g, "")
+            .toLowerCase().trim();
     }
 
-     cleanCSV(csvContent:string) {
-         // Split the content into lines
-         const lines = csvContent.trim().split('\n');
-         // Clean each line
-         const cleanedLines = lines.map(line => {
-             // Remove leading semicolon and space
-             line = line.replace(/^;\s*/, '');
+    cleanCSV(csvContent: string) {
+        // Split the content into lines
+        const lines = csvContent.trim().split('\n');
+        // Clean each line
+        const cleanedLines = lines.map(line => {
+            // Remove leading semicolon and space
+            line = line.replace(/^;\s*/, '');
 
-             // Remove trailing semicolons
-             line = line.replace(/;+\s*$/, '');
+            // Remove trailing semicolons
+            line = line.replace(/;+\s*$/, '');
 
-                // Remove consecutive semicolons within the line
-                line = line.replace(/;{2,}/g, ';');
+            // Remove consecutive semicolons within the line
+            line = line.replace(/;{3,}/g, ';');
 
-                //remplazar \r
-                line = line.replace(/\r/g, '');
+            //remplazar \r
+            line = line.replace(/\r/g, '');
 
 
 
-             return line;
-         });
+            return line;
+        });
 
-         // Join cleaned lines into a single string with line breaks
-         return cleanedLines.join('\r\n');
+        // Join cleaned lines into a single string with line breaks
+        return cleanedLines.join('\r\n');
     }
 
-    async validateLocalFile(data: File, template: Template,isActive=false) {
+    async validateLocalFile(data: File, template: Template, isActive = false, isTransposed = false) {
         return new Promise<{
             columns: string[],
             rows: string[][],
@@ -72,25 +72,46 @@ class TemplateFileUseCase {
         }>((resolve, reject) => {
             this.detectDelimiter(data, async (delim, text) => {
                 try {
-                    
-                    const cleanedCSV = this.cleanCSV(text);
-                    console.log(cleanedCSV)
+
+                    let cleanedCSV = this.cleanCSV(text);
+                    if (template.verticalTemplate && isTransposed) {
+                        // Dividir el CSV en líneas
+                        const lines = cleanedCSV.split('\n');
+
+                        // Dividir cada línea en columnas (en base a ';' como separador)
+                        const rows = lines.map(line => line.split(DELIMITER));
+                        // Verificar si el CSV ya está transpuesto
+                        const _isTransposed = template.columns.length === rows.length;
+
+                        if (_isTransposed) {
+                          // Si no está transpuesto, realizar la transposición
+                          const transposed = rows[0].map((_, colIndex) =>
+                            rows.map((row) => row[colIndex])
+                          );
+
+                          // Unir la matriz transpuesta de nuevo en formato CSV
+                          const cleanedCSV_ = transposed
+                            .map((row) => row.join(";"))
+                            .join("\n");
+
+                          cleanedCSV = cleanedCSV_;
+                        }
+                    }
                     const json = await csvtojson({
                         delimiter: DELIMITER,
                         noheader: template.verticalTemplate,
-                        flatKeys: true, 
+                        flatKeys: true,
+                        headers: template.columns.map(col => col.name)
                     }).fromString(cleanedCSV)
-                    console.log(json)
+                    console.log(cleanedCSV, json)
                     let rows = json.map(row => Object.values(row).join(delim));
                     let columns = json.length > 0 ? Object.keys(json[0]) : [];
                     if (template.verticalTemplate) {
-                        columns = json.length > 0 ? json.map(row => Object.values(row)[0]) as string[]: [];
-                        rows = json.length > 0 ? json.map(row => Object.values(row)[1]) as string[]: [];
+                        rows = json.length > 0 ? json.map(row => Object.values(row))[1] as string[] : [];
                     } else {
                         if (delim !== DELIMITER) {
                             throw new Error('El archivo no coincide con la plantilla, el delimitador debe ser: ' + DELIMITER);
                         }
-
                     }
 
                     columns = columns.filter(col => col.trim() !== '');
@@ -103,9 +124,11 @@ class TemplateFileUseCase {
                             throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden, Columna de nombre: "' + element + '" no encontrada en la plantilla');
                         }
                     });
-                    const rows_ = rows;
-                    
-                   
+                    const rows_ = rows || [];
+                    if(rows_.length === 0){
+                        throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
+                    }
+
                     if (rows_.filter(row => row == undefined).length > 0) {
                         throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
                     }
@@ -113,7 +136,7 @@ class TemplateFileUseCase {
                         throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
 
                     }
-                    
+
                     // validar que su contenido no contenga las palabras “NO APLICA”, “NO DISPONIBLE”, “N/D”, “ND”, “NA”, “N/A”. 
                     const invalidWords = ["NO APLICA", "NO DISPONIBLE", "N/D", "ND", "NA", "N/A"];
                     if (!isActive) {
@@ -122,7 +145,7 @@ class TemplateFileUseCase {
                             throw new Error('El archivo no cumple con la plantilla, por favor verifique que el archivo no contenga celdas con las palabras: NO APLICA, NO DISPONIBLE, N/D, ND, NA, N/A');
                         }
                     }
-                     
+
 
                     const final_rows = rows_.map(row => {
                         const row_data = row.split(delim);
@@ -143,11 +166,11 @@ class TemplateFileUseCase {
 
     }
 
-    public detectDelimiter(file: File,callback: (delimiter: string, text: string) => void) {
+    public detectDelimiter(file: File, callback: (delimiter: string, text: string) => void) {
         const reader = new FileReader();
 
         reader.onloadend = function (event: ProgressEvent<FileReader>) {
-            
+
             const fileData = event.target?.result as string;
             console.log(fileData);
             const sample = fileData;
@@ -164,7 +187,7 @@ class TemplateFileUseCase {
             callback(sortedDelimiters[0].delimiter || ",", sample);
         };
 
-        reader.readAsText(file, 'ISO-8859-1');
+        reader.readAsText(file, 'utf-8');
     }
 
 

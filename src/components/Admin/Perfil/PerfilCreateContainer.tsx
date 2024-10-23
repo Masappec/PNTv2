@@ -32,16 +32,19 @@ const PerfilCreateContainer = () => {
 
     console.log('Contraseña actual:', currentPassword)
     console.log('Nueva contraseña:', newPassword)
-    try {
       if (!currentPassword || !newPassword) {
         setError('Todos los campos son requeridos')
         return
       }
-      await usecase.changePassword(currentPassword, newPassword)
-      setSuccess("Contraseña cambiada correctamente")
-    } catch (error) {
-      setError('Error al cambiar la contraseña')
-    }
+      await usecase.changePassword(currentPassword, newPassword).then(() => {
+        setError('')
+        setSuccess('Contraseña cambiada correctamente')
+      }).catch((error) => {
+        setSuccess('')
+        console.log('Error:', error)
+        setError(error.message)
+      })
+    
   }
 
   return (

@@ -16,14 +16,13 @@ import NumeralDetail from "../../../../domain/entities/NumeralDetail";
 import Template from "../../../../domain/entities/Template";
 import { Row } from "../../../../utils/interface";
 import { Pagination } from "../../../../infrastructure/Api";
-import { sleep } from "../../../../utils/functions";
 import { TabsRef } from "flowbite-react";
 
 export interface INeedProps {
   numeral: NumeralEntity,
   childs: NumeralEntity[]
-  month:number;
-  year:number
+  month: number;
+  year: number
 }
 
 interface IProps {
@@ -43,8 +42,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const state = location.state as INeedProps;
 
-  const [month,setMonth] = useState(new Date().getMonth()+1)
-  const [year,setYear] = useState(new Date().getFullYear())
+  const [month, setMonth] = useState(new Date().getMonth() + 1)
+  const [year, setYear] = useState(new Date().getFullYear())
 
   const [numeral, setNumeral] = useState<NumeralEntity>();
   const [detail, setDetail] = useState<NumeralDetail | null>(null)
@@ -178,6 +177,7 @@ const ActiveCreateContainer = (props: IProps) => {
       props.templateUseCase.validateLocalFile(
         file_ as File,
         templateDetail,
+        true,
         true
       ).then((res) => {
 
@@ -235,14 +235,14 @@ const ActiveCreateContainer = (props: IProps) => {
           ...newTemplates,
           isValid: false
         } as TemplateFileEntity
-       
+
       })
     }).catch((error) => {
       setLoadingFiles(loadingFiles.filter((loading) => {
         return loading.name !== templateFile.name
       }))
       setError(error.message)
-     
+
     })
 
 
@@ -286,7 +286,9 @@ const ActiveCreateContainer = (props: IProps) => {
     props.templateUseCase.validateLocalFile(
       newTemplates.file as File,
       templateDetail,
+      true,
       true
+
     ).then((res) => {
       const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
 
@@ -334,9 +336,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
 
       setError(e.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
 
 
@@ -417,7 +417,7 @@ const ActiveCreateContainer = (props: IProps) => {
       establishment,
       numeral?.id || 0,
       year,
-      month+1
+      month + 1
     )
     await props.transparencyActiveUseCase.publish(newTransparency)
 
@@ -518,7 +518,7 @@ const ActiveCreateContainer = (props: IProps) => {
     })
     if (!templateDetail) return
 
-    props.templateUseCase.validateLocalFile(file, templateDetail, true).then((res) => {
+    props.templateUseCase.validateLocalFile(file, templateDetail, true, true).then((res) => {
       if (!res) {
         setError("El archivo no cumple con el formato")
         return
@@ -553,9 +553,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
     }).catch((e) => {
       setError(e.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
   }
 
@@ -675,9 +673,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
     if (files) {
       setError("Ya existe un archivo de " + file.description)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
       return
     }
     setError("")
@@ -688,7 +684,7 @@ const ActiveCreateContainer = (props: IProps) => {
       return response.blob();
     }).then((file_) => {
       const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-      props.templateUseCase.validateLocalFile(blob as File, temDetail, true).then((res) => {
+      props.templateUseCase.validateLocalFile(blob as File, temDetail, true, true).then((res) => {
         if (!res) {
           setError("El archivo no cumple con el formato")
           return

@@ -239,9 +239,7 @@ const FocalizedCreateContainer = (props: Props) => {
 
     if (files) {
       setError("Ya existe un archivo de " + file.description)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
       return
     }
     setError("")
@@ -252,44 +250,45 @@ const FocalizedCreateContainer = (props: Props) => {
       return response.blob();
     }).then((file_) => {
       const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-      props.templateUseCase.validateLocalFile(blob as File, temDetail).then((res) => {
-        if (!res) {
-          setError("El archivo no cumple con el formato")
-          return
-        }
-        const columns = res.columns.map((column) => {
-          return {
-            key: column,
-            value: column,
-            is_header: true
+      props.templateUseCase.validateLocalFile(blob as File, temDetail, false,
+        true).then((res) => {
+          if (!res) {
+            setError("El archivo no cumple con el formato")
+            return
           }
-        })
-        if (temDetail.verticalTemplate) {
-          const rows = res.rows.map((row) => {
+          const columns = res.columns.map((column) => {
             return {
-              key: row[0] as string,
-              value: row[0] as string
+              key: column,
+              value: column,
+              is_header: true
             }
           })
-
-          buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
-          tabsRef.current?.setActiveTab(2)
-          return
-        } else {
-          const rows = res.rows.map((row) => {
-            return row.map((value, index) => {
+          if (temDetail.verticalTemplate) {
+            const rows = res.rows.map((row) => {
               return {
-                key: index.toString(),
-                value: value
+                key: row[0] as string,
+                value: row[0] as string
               }
             })
-          })
-          buildRowFromTemplateAnData(temDetail, [columns, ...rows])
-          tabsRef.current?.setActiveTab(2)
-        }
-      }).catch((e) => {
-        setError(e.message)
-      })
+
+            buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
+            tabsRef.current?.setActiveTab(2)
+            return
+          } else {
+            const rows = res.rows.map((row) => {
+              return row.map((value, index) => {
+                return {
+                  key: index.toString(),
+                  value: value
+                }
+              })
+            })
+            buildRowFromTemplateAnData(temDetail, [columns, ...rows])
+            tabsRef.current?.setActiveTab(2)
+          }
+        }).catch((e) => {
+          setError(e.message)
+        })
     }).catch((e) => {
       setError(e.message)
     })
@@ -359,7 +358,9 @@ const FocalizedCreateContainer = (props: Props) => {
 
     props.templateUseCase.validateLocalFile(
       newTemplates.file as File,
-      templateDetail
+      templateDetail,
+      false,
+      true
     ).then((res) => {
 
       setError("")
@@ -617,9 +618,7 @@ const FocalizedCreateContainer = (props: Props) => {
         return loading.name !== templateFile.name
       }))
       setError(error.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
 
 
@@ -740,6 +739,7 @@ const FocalizedCreateContainer = (props: Props) => {
 
       year={new Date().getFullYear()}
       month={new Date().getMonth()}
+      tabRef={tabsRef}
     />
   )
 }

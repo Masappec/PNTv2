@@ -82,10 +82,10 @@ class AuthService {
     try {
       // Llama al método de registro en el servicio de API
       const response = await this.api.changePassword(current, newPass)
-
+     
       return response
     } catch (error: any) {
-      throw new Error(error?.message || 'Error al cambiar contraseña.')
+      throw new Error(error?.message || 'Error al cambiar la contraseña.')
     }
   }
   // Otros métodos relacionados con la lógica de autenticación pueden ir aquí

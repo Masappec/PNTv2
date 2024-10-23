@@ -250,6 +250,7 @@ const ActiveCreatePresenter = (props: Props) => {
 
                     return (
                       <DataTablePartial
+                        id={file.name}
                         data={props.dataTable.find((e) => e.id == file.id)?.data || [[]]}
                         handleCancel={() => { }}
                         index={index}
