@@ -232,7 +232,7 @@ const SolicityManualContainer = (props: Props) => {
 
     const format_receipt: ColourOption[] = [
         // { value: 'Portal Web', label: 'Portal Web', color: '#00B8D9' },
-        { value: 'Presencial', label: 'Presencial', color: '#00B8D9' },
+        { value: 'Físico', label: 'Físico', color: '#00B8D9' },
         { value: 'Correo Electrónico', label: 'Correo Electrónico', color: '#00B8D9' },
         { value: 'Otro', label: 'Otro', color: '#00B8D9' },
 
