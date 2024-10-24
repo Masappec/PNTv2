@@ -48,7 +48,7 @@ class TemplateFileUseCase {
             line = line.replace(/;+\s*$/, '');
 
             // Remove consecutive semicolons within the line
-            line = line.replace(/;{3,}/g, ';');
+            line = line.replace(/;{3,}/g, '');
 
             //remplazar \r
             line = line.replace(/\r/g, '');
@@ -57,9 +57,10 @@ class TemplateFileUseCase {
 
             return line;
         });
+        const nonEmptyLines = cleanedLines.filter((line) => line.trim() !== "");
 
         // Join cleaned lines into a single string with line breaks
-        return cleanedLines.join('\r\n');
+        return nonEmptyLines.join("\r\n");
     }
 
     async validateLocalFile(data: File, template: Template, isActive = false, isTransposed = false) {
