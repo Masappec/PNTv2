@@ -220,6 +220,7 @@ const SolicityCreateContainer = (props: Props) => {
         { value: 'Pueblo o Nacionalidad Indígena', label: 'Pueblo o Nacionalidad Indígena', color: '#00B8D9' },
         { value: 'Pueblo Afrodescendiente', label: 'Pueblo Afrodescendiente', color: '#00B8D9' },
         { value: 'Blanca', label: 'Blanca', color: '#00B8D9' },
+        { value: 'Otro', label: 'Otro', color: '#00B8D9' },
 
     ]
 
