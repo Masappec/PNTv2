@@ -104,15 +104,10 @@ class TemplateFileUseCase {
                         flatKeys: true,
                         headers: template.columns.map(col => col.name)
                     }).fromString(cleanedCSV)
-                    console.log(cleanedCSV, json)
                     let rows = json.map(row => Object.values(row).join(delim));
                     let columns = json.length > 0 ? Object.keys(json[0]) : [];
                     if (template.verticalTemplate) {
                         rows = json.length > 0 ? json.map(row => Object.values(row))[1] as string[] : [];
-                    } else {
-                        if (delim !== DELIMITER) {
-                            throw new Error('El archivo no coincide con la plantilla, el delimitador debe ser: ' + DELIMITER);
-                        }
                     }
 
                     columns = columns.filter(col => col.trim() !== '');
@@ -173,7 +168,6 @@ class TemplateFileUseCase {
         reader.onloadend = function (event: ProgressEvent<FileReader>) {
 
             const fileData = event.target?.result as string;
-            console.log(fileData);
             const sample = fileData;
 
             const delimiters = [',', ';', '\t'];
@@ -185,7 +179,7 @@ class TemplateFileUseCase {
 
             const sortedDelimiters = counts.sort((a, b) => b.count - a.count);
 
-            callback(sortedDelimiters[0].delimiter || ",", sample);
+            callback(sortedDelimiters[0].delimiter || DELIMITER, sample);
         };
 
         reader.readAsText(file, 'utf-8');
