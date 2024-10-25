@@ -6,188 +6,238 @@ import csvtojson from 'csvtojson';
 
 
 class TemplateFileUseCase {
+  constructor(private readonly service: TemplateService) {}
 
-    constructor(
-        private readonly service: TemplateService
-    ) { }
+  async validateFile(data: TemplateFileEntity) {
+    return await this.service.validateFile(data);
+  }
+  normalizeString(str: string) {
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/:/g, "")
+      .replace(/-/g, "")
+      .replace(/,/g, "")
+      .replace(/\./g, "")
+      .replace(/ /g, "")
+      .replace(/_/g, "")
+      .replace(/#/g, "")
+      .replace(/%/g, "")
+      .replace(/&/g, "")
+      .replace(/"/g, "")
+      .replace(/'/g, "")
+      .replace(/!/g, "")
+      .replace(/¡/g, "")
+      .replace(/¿/g, "")
+      .replace(/-/g, "")
+      .replace(/\(\)/g, "")
+      .replace(/\(/g, "")
+      .replace(/\)/g, "")
+      .toLowerCase()
+      .trim();
+  }
 
-    async validateFile(data: TemplateFileEntity) {
-        return await this.service.validateFile(data)
-    }
-    normalizeString(str: string) {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/:/g, "")
-            .replace(/-/g, "")
-            .replace(/,/g, "")
-            .replace(/\./g, "")
-            .replace(/ /g, "")
-            .replace(/_/g, "")
-            .replace(/#/g, "")
-            .replace(/%/g, "")
-            .replace(/&/g, "")
-            .replace(/"/g, "")
-            .replace(/'/g, "")
-            .replace(/!/g, "")
-            .replace(/¡/g, "")
-            .replace(/¿/g, "")
-            .replace(/-/g, "")
-            .replace(/\(\)/g, "")
-            .replace(/\(/g, "")
-            .replace(/\)/g, "")
-            .toLowerCase().trim();
-    }
+  cleanCSV(csvContent: string) {
+    // Split the content into lines
+    const lines = csvContent.trim().split("\n");
+    // Clean each line
+    const cleanedLines = lines.map((line) => {
+      // Remove leading semicolon and space
+      line = line.replace(/^;\s*/, "");
 
-    cleanCSV(csvContent: string) {
-        // Split the content into lines
-        const lines = csvContent.trim().split('\n');
-        // Clean each line
-        const cleanedLines = lines.map(line => {
-            // Remove leading semicolon and space
-            line = line.replace(/^;\s*/, '');
+      // Remove trailing semicolons
+      line = line.replace(/;+\s*$/, "");
 
-            // Remove trailing semicolons
-            line = line.replace(/;+\s*$/, '');
+      // Remove consecutive semicolons within the line
+      line = line.replace(/;{3,}/g, "");
 
-            // Remove consecutive semicolons within the line
-            line = line.replace(/;{3,}/g, '');
+      //remplazar \r
+      line = line.replace(/\r/g, "");
 
-            //remplazar \r
-            line = line.replace(/\r/g, '');
+      return line;
+    });
+    const nonEmptyLines = cleanedLines.filter((line) => line.trim() !== "");
 
+    // Join cleaned lines into a single string with line breaks
+    return nonEmptyLines.join("\r\n");
+  }
+  uniqueHeaders = (headers:string[]) => {
+    const seen = new Map();
+    return headers.map((header) => {
+      const count = seen.get(header) || 0;
+      seen.set(header, count + 1);
+      return count > 0 ? `${header}_${count}` : header;
+    });
+  };
+  async validateLocalFile(
+    data: File,
+    template: Template,
+    isActive = false,
+    isTransposed = false
+  ) {
+    return new Promise<{
+      columns: string[];
+      rows: string[][];
+      verticalTemplate: boolean;
+      valid: boolean;
+    }>((resolve, reject) => {
+      this.detectDelimiter(data, async (delim, text) => {
+        try {
+          let cleanedCSV = this.cleanCSV(text);
+          if (template.verticalTemplate && isTransposed) {
+            // Dividir el CSV en líneas
+            const lines = cleanedCSV.split("\n");
 
+            // Dividir cada línea en columnas (en base a ';' como separador)
+            const rows = lines.map((line) => line.split(DELIMITER));
+            // Verificar si el CSV ya está transpuesto
+            const _isTransposed = template.columns.length === rows.length;
 
-            return line;
-        });
-        const nonEmptyLines = cleanedLines.filter((line) => line.trim() !== "");
+            if (_isTransposed) {
+              // Si no está transpuesto, realizar la transposición
+              const transposed = rows[0].map((_, colIndex) =>
+                rows.map((row) => row[colIndex])
+              );
 
-        // Join cleaned lines into a single string with line breaks
-        return nonEmptyLines.join("\r\n");
-    }
+              // Unir la matriz transpuesta de nuevo en formato CSV
+              const cleanedCSV_ = transposed
+                .map((row) => row.join(";"))
+                .join("\n");
 
-    async validateLocalFile(data: File, template: Template, isActive = false, isTransposed = false) {
-        return new Promise<{
-            columns: string[],
-            rows: string[][],
-            verticalTemplate: boolean,
-            valid: boolean
+              cleanedCSV = cleanedCSV_;
+            }
+          }
+          const header_unique = this.uniqueHeaders(template.columns.map((col) => col.name));
+          const json = await csvtojson({
+            delimiter: DELIMITER,
+            noheader: template.verticalTemplate,
+            flatKeys: true,
+            headers: header_unique,
+          }).fromString(cleanedCSV);
+          console.log(
+            json,
+            template.columns.map((col) => col.name)
+          );
 
-        }>((resolve, reject) => {
-            this.detectDelimiter(data, async (delim, text) => {
-                try {
+          let rows = json.map((row) => Object.values(row).join(delim));
+           let columns = []
+          if(template.verticalTemplate){
+                columns = json.length > 0 ? (Object.values(json[0]) as string[]) : [];
+            }else{
+                columns = json.length > 0 ? Object.keys(json[0]) as string[] : [];
+            }
+          if (template.verticalTemplate) {
+            rows =
+              json.length > 0
+                ? (json.map((row) => Object.values(row))[1] as string[])
+                : [];
+          }
 
-                    let cleanedCSV = this.cleanCSV(text);
-                    if (template.verticalTemplate && isTransposed) {
-                        // Dividir el CSV en líneas
-                        const lines = cleanedCSV.split('\n');
+          columns = columns.filter((col) => col.trim() !== "");
+          console.log(columns, template.columns);
+          if (columns.length !== template.columns.length) {
+            throw new Error(
+              "El archivo no coincide con la plantilla, la cantidad de columnas no coincide"
+            );
+          }
+          columns.forEach((element) => {
+            if (
+              !template.columns.find(
+                (col) =>
+                  this.normalizeString(col.name) ===
+                  this.normalizeString(element)
+              )
+            ) {
+              throw new Error(
+                'El archivo no coincide con la plantilla, las columnas no coinciden, Columna de nombre: "' +
+                  element +
+                  '" no encontrada en la plantilla'
+              );
+            }
+          });
+          const rows_ = rows || [];
+          if (rows_.length === 0) {
+            throw new Error(
+              "El archivo no contiene datos, por favor verifique que el archivo no este vacio"
+            );
+          }
 
-                        // Dividir cada línea en columnas (en base a ';' como separador)
-                        const rows = lines.map(line => line.split(DELIMITER));
-                        // Verificar si el CSV ya está transpuesto
-                        const _isTransposed = template.columns.length === rows.length;
+          if (rows_.filter((row) => row == undefined).length > 0) {
+            throw new Error(
+              "El archivo no contiene datos, por favor verifique que el archivo no este vacio"
+            );
+          }
+          if (rows_.filter((row) => row.trim() == "").length > 0) {
+            throw new Error(
+              "El archivo no contiene datos, por favor verifique que el archivo no este vacio"
+            );
+          }
 
-                        if (_isTransposed) {
-                          // Si no está transpuesto, realizar la transposición
-                          const transposed = rows[0].map((_, colIndex) =>
-                            rows.map((row) => row[colIndex])
-                          );
+          // validar que su contenido no contenga las palabras “NO APLICA”, “NO DISPONIBLE”, “N/D”, “ND”, “NA”, “N/A”.
+          const invalidWords = [
+            "NO APLICA",
+            "NO DISPONIBLE",
+            "N/D",
+            "ND",
+            "NA",
+            "N/A",
+          ];
+          if (!isActive) {
+            const invalidCells = rows_
+              .map((row) => row.split(delim))
+              .filter((row) =>
+                row.some((cell) =>
+                  invalidWords.includes(cell.trim().toUpperCase())
+                )
+              );
+            if (invalidCells.length > 0) {
+              throw new Error(
+                "El archivo no cumple con la plantilla, por favor verifique que el archivo no contenga celdas con las palabras: NO APLICA, NO DISPONIBLE, N/D, ND, NA, N/A"
+              );
+            }
+          }
 
-                          // Unir la matriz transpuesta de nuevo en formato CSV
-                          const cleanedCSV_ = transposed
-                            .map((row) => row.join(";"))
-                            .join("\n");
+          const final_rows = rows_.map((row) => {
+            const row_data = row.split(delim);
+            return row_data.filter((col) => col.trim() !== "");
+          });
+          resolve({
+            columns: template.columns.map((col) => col.name),
+            rows: final_rows,
+            verticalTemplate: template.verticalTemplate,
+            valid: true,
+          });
+        } catch (error) {
+          reject(error);
+        }
+      });
+    });
+  }
 
-                          cleanedCSV = cleanedCSV_;
-                        }
-                    }
-                    const json = await csvtojson({
-                        delimiter: DELIMITER,
-                        noheader: template.verticalTemplate,
-                        flatKeys: true,
-                        headers: template.columns.map(col => col.name)
-                    }).fromString(cleanedCSV)
-                    let rows = json.map(row => Object.values(row).join(delim));
-                    let columns = json.length > 0 ? Object.keys(json[0]) : [];
-                    if (template.verticalTemplate) {
-                        rows = json.length > 0 ? json.map(row => Object.values(row))[1] as string[] : [];
-                    }
+  public detectDelimiter(
+    file: File,
+    callback: (delimiter: string, text: string) => void
+  ) {
+    const reader = new FileReader();
 
-                    columns = columns.filter(col => col.trim() !== '');
-                    if (columns.length !== template.columns.length) {
-                        throw new Error('El archivo no coincide con la plantilla, la cantidad de columnas no coincide');
+    reader.onloadend = function (event: ProgressEvent<FileReader>) {
+      const fileData = event.target?.result as string;
+      const sample = fileData;
 
-                    }
-                    columns.forEach(element => {
-                        if (!template.columns.find(col => this.normalizeString(col.name) === this.normalizeString(element))) {
-                            throw new Error('El archivo no coincide con la plantilla, las columnas no coinciden, Columna de nombre: "' + element + '" no encontrada en la plantilla');
-                        }
-                    });
-                    const rows_ = rows || [];
-                    if(rows_.length === 0){
-                        throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
-                    }
+      const delimiters = [",", ";", "\t"];
 
-                    if (rows_.filter(row => row == undefined).length > 0) {
-                        throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
-                    }
-                    if (rows_.filter(row => row.trim() == '').length > 0) {
-                        throw new Error('El archivo no contiene datos, por favor verifique que el archivo no este vacio');
+      const counts = delimiters.map((delimiter) => ({
+        delimiter,
+        count: (sample.match(new RegExp(delimiter, "g")) || []).length,
+      }));
 
-                    }
+      const sortedDelimiters = counts.sort((a, b) => b.count - a.count);
 
-                    // validar que su contenido no contenga las palabras “NO APLICA”, “NO DISPONIBLE”, “N/D”, “ND”, “NA”, “N/A”. 
-                    const invalidWords = ["NO APLICA", "NO DISPONIBLE", "N/D", "ND", "NA", "N/A"];
-                    if (!isActive) {
-                        const invalidCells = rows_.map(row => row.split(delim)).filter(row => row.some(cell => invalidWords.includes(cell.trim().toUpperCase())));
-                        if (invalidCells.length > 0) {
-                            throw new Error('El archivo no cumple con la plantilla, por favor verifique que el archivo no contenga celdas con las palabras: NO APLICA, NO DISPONIBLE, N/D, ND, NA, N/A');
-                        }
-                    }
+      callback(sortedDelimiters[0].delimiter || DELIMITER, sample);
+    };
 
-
-                    const final_rows = rows_.map(row => {
-                        const row_data = row.split(delim);
-                        return row_data.filter(col => col.trim() !== '');
-                    });
-                    resolve({
-                        columns: template.columns.map(col => col.name),
-                        rows: final_rows,
-                        verticalTemplate: template.verticalTemplate,
-                        valid: true
-                    });
-
-                } catch (error) {
-                    reject(error);
-                }
-            });
-        });
-
-    }
-
-    public detectDelimiter(file: File, callback: (delimiter: string, text: string) => void) {
-        const reader = new FileReader();
-
-        reader.onloadend = function (event: ProgressEvent<FileReader>) {
-
-            const fileData = event.target?.result as string;
-            const sample = fileData;
-
-            const delimiters = [',', ';', '\t'];
-
-            const counts = delimiters.map(delimiter => ({
-                delimiter,
-                count: (sample.match(new RegExp(delimiter, 'g')) || []).length
-            }));
-
-            const sortedDelimiters = counts.sort((a, b) => b.count - a.count);
-
-            callback(sortedDelimiters[0].delimiter || DELIMITER, sample);
-        };
-
-        reader.readAsText(file, 'utf-8');
-    }
-
-
-
-
+    reader.readAsText(file, "utf-8");
+  }
 }
 
 export default TemplateFileUseCase;
