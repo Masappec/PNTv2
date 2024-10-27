@@ -187,6 +187,7 @@ class TemplateFileUseCase {
     }>((resolve, reject) => {
       this.detectDelimiter(data, async (delim, text) => {
         try {
+          console.log("delimiter", delim);
           const cleanedCSV = this.cleanCSV(text);
           const result = await this.validateFileContent(cleanedCSV, template, isActive);
           resolve(result);
