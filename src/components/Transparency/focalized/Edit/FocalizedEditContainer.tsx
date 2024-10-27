@@ -14,7 +14,6 @@ import ActiveCreatePresenter from "../../Active/Create/ActiveCreatePresenter";
 import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
 import Template from "../../../../domain/entities/Template";
 import TemplateFileUseCase from "../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
-import { sleep } from "../../../../utils/functions";
 import { TabsRef } from "flowbite-react";
 
 interface Props {
@@ -49,7 +48,7 @@ const FocalizedEditContainer = (props: Props) => {
     file_publication: FilePublicationEntity | null
   }[]>([]);
 
-  const [, setPublication] = useState<TransparencyFocusEntity>(new TransparencyFocusEntity(
+  const [publication, setPublication] = useState<TransparencyFocusEntity>(new TransparencyFocusEntity(
     0, {
     id: 0,
     description: "",
@@ -259,9 +258,7 @@ const FocalizedEditContainer = (props: Props) => {
           ...newTemplates,
           isValid: false
         } as TemplateFileEntity
-        sleep(2000).then(() => {
-          setError("")
-        })
+        
       })
     }).catch((error) => {
       setLoadingFiles(loadingFiles.filter((file) => {
@@ -272,81 +269,7 @@ const FocalizedEditContainer = (props: Props) => {
     })
 
 
-    /*props.usecase.downloadFileFromUrl(e.target.value).then((file) => {
- 
-      if (file instanceof Blob) {
-        const file_ = new File([file], "data.csv", {
-          type: "text/csv;charset=utf-8;",
-        });
-        props.templateUseCase.validateLocalFile(
-          file_ as File,
-          templateDetail
-        ).then((res) => {
- 
-          setError("")
-          newTemplates = {
-            ...newTemplates,
-            isValid: res,
-            file: file_
-          } as TemplateFileEntity
- 
- 
-          //reemplazar el template
-          setTemplates(templates.map((template) => {
-            if (template.id === newTemplates?.id) {
-              return newTemplates
-            }
-            return template
-          }))
- 
- 
- 
-          //reemplazar el filePublication
-          const name = newTemplates.file?.name || ""
- 
-          let filePub = filesPublication.find(x => x.description == newTemplates?.name as string)
-          const index = filesPublication.indexOf(filePub as FilePublicationEntity)
- 
- 
- 
-          if (!filePub) {
-            filePub = new FilePublicationEntity(0, name, newTemplates.name, newTemplates.file as File)
-            setFilesPublication([...filesPublication, filePub])
-          } else {
-            filePub.url_download = newTemplates.file as File
-            const newFiles = [
-              ...filesPublication as FilePublicationEntity[],
-            ]
-            newFiles[index] = filePub
-            setFilesPublication(newFiles)
-          }
- 
- 
-        }).catch((e) => {
-          newTemplates = {
-            ...newTemplates,
-            isValid: false
-          } as TemplateFileEntity
- 
- 
-          //reemplazar el template
-          setTemplates(templates.map((template) => {
-            if (template.id === newTemplates?.id) {
-              return newTemplates
-            }
-            return template
-          }))
- 
-          setError(e.message)
-        })
- 
-      } else if (typeof file === "string") {
-        setError("No se ha podido descargar el archivo")
- 
-      }
-    }).catch((error) => {
-      setError(error.message)
-    })*/
+   
 
 
   }
@@ -386,7 +309,7 @@ const FocalizedEditContainer = (props: Props) => {
       newTemplates.file as File,
       templateDetail,
       false,
-      true
+      
     ).then((res) => {
 
       setError("")
@@ -488,21 +411,17 @@ const FocalizedEditContainer = (props: Props) => {
           setIsDisabled(false)
           setSuccess("Se ha subido correctamente la publicación")
           setTimeout(() => {
-            navigate("/admin/transparency/active")
+            navigate("/admin/transparency/focalized")
           }, 2000)
         }).catch((e) => {
           setLoading(false)
           setError(e.message)
-          sleep(2000).then(() => {
-            setError("")
-          })
+         
         })
       }).catch((e) => {
         setLoading(false)
         setError(e.message)
-        sleep(2000).then(() => {
-          setError("")
-        })
+       
       })
       return;
     }
@@ -534,7 +453,7 @@ const FocalizedEditContainer = (props: Props) => {
     await props.tfocalizedUseCase.updateTransparencyFocus(
       establishment.id || 0,
       filesPublication.map(x => x.id),
-      numeral.id
+      publication.id
     )
 
 
@@ -567,7 +486,7 @@ const FocalizedEditContainer = (props: Props) => {
 
 
     let blob;
-    if (templateDetail.verticalTemplate) {
+    if (!templateDetail.verticalTemplate) {
 
       blob = props.fileUseCase.generateContentCsvVertical(data);
       //descargar archivo
@@ -636,7 +555,7 @@ const FocalizedEditContainer = (props: Props) => {
     })
     if (!templateDetail) return
 
-    props.templateUseCase.validateLocalFile(file, templateDetail, false, true).then((res) => {
+    props.templateUseCase.validateLocalFile(file, templateDetail, false).then((res) => {
       if (!res) {
         setError("El archivo no cumple con el formato")
         return
@@ -707,12 +626,23 @@ const FocalizedEditContainer = (props: Props) => {
       return;
     }
     let content;
-    if (template.verticalTemplate) {
-      content = props.fileUseCase.generateContentCsvVertical(data_template.data);
+    
+    const Row_obj:Row[][] = template.columns.map((column) => {
+      return [
+        {
+          key: column.id.toString(),
+          value: column.name,
+          is_header: true,
+        }
+      ]
+    })
+    
+  
+    if (!template.verticalTemplate) {
+      content = props.fileUseCase.generateContentCsvVertical(Row_obj);
     } else {
-      content = props.fileUseCase.generateContentCsv(data_template.data);
+      content = props.fileUseCase.generateContentCsv(Row_obj);
     }
-
 
 
 
@@ -822,25 +752,7 @@ const FocalizedEditContainer = (props: Props) => {
             is_header: true
           }
         })
-        if (temDetail.verticalTemplate) {
-          const rows = res.rows.map((row) => {
-            return {
-              key: row[0] as string,
-              value: row[0] as string
-            }
-          })
-
-          buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
-          tabsRef.current?.setActiveTab(2)
-          const element = document.getElementById(temDetail.name)
-          if (element) {
-            element.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }
-          return
-        } else {
+       
           const rows = res.rows.map((row) => {
             return row.map((value, index) => {
               return {
@@ -858,7 +770,6 @@ const FocalizedEditContainer = (props: Props) => {
               block: 'start'
             });
           }
-        }
       }).catch((e) => {
         setError(e.message)
       })

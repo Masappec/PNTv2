@@ -178,7 +178,6 @@ const ActiveCreateContainer = (props: IProps) => {
         file_ as File,
         templateDetail,
         true,
-        true
       ).then((res) => {
 
         const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
@@ -287,7 +286,6 @@ const ActiveCreateContainer = (props: IProps) => {
       newTemplates.file as File,
       templateDetail,
       true,
-      true
 
     ).then((res) => {
       const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
@@ -518,7 +516,7 @@ const ActiveCreateContainer = (props: IProps) => {
     })
     if (!templateDetail) return
 
-    props.templateUseCase.validateLocalFile(file, templateDetail, true, true).then((res) => {
+    props.templateUseCase.validateLocalFile(file, templateDetail, true).then((res) => {
       if (!res) {
         setError("El archivo no cumple con el formato")
         return
@@ -591,11 +589,24 @@ const ActiveCreateContainer = (props: IProps) => {
       return;
     }
     let content;
-    if (template.verticalTemplate) {
-      content = props.usecase.generateContentCsvVertical(data_template.data);
+
+    const Row_obj: Row[][] = template.columns.map((column) => {
+      return [
+        {
+          key: column.id.toString(),
+          value: column.name,
+          is_header: true,
+        }
+      ]
+    })
+
+
+    if (!template.verticalTemplate) {
+      content = props.usecase.generateContentCsvVertical(Row_obj);
     } else {
-      content = props.usecase.generateContentCsv(data_template.data);
+      content = props.usecase.generateContentCsv(Row_obj);
     }
+
 
     const a = document.createElement('a')
     a.download = name + ".csv";
@@ -684,7 +695,7 @@ const ActiveCreateContainer = (props: IProps) => {
       return response.blob();
     }).then((file_) => {
       const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-      props.templateUseCase.validateLocalFile(blob as File, temDetail, true, true).then((res) => {
+      props.templateUseCase.validateLocalFile(blob as File, temDetail, true).then((res) => {
         if (!res) {
           setError("El archivo no cumple con el formato")
           return
@@ -696,18 +707,7 @@ const ActiveCreateContainer = (props: IProps) => {
             is_header: true
           }
         })
-        if (temDetail.verticalTemplate) {
-          const rows = res.rows.map((row) => {
-            return {
-              key: row[0] as string,
-              value: row[0] as string
-            }
-          })
-
-          buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
-          tabsRef.current?.setActiveTab(2)
-          return
-        } else {
+       
           const rows = res.rows.map((row) => {
             return row.map((value, index) => {
               return {
@@ -718,7 +718,6 @@ const ActiveCreateContainer = (props: IProps) => {
           })
           buildRowFromTemplateAnData(temDetail, [columns, ...rows])
           tabsRef.current?.setActiveTab(2)
-        }
       }).catch((e) => {
         setError(e.message)
       })
