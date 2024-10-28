@@ -37,6 +37,9 @@ class TemplateFileUseCase {
 
   cleanCSV(csvContent: string) {
     // Split the content into lines
+    if(!csvContent){
+      throw new Error("No se pudo leer el archivo, por favor verifique que el archivo no este vacio");
+    }
     const lines = csvContent.trim().split("\n");
     // Clean each line
     const cleanedLines = lines.map((line) => {
@@ -54,7 +57,7 @@ class TemplateFileUseCase {
 
       return line;
     });
-    const nonEmptyLines = cleanedLines.filter((line) => line.trim() !== "");
+    const nonEmptyLines = cleanedLines.filter((line) => line && line.trim() !== "");
 
     // Join cleaned lines into a single string with line breaks
     return nonEmptyLines.join("\r\n");
@@ -123,8 +126,11 @@ class TemplateFileUseCase {
       ];
       const invalidCells = rows.filter((row) => {
         const _row = row as string[];
-        return _row.some((cell) =>
-          invalidWords.includes(cell.trim().toUpperCase())
+        return _row.some((cell) =>{
+          
+          return cell && invalidWords.includes(cell.toString().trim().toUpperCase())
+
+        }
         );
       });
       if(!isNotValidateNA){
@@ -150,7 +156,7 @@ class TemplateFileUseCase {
       if (
         rows.filter((row) => {
           const _row = row as string[];
-          return _row.filter((col) => col.trim() !== "").length === 0;
+          return _row.filter((col) => col && col.toString().trim() !== "").length === 0;
         }).length > 0
       ) {
         throw new Error(
@@ -161,7 +167,7 @@ class TemplateFileUseCase {
 
       const rows_result = rows.map((row) => {
         const _row = row as string[];
-        return _row.filter((col) => col.trim() !== "");
+        return _row.filter((col) => col && col.toString().trim() !== "");
       });
        return {
          columns: template.columns.map((col) => col.name),
