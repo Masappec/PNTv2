@@ -4,7 +4,7 @@ import Template from "../../entities/Template";
 import TemplateFileEntity from "../../entities/TemplateFileEntity";
 import * as dfd from "danfojs/dist/danfojs-browser/src";
 class TemplateFileUseCase {
-  constructor(private readonly service: TemplateService) {}
+  constructor(private readonly service: TemplateService) { }
 
   async validateFile(data: TemplateFileEntity) {
     return await this.service.validateFile(data);
@@ -37,7 +37,7 @@ class TemplateFileUseCase {
 
   cleanCSV(csvContent: string) {
     // Split the content into lines
-    if(!csvContent){
+    if (!csvContent) {
       throw new Error("No se pudo leer el archivo, por favor verifique que el archivo no este vacio");
     }
     const lines = csvContent.trim().split("\n");
@@ -71,33 +71,39 @@ class TemplateFileUseCase {
     });
   };
 
-  async validateFileContent(cleanedCSV: string, template: Template, isNotValidateNA:boolean) {
+  async validateFileContent(cleanedCSV: string, template: Template, isNotValidateNA: boolean) {
+
+    console.log(cleanedCSV)
 
     const blob = new Blob([cleanedCSV], { type: "text/csv" });
     const fileURL = URL.createObjectURL(blob);
 
-     const df = await dfd.readCSV(fileURL, {
-       delimiter: DELIMITER,
-       header: false
-     });
-     if (!df) {
-       throw new Error("No se pudo leer el archivo, por favor verifique que el archivo no este vacio");
-      }
-      let dataframe = df;
-      if(template.verticalTemplate){
-        if(dataframe.columns.length !== template.columns.length){
-          dataframe = dataframe.transpose();
-        
-        }
-      }
-      dataframe.$setColumnNames(dataframe.head().values[0] as string[]);
-      console.log(dataframe.print());
-      console.log(template.columns, dataframe.columns);
-      //implementar validaciones
-      if(dataframe.columns.length !== template.columns.length){
-        throw new Error("El archivo no coincide con la plantilla, la cantidad de columnas no coincide");
-      }
+    const df = await dfd.readCSV(fileURL, {
+      delimiter: DELIMITER,
+      header: false
+    });
+    if (!df) {
+      throw new Error("No se pudo leer el archivo, por favor verifique que el archivo no este vacio");
+    }
+    let dataframe = df;
+    if (template.verticalTemplate) {
+      if (dataframe.columns.length !== template.columns.length) {
+        dataframe = dataframe.transpose();
 
+      }
+    }
+    let applyValidHeaders = true;
+    const head = this.uniqueHeaders(dataframe.head().values[0] as string[])
+    if (head !== dataframe.head().values[0] as string[]) {
+      applyValidHeaders = false;
+    }
+    dataframe.$setColumnNames(head);
+    //implementar validaciones
+    if (dataframe.columns.length !== template.columns.length) {
+      throw new Error("El archivo no coincide con la plantilla, la cantidad de columnas no coincide");
+    }
+
+    if (applyValidHeaders) {
       dataframe.columns.forEach((element) => {
         if (
           !template.columns.find(
@@ -108,76 +114,78 @@ class TemplateFileUseCase {
         ) {
           throw new Error(
             'El archivo no coincide con la plantilla, las columnas no coinciden, Columna de nombre: "' +
-              element +
-              '" no encontrada en la plantilla'
+            element +
+            '" no encontrada en la plantilla'
           );
         }
       });
+    }
 
-      // validar que su contenido no contenga las palabras “NO APLICA”, “NO DISPONIBLE”, “N/D”, “ND”, “NA”, “N/A”.
-      const rows = dataframe.values.slice(1);
-      const invalidWords = [
-        "NO APLICA",
-        "NO DISPONIBLE",
-        "N/D",
-        "ND",
-        "NA",
-        "N/A",
-      ];
-      const invalidCells = rows.filter((row) => {
+
+    // validar que su contenido no contenga las palabras “NO APLICA”, “NO DISPONIBLE”, “N/D”, “ND”, “NA”, “N/A”.
+    const rows = dataframe.values.slice(1);
+    const invalidWords = [
+      "NO APLICA",
+      "NO DISPONIBLE",
+      "N/D",
+      "ND",
+      "NA",
+      "N/A",
+    ];
+    const invalidCells = rows.filter((row) => {
+      const _row = row as string[];
+      return _row.some((cell) => {
+
+        return cell && invalidWords.includes(cell.toString().trim().toUpperCase())
+
+      }
+      );
+    });
+    if (!isNotValidateNA) {
+      if (invalidCells.length > 0) {
+        throw new Error(
+          "El archivo no cumple con la plantilla, por favor verifique que el archivo no contenga celdas con las palabras: NO APLICA, NO DISPONIBLE, N/D, ND, NA, N/A"
+        );
+      }
+    }
+
+    if (rows.length === 0) {
+      throw new Error(
+        "El archivo no contiene datos, por favor verifique que el archivo no este vacio"
+      );
+    }
+
+    if (rows.filter((row) => row == undefined || row === null).length > 0) {
+      throw new Error(
+        "El archivo contiene datos vacios, por favor verifique que el archivo no contenga celdas vacias"
+      );
+    }
+
+    if (
+      rows.filter((row) => {
         const _row = row as string[];
-        return _row.some((cell) =>{
-          
-          return cell && invalidWords.includes(cell.toString().trim().toUpperCase())
-
-        }
-        );
-      });
-      if(!isNotValidateNA){
-        if (invalidCells.length > 0) {
-          throw new Error(
-            "El archivo no cumple con la plantilla, por favor verifique que el archivo no contenga celdas con las palabras: NO APLICA, NO DISPONIBLE, N/D, ND, NA, N/A"
-          );
-        }
-      }
-
-      if (rows.length === 0) {
-        throw new Error(
-          "El archivo no contiene datos, por favor verifique que el archivo no este vacio"
-        );
-      }
-
-      if (rows.filter((row) => row == undefined || row === null).length > 0) {
-        throw new Error(
-          "El archivo contiene datos vacios, por favor verifique que el archivo no contenga celdas vacias"
-        );
-      }
-
-      if (
-        rows.filter((row) => {
-          const _row = row as string[];
-          return _row.filter((col) => col && col.toString().trim() !== "").length === 0;
-        }).length > 0
-      ) {
-        throw new Error(
-          "El archivo no contiene datos, por favor verifique que el archivo no este vacio"
-        );
-      }
+        return _row.filter((col) => col && col.toString().trim() !== "").length === 0;
+      }).length > 0
+    ) {
+      throw new Error(
+        "El archivo no contiene datos, por favor verifique que el archivo no este vacio"
+      );
+    }
 
 
-      const rows_result = rows.map((row) => {
-        const _row = row as string[];
-        return _row.filter((col) => col && col.toString().trim() !== "");
-      });
-       return {
-         columns: template.columns.map((col) => col.name),
-         rows: rows_result,
-         verticalTemplate: template.verticalTemplate,
-         valid: true,
-       };
+    const rows_result = rows.map((row) => {
+      const _row = row as string[];
+      return _row.filter((col) => col && col.toString().trim() !== "");
+    });
+    return {
+      columns: template.columns.map((col) => col.name),
+      rows: rows_result,
+      verticalTemplate: template.verticalTemplate,
+      valid: true,
+    };
 
 
-    
+
   }
 
   async validateLocalFile(
@@ -197,7 +205,7 @@ class TemplateFileUseCase {
           const cleanedCSV = this.cleanCSV(text);
           const result = await this.validateFileContent(cleanedCSV, template, isActive);
           resolve(result);
-          
+
         } catch (error) {
           console.log(error);
           reject(error);

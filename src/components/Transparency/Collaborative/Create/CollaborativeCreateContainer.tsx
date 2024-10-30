@@ -110,7 +110,7 @@ const CollabCreateContainer = (props: Props) => {
       return {
         id: template.id,
         data: [
-          template.columns.map((column) => {
+          template.columns.sort((a, b) => a.id - b.id).map((column) => {
             return {
               key: column.id.toString(),
               value: column.name,
@@ -646,7 +646,7 @@ const CollabCreateContainer = (props: Props) => {
     }
     let content;
 
-    const Row_obj: Row[][] = template.columns.map((column) => {
+    const Row_obj: Row[][] = template.columns.sort((a, b) => a.id - b.id).map((column) => {
       return [
         {
           key: column.id.toString(),
