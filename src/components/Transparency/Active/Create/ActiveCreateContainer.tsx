@@ -415,7 +415,7 @@ const ActiveCreateContainer = (props: IProps) => {
       establishment,
       numeral?.id || 0,
       year,
-      month + 1
+      month
     )
     await props.transparencyActiveUseCase.publish(newTransparency)
 

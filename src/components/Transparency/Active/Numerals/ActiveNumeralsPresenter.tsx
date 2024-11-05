@@ -57,7 +57,7 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
           className="block max-w-6xl rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
           onChange={(e)=>props.OnselectedMonth(e.target.selectedIndex)}
         >
-          {meses.slice(0,new Date().getMonth()+1).map((e,i) => {
+          {meses.slice(0,new Date().getMonth()).map((e,i) => {
             return <option value={e} selected={i==props.selectedMonth}>
               {e}
             </option>

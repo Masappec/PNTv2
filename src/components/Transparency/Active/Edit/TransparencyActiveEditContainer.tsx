@@ -458,7 +458,7 @@ const ActiveEditContainer = (props: Props) => {
             establishment,
             numeral?.id || 0,
             year,
-            month + 1
+            month
         )
         await props.transparencyActiveUseCase.updatePublication(newTransparency)
 

@@ -85,7 +85,7 @@ const DetailEntityPresenter = (props: Props) => {
                       </span>
                     ) : (
                       <span className='h-max rounded-md bg-custom-green px-2 py-1 text-xs font-normal text-white'>
-                        Publicado
+                          Publicado dentro del plazo
                       </span>
                     ) : (
                           <span className='h-max rounded-md bg-custom-red px-2 py-1 text-xs font-normal text-white'>

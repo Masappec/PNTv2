@@ -1,41 +1,21 @@
 import { FaCheck, FaSave } from "react-icons/fa";
 
-/*class Status(models.TextChoices):
-    DRAFT = 'DRAFT', 'BORRADOR'
-    SEND = 'SEND', 'ENVIADO'
-    RESPONSED = 'RESPONSED', 'RESPONDIDA'
-    NO_RESPONSED = 'NO_RESPONSED', 'NO RESPONDIDA'
-    INSISTENCY_PERIOD = 'INSISTENCY_PERIOD', 'PERIODO DE INSISTENCIA'
-    INSISTENCY_SEND = 'INSISTENCY_SEND', 'INSISTENCIA ENVIADA'
-    INSISTENCY_RESPONSED = 'INSISTENCY_RESPONSED', 'INSISTENCIA RESPONDIDA'
-    INSISTENCY_NO_RESPONSED = 'INSISTENCY_NO_RESPONSED', 'INSISTENCIA NO RESPONDIDA'
-    PERIOD_INFORMAL_MANAGEMENT = 'PERIOD_INFORMAL_MANAGEMENT', 'PERIODO DE GESTIÓN OFICIOSA'
-    INFORMAL_MANAGMENT_SEND = 'INFORMAL_MANAGMENT_SEND', 'GESTIÓN OFICIOSA ENVIADA'
-    INFORMAL_MANAGMENT_RESPONSED = 'INFORMAL_MANAGMENT_RESPONSED', 'GESTIÓN OFICIOSA RESPONDIDA'
-    INFORMAL_MANAGMENT_NO_RESPONSED = 'INFORMAL_MANAGMENT_NO_RESPONSED', 'GESTIÓN OFICIOSA NO RESPONDIDA'
-    FINISHED_WITHOUT_RESPONSE = 'FINISHED_WITHOUT_RESPONSE', 'FINALIZADO SIN RESPUESTA'
-    FINISHED = 'FINISHED', 'FINALIZADO'
-*/
-/*
-Solicitud enviada
 
+export const StatusPublish = {
+    DRAFT: {
+        value:'Subido'
+    },
+    APPROVED:{
+        value:'Publicado'
+    },
+    PUBLISH_IN_DATE:{
+        value:'Publicado dentro del plazo'
+    },
+    PUBLISH_OUT_DATE:{
+        value:'Atrasado'
+    }
+}
 
-
-Se cumplió el plazo que la Institución tenía para responder y no se recibió.
-
-
-
-Solicitud de insistencia enviada.
-
-
-
-Se cumplió el plazo que la Institución tenía para responder insistencia y solicitud, y no respondió.
-
-
-Solicitud de Gestión Oficiosa enviada a la Defensoría del Pueblo (DPE). Proceso concluido en el Portal. El seguimiento posterior a esta etapa debe realizarse directamente con la DPE.
-
-Quitar el estado de Gestión oficiosa no respondida. El proceso terminaría en el paso anterior. Se va a mostrar el proceso que debe seguir el usuario posterior a esta etapa (Básicamente un enlace a otro sitio web).
-*/
 export const StatusSolicity = {
 
     DRAFT: {
