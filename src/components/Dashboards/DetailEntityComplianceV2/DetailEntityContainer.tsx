@@ -132,8 +132,8 @@ const DetailEntityContainer = (props: IProps) => {
   }, [month, year, establishment_id])
 
 
-  const isRezagado = (date: string | null, month: number, year: number) => {
-
+  const isRezagado = (date: string | null) => {
+    
     return isWithinDeadline(date || "");
   }
 

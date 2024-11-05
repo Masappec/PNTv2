@@ -20,7 +20,7 @@ interface Props {
   year: number;
   establishment_name: string;
   type: string;
-  isRezagado: (date: string|null, month: number, year: number) => boolean
+  isRezagado: (date: string|null) => boolean
 }
 const meses = [
   "Enero",
@@ -78,7 +78,7 @@ const DetailEntityPresenter = (props: Props) => {
                   title: "Estado",
                   render: (row) => (
 
-                    row.published ? props.isRezagado(row?.publication?.published_at || null, props.month, props.year) ? (
+                    row.published ? props.isRezagado(row?.publication?.published_at || null) ? (
 
                       <span className='h-max rounded-md bg-yellow-400 px-2 py-1 text-xs font-normal text-white'>
                         Publicado con atraso
@@ -130,7 +130,7 @@ const DetailEntityPresenter = (props: Props) => {
                   title: "Estado",
                   render: (row) => (
 
-                    row.published ? props.isRezagado(row?.published_at || null, props.month, props.year) ? (
+                    row.published ? props.isRezagado(row?.published_at || null) ? (
 
                       <span className='h-max rounded-md bg-yellow-400 px-2 py-1 text-xs font-normal text-white'>
                         Publicado con atraso
@@ -182,7 +182,7 @@ const DetailEntityPresenter = (props: Props) => {
                   title: "Estado",
                   render: (row) => (
 
-                    row.published ? props.isRezagado(row?.published_at || null, props.month, props.year) ? (
+                    row.published ? props.isRezagado(row?.published_at || null) ? (
 
                       <span className='h-max rounded-md bg-yellow-400 px-2 py-1 text-xs font-normal text-white'>
                         Publicado con atraso
