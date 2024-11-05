@@ -43,7 +43,7 @@ const EstablishmentCreateContainer = ({
         job_authority: "",
         logo: "",
         name: "",
-        email_accesstoinformation: "",
+        email_accesstoinformation: "NO",
         email_committe: "",
         first_name_committe: "",
         highest_committe: "",
@@ -193,11 +193,6 @@ const EstablishmentCreateContainer = ({
             return
         }
 
-        if (data.email_accesstoinformation==undefined||data.email_accesstoinformation.length < 3) {
-            setError("El correo de acceso a la información debe tener al menos 3 caracteres")
-            setLoading(false)
-            return
-        }
 
         if (data.email_committe==undefined||data.email_committe.length < 3) {
             setError("El correo del comité debe tener al menos 3 caracteres")

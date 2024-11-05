@@ -42,7 +42,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const state = location.state as INeedProps;
 
-  const [month, setMonth] = useState(new Date().getMonth() + 1)
+  const [month, setMonth] = useState(new Date().getMonth())
   const [year, setYear] = useState(new Date().getFullYear())
 
   const [numeral, setNumeral] = useState<NumeralEntity>();

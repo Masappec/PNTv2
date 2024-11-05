@@ -17,12 +17,12 @@ const ActiveNumeralsContainer = (props: IProps) => {
     const [loading, setLoading] = useState<boolean>(true)
     const navigate = useNavigate()
 
-    const [month,setMonth] = useState<number>(new Date().getMonth())
+    const [month,setMonth] = useState<number>(new Date().getMonth()-1)
 
     
 
     useEffect(() => {
-        props.usecase.getNumeralByUserInSession(new Date().getFullYear(),month+1).then(_numerals => {
+        props.usecase.getNumeralByUserInSession(new Date().getFullYear(), month).then(_numerals => {
             setNumerals(_numerals.sort((a, b) => parseInt(a.name.replace("Numeral", "")) - parseInt(b.name.replace("Numeral", ""))))
             setLoading(false)
         }).catch((e) => {
