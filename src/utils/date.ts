@@ -11,7 +11,19 @@ export class DatePnt extends Date{
     }
 
     getMonthToUpload(){
-        return this.getMonthOneBased() -1 ;
+        let mesApublicar = this.getMonthOneBased() -1 ;
+        if(mesApublicar==0){
+            return 1;
+        }
+        return mesApublicar;
+    }
+
+    getYear(){
+        let mesApublicar = this.getMonthOneBased() - 1;
+        if (mesApublicar == 0) {
+            return super.getFullYear()-1;
+        }
+        return super.getFullYear()
     }
 
     // Otro método personalizado

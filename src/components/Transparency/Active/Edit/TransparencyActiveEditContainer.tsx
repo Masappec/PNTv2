@@ -17,6 +17,7 @@ import { Row } from "../../../../utils/interface";
 import { Pagination } from "../../../../infrastructure/Api";
 import ActiveCreatePresenter from "../Create/ActiveCreatePresenter";
 import { TabsRef } from "flowbite-react";
+import { DatePnt } from "../../../../utils/date";
 
 export interface INeedProps {
     numeral: NumeralEntity,
@@ -40,8 +41,8 @@ const ActiveEditContainer = (props: Props) => {
 
     const state = location.state as INeedProps;
 
-    const [year, setYear] = useState(new Date().getFullYear())
-    const [month, setMonth] = useState(new Date().getMonth()-1)
+    const [year, setYear] = useState(new DatePnt().getYear())
+    const [month, setMonth] = useState(new DatePnt().getMonthToUpload())
 
     const [numeral, setNumeral] = useState<NumeralEntity>();
     const [detail, setDetail] = useState<NumeralDetail | null>(null)
