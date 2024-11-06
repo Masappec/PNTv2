@@ -43,7 +43,7 @@ const EstablishmentCreateContainer = ({
         job_authority: "",
         logo: "",
         name: "",
-        email_accesstoinformation: "",
+        email_accesstoinformation: "example@gmail.com",
         email_committe: "",
         first_name_committe: "",
         highest_committe: "",
