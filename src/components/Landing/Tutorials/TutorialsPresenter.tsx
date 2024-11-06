@@ -47,19 +47,23 @@ const TutorialsPresenter = (props:Props) => {
                 Nacional de Transparencia.
               </p>
         
-              <div className='space-y-8'>
-            
-              {
-                props.tutorial.map((data) => {
+              <div>
+                {props.tutorial.map((data) => {
                   return (
                     <>
-                   
+                      <hr />
+                      <h2 className="text-center text-2xl font-semibold text-gray mb-2 mt-2">
+                        {data.title}
+                      </h2>
+                      <p className="text-gray-700 text-lg mb-6">
+                        {data.description}
+                      </p>
                       <Iframe title={data.title} link={formatUrlYoutube(data.url)} />
+                      <hr className="mt-2"/>
                     </>
-                  )
-                })
-              }
-            </div>
+                  );
+                })}
+              </div>
             </section>
             </main>
            
