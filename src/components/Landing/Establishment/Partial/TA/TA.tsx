@@ -33,6 +33,7 @@ const TA = (props: Props) => {
 
     const onDownloadFile = async (url: string, name: string) => {
         try {
+            console.log(url)
             const res = await axios.get(url, {
                 responseType: 'blob'
             })
@@ -55,8 +56,8 @@ const TA = (props: Props) => {
 
             const file = new File([res.data], name + '.csv', { type: 'text/csv' })
             TemplateUsecase.detectDelimiter(file, (delim, text) => {
-                console.log(delim)
-                Transform.fromCsvToPdfLandScape(text, name, props.establishment)
+                const csv = TemplateUsecase.cleanCSV(text)
+                Transform.fromCsvToPdfLandScape(csv, name, props.establishment)
             })
         } catch (e) {
             console.log(e)

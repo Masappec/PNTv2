@@ -41,7 +41,7 @@ const ActiveEditContainer = (props: Props) => {
     const state = location.state as INeedProps;
 
     const [year, setYear] = useState(new Date().getFullYear())
-    const [month, setMonth] = useState(new Date().getMonth())
+    const [month, setMonth] = useState(new Date().getMonth()-1)
 
     const [numeral, setNumeral] = useState<NumeralEntity>();
     const [detail, setDetail] = useState<NumeralDetail | null>(null)

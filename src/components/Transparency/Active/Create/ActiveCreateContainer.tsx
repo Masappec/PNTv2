@@ -17,6 +17,7 @@ import Template from "../../../../domain/entities/Template";
 import { Row } from "../../../../utils/interface";
 import { Pagination } from "../../../../infrastructure/Api";
 import { TabsRef } from "flowbite-react";
+import { DatePnt } from "../../../../utils/date";
 
 export interface INeedProps {
   numeral: NumeralEntity,
@@ -42,7 +43,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const state = location.state as INeedProps;
 
-  const [month, setMonth] = useState(new Date().getMonth()+1)
+  const [month, setMonth] = useState(new DatePnt().getMonthOneBased()-1)
   const [year, setYear] = useState(new Date().getFullYear())
 
   const [numeral, setNumeral] = useState<NumeralEntity>();

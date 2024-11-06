@@ -2,6 +2,7 @@ import { useState } from "react";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
 import AudiencePresenter from "./AudiencePresenter"
 import { AudienceRequest, AudienceResponse } from "../../../../infrastructure/Api/PublicDataApi/interface";
+import { DatePnt } from "../../../../utils/date";
 
 
 interface Props {
@@ -20,11 +21,11 @@ const AudienceContainer = (props: Props) => {
     const [isSearching, SetSearching] = useState<boolean>(false)
 
     const [data, setData] = useState<AudienceRequest>({
-        month:new Date().getMonth()+1,
+        month: new DatePnt().getMonthOneBased(),
         names: "",
         year:new Date().getFullYear()
     })
-    const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+    const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased());
     const [year, setYear] = useState<number>(new Date().getFullYear());
     const [res, setRes] = useState<AudienceResponse[]>([])
 
