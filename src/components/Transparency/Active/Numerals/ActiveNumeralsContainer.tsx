@@ -17,7 +17,7 @@ const ActiveNumeralsContainer = (props: IProps) => {
     const [loading, setLoading] = useState<boolean>(true)
     const navigate = useNavigate()
 
-    const [month,setMonth] = useState<number>(new Date().getMonth()-1)
+    const [month,setMonth] = useState<number>(new Date().getMonth())
 
     
 

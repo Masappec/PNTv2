@@ -149,21 +149,28 @@ const CollaborativeEditContainer = (props: Props) => {
 
   const buildRowFromTemplate = (templates: Template[]) => {
     const data: { id: number, data: Row[][] }[] = templates.map((template) => {
+
       return {
         id: template.id,
         data: [
-          template.columns.sort((a, b) => a.id - b.id).map((column) => {
+          [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
             return {
               key: column.id.toString(),
               value: column.name,
               is_header: true,
             }
-          })
+          })],
+          [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
+            return {
+              key: column.id.toString(),
+              value: column.value,
+              is_header: true,
+            }
+          })],
         ] as Row[][]
       }
 
     })
-    console.log(data)
 
 
     setTemplateTable(data)

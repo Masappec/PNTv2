@@ -42,7 +42,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const state = location.state as INeedProps;
 
-  const [month, setMonth] = useState(new Date().getMonth())
+  const [month, setMonth] = useState(new Date().getMonth()+1)
   const [year, setYear] = useState(new Date().getFullYear())
 
   const [numeral, setNumeral] = useState<NumeralEntity>();
@@ -126,16 +126,24 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const buildRowFromTemplate = (templates: Template[]) => {
     const data: { id: number, data: Row[][] }[] = templates.map((template) => {
+      
       return {
         id: template.id,
         data: [
-          template.columns.sort((a, b) => a.id - b.id).map((column) => {
+          [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
             return {
               key: column.id.toString(),
               value: column.name,
               is_header: true,
             }
-          })
+          })],
+          [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
+            return {
+              key: column.id.toString(),
+              value: column.value,
+              is_header: true,
+            }
+          })],
         ] as Row[][]
       }
 

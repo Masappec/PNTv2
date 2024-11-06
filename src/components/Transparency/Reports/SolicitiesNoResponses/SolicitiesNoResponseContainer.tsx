@@ -31,7 +31,8 @@ const SolicitiesNoResponseContainer = (props: Props) => {
     const [search, setSeach] = useState<string>("");
     const [status_, setStatus] = useState<string>(StatusSolicity.NO_RESPONSED.key+","+
         StatusSolicity.INSISTENCY_NO_RESPONSED.key+","+
-        StatusSolicity.FINISHED_WITHOUT_RESPONSE.key+","+StatusSolicity.INFORMAL_MANAGMENT_NO_RESPONSED.key);
+        StatusSolicity.FINISHED_WITHOUT_RESPONSE.key+","+
+        StatusSolicity.INFORMAL_MANAGMENT_NO_RESPONSED.key);
     useEffect(() => {
         props.useCase.getEstablishmentSolicity("", currentPage, limit, columnsSort,status_).then(response => {
                 SetSolicitudes(response.results)
