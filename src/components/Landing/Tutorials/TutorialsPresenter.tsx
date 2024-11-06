@@ -42,23 +42,24 @@ const TutorialsPresenter = (props: Props) => {
           navegar por el Portal Nacional de Transparencia.
         </p>
 
-        <div className="space-y-8">
+        <div>
           {props.tutorial.map((data) => {
             return (
               <>
                 <hr />
-                <h2 className="text-center text-2xl font-semibold text-gray">
+                <h2 className="text-center text-2xl font-semibold text-gray mb-2 mt-2">
                   {data.title}
                 </h2>
-                <Iframe title={data.title} link={formatUrlYoutube(data.url)} />
-                <p className="text-center text-gray-700 text-lg">
+                <p className="text-gray-700 text-lg mb-6">
                   {data.description}
                 </p>
-                <hr />
+                <Iframe title={data.title} link={formatUrlYoutube(data.url)} />
+                <hr className="mt-2"/>
               </>
             );
           })}
         </div>
+
       </section>
     </main>
   );
