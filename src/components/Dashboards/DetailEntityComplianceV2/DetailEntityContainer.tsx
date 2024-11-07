@@ -8,6 +8,7 @@ import TransparencyCollabUseCase from '../../../domain/useCases/TransparencyColl
 import TransparencyFocusEntity from '../../../domain/entities/TransparencyFocus';
 import TransparencyCollab from '../../../domain/entities/TransparencyCollab';
 import EstablishmentEntity from '../../../domain/entities/Establishment';
+import { isWithinDeadline } from '../../../utils/functions';
 
 interface IProps {
   usecase: NumeralUseCase,
@@ -131,19 +132,9 @@ const DetailEntityContainer = (props: IProps) => {
   }, [month, year, establishment_id])
 
 
-  const isRezagado = (date: string | null, month: number, year: number) => {
-
-    if (date == null) {
-      return true
-    }
-    const formatExpired = new Date();
-    formatExpired.setFullYear(year, month - 1, 15)
-
-    if (new Date(date) > formatExpired) {
-      return true
-    }
-
-    return false
+  const isRezagado = (date: string | null) => {
+    
+    return isWithinDeadline(date || "");
   }
 
   return (

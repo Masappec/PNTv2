@@ -4,6 +4,7 @@ import TransparencyActiveUseCase from "../../../domain/useCases/TransparencyActi
 import TransparencyActive from "../../../domain/entities/TransparencyActive";
 import EstablishmentEntity from "../../../domain/entities/Establishment";
 import SessionService from "../../../infrastructure/Services/SessionService";
+import { DatePnt } from "../../../utils/date";
 
 
 interface Props{
@@ -15,7 +16,7 @@ const AllPublicationsContainer = (props:Props)=>{
 
 
     const [year,setYear] = useState<number>(new Date().getFullYear())
-    const [month,setMonth]= useState<number>(new Date().getMonth()+1)
+    const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased())
 
     const [publications, setPublications] = useState<TransparencyActive[]>([])
     const [error,setError] = useState<string>("")

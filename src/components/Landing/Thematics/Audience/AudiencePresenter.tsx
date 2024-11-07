@@ -7,6 +7,7 @@ import Table from "../../../Common/Table";
 import { useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { CalendarMonth } from "../../../Common/CalendarYear";
+import { DatePnt } from "../../../../utils/date";
 
 interface Props {
 
@@ -29,7 +30,7 @@ interface Props {
 const AudiencePresenter = (props: Props) => {
 
   const [year, setYear] = useState<number>(new Date().getFullYear());
-  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+  const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased());
 
   const [visible, setVisible] = useState<boolean>(false);
   return (

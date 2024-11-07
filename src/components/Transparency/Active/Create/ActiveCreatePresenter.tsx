@@ -51,6 +51,7 @@ interface Props {
 
 
 const meses = [
+  "",
   "Enero",
   "Febrero",
   "Marzo",

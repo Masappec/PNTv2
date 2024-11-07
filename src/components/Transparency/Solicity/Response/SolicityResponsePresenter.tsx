@@ -117,77 +117,7 @@ const SolicityResponsePresenter = (props: Props) => {
             <form onSubmit={props.handleSubmit}>
 
 
-                {
-                    props.isAvaliableForChangeStatus ?
-                        <><p className="text-gray-800 dark:text-white text-xs py-5">
-                            {
-                                props.solicitySaved.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key ?
-                                    `Escribe a continuación la explicación por la cual solicitas la Gestión Oficiosa a la Defensoría del Pueblo con relación a esta solicitud. De acuerdo a lo establecido en la LOTAIP, la entidad tiene un plazo de 10 días para responder una Gestión Oficiosa y a su vez a la solicitud original. Si deseas conocer más sobre este proceso revisa la sección`
-                                    :
-                                    `De acuerdo a lo establecido en la LOTAIP, si transcurridos 10  días no recibes respuesta,
-                            a partir del día 11 puedes insistir con esta solicitud, para lo cual puedes presionar
-                            el botón a continuación y completar la información indicada.
-                            Si deseas conocer más sobre este proceso revisa la sección`
-
-                            }
-
-
-                            <Link
-                                className="text-primary-600"
-                                to="/normativa">“¿Deben las entidades responder mis solicitudes?”</Link>
-                        </p>
-                            <Button
-                                onClick={() => { props.ChangeStatus() }}
-                                type="button"
-                                className="text-white h-10 font-bold bg-sky-800 w-auto "
-                            >
-                                <FiCheckSquare size={23} className=" mr-4" />
-                                <span>{props.textForChangeStatus}</span>
-                            </Button> </> : null
-                }
-                {
-                    props.isAvaliableToInsistency ?
-                        <>
-
-
-                            <div>
-                                <Label
-                                    htmlFor=""
-                                    value={props.textForMotiveDescription}
-                                    className="text-sm "
-                                />
-                                <Link
-                                    className="text-primary-600"
-                                    to="/normativa">“¿Deben las entidades responder mis solicitudes?”</Link>
-                                <Textarea
-                                    placeholder={props.solicitySaved.status !== StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key ?
-                                        "Escribe la explicación por la que solicitas la insistencia" :
-                                        "Escribe la explicación por la que solicitas la Gestión Oficiosa"}
-                                    name="description"
-                                    rows={5}
-                                    onChange={(e) => {
-                                        setCount(e.target.value.length)
-                                        props.onChangeTextResponse(e.target.value)
-                                    }}
-                                    ref={responseRef as React.RefObject<HTMLTextAreaElement>}
-                                ></Textarea>
-                                <span>
-                                    {count} / 3000
-                                </span>
-                                <Button
-                                    type="button"
-                                    color="danger"
-                                    className="text-white font-bold bg-gray-500 hover:bg-gray-700 "
-                                    onClick={props.onCancelChangeStatus}
-                                >
-                                    <IoClose size={23} className=" mr-2" />
-                                    Cancelar
-                                </Button>
-                            </div>
-
-
-                        </> : null
-                }
+                
 
                 {props.isAvaliableToResponse &&
                     <>
@@ -363,6 +293,77 @@ const SolicityResponsePresenter = (props: Props) => {
                             </Tabs.Item>
                         </Tabs>
                     </>
+                }
+                {
+                    props.isAvaliableForChangeStatus ?
+                        <><p className="text-gray-800 dark:text-white text-xs py-5">
+                            {
+                                props.solicitySaved.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key ?
+                                    `Escribe a continuación la explicación por la cual solicitas la Gestión Oficiosa a la Defensoría del Pueblo con relación a esta solicitud. De acuerdo a lo establecido en la LOTAIP, la entidad tiene un plazo de 10 días para responder una Gestión Oficiosa y a su vez a la solicitud original. Si deseas conocer más sobre este proceso revisa la sección`
+                                    :
+                                    `De acuerdo a lo establecido en la LOTAIP, si transcurridos 10  días no recibes respuesta,
+                            a partir del día 11 puedes insistir con esta solicitud, para lo cual puedes presionar
+                            el botón a continuación y completar la información indicada.
+                            Si deseas conocer más sobre este proceso revisa la sección`
+
+                            }
+
+
+                            <Link
+                                className="text-primary-600"
+                                to="/normativa">“¿Deben las entidades responder mis solicitudes?”</Link>
+                        </p>
+                            <Button
+                                onClick={() => { props.ChangeStatus() }}
+                                type="button"
+                                className="text-white h-10 font-bold bg-sky-800 w-auto "
+                            >
+                                <FiCheckSquare size={23} className=" mr-4" />
+                                <span>{props.textForChangeStatus}</span>
+                            </Button> </> : null
+                }
+                {
+                    props.isAvaliableToInsistency ?
+                        <>
+
+
+                            <div>
+                                <Label
+                                    htmlFor=""
+                                    value={props.textForMotiveDescription}
+                                    className="text-sm "
+                                />
+                                <Link
+                                    className="text-primary-600"
+                                    to="/normativa">“¿Deben las entidades responder mis solicitudes?”</Link>
+                                <Textarea
+                                    placeholder={props.solicitySaved.status !== StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key ?
+                                        "Escribe la explicación por la que solicitas la insistencia" :
+                                        "Escribe la explicación por la que solicitas la Gestión Oficiosa"}
+                                    name="description"
+                                    rows={5}
+                                    onChange={(e) => {
+                                        setCount(e.target.value.length)
+                                        props.onChangeTextResponse(e.target.value)
+                                    }}
+                                    ref={responseRef as React.RefObject<HTMLTextAreaElement>}
+                                ></Textarea>
+                                <span>
+                                    {count} / 3000
+                                </span>
+                                <Button
+                                    type="button"
+                                    color="danger"
+                                    className="text-white font-bold bg-gray-500 hover:bg-gray-700 "
+                                    onClick={props.onCancelChangeStatus}
+                                >
+                                    <IoClose size={23} className=" mr-2" />
+                                    Cancelar
+                                </Button>
+                            </div>
+
+
+                        </> : null
                 }
                 <div className="flex flex-col m-2">
                     {

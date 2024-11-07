@@ -10,6 +10,7 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { ResponsePresupuestos } from "../../../../infrastructure/Api/PublicDataApi/interface";
 import axios from "axios";
 import { Transform } from "../../../../utils/transform";
+import { DatePnt } from "../../../../utils/date";
 
 interface Props {
     usecase: PublicDataApi;
@@ -19,7 +20,7 @@ const FinanceContainer = (props: Props) => {
 
     const [isSearching, SetSearching] = useState<boolean>(false)
     const [year, setYear] = useState<number>(new Date().getFullYear())
-    const [month, setMonth] = useState<number>(new Date().getMonth() + 1)
+    const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased())
     const [ruc, setRuc] = useState<string>("")
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
     const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
