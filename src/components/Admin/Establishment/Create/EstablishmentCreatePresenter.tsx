@@ -331,7 +331,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                 />
                             </div>
                             */}
-
+                        </div>
                         <hr />
                         <div className="flex-col items-center justify-between  mb-52">
 
@@ -355,9 +355,8 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                 />
                             </div>
 
-                                </div>
-                    </div>
-
+                        </div>
+                    </div>                    
                 </section>
             </form>
         </div>
