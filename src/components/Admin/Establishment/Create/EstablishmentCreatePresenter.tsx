@@ -353,9 +353,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                         props.hangelChangeExtraNumeral(e)
                                     }}
                                 />
-                            </div>
-
-                                </div>
+                            </div>                               
                     </div>
 
                 </section>
