@@ -4,6 +4,7 @@ import PublicDataApi from "../../../infrastructure/Api/PublicDataApi";
 import { PublicDataApiResponse, Top20 } from "../../../infrastructure/Api/PublicDataApi/interface";
 import { Pagination } from "../../../infrastructure/Api";
 import EstablishmentUseCase from "../../../domain/useCases/Establishment/EstablishmentUseCase";
+import { DatePnt } from "../../../utils/date";
 
 interface Props{
     usecase:PublicDataApi;
@@ -12,7 +13,7 @@ interface Props{
 const IndicatorsAdminContainer = (props:Props) => {
 
     const [year, setYear] = useState<number>(new Date().getFullYear())
-    const [month, setMonth] = useState<number>(new Date().getMonth()+1)
+    const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased())
 
 
     const [visitasRequest,setVisitasRequest] = useState<{

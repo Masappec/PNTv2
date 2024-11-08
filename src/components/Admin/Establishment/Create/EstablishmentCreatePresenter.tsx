@@ -318,7 +318,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
 
                             </div>
                             {/*
-                            Campo eliminado según tarea: "En el formulario de creación de instituciones eliminar el campo 'Correo de acceso a la información'"
+                            Campo eliminado según issue # 3
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Correo de acceso a la información"} width="w-60"
@@ -331,7 +331,7 @@ const EstablishmentCreatePresenter = (props: Props) => {
                                 />
                             </div>
                             */}
-                        </div>
+
                         <hr />
                         <div className="flex-col items-center justify-between  mb-52">
 

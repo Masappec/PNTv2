@@ -13,10 +13,7 @@ export class Transform {
 
     static fromCsvToPdfLandScape = (csv: string, name: string, establishment: string) => {
             
-        csv = csv.replace(/""/g, '"'); // Manejar comillas dobles
-        csv = csv.replace(/;/g, ',');
-        csv = csv.replace(/,/g, ';');
-        csv = csv.replace(/"/g, ''); // Eliminar las comillas
+       
         const rows = csv.split('\n')
         let csvContent    = rows.map(row => row.split(DELIMITER).map(cell => cell.trim()));
 

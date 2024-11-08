@@ -7,6 +7,7 @@ import { RootState } from "../../../../infrastructure/Store";
 import { useSelector } from "react-redux";
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import TransparencyCollabUseCase from "../../../../domain/useCases/TransparencyCollabUseCase/TransparencyCollabUseCase";
+import { DatePnt } from "../../../../utils/date";
 
 
 interface Props {
@@ -19,7 +20,7 @@ const AllTCContainer = (props: Props) => {
 
 
     const [year, setYear] = useState<number>(new Date().getFullYear())
-    const [month, setMonth] = useState<number>(new Date().getMonth() + 1)
+    const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased())
 
     const [publications, setPublications] = useState<TransparencyFocusEntity[]>([])
     const [error, setError] = useState<string>("")

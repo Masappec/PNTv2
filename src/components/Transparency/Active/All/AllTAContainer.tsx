@@ -7,6 +7,7 @@ import AllTAPresenter from "./AllTAPresenter";
 import { ColourOption } from "../../../../utils/interface";
 import { RootState } from "../../../../infrastructure/Store";
 import { useSelector } from "react-redux";
+import { DatePnt } from "../../../../utils/date";
 
 
 interface Props {
@@ -19,7 +20,7 @@ const AllTAContainer = (props: Props) => {
 
 
     const [year, setYear] = useState<number>(new Date().getFullYear())
-    const [month, setMonth] = useState<number>(new Date().getMonth() + 1)
+    const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased())
 
     const [publications, setPublications] = useState<TransparencyActive[]>([])
     const [error, setError] = useState<string>("")

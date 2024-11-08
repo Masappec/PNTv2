@@ -1,6 +1,50 @@
 
 import slug from 'slugify';
 
+
+
+
+export function isWithinDeadline(date:string) {
+        const datePublished = new Date(date);
+        const day = datePublished.getDate();
+        const month = datePublished.getMonth();
+        const year = datePublished.getFullYear();
+
+        // Obtener el último día del mes
+        const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
+
+        // Si la fecha es hasta el día 15 o el siguiente día hábil si cae en fin de semana
+        if (day <= 15 || isNextWorkingDay(datePublished)) {
+                return false
+        }
+
+        // Si es entre el 16 y el último día del mes, se considera atrasado
+        if (day >= 16 && day <= lastDayOfMonth) {
+                return true
+        }
+
+        return false
+}
+
+// Función para verificar si es el siguiente día hábil
+function isNextWorkingDay(date:Date) {
+        const dayOfWeek = date.getDay();
+
+        // Verificar si es fin de semana
+        if (dayOfWeek === 0) {
+                // Si es domingo, el siguiente día hábil es lunes
+                return date.getDate() === 16;
+        }
+        if (dayOfWeek === 6) {
+                // Si es sábado, el siguiente día hábil es lunes (17 si cae sábado el 15)
+                return date.getDate() === 17;
+        }
+
+        // Si no es fin de semana, es el día hábil
+        return false;
+}
+
+
 export function slugtext(text: string) {
         return slug(text, {
                 replacement: '-',

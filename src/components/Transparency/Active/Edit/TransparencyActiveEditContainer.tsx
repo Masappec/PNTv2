@@ -17,6 +17,7 @@ import { Row } from "../../../../utils/interface";
 import { Pagination } from "../../../../infrastructure/Api";
 import ActiveCreatePresenter from "../Create/ActiveCreatePresenter";
 import { TabsRef } from "flowbite-react";
+import { DatePnt } from "../../../../utils/date";
 
 export interface INeedProps {
     numeral: NumeralEntity,
@@ -40,8 +41,8 @@ const ActiveEditContainer = (props: Props) => {
 
     const state = location.state as INeedProps;
 
-    const [year, setYear] = useState(new Date().getFullYear())
-    const [month, setMonth] = useState(new Date().getMonth())
+    const [year, setYear] = useState(new DatePnt().getYear())
+    const [month, setMonth] = useState(new DatePnt().getMonthToUpload())
 
     const [numeral, setNumeral] = useState<NumeralEntity>();
     const [detail, setDetail] = useState<NumeralDetail | null>(null)
@@ -121,16 +122,24 @@ const ActiveEditContainer = (props: Props) => {
 
     const buildRowFromTemplate = (templates: Template[]) => {
         const data: { id: number, data: Row[][] }[] = templates.map((template) => {
+
             return {
                 id: template.id,
                 data: [
-                    template.columns.sort((a, b) => a.id - b.id).map((column) => {
+                    [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
                         return {
                             key: column.id.toString(),
                             value: column.name,
                             is_header: true,
                         }
-                    })
+                    })],
+                    [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
+                        return {
+                            key: column.id.toString(),
+                            value: column.value,
+                            is_header: true,
+                        }
+                    })],
                 ] as Row[][]
             }
 
@@ -458,7 +467,7 @@ const ActiveEditContainer = (props: Props) => {
             establishment,
             numeral?.id || 0,
             year,
-            month + 1
+            month
         )
         await props.transparencyActiveUseCase.updatePublication(newTransparency)
 

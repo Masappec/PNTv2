@@ -10,7 +10,8 @@ export class ColumnMapper {
             id: column.id,
             name: column.name,
             regex: column.regex,
-            type: column.type
+            type: column.type,
+            value:column.value
         }
     }
 
@@ -23,7 +24,8 @@ export class ColumnMapper {
             id: column.id,
             name: column.name,
             regex: column.regex || '',
-            type: column.type
+            type: column.type,
+            value:column.value
         }
     }
 }
