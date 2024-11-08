@@ -38,7 +38,7 @@ const EstablishmentEditContainer = ({
         job_authority: "",
         logo: "",
         name: "",
-        email_accesstoinformation: "NO",
+        email_accesstoinformation: "email@example.com",
         email_committe: "",
         first_name_committe: "",
         highest_committe: "",
