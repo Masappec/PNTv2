@@ -56,6 +56,7 @@ const TA = (props: Props) => {
 
             const file = new File([res.data], name + '.csv', { type: 'text/csv' })
             TemplateUsecase.detectDelimiter(file, (delim, text) => {
+                console.log(delim)
                 const csv = TemplateUsecase.cleanCSV(text)
                 Transform.fromCsvToPdfLandScape(csv, name, props.establishment)
             })
