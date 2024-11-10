@@ -303,7 +303,7 @@ const IndicatorsAdminPresenter = (props: Props) => {
                   ,
                 },
                 {
-                  title: 'Score SAIP',
+                  title: 'Score',
                   render(row) {
                     return (
                       <span className="text-gray-500">{row.score_saip}/100</span>
