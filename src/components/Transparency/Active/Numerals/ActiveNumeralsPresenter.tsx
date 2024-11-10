@@ -40,7 +40,8 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
   return (
     <>
       <h2 className="mb-2 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary">
-        Transparencia Activa | {meses[props.selectedMonth]} {new Date().getFullYear()}
+        Transparencia Activa | 
+        {/* {meses[props.selectedMonth]} {new Date().getFullYear()} */}
       </h2>
       <h2 className="text-xs  text-primary">
         En esta sección puedes publicar los conjuntos de datos, metadatos y
