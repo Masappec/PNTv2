@@ -29,7 +29,7 @@ const IndicatorsEstablishment = (props: Props) => {
         day_frencuency_response:0,
         ta_published:0
     });
-    const date = new Date();
+    {/*const date = new Date();*/}
     {/*const monthName = date.toLocaleString('es-ES', { month: 'long' });*/}
 
     const [line, setLine] = useState<ApexOptions>({
