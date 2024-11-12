@@ -28,9 +28,7 @@ const TutorialsPresenter = (props:Props) => {
       }
       console.log(url)
 
-      return url;
-
-      
+      return url;    
 
     }
 
@@ -66,8 +64,7 @@ const TutorialsPresenter = (props:Props) => {
                     }
                   </div>
                   </section>
-            </main>
-           
+            </main>           
         );
     }
 export default TutorialsPresenter; 

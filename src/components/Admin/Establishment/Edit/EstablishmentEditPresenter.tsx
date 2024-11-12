@@ -304,7 +304,19 @@ const EstablishmentEditPresenter = (props: Props) => {
                                 />
 
                             </div>
-                           
+                            {/*
+                            Campo eliminado según issue # 3
+                            <div className="flex  flex-col m-2">
+                                <Input type={"email"}
+                                    placeholder={"Correo de acceso a la información"} width="w-60"
+                                    value={props.data.email_accesstoinformation || ""}
+                                    name="email_accesstoinformation"
+                                    color={props.validateFields('email_accesstoinformation')}
+                                obligatorio
+                                    onChange={(e) => props.setData(e)}
+                                />
+                            </div>
+                            */}
                         </div>
                         <hr />
                         <div className="flex-col items-center justify-between mb-52">
@@ -331,7 +343,6 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </div>
                         </div>
                     </div>
-
                 </section>
             </form>
         </div>
