@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Solicity } from "../../../../domain/entities/Solicity";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
-import { formatDate2 } from "../../../../utils/functions";
+{/*import { formatDate2 } from "../../../../utils/functions";*/}
 import CustomInputSearch from "../../../Common/CustomInputSearch";
 
 interface Props {

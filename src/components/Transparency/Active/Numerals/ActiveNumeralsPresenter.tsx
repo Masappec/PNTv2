@@ -17,7 +17,7 @@ interface ActiveNumeralsPresenterProps {
   selectedMonth:number
 }
 
-const meses = [
+{/*const meses = [
   "",
   "Enero",
   "Febrero",
@@ -31,7 +31,7 @@ const meses = [
   "Octubre",
   "Noviembre",
   "Diciembre"
-];
+];*/}
 const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
   if (props.loading) {
     return <Spinner />;

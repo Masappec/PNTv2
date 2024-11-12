@@ -30,7 +30,7 @@ const IndicatorsEstablishment = (props: Props) => {
         ta_published:0
     });
     const date = new Date();
-    const monthName = date.toLocaleString('es-ES', { month: 'long' });
+    {/*const monthName = date.toLocaleString('es-ES', { month: 'long' });*/}
 
     const [line, setLine] = useState<ApexOptions>({
         chart: {
