@@ -2,8 +2,9 @@
 import jsPDF from "jspdf";
 import csvtojson from 'csvtojson';
 import * as XLSX from 'xlsx';
-import autoTable, { Styles } from "jspdf-autotable";
+import autoTable, { RowInput, Styles } from "jspdf-autotable";
 import { DELIMITER } from "./constans";
+import * as dfd from "danfojs/dist/danfojs-browser/src";
 
 
 export class Transform {
@@ -11,8 +12,17 @@ export class Transform {
 
 
 
-    static fromCsvToPdfLandScape = (csv: string, name: string, establishment: string) => {
-            
+    static fromCsvToPdfLandScape = async(csv: string, name: string, establishment: string) => {
+        
+
+        const blob = new Blob([csv], { type: "text/csv" });
+        const fileURL = URL.createObjectURL(blob);
+
+        const dataframe = await dfd.readCSV(fileURL, {
+            delimiter: DELIMITER,
+            header: false
+        });
+
        
         const rows = csv.split('\n')
         let csvContent    = rows.map(row => row.split(DELIMITER).map(cell => cell.trim()));
@@ -24,10 +34,10 @@ export class Transform {
         const doc = new jsPDF('landscape');
 
         // Extraer encabezados del CSV
-        const headers = csvContent[0].length > 5 ? csvContent[0].slice(0,5) : csvContent[0];
+        const headers = dataframe.head().values[0] as string[]
 
         // Convertir el contenido del CSV a un array de arrays
-        const data = csvContent.slice(1);
+        const data = dataframe.values.slice(1) as RowInput[]
 
         // Agregar un título con margen de 10
         autoTable(doc, {
@@ -94,22 +104,24 @@ export class Transform {
         doc.save(`${name}.pdf`);
     }
 
-    static fromCsvToPdf = (csv: string, name: string, establishment: string) => {
+    static fromCsvToPdf = async(csv: string, name: string, establishment: string) => {
 
-        //limpiar el csv
-        csv = csv.replace(/"/g, '');
-        csv = csv.replace(/;/g, ',');
-        csv = csv.replace(/,/g, ';');
+       
 
-        const csvContent = csv.split('\n').map(row => row.split(DELIMITER));
+        const blob = new Blob([csv], { type: "text/csv" });
+        const fileURL = URL.createObjectURL(blob);
 
+        const dataframe = await dfd.readCSV(fileURL, {
+            delimiter: DELIMITER,
+            header: false
+        });
         const doc = new jsPDF('landscape');
 
         // Extraer encabezados del CSV
-        const headers = csvContent[0];
+        const headers = dataframe.head().values[0] as string[]
 
         // Convertir el contenido del CSV a un array de arrays
-        const data = csvContent.slice(1);
+        const data = dataframe.values.slice(1) as RowInput[]
 
         // Agregar un título con margen de 10
         autoTable(doc, {
