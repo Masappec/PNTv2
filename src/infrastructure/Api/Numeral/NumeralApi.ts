@@ -68,6 +68,23 @@ class NumeralApi {
             }
         }
     }
+
+    async updateNumeralState(id: number, data: { isDefault: boolean }) {
+        try {
+            const response = await this.api.patch(
+                `${TRANSPARENCY_PATH}/numerals/${id}/update-state/`,
+                data,
+            );
+            return response.data;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                const message = error?.response?.data?.message || "Ocurrio un error al actualizar el estado del numeral";
+                throw new Error(message);
+            } else {
+                throw new Error("Ocurrió un error al actualizar el estdo del numeral");
+            }
+        }
+    }
 }
 
 export default NumeralApi;

@@ -28,6 +28,18 @@ class NumeralService {
         return res.map(r => NumeralDetailMapper.toDomain(r))
     }
 
+    /**
+     * Actualiza el estado de un numeral
+     * @param numeral_id - ID del numeral a actualizar
+     * @param data - Datos a enviar al API
+     * @returns - Respuesta del API mapeada a dominio
+    */
+    async updateNumeralState(numeral_id: number, data: { isDefault: boolean }) {
+        const res = await this.api.updateNumeralState(numeral_id, data);
+        console.info("Respuesta del api", res);
+        return res;
+    }
+
 }
 
 export default NumeralService;

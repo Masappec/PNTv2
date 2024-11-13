@@ -286,6 +286,32 @@ const EstablishmentEditContainer = ({
         setSelectedExtraNumeral(e.map((item) => parseInt(item.value)))
         setData({ ...data, extra_numerals: e.map((item) => item.value).join(',') })
     }
+
+    const handleRemoveNumeral = async (numeralId: string) => {
+        try {
+            // Convetir el numeralID en numero
+            const numeralIdAsNumber = parseInt(numeralId, 10);
+            if (isNaN(numeralIdAsNumber)) {
+                throw new Error(`El numeralId "${numeralId}" no es un numerao valido.`)
+            }
+            // Llamada al backend para actualizar el estado 
+            await numeralUsecase.updateNumeralState(numeralIdAsNumber, {
+                isDefault: true,
+            });
+            // Actualiza el estado local eliminando el numeral del arreglo
+            setData((prevData) => {
+                const updateNumerals = (prevData.extra_numerals || "")
+                    .split(",")
+                    .filter((id) => id !== numeralId)
+                    .join(",");
+                console.log("updateNumerals", updateNumerals);
+                return { ...prevData, extra_numerals: updateNumerals};
+            });
+        } catch (error) {
+            console.error("Error al eliminar el numeral:", error)
+        }
+    }
+
     const validateFields = (name: string) => {
         if (modified) {
             console.log(data[name as keyof EstablishmentEntity], name)
@@ -311,6 +337,7 @@ const EstablishmentEditContainer = ({
             setSuccess={setSuccess}
             options={options}
             hangelChangeExtraNumeral={hangelChangeExtraNumeral}
+            handleRemoveNumeral={handleRemoveNumeral}
             numerals={numerals}
             getSelectedExtraNumeral={getSelectedExtraNumeral}
             validateFields={validateFields}
