@@ -112,9 +112,13 @@ const AllSolicitiesPresenter = (props: Props) => {
                             title: "Días transcurridos",
                             key: "date",
                             render: (solicity) => (
-                                <p>{
-                                    solicity.date ? Math.floor((new Date().getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) : ""
-                                }</p>
+                                <p>
+                                    {
+                                        solicity.date && solicity.responseDate
+                                        ? Math.floor((new Date(solicity.responseDate).getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) 
+                                        : ""
+                                    }
+                                </p>
                             )
                         },
 
@@ -128,7 +132,7 @@ const AllSolicitiesPresenter = (props: Props) => {
                                 const color = status?.bg || "bg-primary-500"
                                 const border = color.replace("bg", "border")
                                 return (
-                                    <p className={`text-wrap border rounded-md px-2 py-1    
+                                    <p className={`text-wrap border rounded-md px-2 py-1
                                         md:w-5/12 w-full
                                      ${border}
                                      ${color} text-white text-center
