@@ -333,17 +333,6 @@ const EstablishmentEditPresenter = (props: Props) => {
                   obligatorio
                 />
               </div>
-              <div className="flex  flex-col m-2">
-                <Input
-                  type={"email"}
-                  placeholder={"Correo de acceso a la info"}
-                  width="w-60"
-                  value={props.data.email_accesstoinformation || ""}
-                  name="email_accesstoinformation"
-                  onChange={(e) => props.setData(e)}
-                  obligatorio
-                />
-              </div>
             </div>
             <hr />
             <div className="flex-col items-center justify-between mb-52">

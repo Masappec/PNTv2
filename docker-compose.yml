@@ -8,10 +8,10 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf 
-      - ./cert/fullchain.pem:/etc/nginx/ssl/certificates/fullchain.pem
-      - ./cert/privkey.key:/etc/nginx/ssl/certificates/privkey.key
-      - /home/transparencia:/usr/share/transparencia
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      #- ./cert/fullchain.pem:/etc/nginx/ssl/certificates/fullchain.pem
+      #- ./cert/privkey.key:/etc/nginx/ssl/certificates/privkey.key
+      #- /home/transparencia:/usr/share/transparencia
     networks:
       - pntv2-back_pnt_network
 
