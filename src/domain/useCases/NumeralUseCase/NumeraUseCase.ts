@@ -33,6 +33,23 @@ class NumeralUseCase {
     async getNumeralsAllowed() {
         return await this.service.getNumeralsAllowed()
     }
+
+    /**
+     * Actualiza el estado de un numeral (por ejemplo, isDefault)
+     * @param id - ID del numeral a actualizar
+     * @param data - Objeto con los campos a actualizar
+     * @returns - Respuesta del servicio
+    */
+    async updateNumeralState(id: number, data: { isDefault: boolean }) {
+        try {
+            const response = await this.service.updateNumeralState(id, data);
+            console.info(response);
+            return response;
+        } catch (error) {
+            console.error("Error al actualizar el estado del numeral:", error);
+            throw error;
+        }
+    }
 }
 
 export default NumeralUseCase;

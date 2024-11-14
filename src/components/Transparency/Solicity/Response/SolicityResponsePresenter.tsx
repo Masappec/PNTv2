@@ -127,14 +127,14 @@ const SolicityResponsePresenter = (props: Props) => {
                                 htmlFor=""
                                 value={
                                     (props.userSession.id || 0) == props.solicitySaved.userCreated ?
-                                        "Si necesitas consultar alguna aclaración \n sobre la respuesta recibida, ingresarla a continuación" :
+                                        "Escriba a continuación la respuesta para esta solicitud" :
                                         "Escriba a continuación la respuesta para esta solicitud"}
                                 className="text-xl font-bold flex-wrap"
                             />
                             <Textarea
                                 placeholder={
                                     (props.userSession.id || 0) == props.solicitySaved.userCreated ?
-                                        "Solicitar explicación. Si necesitas consultar alguna aclaración sobre la respuesta recibida, ingresarla a continuación" :
+                                        "Escriba a continuación la respuesta para esta solicitud" :
                                         "Escriba a continuación la respuesta para esta solicitud"
                                 }
                                 name="description"
