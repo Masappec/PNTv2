@@ -111,11 +111,40 @@ const AllSolicitiesPresenter = (props: Props) => {
                         {
                             title: "Días transcurridos",
                             key: "date",
-                            render: (solicity) => (
-                                <p>{
-                                    solicity.date ? Math.floor((new Date().getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) : ""
-                                }</p>
-                            )
+                            render: (solicity) => {
+                                const calculateTimeDifference = (startDate: string | Date, endDate: string | Date) => {
+                                    const start = new Date(startDate);
+                                    const end = new Date(endDate);
+
+                                    // Validar que ambas fechas sean válidas
+                                    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+                                        console.error("Fechas inválidas:", { startDate, endDate });
+                                        return { days: 0, hours: 0 };
+                                    }
+
+                                    const diffInMilliseconds = end.getTime() - start.getTime();
+
+                                    const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor(
+                                        (diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                                    );
+                                    return { days, hours };
+                                };
+
+                                // Determinar `endDate`: usar `updated_at` si el estado es RESPONSED, de lo contrario, usar la fecha actual
+                                const endDate =
+                                    solicity.status === "RESPONSED"
+                                        ? solicity.updated_at
+                                        : new Date().toISOString(); // Normalizar como cadena ISO
+
+                                const timeDifference = calculateTimeDifference(solicity.date, endDate);
+
+                                return (
+                                    <p>
+                                        {timeDifference.days} días, {timeDifference.hours} horas
+                                    </p>
+                                );
+                            },
                         },
 
                         {
@@ -128,7 +157,7 @@ const AllSolicitiesPresenter = (props: Props) => {
                                 const color = status?.bg || "bg-primary-500"
                                 const border = color.replace("bg", "border")
                                 return (
-                                    <p className={`text-wrap border rounded-md px-2 py-1    
+                                    <p className={`text-wrap border rounded-md px-2 py-1
                                         md:w-5/12 w-full
                                      ${border}
                                      ${color} text-white text-center
