@@ -130,9 +130,9 @@ class SolicityUseCase {
           const expired_date = moment.utc(solicity.expiry_date).toDate()
           const now = new Date()
 
-          if (now.getDay() <= expired_date.getDay()
-            && now.getMonth() <= expired_date.getMonth()
-            && now.getFullYear() <= expired_date.getFullYear()
+          if (now.getDate() <= expired_date.getDate()
+            && now.getMonth() == expired_date.getMonth()
+            && now.getFullYear() == expired_date.getFullYear()
           ) {
             return true
           }
