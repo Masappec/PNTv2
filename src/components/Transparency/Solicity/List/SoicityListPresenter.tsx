@@ -4,7 +4,7 @@ import Table from "../../../Common/Table/index"
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
 import Alert from "../../../Common/Alert"
-import { elapsedTime, formatDate2 } from "../../../../utils/functions"
+import { formatDate2 } from "../../../../utils/functions"
 import SessionService from "../../../../infrastructure/Services/SessionService"
 
 
@@ -63,7 +63,7 @@ const SolicityListPresenter = (props: Props) => {
                     onClose={() => { props.setError("") }}
                 /> : null
             }
-            <section className='mb-8 flex  items-end 
+            <section className='mb-8 flex  items-end
             w-full
                     justify-between gap-4 flex-row md:items-center'>
                 <div className="flex flex-col md:flex-row gap-6  w-fit">
@@ -138,7 +138,7 @@ const SolicityListPresenter = (props: Props) => {
 
 
                     </div>
-                   
+
                     <div className="flex flex-col gap-2 mt-4">
                         <label className='text-gray-500 text-sm'>
                             limite
@@ -199,7 +199,7 @@ const SolicityListPresenter = (props: Props) => {
                             key: "estblishment__name",
                             render: (solicity) => (
                                 <a
-                                    className="text-blue-500 text-wrap 
+                                    className="text-blue-500 text-wrap
                                      hover:courser-pointer hover:underline"
                                     onClick={() => props.onEdit(solicity)}
                                 >{solicity.estblishment_name}</a>
@@ -234,11 +234,40 @@ const SolicityListPresenter = (props: Props) => {
                             title: "Días/Horas transcurridos",
                             key: "date",
 
-                            render: (solicity) => (
-                                <p>{
-                                    solicity.date ? elapsedTime(solicity.date) : ""
-                                }</p>
-                            )
+                            render: (solicity) => {
+                                const calculateTimeDifference = (startDate: string | Date, endDate: string | Date) => {
+                                    const start = new Date(startDate);
+                                    const end = new Date(endDate);
+
+                                    // Validar que ambas fechas sean válidas
+                                    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+                                        console.error("Fechas inválidas:", { startDate, endDate });
+                                        return { days: 0, hours: 0 };
+                                    }
+
+                                    const diffInMilliseconds = end.getTime() - start.getTime();
+
+                                    const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor(
+                                        (diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                                    );
+                                    return { days, hours };
+                                };
+
+                                // Determinar `endDate`: usar `updated_at` si el estado es RESPONSED, de lo contrario, usar la fecha actual
+                                const endDate =
+                                    solicity.status === "RESPONSED"
+                                        ? solicity.updated_at
+                                        : new Date().toISOString(); // Normalizar como cadena ISO
+
+                                const timeDifference = calculateTimeDifference(solicity.date, endDate);
+
+                                return (
+                                    <p>
+                                        {timeDifference.days} días, {timeDifference.hours} horas
+                                    </p>
+                                );
+                            },
                         },
 
                         {
@@ -250,8 +279,8 @@ const SolicityListPresenter = (props: Props) => {
                                 const color = status?.bg || "bg-primary-500"
                                 const border = status?.bg.replace("bg", "border") || "border-primary-500"
                                 return (
-                                    <p className={`text-wrap border rounded-md px-2 py-1    
-                                       w-auto 
+                                    <p className={`text-wrap border rounded-md px-2 py-1
+                                       w-auto
                                      ${border}
                                      ${color} text-white text-center
 `}>
