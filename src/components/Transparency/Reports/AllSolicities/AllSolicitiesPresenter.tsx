@@ -107,33 +107,17 @@ const AllSolicitiesPresenter = (props: Props) => {
                                 }</p>
                             )
                         },
+
                         {
-                            title: "Días/Horas transcurridos",
+                            title: "Días transcurridos",
                             key: "date",
-                            render: (solicity) => {
-                                const calculateTimeDifference = (startDate, endDate) => {
-                                    const start = new Date(startDate);
-                                    const end = new Date(endDate);
-                                    const diffInMilliseconds = end - start;
-
-                                    const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
-                                    const hours = Math.floor((diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                    return { days, hours };
-                                };
-
-                                // Usar `updated_at` si el estado es RESPONSED, de lo contrario, usar la fecha actual
-                                const endDate =
-                                    solicity.status === "RESPONSED" ? solicity.updated_at : new Date();
-
-                                const timeDifference = calculateTimeDifference(solicity.date, endDate);
-
-                                return (
-                                    <p>
-                                        {timeDifference.days} días, {timeDifference.hours} horas
-                                    </p>
-                                );
-                            },
+                            render: (solicity) => (
+                                <p>{
+                                    solicity.date ? Math.floor((new Date().getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) : ""
+                                }</p>
+                            )
                         },
+
                         {
                             title: "Estado",
                             key: "status",
@@ -144,7 +128,7 @@ const AllSolicitiesPresenter = (props: Props) => {
                                 const color = status?.bg || "bg-primary-500"
                                 const border = color.replace("bg", "border")
                                 return (
-                                    <p className={`text-wrap border rounded-md px-2 py-1
+                                    <p className={`text-wrap border rounded-md px-2 py-1    
                                         md:w-5/12 w-full
                                      ${border}
                                      ${color} text-white text-center
