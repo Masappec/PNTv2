@@ -224,7 +224,6 @@ const ActiveEditContainer = (props: Props) => {
                 templateDetail,
                 true,
             ).then((res) => {
-                const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
 
                 setLoadingFiles(loadingFiles.filter((file) => {
                     return file.name !== newTemplates?.name
@@ -235,7 +234,6 @@ const ActiveEditContainer = (props: Props) => {
                 newTemplates = {
                     ...newTemplates,
                     isValid: res.valid,
-                    file: newFile
                 } as TemplateFileEntity
 
 
@@ -327,7 +325,6 @@ const ActiveEditContainer = (props: Props) => {
             templateDetail,
             true,
         ).then((res) => {
-            const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
 
 
 
@@ -335,7 +332,6 @@ const ActiveEditContainer = (props: Props) => {
             newTemplates = {
                 ...newTemplates,
                 isValid: res.valid,
-                file: newFile
             } as TemplateFileEntity
 
 
