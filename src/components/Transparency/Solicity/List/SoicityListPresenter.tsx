@@ -4,7 +4,7 @@ import Table from "../../../Common/Table/index"
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
 import Alert from "../../../Common/Alert"
-import { elapsedTime, formatDate2 } from "../../../../utils/functions"
+import { formatDate2 } from "../../../../utils/functions"
 import SessionService from "../../../../infrastructure/Services/SessionService"
 
 
@@ -234,19 +234,30 @@ const SolicityListPresenter = (props: Props) => {
                             title: "Días/Horas transcurridos",
                             key: "date",
                             render: (solicity) => {
-                                const calculateTimeDifference = (startDate, endDate) => {
+                                const calculateTimeDifference = (startDate: string | Date, endDate: string | Date) => {
                                     const start = new Date(startDate);
                                     const end = new Date(endDate);
-                                    const diffInMilliseconds = end - start;
+
+                                    // Validar que ambas fechas sean válidas
+                                    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+                                        console.error("Fechas inválidas:", { startDate, endDate });
+                                        return { days: 0, hours: 0 };
+                                    }
+
+                                    const diffInMilliseconds = end.getTime() - start.getTime();
 
                                     const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
-                                    const hours = Math.floor((diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                    const hours = Math.floor(
+                                        (diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                                    );
                                     return { days, hours };
                                 };
 
-                                // Usar `updated_at` si el estado es RESPONSED, de lo contrario, usar la fecha actual
+                                // Determinar `endDate`: usar `updated_at` si el estado es RESPONSED, de lo contrario, usar la fecha actual
                                 const endDate =
-                                    solicity.status === "RESPONSED" ? solicity.updated_at : new Date();
+                                    solicity.status === "RESPONSED"
+                                        ? solicity.updated_at
+                                        : new Date().toISOString(); // Normalizar como cadena ISO
 
                                 const timeDifference = calculateTimeDifference(solicity.date, endDate);
 
