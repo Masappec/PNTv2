@@ -189,7 +189,6 @@ const ActiveCreateContainer = (props: IProps) => {
         true,
       ).then((res) => {
 
-        const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
         setLoadingFiles(loadingFiles.filter((loading) => {
           return loading.name !== templateFile.name
         }))
@@ -201,7 +200,6 @@ const ActiveCreateContainer = (props: IProps) => {
         newTemplates = {
           ...newTemplates,
           isValid: res.valid,
-          file: newFile
         } as TemplateFileEntity
 
 
@@ -297,13 +295,11 @@ const ActiveCreateContainer = (props: IProps) => {
       true,
 
     ).then((res) => {
-      const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
 
       setError("")
       newTemplates = {
         ...newTemplates,
         isValid: res.valid,
-        file: newFile
       } as TemplateFileEntity
 
 
