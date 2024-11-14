@@ -29,8 +29,8 @@ const IndicatorsEstablishment = (props: Props) => {
         day_frencuency_response:0,
         ta_published:0
     });
-    const date = new Date();
-    const monthName = date.toLocaleString('es-ES', { month: 'long' });
+    {/*const date = new Date();*/}
+    {/*const monthName = date.toLocaleString('es-ES', { month: 'long' });*/}
 
     const [line, setLine] = useState<ApexOptions>({
         chart: {
@@ -268,7 +268,8 @@ const IndicatorsEstablishment = (props: Props) => {
                                     {props.establishment_name}
                                 </p>
                                 <p className="text-sm text-primary font-bold">
-                                    Cumplimiento LOTAIP - {monthName} {new Date().getFullYear()}
+                                    Cumplimiento LOTAIP | {/*monthName} {new Date().getFullYear()*/}
+                                
                                 </p>
                                 <p className="text-cyan-800 text-sm  font-bold">
                                     {res.total_score}/100
