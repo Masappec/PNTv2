@@ -90,7 +90,7 @@ class SolicityUseCase {
 
   availableToInsistency(user: UserEntity, solicity: Solicity) {
     if (solicity && user) {
-      if (user.id == solicity.userCreated) {
+      if (user.group?.find(x=>x.name.toLowerCase().includes('ciudadano'))) {
 
         return solicity.status == StatusSolicity.INSISTENCY_PERIOD.key
           || solicity.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
@@ -111,6 +111,7 @@ class SolicityUseCase {
       if (user_citizen_id !== user_session) {
         return solicity.status == StatusSolicity.INSISTENCY_SEND.key
           || solicity.status == StatusSolicity.SEND.key
+          || solicity.status == StatusSolicity.PRORROGA.key
           || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_SEND.key
       }
 
@@ -181,7 +182,7 @@ class SolicityUseCase {
   getTextChangeStatus(solicity: Solicity, user_id: number) {
     if (user_id != solicity.userCreated) {
       if (solicity.status == StatusSolicity.SEND.key) {
-        return 'Prórroga'
+        return 'Activar Prórroga'
       }
     } else {
       if (solicity.status == StatusSolicity.RESPONSED.key

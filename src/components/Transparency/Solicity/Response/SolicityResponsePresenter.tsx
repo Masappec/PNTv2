@@ -311,7 +311,12 @@ const SolicityResponsePresenter = (props: Props) => {
 
                             <Link
                                 className="text-primary-600"
-                                to="/normativa">“¿Deben las entidades responder mis solicitudes?”</Link>
+                                to="/normativa">
+                                    {
+                                    (props.userSession.id || 0) == props.solicitySaved.userCreated ?
+                                        "“¿Deben las entidades responder mis solicitudes?”":""
+                                    }
+                                    </Link>
                         </p>
                             <Button
                                 onClick={() => { props.ChangeStatus() }}
@@ -330,12 +335,20 @@ const SolicityResponsePresenter = (props: Props) => {
                             <div>
                                 <Label
                                     htmlFor=""
-                                    value={props.textForMotiveDescription}
+                                    value={
+                                        props.userSession.establishment_id?
+                                        props.textForMotiveDescription:""
+                                    }
                                     className="text-sm "
                                 />
                                 <Link
                                     className="text-primary-600"
-                                    to="/normativa">“¿Deben las entidades responder mis solicitudes?”</Link>
+                                    to="/normativa">
+                                    {
+                                        (props.userSession.id || 0) == props.solicitySaved.userCreated ?
+                                            "“¿Deben las entidades responder mis solicitudes?”" : ""
+                                    }
+                                </Link>
                                 <Textarea
                                     placeholder={props.solicitySaved.status !== StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key ?
                                         "Escribe la explicación por la que solicitas la insistencia" :
