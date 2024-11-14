@@ -115,7 +115,7 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                 <button
                     type='button'
                     onClick={props.onAdd}
-                    className='inline-flex items-center gap-2 rounded-lg
+                    className='inline-flex items-center gap-2 rounded-lg 
                     bg-primary px-5 py-2.5 text-center text-sm font-medium
                     w-auto
                      text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
@@ -187,29 +187,11 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         {
                             title: "Días transcurridos",
                             key: "-date",
-                            render: (solicity) => {
-                                const calculateTimeDifference = (startDate, endDate) => {
-                                    const start = new Date(startDate);
-                                    const end = new Date(endDate);
-                                    const diffInMilliseconds = end - start;
-
-                                    const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
-                                    const hours = Math.floor((diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                    return { days, hours };
-                                };
-
-                                // Usar `updated_at` si el estado es RESPONSED, de lo contrario, usar la fecha actual
-                                const endDate =
-                                    solicity.status === "RESPONSED" ? solicity.updated_at : new Date();
-
-                                const timeDifference = calculateTimeDifference(solicity.date, endDate);
-
-                                return (
-                                    <p>
-                                        {timeDifference.days} días, {timeDifference.hours} horas
-                                    </p>
-                                );
-                            },
+                            render: (solicity) => (
+                                <p className="text-left">{
+                                    solicity.date ? elapsedTime(solicity.date) : ""
+                                }</p>
+                            )
                         },
 
                         {
@@ -222,8 +204,8 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                                 const color = status?.bg || "bg-primary-500"
                                 const border = color.replace("bg", "border")
                                 return (
-                                    <p className={`text-wrap border rounded-md px-2 py-1
-                                        w-auto
+                                    <p className={`text-wrap border rounded-md px-2 py-1    
+                                        w-auto 
                                      ${border}
                                      ${color} text-white text-center
 `}>
