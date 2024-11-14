@@ -104,7 +104,7 @@ class FilePublicationService {
         
          if (isVertical) {
              // Escribir columnas
-             const temporalRows = [columns, rows.map(row=>row.length>0?row[0]:"")];
+             const temporalRows = [columns, ...rows];
 
              const objectRow:Row[][] = temporalRows.map((row,index) => {
                     return row.map((cell) => {
