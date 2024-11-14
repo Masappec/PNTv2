@@ -25,7 +25,8 @@ interface Props {
     setError: (e: string) => void;
     setSuccess: (e: string) => void;
     options: OptionsSelectCreate;
-    hangelChangeExtraNumeral: (e: MultiValue<{ value: string, label: string }>) => void
+    hangelChangeExtraNumeral: (e: MultiValue<{ value: string, label: string }>) => void;
+    handleRemoveNumeral: (id: string) => void;
     numerals: NumeralDetail[];
     validateFields: (name: string) => string;
 
@@ -335,8 +336,18 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     }
                                     className="w-full"
                                     isMulti
-                                    onChange={(e) => {
-                                        props.hangelChangeExtraNumeral(e)
+                                    onChange={(selectedOptions) => {
+                                        // Delegar la eliminacion si corresponde
+                                        const selectedIds = selectedOptions?.map((option) => option.value) || [];
+                                        const removeIds = props
+                                            .getSelectedExtraNumeral(props.data.extra_numerals || "")
+                                            .map((numeral) => numeral.value)
+                                            .filter((id) => !selectedIds.includes(id));
+
+                                        removeIds.forEach((id) => {
+                                            props.handleRemoveNumeral(id);
+                                        })
+                                        props.hangelChangeExtraNumeral(selectedOptions);
                                     }}
                                     value={props.getSelectedExtraNumeral(props.data.extra_numerals||"")}
                                 />
