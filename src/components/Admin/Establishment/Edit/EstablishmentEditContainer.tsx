@@ -274,7 +274,7 @@ const EstablishmentEditContainer = ({
         for(const numeral of selected) {
             //console.log("Add:",numeral.value)
             if (numeral.value){
-                numeralUsecase.updateNumeralState(numeral.value, {
+                numeralUsecase.updateNumeralState(Number(numeral.value), {
                     isSelected: false,
                 });
             } else {

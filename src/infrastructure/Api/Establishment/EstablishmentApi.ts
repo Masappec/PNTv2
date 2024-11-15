@@ -40,7 +40,7 @@ class EstablishmentApi {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-
+            console.log("Respuesta", response.data)
             return response.data;
 
         } catch (error: any) {
