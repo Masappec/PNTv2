@@ -77,7 +77,7 @@ const EstablishmentEditContainer = ({
         usecase.detail(id || "").then((res) => {
             const es = res
             numeralUsecase.getNumeralByEstablishment(parseInt(id || "0")).then((res) => {
-                const res_ = res.filter((item) => !item.isDefault).map((item) => item.id)
+                const res_ = res.filter((item) => !item.isDefault && !item.isSelected).map((item) => item.id)
                 setData({ ...es, extra_numerals: res_.join(',') })
             }).catch((err) => {
                 console.log(err)
@@ -93,7 +93,6 @@ const EstablishmentEditContainer = ({
         data.highest_authority = "NINGUNO"
         data.highest_committe = "NINGUNO" 
         data.extra_numerals = selectedExtraNumeral.join(',')
-        console.log(data)
 
         if (data.name === "") {
             setError("Ingrese el nombre")
@@ -272,6 +271,16 @@ const EstablishmentEditContainer = ({
             }
             return null
         }).filter((item) => item !== null) as MultiValue<{ value: string, label: string }>
+        for(const numeral of selected) {
+            //console.log("Add:",numeral.value)
+            if (numeral.value){
+                numeralUsecase.updateNumeralState(numeral.value, {
+                    isSelected: false,
+                });
+            } else {
+                console.log("Nada por hacer")
+            }
+        }
         return selected
     }
 
@@ -296,7 +305,7 @@ const EstablishmentEditContainer = ({
             }
             // Llamada al backend para actualizar el estado 
             await numeralUsecase.updateNumeralState(numeralIdAsNumber, {
-                isDefault: true,
+                isSelected: true,
             });
             // Actualiza el estado local eliminando el numeral del arreglo
             setData((prevData) => {
@@ -304,7 +313,7 @@ const EstablishmentEditContainer = ({
                     .split(",")
                     .filter((id) => id !== numeralId)
                     .join(",");
-                console.log("updateNumerals", updateNumerals);
+                //console.log("Remove", updateNumerals);
                 return { ...prevData, extra_numerals: updateNumerals};
             });
         } catch (error) {

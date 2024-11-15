@@ -135,6 +135,16 @@ const EstablishmentInSessionContainer = ({
             }
             return null
         }).filter((item) => item !== null) as MultiValue<{ value: string, label: string }>
+        for(const numeral of selected) {
+            //console.log("Add:",numeral.value)
+            if (numeral.value){
+                numeralUsecase.updateNumeralState(numeral.value, {
+                    isSelected: false,
+                });
+            } else {
+                console.log("Nada por hacer")
+            }
+        }
         return selected
     }
 
@@ -159,7 +169,7 @@ const EstablishmentInSessionContainer = ({
             }
             // Llamada al backend para actualizar el estado 
             await numeralUsecase.updateNumeralState(numeralIdAsNumber, {
-                isDefault: true,
+                isSelected: true,
             });
             // Actualiza el estado local eliminando el numeral del arreglo
             setData((prevData) => {
@@ -167,7 +177,7 @@ const EstablishmentInSessionContainer = ({
                     .split(",")
                     .filter((id) => id !== numeralId)
                     .join(",");
-                console.log("updateNumerals", updateNumerals);
+                //console.log("Remove", updateNumerals);
                 return { ...prevData, extra_numerals: updateNumerals};
             });
         } catch (error) {

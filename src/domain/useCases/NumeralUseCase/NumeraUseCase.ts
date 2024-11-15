@@ -40,10 +40,10 @@ class NumeralUseCase {
      * @param data - Objeto con los campos a actualizar
      * @returns - Respuesta del servicio
     */
-    async updateNumeralState(id: number, data: { isDefault: boolean }) {
+    async updateNumeralState(id: number, data: { isSelected: boolean }) {
         try {
             const response = await this.service.updateNumeralState(id, data);
-            console.info(response);
+            //console.info(response);
             return response;
         } catch (error) {
             console.error("Error al actualizar el estado del numeral:", error);
