@@ -11,6 +11,7 @@ interface Dto extends BaseDTO {
     name: string,
     description: string,
     isDefault: boolean,
+    isSelected: boolean,
     parent: number | null;
     templates: TemplateFileEntity[]
     published: boolean;
@@ -22,6 +23,7 @@ class NumeralEntity extends BaseEntity {
     name: string = "";
     description: string = "";
     isDefault = false;
+    isSelected = false;
     parent: number | null = 0
     templates: TemplateFileEntity[] = []
     published: boolean = false;
@@ -37,6 +39,7 @@ class NumeralEntity extends BaseEntity {
             name,
             description,
             isDefault,
+            isSelected,
             userCreated,
             userUpdated,
             userDeleted,
@@ -52,6 +55,7 @@ class NumeralEntity extends BaseEntity {
         this.name = name;
         this.description = description;
         this.isDefault = isDefault;
+        this.isSelected= isSelected;
         this.parent = parent;
         this.templates = templates;
         this.published = published;

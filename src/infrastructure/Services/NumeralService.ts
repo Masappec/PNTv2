@@ -34,9 +34,9 @@ class NumeralService {
      * @param data - Datos a enviar al API
      * @returns - Respuesta del API mapeada a dominio
     */
-    async updateNumeralState(numeral_id: number, data: { isDefault: boolean }) {
+    async updateNumeralState(numeral_id: number, data: { isSelected: boolean }) {
         const res = await this.api.updateNumeralState(numeral_id, data);
-        console.info("Respuesta del api", res);
+        //console.info("Respuesta del api", res);
         return res;
     }
 

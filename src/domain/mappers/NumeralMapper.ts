@@ -12,6 +12,7 @@ class NumeralMapper {
             description: data.description,
             id: data.id,
             isDefault: data.is_default,
+            isSelected: data.is_selected,
             name: data.name,
             parent: data.parent,
             templates: data.templates.map((template) => ({
