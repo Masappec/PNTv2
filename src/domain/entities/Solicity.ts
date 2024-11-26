@@ -158,8 +158,8 @@ export class Comments {
         public motive: string,
         public user: number,
         public solicity: number,
-        public files: number[],
-        public attachments: number[]
+        public files: FilePublicationEntity[],
+        public attachments: AttachmentEntity[]
     ) { }
 
 }
@@ -240,9 +240,11 @@ export class Solicity extends BaseEntity {
         })
 
         solicity.comments?.forEach(c => {
-            list.push(new TimeLinePresenter(c.user, c.created_at, c.motive, [], [],
-                "COMMENT", "Motivo de Prórroga", 'Motivo de Prórroga'))
-        })
+            list.push(new TimeLinePresenter(c.user, c.created_at, c.motive, c.files, c.attachments,
+                "COMMENT", "Motivo de Prórroga", 'Motivo de Prórroga'
+            ));
+        });
+        console.log("Solicity Comments",solicity.comments)
 
 
 

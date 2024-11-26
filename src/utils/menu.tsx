@@ -46,6 +46,7 @@ import { GrCompliance } from "react-icons/gr";
 import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
 import VerPerfil from "../interfaces/web/Transparency/Perfil";
 import AllPublications from "../interfaces/web/Transparency/AllPublications";
+import InboxCreate from "../interfaces/web/Admin/Inbox";
 
 
 export interface MenuItem {
@@ -431,6 +432,14 @@ const menu = [
   },
 
 
+  {
+    name: 'Mensajes Masivos',
+    path: '/admin/inbox/create',
+    visible: true,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: 'view_establishment',
+    element: <InboxCreate />
+  },
   {
     name: ' Cumplimiento de Entidades',
     path: '/admin/entitycompliance',

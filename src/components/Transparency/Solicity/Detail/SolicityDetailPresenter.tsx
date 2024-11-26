@@ -32,11 +32,12 @@ interface Props {
 }
 const SolicityDetailPresenter = (props: Props) => {
 
-
+  console.log("Revisar respuesta aqui:",props.timeline_response)
   const [user, setUserSession] = useState<UserEntity | null>(null)
 
   useEffect(() => {
     const session = SessionService.getUserData()
+    console.info("Session", session)
     setUserSession(session)
   }, [])
   if (props.error) {
@@ -165,6 +166,7 @@ const SolicityDetailPresenter = (props: Props) => {
                 <p className='mb-4 text-slate-600 break-words'>
                   {response.text}
                 </p>
+              
                 {
                   response.attachments.map(file => (
 
@@ -197,7 +199,6 @@ const SolicityDetailPresenter = (props: Props) => {
                 }
                 {
                   response.files.map(file => (
-
                     <article
                       key={'subido' + index}
                       className='grid xl:w-1/4

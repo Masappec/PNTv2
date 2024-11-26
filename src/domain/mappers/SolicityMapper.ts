@@ -7,7 +7,7 @@ import { SolicityResultMapper } from "./SolicityResultMapper";
 class SolicityMappers {
 
     static apiToDomain(data: SolicityResponseDto): Solicity {
-        console.log(data)
+        //console.log(data)
         return new Solicity(
             data.id,
             data.created_at + "",

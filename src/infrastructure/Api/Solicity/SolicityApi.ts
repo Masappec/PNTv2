@@ -222,7 +222,9 @@ class SolicityApi {
 
   async changeStatus(data:{solicity_id:number,
     text:string,
-
+    files: number[],
+    attachment: number[],
+    // Aqui vamos a revisar 
   }) {
     try {
       const res = await this.api.post<MessageTranslation<SolicityResponseDto>>(TRANSPARENCY_PATH + '/solicity/change-status', data);

@@ -308,6 +308,7 @@ const SolicityResponseContainer = (props: Props) => {
     const onAddDataSet = (type: "table" | "file" | "url") => {
         if (type === "file") {
             const copyFiles = [...files]
+            console.log("CopyFiles", copyFiles)
             if (files.length < 3) {
                 copyFiles.push({
                     file: null,
@@ -319,6 +320,7 @@ const SolicityResponseContainer = (props: Props) => {
                     percent: 0
                 })
                 SetFiles(copyFiles)
+                console.log("F.CopyFiles", copyFiles)
             } else {
                 setError("Solo se permiten 3 archivos")
                 setTimeout(() => {
@@ -390,6 +392,7 @@ const SolicityResponseContainer = (props: Props) => {
         SetFiles(copyFiles)
 
         const data = new FilePublicationEntity(0, name, description, file);
+        console.log("395 Data", data)
         if (file instanceof File) {
             props.fileUseCase.createFilePublication(data,
                 (e) => {
@@ -421,67 +424,7 @@ const SolicityResponseContainer = (props: Props) => {
                 SetFiles(copyFiles)
             })
         }
-
-    }
-
-
-
-
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setLoading(true)
-        setError("")
-        if (solicityToResponse.status == StatusSolicity.INSISTENCY_PERIOD.key ||
-            solicityToResponse.status == StatusSolicity.PRORROGA.key ||
-            solicityToResponse.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key) {
-            if (dataResponseSolicity.text == "") {
-                setError("Favor Ingresa la descripción de tu solicitud")
-                setLoading(false)
-                return;
-            }
-            props.usecase.changeStatus(solicityToResponse.id, dataResponseSolicity.text).then((res) => {
-                setTimeline(Solicity.ordernReponse(res))
-                setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
-                SetSolicity(res)
-                console.log(res)
-                setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))
-                setIsAvaliableToInsistency(true)
-                setLoading(false)
-            }).catch((e) => {
-                console.log(e)
-                setLoading(false)
-
-            })
-            handleCancel()
-            return
-        }
-
-        dataResponseSolicity.id_solicitud = solicityToResponse.id
-        dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0).filter(
-            e => e != 0
-        )
-        dataResponseSolicity.attachment = attachs.map((attach) => attach.entity?.id || 0)
-        if (dataResponseSolicity.text == '' || dataResponseSolicity.text == null) {
-            setError('Ingresa tu consulta/respuesta')
-            setLoading(false);
-            return
-        }
-        props.usecase.responseSolicity(dataResponseSolicity).then((_solicity) => {
-            setLoading(false)
-            setSuccess("Solicitud enviada correctamente")
-            SetSolicity(_solicity)
-            setIsSaved(true)
-            handleCancel()
-
-            //toast.success("Solicitud enviada correctamente")
-        }).catch((err) => {
-            setError(err.message)
-            setLoading(false)
-            setIsSaved(false)
-            handleCancel()
-
-        })
-
+        
     }
 
 
@@ -498,6 +441,65 @@ const SolicityResponseContainer = (props: Props) => {
             SetAttachs(copyFiles)
         }
     }
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setLoading(true)
+        setError("")
+        if (solicityToResponse.status == StatusSolicity.INSISTENCY_PERIOD.key ||
+            solicityToResponse.status == StatusSolicity.PRORROGA.key ||
+            solicityToResponse.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key) {
+            if (dataResponseSolicity.text == "") {
+                setError("Favor Ingresa la descripción de tu solicitud")
+                setLoading(false)
+                return;
+            }
+            props.usecase.changeStatus(solicityToResponse.id, dataResponseSolicity.text, dataResponseSolicity.files, dataResponseSolicity.attachment).then((res) => {
+                setTimeline(Solicity.ordernReponse(res))
+                setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
+                SetSolicity(res)
+                console.log(res)
+                setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))
+                setIsAvaliableToInsistency(true)
+                setLoading(false)
+            }).catch((e) => {
+                console.log(e)
+                setLoading(false)
+                
+            })
+            handleCancel()
+            return
+        }
+        console.log("porque este console.log no se ejecuta o no sale en la cosola web?")
+        dataResponseSolicity.id_solicitud = solicityToResponse.id
+        dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0).filter(
+            e => e != 0
+        )
+        dataResponseSolicity.attachment = attachs.map((attach) => attach.entity?.id || 0)
+        if (dataResponseSolicity.text == '' || dataResponseSolicity.text == null) {
+            setError('Ingresa tu consulta/respuesta')
+            setLoading(false);
+            return
+        }
+        props.usecase.responseSolicity(dataResponseSolicity).then((_solicity) => {
+            console.log("Tampoco puedo ver estos console.logs")
+            console.log("474.Solicity", _solicity)
+            setLoading(false)
+            setSuccess("Solicitud enviada correctamente")
+            SetSolicity(_solicity)
+            setIsSaved(true)
+            handleCancel()
+
+            //toast.success("Solicitud enviada correctamente")
+        }).catch((err) => {
+            setError(err.message)
+            setLoading(false)
+            setIsSaved(false)
+            handleCancel()
+
+        })
+    }
+
     const getSelectedItem = (value: string, options: ColourOption[]) => {
         const item = options.find((item) => item.value === value)
         return item || {} as ColourOption
@@ -509,7 +511,7 @@ const SolicityResponseContainer = (props: Props) => {
             setSolicityToResponse(res)
             setTimeline(Solicity.ordernReponse(res))
             setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
-            console.log(res)
+            console.log("Que es esto?",res)
             setIsAvaliableToInsistency(props.usecase.availableToInsistency(userSession, res))
             SetSolicity(res)
         }).catch((e) => {
