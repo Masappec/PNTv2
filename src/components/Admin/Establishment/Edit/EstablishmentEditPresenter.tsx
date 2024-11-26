@@ -29,7 +29,7 @@ interface Props {
     handleRemoveNumeral: (id: string) => void;
     numerals: NumeralDetail[];
     validateFields: (name: string) => string;
-
+    userRole: string;
     getSelectedExtraNumeral: (extra_numerals: string) => MultiValue<{ value: string, label: string }>
 }
 
@@ -105,7 +105,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('name')}
                                     obligatorio
-
+                                    disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -126,7 +126,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="identification"
                                     color={props.validateFields('identification')}
                                     obligatorio
-                                    disabled
+                                    disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -161,6 +161,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     ]}
                                     color={props.validateFields('type_institution')}
                                     obligatorio
+                                    disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -179,6 +180,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     ]}
                                     color={props.validateFields('function_organization')}
                                     obligatorio
+                                    disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
@@ -196,6 +198,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     ]}
                                     color={props.validateFields('type_organization')}
                                     obligatorio
+                                    disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
                             <div className="flex  flex-col m-2">
