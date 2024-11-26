@@ -164,7 +164,9 @@ const RegisterPresenter = ({ ...props }: RegisterPresenterProps) => {
 
                       />
                       <label htmlFor='accept_terms' className='ml-2 text-sm text-gray-900'>
-                        <a href="https://transparenciav1.dpe.gob.ec/transparencia/normativa.php" target="_blank">
+                        <a className='font-medium text-primary hover:underline hover:underline-offset-2' 
+                          href='https://transparenciav1.dpe.gob.ec/transparencia/normativa.php'
+                          target='_blank'>
                           {field.description}
                         </a>
                       </label>
