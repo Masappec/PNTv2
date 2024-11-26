@@ -128,17 +128,9 @@ class SolicityUseCase {
     if (solicity && user) {
       if (solicity.status == StatusSolicity.SEND.key) {
         if (user_citizen_id !== user_session) {
-          const expired_date = moment.utc(solicity.expiry_date).toDate()
-          const now = new Date()
-          
-          const normalizeDate = (date: any) => {
-            return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-          };
-        
-          const normalizedNow = normalizeDate(now);
-          const normalizedExpiredDate = normalizeDate(expired_date);
-          
-          if (normalizedNow <= normalizedExpiredDate
+          const expired_date = new Date(parseInt(solicity.expiry_date.substring(0,4)), parseInt(solicity.expiry_date.substring(5,7)) - 1, parseInt(solicity.expiry_date.substring(8,10)))
+          const now = new Date()     
+          if (now <= expired_date
           ) {
             return true
           }
@@ -154,8 +146,8 @@ class SolicityUseCase {
     return await this.solicityService.createManualSolicity(data);
   }
 
-  async changeStatus(solicityId: number, text: string, files: number[], attachment: number[]) {
-    return await this.solicityService.changeStatus(solicityId, text, files, attachment);
+  async changeStatus(solicityId: number, text: string) {
+    return await this.solicityService.changeStatus(solicityId, text);
   }
 
   isAvaliableChangeStaus(solicity: Solicity) {

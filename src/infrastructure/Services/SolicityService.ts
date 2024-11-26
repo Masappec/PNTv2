@@ -107,13 +107,11 @@ class SolicityService {
     return response;
   }
 
-  async changeStatus(solicity_id: number, text: string, files: number[], attachment: number[]) {
+  async changeStatus(solicity_id: number, text: string) {
 
     const response = await this.api.changeStatus({
       solicity_id: solicity_id,
       text: text,
-      files: files,
-      attachment: attachment,
     });
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
 

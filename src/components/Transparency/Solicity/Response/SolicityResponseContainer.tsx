@@ -446,6 +446,7 @@ const SolicityResponseContainer = (props: Props) => {
         e.preventDefault()
         setLoading(true)
         setError("")
+        console.log("Solicity to response", solicityToResponse)
         if (solicityToResponse.status == StatusSolicity.INSISTENCY_PERIOD.key ||
             solicityToResponse.status == StatusSolicity.PRORROGA.key ||
             solicityToResponse.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key) {
@@ -454,7 +455,8 @@ const SolicityResponseContainer = (props: Props) => {
                 setLoading(false)
                 return;
             }
-            props.usecase.changeStatus(solicityToResponse.id, dataResponseSolicity.text, dataResponseSolicity.files, dataResponseSolicity.attachment).then((res) => {
+            // Llamar el nuevo enpoint para asociar el estatus
+            props.usecase.changeStatus(solicityToResponse.id, dataResponseSolicity.text).then((res) => {
                 setTimeline(Solicity.ordernReponse(res))
                 setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
                 SetSolicity(res)
@@ -470,7 +472,6 @@ const SolicityResponseContainer = (props: Props) => {
             handleCancel()
             return
         }
-        console.log("porque este console.log no se ejecuta o no sale en la cosola web?")
         dataResponseSolicity.id_solicitud = solicityToResponse.id
         dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0).filter(
             e => e != 0
