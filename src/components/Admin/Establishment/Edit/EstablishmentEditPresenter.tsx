@@ -219,7 +219,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                            
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Nombre de la autoridad superior"} width="w-60"
+                                    placeholder={"Nombre de la máxima autoridad"} width="w-60"
                                     value={props.data.first_name_authority || ""}
                                     name="first_name_authority"
                                     onChange={(e) => props.setData(e)}
@@ -229,7 +229,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </div>
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Apellido de la autoridad superior"} width="w-60"
+                                    placeholder={"Apellido de la máxima autoridad"} width="w-60"
                                     value={props.data.last_name_authority || ""}
                                     name="last_name_authority"
                                     onChange={(e) => props.setData(e)}
@@ -240,7 +240,7 @@ const EstablishmentEditPresenter = (props: Props) => {
 
                             <div className="flex  flex-col m-2">
                                 <Input type={"text"}
-                                    placeholder={"Cargo de la autoridad superior"} width="w-60"
+                                    placeholder={"Cargo de la máxima autoridad"} width="w-60"
                                     value={props.data.job_authority || ""}
                                     name="job_authority"
                                     onChange={(e) => props.setData(e)}
@@ -252,7 +252,7 @@ const EstablishmentEditPresenter = (props: Props) => {
 
                             <div className="flex  flex-col m-2">
                                 <Input type={"email"}
-                                    placeholder={"Correo de la autoridad superior"} width="w-60"
+                                    placeholder={"Correo de la máxima autoridad"} width="w-60"
                                     value={props.data.email_authority || ""}
                                     name="email_authority"
                                     onChange={(e) => props.setData(e)}
