@@ -174,36 +174,50 @@ const AllSolicitiesPresenter = (props: Props) => {
                                 const calculateTimeDifference = (startDate: string | Date, endDate: string | Date) => {
                                     const start = new Date(startDate);
                                     const end = new Date(endDate);
-
+                            
                                     // Validar que ambas fechas sean válidas
                                     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
                                         console.error("Fechas inválidas:", { startDate, endDate });
                                         return { days: 0, hours: 0 };
                                     }
-
+                            
                                     const diffInMilliseconds = end.getTime() - start.getTime();
-
                                     const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
-                                    const hours = Math.floor(
-                                        (diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-                                    );
+                                    const hours = Math.floor((diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                                     return { days, hours };
                                 };
-
-                                // Determinar `endDate`: usar `updated_at` si el estado es RESPONSED, de lo contrario, usar la fecha actual
-                                const endDate =
-                                    solicity.status === "RESPONSED"
-                                        ? solicity.updated_at
-                                        : new Date().toISOString(); // Normalizar como cadena ISO
-
+                            
+                                // Determinar la fecha de finalización según el estado
+                                let endDate;
+                            
+                                switch (solicity.status) {
+                                    case "RESPONSED":
+                                        // Usar `updated_at` como fecha de fin en solicitudes respondidas
+                                        endDate = solicity.updated_at;
+                                        break;
+                            
+                                    case "PRORROGA":
+                                    case "NO_RESPONSED":
+                                    case "INSISTENCY_NO_RESPONSED":
+                                        // Usar `expiry_date` como fecha de fin en estos estados
+                                        endDate = solicity.expiry_date;
+                                        break;
+                            
+                                    default:
+                                        // Usar la fecha actual para otros estados
+                                        endDate = new Date().toISOString();
+                                        break;
+                                }
+                            
+                                // Calcular la diferencia de tiempo desde la fecha de envío (start_date) hasta endDate
                                 const timeDifference = calculateTimeDifference(solicity.date, endDate);
-
+                            
                                 return (
                                     <p>
                                         {timeDifference.days} días, {timeDifference.hours} horas
                                     </p>
                                 );
-                            },
+                            }                                                        
                         },
 
                         {
