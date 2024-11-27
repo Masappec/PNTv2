@@ -339,6 +339,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     }
                                     className="w-full"
                                     isMulti
+                                    isDisabled={props.userRole === "Supervisora PNT"}
                                     onChange={(selectedOptions) => {
                                         // Delegar la eliminacion si corresponde
                                         const selectedIds = selectedOptions?.map((option) => option.value) || [];
