@@ -132,7 +132,7 @@ export const StatusSolicity = {
         key: 'PRORROGA',
         bg: 'bg-yellow-700',
         icon: <FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Recibido - Prórroga',
+        value_2: 'Recibida - Prórroga',
         text: 'Prórroga'
     },
 
