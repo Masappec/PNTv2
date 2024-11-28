@@ -15,7 +15,7 @@ const AboutPresenter = () => {
         manera libre y sin ningún tipo de restricciones.</p>
         
         <p>
-        Esta herramienta es el resultado de un proceso de cocreación, o construcción colaborativa, liderado por la 
+        Esta herramienta es el resultado de un proceso de cocreación, o construcción colaborativa, liderado por la  
         <strong>Defensoría del Pueblo de Ecuador</strong>. Participaron personas servidoras públicas integrantes de los Comités de 
         Transparencia y personas delegadas como Oficiales de Transparencia de distintas entidades, así como 
         representantes de la <strong>academia</strong> y de <strong>organizaciones sociales</strong> que promueven el ejercicio y exigibilidad del derecho 
