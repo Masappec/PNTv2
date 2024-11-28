@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
+import SessionService from "../../../../infrastructure/Services/SessionService"
 import { useNavigate, useParams } from "react-router-dom"
 import EstablishmentEditPresenter from "./EstablishmentEditPresenter"
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
@@ -27,6 +28,7 @@ const EstablishmentEditContainer = ({
     const [loading, setLoading] = useState<boolean>(false)
     const [selectedExtraNumeral, setSelectedExtraNumeral] = useState<number[]>([])
     const [modified, setModified] = useState<boolean>(false)
+    const [userRole, setUserRole] = useState<string>("");
 
     const [data, setData] = useState<EstablishmentEntity>({
         abbreviation: "",
@@ -55,6 +57,20 @@ const EstablishmentEditContainer = ({
 
     })
     const [numerals, setNumerals] = useState<NumeralDetail[]>([])
+
+    useEffect(() => {
+        const userSession = SessionService.getUserData();
+        if (userSession) {
+            const group = userSession.group;
+            if (group && group.length > 0) {
+                setUserRole(group[0].name); // Guardar el nombre del primer rol en el estado
+            } else {
+                console.warn("El usuario no tiene grupos asignados");
+            }
+        } else {
+            console.error("No se encontró el usuario");
+        }
+    }, []);
 
     useEffect(() => {
         usecase.getOptions().then((res) => {
@@ -274,7 +290,7 @@ const EstablishmentEditContainer = ({
         for(const numeral of selected) {
             //console.log("Add:",numeral.value)
             if (numeral.value){
-                numeralUsecase.updateNumeralState(numeral.value, {
+                numeralUsecase.updateNumeralState(Number(numeral.value), {
                     isSelected: false,
                 });
             } else {
@@ -350,6 +366,7 @@ const EstablishmentEditContainer = ({
             numerals={numerals}
             getSelectedExtraNumeral={getSelectedExtraNumeral}
             validateFields={validateFields}
+            userRole={userRole}
         />
     )
 
