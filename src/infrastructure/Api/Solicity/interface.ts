@@ -52,7 +52,7 @@ export interface CommentsDto {
   motive: string;
   user: number;
   solicity: number;
-  files: number[];
+  files: FilePublicationResponse[];
   attachments: number[];
 
 }
@@ -169,4 +169,5 @@ export interface SolicityResult {
 export interface CommentDto {
   solicity_id: number;
   motive: string;
+  files: number[]
 }

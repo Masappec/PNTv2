@@ -402,6 +402,16 @@ const SolicityResponseContainer = (props: Props) => {
                 copyFiles[index].loading = false
                 SetFiles(copyFiles)
 
+                // Agregar a `dataResponseSolicity.files`
+                setResponseSolicity((prev) => {
+                    const updatedFiles = [...prev.files, response.id];
+                    console.log("Archivos actualizados:", updatedFiles);
+                    return {
+                        ...prev,
+                        files: updatedFiles,    
+                    };
+                });
+
             }).catch((error) => {
                 const copyFiles = [...files]
                 copyFiles[index].error = error.message
@@ -424,7 +434,12 @@ const SolicityResponseContainer = (props: Props) => {
 
     }
 
-
+    const files_tosend_prorroga = dataResponseSolicity.files.map((file) => {
+        if (typeof file === "number") {
+            return file; 
+        }
+        return file
+    })
 
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -439,7 +454,7 @@ const SolicityResponseContainer = (props: Props) => {
                 setLoading(false)
                 return;
             }
-            props.usecase.changeStatus(solicityToResponse.id, dataResponseSolicity.text).then((res) => {
+            props.usecase.changeStatus(solicityToResponse.id, dataResponseSolicity.text, files_tosend_prorroga).then((res) => {
                 setTimeline(Solicity.ordernReponse(res))
                 setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
                 SetSolicity(res)
