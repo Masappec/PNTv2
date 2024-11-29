@@ -52,7 +52,7 @@ export interface CommentsDto {
   motive: string;
   user: number;
   solicity: number;
-  files: number[];
+  files: FilePublicationResponse[];
   attachments: number[];
 
 }

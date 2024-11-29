@@ -105,6 +105,7 @@ class SolicityService {
       solicity_id: solicity_id,
       files: files
     });
+    console.log("Response Resolver:", response)
     return response;
   }
 
