@@ -169,4 +169,5 @@ export interface SolicityResult {
 export interface CommentDto {
   solicity_id: number;
   motive: string;
+  files: number[]
 }

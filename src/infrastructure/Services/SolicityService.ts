@@ -99,19 +99,21 @@ class SolicityService {
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
   }
 
-  async commentSolicity(solicity_id: number, comment: string) {
+  async commentSolicity(solicity_id: number, comment: string, files: number[]) {
     const response = await this.api.commentSolicity({
       motive: comment,
       solicity_id: solicity_id,
+      files: files
     });
     return response;
   }
 
-  async changeStatus(solicity_id: number, text: string) {
+  async changeStatus(solicity_id: number, text: string, files: number[]) {
 
     const response = await this.api.changeStatus({
       solicity_id: solicity_id,
-      text: text
+      text: text,
+      files: files
     });
     return SolicityMappers.apiToDomain(response.json as SolicityResponseDto);
 

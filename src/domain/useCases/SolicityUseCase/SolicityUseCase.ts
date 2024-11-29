@@ -61,8 +61,8 @@ class SolicityUseCase {
 
   }
 
-  commentSolicity(comment: string, solicityId: number) {
-    return this.solicityService.commentSolicity(solicityId, comment);
+  commentSolicity(comment: string, solicityId: number, files: number[]) {
+    return this.solicityService.commentSolicity(solicityId, comment, files);
   }
 
 
@@ -146,8 +146,8 @@ class SolicityUseCase {
     return await this.solicityService.createManualSolicity(data);
   }
 
-  async changeStatus(solicityId: number, text: string) {
-    return await this.solicityService.changeStatus(solicityId, text);
+  async changeStatus(solicityId: number, text: string, files: number[]) {
+    return await this.solicityService.changeStatus(solicityId, text, files);
   }
 
   isAvaliableChangeStaus(solicity: Solicity) {
