@@ -278,5 +278,16 @@ class SolicityUseCase {
     // Guardar el PDF
     doc.save(`Solicitud-${data.number_saip}.pdf`);
   }
+
+
+  isAvaliableToResponseProrroga(user: UserEntity, solicity: Solicity) {
+ 
+    if (solicity && user) {
+      if (solicity.status == StatusSolicity.PRORROGA.key) {
+        return solicity.timeline.find(x => x.status == StatusSolicity.PRORROGA.key) ? true : false
+      }
+    }
+    return false;
+  }
 }
 export default SolicityUseCase;
