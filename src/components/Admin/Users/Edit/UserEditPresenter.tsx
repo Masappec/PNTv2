@@ -34,6 +34,7 @@ interface UserEditPresenterProps {
     onChangePassword: (data: IOncalculate) => void;
     loadingSubmit: boolean;
     isEstablishmentUser: boolean;
+    userRole: string;
     onLoadOptions: (inputValue: string, callback: (options: ColourOption[]) => void) => void;
 }
 
@@ -42,7 +43,7 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
         return (<div className="flex items-center py-5 justify-center">
             <Spinner />
         </div>)
-
+    console.log("Fields", props.fields)
     return (
         <>
             <p className='my-8 max-w-3xl items-center text-sm text-primary'>
@@ -159,7 +160,6 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                     
                                     
                                 />
-                                
                                 :field.type_field == "select" ?
                                     <div>
                                         <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
@@ -225,7 +225,9 @@ const UserEditPresenter = (props: UserEditPresenterProps) => {
                                             placeholder={"Ingresa " + field.description}
                                             name={field.name}
                                             value={props.data[field.name as keyof UserEntity] as string}
-
+                                            disabled={
+                                                field.name === "username" && props.userRole !== "Superadministradora PNT DPE"
+                                            }
                                             data-astro-source-loc='32:14'
                                         />
                                     </div>
