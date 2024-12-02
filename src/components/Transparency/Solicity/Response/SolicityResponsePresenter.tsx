@@ -452,6 +452,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                         props.onChangeTextResponse(e.target.value)
                                     }}
                                     ref={responseRef as React.RefObject<HTMLTextAreaElement>}
+                                    required
                                 ></Textarea>
                                 <span>
                                     {count} / 3000
