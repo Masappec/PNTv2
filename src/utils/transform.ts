@@ -2,7 +2,7 @@
 import jsPDF from "jspdf";
 import csvtojson from 'csvtojson';
 import * as XLSX from 'xlsx';
-import autoTable, { RowInput, Styles } from "jspdf-autotable";
+import autoTable, { RowInput } from "jspdf-autotable";
 import { DELIMITER } from "./constans";
 import * as dfd from "danfojs/dist/danfojs-browser/src";
 
