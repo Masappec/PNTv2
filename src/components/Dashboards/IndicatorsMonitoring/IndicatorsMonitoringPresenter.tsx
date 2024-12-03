@@ -34,6 +34,8 @@ const IndicatorsMonitoringPresenter = (props: Props) => {
         day_frencuency_publish: 0,
         day_frencuency_response: 0,
         ta_published: 0,
+        tf_published: 0,
+        tc_published: 0
     });
     const todas = EstablishmentEntity.generateAllEstablishment('')
 
