@@ -38,12 +38,10 @@ interface Props {
     onChangeSort: (sort: string) => void
     columnsSort: string[]
     onChangeStatus: (value: string) => void
+    onExport: () => void
 }
 
 const SolicityListEstablishmentPresenter = (props: Props) => {
-
-    console.log("DASSSA", props.data)
-
     return (
         <>
             <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
@@ -111,7 +109,12 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
                 </div>
 
+                <div className="flex justify-end ml-28">
+                    <button className='inline-flex w-full items-center gap-2 rounded-md border border-primary px-5 py-2.5 text-center text-xs font-medium text-gray-600 transition-colors hover:bg-primary hover:text-white focus:outline-none'
 
+                        onClick={props.onExport}
+                    >Exportar</button>
+                </div>
                 <button
                     type='button'
                     onClick={props.onAdd}

@@ -98,6 +98,25 @@ class ReportsApi {
             throw new Error(e);
         }
     }
+
+    // Nuevo método para generar el reporte de todas las solicitudes
+    async generateReportAllSolicities(year: number) {
+        try {
+            const response = await this.api.post(TRANSPARENCY_PATH + `/reports/download/reporte-todas-solicitudes`,
+                {
+                    year
+                },
+                {
+                    responseType: 'blob' // Asegúrate de manejar la respuesta como un blob para descargar el archivo
+                }
+            );
+            return response.data;
+        } catch (error: any) {
+            const e = error?.response?.data?.message || "Error al obtener el reporte";
+            throw new Error(e);
+        }
+    }
+
     
 }
 
