@@ -16,6 +16,12 @@ const HeaderPages = (props: HeaderPagesProps) => {
             <LogoPortal className="ml-10 max-w-32 xl:ml-0" />
           </a>
           <div className="flex items-center lg:order-2">
+          <Link to="/admin/notifications" className="group relative inline-block cursor-pointer rounded-t-md p-2 text-lg transition hover:bg-primary/20 w-[110px] text-center">
+              <span className="text-pretty text-base font-medium">Aviso 📢​</span>
+              <span className="absolute -bottom-1 left-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6"></span>
+              <span className="absolute -bottom-1 right-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6"></span>
+            </Link>
+
             <Link to="/admin/perfil" className="group relative inline-block cursor-pointer rounded-t-md p-2 text-lg transition hover:bg-primary/20 w-[110px] text-center">
               <span className="text-pretty text-base font-medium">Ver Perfil</span>
               <span className="absolute -bottom-1 left-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6"></span>
