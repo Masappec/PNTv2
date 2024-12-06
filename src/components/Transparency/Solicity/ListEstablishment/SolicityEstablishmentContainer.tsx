@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import SolicityUseCase from "../../../../domain/useCases/SolicityUseCase/SolicityUseCase"
 import { Solicity } from "../../../../domain/entities/Solicity"
+import ReportsApi from "../../../../infrastructure/Api/Reports"
 
 interface Props {
     useCase: SolicityUseCase;
+    reportApi:ReportsApi;
 }
 
 
@@ -134,6 +136,21 @@ const SolicityListEstablishmentContainer = (props: Props) => {
             SetError(err.message)
         })
     }
+    const onExport = async () => {
+        try {
+            const response = await props.reportApi.generateReportAllSolicities(new Date().getFullYear());
+            const url = window.URL.createObjectURL(new Blob([response]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'TodasLasSolicitudes.xlsx'); // Nombre del archivo descargado
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (error: any) {
+            console.error("Error al descargar el reporte:", error.message);
+            alert("No se pudo descargar el reporte: " + error.message);
+        }
+    }
 
     const handleChageStatus = (e:string)=>{
         setStatus(e)
@@ -155,6 +172,7 @@ const SolicityListEstablishmentContainer = (props: Props) => {
             onChangeSort={onChangesSort}
             error={error}
             data={solicitudes}
+            onExport={onExport}
 
             onAdd={handleAdd}
             onCancelDelete={handleCancelDelete}
