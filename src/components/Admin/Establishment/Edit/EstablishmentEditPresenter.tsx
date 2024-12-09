@@ -35,18 +35,18 @@ interface Props {
 
 const EstablishmentEditPresenter = (props: Props) => {
 
-    if (!props.data.id) return (<div className="flex items-center py-5 justify-center">
+    if (!props.data.id) return (<div className="flex items-center justify-center py-5">
         <Spinner />
     </div>)
 
     return (
 
         <div className="container mb-24">
-            <div className="flex items-center py-5 justify-center">
+            <div className="flex items-center justify-center py-5">
 
 
             </div>
-            <form className="flex  mt-5" onSubmit={props.handleSubmit}>
+            <form className="flex mt-5" onSubmit={props.handleSubmit}>
                 <section className="container px-4 mx-auto">
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div>
@@ -67,8 +67,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                             <button
                                 type="button"
                                 onClick={props.onCancel}
-                                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
-                                text-white transition-colors duration-200 bg-gray-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-500 dark:hover:bg-blue-500 dark:bg-blue-600">
+                                className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white bg-gray-400 rounded-lg transition-colors duration-200 shrink-0 sm:w-auto gap-x-2 hover:bg-primary-500 dark:hover:bg-blue-500 dark:bg-blue-600">
                                 <LuX className="w-5 h-5" />
                                 <span>
                                     Cancelar
@@ -77,8 +76,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                             {
                                 props.loading ? <Spinner /> : <button
                                     type="submit"
-                                    className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide
-                                text-white transition-colors duration-200  bg-primary-400  rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-primary-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                                    className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white rounded-lg transition-colors duration-200 bg-primary-400 shrink-0 sm:w-auto gap-x-2 hover:bg-primary-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                                     <LuCheck className="w-5 h-5" />
                                     <span>
                                         Guardar
@@ -97,7 +95,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                             props.success && <Alert message={props.success} type="success" onClose={() => props.setSuccess('')} />
                         }
                         <div className="grid xl:grid-cols-1 gap-4">
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Nombre"} width="w-60"
                                     value={props.data.name || ""}
@@ -108,7 +106,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Abreviación"} width="w-60"
                                     value={props.data.abbreviation || ""}
@@ -119,7 +117,7 @@ const EstablishmentEditPresenter = (props: Props) => {
 
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"RUC"} width="w-60"
                                     value={props.data.identification || ""}
@@ -129,8 +127,8 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
-                                <label className="text-sm font-medium text-gray-800 dark:text-white">Dirección</label>
+                            <div className="flex flex-col m-2">
+                                <label className="flex flex-col text-gray-800 m-2medium dark:text-white">Dirección</label>
                                 <textarea
                                     placeholder={"Dirección"}
                                     value={props.data.address || ""}
@@ -146,7 +144,7 @@ const EstablishmentEditPresenter = (props: Props) => {
 
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Select
                                     placeholder="Tipo de institución"
                                     name="type_institution"
@@ -164,7 +162,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Select
                                     placeholder="Función de la institución"
                                     name="function_organization"
@@ -183,7 +181,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Select
                                     placeholder="Tipo de organización"
                                     name="type_organization"
@@ -201,7 +199,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
 
                                 <Dropzone
                                     handleChageLogo={props.onChageLogo}
@@ -220,7 +218,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                 />
                             </div>
                            
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Nombre de la máxima autoridad"} width="w-60"
                                     value={props.data.first_name_authority || ""}
@@ -230,7 +228,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                 obligatorio
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Apellido de la máxima autoridad"} width="w-60"
                                     value={props.data.last_name_authority || ""}
@@ -241,7 +239,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                 />
                             </div>
 
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Cargo de la máxima autoridad"} width="w-60"
                                     value={props.data.job_authority || ""}
@@ -253,7 +251,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                 />
                             </div>
 
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"email"}
                                     placeholder={"Correo de la máxima autoridad"} width="w-60"
                                     value={props.data.email_authority || ""}
@@ -266,7 +264,7 @@ const EstablishmentEditPresenter = (props: Props) => {
 
                            
 
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Nombre del Responsable del Comité "} width="w-60"
                                     value={props.data.first_name_committe || ""}
@@ -276,7 +274,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                 obligatorio
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Apellido del Responsable del Comité "} width="w-60"
                                     value={props.data.last_name_committe || ""}
@@ -287,7 +285,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                 />
 
                             </div>
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"text"}
                                     placeholder={"Cargo del Responsable del  Comité"} width="w-60"
                                     value={props.data.job_committe || ""}
@@ -297,7 +295,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                 obligatorio
                                 />
                             </div>
-                            <div className="flex  flex-col m-2">
+                            <div className="flex flex-col m-2">
                                 <Input type={"email"}
                                     placeholder={"Correo del Responsable del comité"} width="w-60"
                                     value={props.data.email_committe || ""}
@@ -310,13 +308,15 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </div>
                             {/*
                             Campo eliminado según issue # 3
-                            <div className="flex  flex-col m-2">
-                                <Input type={"email"}
+                            
+                            <div className="sr-only">
+                                <Input
+                                    type={"email"}
                                     placeholder={"Correo de acceso a la información"} width="w-60"
-                                    value={props.data.email_accesstoinformation || ""}
+                                    value={props.data.email_accesstoinformation || "email@example.com"}
                                     name="email_accesstoinformation"
                                     color={props.validateFields('email_accesstoinformation')}
-                                obligatorio
+                                    obligatorio
                                     onChange={(e) => props.setData(e)}
                                 />
                             </div>

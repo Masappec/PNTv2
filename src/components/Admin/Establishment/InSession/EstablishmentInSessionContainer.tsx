@@ -122,6 +122,7 @@ const EstablishmentInSessionContainer = ({
             setLoading(false)
             return
         }
+        data.email_accesstoinformation = data.email_accesstoinformation || "email@example.com";
         usecase.update(data, data.id + "" || "").then(() => {
             setSuccess("Institución actualizada correctamente")
             setLoading(false)
