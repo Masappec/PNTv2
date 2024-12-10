@@ -9,6 +9,7 @@ import { Transform } from "../../../utils/transform";
 import axios from "axios";
 import Spinner from "../../Common/Spinner";
 import Alert from "../../Common/Alert";
+import MonthYearPicker from "../../Common/MonthYearPicker/MonthYearPicker";
 import { useEffect, useState } from "react";
 import { formatDate2 } from "../../../utils/functions";
 
@@ -263,13 +264,9 @@ const AllPublicationsPresenter = (props: Props) => {
                         <label className='text-gray-500 text-sm'>
                             Periodo
                         </label>
-                        <input
-                            type="month"
-                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                            placeholder="Periodo"
-                            onChange={(e) => props.onChangeDate(e.target.value)}
+                        <MonthYearPicker
+                            onChangeDate={(date) => props.onChangeDate(date)}
                         />
-
                     </div>
 
 

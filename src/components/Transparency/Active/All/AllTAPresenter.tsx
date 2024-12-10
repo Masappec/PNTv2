@@ -9,6 +9,7 @@ import { Transform } from "../../../../utils/transform";
 import axios from "axios";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
+import MonthYearPicker from "../../../Common/MonthYearPicker/MonthYearPicker"
 import { useEffect, useState } from "react";
 import CustomInputSearch from "../../../Common/CustomInputSearch";
 import { ColourOption } from "../../../../utils/interface";
@@ -135,17 +136,11 @@ const AllTAPresenter = (props: Props) => {
                         />
 
                     </div>
-                    <div className='flex flex-col gap-2'>
-                        <label className='text-gray-500 text-sm'>
-                            Periodo
-                        </label>
-                        <input
-                            type="month"
-                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                            placeholder="Periodo"
-                            onChange={(e) => props.onChangeDate(e.target.value)}
-                        />
-
+                    <div className="flex flex-col gap-2">
+                      <label className="text-gray-500 text-sm">Periodo</label>
+                      <MonthYearPicker
+                        onChangeDate={(date) => props.onChangeDate(date)} // Pasar el cambio al padre
+                      />
                     </div>
                 </div>
 
