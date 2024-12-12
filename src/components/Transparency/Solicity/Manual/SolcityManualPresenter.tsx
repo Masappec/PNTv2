@@ -61,15 +61,28 @@ const SolicityManualPresenter = (props: Props) => {
   return (
     <>
       <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
-        Crear nueva Solicitud de Acceso a la Información Pública (SAIP)
+      Ingreso de solicitudes recibidas fuera del Portal
 
 
       </h2>
-      <h2 className="text-xs  text-primary">Para crear una nueva Solicitud de Acceso a la Información, favor completa la siguiente información. Una vez que presiones “Enviar Solicitud” esta será recibida por la institución que selecciones. Si necesitas más información sobre cómo realizar este proceso, consulta nuestra sección de aprendizaje.
+      <h2 className="text-xs  text-primary">En esta opción puedes cargar una solicitud de acceso a la información que se haya recibido en 
+        formato físico o por otro medio que no sea este portal, favor completa la siguiente información. 
+        <br/>
+        Una vez que presiones “Enviar Solicitud” esta será recibida por la institución que selecciones. 
+        <br/>
+        Si necesitas más información sobre cómo realizar este proceso, consulta nuestra sección de tutoriales.
         <a
           className='font-bold text-sm text-primary hover:underline hover:underline-offset-2 ml-3'
           href='/tutoriales'>Revisa nuestro tutorial.
         </a>
+        Se recuerda a las entidades que no se activará la opción para solicitud de insistencia, ya que esta únicamente está disponible para las personas solicitantes de información que se hayan registrado en este portal.
+        <br/>
+        Cuando no se haya respondido una solicitud dentro del plazo de 10 días, automáticamente el estado cambiará a "No respondida".
+        <br/>
+        Cuando reciban solicitudes de insistencia por fuera del portal deberán registrarlas como nueva solicitud.
+        <br/>
+        Por esta razón, las entidades deberán promover el registro de la ciudadanía directamente en este portal.
+
       </h2>
       <section className='mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center'>
         <form

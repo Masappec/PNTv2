@@ -57,6 +57,7 @@ class NumeralApi {
     async getNumeralsAllowed() {
         try {
             const response = await this.api.get<NumeralDetailDTO[]>(TRANSPARENCY_PATH + "/numerals/allow/");
+            //console.log("Response Allow", response.data)
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {
@@ -69,12 +70,13 @@ class NumeralApi {
         }
     }
 
-    async updateNumeralState(id: number, data: { isDefault: boolean }) {
+    async updateNumeralState(id: number, data: { isSelected: boolean }) {
         try {
             const response = await this.api.patch(
                 `${TRANSPARENCY_PATH}/numerals/${id}/update-state/`,
                 data,
             );
+            //console.log(response)
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {

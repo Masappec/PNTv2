@@ -13,6 +13,7 @@ export interface NumeralDTO extends BaseObject {
   name: string;
   description: string;
   is_default: boolean;
+  is_selected: boolean;
   parent: number | null;
   templates: PartialTemplateDto[];
   published: boolean;

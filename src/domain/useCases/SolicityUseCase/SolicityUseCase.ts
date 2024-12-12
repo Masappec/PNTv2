@@ -61,8 +61,8 @@ class SolicityUseCase {
 
   }
 
-  commentSolicity(comment: string, solicityId: number) {
-    return this.solicityService.commentSolicity(solicityId, comment);
+  commentSolicity(comment: string, solicityId: number, files: number[]) {
+    return this.solicityService.commentSolicity(solicityId, comment, files);
   }
 
 
@@ -128,33 +128,26 @@ class SolicityUseCase {
     if (solicity && user) {
       if (solicity.status == StatusSolicity.SEND.key) {
         if (user_citizen_id !== user_session) {
-          const expired_date = moment.utc(solicity.expiry_date).toDate()
-          const now = new Date()
-
-          if (now.getDate() <= expired_date.getDate()
-            && now.getMonth() == expired_date.getMonth()
-            && now.getFullYear() == expired_date.getFullYear()
+          const expired_date = new Date(parseInt(solicity.expiry_date.substring(0,4)), parseInt(solicity.expiry_date.substring(5,7)) - 1, parseInt(solicity.expiry_date.substring(8,10)))
+          const now = new Date()     
+          if (now <= expired_date
           ) {
             return true
           }
 
         }
       }
-
-
-
     }
-
     return false;
-
   }
+  
   async createManualSolicity(data: CreateSolicity) {
     console.log(data)
     return await this.solicityService.createManualSolicity(data);
   }
 
-  async changeStatus(solicityId: number, text: string) {
-    return await this.solicityService.changeStatus(solicityId, text);
+  async changeStatus(solicityId: number, text: string, files: number[]) {
+    return await this.solicityService.changeStatus(solicityId, text, files);
   }
 
   isAvaliableChangeStaus(solicity: Solicity) {
@@ -284,6 +277,17 @@ class SolicityUseCase {
 
     // Guardar el PDF
     doc.save(`Solicitud-${data.number_saip}.pdf`);
+  }
+
+
+  isAvaliableToResponseProrroga(user: UserEntity, solicity: Solicity) {
+ 
+    if (solicity && user) {
+      if (solicity.status == StatusSolicity.PRORROGA.key) {
+        return solicity.timeline.find(x => x.status == StatusSolicity.PRORROGA.key) ? true : false
+      }
+    }
+    return false;
   }
 }
 export default SolicityUseCase;

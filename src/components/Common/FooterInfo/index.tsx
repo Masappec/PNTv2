@@ -116,7 +116,8 @@ const FooterInfo = () => {
           <div className='flex items-center gap-4 text-gray-300'>
             <a
               className='hover:underline hover:underline-offset-2'
-              href='/politicas-condiciones'
+              href='https://transparenciav1.dpe.gob.ec/transparencia/normativa.php'
+              target='_blank'
             >
               Políticas y Condiciones de Uso del Sitio
             </a>

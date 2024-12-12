@@ -52,9 +52,20 @@ const UserEditContainer = ({
         label:"",
         value:""
     })
+    const [userRole, setUserRole] = useState<string>("");
 
     useEffect(() => {
-        const user = SessionService.getUserData()
+        const user = SessionService.getUserData();
+        if (user) {
+            const group = user.group;
+            if (group && group.length > 0) {
+                setUserRole(group[0].name); // Guardar el nombre del primer rol en el estado
+            } else {
+                console.warn("El usuario no tiene grupos asignados");
+            }
+        } else {
+            console.error("No se encontró el usuario");
+        }
         SetUserSession(user)
         const is = UserEntity.isUserEntity(user)
         if (is) {
@@ -258,6 +269,7 @@ const UserEditContainer = ({
             onLoadOptions={loadOption}
             establishmentSelected={selectedEstablishment}
             onEstablishmentSelect={handleSelect}
+            userRole={userRole}
         />
     )
 }

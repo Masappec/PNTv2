@@ -349,9 +349,101 @@ const SolicityResponsePresenter = (props: Props) => {
                                             "“¿Deben las entidades responder mis solicitudes?”" : ""
                                     }
                                 </Link>
+                                <div className="flex flex-col m-2 mt-16">
+                                    <h3 className="text-lg font-medium text-gray-800 dark:text-white">
+                                        Archivo Adjunto Para Prórroga
+                                    </h3>
+
+                                    <div className="flex flex-row m-2">
+                                        {
+                                            props.files.filter(x => x.file_solicity).map((file, index) => {
+                                                return (
+                                                    <div className="flex flex-col m-2 bg-slate-100 p-5 rounded-lg shadow-xl">
+                                                        <FaFile className=" text-primary-600" size={30} />
+                                                        <span className=" text-gray-500 dark:text-gray-300">
+                                                            {file.file_solicity?.name || file.file_solicity?.description}
+                                                        </span>
+                                                        <span className=" text-gray-500 text-sm dark:text-gray-300">
+                                                            { }
+                                                        </span>
+                                                        <span className="mt-5 text-gray-500 text-sm dark:text-gray-300">
+                                                            <FaTrash className=" text-red-600" size={15} onClick={() => props.onRemoveFileFromSolicity(index, "file")} />
+                                                        </span>
+                                                    </div>
+                                                )
+
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                                <h4>
+                                    Si desea adjuntar archivo como parte del motivo de prórroga, seleccione a continuación
+                                </h4>
+                                <Tabs aria-label="Datos" className="bg-white dark:bg-gray-800"
+                                    theme={themeTabs}
+                                    style="underline"
+
+                                >
+
+                                    <Tabs.Item title="Subir Archivo">
+                                        <div className="flex-col m-2">
+
+                                            {
+                                                props.files.map((file, index) => {
+                                                    if (file.type === "file") {
+                                                        return (
+                                                            <div className="flex flex-row  m-2">
+                                                                <FileUploadForm
+
+                                                                    onSave={(
+                                                                        file, name, description
+                                                                    ) => { props.onSaveFile(file, name, description, index) }}
+                                                                    isSaved={file.file_solicity !== null}
+                                                                    loading={file.loading}
+                                                                    percent={file.percent}
+                                                                    key={index}
+                                                                    onCancel={() => props.onRemoveFileFromSolicity(index, "file")}
+                                                                />
+
+                                                            </div>
+                                                        )
+                                                    }
+                                                })
+                                            }
+
+
+                                            <div className="flex items-center justify-center mt-4 gap-x-3 w-full">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => props.onAddDataSet("file")}
+                                                    className='flex items-center gap-2 rounded-md border 
+                                                border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
+                                                    <svg
+                                                        xmlns='http://www.w3.org/2000/svg'
+                                                        height='24px'
+                                                        viewBox='0 -960 960 960'
+                                                        width='24px'
+                                                        fill='currentColor'
+                                                    ><path
+                                                        d='M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'
+                                                    ></path>
+                                                    </svg>
+                                                    <span>Agregar adjunto</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </Tabs.Item>
+                                    
+                                </Tabs>
+                                <label></label>
+                                <label></label>
+                                <label className="m-6">Motivo de prórroga</label>
+                                <label></label>
+                                <label></label>
                                 <Textarea
                                     placeholder={props.solicitySaved.status !== StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key ?
-                                        "Escribe la explicación por la que solicitas la insistencia" :
+                                        "Escribe la explicación por la que solicitas la prórroga" :
                                         "Escribe la explicación por la que solicitas la Gestión Oficiosa"}
                                     name="description"
                                     rows={5}
@@ -360,6 +452,7 @@ const SolicityResponsePresenter = (props: Props) => {
                                         props.onChangeTextResponse(e.target.value)
                                     }}
                                     ref={responseRef as React.RefObject<HTMLTextAreaElement>}
+                                    required
                                 ></Textarea>
                                 <span>
                                     {count} / 3000

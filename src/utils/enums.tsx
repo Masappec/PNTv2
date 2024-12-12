@@ -27,11 +27,11 @@ export const StatusSolicity = {
         text: 'Borrador'
     },
     SEND: {
-        value: 'Enviado',
+        value: 'Enviada',
         key: 'SEND',
         bg: 'bg-primary-500',
         icon: <FaSave />,
-        value_2: 'Recibido',
+        value_2: 'Recibida',
         text: 'Solicitud enviada'
     },
     RESPONSED: {
@@ -39,8 +39,8 @@ export const StatusSolicity = {
         key: 'RESPONSED',
         bg: 'bg-custom-green',
         icon: <FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Respondido',
-        text: 'Respondido'
+        value_2: 'Respondida',
+        text: 'Respondida'
     },
     NO_RESPONSED: {
         value: 'No respondida',
@@ -132,7 +132,7 @@ export const StatusSolicity = {
         key: 'PRORROGA',
         bg: 'bg-yellow-700',
         icon: <FaCheck className="text-primary-500 text-center" />,
-        value_2: 'Prórroga',
+        value_2: 'Recibida - Prórroga',
         text: 'Prórroga'
     },
 

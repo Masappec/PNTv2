@@ -2,6 +2,7 @@ import { SolicityDraftRequestDto, SolicityResponseDto, SolicityResult } from "..
 import CreateSolicity from "../entities/CreateSolicity";
 import ResponseSolicity from "../entities/ResponseSolicity";
 import { Comments, Insistency, Solicity } from "../entities/Solicity"
+import FilePublicationMapper from "./FilePublicationMapper";
 import { SolicityResultMapper } from "./SolicityResultMapper";
 
 class SolicityMappers {
@@ -70,7 +71,7 @@ class SolicityMappers {
                 r.motive,
                 r.user,
                 r.solicity,
-                r.files,
+                r.files.map(FilePublicationMapper.fromApiToDomain),
                 r.attachments
             )
             ) || []

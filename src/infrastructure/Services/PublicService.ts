@@ -57,13 +57,15 @@ class PublicService {
         const data = establishments.map((establishment) => {
             return [
                 establishment.name,
-                establishment.function_organization
+                (establishment.function_organization==null?'':establishment.function_organization),
+                establishment.identification
             ]
         });
         autoTable(doc, {
             head:[[
                 'Nombre',
                 'Tipo de Institución',
+                'RUC'
             ]],
             body: data as string[][],
         });
@@ -76,21 +78,21 @@ class PublicService {
 
     async donwloadExcel(establishment_id: EstablishmentEntity[]){
         const csv = establishment_id.map((establishment) => {
-            return establishment.name + DELIMITER + establishment.function_organization+ '\n';
+            return establishment.name + DELIMITER + (establishment.function_organization==null?'':establishment.function_organization) + DELIMITER + establishment.identification + '\n';
         }).join('');
 
-        const final = 'Nombre' + DELIMITER + 'Tipo de Institución' + '\n' + csv;
+        const final = 'Nombre' + DELIMITER + 'Tipo de Institución' + DELIMITER + 'RUC' + '\n' + csv;
         Transform.fromCsvToXlxs(final, 'instituciones');
     }
 
 
     async donwloadCsv(establishment_id: EstablishmentEntity[]){
         const csv = establishment_id.map((establishment) => {
-            return establishment.name + DELIMITER + establishment.function_organization+ '\n';
+            return establishment.name + DELIMITER + (establishment.function_organization==null?'':establishment.function_organization)  + DELIMITER + establishment.identification + '\n';
         }).join('');
 
         
-        const blob_ = '\uFEFF' + 'Nombre' + DELIMITER + 'Tipo de Institución' + '\n' + csv;
+        const blob_ = '\uFEFF' + 'Nombre' + DELIMITER + 'Tipo de Institución' + DELIMITER + 'RUC' + '\n' + csv;
 
         const a = document.createElement('a')
         a.download =  "instituciones.csv";

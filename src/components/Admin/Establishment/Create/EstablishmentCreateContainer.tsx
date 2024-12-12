@@ -237,7 +237,7 @@ const EstablishmentCreateContainer = ({
             setLoading(false)
             return
         }
-        
+        data.email_accesstoinformation = data.email_accesstoinformation || "email@example.com";
         usecase.Create(data).then((res) => {
             console.log(res)
             setLoading(false)

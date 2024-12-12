@@ -15,10 +15,10 @@ const AboutPresenter = () => {
         manera libre y sin ningún tipo de restricciones.</p>
         
         <p>
-        Esta herramienta es el resultado de un proceso de cocreación, o construcción colaborativa, liderado por la 
-        Defensoría del Pueblo de Ecuador. Participaron personas servidoras públicas integrantes de los Comités de 
+        Esta herramienta es el resultado de un proceso de cocreación, o construcción colaborativa, liderado por la  
+        <strong>&nbsp;Defensoría del Pueblo de Ecuador</strong>. Participaron personas servidoras públicas integrantes de los Comités de 
         Transparencia y personas delegadas como Oficiales de Transparencia de distintas entidades, así como 
-        representantes de la academia y de organizaciones sociales que promueven el ejercicio y exigibilidad del derecho 
+        representantes de la <strong>academia</strong> y de <strong>organizaciones sociales</strong> que promueven el ejercicio y exigibilidad del derecho 
         humano de acceso a la información pública. Desde distintos espacios de participación efectuados durante el 2024, 
         contribuyeron con su experiencia, comentarios y sugerencias para desarrollar esta solución en su versión renovada.
         </p>
