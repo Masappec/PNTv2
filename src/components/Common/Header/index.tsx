@@ -83,7 +83,7 @@ const Header = () => {
                 </span>
               </a>
             </li>
-            {/* Navigation Link */}
+            {/* Navigation Link 
             <li className='m-0 w-max'>
               <Link
                 to='/indicadores'
@@ -96,7 +96,7 @@ const Header = () => {
                   className='absolute -bottom-1 right-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
                 </span>
               </Link>
-            </li>
+            </li>*/}
             {/* Navigation Link */}
             <li className='m-0 w-max'>
               <Link
