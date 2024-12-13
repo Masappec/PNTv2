@@ -545,7 +545,8 @@ const SolicityResponseContainer = (props: Props) => {
 
 
     const isChangeStatus = () => {
-        if (userSession.id == parseInt(solicityToResponse.user_created || "0")) {
+        const is_Est = userSession.user_permissions?.find(x => x.codename === 'view_solicityresponse')
+        if (!is_Est) {
             return props.usecase.isAvaliableChangeStaus(solicityToResponse)
 
         } else {
@@ -553,7 +554,7 @@ const SolicityResponseContainer = (props: Props) => {
         }
     }
     const textChangeStatus = () => {
-        return props.usecase.getTextChangeStatus(solicityToResponse, userSession.id)
+        return props.usecase.getTextChangeStatus(solicityToResponse, userSession)
     }
 
 
@@ -561,7 +562,8 @@ const SolicityResponseContainer = (props: Props) => {
     const changeStatus = () => {
 
         let new_status = '';
-        if (userSession.id == parseInt(solicityToResponse.user_created || "0")) {
+        const is_Est = userSession.user_permissions?.find(x => x.codename === 'view_solicityresponse')
+        if (!is_Est) {
             if (solicityToResponse.status == StatusSolicity.RESPONSED.key) {
                 new_status = StatusSolicity.INSISTENCY_PERIOD.key
             } else if (solicityToResponse.status == StatusSolicity.NO_RESPONSED.key) {
