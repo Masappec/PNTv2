@@ -186,9 +186,7 @@ const AllTAPresenter = (props: Props) => {
                         render: (item) => {
                             return (
                                 <p className="text-gray-900 dark:text-white text-base">
-
                                     {new Date(item.published_at).toLocaleDateString()}
-
                                 </p>
                             )
                         },
@@ -196,62 +194,46 @@ const AllTAPresenter = (props: Props) => {
                     },
                     {
                         render: (item) => {
-                            return <div className="flex flex-row space-x-5">
-                                {
-                                    item.files.map((file, i) =>
-                                        <div className="flex flex-col space-y-2" key={i}>
-                                            <div key={i} className="grid xl:grid-cols-3 gap-3 grid-cols-1">
-                                                <a key={i}
-                                                    href={'#'}
-                                                    onClick={() => onDownloadFile(file.url_download as string,
-                                                        `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                                    )}
-                                                    className="text-primary-500 
-                                                    hover:text-primary-600 text-base">
-                                                    <FaFileCsv className="text-primary-500 
-                                                    hover:text-primary-600 text-base ml-5"
-                                                        size={30}
-                                                    />
-
-
-                                                </a>
-                                                <a key={i}
-                                                    href={'#'}
-                                                    onClick={() => onDownLoadPdf(file.url_download as string,
-                                                        `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                                    )}
-                                                    className="text-primary-500
-                                                    hover:text-primary-600 text-base">
-                                                    <FaFilePdf className="text-red-500 
-                                                    hover:text-primary-600 text-base ml-5"
-                                                        size={30}
-
-                                                    />
-                                                </a>
-                                                <a key={i}
-                                                    href={"#"}
-                                                    onClick={() => onDonwloadXlsx(file.url_download as string,
-                                                        `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                                    )}
-                                                    target="_blank"
-                                                    className="text-primary-500
-                                                    hover:text-primary-600 text-base ml-5"
-                                                >
-                                                    <FaFileExcel className="text-green-500" size={30}
-                                                    />
-                                                </a>
-
-
-
+                            return (
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    {
+                                        item.files.map((file, i) => (
+                                            <div key={i} className="flex flex-col items-center">
+                                                <div className="flex space-x-3">
+                                                    <a
+                                                        href={'#'}
+                                                        onClick={() => onDownloadFile(
+                                                            file.url_download as string,
+                                                            `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                        )}
+                                                        className="text-primary-500 hover:text-primary-600 text-base">
+                                                        <FaFileCsv className="text-primary-500 hover:text-primary-600" size={30} />
+                                                    </a>
+                                                    <a
+                                                        href={'#'}
+                                                        onClick={() => onDownLoadPdf(
+                                                            file.url_download as string,
+                                                            `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                        )}
+                                                        className="text-primary-500 hover:text-primary-600 text-base">
+                                                        <FaFilePdf className="text-red-500 hover:text-primary-600" size={30} />
+                                                    </a>
+                                                    <a
+                                                        href={'#'}
+                                                        onClick={() => onDonwloadXlsx(
+                                                            file.url_download as string,
+                                                            `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                        )}
+                                                        className="text-primary-500 hover:text-primary-600 text-base">
+                                                        <FaFileExcel className="text-green-500" size={30} />
+                                                    </a>
+                                                </div>
+                                                <p className="text-center text-sm mt-2">{file.description}</p>
                                             </div>
-                                            <div key={i} className="w-full justify-center items-center">
-                                                {file.description}
-                                            </div>
-                                        </div>
-                                    )
-                                }
-                            </div>
-
+                                        ))
+                                    }
+                                </div>
+                            )
                         },
                         title: "Archivos Publicados"
                     },
@@ -271,6 +253,7 @@ const AllTAPresenter = (props: Props) => {
                 to={props.data.length}
                 total={props.data.length}
             />
+
         </>
     )
 }
