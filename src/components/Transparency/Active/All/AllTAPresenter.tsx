@@ -158,98 +158,118 @@ const AllTAPresenter = (props: Props) => {
                 show={true}
                 columns={[
                     {
-                        render: (item) => {
-                            return (
-                                <p className="text-gray-900 dark:text-white text-base">
-                                    {item.establishment.name}</p>
-                            )
-                        },
-                        title: "Institución"
+                        render: (item) => (
+                            <p className="text-gray-900 dark:text-white text-base">
+                                {item.establishment.name}
+                            </p>
+                        ),
+                        title: "Institución",
                     },
                     {
-                        render: (item) => {
-                            return (
-                                <p className="text-gray-900 dark:text-white text-base">{item.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "")}</p>
-                            )
-                        },
-                        title: "#"
+                        render: (item) => (
+                            <p className="text-gray-900 dark:text-white text-base">
+                                {item.numeralPartial?.name
+                                    .toLocaleLowerCase()
+                                    .replace("numeral", "")}
+                            </p>
+                        ),
+                        title: "#",
                     },
                     {
-                        render: (item) => {
-                            return (
-                                <p className="text-gray-900 dark:text-white text-base">{item.numeralPartial?.description}</p>
-                            )
-                        },
-                        title: "Numeral"
+                        render: (item) => (
+                            <p className="text-gray-900 dark:text-white text-base">
+                                {item.numeralPartial?.description}
+                            </p>
+                        ),
+                        title: "Numeral",
                     },
                     {
-                        render: (item) => {
-                            return (
-                                <p className="text-gray-900 dark:text-white text-base">
-                                    {new Date(item.published_at).toLocaleDateString()}
-                                </p>
-                            )
-                        },
-                        title: "Publicado"
+                        render: (item) => (
+                            <p className="text-gray-900 dark:text-white text-base">
+                                {new Date(item.published_at).toLocaleDateString()}
+                            </p>
+                        ),
+                        title: "Publicado",
                     },
                     {
-                        render: (item) => {
-                            return (
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    {
-                                        item.files.map((file, i) => (
-                                            <div key={i} className="flex flex-col items-center">
-                                                <div className="flex space-x-3">
-                                                    <a
-                                                        href={'#'}
-                                                        onClick={() => onDownloadFile(
-                                                            file.url_download as string,
-                                                            `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                                        )}
-                                                        className="text-primary-500 hover:text-primary-600 text-base">
-                                                        <FaFileCsv className="text-primary-500 hover:text-primary-600" size={30} />
-                                                    </a>
-                                                    <a
-                                                        href={'#'}
-                                                        onClick={() => onDownLoadPdf(
-                                                            file.url_download as string,
-                                                            `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                                        )}
-                                                        className="text-primary-500 hover:text-primary-600 text-base">
-                                                        <FaFilePdf className="text-red-500 hover:text-primary-600" size={30} />
-                                                    </a>
-                                                    <a
-                                                        href={'#'}
-                                                        onClick={() => onDonwloadXlsx(
-                                                            file.url_download as string,
-                                                            `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                                        )}
-                                                        className="text-primary-500 hover:text-primary-600 text-base">
-                                                        <FaFileExcel className="text-green-500" size={30} />
-                                                    </a>
-                                                </div>
-                                                <p className="text-center text-sm mt-2">{file.description}</p>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                            )
-                        },
-                        title: "Archivos Publicados"
+                        render: (item) => (
+                            <div className="grid grid-cols-1 gap-4">
+                                {item.files.map((file, i) => (
+                                    <div
+                                        key={i}
+                                        className="flex flex-row items-center justify-between border-b border-gray-300 pb-2"
+                                    >
+                                        <div className="flex space-x-3">
+                                            {/* Iconos de descarga */}
+                                            <a
+                                                href="#"
+                                                onClick={() =>
+                                                    onDownloadFile(
+                                                        file.url_download as string,
+                                                        `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                    )
+                                                }
+                                                className="text-primary-500 hover:text-primary-600 text-base"
+                                            >
+                                                <FaFileCsv
+                                                    className="text-primary-500 hover:text-primary-600"
+                                                    size={30}
+                                                />
+                                            </a>
+                                            <a
+                                                href="#"
+                                                onClick={() =>
+                                                    onDownLoadPdf(
+                                                        file.url_download as string,
+                                                        `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                    )
+                                                }
+                                                className="text-primary-500 hover:text-primary-600 text-base"
+                                            >
+                                                <FaFilePdf
+                                                    className="text-red-500 hover:text-primary-600"
+                                                    size={30}
+                                                />
+                                            </a>
+                                            <a
+                                                href="#"
+                                                onClick={() =>
+                                                    onDonwloadXlsx(
+                                                        file.url_download as string,
+                                                        `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                    )
+                                                }
+                                                className="text-primary-500 hover:text-primary-600 text-base"
+                                            >
+                                                <FaFileExcel
+                                                    className="text-green-500"
+                                                    size={30}
+                                                />
+                                            </a>
+                                        </div>
+                                        {/* Descripción */}
+                                        <p className="text-sm text-gray-600">
+                                            {file.description}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        ),
+                        title: "Archivos Publicados",
                     },
                 ]}
                 data={props.data}
                 description="No se encontraron resultados"
                 length={props.data.length}
-                onFilter={() => { }}
+                onFilter={() => {}}
                 search=""
                 title=""
                 currentPage={1}
                 from={1}
                 isImport={false}
                 key={0}
-                onChangePage={() => { }}
-                onImport={() => { }}
+                onChangePage={() => {}}
+                onImport={() => {}}
                 to={props.data.length}
                 total={props.data.length}
             />
