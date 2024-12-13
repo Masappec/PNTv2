@@ -178,11 +178,15 @@ const AllPublicationsPresenter = (props: Props) => {
                 });
     
                 return (
-                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
                         {files.map((file, i) => (
-                            <div key={i} className="flex flex-col items-center space-y-2">
+                            <div
+                                key={i}
+                                className="flex flex-col items-center text-center space-y-2"
+                                style={{ minWidth: '120px' }} // Ajusta este valor según el diseño deseado
+                            >
                                 <div className="flex space-x-3">
-                                    {/* Iconos de descarga */}
+                                    {/* Icono CSV */}
                                     <a
                                         href="#"
                                         onClick={() =>
@@ -191,10 +195,11 @@ const AllPublicationsPresenter = (props: Props) => {
                                                 `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
                                             )
                                         }
-                                        className="text-primary-500 hover:text-primary-600 text-base"
+                                        className="text-primary-500 hover:text-primary-600"
                                     >
-                                        <FaFileCsv className="text-primary-500 hover:text-primary-600" size={30} />
+                                        <FaFileCsv size={30} className="text-primary-500" />
                                     </a>
+                                    {/* Icono PDF */}
                                     <a
                                         href="#"
                                         onClick={() =>
@@ -203,10 +208,11 @@ const AllPublicationsPresenter = (props: Props) => {
                                                 `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
                                             )
                                         }
-                                        className="text-red-500 hover:text-primary-600 text-base"
+                                        className="text-red-500 hover:text-primary-600"
                                     >
-                                        <FaFilePdf className="text-red-500 hover:text-primary-600" size={30} />
+                                        <FaFilePdf size={30} className="text-red-500" />
                                     </a>
+                                    {/* Icono XLS */}
                                     <a
                                         href="#"
                                         onClick={() =>
@@ -215,16 +221,16 @@ const AllPublicationsPresenter = (props: Props) => {
                                                 `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
                                             )
                                         }
-                                        className="text-green-500 hover:text-primary-600 text-base"
+                                        className="text-green-500 hover:text-primary-600"
                                     >
-                                        <FaFileExcel className="text-green-500 hover:text-primary-600" size={30} />
+                                        <FaFileExcel size={30} className="text-green-500" />
                                     </a>
                                 </div>
-                                <p className="text-center text-sm">{file.description}</p>
+                                <p className="text-sm truncate">{file.description}</p>
                             </div>
                         ))}
                     </div>
-                );
+                );                
             },
             title: "Archivos Publicados",
         },
