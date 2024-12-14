@@ -178,57 +178,58 @@ const AllPublicationsPresenter = (props: Props) => {
                 });
     
                 return (
-                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                        {files.map((file, i) => (
-                            <div
-                                key={i}
-                                className="flex flex-col items-center text-center space-y-2"
-                                style={{ minWidth: '120px' }} // Ajusta este valor según el diseño deseado
-                            >
-                                <div className="flex space-x-3">
-                                    {/* Icono CSV */}
-                                    <a
-                                        href="#"
-                                        onClick={() =>
-                                            onDownloadFile(
-                                                file.url_download as string,
-                                                `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                            )
-                                        }
-                                        className="text-primary-500 hover:text-primary-600"
-                                    >
-                                        <FaFileCsv size={30} className="text-primary-500" />
-                                    </a>
-                                    {/* Icono PDF */}
-                                    <a
-                                        href="#"
-                                        onClick={() =>
-                                            onDownLoadPdf(
-                                                file.url_download as string,
-                                                `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                            )
-                                        }
-                                        className="text-red-500 hover:text-primary-600"
-                                    >
-                                        <FaFilePdf size={30} className="text-red-500" />
-                                    </a>
-                                    {/* Icono XLS */}
-                                    <a
-                                        href="#"
-                                        onClick={() =>
-                                            onDonwloadXlsx(
-                                                file.url_download as string,
-                                                `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                            )
-                                        }
-                                        className="text-green-500 hover:text-primary-600"
-                                    >
-                                        <FaFileExcel size={30} className="text-green-500" />
-                                    </a>
+                    <div className="overflow-x-auto">
+                        <div className="grid grid-flow-row-dense grid-cols-3 gap-x-10 gap-y-6 min-w-max">
+                            {files.map((file, i) => (
+                                <div
+                                    key={i}
+                                    className="flex flex-col items-center text-center space-y-4 p-4"
+                                >
+                                    <div className="flex space-x-6">
+                                        {/* Ícono CSV */}
+                                        <a
+                                            href="#"
+                                            onClick={() =>
+                                                onDownloadFile(
+                                                    file.url_download as string,
+                                                    `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                )
+                                            }
+                                            className="text-primary-500 hover:text-primary-600"
+                                        >
+                                            <FaFileCsv size={30} className="text-primary-500" />
+                                        </a>
+                                        {/* Ícono PDF */}
+                                        <a
+                                            href="#"
+                                            onClick={() =>
+                                                onDownLoadPdf(
+                                                    file.url_download as string,
+                                                    `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                )
+                                            }
+                                            className="text-red-500 hover:text-primary-600"
+                                        >
+                                            <FaFilePdf size={30} className="text-red-500" />
+                                        </a>
+                                        {/* Ícono XLS */}
+                                        <a
+                                            href="#"
+                                            onClick={() =>
+                                                onDonwloadXlsx(
+                                                    file.url_download as string,
+                                                    `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                )
+                                            }
+                                            className="text-green-500 hover:text-primary-600"
+                                        >
+                                            <FaFileExcel size={30} className="text-green-500" />
+                                        </a>
+                                    </div>
+                                    <p className="text-sm">{file.description}</p>
                                 </div>
-                                <p className="text-sm truncate">{file.description}</p>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 );                
             },
