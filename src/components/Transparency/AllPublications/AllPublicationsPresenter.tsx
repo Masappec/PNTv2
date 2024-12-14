@@ -179,7 +179,7 @@ const AllPublicationsPresenter = (props: Props) => {
     
                 return (
                     <div className="overflow-x-auto">
-                        <div className="grid grid-flow-row-dense grid-cols-3 gap-x-10 gap-y-6 min-w-max">
+                        <div className="grid grid-flow-row-dense grid-cols-3 gap-x-1 gap-y-2 min-w-max">
                             {files.map((file, i) => (
                                 <div
                                     key={i}
@@ -226,7 +226,13 @@ const AllPublicationsPresenter = (props: Props) => {
                                             <FaFileExcel size={30} className="text-green-500" />
                                         </a>
                                     </div>
-                                    <p className="text-sm">{file.description}</p>
+                                    {/* Descripción con tamaño uniforme */}
+                                    <p
+                                        className="text-sm max-w-[150px] truncate"
+                                        title={file.description} // Mostrar el texto completo al pasar el cursor
+                                    >
+                                        {file.description}
+                                    </p>
                                 </div>
                             ))}
                         </div>
