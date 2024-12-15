@@ -1,21 +1,27 @@
 import { Tabs } from "flowbite-react";
-import AllSolicities from "./AllSolicities";
 import SolicitiesResponse from "./SolicitiesResponse";
 import { themeTabs } from "../../../../components/Common/Tabs/Theme";
 import SolicitiesNoResponse from "./SolicitiesNoResponse";
-import FilePublications from "./FilePublications";
-import SolicityListEstablishment from "../Solicity/ListEstablishment";
+import SolicitiesResponse3 from '../Solicity/ListEstablishment'
 import AllPublications from "../AllPublications";
-
+import SessionService from "../../../../infrastructure/Services/SessionService";
 
 
 const Reports = () => {
 
 
     return (
+        <>
+         <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+                
+                Bienvenido/a al área de gestión de LOTAIP de {" "}
+                {SessionService.getEstablishmentData().name}
+
+            </h2>
         <Tabs theme={themeTabs} style="underline">
+           
             <Tabs.Item title="Todas las solicitudes"  >
-            <SolicityListEstablishment />
+                <SolicitiesResponse3 />
             </Tabs.Item>
             <Tabs.Item title="Solicitudes respondidas" >
                 <SolicitiesResponse />
@@ -24,9 +30,11 @@ const Reports = () => {
                 <SolicitiesNoResponse />
             </Tabs.Item>
             <Tabs.Item title="Archivos publicados por mes " >
-                <AllPublications  />
+                <AllPublications />
             </Tabs.Item>
         </Tabs>
+        </>
+
     )
 
 }

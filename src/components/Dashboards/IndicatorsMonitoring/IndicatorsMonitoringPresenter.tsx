@@ -30,7 +30,10 @@ const IndicatorsMonitoringPresenter = (props: Props) => {
         atendidas: [],
         recibidas: [],
         score_activa: 0,
-        score_saip: 0
+        score_saip: 0,
+        day_frencuency_publish: 0,
+        day_frencuency_response: 0,
+        ta_published: 0,
     });
     const todas = EstablishmentEntity.generateAllEstablishment('')
 
@@ -177,12 +180,12 @@ const IndicatorsMonitoringPresenter = (props: Props) => {
                 series: [
                     {
                         name: "Recibidas",
-                        data: response.recibidas,
+                        data: response.recibidas||0,
                         color: "#5CA9C3",
                     },
                     {
                         name: "Atendidas",
-                        data: response.atendidas,
+                        data: response.atendidas||0,
                         color: "#1A7290",
                     }
                 ]
@@ -191,16 +194,16 @@ const IndicatorsMonitoringPresenter = (props: Props) => {
 
             setChartPieSolicities({
                 ...chartPieSolicities,
-                series: [response.total_atendidas, response.total_recibidas],
+                series: [response.total_atendidas||0, response.total_recibidas||0],
                 labels: ["Atendidas", "Recibidas"],
             })
             const imgQR = generarQR(window.location.protocol + "//" + window.location.host + "/entidades/" + entity.slug + "#indicadores")
             setQr(imgQR)
             setScore({
                 ...score,
-                series: [response.total_score],
-                colors: [getColorBasedOnScore(response.total_score)],
-                labels: [labelScore(response.total_score)],
+                series: [response.total_score||0],
+                colors: [getColorBasedOnScore(response.total_score||0)],
+                labels: [labelScore(response.total_score||0)],
                 //set color value
                 plotOptions: {
                     ...score.plotOptions,

@@ -28,8 +28,8 @@ class SolicityUseCase {
     return await this.solicityService.createDraftSolicity(data);
   }
 
-  async sendDraftSolicity(data: CreateSolicity, id: number) {
-    return await this.solicityService.sendDraftSolicity(data, id);
+  async sendDraftSolicity(data: CreateSolicity, id: number,is_send:boolean) {
+    return await this.solicityService.sendDraftSolicity(data, id,is_send);
   }
 
   async getSolicityById(id: number) {
@@ -160,7 +160,7 @@ class SolicityUseCase {
     const expired_date = moment.utc(solicity.expiry_date).toDate()
     const now = new Date()
 
-
+    console.log(solicity.status)
     if (solicity.status == StatusSolicity.RESPONSED.key
       || solicity.status == StatusSolicity.NO_RESPONSED.key
       || solicity.status == StatusSolicity.INSISTENCY_RESPONSED.key

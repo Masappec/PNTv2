@@ -106,7 +106,7 @@ class EstablishmentApi {
         } catch (error) {
             if (error instanceof AxiosError) {
 
-                const e: string = error.response?.data?.message || 'Error al eliminar institución.';
+                const e: string = error.response?.data?.message || 'Error al Obtener datos de la sesión.';
                 throw new Error(e);
             } else {
                 throw new Error("Ocurrio un error")

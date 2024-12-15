@@ -234,7 +234,7 @@ const SolicityManualContainer = (props: Props) => {
     ]
 
     const format_receipt: ColourOption[] = [
-        // { value: 'formulario web', label: 'formulario web', color: '#00B8D9' },
+        // { value: 'Portal Web', label: 'Portal Web', color: '#00B8D9' },
         { value: 'Presencial', label: 'Presencial', color: '#00B8D9' },
         { value: 'Correo Electrónico', label: 'Correo Electrónico', color: '#00B8D9' },
         { value: 'Otro', label: 'Otro', color: '#00B8D9' },
@@ -374,7 +374,7 @@ const SolicityManualContainer = (props: Props) => {
 
                         <button
                             type='button'
-                            onClick={() => navigate('/admin/establishment/solicity')}
+                            onClick={() => navigate('/admin/reports')}
 
                             className='w-full rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-80'>
                             Ver SAIP

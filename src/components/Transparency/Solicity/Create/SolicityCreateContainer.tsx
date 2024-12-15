@@ -77,13 +77,13 @@ const SolicityCreateContainer = (props: Props) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setIsLoadingSend(true)
-        data.format_receipt = "formulario web"
+        data.format_receipt = "Portal Web"
         data.address = entity.address || "Sin dirección"
         data.address = entity.address || "Sin Ciudad"
         console.log(data)
 
         if (solicitySaved?.id) {
-            const draft_send = props.usecase.sendDraftSolicity(data, solicitySaved.id || 0)
+            const draft_send = props.usecase.sendDraftSolicity(data, solicitySaved.id || 0,false)
 
             draft_send.then((res) => {
                 setSuccess("Solicitud Guardada como borrador")
@@ -235,7 +235,7 @@ const SolicityCreateContainer = (props: Props) => {
     ]
 
     const format_receipt: ColourOption[] = [
-        { value: 'formulario web', label: 'formulario web', color: '#00B8D9' },
+        { value: 'Portal Web', label: 'Portal Web', color: '#00B8D9' },
     ]
 
 
@@ -275,7 +275,7 @@ const SolicityCreateContainer = (props: Props) => {
         }
         data.establishment = entity.id || 0
         data.address = entity.address || "Sin dirección"
-        data.format_receipt = 'formulario web'
+        data.format_receipt = 'Portal Web'
         if (data.text === "") {
             setError("Ingrese el texto de la solicitud")
             setIsLoadingSave(false)

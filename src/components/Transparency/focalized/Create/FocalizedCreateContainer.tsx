@@ -737,6 +737,9 @@ const FocalizedCreateContainer = (props: Props) => {
       DownloadFileFromUrl={Download}
       onChangePage={onChangePage}
       loadingFiles={loadingFiles}
+
+      year={new Date().getFullYear()}
+      month={new Date().getMonth()}
     />
   )
 }

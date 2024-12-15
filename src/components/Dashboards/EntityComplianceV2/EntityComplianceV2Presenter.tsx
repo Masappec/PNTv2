@@ -2,12 +2,14 @@ import { FaCalendarAlt } from "react-icons/fa";
 import Table from "../../Common/Table";
 import { CalendarMonth } from "../../Common/CalendarYear";
 import { useState } from "react";
+import { ComplianceEstablisment } from "../../../infrastructure/Api/PublicDataApi/interface";
+import { Pagination } from "../../../infrastructure/Api";
 
-   
+
 
 interface Props {
 
-    data: [];
+    data: Pagination<ComplianceEstablisment>;
     current: number;
     pageSize: number;
     from: number;
@@ -17,18 +19,16 @@ interface Props {
     onPaginate: (page: number) => void;
     onSearch: (search: string) => void
 
-    
+
     month: number;
-    onSelectedMonth: (month: number) => void;  
+    onSelectedMonth: (month: number) => void;
     onSelectedYear: (year: number) => void;
     year: number;
-  
-  }
-  const EntityComplianceV2Presenter = (props: Props) => {
+    onDetail: (data:ComplianceEstablisment,type:'TA'|'TF'|'TC')=>void
+
+}
+const EntityComplianceV2Presenter = (props: Props) => {
     const [visible, setVisible] = useState<boolean>(false);
-    const fecha = new Date();
-    const opciones: Intl.DateTimeFormatOptions = { month: 'long' };
-    const mesActual = new Intl.DateTimeFormat('es-ES', opciones).format(fecha);
 
     const meses = [
         "Enero",
@@ -43,19 +43,19 @@ interface Props {
         "Octubre",
         "Noviembre",
         "Diciembre"
-      ]
-  
-  
-  
+    ]
+
+
+
     return (
         <>
-   
-  
-        <h2 className='mb-14 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary '>
-        {"Cumplimiento de Entidades"}
 
-    </h2>
-    <section className='mb-4 flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center mt-7'>
+
+            <h2 className='mb-14 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary '>
+                {"Cumplimiento de Entidades"}
+
+            </h2>
+            <section className='mb-4 flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center mt-7'>
                 <div className='w-full max-w-md'>
                     <div className='group relative'>
                         <svg
@@ -82,34 +82,34 @@ interface Props {
 
                 <div className="">
 
-<button className="text-primary hover:text-primary-dark
-focus:outline-none focus:ring-2 focus:ring-primary-dark
-rounded-md px-3 py-2 border-2 w-96"
-  type="button"
-  onClick={() => setVisible(!visible)}
->
+                    <button className="text-primary hover:text-primary-dark
+                        focus:outline-none focus:ring-2 focus:ring-primary-dark
+                        rounded-md px-3 py-2 border-2 w-96"
+                        type="button"
+                        onClick={() => setVisible(!visible)}
+                    >
 
-   <FaCalendarAlt className=" mt-1 absolute"/> 
-   <span className="-ml-10"> Escoge el mes: {
-      meses[props.month - 1]
-    }
-    </span>
-  &nbsp;
-  <span className="text-sm font-semibold">
-    {props.year}
-  </span>
-
-
+                        <FaCalendarAlt className=" mt-1 absolute" />
+                        <span className="-ml-10"> Escoge el mes: {
+                            meses[props.month - 1]
+                        }
+                        </span>
+                        &nbsp;
+                        <span className="text-sm font-semibold">
+                            {props.year}
+                        </span>
 
 
-</button>
-<CalendarMonth
-  visible={visible}
-  onMonthSelect={(month) => props.onSelectedMonth(month + 1)}
-  onYearSelect={(year) => props.onSelectedYear(year)}
-  setVisible={setVisible}
-/>
-</div>
+
+
+                    </button>
+                    <CalendarMonth
+                        visible={visible}
+                        onMonthSelect={(month) => props.onSelectedMonth(month + 1)}
+                        onYearSelect={(year) => props.onSelectedYear(year)}
+                        setVisible={setVisible}
+                    />
+                </div>
             </section>
             <section className='h-min rounded-md bg-gray-100'>
                 <Table
@@ -117,52 +117,63 @@ rounded-md px-3 py-2 border-2 w-96"
                     columns={[
                         {
                             title: "Institución",
-                            render: () => (
-                                <p className="text-left text-wrap">{}</p>
+                            render: (row) => (
+                                <p className="text-left text-wrap">{row.name}</p>
                             )
                         },
                         {
                             title: "Transparencia Activa Publicados/Total",
-                            render: () => (
-                                <p className="text-left">{}</p>
+                            render: (row) => (
+                                <a className="text-left text-primary hover:text-primary-dark cursor-pointer"
+                                    onClick={()=>props.onDetail(row,'TA')}
+                                    href="#">
+                                    {row.total_published_ta }/{row.total_numeral_ta}
+                                
+                                </a>
                             )
                         },
                         {
                             title: "Transparencia Pasiva Recibidas/Respondidas",
-                            render: () => (
-                                <p className="text-left" >{}</p>
+                            render: (row) => (
+                                <p  >{ row.total_solicities_rec}/{row.total_solicities_res}</p>
                             )
                         },
                         {
                             title: "Transparencia Focalizada Publicados",
-                            render: () => (
-                                <p className="text-left" >{}</p>
+                            render: (row) => (
+                                <a className="text-left text-primary hover:text-primary-dark cursor-pointer"
+                                    onClick={()=>props.onDetail(row,'TF')}
+                                    href="#">
+                                    {row.total_tf }</a>
                             )
                         },
                         {
                             title: "Transparencia Colaborativa Publicados",
-                            render: () => (
-                                <p className="text-left" >{}</p>
+                            render: (row) => (
+                                <a className="text-left text-primary hover:text-primary-dark cursor-pointer"
+                                    onClick={()=>props.onDetail(row,'TC')}
+                                    href="#">
+                                    {row.total_tc }</a>
                             )
                         },
-                        
-                 
-                
-                ]}
-                data={[]}
-            
-                from={props.from}
-                onChangePage={props.onPaginate}
-                to={props.to}
-                total={props.total}
-                totalPages={props.total_pages}
-                onSearch={props.onSearch}
-        
-              />
+
+
+
+                    ]}
+                    data={props.data.results}
+                    currentPage={props.data.current}
+                    from={props.from}
+                    onChangePage={props.onPaginate}
+                    to={props.to}
+                    total={props.total}
+                    totalPages={props.total_pages}
+                    onSearch={props.onSearch}
+
+                />
             </section>
-        
-         </>
+
+        </>
     );
-  };
- 
+};
+
 export default EntityComplianceV2Presenter
