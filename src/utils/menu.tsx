@@ -466,7 +466,7 @@ const menu = [
     path: "/admin/annualreports",
     visible: true,
     icon: <GrCompliance size={25} className="text-slate-500" />,
-    permission_required: "view_establishment",
+    permission_required: "view_transparencyactive",
     element: <AnnualReport />,
   },
 ]
