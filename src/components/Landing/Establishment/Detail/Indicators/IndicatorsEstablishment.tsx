@@ -1,7 +1,6 @@
-
 import { ApexOptions } from "apexcharts";
 import { useEffect, useState } from "react";
-import Chart from "react-apexcharts";
+{/*import Chart from "react-apexcharts";*/}
 import PublicDataApi from "../../../../../infrastructure/Api/PublicDataApi";
 import { IndicatorResponse } from "../../../../../infrastructure/Api/PublicDataApi/interface";
 
@@ -33,6 +32,7 @@ const IndicatorsEstablishment = (props: Props) => {
     });
     {/*const date = new Date();*/}
     {/*const monthName = date.toLocaleString('es-ES', { month: 'long' });*/}
+    console.log(res.total_score)
 
     const [line, setLine] = useState<ApexOptions>({
         chart: {
