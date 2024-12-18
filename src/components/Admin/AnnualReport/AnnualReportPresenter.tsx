@@ -1,19 +1,10 @@
 import { Label, Select, TextInput } from "flowbite-react";
 import { Form } from "react-router-dom";
-import TableInfo from "../../Common/TableInfo";
 import Table from "../../Common/Table";
 
 
-interface Props{
-  page: number;
-  setPage: (page: number) => void;
-  totalPage: number;
-  from: number;
-  to: number;
-  total: number;
-}
 
-const AnnualReportPresenter = (props:Props)=>{
+const AnnualReportPresenter = ()=>{
 
 return(
     <>
@@ -126,12 +117,12 @@ return(
           description={""}
           length={0}
           data={[]}
-          currentPage={props.page}
-          onChangePage={props.setPage}
-          totalPages={props.totalPage}
-          from={props.from}
-          to={props.to}
-          total={props.total}
+          currentPage={0}
+          onChangePage={() => {}}
+          totalPages={0}
+          from={0}
+          to={0}
+          total={0}
         />
 
 <p className="text-primary font-semibold my-3">Ingrese el número de solicitudes de acceso a la información pública que su entidad recibió y gestionó en el período enero-diciembre
@@ -389,12 +380,12 @@ return(
           description={""}
           length={0}
           data={[]}
-          currentPage={props.page}
-          onChangePage={props.setPage}
-          totalPages={props.totalPage}
-          from={props.from}
-          to={props.to}
-          total={props.total}
+          currentPage={0}
+          onChangePage={() => {}}
+          totalPages={0}
+          from={0}
+          to={0}
+          total={0}
         />
           <p className="font-semibold text-gray-500 my-3 text-sm">Obligaciones específicas
 
@@ -448,12 +439,12 @@ return(
     description={""}
     length={0}
     data={[]}
-    currentPage={props.page}
-    onChangePage={props.setPage}
-    totalPages={props.totalPage}
-    from={props.from}
-    to={props.to}
-    total={props.total}
+    currentPage={0}
+          onChangePage={() => {}}
+          totalPages={0}
+          from={0}
+          to={0}
+          total={0}
   />
     <p className="text-base font-medium text-primary ">- Transparencia colaborativa:
       </p>
@@ -507,12 +498,12 @@ return(
           description={""}
           length={0}
           data={[]}
-          currentPage={props.page}
-          onChangePage={props.setPage}
-          totalPages={props.totalPage}
-          from={props.from}
-          to={props.to}
-          total={props.total}
+          currentPage={0}
+          onChangePage={() => {}}
+          totalPages={0}
+          from={0}
+          to={0}
+          total={0}
         />
 
 <p className="text-base font-medium text-primary ">- Transparencia focalizada:
@@ -567,12 +558,12 @@ return(
           description={""}
           length={0}
           data={[]}
-          currentPage={props.page}
-          onChangePage={props.setPage}
-          totalPages={props.totalPage}
-          from={props.from}
-          to={props.to}
-          total={props.total}
+          currentPage={0}
+          onChangePage={() => {}}
+          totalPages={0}
+          from={0}
+          to={0}
+          total={0}
         />
       </section>
       <section>
