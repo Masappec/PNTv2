@@ -11,3 +11,5 @@ export const IS_SERVER: 'Y' | 'N' = 'N' //import.meta.env.VITE_IS_SERVER;
 //https://transparencia.dpe.gob.ec/transparencia/regCiudadano.php
 export const BASE_URL = '/'
 //export const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+export const DELIMITER = ';';
