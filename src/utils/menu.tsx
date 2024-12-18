@@ -46,6 +46,7 @@ import { GrCompliance } from "react-icons/gr";
 import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
 import VerPerfil from "../interfaces/web/Transparency/Perfil";
 import AllPublications from "../interfaces/web/Transparency/AllPublications";
+import AnnualReport from "../interfaces/web/Admin/AnnualReport";
 
 
 export interface MenuItem {
@@ -458,8 +459,16 @@ const menu = [
 
   },
 
+  
 
-
+  {
+    name: " Reportes anuales",
+    path: "/admin/annualreports",
+    visible: true,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: "view_transparencyactive",
+    element: <AnnualReport />,
+  },
 ]
 
 export default menu
