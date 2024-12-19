@@ -11,39 +11,39 @@ return(
     <h2 className="mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary">
     {"Reporte de Informe Anual"}
   </h2>
-  <Form className="grid grid-cols-1 items-start justify-center gap-4 text-start">
-    <section>
+  <Form className="grid grid-cols-1 items-start justify-center gap-4 text-start ">
+    <section className="container w-[500px]">
     <h2 className="text-xl font-semibold text-primary">Institución</h2>
     <div>
     <div className="mb-1 block">
           <Label htmlFor="small" value="Nombre de entidad:" className="text-gray-500" />
         </div>
-        <TextInput id="small" type="text" sizing="sm" className="w-96" />
+        <TextInput id="small" type="text" sizing="sm"  />
              
             </div>
             <div>
             <div className="mb-1 block">
           <Label htmlFor="small" value=" Función del estado a la que pertenece:" className="text-gray-500"/>
         </div>
-        <TextInput id="small" type="text" sizing="sm" className="w-96" />
+        <TextInput id="small" type="text" sizing="sm"  />
              
             </div>
             <div>
             <div className="mb-1 block">
           <Label htmlFor="small" value="Fecha de emisión del informe: " className="text-gray-500"/>
         </div>
-        <TextInput id="small" type="text" sizing="sm" className="w-96" />
+        <TextInput id="small" type="text" sizing="sm"  />
         
             </div>
             </section>
-            <section>
+            <section className="w-[500px]">
             <h2 className="text-xl font-semibold text-primary">Artículo 10</h2>
             <p className="text-base font-medium text-primary">
             Custodia de la información 
       </p>
      
       <div>
-      <div className="mb-1 block mt-5">
+      <div className="mb-1 block mt-5]">
           <Label htmlFor="small" value="¿Se han creado y se mantienen registros públicos de manera profesional para el manejo y archivo de la información y documentación?" className="text-gray-500" />
         </div>
       <Select className="w-44 mt-3" required>
@@ -56,18 +56,18 @@ return(
         <div className="mb-1 block mt-5">
           <Label htmlFor="small" value="Norma archivística utilizada:" className="text-gray-500" />
         </div>
-        <TextInput id="small" type="text" sizing="sm" className="w-96" />
+        <TextInput id="small" type="text" sizing="sm"  />
       </div>
       <div>
         <div className="mb-1 block mt-5">
           <Label htmlFor="small" value="Comentario/aclaración:" className="text-gray-500" />
         </div>
-        <TextInput id="small" type="text" sizing="sm" className="w-96" />
+        <TextInput id="small" type="text" sizing="sm" />
       </div>
       </section>
       <section>
       <h2 className="text-xl font-semibold text-primary">Artículo 11</h2>
-      <p className="font-semibold text-primary my-3">Detalle de las solicitudes de acceso a la información y el trámite dado a cada una de ellas; con indicación del tiempo que ha tomado en responder
+      <p className="font-semibold text-primary my-3 w-[500px]">Detalle de las solicitudes de acceso a la información y el trámite dado a cada una de ellas; con indicación del tiempo que ha tomado en responder
       </p>
       <Table
           show={false}
@@ -124,17 +124,18 @@ return(
           to={0}
           total={0}
         />
+        <div className="w-[500px]">
 
-<p className="text-primary font-semibold my-3">Ingrese el número de solicitudes de acceso a la información pública que su entidad recibió y gestionó en el período enero-diciembre
+<p className="text-primary font-semibold my-3 ">Ingrese el número de solicitudes de acceso a la información pública que su entidad recibió y gestionó en el período enero-diciembre
 </p>
 <div>
 <div className="mb-1 block mt-5">
           <Label htmlFor="small" value="Cantidad" className="text-gray-500" />
         </div>
-        <TextInput id="small" type="text" sizing="sm" className="w-96" />
+        <TextInput id="small" type="text" sizing="sm" className="w-[500px]" />
       </div>
       <div>
-      <div className="mb-1 block mt-5">
+      <div className="mb-1 block mt-5 ">
       <Label htmlFor="small" value="¿Su entidad recibió y gestionó una cantidad  diferente de solicitudes de las que registró en el Portal Nacional de Transparencia?" className="text-gray-500" /></div>
       <Select className="w-44 " required>
         <option>Si</option>
@@ -148,14 +149,14 @@ return(
           <Label htmlFor="small" value="Cantidad de SAIP registradas en el portal
 " className="text-gray-500" />
         </div>
-        <TextInput id="small" type="number" sizing="sm" className="w-96" />
+        <TextInput id="small" type="number" sizing="sm" />
       </div>
       <div>
             <div className="mb-2 block mt-4">
           <Label htmlFor="small" value="Descripción de las razones por las que no fueron ingresadas al portal
  " className="text-gray-500"/>
         </div>
-        <TextInput id="small" type="text" sizing="sm" className="w-96" />
+        <TextInput id="small" type="text" sizing="sm"  />
         
             </div>
             <p className="text-primary font-semibold  my-3">¿Las solicitudes de acceso a la información pública que NO fueron registradas en el Portal Nacional de Transparencia, fueron respondidas?
@@ -166,14 +167,15 @@ return(
     <Label htmlFor="small" value="Cantidad 
 " className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm" />
 </div>
 <div>
 
 <div className="mb-1 block mt-5">
     <Label htmlFor="small" value="Comentario/aclaración" className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm" />
+</div>
 </div>
 
       
@@ -182,6 +184,7 @@ return(
       
       </section>
       <section>
+        <div className="w-[500px]">
       <h2 className="text-xl font-semibold text-primary">Artículo 11</h2>
       <p className="font-semibold text-primary my-3">Informe semestral actualizado sobre el listado índice de información reservada
       </p>
@@ -201,36 +204,37 @@ return(
 <div className="mb-1 block mt-5">
     <Label htmlFor="small" value="Número de temas clasificados como Reservados: " className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm" />
 </div>
 <div>
 
 <div className="mb-1 block mt-5">
     <Label htmlFor="small" value="Número de temas clasificados como Confidencial (Ley Orgánica de Empresas Públicas): " className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm"  />
 </div>
 <div>
 <div className="mb-1 block mt-5">
     <Label htmlFor="small" value="Número de temas clasificados como Secreto: " className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm"  />
 </div>
 <div>
 <div className="mb-2 block mt-5">
     <Label htmlFor="small" value="Número de temas clasificados como Secreto: " className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm" />
 </div>
 <div>
 <div className="mb-1 block mt-5">
     <Label htmlFor="small" value="Número de temas clasificados como Secretísimo:" className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm" />
 </div>
 
 <p className="font-semibold text-primary my-3">El índice de la información clasificada como reservada, detallando la fecha de la resolución de clasificación de la reserva y el período de vigencia de la misma
       </p>
+      </div>
       <table className='w-full divide-y divide-gray-200 mt-5'>
                     <thead className='sticky top-0 z-10 w-full bg-gray-100 text-center'>
                       <tr className='text-xs'>
@@ -306,7 +310,7 @@ return(
                   <section className='flex w-full items-end justify-center gap-2 p-2 text-sm'>
                     <button
                     type="button"
-                      onClick={() => {}}
+                      onClick={() => { }}
                       className='flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white'>
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -566,7 +570,7 @@ return(
           total={0}
         />
       </section>
-      <section>
+      <section className="w-[500px]">
       <h2 className="text-xl font-semibold text-primary">Artículo 40</h2>
       <p className="font-semibold text-primary my-3">Gestión Oficiosa
       </p>
@@ -585,22 +589,22 @@ return(
 <div className="mb-1 block mt-5">
     <Label htmlFor="small" value="Cantidad de gestiones oficiosas" className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm" />
 </div>
 <div>
 
 <div className="mb-1 block mt-5">
     <Label htmlFor="small" value="Descripción específica de la corrección de información" className="text-gray-500" />
   </div>
-  <TextInput id="small" type="text" sizing="sm" className="w-96" />
+  <TextInput id="small" type="text" sizing="sm" />
 </div>
       </section>
-      <section>
+      <section >
       <h2 className="text-xl font-semibold text-primary">Artículo 42 de la LOTAIP</h2>
       <p className="font-semibold text-primary my-3">Sanciones administrativas
       </p>
       <div>
-      <div className="mb-1 block mt-5">
+      <div className="mb-1 block mt-5 w-[500px]">
           <Label htmlFor="small" value="¿Personas servidoras públicas de su entidad o personas del sector privado han recibido sanciones por omisión o negativa en el acceso a la información pública?" className="text-gray-500" />
         </div>
       <Select className="w-44 mt-3" required>
@@ -610,7 +614,7 @@ return(
       </Select>
       </div>
 
-      <table className='w-full divide-y divide-gray-200 mt-5'>
+      <table className='w-full divide-y divide-gray-200 mt-5 '>
                     <thead className='sticky top-0 z-10 w-full bg-gray-100 text-center'>
                       <tr className='text-sm'>
                         <th scope='col' className='rounded-tl-md'>Ley</th>
@@ -693,8 +697,8 @@ return(
                       </tr>
                     </tbody>
                   </table>
-                 <section>
-                 <h2 className="text-xl font-semibold text-primary">Disposición transitoria séptima</h2>
+                 <section className="w-[500px]">
+                 <h2 className="text-xl font-semibold text-primary mt-7">Disposición transitoria séptima</h2>
                  <div>
 <div className="mb-1 block mt-5">
     <Label htmlFor="small" value="Número de temas clasificados como Secreto: " className="text-gray-500" />
@@ -711,7 +715,7 @@ return(
     <Label htmlFor="small" value="Cantidad 
 " className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm"  />
 </div>
 <div>
 
@@ -719,11 +723,11 @@ return(
     <Label htmlFor="small" value="Descripción específica del programa de difusión, capacitación y fortalecimiento sobre la LOTAIP
 " className="text-gray-500" />
   </div>
-  <TextInput id="small" type="text" sizing="sm" className="w-96" />
+  <TextInput id="small" type="text" sizing="sm"  />
 </div>
                  </section>
-                 <section>
-                 <h2 className="text-xl font-semibold text-primary">Disposición transitoria octava</h2>
+                 <section className="w-[500px]">
+                 <h2 className="text-xl font-semibold mt-7 text-primary">Disposición transitoria octava</h2>
                  <div>
 <div className="mb-1 block mt-5">
     <Label htmlFor="small" value="¿Sí su entidad es un establecimiento educativo público o privado, desarrolló actividades y programas de promoción del derecho de acceso a la información pública, sus garantías y referente a la transparencia sus garantías y referente a la transparencia colaborativa? " className="text-gray-500" />
@@ -741,7 +745,7 @@ return(
     <Label htmlFor="small" value="Cantidad 
 " className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm"  />
 </div>
 
 <div>
@@ -750,7 +754,7 @@ return(
     <Label htmlFor="small" value="Descripción específica de la actividad o programa desarrollado
 " className="text-gray-500" />
   </div>
-  <TextInput id="small" type="number" sizing="sm" className="w-96" />
+  <TextInput id="small" type="number" sizing="sm" />
 </div>
                  </section>
                  <div className='flex w-full items-end justify-center gap-2 p-2 text-sm'>
