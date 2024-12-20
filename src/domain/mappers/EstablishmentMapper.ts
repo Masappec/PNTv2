@@ -78,6 +78,7 @@ class EstablishmentMapper {
             function_organization: data.function_organization || '',
             type_institution: data.type_institution || '',
             type_organization: data.type_organization || '',
+            alias:  ''
 
         }
     }

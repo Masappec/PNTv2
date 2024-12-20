@@ -61,8 +61,8 @@ class SolicityUseCase {
 
   }
 
-  commentSolicity(comment: string, solicityId: number) {
-    return this.solicityService.commentSolicity(solicityId, comment);
+  commentSolicity(comment: string, solicityId: number, files: number[]) {
+    return this.solicityService.commentSolicity(solicityId, comment, files);
   }
 
 
@@ -90,7 +90,7 @@ class SolicityUseCase {
 
   availableToInsistency(user: UserEntity, solicity: Solicity) {
     if (solicity && user) {
-      if (user.id == solicity.userCreated) {
+      if (user.group?.find(x=>x.name.toLowerCase().includes('ciudadano'))) {
 
         return solicity.status == StatusSolicity.INSISTENCY_PERIOD.key
           || solicity.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
@@ -111,6 +111,7 @@ class SolicityUseCase {
       if (user_citizen_id !== user_session) {
         return solicity.status == StatusSolicity.INSISTENCY_SEND.key
           || solicity.status == StatusSolicity.SEND.key
+          || solicity.status == StatusSolicity.PRORROGA.key
           || solicity.status == StatusSolicity.INFORMAL_MANAGMENT_SEND.key
       }
 
@@ -122,38 +123,30 @@ class SolicityUseCase {
 
 
   avaliableToProrroga(user: UserEntity, solicity: Solicity) {
-    const user_citizen_id = parseInt(solicity.user_created);
-    const user_session = user.id
+    const user_session = user.user_permissions?.find(x => x.codename === 'view_solicityresponse')
     if (solicity && user) {
       if (solicity.status == StatusSolicity.SEND.key) {
-        if (user_citizen_id !== user_session) {
-          const expired_date = moment.utc(solicity.expiry_date).toDate()
-          const now = new Date()
-
-          if (now.getDay() == expired_date.getDay()
-            && now.getMonth() == expired_date.getMonth()
-            && now.getFullYear() == expired_date.getFullYear()
+        if (user_session) {
+          const expired_date = new Date(parseInt(solicity.expiry_date.substring(0,4)), parseInt(solicity.expiry_date.substring(5,7)) - 1, parseInt(solicity.expiry_date.substring(8,10)))
+          const now = new Date()     
+          if (now <= expired_date
           ) {
             return true
           }
 
         }
       }
-
-
-
     }
-
     return false;
-
   }
+  
   async createManualSolicity(data: CreateSolicity) {
     console.log(data)
     return await this.solicityService.createManualSolicity(data);
   }
 
-  async changeStatus(solicityId: number, text: string) {
-    return await this.solicityService.changeStatus(solicityId, text);
+  async changeStatus(solicityId: number, text: string, files: number[]) {
+    return await this.solicityService.changeStatus(solicityId, text, files);
   }
 
   isAvaliableChangeStaus(solicity: Solicity) {
@@ -178,10 +171,11 @@ class SolicityUseCase {
     return false
   }
 
-  getTextChangeStatus(solicity: Solicity, user_id: number) {
-    if (user_id != solicity.userCreated) {
+  getTextChangeStatus(solicity: Solicity, user: UserEntity) {
+    const user_session = user.user_permissions?.find(x => x.codename === 'view_solicityresponse')
+    if (user_session) {
       if (solicity.status == StatusSolicity.SEND.key) {
-        return 'Prórroga'
+        return 'Activar Prórroga'
       }
     } else {
       if (solicity.status == StatusSolicity.RESPONSED.key
@@ -283,6 +277,17 @@ class SolicityUseCase {
 
     // Guardar el PDF
     doc.save(`Solicitud-${data.number_saip}.pdf`);
+  }
+
+
+  isAvaliableToResponseProrroga(user: UserEntity, solicity: Solicity) {
+ 
+    if (solicity && user) {
+      if (solicity.status == StatusSolicity.PRORROGA.key) {
+        return solicity.timeline.find(x => x.status == StatusSolicity.PRORROGA.key) ? true : false
+      }
+    }
+    return false;
   }
 }
 export default SolicityUseCase;

@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 interface InputProps extends TextInputProps {
   width?: string;
+  obligatorio?: boolean;
 }
 
 const Input: FC<InputProps> = ({ ...props }) => {
@@ -14,6 +15,9 @@ const Input: FC<InputProps> = ({ ...props }) => {
           <Label value={props.placeholder}
             htmlFor={props.name}
           />
+          {
+            props.obligatorio && <span className="text-red-500 ml-1">*</span>
+          }
         </div>
         <TextInput
           {

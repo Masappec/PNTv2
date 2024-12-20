@@ -100,11 +100,11 @@ class FilePublicationService {
 
      csvContentFromColumnsAndRows = (columns: string[], rows: string[][], name: string,isVertical:boolean) => {
         let csvContent = '';
-
+        console.log("csvContentFromColumnsAndRows",columns,rows)
         
          if (isVertical) {
              // Escribir columnas
-             const temporalRows = [columns, rows.map(row=>row.length>0?row[0]:"")];
+             const temporalRows = [columns, ...rows];
 
              const objectRow:Row[][] = temporalRows.map((row,index) => {
                     return row.map((cell) => {
@@ -114,7 +114,6 @@ class FilePublicationService {
                         } as Row
                     })
                 });
-             console.log(objectRow, rows)
              csvContent = this.generateContentCsvVertical(objectRow);
          } else {
              // Escribir columnas
@@ -150,7 +149,6 @@ class FilePublicationService {
             });
             csvContent += "\r\n "; // Agregar un salto de línea después de cada columna
         });
-        console.log(csvContent)
         return csvContent;
     }
     /**
@@ -185,7 +183,6 @@ class FilePublicationService {
 
 
         } catch (e) {
-            console.log(e);
             if (e instanceof AxiosError) {
                 const _error = "Error al descargar el archivo: " + (e.response?.data?.message || e.message);
 

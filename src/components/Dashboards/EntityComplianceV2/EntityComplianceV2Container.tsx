@@ -4,12 +4,13 @@ import { Pagination } from '../../../infrastructure/Api'
 import { ComplianceEstablisment } from '../../../infrastructure/Api/PublicDataApi/interface'
 import PublicDataApi from '../../../infrastructure/Api/PublicDataApi'
 import { useNavigate } from 'react-router-dom'
+import { DatePnt } from '../../../utils/date'
 
 function EntityComplianceV2Container() {
 
     const api = new PublicDataApi();
     const [year, setYear] = useState<number>(new Date().getFullYear())
-    const [month, setMonth] = useState<number>(new Date().getMonth()+1)
+    const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased())
 
     const [page,setPage] = useState(1)
     const [search,setSearch] = useState('')

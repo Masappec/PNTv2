@@ -16,14 +16,14 @@ import NumeralDetail from "../../../../domain/entities/NumeralDetail";
 import Template from "../../../../domain/entities/Template";
 import { Row } from "../../../../utils/interface";
 import { Pagination } from "../../../../infrastructure/Api";
-import { sleep } from "../../../../utils/functions";
 import { TabsRef } from "flowbite-react";
+import { DatePnt } from "../../../../utils/date";
 
 export interface INeedProps {
   numeral: NumeralEntity,
   childs: NumeralEntity[]
-  month:number;
-  year:number
+  month: number;
+  year: number
 }
 
 interface IProps {
@@ -43,8 +43,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const state = location.state as INeedProps;
 
-  const [month,setMonth] = useState(new Date().getMonth()+1)
-  const [year,setYear] = useState(new Date().getFullYear())
+  const [month, setMonth] = useState(new DatePnt().getMonthOneBased()-1)
+  const [year, setYear] = useState(new DatePnt().getYear())
 
   const [numeral, setNumeral] = useState<NumeralEntity>();
   const [detail, setDetail] = useState<NumeralDetail | null>(null)
@@ -127,16 +127,24 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const buildRowFromTemplate = (templates: Template[]) => {
     const data: { id: number, data: Row[][] }[] = templates.map((template) => {
+      
       return {
         id: template.id,
         data: [
-          template.columns.map((column) => {
+          [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
             return {
               key: column.id.toString(),
               value: column.name,
               is_header: true,
             }
-          })
+          })],
+          [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
+            return {
+              key: column.id.toString(),
+              value: column.value,
+              is_header: true,
+            }
+          })],
         ] as Row[][]
       }
 
@@ -178,10 +186,9 @@ const ActiveCreateContainer = (props: IProps) => {
       props.templateUseCase.validateLocalFile(
         file_ as File,
         templateDetail,
-        true
+        true,
       ).then((res) => {
 
-        const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
         setLoadingFiles(loadingFiles.filter((loading) => {
           return loading.name !== templateFile.name
         }))
@@ -193,7 +200,6 @@ const ActiveCreateContainer = (props: IProps) => {
         newTemplates = {
           ...newTemplates,
           isValid: res.valid,
-          file: newFile
         } as TemplateFileEntity
 
 
@@ -235,18 +241,14 @@ const ActiveCreateContainer = (props: IProps) => {
           ...newTemplates,
           isValid: false
         } as TemplateFileEntity
-        sleep(2000).then(() => {
-          setError("")
-        })
+
       })
     }).catch((error) => {
       setLoadingFiles(loadingFiles.filter((loading) => {
         return loading.name !== templateFile.name
       }))
       setError(error.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
 
 
@@ -290,15 +292,14 @@ const ActiveCreateContainer = (props: IProps) => {
     props.templateUseCase.validateLocalFile(
       newTemplates.file as File,
       templateDetail,
-      true
+      true,
+
     ).then((res) => {
-      const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
 
       setError("")
       newTemplates = {
         ...newTemplates,
         isValid: res.valid,
-        file: newFile
       } as TemplateFileEntity
 
 
@@ -338,9 +339,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
 
       setError(e.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
 
 
@@ -421,7 +420,7 @@ const ActiveCreateContainer = (props: IProps) => {
       establishment,
       numeral?.id || 0,
       year,
-      month+1
+      month
     )
     await props.transparencyActiveUseCase.publish(newTransparency)
 
@@ -557,9 +556,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
     }).catch((e) => {
       setError(e.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
   }
 
@@ -597,11 +594,24 @@ const ActiveCreateContainer = (props: IProps) => {
       return;
     }
     let content;
-    if (template.verticalTemplate) {
-      content = props.usecase.generateContentCsvVertical(data_template.data);
+
+    const Row_obj: Row[][] = template.columns.sort((a, b) => a.id - b.id).map((column) => {
+      return [
+        {
+          key: column.id.toString(),
+          value: column.name,
+          is_header: true,
+        }
+      ]
+    })
+
+
+    if (!template.verticalTemplate) {
+      content = props.usecase.generateContentCsvVertical(Row_obj);
     } else {
-      content = props.usecase.generateContentCsv(data_template.data);
+      content = props.usecase.generateContentCsv(Row_obj);
     }
+
 
     const a = document.createElement('a')
     a.download = name + ".csv";
@@ -679,9 +689,7 @@ const ActiveCreateContainer = (props: IProps) => {
 
     if (files) {
       setError("Ya existe un archivo de " + file.description)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
       return
     }
     setError("")
@@ -704,18 +712,7 @@ const ActiveCreateContainer = (props: IProps) => {
             is_header: true
           }
         })
-        if (temDetail.verticalTemplate) {
-          const rows = res.rows.map((row) => {
-            return {
-              key: row[0] as string,
-              value: row[0] as string
-            }
-          })
-
-          buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
-          tabsRef.current?.setActiveTab(2)
-          return
-        } else {
+       
           const rows = res.rows.map((row) => {
             return row.map((value, index) => {
               return {
@@ -726,7 +723,6 @@ const ActiveCreateContainer = (props: IProps) => {
           })
           buildRowFromTemplateAnData(temDetail, [columns, ...rows])
           tabsRef.current?.setActiveTab(2)
-        }
       }).catch((e) => {
         setError(e.message)
       })

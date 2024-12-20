@@ -12,11 +12,11 @@ export const messages = {
 
         //herp landing
         portal_nacional: 'Portal Nacional de Transparencia',
-        title_search_entities: 'Accede a la información que publican las entidades del estado ecuatoriano en cumplimiento de la LOTAIP',
+        title_search_entities: 'Accede a la información que publican las entidades del Estado ecuatoriano en cumplimiento de la LOTAIP',
         subtitle_search_entities: '{total} total de entidades públicas y {total_files} total de archivos publicados ',
 
         //ejes 
-        search_by_tematic: 'Buscar por eje temático',
+        search_by_tematic: 'Buscar por ejes temáticos',
 
         //footer landing
 

@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
+import SessionService from "../../../../infrastructure/Services/SessionService"
 import { useNavigate } from "react-router-dom"
 import EstablishmentEditPresenter from "../Edit/EstablishmentEditPresenter"
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
@@ -26,6 +27,7 @@ const EstablishmentInSessionContainer = ({
     const [loading, setLoading] = useState<boolean>(false)
     const [selectedExtraNumeral, setSelectedExtraNumeral] = useState<number[]>([])
     const [modified, setModified] = useState<boolean>(false)
+    const [userRole, setUserRole] = useState<string>("");
 
     const [data, setData] = useState<EstablishmentEntity>({
         abbreviation: "",
@@ -37,7 +39,7 @@ const EstablishmentInSessionContainer = ({
         job_authority: "",
         logo: "",
         name: "",
-        email_accesstoinformation: "",
+        email_accesstoinformation: "email@example.com",
         email_committe: "",
         first_name_committe: "",
         highest_committe: "",
@@ -53,6 +55,20 @@ const EstablishmentInSessionContainer = ({
 
     })
     const [numerals, setNumerals] = useState<NumeralDetail[]>([])
+
+    useEffect(() => {
+        const userSession = SessionService.getUserData();
+        if (userSession) {
+            const group = userSession.group;
+            if (group && group.length > 0) {
+                setUserRole(group[0].name); // Guardar el nombre del primer rol en el estado
+            } else {
+                console.warn("El usuario no tiene grupos asignados");
+            }
+        } else {
+            console.error("No se encontró el usuario");
+        }
+    }, []);
 
     useEffect(() => {
         usecase.getOptions().then((res) => {
@@ -106,6 +122,7 @@ const EstablishmentInSessionContainer = ({
             setLoading(false)
             return
         }
+        data.email_accesstoinformation = data.email_accesstoinformation || "email@example.com";
         usecase.update(data, data.id + "" || "").then(() => {
             setSuccess("Institución actualizada correctamente")
             setLoading(false)
@@ -135,6 +152,16 @@ const EstablishmentInSessionContainer = ({
             }
             return null
         }).filter((item) => item !== null) as MultiValue<{ value: string, label: string }>
+        for(const numeral of selected) {
+            //console.log("Add:",numeral.value)
+            if (numeral.value){
+                numeralUsecase.updateNumeralState(Number(numeral.value), {
+                    isSelected: false,
+                });
+            } else {
+                console.log("Nada por hacer")
+            }
+        }
         return selected
     }
 
@@ -149,6 +176,32 @@ const EstablishmentInSessionContainer = ({
         setSelectedExtraNumeral(e.map((item) => parseInt(item.value)))
         setData({ ...data, extra_numerals: e.map((item) => item.value).join(',') })
     }
+
+    const handleRemoveNumeral = async (numeralId: string) => {
+        try {
+            // Convetir el numeralID en numero
+            const numeralIdAsNumber = parseInt(numeralId, 10);
+            if (isNaN(numeralIdAsNumber)) {
+                throw new Error(`El numeralId "${numeralId}" no es un numerao valido.`)
+            }
+            // Llamada al backend para actualizar el estado 
+            await numeralUsecase.updateNumeralState(numeralIdAsNumber, {
+                isSelected: true,
+            });
+            // Actualiza el estado local eliminando el numeral del arreglo
+            setData((prevData) => {
+                const updateNumerals = (prevData.extra_numerals || "")
+                    .split(",")
+                    .filter((id) => id !== numeralId)
+                    .join(",");
+                //console.log("Remove", updateNumerals);
+                return { ...prevData, extra_numerals: updateNumerals};
+            });
+        } catch (error) {
+            console.error("Error al eliminar el numeral:", error)
+        }
+    }
+
     const validateFields = (name: string) => {
         if (modified) {
             console.log(data[name as keyof EstablishmentEntity], name)
@@ -174,9 +227,11 @@ const EstablishmentInSessionContainer = ({
             setSuccess={setSuccess}
             options={options}
             hangelChangeExtraNumeral={hangelChangeExtraNumeral}
+            handleRemoveNumeral={handleRemoveNumeral}
             numerals={numerals}
             getSelectedExtraNumeral={getSelectedExtraNumeral}
             validateFields={validateFields}
+            userRole={userRole}
         />
     )
 

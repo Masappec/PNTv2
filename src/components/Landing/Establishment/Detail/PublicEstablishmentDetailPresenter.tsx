@@ -49,39 +49,39 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
       <section className='section-container my-16'>
         <div className="flex flex-row gap-5 justify-start">
           <div className="flex-col">
-              <h1 className='mb-4 w-full text-balance text-2xl font-semibold leading-tight md:text-[40px]'>
-                {props.entity.name}
-              </h1>
+            <h1 className='mb-4 w-full text-balance text-2xl font-semibold leading-tight md:text-[40px]'>
+              {props.entity.name}
+            </h1>
 
-              <ul className='mb-12 mt-8'>
-                <li className='mb-2 flex items-center gap-x-2'>
-                  <h2 className='text-xl font-medium text-gray-600'>Máxima Autoridad</h2>
-                </li>
-                <li className='flex flex-col items-start justify-start gap-x-2 sm:flex-row'>
-                  <h2 className='font-medium text-gray-600'>Nombre:</h2>
-                  <h3 className='font-medium'>{
-                    props.entity.first_name_authority +
-                    " " +
-                    props.entity.last_name_authority
-                  }</h3>
-                </li>
-                <li className='flex flex-col items-start justify-start gap-x-2 sm:flex-row'>
-                  <h2 className='font-medium text-gray-600'>Cargo:</h2>
-                  <h3 className='font-medium'>{
-                    props.entity.highest_authority
-                  }</h3>
-                </li>
-              </ul>
+            <ul className='mb-12 mt-8'>
+              <li className='mb-2 flex items-center gap-x-2'>
+                <h2 className='text-xl font-medium text-gray-600'>Máxima Autoridad</h2>
+              </li>
+              <li className='flex flex-col items-start justify-start gap-x-2 sm:flex-row'>
+                <h2 className='font-medium text-gray-600'>Nombre:</h2>
+                <h3 className='font-medium'>{
+                  props.entity.first_name_authority +
+                  " " +
+                  props.entity.last_name_authority
+                }</h3>
+              </li>
+              <li className='flex flex-col items-start justify-start gap-x-2 sm:flex-row'>
+                <h2 className='font-medium text-gray-600'>Cargo:</h2>
+                <h3 className='font-medium'>{
+                  props.entity.job_authority
+                }</h3>
+              </li>
+            </ul>
           </div>
           <div className="flex-col">
             <img
-              src={props.entity.logo ? props.entity.logo as string: logo}
-              alt='Logo'
+              src={props.entity.logo ? props.entity.logo as string : logo}
+              alt='Logo Entidad'
               className='w-48 h-48 object-cover'
             />
           </div>
         </div>
-        
+
 
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
           <article

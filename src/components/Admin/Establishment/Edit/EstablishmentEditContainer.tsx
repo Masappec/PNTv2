@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
+import SessionService from "../../../../infrastructure/Services/SessionService"
 import { useNavigate, useParams } from "react-router-dom"
 import EstablishmentEditPresenter from "./EstablishmentEditPresenter"
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
@@ -27,6 +28,7 @@ const EstablishmentEditContainer = ({
     const [loading, setLoading] = useState<boolean>(false)
     const [selectedExtraNumeral, setSelectedExtraNumeral] = useState<number[]>([])
     const [modified, setModified] = useState<boolean>(false)
+    const [userRole, setUserRole] = useState<string>("");
 
     const [data, setData] = useState<EstablishmentEntity>({
         abbreviation: "",
@@ -38,14 +40,15 @@ const EstablishmentEditContainer = ({
         job_authority: "",
         logo: "",
         name: "",
-        email_accesstoinformation: "",
+        email_accesstoinformation: "email@example.com",
         email_committe: "",
         first_name_committe: "",
         highest_committe: "",
         job_committe: "",
         last_name_committe: "",
         identification: "",
-        extra_numerals: ''
+        extra_numerals: '',
+        address:""
     })
     const [options, setOptions] = useState<OptionsSelectCreate>({
         functions: [],
@@ -54,6 +57,20 @@ const EstablishmentEditContainer = ({
 
     })
     const [numerals, setNumerals] = useState<NumeralDetail[]>([])
+
+    useEffect(() => {
+        const userSession = SessionService.getUserData();
+        if (userSession) {
+            const group = userSession.group;
+            if (group && group.length > 0) {
+                setUserRole(group[0].name); // Guardar el nombre del primer rol en el estado
+            } else {
+                console.warn("El usuario no tiene grupos asignados");
+            }
+        } else {
+            console.error("No se encontró el usuario");
+        }
+    }, []);
 
     useEffect(() => {
         usecase.getOptions().then((res) => {
@@ -76,7 +93,7 @@ const EstablishmentEditContainer = ({
         usecase.detail(id || "").then((res) => {
             const es = res
             numeralUsecase.getNumeralByEstablishment(parseInt(id || "0")).then((res) => {
-                const res_ = res.filter((item) => !item.isDefault).map((item) => item.id)
+                const res_ = res.filter((item) => !item.isDefault && !item.isSelected).map((item) => item.id)
                 setData({ ...es, extra_numerals: res_.join(',') })
             }).catch((err) => {
                 console.log(err)
@@ -89,16 +106,150 @@ const EstablishmentEditContainer = ({
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
+        data.highest_authority = "NINGUNO"
+        data.highest_committe = "NINGUNO" 
         data.extra_numerals = selectedExtraNumeral.join(',')
-        if (data.abbreviation === "" ||
-            data.email_authority === "" || data.first_name_authority === "" ||
-            data.highest_authority === "" || data.last_name_authority === "" ||
-            data.job_authority === "" || data.name === "" ||
-            data.email_accesstoinformation === "" || data.email_committe === "" ||
-            data.first_name_committe === "" || data.highest_committe === "" ||
-            data.job_committe === "" || data.last_name_committe === "" ||
-            data.identification === "") {
-            setError("Ingrese los campos requeridos")
+
+        if (data.name === "") {
+            setError("Ingrese el nombre")
+            setLoading(false)
+            return
+        }
+        if(data.abbreviation ===""){
+            setError("Ingrese la abreviatura")
+            setLoading(false)
+            return
+        }
+        if(data.email_authority ===""){
+            setError("Ingrese el correo de la autoridad")
+            setLoading(false)
+            return
+        }
+        if(data.first_name_authority ===""){
+            setError("Ingrese el nombre de la autoridad")
+            setLoading(false)
+            return
+        }
+        if(data.highest_authority ===""){
+            setError("Ingrese el cargo de la autoridad")
+            setLoading(false)
+            return
+        }
+        if(data.last_name_authority ===""){
+            setError("Ingrese el apellido de la autoridad")
+            setLoading(false)
+            return
+        }
+        if(data.job_authority ===""){
+            setError("Ingrese el trabajo de la autoridad")
+            setLoading(false)
+            return
+        }
+        
+       
+        if(data.email_committe ===""){
+            setError("Ingrese el correo del comité")
+            setLoading(false)
+            return
+        }
+        if(data.first_name_committe ===""){
+            setError("Ingrese el nombre del comité")
+            setLoading(false)
+            return
+        }
+        
+        if(data.job_committe ===""){
+            setError("Ingrese el trabajo del comité")
+            setLoading(false)
+            return
+        }
+        if(data.last_name_committe ===""){
+            setError("Ingrese el apellido del comité")
+            setLoading(false)
+            return
+        }
+
+        if (data.identification === "") {
+            setError("Ingrese la identificación")
+            setLoading(false)
+            return
+        }
+
+        if (data.name.length < 3) {
+            setError("El nombre debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.abbreviation.length < 3) {
+            setError("La abreviatura debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.email_authority.length < 3) {
+            setError("El correo de la autoridad debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.first_name_authority.length < 3) {
+            setError("El nombre de la autoridad debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.highest_authority.length < 3) {
+            setError("El cargo de la autoridad debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.last_name_authority.length < 3) {
+            setError("El apellido de la autoridad debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.job_authority.length < 3) {
+            setError("El trabajo de la autoridad debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+  
+        if (data.email_committe == undefined || data.email_committe.length < 3) {
+            setError("El correo del comité debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.first_name_committe == undefined || data.first_name_committe.length < 3) {
+            setError("El nombre del comité debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.highest_committe.length < 3) {
+            setError("El cargo del comité debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.job_committe == undefined || data.job_committe.length < 3) {
+            setError("El trabajo del comité debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.last_name_committe == undefined || data.last_name_committe.length < 3) {
+            setError("El apellido del comité debe tener al menos 3 caracteres")
+            setLoading(false)
+            return
+        }
+
+        if (data.identification.length < 3) {
+            setError("La identificación debe tener al menos 3 caracteres")
             setLoading(false)
             return
         }
@@ -107,6 +258,7 @@ const EstablishmentEditContainer = ({
             setLoading(false)
             return
         }
+        data.email_accesstoinformation = data.email_accesstoinformation || "email@example.com";
         usecase.update(data, id || "").then(() => {
             setSuccess("Institución actualizada correctamente")
             setLoading(false)
@@ -136,6 +288,16 @@ const EstablishmentEditContainer = ({
             }
             return null
         }).filter((item) => item !== null) as MultiValue<{ value: string, label: string }>
+        for(const numeral of selected) {
+            //console.log("Add:",numeral.value)
+            if (numeral.value){
+                numeralUsecase.updateNumeralState(Number(numeral.value), {
+                    isSelected: false,
+                });
+            } else {
+                console.log("Nada por hacer")
+            }
+        }
         return selected
     }
 
@@ -150,6 +312,32 @@ const EstablishmentEditContainer = ({
         setSelectedExtraNumeral(e.map((item) => parseInt(item.value)))
         setData({ ...data, extra_numerals: e.map((item) => item.value).join(',') })
     }
+
+    const handleRemoveNumeral = async (numeralId: string) => {
+        try {
+            // Convetir el numeralID en numero
+            const numeralIdAsNumber = parseInt(numeralId, 10);
+            if (isNaN(numeralIdAsNumber)) {
+                throw new Error(`El numeralId "${numeralId}" no es un numerao valido.`)
+            }
+            // Llamada al backend para actualizar el estado 
+            await numeralUsecase.updateNumeralState(numeralIdAsNumber, {
+                isSelected: true,
+            });
+            // Actualiza el estado local eliminando el numeral del arreglo
+            setData((prevData) => {
+                const updateNumerals = (prevData.extra_numerals || "")
+                    .split(",")
+                    .filter((id) => id !== numeralId)
+                    .join(",");
+                //console.log("Remove", updateNumerals);
+                return { ...prevData, extra_numerals: updateNumerals};
+            });
+        } catch (error) {
+            console.error("Error al eliminar el numeral:", error)
+        }
+    }
+
     const validateFields = (name: string) => {
         if (modified) {
             console.log(data[name as keyof EstablishmentEntity], name)
@@ -175,9 +363,11 @@ const EstablishmentEditContainer = ({
             setSuccess={setSuccess}
             options={options}
             hangelChangeExtraNumeral={hangelChangeExtraNumeral}
+            handleRemoveNumeral={handleRemoveNumeral}
             numerals={numerals}
             getSelectedExtraNumeral={getSelectedExtraNumeral}
             validateFields={validateFields}
+            userRole={userRole}
         />
     )
 

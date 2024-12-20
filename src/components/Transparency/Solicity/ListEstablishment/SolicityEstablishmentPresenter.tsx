@@ -3,7 +3,7 @@ import Table from "../../../Common/Table/index"
 import { Solicity } from "../../../../domain/entities/Solicity"
 import { StatusSolicity } from "../../../../utils/enums"
 import Select from "../../../Common/Select"
-import { elapsedTime, formatDate2 } from "../../../../utils/functions"
+import { formatDate2 } from "../../../../utils/functions"
 
 
 
@@ -38,12 +38,10 @@ interface Props {
     onChangeSort: (sort: string) => void
     columnsSort: string[]
     onChangeStatus: (value: string) => void
+    onExport: () => void
 }
 
 const SolicityListEstablishmentPresenter = (props: Props) => {
-
-
-
     return (
         <>
             <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
@@ -111,11 +109,16 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
 
                 </div>
 
+                <div className="flex justify-end ml-28">
+                    <button className='inline-flex w-full items-center gap-2 rounded-md border border-primary px-5 py-2.5 text-center text-xs font-medium text-gray-600 transition-colors hover:bg-primary hover:text-white focus:outline-none'
 
+                        onClick={props.onExport}
+                    >Exportar</button>
+                </div>
                 <button
                     type='button'
                     onClick={props.onAdd}
-                    className='inline-flex items-center gap-2 rounded-lg 
+                    className='inline-flex items-center gap-2 rounded-lg
                     bg-primary px-5 py-2.5 text-center text-sm font-medium
                     w-auto
                      text-white hover:opacity-80 focus:outline-none focus:ring-4 focus:ring-blue-300'>
@@ -187,11 +190,63 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                         {
                             title: "Días transcurridos",
                             key: "-date",
-                            render: (solicity) => (
-                                <p className="text-left">{
-                                    solicity.date ? elapsedTime(solicity.date) : ""
-                                }</p>
-                            )
+                            render: (solicity) => {
+                                const calculateTimeDifference = (startDate: string | Date, endDate: string | Date) => {
+                                    const start = new Date(startDate);
+                                    const end = new Date(endDate);
+                            
+                                    // Validar que ambas fechas sean válidas
+                                    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+                                        console.error("Fechas inválidas:", { startDate, endDate });
+                                        return { days: 0, hours: 0 };
+                                    }
+                            
+                                    const diffInMilliseconds = end.getTime() - start.getTime();
+                                    const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor((diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                    return { days, hours };
+                                };
+                            
+                                // Determinar la fecha de finalización según el estado y las condiciones adicionales
+                                let endDate;
+                            
+                                switch (solicity.status) {
+                                    case "RESPONSED":
+                                        // Usar `updated_at` como fecha de fin en solicitudes respondidas
+                                        endDate = solicity.updated_at;
+                                        break;
+                            
+                                    case "PRORROGA":
+                                    case "NO_RESPONSED":
+                                    case "INSISTENCY_NO_RESPONSED":
+                                        // Verificar si la fecha actual ha alcanzado o superado `expiry_date`
+                                        const currentDate = new Date();
+                                        const expiryDate = new Date(solicity.expiry_date);
+                            
+                                        if (!isNaN(expiryDate.getTime()) && currentDate > expiryDate) {
+                                            // Detener el contador en `expiry_date`
+                                            endDate = solicity.expiry_date;
+                                        } else {
+                                            // Calcular hasta la fecha actual si aún no ha alcanzado `expiry_date`
+                                            endDate = currentDate.toISOString();
+                                        }
+                                        break;
+                            
+                                    default:
+                                        // Usar la fecha actual para otros estados
+                                        endDate = new Date().toISOString();
+                                        break;
+                                }
+                            
+                                // Calcular la diferencia de tiempo desde la fecha de envío (start_date) hasta endDate
+                                const timeDifference = calculateTimeDifference(solicity.date, endDate);
+                            
+                                return (
+                                    <p>
+                                        {timeDifference.days} días, {timeDifference.hours} horas
+                                    </p>
+                                );
+                            }                                                                                  
                         },
 
                         {
@@ -204,8 +259,8 @@ const SolicityListEstablishmentPresenter = (props: Props) => {
                                 const color = status?.bg || "bg-primary-500"
                                 const border = color.replace("bg", "border")
                                 return (
-                                    <p className={`text-wrap border rounded-md px-2 py-1    
-                                        w-auto 
+                                    <p className={`text-wrap border rounded-md px-2 py-1
+                                        w-auto
                                      ${border}
                                      ${color} text-white text-center
 `}>

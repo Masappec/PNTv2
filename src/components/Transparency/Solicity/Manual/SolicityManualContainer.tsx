@@ -82,11 +82,8 @@ const SolicityManualContainer = (props: Props) => {
         }
         data.establishment = entity.id || 0
         data.address = entity.address || "Sin dirección"
-        if (data.date === "") {
-            setError("Favor Selecciona una fecha")
-            setIsLoadingSend(false)
-            return
-        }
+        data.date = new Date().toISOString()
+
 
         if (data.text == "") {
             setError("Favor Ingresa la petición de la solicitud")
@@ -117,7 +114,7 @@ const SolicityManualContainer = (props: Props) => {
         }
 
         if (!data.race_identification) {
-            setError("Favor Selecciona la raza")
+            setError("Falta autoidentificación cultural")
             setIsLoadingSend(false)
             return
         }
@@ -220,6 +217,7 @@ const SolicityManualContainer = (props: Props) => {
         { value: 'Pueblo o Nacionalidad Indígena', label: 'Pueblo o Nacionalidad Indígena', color: '#00B8D9' },
         { value: 'Pueblo Afrodescendiente', label: 'Pueblo Afrodescendiente', color: '#00B8D9' },
         { value: 'Blanca', label: 'Blanca', color: '#00B8D9' },
+        { value: 'Otro', label: 'Otro', color: '#00B8D9' },
 
     ]
 
@@ -235,7 +233,7 @@ const SolicityManualContainer = (props: Props) => {
 
     const format_receipt: ColourOption[] = [
         // { value: 'Portal Web', label: 'Portal Web', color: '#00B8D9' },
-        { value: 'Presencial', label: 'Presencial', color: '#00B8D9' },
+        { value: 'Físico', label: 'Físico', color: '#00B8D9' },
         { value: 'Correo Electrónico', label: 'Correo Electrónico', color: '#00B8D9' },
         { value: 'Otro', label: 'Otro', color: '#00B8D9' },
 
@@ -315,7 +313,7 @@ const SolicityManualContainer = (props: Props) => {
         }
 
         if (!data.race_identification) {
-            setError("Selecciona la raza")
+            setError("Falta autoidentificación cultural")
             setIsLoadingSave(false)
             return
         }

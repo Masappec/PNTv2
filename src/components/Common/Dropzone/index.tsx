@@ -63,7 +63,7 @@ const Dropzone = (props: DropzoneProps) => {
 
 
         if (type.match(/image/)) {
-            return <img src={url} alt="" className="w-full h-full object-cover" />
+            return <img src={url} alt="Imagen de Tipo de Datos" className="w-full h-full object-cover" />
         }
 
         if (type.match(/pdf/)) {

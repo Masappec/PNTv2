@@ -2,7 +2,7 @@ import insignia from '../../../assets/insignia.svg';
 
 const Insignia = () => {
     return (
-        <img src={insignia} alt="insignia" 
+        <img src={insignia} alt="Insignia Digital" 
         width={150}
         />
     );

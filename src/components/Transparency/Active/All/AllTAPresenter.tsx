@@ -9,6 +9,7 @@ import { Transform } from "../../../../utils/transform";
 import axios from "axios";
 import Spinner from "../../../Common/Spinner";
 import Alert from "../../../Common/Alert";
+import MonthYearPicker from "../../../Common/MonthYearPicker/MonthYearPicker"
 import { useEffect, useState } from "react";
 import CustomInputSearch from "../../../Common/CustomInputSearch";
 import { ColourOption } from "../../../../utils/interface";
@@ -135,17 +136,11 @@ const AllTAPresenter = (props: Props) => {
                         />
 
                     </div>
-                    <div className='flex flex-col gap-2'>
-                        <label className='text-gray-500 text-sm'>
-                            Periodo
-                        </label>
-                        <input
-                            type="month"
-                            className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-8 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
-                            placeholder="Periodo"
-                            onChange={(e) => props.onChangeDate(e.target.value)}
-                        />
-
+                    <div className="flex flex-col gap-2">
+                      <label className="text-gray-500 text-sm">Periodo</label>
+                      <MonthYearPicker
+                        onChangeDate={(date) => props.onChangeDate(date)} // Pasar el cambio al padre
+                      />
                     </div>
                 </div>
 
@@ -163,119 +158,122 @@ const AllTAPresenter = (props: Props) => {
                 show={true}
                 columns={[
                     {
-                        render: (item) => {
-                            return (
-                                <p className="text-gray-900 dark:text-white text-base">
-                                    {item.establishment.name}</p>
-                            )
-                        },
-                        title: "Institución"
+                        render: (item) => (
+                            <p className="text-gray-900 dark:text-white text-base">
+                                {item.establishment.name}
+                            </p>
+                        ),
+                        title: "Institución",
                     },
                     {
-                        render: (item) => {
-                            return (
-                                <p className="text-gray-900 dark:text-white text-base">{item.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "")}</p>
-                            )
-                        },
-                        title: "#"
+                        render: (item) => (
+                            <p className="text-gray-900 dark:text-white text-base">
+                                {item.numeralPartial?.name
+                                    .toLocaleLowerCase()
+                                    .replace("numeral", "")}
+                            </p>
+                        ),
+                        title: "#",
                     },
                     {
-                        render: (item) => {
-                            return (
-                                <p className="text-gray-900 dark:text-white text-base">{item.numeralPartial?.description}</p>
-                            )
-                        },
-                        title: "Numeral"
+                        render: (item) => (
+                            <p className="text-gray-900 dark:text-white text-base">
+                                {item.numeralPartial?.description}
+                            </p>
+                        ),
+                        title: "Numeral",
                     },
                     {
-                        render: (item) => {
-                            return (
-                                <p className="text-gray-900 dark:text-white text-base">
-
-                                    {new Date(item.published_at).toLocaleDateString()}
-
-                                </p>
-                            )
-                        },
-                        title: "Publicado"
+                        render: (item) => (
+                            <p className="text-gray-900 dark:text-white text-base">
+                                {new Date(item.published_at).toLocaleDateString()}
+                            </p>
+                        ),
+                        title: "Publicado",
                     },
                     {
-                        render: (item) => {
-                            return <div className="flex flex-row space-x-5">
-                                {
-                                    item.files.map((file, i) =>
-                                        <div className="flex flex-col space-y-2" key={i}>
-                                            <div key={i} className="grid xl:grid-cols-3 gap-3 grid-cols-1">
-                                                <a key={i}
-                                                    href={'#'}
-                                                    onClick={() => onDownloadFile(file.url_download as string,
+                        render: (item) => (
+                            <div className="grid grid-cols-1 gap-4">
+                                {item.files.map((file, i) => (
+                                    <div
+                                        key={i}
+                                        className="flex flex-row items-center justify-between border-b border-gray-300 pb-2"
+                                    >
+                                        <div className="flex space-x-3">
+                                            {/* Iconos de descarga */}
+                                            <a
+                                                href="#"
+                                                onClick={() =>
+                                                    onDownloadFile(
+                                                        file.url_download as string,
                                                         `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                                    )}
-                                                    className="text-primary-500 
-                                                    hover:text-primary-600 text-base">
-                                                    <FaFileCsv className="text-primary-500 
-                                                    hover:text-primary-600 text-base ml-5"
-                                                        size={30}
-                                                    />
-
-
-                                                </a>
-                                                <a key={i}
-                                                    href={'#'}
-                                                    onClick={() => onDownLoadPdf(file.url_download as string,
+                                                    )
+                                                }
+                                                className="text-primary-500 hover:text-primary-600 text-base"
+                                            >
+                                                <FaFileCsv
+                                                    className="text-primary-500 hover:text-primary-600"
+                                                    size={30}
+                                                />
+                                            </a>
+                                            <a
+                                                href="#"
+                                                onClick={() =>
+                                                    onDownLoadPdf(
+                                                        file.url_download as string,
                                                         `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                                    )}
-                                                    className="text-primary-500
-                                                    hover:text-primary-600 text-base">
-                                                    <FaFilePdf className="text-red-500 
-                                                    hover:text-primary-600 text-base ml-5"
-                                                        size={30}
-
-                                                    />
-                                                </a>
-                                                <a key={i}
-                                                    href={"#"}
-                                                    onClick={() => onDonwloadXlsx(file.url_download as string,
+                                                    )
+                                                }
+                                                className="text-primary-500 hover:text-primary-600 text-base"
+                                            >
+                                                <FaFilePdf
+                                                    className="text-red-500 hover:text-primary-600"
+                                                    size={30}
+                                                />
+                                            </a>
+                                            <a
+                                                href="#"
+                                                onClick={() =>
+                                                    onDonwloadXlsx(
+                                                        file.url_download as string,
                                                         `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                                    )}
-                                                    target="_blank"
-                                                    className="text-primary-500
-                                                    hover:text-primary-600 text-base ml-5"
-                                                >
-                                                    <FaFileExcel className="text-green-500" size={30}
-                                                    />
-                                                </a>
-
-
-
-                                            </div>
-                                            <div key={i} className="w-full justify-center items-center">
-                                                {file.description}
-                                            </div>
+                                                    )
+                                                }
+                                                className="text-primary-500 hover:text-primary-600 text-base"
+                                            >
+                                                <FaFileExcel
+                                                    className="text-green-500"
+                                                    size={30}
+                                                />
+                                            </a>
                                         </div>
-                                    )
-                                }
+                                        {/* Descripción */}
+                                        <p className="text-sm text-gray-600">
+                                            {file.description}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
-
-                        },
-                        title: "Archivos Publicados"
+                        ),
+                        title: "Archivos Publicados",
                     },
                 ]}
                 data={props.data}
                 description="No se encontraron resultados"
                 length={props.data.length}
-                onFilter={() => { }}
+                onFilter={() => {}}
                 search=""
                 title=""
                 currentPage={1}
                 from={1}
                 isImport={false}
                 key={0}
-                onChangePage={() => { }}
-                onImport={() => { }}
+                onChangePage={() => {}}
+                onImport={() => {}}
                 to={props.data.length}
                 total={props.data.length}
             />
+
         </>
     )
 }

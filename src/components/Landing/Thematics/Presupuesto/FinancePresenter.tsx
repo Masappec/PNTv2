@@ -77,7 +77,7 @@ const FinancePresenter = (props: Props) => {
       <section className='section-container my-16'>
         <header className='mb-8'>
           <h1 className='mb-4 text-balance text-2xl font-normal leading-tight md:text-[40px]'>
-            Presupuestos por Instituciones
+            Presupuestos por instituciones
           </h1>
           <p className='text-balance text-gray-600'>
             Consulta los presupuestos de las instituciones sujetas al ámbito de la LOTAIP.

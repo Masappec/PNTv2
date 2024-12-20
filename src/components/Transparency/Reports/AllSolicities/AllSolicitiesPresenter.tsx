@@ -47,16 +47,16 @@ const AllSolicitiesPresenter = (props: Props) => {
         <>
             <section className="flex justify-between">
 
-            <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
-                Solicitudes Recibidas
+                <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
+                    Solicitudes Recibidas
 
-            </h2>
-            <div className="flex justify-end">
-                <button className='inline-flex w-full items-center gap-2 rounded-md border border-primary px-5 py-2.5 text-center text-xs font-medium text-gray-600 transition-colors hover:bg-primary hover:text-white focus:outline-none'
+                </h2>
+                <div className="flex justify-end">
+                    <button className='inline-flex w-full items-center gap-2 rounded-md border border-primary px-5 py-2.5 text-center text-xs font-medium text-gray-600 transition-colors hover:bg-primary hover:text-white focus:outline-none'
 
-                    onClick={props.onExport}
-                >Exportar</button>
-            </div>
+                        onClick={props.onExport}
+                    >Exportar</button>
+                </div>
             </section>
 
             <section className='h-min rounded-md bg-gray-100'>
@@ -111,11 +111,63 @@ const AllSolicitiesPresenter = (props: Props) => {
                         {
                             title: "Días transcurridos",
                             key: "date",
-                            render: (solicity) => (
-                                <p>{
-                                    solicity.date ? Math.floor((new Date().getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) : ""
-                                }</p>
-                            )
+                            render: (solicity) => {
+                                const calculateTimeDifference = (startDate: string | Date, endDate: string | Date) => {
+                                    const start = new Date(startDate);
+                                    const end = new Date(endDate);
+                            
+                                    // Validar que ambas fechas sean válidas
+                                    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+                                        console.error("Fechas inválidas:", { startDate, endDate });
+                                        return { days: 0, hours: 0 };
+                                    }
+                            
+                                    const diffInMilliseconds = end.getTime() - start.getTime();
+                                    const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor((diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                    return { days, hours };
+                                };
+                            
+                                // Determinar la fecha de finalización según el estado y las condiciones adicionales
+                                let endDate;
+                            
+                                switch (solicity.status) {
+                                    case "RESPONSED":
+                                        // Usar `updated_at` como fecha de fin en solicitudes respondidas
+                                        endDate = solicity.updated_at;
+                                        break;
+                            
+                                    case "PRORROGA":
+                                    case "NO_RESPONSED":
+                                    case "INSISTENCY_NO_RESPONSED":
+                                        // Verificar si la fecha actual ha alcanzado o superado `expiry_date`
+                                        const currentDate = new Date();
+                                        const expiryDate = new Date(solicity.expiry_date);
+                            
+                                        if (!isNaN(expiryDate.getTime()) && currentDate > expiryDate) {
+                                            // Detener el contador en `expiry_date`
+                                            endDate = solicity.expiry_date;
+                                        } else {
+                                            // Calcular hasta la fecha actual si aún no ha alcanzado `expiry_date`
+                                            endDate = currentDate.toISOString();
+                                        }
+                                        break;
+                            
+                                    default:
+                                        // Usar la fecha actual para otros estados
+                                        endDate = new Date().toISOString();
+                                        break;
+                                }
+                            
+                                // Calcular la diferencia de tiempo desde la fecha de envío (start_date) hasta endDate
+                                const timeDifference = calculateTimeDifference(solicity.date, endDate);
+                            
+                                return (
+                                    <p>
+                                        {timeDifference.days} días, {timeDifference.hours} horas
+                                    </p>
+                                );
+                            }                            
                         },
 
                         {
@@ -128,7 +180,7 @@ const AllSolicitiesPresenter = (props: Props) => {
                                 const color = status?.bg || "bg-primary-500"
                                 const border = color.replace("bg", "border")
                                 return (
-                                    <p className={`text-wrap border rounded-md px-2 py-1    
+                                    <p className={`text-wrap border rounded-md px-2 py-1
                                         md:w-5/12 w-full
                                      ${border}
                                      ${color} text-white text-center

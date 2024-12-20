@@ -13,6 +13,7 @@ export interface ColumnTemplateDto {
     type: string;
     format: string;
     regex: string;
+    value:string
 }
 
 export interface TemplateDetail {

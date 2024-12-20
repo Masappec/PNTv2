@@ -70,7 +70,20 @@ const Header = () => {
                 </span>
               </Link>
             </li>
-            {/* Navigation Link */}
+            <li className='m-0 w-max'>
+              <a
+                href='/backend/v1/public/swagger/'
+                className='group relative inline-block cursor-pointer rounded-t-md p-2 text-lg transition hover:bg-primary/20'>
+                <span className='text-pretty text-base font-medium'>API</span>
+                <span
+                  className='absolute -bottom-1 left-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+                <span
+                  className='absolute -bottom-1 right-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+              </a>
+            </li>
+            {/* Navigation Link 
             <li className='m-0 w-max'>
               <Link
                 to='/indicadores'
@@ -83,7 +96,7 @@ const Header = () => {
                   className='absolute -bottom-1 right-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
                 </span>
               </Link>
-            </li>
+            </li>*/}
             {/* Navigation Link */}
             <li className='m-0 w-max'>
               <Link

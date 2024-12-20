@@ -402,6 +402,16 @@ const SolicityResponseContainer = (props: Props) => {
                 copyFiles[index].loading = false
                 SetFiles(copyFiles)
 
+                // Agregar a `dataResponseSolicity.files`
+                setResponseSolicity((prev) => {
+                    const updatedFiles = [...prev.files, response.id];
+                    console.log("Archivos actualizados:", updatedFiles);
+                    return {
+                        ...prev,
+                        files: updatedFiles,    
+                    };
+                });
+
             }).catch((error) => {
                 const copyFiles = [...files]
                 copyFiles[index].error = error.message
@@ -424,66 +434,73 @@ const SolicityResponseContainer = (props: Props) => {
 
     }
 
+    const files_tosend_prorroga = dataResponseSolicity.files.map((file) => {
+        if (typeof file === "number") {
+            return file; 
+        }
+        return file
+    })
 
+    const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setError("");
 
+        const isProrroga = solicityToResponse.status === StatusSolicity.PRORROGA.key;
+        const isAvailableToRespond = isProrroga ? props.usecase.isAvaliableToResponseProrroga(userSession, solicityToResponse) : true;
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setLoading(true)
-        setError("")
-        if (solicityToResponse.status == StatusSolicity.INSISTENCY_PERIOD.key ||
-            solicityToResponse.status == StatusSolicity.PRORROGA.key ||
-            solicityToResponse.status == StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key) {
-            if (dataResponseSolicity.text == "") {
-                setError("Favor Ingresa la descripción de tu solicitud")
-                setLoading(false)
-                return;
-            }
-            props.usecase.changeStatus(solicityToResponse.id, dataResponseSolicity.text).then((res) => {
-                setTimeline(Solicity.ordernReponse(res))
-                setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
-                SetSolicity(res)
-                console.log(res)
-                setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))
-                setIsAvaliableToInsistency(true)
-                setLoading(false)
-            }).catch((e) => {
-                console.log(e)
-                setLoading(false)
-
-            })
-            handleCancel()
-            return
+        if (isProrroga && !isAvailableToRespond) {
+            handleProrrogaResponse();
+            return;
         }
 
-        dataResponseSolicity.id_solicitud = solicityToResponse.id
-        dataResponseSolicity.files = files.map((file) => file.file_solicity?.id || 0).filter(
-            e => e != 0
-        )
-        dataResponseSolicity.attachment = attachs.map((attach) => attach.entity?.id || 0)
-        if (dataResponseSolicity.text == '' || dataResponseSolicity.text == null) {
-            setError('Ingresa tu consulta/respuesta')
+        try {
+            await updateSolicityStatus();
+            setTextDescription(props.usecase.getDescriptionTextStatus(solicityToResponse, userSession.id));
+            setIsAvaliableToInsistency(true);
             setLoading(false);
-            return
+            setSuccess("Solicitud enviada correctamente");
+            setIsSaved(true);
+            handleCancel();
+        } catch (error: any) {
+            setError(error?.message as string);
+            setLoading(false);
+            setIsSaved(false);
+            handleCancel();
         }
-        props.usecase.responseSolicity(dataResponseSolicity).then((_solicity) => {
-            setLoading(false)
-            setSuccess("Solicitud enviada correctamente")
-            SetSolicity(_solicity)
-            setIsSaved(true)
-            handleCancel()
+    };
 
-            //toast.success("Solicitud enviada correctamente")
-        }).catch((err) => {
-            setError(err.message)
-            setLoading(false)
-            setIsSaved(false)
-            handleCancel()
+    const handleProrrogaResponse = async () => {
+        try {
+            const res = await props.usecase.changeStatus(solicityToResponse.id, dataResponseSolicity.text, files_tosend_prorroga);
+            setTimeline(Solicity.ordernReponse(res));
+            setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res));
+            SetSolicity(res);
+            setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id));
+            setIsAvaliableToInsistency(true);
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+        handleCancel();
+    };
 
-        })
+    const updateSolicityStatus = async () => {
+        dataResponseSolicity.id_solicitud = solicityToResponse.id;
+        dataResponseSolicity.files = files.map(file => file.file_solicity?.id || 0).filter(e => e !== 0);
+        dataResponseSolicity.attachment = attachs.map(attach => attach.entity?.id || 0);
 
-    }
+        if (!dataResponseSolicity.text) {
+            setError('Ingresa tu consulta/respuesta');
+            setLoading(false);
+            return;
+        }
 
+        return await props.usecase.responseSolicity(dataResponseSolicity);
+    };
+
+    
 
     const onRemoveFileFromPublication = (index: number, type: string) => {
         if (type === "file") {
@@ -528,7 +545,8 @@ const SolicityResponseContainer = (props: Props) => {
 
 
     const isChangeStatus = () => {
-        if (userSession.id == parseInt(solicityToResponse.user_created || "0")) {
+        const is_Est = userSession.user_permissions?.find(x => x.codename === 'view_solicityresponse')
+        if (!is_Est) {
             return props.usecase.isAvaliableChangeStaus(solicityToResponse)
 
         } else {
@@ -536,7 +554,7 @@ const SolicityResponseContainer = (props: Props) => {
         }
     }
     const textChangeStatus = () => {
-        return props.usecase.getTextChangeStatus(solicityToResponse, userSession.id)
+        return props.usecase.getTextChangeStatus(solicityToResponse, userSession)
     }
 
 
@@ -544,7 +562,8 @@ const SolicityResponseContainer = (props: Props) => {
     const changeStatus = () => {
 
         let new_status = '';
-        if (userSession.id == parseInt(solicityToResponse.user_created || "0")) {
+        const is_Est = userSession.user_permissions?.find(x => x.codename === 'view_solicityresponse')
+        if (!is_Est) {
             if (solicityToResponse.status == StatusSolicity.RESPONSED.key) {
                 new_status = StatusSolicity.INSISTENCY_PERIOD.key
             } else if (solicityToResponse.status == StatusSolicity.NO_RESPONSED.key) {

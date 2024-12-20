@@ -27,10 +27,12 @@ const IndicatorsEstablishment = (props: Props) => {
         score_saip: 0,
         day_frencuency_publish:0,
         day_frencuency_response:0,
-        ta_published:0
+        ta_published:0,
+        tf_published: 0,
+        tc_published: 0
     });
-    const date = new Date();
-    const monthName = date.toLocaleString('es-ES', { month: 'long' });
+    {/*const date = new Date();*/}
+    {/*const monthName = date.toLocaleString('es-ES', { month: 'long' });*/}
 
     const [line, setLine] = useState<ApexOptions>({
         chart: {
@@ -260,7 +262,7 @@ const IndicatorsEstablishment = (props: Props) => {
                         <div className="flex flex-row mt-4 border-2 border-black ">
 
                             <div className="flex-col border-r-2 border-black">
-                                <img src={props.qrUrl} alt="insignia" />
+                                <img src={props.qrUrl} alt="Insignia Digital de Transparencia" />
 
                             </div>
                             <div className="flex-col ml-2 ">
@@ -268,7 +270,8 @@ const IndicatorsEstablishment = (props: Props) => {
                                     {props.establishment_name}
                                 </p>
                                 <p className="text-sm text-primary font-bold">
-                                    Cumplimiento LOTAIP - {monthName} {new Date().getFullYear()}
+                                    Cumplimiento LOTAIP | {/*monthName} {new Date().getFullYear()*/}
+                                
                                 </p>
                                 <p className="text-cyan-800 text-sm  font-bold">
                                     {res.total_score}/100
@@ -319,18 +322,6 @@ const IndicatorsEstablishment = (props: Props) => {
                 <div className="flex flex-col items-center p-4 h-52">
                     <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
                         <h2 className="text-lg font-semibold text-gray-800 mb-4">
-                            Cantidad total de archivos de transparencia publicados en {new Date().getFullYear()}
-                        </h2>
-                        <div className="bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
-                            <h4 className="text-2xl font-bold">
-                                {res.ta_published}
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col items-center p-4 h-52">
-                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
                             Día del mes donde frecuentemente se publican los archivos de transparencia: 
                         </h2>
                         
@@ -342,7 +333,46 @@ const IndicatorsEstablishment = (props: Props) => {
                     </div>
                 </div>
             </div>
+            <div className="flex flex-row gap-1">
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Cantidad total de archivos de transparencia activa publicados en {new Date().getFullYear()}
+                        </h2>
+                        <div className="bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.ta_published}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
 
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Cantidad total de archivos de transparencia focalizada publicados en {new Date().getFullYear()}
+                        </h2>
+                        <div className="bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.tf_published}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex flex-col items-center p-4 h-52">
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Cantidad total de archivos de transparencia colaborativa publicados en {new Date().getFullYear()}
+                        </h2>
+                        <div className="bg-blue-100 border border-blue-200 text-blue-800 rounded-lg px-4 py-2 text-center">
+                            <h4 className="text-2xl font-bold">
+                                {res.tc_published}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
 
     );

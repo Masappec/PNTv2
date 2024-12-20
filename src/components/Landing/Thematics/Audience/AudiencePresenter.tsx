@@ -7,6 +7,7 @@ import Table from "../../../Common/Table";
 import { useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { CalendarMonth } from "../../../Common/CalendarYear";
+import { DatePnt } from "../../../../utils/date";
 
 interface Props {
 
@@ -29,7 +30,7 @@ interface Props {
 const AudiencePresenter = (props: Props) => {
 
   const [year, setYear] = useState<number>(new Date().getFullYear());
-  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+  const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased());
 
   const [visible, setVisible] = useState<boolean>(false);
   return (
@@ -41,10 +42,10 @@ const AudiencePresenter = (props: Props) => {
         <section className='section-container my-16'>
           <header className='mb-8'>
             <h1 className='mb-4 text-balance text-2xl font-normal leading-tight md:text-[40px]'>
-              Audiencias y Reuniones
+              Audiencias y reuniones
             </h1>
             <p className='text-balance text-gray-600'>
-              Revisa las audiencias y reuniones sostenidas por autoridades y servidores del jerarquíco superior.
+              Revisa las audiencias y reuniones sostenidas por autoridades y servidores del jerárquico superior.
             </p>
           </header>
 

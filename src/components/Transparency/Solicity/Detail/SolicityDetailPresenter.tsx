@@ -31,7 +31,7 @@ interface Props {
 
 }
 const SolicityDetailPresenter = (props: Props) => {
-
+  //console.log("Timeline response", props.timeline_response)
 
   const [user, setUserSession] = useState<UserEntity | null>(null)
 

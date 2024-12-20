@@ -13,6 +13,7 @@ interface IDataTablePartial {
     file?: File | null
     isSaved: boolean,
     title?: string,
+    id?: string,
     limit?: number
 
 }
@@ -20,20 +21,20 @@ const DataTablePartial = (props: IDataTablePartial) => {
 
     const [data, setData] = useState<Row[][]>(props.data)
 
-    useEffect   (() => {
+    useEffect(() => {
         setData(props.data)
-        
+
     }, [props.data])
 
-    const [errorCell, setErrorCell] = useState<{ row: number, column: number }[] >([])
+    const [errorCell, setErrorCell] = useState<{ row: number, column: number }[]>([])
 
 
     const validateFieldBlank = (data: Row[][]) => {
         const list: typeof errorCell = [];
         const error = data.some((row, i) => {
             return row.some((cell, j) => {
-                if (cell.value === "" || cell.value === null|| cell.value === undefined
-                || cell.value === "" || cell.value === null|| cell.value === undefined) {
+                if (cell.value === "" || cell.value === null || cell.value === undefined
+                    || cell.value === "" || cell.value === null || cell.value === undefined) {
                     list.push({ row: i, column: j })
                     return true
                 }
@@ -44,7 +45,7 @@ const DataTablePartial = (props: IDataTablePartial) => {
         return error
     }
 
-    return <form><div className="grid grid-cols-1 gap-4 m-5 h-auto ">
+    return <form id={props.id}><div className="grid grid-cols-1 gap-4 m-5 h-auto ">
 
         <div className="flex  justify-between">
             <h4 className='my-4 text-sm font-semibold text-gray-900'>{props.title}</h4>
@@ -55,11 +56,11 @@ const DataTablePartial = (props: IDataTablePartial) => {
                     <button className="bg-primary-600 text-white px-4 py-2 rounded-md mx-4"
                         onClick={(e) => {
                             e.preventDefault()
-                            if(validateFieldBlank(data)){
+                            if (validateFieldBlank(data)) {
                                 return
                             }
                             props.handleSave(props.file as File)
-                        
+
                         }}
                         type="button"
                     >Guardar</button>

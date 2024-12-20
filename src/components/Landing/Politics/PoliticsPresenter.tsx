@@ -66,7 +66,10 @@ const PoliticsPresenter = () => {
           Defensoría del Pueblo de Ecuador como órgano rector en materia de
           transparencia y acceso a la información pública:
           &nbsp; 
-          <span className="font-bold text-primary"> accesoinformacion@dpe.gob.ec.</span> Se aclara que en este correo electrónico
+          <span className="font-bold text-primary">  <a
+            href='mailto:accesoinformacion@dpe.gob.ec'
+            className='font-bold text-primary underline underline-offset-2'
+          >accesoinformacion@dpe.gob.ec.</a></span> Se aclara que en este correo electrónico
           institucional no se responderán solicitudes de acceso a la información
           o requerimientos de entidades, los cuales deben ser canalizados desde
           las funcionalidades del Portal Nacional de Transparencia como único

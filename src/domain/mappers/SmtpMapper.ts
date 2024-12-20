@@ -30,7 +30,7 @@ class SmtpMapper {
                 value: smtpEntity.secure === true ? 'True' : 'False',
             },
             {
-                name: 'USERNAME',
+                name: 'USER',
                 value: smtpEntity.auth.user,
             },
             {

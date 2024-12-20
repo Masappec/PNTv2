@@ -14,7 +14,6 @@ import ActiveCreatePresenter from "../../Active/Create/ActiveCreatePresenter";
 import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
 import Template from "../../../../domain/entities/Template";
 import TemplateFileUseCase from "../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
-import { sleep } from "../../../../utils/functions";
 import { TabsRef } from "flowbite-react";
 
 
@@ -103,21 +102,28 @@ const FocalizedCreateContainer = (props: Props) => {
 
   const buildRowFromTemplate = (templates: Template[]) => {
     const data: { id: number, data: Row[][] }[] = templates.map((template) => {
+
       return {
         id: template.id,
         data: [
-          template.columns.map((column) => {
+          [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
             return {
               key: column.id.toString(),
               value: column.name,
               is_header: true,
             }
-          })
+          })],
+          [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
+            return {
+              key: column.id.toString(),
+              value: column.value,
+              is_header: true,
+            }
+          })],
         ] as Row[][]
       }
 
     })
-    console.log(data)
 
 
     setTemplateTable(data)
@@ -239,9 +245,7 @@ const FocalizedCreateContainer = (props: Props) => {
 
     if (files) {
       setError("Ya existe un archivo de " + file.description)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
       return
     }
     setError("")
@@ -252,44 +256,32 @@ const FocalizedCreateContainer = (props: Props) => {
       return response.blob();
     }).then((file_) => {
       const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-      props.templateUseCase.validateLocalFile(blob as File, temDetail).then((res) => {
-        if (!res) {
-          setError("El archivo no cumple con el formato")
-          return
-        }
-        const columns = res.columns.map((column) => {
-          return {
-            key: column,
-            value: column,
-            is_header: true
+      props.templateUseCase.validateLocalFile(blob as File, temDetail, false).then((res) => {
+          if (!res) {
+            setError("El archivo no cumple con el formato")
+            return
           }
-        })
-        if (temDetail.verticalTemplate) {
-          const rows = res.rows.map((row) => {
+          const columns = res.columns.map((column) => {
             return {
-              key: row[0] as string,
-              value: row[0] as string
+              key: column,
+              value: column,
+              is_header: true
             }
           })
-
-          buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
-          tabsRef.current?.setActiveTab(2)
-          return
-        } else {
-          const rows = res.rows.map((row) => {
-            return row.map((value, index) => {
-              return {
-                key: index.toString(),
-                value: value
-              }
+          
+            const rows = res.rows.map((row) => {
+              return row.map((value, index) => {
+                return {
+                  key: index.toString(),
+                  value: value
+                }
+              })
             })
-          })
-          buildRowFromTemplateAnData(temDetail, [columns, ...rows])
-          tabsRef.current?.setActiveTab(2)
-        }
-      }).catch((e) => {
-        setError(e.message)
-      })
+            buildRowFromTemplateAnData(temDetail, [columns, ...rows])
+            tabsRef.current?.setActiveTab(2)
+        }).catch((e) => {
+          setError(e.message)
+        })
     }).catch((e) => {
       setError(e.message)
     })
@@ -359,7 +351,8 @@ const FocalizedCreateContainer = (props: Props) => {
 
     props.templateUseCase.validateLocalFile(
       newTemplates.file as File,
-      templateDetail
+      templateDetail,
+      false,
     ).then((res) => {
 
       setError("")
@@ -605,9 +598,7 @@ const FocalizedCreateContainer = (props: Props) => {
           ...newTemplates,
           isValid: false
         } as TemplateFileEntity
-        sleep(2000).then(() => {
-          setError("")
-        })
+       
 
       })
 
@@ -617,9 +608,7 @@ const FocalizedCreateContainer = (props: Props) => {
         return loading.name !== templateFile.name
       }))
       setError(error.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
 
 
@@ -662,12 +651,26 @@ const FocalizedCreateContainer = (props: Props) => {
       setError("No se ha encontrado el template")
       return
     }
+   
     let content;
-    if (template.verticalTemplate) {
-      content = props.fileUseCase.generateContentCsvVertical(data_template.data);
+
+    const Row_obj: Row[][] = template.columns.sort((a, b) => a.id - b.id).map((column) => {
+      return [
+        {
+          key: column.id.toString(),
+          value: column.name,
+          is_header: true,
+        }
+      ]
+    })
+
+
+    if (!template.verticalTemplate) {
+      content = props.fileUseCase.generateContentCsvVertical(Row_obj);
     } else {
-      content = props.fileUseCase.generateContentCsv(data_template.data);
+      content = props.fileUseCase.generateContentCsv(Row_obj);
     }
+
 
     const a = document.createElement('a')
     a.download = name + ".csv";
@@ -740,6 +743,7 @@ const FocalizedCreateContainer = (props: Props) => {
 
       year={new Date().getFullYear()}
       month={new Date().getMonth()}
+      tabRef={tabsRef}
     />
   )
 }

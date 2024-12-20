@@ -34,6 +34,8 @@ const IndicatorsMonitoringPresenter = (props: Props) => {
         day_frencuency_publish: 0,
         day_frencuency_response: 0,
         ta_published: 0,
+        tf_published: 0,
+        tc_published: 0
     });
     const todas = EstablishmentEntity.generateAllEstablishment('')
 
@@ -325,7 +327,7 @@ const IndicatorsMonitoringPresenter = (props: Props) => {
 
                         />
                         <div className="flexmt-4">
-                            <img src={qr} alt="insignia" />
+                            <img src={qr} alt="Insignia Digital" />
                             <Tooltip content="QR copiado" trigger="click">
                                 <button
                                     onClick={() => {

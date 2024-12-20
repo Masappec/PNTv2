@@ -199,7 +199,9 @@ export interface IndicatorResponse {
     total_score: number;
     day_frencuency_publish:number,
     day_frencuency_response:number;
-    ta_published:number
+    ta_published:number;
+    tf_published: number;
+    tc_published: number;
 }
 
 

@@ -155,7 +155,7 @@ export default LoginPresenter;
           <div className=" pl-10  relative">
             <img
               src={logo}
-              alt="imagen"
+              alt="Logo Portal Nacioanl de Transparencia"
               className=" flex items-center justify-center w-96 max-w-screen-2xl h-auto mb-60 -mt-32 "
             />
             <p className="mt-36 text-2xl text-slate-400  ">
@@ -174,7 +174,7 @@ export default LoginPresenter;
               <img
                 src={logo}
                 className="mr-3 h-20 justify-center"
-                alt="Logo de la defensoria del pueblo"
+                alt="Logo de la Defensoria del Pueblo"
                 tabIndex={1}
               />
             </div>

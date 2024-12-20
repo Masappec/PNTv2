@@ -4,6 +4,7 @@ import TransparencyActiveUseCase from "../../../domain/useCases/TransparencyActi
 import TransparencyActive from "../../../domain/entities/TransparencyActive";
 import EstablishmentEntity from "../../../domain/entities/Establishment";
 import SessionService from "../../../infrastructure/Services/SessionService";
+import { DatePnt } from "../../../utils/date";
 
 
 interface Props{
@@ -15,7 +16,7 @@ const AllPublicationsContainer = (props:Props)=>{
 
 
     const [year,setYear] = useState<number>(new Date().getFullYear())
-    const [month,setMonth]= useState<number>(new Date().getMonth()+1)
+    const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased())
 
     const [publications, setPublications] = useState<TransparencyActive[]>([])
     const [error,setError] = useState<string>("")
@@ -24,9 +25,20 @@ const AllPublicationsContainer = (props:Props)=>{
     const [entity, setEntity] = useState<EstablishmentEntity>(EstablishmentEntity.generateAllEstablishment(""));
     const [loading,setLoading] = useState<boolean>(false);
 
+    const [hasPermApp,setHasPermApp] = useState(false);
+
     useEffect(()=>{
         const _est = SessionService.getEstablishmentData();
         setEntity(_est)
+       
+    },[])
+
+    useEffect(()=>{
+        const user = SessionService.getUserData();
+        if (user && user.user_permissions){
+            const hasPerm = user.user_permissions?.findIndex(x => x.codename == 'approve_numeral_ta')
+            setHasPermApp(hasPerm !== -1)
+        }
        
     },[])
 
@@ -35,7 +47,9 @@ const AllPublicationsContainer = (props:Props)=>{
     }, [entity,month,year])
 
     const getDataTA =()=>{
-        props.transparencyUseCase?.getPublicationsPublics(month, year, entity.id || 0).then((response) => {
+        if (entity.id === undefined) return;
+        
+        props.transparencyUseCase?.getPublicationsAll(month, year, entity.id || 0).then((response) => {
 
 
             console.log(response)
@@ -77,6 +91,18 @@ const AllPublicationsContainer = (props:Props)=>{
         setYear(parseInt(Y));
     }
 
+    const approvePublication=(ta:TransparencyActive)=>{
+        props.transparencyUseCase?.approvePublication({
+            establishment_id: ta.establishment.id||0,
+            id: ta.id,
+            type: "TA"
+        }).then(()=>{
+            getDataTA()
+        }).catch((error)=>{
+            setError(error.message)
+        })
+    }
+
     return (
         <>
           
@@ -89,6 +115,8 @@ const AllPublicationsContainer = (props:Props)=>{
                 loading={loading}
                 error={error}
                 onCloseError={()=>setError("")}
+                approvePublication={approvePublication}
+                hasPermApp={hasPermApp}
             />
         </>
         

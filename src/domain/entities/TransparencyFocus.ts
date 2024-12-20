@@ -17,7 +17,13 @@ class TransparencyFocusEntity {
     published_at: string;
     max_date_to_publish: string;
     establishment: EstablishmentEntity;
-
+    public created_at: Date;
+    public updated_at: Date;
+    public deleted: boolean;
+    public deleted_at: Date;
+    public user_created: string;
+    public user_updated: string;
+    public user_deleted: string;
 
     constructor(id: number,
         numeral: {
@@ -34,7 +40,13 @@ class TransparencyFocusEntity {
         published_at: string,
         max_date_to_publish: string,
         establishment: EstablishmentEntity,
-
+        created_at: Date,
+        updated_at: Date,
+        deleted: boolean,
+        deleted_at: Date,
+        user_created: string,
+        user_updated: string,
+        user_deleted: string
     ) {
         this.id = id;
         this.numeral = numeral;
@@ -47,6 +59,13 @@ class TransparencyFocusEntity {
         this.published_at = published_at;
         this.max_date_to_publish = max_date_to_publish;
         this.establishment = establishment;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.deleted = deleted;
+        this.deleted_at = deleted_at;
+        this.user_created = user_created;
+        this.user_updated = user_updated;
+        this.user_deleted = user_deleted;
 
     }
 

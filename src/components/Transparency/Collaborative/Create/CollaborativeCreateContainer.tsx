@@ -14,7 +14,6 @@ import TemplateFileEntity from "../../../../domain/entities/TemplateFileEntity";
 import Template from "../../../../domain/entities/Template";
 import TemplateFileUseCase from "../../../../domain/useCases/TemplateFileUseCase/TemplateFileUseCase";
 import TransparencyCollabUseCase from "../../../../domain/useCases/TransparencyCollabUseCase/TransparencyCollabUseCase";
-import { sleep } from "../../../../utils/functions";
 import { TabsRef } from "flowbite-react";
 
 
@@ -39,7 +38,7 @@ const CollabCreateContainer = (props: Props) => {
   const [success, setSuccess] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
- 
+
   const navigate = useNavigate()
 
   const [numeral, setNumeral] = useState<NumeralDetail>(new NumeralDetail(0, [], new Date(), new Date(), false, null, "", "", "", false, "", "", "", 0))
@@ -108,21 +107,28 @@ const CollabCreateContainer = (props: Props) => {
 
   const buildRowFromTemplate = (templates: Template[]) => {
     const data: { id: number, data: Row[][] }[] = templates.map((template) => {
+
       return {
         id: template.id,
         data: [
-          template.columns.map((column) => {
+          [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
             return {
               key: column.id.toString(),
               value: column.name,
               is_header: true,
             }
-          })
+          })],
+          [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
+            return {
+              key: column.id.toString(),
+              value: column.value,
+              is_header: true,
+            }
+          })],
         ] as Row[][]
       }
 
     })
-    console.log(data)
 
 
     setTemplateTable(data)
@@ -241,9 +247,7 @@ const CollabCreateContainer = (props: Props) => {
 
     if (files) {
       setError("Ya existe un archivo de " + file.description)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
       return
     }
     setError("")
@@ -254,7 +258,7 @@ const CollabCreateContainer = (props: Props) => {
       return response.blob();
     }).then((file_) => {
       const blob = new Blob([file_], { type: 'text/csv;charset=utf-8' });
-      props.templateUseCase.validateLocalFile(blob as File, temDetail).then((res) => {
+      props.templateUseCase.validateLocalFile(blob as File, temDetail, false).then((res) => {
         if (!res) {
           setError("El archivo no cumple con el formato")
           return
@@ -266,18 +270,7 @@ const CollabCreateContainer = (props: Props) => {
             is_header: true
           }
         })
-        if (temDetail.verticalTemplate) {
-          const rows = res.rows.map((row) => {
-            return {
-              key: row[0] as string,
-              value: row[0] as string
-            }
-          })
-
-          buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
-          tabsRef.current?.setActiveTab(2)
-          return
-        } else {
+       
           const rows = res.rows.map((row) => {
             return row.map((value, index) => {
               return {
@@ -288,7 +281,6 @@ const CollabCreateContainer = (props: Props) => {
           })
           buildRowFromTemplateAnData(temDetail, [columns, ...rows])
           tabsRef.current?.setActiveTab(2)
-        }
       }).catch((e) => {
         setError(e.message)
       })
@@ -325,7 +317,7 @@ const CollabCreateContainer = (props: Props) => {
       navigation("/admin/transparency/collaborative")
     }).catch((error) => {
       setError(error.message)
-      
+
       setLoading(false)
     })
 
@@ -358,7 +350,8 @@ const CollabCreateContainer = (props: Props) => {
 
     props.templateUseCase.validateLocalFile(
       newTemplates.file as File,
-      templateDetail
+      templateDetail,
+      false,
     ).then((res) => {
 
       setError("")
@@ -553,7 +546,8 @@ const CollabCreateContainer = (props: Props) => {
 
       props.templateUseCase.validateLocalFile(
         file_ as File,
-        templateDetail
+        templateDetail,
+        false,
       ).then((res) => {
         setLoadingFiles(loadingFiles.filter((loading) => {
           return loading.name !== templateFile.name
@@ -604,9 +598,7 @@ const CollabCreateContainer = (props: Props) => {
           ...newTemplates,
           isValid: false
         } as TemplateFileEntity
-        sleep(2000).then(() => {
-          setError("")
-        })
+        
 
       })
 
@@ -616,9 +608,7 @@ const CollabCreateContainer = (props: Props) => {
         return loading.name !== templateFile.name
       }))
       setError(error.message)
-      sleep(2000).then(() => {
-        setError("")
-      })
+
     })
 
 
@@ -662,11 +652,24 @@ const CollabCreateContainer = (props: Props) => {
       return
     }
     let content;
-    if (template.verticalTemplate) {
-      content = props.fileUseCase.generateContentCsvVertical(data_template.data);
+
+    const Row_obj: Row[][] = template.columns.sort((a, b) => a.id - b.id).map((column) => {
+      return [
+        {
+          key: column.id.toString(),
+          value: column.name,
+          is_header: true,
+        }
+      ]
+    })
+
+
+    if (!template.verticalTemplate) {
+      content = props.fileUseCase.generateContentCsvVertical(Row_obj);
     } else {
-      content = props.fileUseCase.generateContentCsv(data_template.data);
+      content = props.fileUseCase.generateContentCsv(Row_obj);
     }
+
 
     const a = document.createElement('a')
     a.download = name + ".csv";
@@ -739,6 +742,7 @@ const CollabCreateContainer = (props: Props) => {
 
       year={new Date().getFullYear()}
       month={new Date().getMonth()}
+
     />
   )
 }

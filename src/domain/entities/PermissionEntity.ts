@@ -56,13 +56,13 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
         type: 'Mi Institución',
         list: [
             {
-                codename: 'view_my_establishment',
+                codename: 'view_establishment_internal',
                 content_type: 'Instituciones',
                 name: 'Ver Información de Mi Institución',
                 id: 18
             },
             {
-                codename: 'change_my_establishment',
+                codename: 'update_establishment_internal',
                 content_type: 'Instituciones',
                 name: 'Actualizar Información de Mi Institución',
                 id: 19
@@ -103,25 +103,25 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
         type: 'Usuarios de Entidad  (De la Entidad a la que pertenece)',
         list: [
             {
-                codename: 'view_internal_user',
+                codename: 'view_user_establishment',
                 name: 'Ver Usuarios de mi Institución',
                 content_type: 'Usuarios',
                 id: 5
             },
             {
-                codename: 'update_user_establishment',
+                codename: 'add_user_establishment',
                 name: 'Crear Usuario de mi Institución',
                 content_type: 'Usuarios',
                 id: 7
             },
             {
-                codename: 'delete_user_establishment',
+                codename: 'update_user_establishment',
                 name: 'Editar Usuario de mi Institución',
                 content_type: 'Usuarios',
                 id: 8
             },
             {
-                codename: 'view_user_establishment',
+                codename: 'delete_user_establishment',
                 name: 'Eliminar Usuario de mi Institución',
                 content_type: 'Usuarios',
                 id: 9
@@ -265,6 +265,12 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
                 content_type: 'Transparencia Activa',
                 name: 'Ver T.A de todas las entidades',
                 id: 23
+            },
+            {
+                codename: 'approve_numeral_ta',
+                content_type: 'Transparencia Activa',
+                name: 'Aprobar Numerales Transparencia Activa',
+                id: 24
             }
         ]
     },
@@ -294,6 +300,12 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
                 content_type: 'Transparencia Colaborativa',
                 name: 'Ver T.C de todas las entidades',
                 id: 26
+            },
+            {
+                codename: 'approve_numeral_tc',
+                content_type: 'Transparencia Colaborativa',
+                name: 'Aprobar Numerales Transparencia Colaborativa',
+                id: 24
             }
         ]
     },
@@ -323,6 +335,12 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
                 content_type: 'Transparencia Focalizada',
                 id: 29,
                 name: 'Ver T.F de todas las entidades'
+            },
+            {
+                codename: 'approve_numeral_tf',
+                content_type: 'Transparencia Colaborativa',
+                name: 'Aprobar Numerales Transparencia Focalizada',
+                id: 24
             }
         ]
     },

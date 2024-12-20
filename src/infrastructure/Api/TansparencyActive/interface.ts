@@ -64,3 +64,13 @@ export interface TransparencyActivePublicResponse {
         description: string;
     };
 }
+
+/*id = serializers.IntegerField()
+    establishment_id = serializers.IntegerField()
+    type = serializers.CharField()*/
+
+export interface TransparencyActiveTypeResponse {
+    id: number;
+    establishment_id: number;
+    type: string;
+}

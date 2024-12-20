@@ -11,6 +11,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     selected?: {
         value: string;
     }
+    obligatorio?: boolean;
 }
 
 const Select = (props: SelectProps) => {
@@ -20,6 +21,9 @@ const Select = (props: SelectProps) => {
 
             <div className="mb-2 block">
                 <Label value={props.placeholder} data-testid="flowbite-label" />
+                {
+                    props.obligatorio && <span className="text-red-500 ml-1">*</span>
+                }
             </div>
             <select
                 {...props}

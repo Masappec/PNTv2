@@ -16,13 +16,13 @@ import Template from "../../../../domain/entities/Template";
 import { Row } from "../../../../utils/interface";
 import { Pagination } from "../../../../infrastructure/Api";
 import ActiveCreatePresenter from "../Create/ActiveCreatePresenter";
-import { sleep } from "../../../../utils/functions";
 import { TabsRef } from "flowbite-react";
+import { DatePnt } from "../../../../utils/date";
 
 export interface INeedProps {
     numeral: NumeralEntity,
-    year:number;
-    month:number;
+    year: number;
+    month: number;
 }
 
 interface Props {
@@ -41,8 +41,8 @@ const ActiveEditContainer = (props: Props) => {
 
     const state = location.state as INeedProps;
 
-    const [year,setYear] = useState(new Date().getFullYear())
-    const [month,setMonth] = useState(new Date().getMonth())
+    const [year, setYear] = useState(new DatePnt().getYear())
+    const [month, setMonth] = useState(new DatePnt().getMonthToUpload())
 
     const [numeral, setNumeral] = useState<NumeralEntity>();
     const [detail, setDetail] = useState<NumeralDetail | null>(null)
@@ -122,16 +122,24 @@ const ActiveEditContainer = (props: Props) => {
 
     const buildRowFromTemplate = (templates: Template[]) => {
         const data: { id: number, data: Row[][] }[] = templates.map((template) => {
+
             return {
                 id: template.id,
                 data: [
-                    template.columns.map((column) => {
+                    [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
                         return {
                             key: column.id.toString(),
                             value: column.name,
                             is_header: true,
                         }
-                    })
+                    })],
+                    [...template.columns.sort((a, b) => a.id - b.id).map((column) => {
+                        return {
+                            key: column.id.toString(),
+                            value: column.value,
+                            is_header: true,
+                        }
+                    })],
                 ] as Row[][]
             }
 
@@ -214,9 +222,8 @@ const ActiveEditContainer = (props: Props) => {
             props.templateUseCase.validateLocalFile(
                 file_ as File,
                 templateDetail,
-                true
+                true,
             ).then((res) => {
-                const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
 
                 setLoadingFiles(loadingFiles.filter((file) => {
                     return file.name !== newTemplates?.name
@@ -227,7 +234,6 @@ const ActiveEditContainer = (props: Props) => {
                 newTemplates = {
                     ...newTemplates,
                     isValid: res.valid,
-                    file: newFile
                 } as TemplateFileEntity
 
 
@@ -269,18 +275,14 @@ const ActiveEditContainer = (props: Props) => {
                     ...newTemplates,
                     isValid: false
                 } as TemplateFileEntity
-                sleep(2000).then(() => {
-                    setError("")
-                })
+              
             })
         }).catch((error) => {
             setLoadingFiles(loadingFiles.filter((file) => {
                 return file.name !== newTemplates?.name
             }))
             setError(error.message)
-            sleep(2000).then(() => {
-                setError("")
-            })
+           
         })
 
 
@@ -321,9 +323,8 @@ const ActiveEditContainer = (props: Props) => {
         props.templateUseCase.validateLocalFile(
             newTemplates.file as File,
             templateDetail,
-            true
+            true,
         ).then((res) => {
-            const newFile = props.usecase.csvContentFromColumsAndRows(res.columns, res.rows, templateDetail.name, templateDetail.verticalTemplate)
 
 
 
@@ -331,7 +332,6 @@ const ActiveEditContainer = (props: Props) => {
             newTemplates = {
                 ...newTemplates,
                 isValid: res.valid,
-                file: newFile
             } as TemplateFileEntity
 
 
@@ -375,9 +375,7 @@ const ActiveEditContainer = (props: Props) => {
 
 
             setError(e.message)
-            sleep(5000).then(() => {
-                setError("")
-            })
+           
         })
 
 
@@ -427,16 +425,12 @@ const ActiveEditContainer = (props: Props) => {
                 }).catch((e) => {
                     setLoading(false)
                     setError(e.message)
-                    sleep(2000).then(() => {
-                        setError("")
-                    })
+                   
                 })
             }).catch((e) => {
                 setLoading(false)
                 setError(e.message)
-                sleep(2000).then(() => {
-                    setError("")
-                })
+               
             })
             return;
         }
@@ -469,7 +463,7 @@ const ActiveEditContainer = (props: Props) => {
             establishment,
             numeral?.id || 0,
             year,
-            month+1
+            month
         )
         await props.transparencyActiveUseCase.updatePublication(newTransparency)
 
@@ -610,9 +604,7 @@ const ActiveEditContainer = (props: Props) => {
             setSuccess("Se ha guardado correctamente el archivo")
         }).catch((e) => {
             setError(e.message)
-            sleep(2000).then(() => {
-                setError("")
-            })
+            
         })
     }
 
@@ -650,13 +642,23 @@ const ActiveEditContainer = (props: Props) => {
             return;
         }
         let content;
-        if (template.verticalTemplate) {
-            content = props.usecase.generateContentCsvVertical(data_template.data);
+
+        const Row_obj: Row[][] = template.columns.sort((a, b) => a.id - b.id).map((column) => {
+            return [
+                {
+                    key: column.id.toString(),
+                    value: column.name,
+                    is_header: true,
+                }
+            ]
+        })
+
+
+        if (!template.verticalTemplate) {
+            content = props.usecase.generateContentCsvVertical(Row_obj);
         } else {
-            content = props.usecase.generateContentCsv(data_template.data);
+            content = props.usecase.generateContentCsv(Row_obj);
         }
-
-
 
 
         const a = document.createElement('a')
@@ -693,9 +695,7 @@ const ActiveEditContainer = (props: Props) => {
 
         if (files) {
             setError("Ya existe un archivo de " + file.description)
-            sleep(2000).then(() => {
-                setError("")
-            })
+            
             return
         }
         setError("")
@@ -718,18 +718,7 @@ const ActiveEditContainer = (props: Props) => {
                         is_header: true
                     }
                 })
-                if (temDetail.verticalTemplate) {
-                    const rows = res.rows.map((row) => {
-                        return {
-                            key: row[0] as string,
-                            value: row[0] as string
-                        }
-                    })
-
-                    buildRowFromTemplateAnData(temDetail, [columns, [...rows]])
-                    tabsRef.current?.setActiveTab(2)
-                    return
-                } else {
+              
                     const rows = res.rows.map((row) => {
                         return row.map((value, index) => {
                             return {
@@ -740,7 +729,6 @@ const ActiveEditContainer = (props: Props) => {
                     })
                     buildRowFromTemplateAnData(temDetail, [columns, ...rows])
                     tabsRef.current?.setActiveTab(2)
-                }
             }).catch((e) => {
                 setError(e.message)
             })

@@ -28,6 +28,7 @@ export interface EstablishmentCreateDTO {
     name: string,
     code: string,
     logo: File,
+    alias:string;
     abbreviation: string,
     highest_authority: string,
     first_name_authority: string,

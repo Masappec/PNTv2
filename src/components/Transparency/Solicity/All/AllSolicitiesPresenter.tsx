@@ -56,8 +56,8 @@ const AllSolicitiesPresenter = (props: Props) => {
                 Solicitudes Recibidas
 
             </h2>
-            
-           
+
+
             </section>
              <section className='mb-8 m-2 flex flex-col gap-4 sm:flex-row sm:items-center'>
 
@@ -76,7 +76,7 @@ const AllSolicitiesPresenter = (props: Props) => {
                         />
 
                     </div>
-                   
+
                 </div>
                 <div className='flex flex-col'>
 
@@ -104,9 +104,9 @@ const AllSolicitiesPresenter = (props: Props) => {
 
                     </Select>
                 </div>
-             
+
             </section>
-            
+
             <section className='h-min rounded-md bg-gray-100'>
 
 
@@ -170,11 +170,54 @@ const AllSolicitiesPresenter = (props: Props) => {
                         {
                             title: "Días transcurridos",
                             key: "date",
-                            render: (solicity) => (
-                                <p>{
-                                    solicity.date ? Math.floor((new Date().getTime() - new Date(solicity.date).getTime()) / (1000 * 60 * 60 * 24)) : ""
-                                }</p>
-                            )
+                            render: (solicity) => {
+                                const calculateTimeDifference = (startDate: string | Date, endDate: string | Date) => {
+                                    const start = new Date(startDate);
+                                    const end = new Date(endDate);
+                            
+                                    // Validar que ambas fechas sean válidas
+                                    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+                                        console.error("Fechas inválidas:", { startDate, endDate });
+                                        return { days: 0, hours: 0 };
+                                    }
+                            
+                                    const diffInMilliseconds = end.getTime() - start.getTime();
+                                    const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor((diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                    return { days, hours };
+                                };
+                            
+                                // Determinar la fecha de finalización según el estado
+                                let endDate;
+                            
+                                switch (solicity.status) {
+                                    case "RESPONSED":
+                                        // Usar `updated_at` como fecha de fin en solicitudes respondidas
+                                        endDate = solicity.updated_at;
+                                        break;
+                            
+                                    case "PRORROGA":
+                                    case "NO_RESPONSED":
+                                    case "INSISTENCY_NO_RESPONSED":
+                                        // Usar `expiry_date` como fecha de fin en estos estados
+                                        endDate = solicity.expiry_date;
+                                        break;
+                            
+                                    default:
+                                        // Usar la fecha actual para otros estados
+                                        endDate = new Date().toISOString();
+                                        break;
+                                }
+                            
+                                // Calcular la diferencia de tiempo desde la fecha de envío (start_date) hasta endDate
+                                const timeDifference = calculateTimeDifference(solicity.date, endDate);
+                            
+                                return (
+                                    <p>
+                                        {timeDifference.days} días, {timeDifference.hours} horas
+                                    </p>
+                                );
+                            }                                                        
                         },
 
                         {
@@ -187,7 +230,7 @@ const AllSolicitiesPresenter = (props: Props) => {
                                 const color = status?.bg || "bg-primary-500"
                                 const border = color.replace("bg", "border")
                                 return (
-                                    <p className={`text-wrap border rounded-md px-2 py-1    
+                                    <p className={`text-wrap border rounded-md px-2 py-1
                                      w-auto
                                      justify-start
                                      ${border}

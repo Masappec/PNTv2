@@ -12,6 +12,7 @@ import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import { IOncalculate } from "../../../Common/PasswordMeter"
 import { sleep } from "../../../../utils/functions"
 import SessionService from "../../../../infrastructure/Services/SessionService"
+import { ColourOption } from "../../../../utils/interface"
 
 
 const UserEditContainer = ({
@@ -46,15 +47,36 @@ const UserEditContainer = ({
     const [isDisabled, setIsDisabled] = useState(false)
     const [loadingSubmit, setLoadingSubmit] = useState(false)
     const [isUserEntity, setIsUserEntity] = useState<boolean>(false)
+    const [selectedEstablishment,SetSelectedEstablishment] = useState<ColourOption>({
+        color:"",
+        label:"",
+        value:""
+    })
+    const [userRole, setUserRole] = useState<string>("");
 
     useEffect(() => {
-        const user = SessionService.getUserData()
+        const user = SessionService.getUserData();
+        if (user) {
+            const group = user.group;
+            if (group && group.length > 0) {
+                setUserRole(group[0].name); // Guardar el nombre del primer rol en el estado
+            } else {
+                console.warn("El usuario no tiene grupos asignados");
+            }
+        } else {
+            console.error("No se encontró el usuario");
+        }
         SetUserSession(user)
         const is = UserEntity.isUserEntity(user)
         if (is) {
             const establishment = SessionService.getEstablishmentData();
 
             setIsUserEntity(is)
+            SetSelectedEstablishment({
+                value:establishment.id+"",
+                color:"",
+                label:establishment.name
+            })
             setData({ ...data, establishment_id: establishment?.id })
 
         }
@@ -64,6 +86,11 @@ const UserEditContainer = ({
 
         establishmentUseCase.getEstablishmentsByUser(id || "").then((res) => {
             setEstablishment(res)
+            SetSelectedEstablishment({
+                color:"",
+                label:res.name,
+                value:res.id?.toString()||""
+            })
         }).catch(() => {
             setEstablishment(null)
         })
@@ -84,9 +111,6 @@ const UserEditContainer = ({
             if (roles.length == 1) {
                 handleConfigFields(roles[0].name)
             }
-            if (roles.length == 0) {
-                navigate("/admin/users")
-            }
             setLoading(false)
 
         }).catch((error) => {
@@ -104,6 +128,9 @@ const UserEditContainer = ({
         data.group = [{ id: roleSelected?.id || 0, name: roleSelected?.name || "" }]
         e.preventDefault()
         setLoadingSubmit(true)
+        if(data.identification==""){
+            data.identification="NO"
+        }
         if (data.group === undefined || data.group.length === 0) {
             setError("El rol es obligatorio")
             setLoadingSubmit(false)
@@ -145,7 +172,7 @@ const UserEditContainer = ({
             target.reset()
             setLoadingSubmit(false)
             sleep(2000).then(() => {
-                navigate("/admin/users")
+                onCancel()
             })
 
         }).catch((error) => {
@@ -156,8 +183,13 @@ const UserEditContainer = ({
     }
 
     const handleChange = (name: string, value: string | boolean) => {
-        console.log(name, value)
+        
         setData({ ...data, [name]: value })
+    }
+
+    const handleSelect = (option:ColourOption)=>{
+        SetSelectedEstablishment(option)
+        setData({...data,establishment_id:parseInt(option.value)})
     }
 
 
@@ -191,9 +223,12 @@ const UserEditContainer = ({
         }
         navigate(route)
     }
-    const onChangePassword = (data: IOncalculate) => {
-
-        if (data.percentage === 100) {
+    const onChangePassword = (_data: IOncalculate) => {
+        if(data.password=="" || data.password==null){
+            setIsDisabled(false)
+            return
+        }
+        if (_data.percentage === 100) {
             setIsDisabled(false)
         } else {
             setIsDisabled(true)
@@ -201,6 +236,14 @@ const UserEditContainer = ({
     };
     const handleShowPassword = () => {
         setShowPassword(!showPassword);
+    }
+    const loadOption = (name: string, callback: (data: ColourOption[]) => void) => {
+        const establishmentField = config.find(x => x.name ==  "establishment_id")
+        if (establishmentField) {
+            const filtered = establishmentField.options?.filter(x => x.name.toLowerCase().includes(name.toLowerCase())).slice(0, 10)
+            
+            callback(filtered?.map  (x => ({label:x.name,value:x.id.toString()||""} as ColourOption)) || [])
+        }
     }
     return (
         <UserEditPresenter
@@ -223,6 +266,10 @@ const UserEditContainer = ({
             onChangePassword={onChangePassword}
             showPassword={showPassword}
             isEstablishmentUser={isUserEntity}
+            onLoadOptions={loadOption}
+            establishmentSelected={selectedEstablishment}
+            onEstablishmentSelect={handleSelect}
+            userRole={userRole}
         />
     )
 }

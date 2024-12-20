@@ -17,10 +17,10 @@ const SolicityOnHoldContainer = (props: Props) => {
     
 
     const handleSubmit = () => {
-        
+        const files: number[] = [];
 
         setLoading(true)
-        props.usecase.commentSolicity(comment, props.solicity_id).then(() => {
+        props.usecase.commentSolicity(comment, props.solicity_id, files).then(() => {
             setLoading(false)
             setSuccess("Comentario agregado con éxito")
             setComment('')
