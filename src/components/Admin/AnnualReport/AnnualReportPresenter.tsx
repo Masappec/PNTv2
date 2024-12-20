@@ -23,21 +23,21 @@ return(
     <section className="container w-[500px]">
     <h2 className="text-xl font-semibold text-primary">Institución</h2>
     <div>
-    <div className="mb-1 block">
+    <div className="mb-1 block mt-5">
           <Label htmlFor="small" value="Nombre de entidad:" className="text-gray-500" />
         </div>
         <TextInput id="small" type="text" sizing="sm"  />
              
             </div>
             <div>
-            <div className="mb-1 block">
+            <div className="mb-1 mt-5 block">
           <Label htmlFor="small" value=" Función del estado a la que pertenece:" className="text-gray-500"/>
         </div>
         <TextInput id="small" type="text" sizing="sm"  />
              
             </div>
             <div>
-            <div className="mb-1 block">
+            <div className="mb-1 mt-5 block">
           <Label htmlFor="small" value="Fecha de emisión del informe: " className="text-gray-500"/>
         </div>
         <TextInput id="small" type="text" sizing="sm"  />
@@ -221,12 +221,7 @@ return(
   </div>
   <TextInput id="small" type="number" sizing="sm"  />
 </div>
-<div>
-<div className="mb-1 block mt-5">
-    <Label htmlFor="small" value="Número de temas clasificados como Secreto: " className="text-gray-500" />
-  </div>
-  <TextInput id="small" type="number" sizing="sm"  />
-</div>
+
 <div>
 <div className="mb-2 block mt-5">
     <Label htmlFor="small" value="Número de temas clasificados como Secreto: " className="text-gray-500" />
