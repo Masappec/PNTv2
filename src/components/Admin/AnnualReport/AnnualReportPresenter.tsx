@@ -2,9 +2,13 @@ import { Label, Select, TextInput } from "flowbite-react";
 import { Form } from "react-router-dom";
 import Table from "../../Common/Table";
 
+interface Props {
+  OnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (e: React.FormEvent) => void;
+  onSelected: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
 
-
-const AnnualReportPresenter = () => {
+const AnnualReportPresenter = (props: Props) => {
 
   return (
     <>
@@ -12,7 +16,7 @@ const AnnualReportPresenter = () => {
         {"Reporte de Informe Anual"}
       </h2>
       <Form className="grid grid-cols-1 items-start justify-center gap-4 text-start ">
-        <section className="container w-[500px]">
+        <section className="container w-full lg:w-[500px]">
           <h2 className="text-xl font-semibold text-primary">Institución</h2>
           <div>
             <div className="mb-1 block">
@@ -46,7 +50,10 @@ const AnnualReportPresenter = () => {
             <div className="mb-1 block mt-5]">
               <Label htmlFor="small" value="¿Se han creado y se mantienen registros públicos de manera profesional para el manejo y archivo de la información y documentación?" className="text-gray-500" />
             </div>
-            <Select className="w-44 mt-3" required>
+            <Select className="w-44 mt-3"
+              onChange={props.onSelected}
+              name="have_public_records"
+              required>
               <option>Si</option>
               <option>No</option>
 
@@ -56,13 +63,19 @@ const AnnualReportPresenter = () => {
             <div className="mb-1 block mt-5">
               <Label htmlFor="small" value="Norma archivística utilizada:" className="text-gray-500" />
             </div>
-            <TextInput id="small" type="text" sizing="sm" />
+            <TextInput id="small" type="text" sizing="sm"
+              name="norme_archive_utility"
+              onChange={props.OnChange}
+            />
           </div>
           <div>
             <div className="mb-1 block mt-5">
               <Label htmlFor="small" value="Comentario/aclaración:" className="text-gray-500" />
             </div>
-            <TextInput id="small" type="text" sizing="sm" />
+            <TextInput id="small" type="text" sizing="sm"
+              name="comment_aclaration"
+              onChange={props.OnChange}
+            />
           </div>
         </section>
         <section>
@@ -132,12 +145,18 @@ const AnnualReportPresenter = () => {
               <div className="mb-1 block mt-5">
                 <Label htmlFor="small" value="Cantidad" className="text-gray-500" />
               </div>
-              <TextInput id="small" type="text" sizing="sm" className="w-[500px]" />
+              <TextInput id="small" type="text" sizing="sm" className="w-[500px]"
+                name="total_saip"
+                onChange={props.OnChange}
+              />
             </div>
             <div>
               <div className="mb-1 block mt-5 ">
                 <Label htmlFor="small" value="¿Su entidad recibió y gestionó una cantidad  diferente de solicitudes de las que registró en el Portal Nacional de Transparencia?" className="text-gray-500" /></div>
-              <Select className="w-44 " required>
+              <Select className="w-44 " required
+                name="did_you_entity_receive"
+                onChange={props.onSelected}
+              >
                 <option>Si</option>
                 <option>No</option>
 
@@ -146,17 +165,32 @@ const AnnualReportPresenter = () => {
             <div>
 
               <div className="mb-1 block mt-5">
-                <Label htmlFor="small" value="Cantidad de SAIP registradas en el portal
-" className="text-gray-500" />
+                <Label htmlFor="small" value="Cantidad de SAIP registradas en el portal" className="text-gray-500" />
               </div>
-              <TextInput id="small" type="number" sizing="sm" />
+              <TextInput id="small" type="number" sizing="sm"
+                name="total_saip_in_portal"
+                onChange={props.OnChange}
+              />
             </div>
             <div>
-              <div className="mb-2 block mt-4">
-                <Label htmlFor="small" value="Descripción de las razones por las que no fueron ingresadas al portal
- " className="text-gray-500" />
+
+              <div className="mb-1 block mt-5">
+                <Label htmlFor="small" value="Cantidad de SAIP NO registradas en el portal" className="text-gray-500" />
               </div>
-              <TextInput id="small" type="text" sizing="sm" />
+              <TextInput id="small" type="number" sizing="sm"
+                name="total_saip_no_portal"
+                onChange={props.OnChange}
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block mt-4">
+                <Label htmlFor="small" value="Descripción de las razones por las que no fueron ingresadas al portal" className="text-gray-500" />
+              </div>
+              <TextInput 
+                id="small" type="text" sizing="sm" 
+                name="description_rason_no_portal" onChange={props.OnChange}
+              />
 
             </div>
             <p className="text-primary font-semibold  my-3">¿Las solicitudes de acceso a la información pública que NO fueron registradas en el Portal Nacional de Transparencia, fueron respondidas?
@@ -164,10 +198,11 @@ const AnnualReportPresenter = () => {
             <div>
 
               <div className="mb-1 block mt-5">
-                <Label htmlFor="small" value="Cantidad 
-" className="text-gray-500" />
+                <Label htmlFor="small" value="Cantidad " className="text-gray-500" />
               </div>
-              <TextInput id="small" type="number" sizing="sm" />
+              <TextInput id="small" type="number" sizing="sm"
+                name="total_no_registered" onChange={props.OnChange}
+              />
             </div>
             <div>
 

@@ -21,15 +21,16 @@ export class AnualReportEntity{
         public have_public_records: boolean,
         public norme_archive_utility: string,
         public comment_aclaration: string,
-        public have_annual_report: boolean,
-        public total: number,
+        public total_saip: number,
         public did_you_entity_receive: boolean,
-        public desription: string,
+        public total_saip_in_portal: number,
+        public total_saip_no_portal: number,
+        public description_rason_no_portal: string,
         public total_no_registered: number,
         public comment_aclaration_no_registered: string,
         public reserve_information: boolean,
         public number_of_reserves: number,
-        public  number_of_confidential: number,
+        public number_of_confidential: number,
         public number_of_secret: number,
         public number_of_secretism: number,
         public information_classified: IndexInformationClassifiedEntity[],
@@ -52,4 +53,12 @@ export class AnualReportEntity{
         public total_activities: number,
         public description_activities: string,
     ){}
+
+    static buildVoid(){
+        return new AnualReportEntity(
+            0,0,0,false,'', '', 0, false, 0, 0, '', 0, '', false, 0, 0, 0, 0, [],
+             false, 0, '', false, 0, '', 0, '', 0, '', 0, '', false, 0, '', false, 0, '', 
+                
+        )
+    }
 }

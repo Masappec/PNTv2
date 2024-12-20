@@ -50,3 +50,9 @@ export interface AnualReportCreateDto {
     total_activities: number;
     description_activities: string;
 }
+
+export interface AnualReportResponseDto extends AnualReportCreateDto {
+    id: number;
+    created_at: string;
+    updated_at: string;
+}
