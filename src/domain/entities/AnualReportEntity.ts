@@ -1,6 +1,6 @@
 
 
-class IndexInformationClassifiedEntity{
+export class IndexInformationClassifiedEntity{
     constructor(
        public  topic: string,
         public legal_basis: string,
