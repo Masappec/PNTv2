@@ -468,6 +468,8 @@ const menu = [
     icon: <GrCompliance size={25} className="text-slate-500" />,
     permission_required: "view_transparencyactive",
     element: <AnnualReport />,
+    visible_for_superadmin: false
+
   },
 ]
 

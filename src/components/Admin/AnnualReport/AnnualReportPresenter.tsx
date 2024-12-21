@@ -1,7 +1,13 @@
 import { Label, Select, TextInput } from "flowbite-react";
-import { Form } from "react-router-dom";
 import Table from "../../Common/Table";
 import { IndexInformationClassifiedEntity } from "../../../domain/entities/AnualReportEntity";
+import EstablishmentEntity from "../../../domain/entities/Establishment";
+import { SolicityStatsAnualReportDto } from "../../../infrastructure/Api/AnualReport/interface";
+import { Pagination } from "../../../infrastructure/Api";
+import { TransparencyActivePublicResponse } from "../../../infrastructure/Api/TansparencyActive/interface";
+import { TransparencyFocusListDto } from "../../../infrastructure/Api/TransparencyFocus/interface";
+import { TransparencyCollabListDto } from "../../../infrastructure/Api/TransparencyCollab/interface";
+import { formatDate2 } from "../../../utils/functions";
 
 interface Props {
   OnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,6 +18,17 @@ interface Props {
   Items:IndexInformationClassifiedEntity[]
   onTextTable: (index:number, name:keyof IndexInformationClassifiedEntity, value:string)=>void;
   onBooleanTable:(index:number, name:keyof IndexInformationClassifiedEntity, value:boolean)=>void;
+  establishment: EstablishmentEntity;
+  solicityStats: SolicityStatsAnualReportDto;
+
+  onPageTAE: (page:number)=>void
+  onPageTA: (page: number) => void
+  onPageTF: (page: number) => void
+  onPageTC: (page: number) => void
+  resultsTAE: Pagination<TransparencyActivePublicResponse>
+  resultsTA: Pagination<TransparencyActivePublicResponse>
+  resultTF:Pagination<TransparencyFocusListDto>
+  resultTC: Pagination<TransparencyCollabListDto>
 }
 
 const AnnualReportPresenter = (props: Props) => {
@@ -20,7 +37,8 @@ const AnnualReportPresenter = (props: Props) => {
       <h2 className="mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary">
         {"Reporte de Informe Anual"}
       </h2>
-      <Form className="grid grid-cols-1 items-start justify-center gap-4 text-start ">
+      <form className="grid grid-cols-1 items-start justify-center gap-4 text-start "
+      onSubmit={props.onSubmit}>
         <section className="container w-full lg:w-[500px]">
           <h2 className="text-xl font-semibold text-primary">Institución</h2>
           <div>
@@ -31,7 +49,10 @@ const AnnualReportPresenter = (props: Props) => {
                 className="text-gray-500"
               />
             </div>
-            <TextInput id="small" type="text" sizing="sm" />
+            <TextInput id="small" type="text" sizing="sm" 
+            value={props.establishment.name}
+            disabled
+            />
           </div>
           <div>
             <div className="mb-1 block">
@@ -41,7 +62,10 @@ const AnnualReportPresenter = (props: Props) => {
                 className="text-gray-500"
               />
             </div>
-            <TextInput id="small" type="text" sizing="sm" />
+            <TextInput id="small" type="text" sizing="sm"
+            value={props.establishment.function_organization}
+              disabled
+            />
           </div>
           <div>
             <div className="mb-1 block">
@@ -51,7 +75,11 @@ const AnnualReportPresenter = (props: Props) => {
                 className="text-gray-500"
               />
             </div>
-            <TextInput id="small" type="text" sizing="sm" />
+            <TextInput id="small" type="text" sizing="sm" 
+            
+            value={new Date().toLocaleString()}
+              disabled
+            />
           </div>
         </section>
         <section className="w-[500px]">
@@ -74,8 +102,12 @@ const AnnualReportPresenter = (props: Props) => {
               name="have_public_records"
               required
             >
-              <option>Si</option>
-              <option>No</option>
+              <option
+              value={"si"}
+              >Si</option>
+              <option
+              value={"no"}
+              >No</option>
             </Select>
           </div>
           <div>
@@ -92,6 +124,7 @@ const AnnualReportPresenter = (props: Props) => {
               sizing="sm"
               name="norme_archive_utility"
               onChange={props.OnChange}
+              
             />
           </div>
           <div>
@@ -122,29 +155,39 @@ const AnnualReportPresenter = (props: Props) => {
             show={false}
             columns={[
               {
-                render: () => <p className="text-left">{}</p>,
+                render: () => <p className="text-center">{
+                  props.solicityStats.total
+                }</p>,
                 title: "Total de SAIP recibidas en el año",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: () => <p className="text-center">{
+                  props.solicityStats.total_response_to_10_days + " / " + props.solicityStats.percent_response_to_10_days+"%"
+                }</p>,
                 title: "Respondidas en hasta 10 días Cantidad / Porcentaje",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: () => <p className="text-center">{
+                  props.solicityStats.total_reponse_to_11_days + " / " + props.solicityStats.percent_reponse_to_11_days + "%"
+                }</p>,
                 title: "Respondidas entre 11 y 15 días Cantidad / Porcentaje",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: () => <p className="text-center">{
+                  props.solicityStats.total_response_plus_15_days + " / " + props.solicityStats.percent_response_plus_15_days + "%"
+                }</p>,
                 title: "Respondidas en más de 15 días Cantidad / Porcentaje",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: () => <p className="text-center">{
+                  props.solicityStats.total_no_response + " / " + props.solicityStats.percent_no_response + "%"
+                }</p>,
                 title: "No respondidas Cantidad / Porcentaje",
               },
             ]}
             description={""}
             length={0}
-            data={[]}
+            data={[props.solicityStats]}
             currentPage={0}
             onChangePage={() => {}}
             totalPages={0}
@@ -168,7 +211,7 @@ const AnnualReportPresenter = (props: Props) => {
               </div>
               <TextInput
                 id="small"
-                type="text"
+                type="number"
                 sizing="sm"
                 className="w-[500px]"
                 name="total_saip"
@@ -189,8 +232,12 @@ const AnnualReportPresenter = (props: Props) => {
                 name="did_you_entity_receive"
                 onChange={props.onSelected}
               >
-                <option>Si</option>
-                <option>No</option>
+                <option
+                  value={"si"}
+                >Si</option>
+                <option
+                  value={"no"}
+                >No</option>
               </Select>
             </div>
             <div>
@@ -273,7 +320,6 @@ const AnnualReportPresenter = (props: Props) => {
               </div>
               <TextInput
                 id="small"
-                type="number"
                 sizing="sm"
                 name="comment_aclaration_no_registered"
                 onChange={props.OnChange}
@@ -302,8 +348,12 @@ const AnnualReportPresenter = (props: Props) => {
                 onChange={props.onSelected}
                 required
               >
-                <option>Si</option>
-                <option>No</option>
+                <option
+                  value={"si"}
+                >Si</option>
+                <option
+                  value={"no"}
+                >No</option>
               </Select>
             </div>
             <p className="text-base font-medium text-gray-500">
@@ -354,7 +404,7 @@ const AnnualReportPresenter = (props: Props) => {
                 id="small"
                 type="number"
                 sizing="sm"
-                name="number_of_secret "
+                name="number_of_secret"
                 onChange={props.OnChange}
               />
             </div>
@@ -414,19 +464,31 @@ const AnnualReportPresenter = (props: Props) => {
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-800">
               {
-                props.Items.map(e=>{
+                props.Items.map((element,index)=>{
                   return(
                     <tr>
                     <td>
                       <textarea
                         className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
-                        onChange={() => {}}
+                        onChange={(e) => {
+                          props.onTextTable(index,
+                            "topic" as keyof IndexInformationClassifiedEntity,
+                            e.target.value
+                          
+                          )
+                        }}
                       />
                     </td>
                     <td>
                       <textarea
                         className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
-                        onChange={() => {}}
+                        onChange={(e) => {
+                          props.onTextTable(index,
+                            "legal_basis" as keyof IndexInformationClassifiedEntity,
+                            e.target.value
+                          
+                          )
+                        }}
                       />
                     </td>
                     <td>
@@ -435,6 +497,14 @@ const AnnualReportPresenter = (props: Props) => {
                         type="date"
                         sizing="sm"
                         className="w-28"
+                        onChange={(e) => {
+                          console.log(e.target.value)
+                          props.onTextTable(index,
+                            "classification_date" as keyof IndexInformationClassifiedEntity,
+                            e.target.value
+                          
+                          )
+                        }}
                       />
                     </td>
                     <td>
@@ -442,19 +512,41 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
                         placeholder=""
                         name="data"
-                        onChange={() => {}}
+                        onChange={(e) => {
+                          props.onTextTable(index,
+                            "period_of_validity" as keyof IndexInformationClassifiedEntity,
+                            e.target.value
+                          
+                          )
+                        }}
                       />
                     </td>
                     <td>
-                      <Select className="w-16 " required>
-                        <option>Si</option>
-                        <option>No</option>
+                      <Select className="w-16 " required
+                      onChange={(e) => {
+                        props.onBooleanTable(index,
+                          "amplation_effectuation" as keyof IndexInformationClassifiedEntity,
+                          e.target.value === "si"
+                        
+                        )}}>
+                          <option
+                            value={"si"}
+                          >Si</option>
+                          <option
+                            value={"no"}
+                          >No</option>
                       </Select>
                     </td>
                     <td>
                       <textarea
                         className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
-                        onChange={() => {}}
+                        onChange={(e) => {
+                          props.onTextTable(index,
+                            "ampliation_description" as keyof IndexInformationClassifiedEntity,
+                            e.target.value
+                          
+                          )
+                        }}
                       />
                     </td>{" "}
                     <td>
@@ -463,12 +555,21 @@ const AnnualReportPresenter = (props: Props) => {
                         type="date"
                         sizing="sm"
                         className="w-32"
+                        onChange={(e)=>{
+                          props.onTextTable(index, "ampliation_date",e.target.value)
+                        }}
                       />
                     </td>{" "}
                     <td>
                       <textarea
                         className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
-                        onChange={() => {}}
+                        onChange={(e) => {
+                          props.onTextTable(index,
+                            "ampliation_period_of_validity" as keyof IndexInformationClassifiedEntity,
+                            e.target.value
+                          
+                          )
+                        }}
                       />
                     </td>
                   </tr>
@@ -512,36 +613,46 @@ const AnnualReportPresenter = (props: Props) => {
             show={false}
             columns={[
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                   e.month
+                }</p>,
                 title: "Mes",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: () => <p className="text-left">{
+                  "19"
+                }</p>,
                 title: "Artículo ",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.numeral.name.replace("Numeral","")
+                }</p>,
                 title: "Numeral",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.published?"Sí":"No"
+                }</p>,
                 title: "Publicado (Sí/No)",
               },
 
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.published?formatDate2(e.published_at):"No Públicado"
+                }</p>,
                 title: "Fecha de publicación",
               },
             ]}
             description={""}
-            length={0}
-            data={[]}
-            currentPage={0}
-            onChangePage={() => {}}
-            totalPages={0}
-            from={0}
-            to={0}
-            total={0}
+            length={props.resultsTA.total}
+            data={props.resultsTA.results}
+            currentPage={props.resultsTA.current}
+            onChangePage={props.onPageTA}
+            totalPages={props.resultsTA.total_pages}
+            from={props.resultsTA.from}
+            to={props.resultsTA.to}
+            total={props.resultsTA.total}
           />
           <p className="font-semibold text-gray-500 my-3 text-sm">
             Obligaciones específicas
@@ -550,36 +661,46 @@ const AnnualReportPresenter = (props: Props) => {
             show={false}
             columns={[
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.month
+                }</p>,
                 title: "Mes",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.numeral.name
+                }</p>,
                 title: "Artículo ",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.numeral.name.replace("Art", "")
+                }</p>,
                 title: "Numeral",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.published ? "Sí" : "No"
+                }</p>,
                 title: "Publicado (Sí/No)",
               },
 
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.published ? formatDate2(e.published_at) : "No Públicado"
+                }</p>,
                 title: "Fecha de publicación",
               },
             ]}
             description={""}
-            length={0}
-            data={[]}
-            currentPage={0}
-            onChangePage={() => {}}
-            totalPages={0}
-            from={0}
-            to={0}
-            total={0}
+            length={props.resultsTAE.results.length}
+            data={props.resultsTAE.results}
+            currentPage={props.resultsTAE.current}
+            onChangePage={props.onPageTAE}
+            totalPages={props.resultsTAE.total_pages}
+            from={props.resultsTAE.from}
+            to={props.resultsTAE.to}
+            total={props.resultsTAE.total}
           />
           <p className="text-base font-medium text-primary ">
             - Transparencia colaborativa:
@@ -589,36 +710,46 @@ const AnnualReportPresenter = (props: Props) => {
             show={false}
             columns={[
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.month
+                }</p>,
                 title: "Mes",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.numeral.name
+                }</p>,
                 title: "Artículo ",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.numeral.name.replace("Art", "")
+                }</p>,
                 title: "Numeral",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.published ? "Sí" : "No"
+                }</p>,
                 title: "Publicado (Sí/No)",
               },
 
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.published ? formatDate2(e.published_at) : "No Públicado"
+                }</p>,
                 title: "Fecha de publicación",
               },
             ]}
             description={""}
-            length={0}
-            data={[]}
-            currentPage={0}
-            onChangePage={() => {}}
-            totalPages={0}
-            from={0}
-            to={0}
-            total={0}
+            length={props.resultTC.results.length}
+            data={props.resultTC.results}
+            currentPage={props.resultTC.current}
+            onChangePage={props.onPageTC}
+            totalPages={props.resultTC.total_pages}
+            from={props.resultTC.from}
+            to={props.resultTC.to}
+            total={props.resultTC.total}
           />
 
           <p className="text-base font-medium text-primary ">
@@ -629,36 +760,46 @@ const AnnualReportPresenter = (props: Props) => {
             show={false}
             columns={[
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.month
+                }</p>,
                 title: "Mes",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.numeral.name
+                }</p>,
                 title: "Artículo ",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.numeral.name.replace("Art", "")
+                }</p>,
                 title: "Numeral",
               },
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.published ? "Sí" : "No"
+                }</p>,
                 title: "Publicado (Sí/No)",
               },
 
               {
-                render: () => <p className="text-left">{}</p>,
+                render: (e) => <p className="text-left">{
+                  e.published ? formatDate2(e.published_at) : "No Públicado"
+                }</p>,
                 title: "Fecha de publicación",
               },
             ]}
             description={""}
-            length={0}
-            data={[]}
-            currentPage={0}
-            onChangePage={() => {}}
-            totalPages={0}
-            from={0}
-            to={0}
-            total={0}
+            length={props.resultTF.results.length}
+            data={props.resultTF.results}
+            currentPage={props.resultTF.current}
+            onChangePage={props.onPageTF}
+            totalPages={props.resultTF.total_pages}
+            from={props.resultTF.from}
+            to={props.resultTF.to}
+            total={props.resultTF.total}
           />
         </section>
         <section className="w-[500px]">
@@ -678,8 +819,12 @@ const AnnualReportPresenter = (props: Props) => {
               onChange={props.onSelected}
               required
             >
-              <option>Si</option>
-              <option>No</option>
+              <option
+                value={"si"}
+              >Si</option>
+              <option
+                value={"no"}
+              >No</option>
             </Select>
           </div>
           <div>
@@ -736,8 +881,12 @@ const AnnualReportPresenter = (props: Props) => {
               onChange={props.onSelected}
               required
             >
-              <option>Si</option>
-              <option>No</option>
+              <option
+                value={"si"}
+              >Si</option>
+              <option
+                value={"no"}
+              >No</option>
             </Select>
           </div>
 
@@ -874,8 +1023,12 @@ const AnnualReportPresenter = (props: Props) => {
                 onChange={props.onSelected}
                 required
               >
-                <option>Si</option>
-                <option>No</option>
+                <option
+                  value={"si"}
+                >Si</option>
+                <option
+                  value={"no"}
+                >No</option>
               </Select>
             </div>
             <div>
@@ -908,7 +1061,7 @@ const AnnualReportPresenter = (props: Props) => {
                 id="small"
                 type="text"
                 sizing="sm"
-                name="description_programs "
+                name="description_programs"
                 onChange={props.OnChange}
               />
             </div>
@@ -931,8 +1084,12 @@ const AnnualReportPresenter = (props: Props) => {
                 onChange={props.onSelected}
                 required
               >
-                <option>Si</option>
-                <option>No</option>
+                <option
+                  value={"si"}
+                >Si</option>
+                <option
+                  value={"no"}
+                >No</option>
               </Select>
             </div>
 
@@ -974,8 +1131,7 @@ const AnnualReportPresenter = (props: Props) => {
           </section>
           <div className="flex w-full items-end justify-center gap-2 p-2 text-sm">
             <button
-              onClick={() => {}}
-              type="button"
+              type="submit"
               className="inline-flex w-1/6 items-center mt-5 gap-2 rounded-lg bg-primary px-5 
                     py-2.5 text-center text-sm
                     font-medium text-white hover:opacity-80 focus:outline-none 
@@ -985,7 +1141,7 @@ const AnnualReportPresenter = (props: Props) => {
             </button>
           </div>
         </section>
-      </Form>
+      </form>
     </>
   );
 };

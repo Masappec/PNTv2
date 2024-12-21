@@ -56,3 +56,17 @@ export interface AnualReportResponseDto extends AnualReportCreateDto {
     created_at: string;
     updated_at: string;
 }
+
+
+
+export interface SolicityStatsAnualReportDto {
+  percent_no_response: number;
+  percent_reponse_to_11_days: number;
+  percent_response_plus_15_days: number;
+  percent_response_to_10_days: number;
+  total: number;
+  total_no_response: number;
+  total_reponse_to_11_days: number;
+  total_response_plus_15_days: number;
+  total_response_to_10_days:number
+}

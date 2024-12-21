@@ -56,9 +56,43 @@ export class AnualReportEntity{
 
     static buildVoid(){
         return new AnualReportEntity(
-            0,0,0,false,'', '', 0, false, 0, 0, '', 0, '', false, 0, 0, 0, 0, [],
-             false, 0, '', false, 0, '', 0, '', 0, '', 0, '', false, 0, '', false, 0, '', 
-                
-        )
+          0,
+          0,
+          0,
+          true,
+          "",
+          "",
+          0,
+          true,
+          0,
+          0,
+          "",
+          0,
+          "",
+          true,
+          0,
+          0,
+          0,
+          0,
+          [],
+          true,
+          0,
+          "",
+          true,
+          0,
+          "",
+          0,
+          "",
+          0,
+          "",
+          0,
+          "",
+          true,
+          0,
+          "",
+          true,
+          0,
+          ""
+        );
     }
 }

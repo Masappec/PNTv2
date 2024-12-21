@@ -18,3 +18,10 @@ export interface AcordionMonthYear<T> {
     total: number;
     isLoading: boolean;
 }
+export interface PartialPage {
+  totalPage: number;
+  curretPage: number;
+  from: number;
+  to: number;
+  total: number;
+}
