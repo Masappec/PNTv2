@@ -8,6 +8,7 @@ import { TransparencyActivePublicResponse } from "../../../infrastructure/Api/Ta
 import { TransparencyFocusListDto } from "../../../infrastructure/Api/TransparencyFocus/interface";
 import { TransparencyCollabListDto } from "../../../infrastructure/Api/TransparencyCollab/interface";
 import { formatDate2 } from "../../../utils/functions";
+import Alert from "../../Common/Alert";
 
 interface Props {
   OnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -29,6 +30,10 @@ interface Props {
   resultsTA: Pagination<TransparencyActivePublicResponse>
   resultTF:Pagination<TransparencyFocusListDto>
   resultTC: Pagination<TransparencyCollabListDto>
+  error: string;
+  success: string;
+  setError: (e: string) => void;
+  setSuccess: (e: string) => void;
 }
 
 const AnnualReportPresenter = (props: Props) => {
@@ -1129,6 +1134,20 @@ const AnnualReportPresenter = (props: Props) => {
               />
             </div>
           </section>
+          {props.error!="" && (
+            <Alert
+              message={props.error}
+              type="error"
+              onClose={() => props.setError("")}
+            />
+          )}
+          {props.success!="" && (
+            <Alert
+              message={props.success}
+              type="success"
+              onClose={() => props.setSuccess("")}
+            />
+          )}
           <div className="flex w-full items-end justify-center gap-2 p-2 text-sm">
             <button
               type="submit"

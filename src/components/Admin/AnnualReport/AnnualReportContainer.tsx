@@ -33,6 +33,10 @@ const AnnualReportContainer = (props: Props) => {
         total_response_plus_15_days:0,
         total_response_to_10_days:0
     })
+
+    const [error, setError] = useState<string>("")
+    const [success, setSuccess] = useState<string>("")
+
     const [establishment, setEstablishment] = useState<EstablishmentEntity>(SessionService.getEstablishmentData())
 
     const [paginableTA, setPaginableTA] = useState<Pagination<TransparencyActivePublicResponse>>({
@@ -127,7 +131,13 @@ const AnnualReportContainer = (props: Props) => {
         form.information_classified = table
         form.month = new DatePnt().getMonthOneBased();
         form.year = new DatePnt().getFullYear();
-        await props.usecase.createAnualReport(form);
+        await props.usecase.createAnualReport(form).then((res) => {
+            setSuccess("Reporte anual creado con exito")
+            setError("")
+        }).catch((err) => {
+            setError(err.message)
+            setSuccess("")
+        })
     }
 
 
@@ -215,6 +225,10 @@ const AnnualReportContainer = (props: Props) => {
             resultsTA={paginableTA}
             resultTF={paginableTF}
             resultTC={paginableTC}
+            error={error}
+            success={success}
+            setError={setError}
+            setSuccess={setSuccess}
 
         />
 
