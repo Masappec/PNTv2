@@ -179,28 +179,33 @@ const EstablishmentInSessionContainer = ({
 
     const handleRemoveNumeral = async (numeralId: string) => {
         try {
-            // Convetir el numeralID en numero
+            // Convertir numeralId a número
             const numeralIdAsNumber = parseInt(numeralId, 10);
             if (isNaN(numeralIdAsNumber)) {
-                throw new Error(`El numeralId "${numeralId}" no es un numerao valido.`)
+                throw new Error(`El numeralId "${numeralId}" no es un número válido.`);
             }
-            // Llamada al backend para actualizar el estado 
-            await numeralUsecase.updateNumeralState(numeralIdAsNumber, {
-                isSelected: true,
-            });
-            // Actualiza el estado local eliminando el numeral del arreglo
+    
+            // Llamada al backend para actualizar el estado
+            await numeralUsecase.updateNumeralState(numeralIdAsNumber, { isSelected: true });
+    
+            // Actualiza extra_numerals en el estado local
             setData((prevData) => {
-                const updateNumerals = (prevData.extra_numerals || "")
+                const updatedExtraNumerals = (prevData.extra_numerals || "")
                     .split(",")
-                    .filter((id) => id !== numeralId)
+                    .filter((id) => id !== numeralId) // Filtrar el ID eliminado
                     .join(",");
-                //console.log("Remove", updateNumerals);
-                return { ...prevData, extra_numerals: updateNumerals};
+                return { ...prevData, extra_numerals: updatedExtraNumerals };
             });
+    
+            // Eliminar el numeral del estado general numerals
+            setNumerals((prevNumerals) => 
+                prevNumerals.filter((numeral) => numeral.id !== numeralIdAsNumber)
+            );
+    
         } catch (error) {
-            console.error("Error al eliminar el numeral:", error)
+            console.error("Error al eliminar el numeral:", error);
         }
-    }
+    };
 
     const validateFields = (name: string) => {
         if (modified) {
