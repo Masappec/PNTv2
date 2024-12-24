@@ -102,7 +102,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     name="name"
                                     onChange={(e) => props.setData(e)}
                                     color={props.validateFields('name')}
-                                    obligatorio
+                                    //obligatorio
                                     disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
@@ -123,7 +123,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                     value={props.data.identification || ""}
                                     name="identification"
                                     color={props.validateFields('identification')}
-                                    obligatorio
+                                    //obligatorio
                                     disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
@@ -158,7 +158,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                         }))
                                     ]}
                                     color={props.validateFields('type_institution')}
-                                    obligatorio
+                                    //obligatorio
                                     disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
@@ -177,7 +177,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                         }))
                                     ]}
                                     color={props.validateFields('function_organization')}
-                                    obligatorio
+                                    //obligatorio
                                     disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
@@ -195,7 +195,7 @@ const EstablishmentEditPresenter = (props: Props) => {
                                         }))
                                     ]}
                                     color={props.validateFields('type_organization')}
-                                    obligatorio
+                                    //obligatorio
                                     disabled={props.userRole === "Supervisora PNT"}
                                 />
                             </div>
