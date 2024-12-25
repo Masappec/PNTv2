@@ -482,6 +482,7 @@ const AnnualReportPresenter = (props: Props) => {
                           
                           )
                         }}
+                        value={element.topic}
                       />
                     </td>
                     <td>
@@ -494,6 +495,7 @@ const AnnualReportPresenter = (props: Props) => {
                           
                           )
                         }}
+                        value={element.legal_basis}
                       />
                     </td>
                     <td>
@@ -510,6 +512,7 @@ const AnnualReportPresenter = (props: Props) => {
                           
                           )
                         }}
+                        value={element.classification_date}
                       />
                     </td>
                     <td>
@@ -524,6 +527,7 @@ const AnnualReportPresenter = (props: Props) => {
                           
                           )
                         }}
+                        value={element.period_of_validity}
                       />
                     </td>
                     <td>
@@ -552,6 +556,7 @@ const AnnualReportPresenter = (props: Props) => {
                           
                           )
                         }}
+                        value={element.ampliation_description}
                       />
                     </td>{" "}
                     <td>

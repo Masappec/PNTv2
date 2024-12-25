@@ -131,7 +131,7 @@ const AnnualReportContainer = (props: Props) => {
         form.information_classified = table
         form.month = new DatePnt().getMonthOneBased();
         form.year = new DatePnt().getFullYear();
-        await props.usecase.createAnualReport(form).then((res) => {
+        await props.usecase.createAnualReport(form).then(() => {
             setSuccess("Reporte anual creado con exito")
             setError("")
         }).catch((err) => {

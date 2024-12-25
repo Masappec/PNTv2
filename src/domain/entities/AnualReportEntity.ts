@@ -1,3 +1,4 @@
+import { AnualReportCreateDto } from "../../infrastructure/Api/AnualReport/interface";
 
 
 export class IndexInformationClassifiedEntity{
@@ -53,6 +54,51 @@ export class AnualReportEntity{
         public total_activities: number,
         public description_activities: string,
     ){}
+
+
+    static build(data:AnualReportCreateDto){
+        return new AnualReportEntity(
+          data.establishment_id,
+          data.year,
+          data.month,
+          data.have_records,
+          data.norme_archive_utility,
+          data.comment_aclaration,
+          data.total_saip,
+          data.did_you_entity_receive,
+          data.total_saip_in_portal,
+          data.total_saip_no_portal,
+          data.description_rason_no_portal,
+          data.total_no_registered,
+          data.comment_aclaration_no_registered,
+          data.reserve_information,
+          data.number_of_reserves,
+          data.number_of_confidential,
+          data.number_of_secret,
+          data.number_of_secretism,
+          data.information_classified,
+          data.have_quality_problems,
+          data.total_quality_problems,
+          data.description_quality_problems,
+          data.have_sanctions,
+          data.total_organic_law_service,
+          data.description_organic_law_service,
+            data.total_organic_law_contraloria,
+            data.description_organic_law_contraloria,
+            data.total_organic_law_national_system,
+            data.description_organic_law_national_system,
+            data.total_organic_law_citizen_participation,
+            data.description_organic_law_citizen_participation,
+            data.implemented_programs,
+            data.total_programs,
+            data.description_programs,
+            data.have_activities,
+            data.total_activities,
+            data.description_activities
+
+
+        );
+    }
 
     static buildVoid(){
         return new AnualReportEntity(
