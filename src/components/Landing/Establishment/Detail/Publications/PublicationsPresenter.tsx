@@ -10,7 +10,7 @@ import TransparencyCollab from "../../../../../domain/entities/TransparencyColla
 import TransparencyFocusEntity from "../../../../../domain/entities/TransparencyFocus";
 import TransparencyActive from "../../../../../domain/entities/TransparencyActive";
 import EstablishmentEntity from "../../../../../domain/entities/Establishment";
-import Alert from "../../../../Common/Alert";
+//import Alert from "../../../../Common/Alert";
 
 interface Props {
     entity: EstablishmentEntity;
