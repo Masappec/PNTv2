@@ -470,6 +470,7 @@ const AnnualReportPresenter = (props: Props) => {
             <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-800">
               {
                 props.Items.map((element,index)=>{
+                  console.log(element)
                   return(
                     <tr>
                     <td>
@@ -482,7 +483,6 @@ const AnnualReportPresenter = (props: Props) => {
                           
                           )
                         }}
-                        value={element.topic}
                       />
                     </td>
                     <td>
@@ -495,7 +495,6 @@ const AnnualReportPresenter = (props: Props) => {
                           
                           )
                         }}
-                        value={element.legal_basis}
                       />
                     </td>
                     <td>
@@ -512,7 +511,6 @@ const AnnualReportPresenter = (props: Props) => {
                           
                           )
                         }}
-                        value={element.classification_date}
                       />
                     </td>
                     <td>
@@ -527,7 +525,6 @@ const AnnualReportPresenter = (props: Props) => {
                           
                           )
                         }}
-                        value={element.period_of_validity}
                       />
                     </td>
                     <td>
@@ -556,7 +553,6 @@ const AnnualReportPresenter = (props: Props) => {
                           
                           )
                         }}
-                        value={element.ampliation_description}
                       />
                     </td>{" "}
                     <td>

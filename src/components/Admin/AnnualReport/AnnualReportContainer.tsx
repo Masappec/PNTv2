@@ -181,25 +181,26 @@ const AnnualReportContainer = (props: Props) => {
     const handlePageTAE = (page:number)=>{
         setPaginableTAE({
             ...paginableTAE,
-            current: page + 1
+            current: page 
         })
     }
     const handlePageTA = (page: number) => {
+
         setPaginableTA({
             ...paginableTA,
-            current: page+1
+            current: page
         })
     }
     const handlePageTF = (page: number) => {
         setPaginableTF({
             ...paginableTF,
-            current: page + 1
+            current: page
         })
     }
     const handlePageTC = (page: number) => {
         setPaginableTC({
             ...paginableTC,
-            current: page + 1
+            current: page
         })
     }
 
