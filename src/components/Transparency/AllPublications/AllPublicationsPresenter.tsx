@@ -147,103 +147,101 @@ const AllPublicationsPresenter = (props: Props) => {
     }
 
     const columnsTable: Column<TransparencyActive>[] = [
-
         {
-            render: (item) => {
-                return (
-                    <p className="text-left text-gray-900 dark:text-white text-base">{item.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "")} {item.numeralPartial?.description}</p>
-                )
-            },
-            title: "Numeral"
+            render: (item) => (
+                <p className="text-left text-gray-900 dark:text-white text-base">
+                    {item.numeralPartial?.name.toLocaleLowerCase().replace("numeral", "")} {item.numeralPartial?.description}
+                </p>
+            ),
+            title: "Numeral",
         },
         {
-            render: (item) => {
-                return (
-                    <p className=" text-gray-900 dark:text-white text-base">
-                        {
-                            item.status !== StatusTransparency.APROVED ? formatDate2(item.created_at.toISOString()) :  formatDate2(item.published_at)
-                        }
-                        
-
-                    </p>
-                )
-            },
-            title: "Publicado"
+            render: (item) => (
+                <p className="text-gray-900 dark:text-white text-base">
+                    {item.status !== StatusTransparency.APROVED
+                        ? formatDate2(item.created_at.toISOString())
+                        : formatDate2(item.published_at)}
+                </p>
+            ),
+            title: "Publicado",
         },
         {
             render: (item) => {
                 let files = item.files.map((file) => {
                     const description = file.description.replace(/\d/g, '').replace(".", '').trim();
-
-                    return {
-                        ...file,
-                        description: description
-                    }
-                })
+                    return { ...file, description: description };
+                });
+    
                 files = files.sort((a, b) => {
                     const order = ["Conjunto de datos", "Metadatos", "Diccionario"];
                     return order.indexOf(a.description) - order.indexOf(b.description);
                 });
-                return <div className="flex flex-row space-x-5">
-                    {
-                        files.map((file, i) =>
-                            <div className="flex flex-col space-y-2" key={i}>
-                                <div key={i} className="grid grid-cols-3 ">
-                                    <a key={i}
-                                        href={'#'}
-                                        onClick={() => onDownloadFile(file.url_download as string,
-                                            `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                        )}
-                                        className="text-primary-500 
-                                                    hover:text-primary-600 text-base">
-                                        <FaFileCsv className="text-primary-500 
-                                                    hover:text-primary-600 text-base ml-5"
-                                            size={30}
-                                        />
-
-
-                                    </a>
-                                    <a key={i}
-                                        href={'#'}
-                                        onClick={() => onDownLoadPdf(file.url_download as string,
-                                            `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                        )}
-                                        className="text-primary-500
-                                                    hover:text-primary-600 text-base">
-                                        <FaFilePdf className="text-red-500 
-                                                    hover:text-primary-600 text-base ml-5"
-                                            size={30}
-
-                                        />
-                                    </a>
-                                    <a key={i}
-                                        href={"#"}
-                                        onClick={() => onDonwloadXlsx(file.url_download as string,
-                                            `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
-                                        )}
-                                        target="_blank"
-                                        className="text-primary-500
-                                                    hover:text-primary-600 text-base"
+    
+                return (
+                    <div className="overflow-x-auto">
+                        <div className="grid grid-flow-row-dense grid-cols-3 gap-x-1 gap-y-2 min-w-max">
+                            {files.map((file, i) => (
+                                <div
+                                    key={i}
+                                    className="flex flex-col items-center text-center space-y-4 p-4"
+                                >
+                                    <div className="flex space-x-6">
+                                        {/* Ícono CSV */}
+                                        <a
+                                            href="#"
+                                            onClick={() =>
+                                                onDownloadFile(
+                                                    file.url_download as string,
+                                                    `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                )
+                                            }
+                                            className="text-primary-500 hover:text-primary-600"
+                                        >
+                                            <FaFileCsv size={30} className="text-primary-500" />
+                                        </a>
+                                        {/* Ícono PDF */}
+                                        <a
+                                            href="#"
+                                            onClick={() =>
+                                                onDownLoadPdf(
+                                                    file.url_download as string,
+                                                    `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                )
+                                            }
+                                            className="text-red-500 hover:text-primary-600"
+                                        >
+                                            <FaFilePdf size={30} className="text-red-500" />
+                                        </a>
+                                        {/* Ícono XLS */}
+                                        <a
+                                            href="#"
+                                            onClick={() =>
+                                                onDonwloadXlsx(
+                                                    file.url_download as string,
+                                                    `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
+                                                )
+                                            }
+                                            className="text-green-500 hover:text-primary-600"
+                                        >
+                                            <FaFileExcel size={30} className="text-green-500" />
+                                        </a>
+                                    </div>
+                                    {/* Descripción con tamaño uniforme */}
+                                    <p
+                                        className="text-sm max-w-[150px] truncate"
+                                        title={file.description} // Mostrar el texto completo al pasar el cursor
                                     >
-                                        <FaFileExcel className="text-green-500" size={30}
-                                        />
-                                    </a>
-
-
-
+                                        {file.description}
+                                    </p>
                                 </div>
-                                <div key={i} className="w-full justify-center items-center">
-                                    {file.description}
-                                </div>
-                            </div>
-                        )
-                    }
-                </div>
-
+                            ))}
+                        </div>
+                    </div>
+                );                
             },
-            title: "Archivos Publicados"
+            title: "Archivos Publicados",
         },
-    ]
+    ];    
 
     
     return (
