@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { LogoPortal } from '../LogoPortal'
+import { useEffect, useState } from 'react'
+import SessionService from '../../../infrastructure/Services/SessionService'
 
 interface HeaderPagesProps {
   name: string
@@ -8,6 +10,23 @@ interface HeaderPagesProps {
 }
 
 const HeaderPages = (props: HeaderPagesProps) => {
+  const [ userName, setUserName ] = useState<string>("")
+  const [ userRole, setUserRole ] = useState<string>("")
+  useEffect(() => {
+    const userSession = SessionService.getUserData();
+        if (userSession) {
+            const group = userSession.group;
+            if (group && group.length > 0) {
+                setUserRole(group[0].name); // Guardar el nombre del primer rol en el estado
+            } else {
+                console.warn("El usuario no tiene grupos asignados");
+            }
+            const userFullName = userSession.first_name + " " + userSession.last_name
+            setUserName(userFullName)
+        } else {
+            console.error("No se encontró el usuario");
+        }
+  }, [])
   return (
     <header className="fixed top-0 z-50 w-full border-b border-gray-300 antialiased">
       <nav className="bg-gray-200 px-4 py-2.5 lg:px-6">
@@ -16,6 +35,12 @@ const HeaderPages = (props: HeaderPagesProps) => {
             <LogoPortal className="ml-10 max-w-32 xl:ml-0" />
           </a>
           <div className="flex items-center lg:order-2">
+            <div className="border-r border-gray-500">
+              <span className='text-center text-xs text-gray-800 font-light mr-3'>
+                {userName} <br />
+                <span>{userRole}</span>
+              </span>
+            </div>
             <Link to="/admin/perfil" className="group relative inline-block cursor-pointer rounded-t-md p-2 text-lg transition hover:bg-primary/20 w-[110px] text-center">
               <span className="text-pretty text-base font-medium">Ver Perfil</span>
               <span className="absolute -bottom-1 left-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6"></span>
