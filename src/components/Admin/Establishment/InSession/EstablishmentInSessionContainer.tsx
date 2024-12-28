@@ -104,6 +104,9 @@ const EstablishmentInSessionContainer = ({
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
+        data.email_accesstoinformation = data.email_accesstoinformation || "email@example.com";
+        data.highest_authority = "NINGUNO"
+        data.highest_committe = "NINGUNO" 
         data.extra_numerals = selectedExtraNumeral.join(',')
         if (data.abbreviation === "" ||
             data.email_authority === "" || data.first_name_authority === "" ||
