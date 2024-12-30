@@ -22,8 +22,15 @@ export const GenerateAnualReportContainer = (props: Props) => {
     const [url, setUrl] = useState<string | null>(null);
     const [isLoaingWorker, setIsLoadingWorker] = useState<boolean>(false);
     const _isLoaingWorker = useSelector((state: RootState) => state.anualReport.isLoading);
+    const _task_id = useSelector((state: RootState) => state.anualReport.task_id);
+    const dispatch = useDispatch();
 
-    const dispatch =useDispatch();
+
+    useEffect(() => {
+        if(_task_id) {
+            props.usecase.startWorker(_task_id);
+        }
+    }, [_task_id]);
 
 
     useEffect(() => {
@@ -48,7 +55,7 @@ export const GenerateAnualReportContainer = (props: Props) => {
 
 
         setIsLoading(true);
-        await props.usecase.generateAnualReport(year).then(res => {
+         props.usecase.generateAnualReport(year).then(res => {
             dispatch(setAnualReports(""));
             setIsLoading(false);
             if (res.task_status == "PENDING") {

@@ -1,7 +1,6 @@
 import { TaskEndAnualReportDto } from "../../../infrastructure/Api/AnualReport/interface";
 import { AnualReportService } from "../../../infrastructure/Services/AnualReportService";
-import SessionService from "../../../infrastructure/Services/SessionService";
-import { setAnualReports, setIsLoading,  } from "../../../infrastructure/Slice/AnualReportSlice";
+import { setAnualReports, setIsLoading, setTaskId,  } from "../../../infrastructure/Slice/AnualReportSlice";
 import { store } from "../../../infrastructure/Store";
 import { AnualReportEntity } from "../../entities/AnualReportEntity";
 
@@ -47,12 +46,11 @@ export class AnualReportUseCase {
 
   public async generateAnualReport(year: number) {
     const res = await this.service.generateAnualReport(year);
-    SessionService.setTaskId(res.task_id);
-    this.startWorker(res.task_id);
+    store.dispatch(setTaskId(res.task_id));
     return res;
   }
 
-  private startWorker(task_id: string) {
+  public startWorker(task_id: string) {
     if (this.worker) {
       this.worker.terminate();
     }
