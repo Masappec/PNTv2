@@ -4,6 +4,8 @@ import {
   AnualReportCreateDto,
   AnualReportResponseDto,
   SolicityStatsAnualReportDto,
+  TaskAnualReportDto,
+  TaskEndAnualReportDto,
 } from "./interface";
 import { TransparencyActivePublicResponse } from "../TansparencyActive/interface";
 import { TransparencyFocusListDto } from "../TransparencyFocus/interface";
@@ -147,4 +149,52 @@ export class AnualReportApi {
       }
     }
   }
+
+
+  public async generateAnualReport(year: number) {
+    try {
+      const res = await this.api.get<TaskAnualReportDto>(
+        TRANSPARENCY_PATH + "/anual-report/generate",
+        {
+          params: {
+            year,
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        const error = err.response?.data;
+        if (error) {
+          throw new Error(error.message);
+        }
+        throw new Error(err.message);
+      } else {
+        throw new Error("Ocurrió un error inesperado");
+      }
+    }
+  }
+
+
+  public async getTaskEndAnualReport(task_id: string) {
+    try {
+      const res = await this.api.get<TaskEndAnualReportDto>(
+        TRANSPARENCY_PATH + "/task/status/"+task_id,
+        
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err)
+      if (err instanceof AxiosError) {
+        const error = err.response?.data;
+        if (error) {
+          throw new Error(error.message);
+        }
+        throw new Error(err.message);
+      } else {
+        throw new Error("Ocurrió un error inesperado");
+      }
+    }
+  }
+
 }

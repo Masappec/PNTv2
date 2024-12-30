@@ -10,6 +10,11 @@ class SessionService {
   static USER_LOCKED = "locked";
   static ESTABLISHMENT_DATA_KEY = "establishment_data";
   static PERSON_DATA_KEY = "person_data";
+
+  static TASK_ID = "task_id";
+  static URL_DOWNLOAD_REPORT = "url_download_report";
+  static DOWLOADED_REPORT = "downloaded_report";
+  
   static setAccessToken(token: string) {
     localStorage.setItem(this.ACCESS_TOKEN_KEY, token);
   }
@@ -82,6 +87,10 @@ class SessionService {
     localStorage.removeItem(this.USER_DATA_KEY);
     localStorage.removeItem(this.PERSON_DATA_KEY);
     localStorage.removeItem(this.ESTABLISHMENT_DATA_KEY);
+    localStorage.removeItem(this.TASK_ID);
+    localStorage.removeItem(this.URL_DOWNLOAD_REPORT);
+    localStorage.removeItem(this.DOWLOADED_REPORT);
+
   }
 
   static isLogged() {
@@ -97,6 +106,46 @@ class SessionService {
       localStorage.getItem("locked") === USER_LOCKED + USER_PASSWORD_LOCKED
     );
   }
+
+  static setTaskId(taskId: string) {
+    localStorage.setItem(this.TASK_ID, taskId);
+  }
+
+  static getTaskId() {
+    return localStorage.getItem(this.TASK_ID);
+  }
+
+  static removeTaskId() {
+    localStorage.removeItem(this.TASK_ID);
+  }
+
+  static setUrlDownloadReport(url: string) {
+    localStorage.setItem(this.URL_DOWNLOAD_REPORT, url);
+  }
+
+  static getUrlDownloadReport() {
+    return localStorage.getItem(this.URL_DOWNLOAD_REPORT);
+  }
+
+
+  static removeUrlDownloadReport() {
+    localStorage.removeItem(this.URL_DOWNLOAD_REPORT);
+  }
+
+  static setDownloadedReport() {
+    localStorage.setItem(this.DOWLOADED_REPORT, "true");
+  }
+
+  static getDownloadedReport() {
+    return localStorage.getItem(this.DOWLOADED_REPORT);
+  }
+
+  static removeDownloadedReport() {
+    localStorage.removeItem(this.DOWLOADED_REPORT);
+  }
+
+  
+
 
 }
 

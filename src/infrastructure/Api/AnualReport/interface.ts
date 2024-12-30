@@ -71,3 +71,22 @@ export interface SolicityStatsAnualReportDto {
   total_response_plus_15_days: number;
   total_response_to_10_days:number
 }
+
+
+export interface TaskAnualReportDto {
+
+  task_id: string;
+  task_status: string;
+}
+
+export interface TaskEndAnualReportDto {
+
+  data:{
+    task_status: string;
+    task_id: string;
+    results: {
+      path: string;
+      url: string;
+    }
+  }
+}

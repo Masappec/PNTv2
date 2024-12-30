@@ -47,6 +47,7 @@ import DetailEntity from "../interfaces/web/Dashboard/DetailEntityComplianceV2";
 import VerPerfil from "../interfaces/web/Transparency/Perfil";
 import AllPublications from "../interfaces/web/Transparency/AllPublications";
 import AnnualReport from "../interfaces/web/Admin/AnnualReport";
+import { GenerateAnualReport } from "../interfaces/web/Admin/GenerateAnualReport";
 
 
 export interface MenuItem {
@@ -471,6 +472,16 @@ const menu = [
     visible_for_superadmin: false
 
   },
+
+  {
+    name: 'Generar Reporte Anual',
+    path: '/admin/annualreports/generate',
+    visible: true,
+    icon: <GrCompliance size={25} className="text-slate-500" />,
+    permission_required: 'view_transparencyactive',
+    element: <GenerateAnualReport />,
+    visible_for_superadmin:true
+  }
 ]
 
 export default menu

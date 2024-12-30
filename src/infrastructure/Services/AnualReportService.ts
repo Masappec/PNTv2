@@ -25,7 +25,7 @@ export class AnualReportService {
     const res = await this.anualReportApi.getTAResume(
       establisment_id,
       isDefault,
-      page, 
+      page,
       limit
     );
     return res;
@@ -45,5 +45,12 @@ export class AnualReportService {
     limit?: number
   ) {
     return await this.anualReportApi.getTCResume(establishment_id, page, limit);
+  }
+
+  public async generateAnualReport(year: number) {
+    return await this.anualReportApi.generateAnualReport(year);
+  }
+  public async getTaskEndAnualReport(task_id: string) {
+    return await this.anualReportApi.getTaskEndAnualReport(task_id);
   }
 }
