@@ -91,7 +91,7 @@ const EstablishmentInSessionContainer = ({
         usecase.getByUserSession().then((res) => {
             const es = res
             numeralUsecase.getNumeralByEstablishment(es.id || 0).then((res) => {
-                const res_ = res.filter((item) => !item.isDefault && !item.isSelected).map((item) => item.id)
+                const res_ = res.filter((item) => !item.isDefault).map((item) => item.id)
                 setData({ ...es, extra_numerals: res_.join(',') })
             }).catch((err) => {
                 console.log(err)
