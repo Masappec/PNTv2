@@ -77,16 +77,20 @@ export interface TaskAnualReportDto {
 
   task_id: string;
   task_status: string;
+  
 }
 
 export interface TaskEndAnualReportDto {
-
-  data:{
+  data: {
     task_status: string;
     task_id: string;
     results: {
       path: string;
       url: string;
-    }
-  }
+    };
+    meta?: {
+      progress?: number;
+      message?: number;
+    };
+  };
 }

@@ -20,10 +20,26 @@ export const GenerateAnualReportContainer = (props: Props) => {
     const [isGenerated, setIsGenerated] = useState<boolean>(false);
     const _url_download_report = useSelector((state: RootState) => state.anualReport);
     const [url, setUrl] = useState<string | null>(null);
+    const [progress, setProgress] = useState<number>(0);
+    const [message, setMessage] = useState<string>("");
     const [isLoaingWorker, setIsLoadingWorker] = useState<boolean>(false);
     const _isLoaingWorker = useSelector((state: RootState) => state.anualReport.isLoading);
     const _task_id = useSelector((state: RootState) => state.anualReport.task_id);
+    const _progress = useSelector((state: RootState) => state.anualReport.progress);
+    const _message = useSelector((state: RootState) => state.anualReport.message);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (_progress) {
+            setProgress(_progress);
+        }
+    }, [_progress]);
+
+    useEffect(() => {
+        if (_message) {
+            setMessage(_message);
+        }
+    }, [_message]);
 
 
     useEffect(() => {
@@ -59,7 +75,7 @@ export const GenerateAnualReportContainer = (props: Props) => {
             dispatch(setAnualReports(""));
             setIsLoading(false);
             if (res.task_status == "PENDING") {
-                setSuccess("El Reporte Anual se está generando, ya puedes salir de la página. te avisaremos cuando esté listo.");
+                setSuccess("El Reporte Anual se está generando, Podrás descargarlo cuando esté listo.");
             } else if (res.task_status == "SUCCESS") {
                 setSuccess("El Reporte Anual se ha generado correctamente.");
             } else if (res.task_status == "FAILURE") {
@@ -84,7 +100,6 @@ export const GenerateAnualReportContainer = (props: Props) => {
         a.download = `ReporteAnual-${selectedYear}.xlsx`;
         a.click();
         a.remove();
-        dispatch(setAnualReports(""));
         SessionService.removeDownloadedReport();
 
 
@@ -103,6 +118,8 @@ export const GenerateAnualReportContainer = (props: Props) => {
             setSuccess={setSuccess}
             onDownloadReport={downloadReport}
             isGenerated={isGenerated}
+            progress={progress}
+            message={message}
             isLoadingWorker={isLoaingWorker}
         />
     )

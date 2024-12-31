@@ -1,4 +1,4 @@
-import { Badge, Dropdown } from "flowbite-react";
+import { Badge, Dropdown} from "flowbite-react";
 import { FiCalendar } from "react-icons/fi";
 import { CalendarYear } from "../../Common/CalendarYear";
 import Alert from "../../Common/Alert";
@@ -15,6 +15,8 @@ interface GenerateAnualReportPresenterProps {
     onDownloadReport: () => void;
     isGenerated: boolean;
     isLoadingWorker: boolean;
+    progress: number;
+    message: string;
 }
 
 export const GenerateAnualReportPresenter = (props: GenerateAnualReportPresenterProps) => {
@@ -52,10 +54,24 @@ export const GenerateAnualReportPresenter = (props: GenerateAnualReportPresenter
                     </button>
                     {
                         props.isLoadingWorker &&
-                        <div className="animate-pulse text-primary">
+                        <>
+                             {/*crea una barra de progreso*/}
+                            <div className="w-full bg-gray-200 rounded-full h-2.5 ">
+                                <div className="bg-primary-600 h-2.5 rounded-full animate-pulse" style={{ width: `${props.progress}%` }}></div>
+                            </div>
+
+                            {props.progress > 0 && <div className="text-primary text-left animate-pulse">{props.progress}%</div>}
+                            {props.message && <div className="text-primary animate-pulse">{props.message}</div>}
+                                
+                        <div className=" text-primary">
+                            
                             Estamos generando el reporte anual, 
-                            te avisaremos cuando esté listo...
+                            podrás descargarlo desde esta página cuando esté listo.
+                            Recuerda que puedes salir de la página.
+
                         </div>
+                        </>
+
                     }
                     {
                         props.isGenerated &&

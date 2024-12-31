@@ -25,7 +25,7 @@ self.onmessage = async (event) => {
         task.data.task_status !== "SUCCESS" &&
         task.data.task_status !== "FAILURE"
       ) {
-        setTimeout(checkTaskStatus, 30000);
+        setTimeout(checkTaskStatus, 10000);
       }
     }).catch((err) => {
       console.log(err);

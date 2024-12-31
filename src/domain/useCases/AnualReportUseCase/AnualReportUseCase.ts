@@ -1,6 +1,6 @@
 import { TaskEndAnualReportDto } from "../../../infrastructure/Api/AnualReport/interface";
 import { AnualReportService } from "../../../infrastructure/Services/AnualReportService";
-import { setAnualReports, setIsLoading, setTaskId,  } from "../../../infrastructure/Slice/AnualReportSlice";
+import { setAnualReports, setIsLoading, setMessage, setProgress, setTaskId,  } from "../../../infrastructure/Slice/AnualReportSlice";
 import { store } from "../../../infrastructure/Store";
 import { AnualReportEntity } from "../../entities/AnualReportEntity";
 
@@ -59,12 +59,16 @@ export class AnualReportUseCase {
     this.worker.postMessage({ task_id });
     store.dispatch(setIsLoading(true));
     this.worker.onmessage = (event: MessageEvent<TaskEndAnualReportDto>) => {
-      console.log(event.data);
       const  data  = event.data;
+      if(data.data.task_status === "PROGRESS") {
+        store.dispatch(setIsLoading(true));
+        store.dispatch(setProgress(data.data.meta?.progress || 0));
+        store.dispatch(setMessage(data.data.meta?.message || ""));
+      }
       if (data.data.task_status === "SUCCESS" || data.data.task_status === "FAILURE") {
         const url = data.data.results.url;
         // Import the store and dispatch the action
-       
+        store.dispatch(setTaskId(""));
         store.dispatch(setAnualReports(url));
         store.dispatch(setIsLoading(false));
         this.stopWorker();
