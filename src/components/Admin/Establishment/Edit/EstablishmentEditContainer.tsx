@@ -91,17 +91,41 @@ const EstablishmentEditContainer = ({
 
     useEffect(() => {
         usecase.detail(id || "").then((res) => {
-            const es = res
-            numeralUsecase.getNumeralByEstablishment(parseInt(id || "0")).then((res) => {
-                const res_ = res.filter((item) => !item.isDefault).map((item) => item.id)
-                setData({ ...es, extra_numerals: res_.join(',') })
+            const es = res;
+            numeralUsecase.getNumeralByEstablishment(parseInt(id || "0")).then((resNumeral) => {
+                // Filtrar elementos que no son isDefault
+                const nonDefaultItems = resNumeral.filter((item) => !item.isDefault);
+                
+                // Filtrar elementos isDefault
+                const defaultItems = resNumeral.filter((item) => item.isDefault);
+                
+                // Manejar cambios en elementos no isDefault
+                const unchangedNonDefault = nonDefaultItems
+                    .filter((item) => item.isSelected)
+                    .map((item) => item.id);
+                console.log(unchangedNonDefault)
+                
+                const changedNonDefault = nonDefaultItems
+                    .filter((item) => !item.isSelected)
+                    .map((item) => item.id);
+                
+                // Manejar cambios en elementos isDefault
+                const unchangedDefault = defaultItems
+                    .filter((item) => !item.isSelected)
+                    .map((item) => item.id);
+                
+                // Combinar los IDs que deben mantenerse
+                const extraNumerals = [...changedNonDefault, ...unchangedDefault].join(',');
+    
+                // Actualizar el estado
+                setData({ ...es, extra_numerals: extraNumerals });
             }).catch((err) => {
-                console.log(err)
-            })
+                console.log(err);
+            });
         }).catch((err) => {
-            setError(err.message)
-        })
-    }, [])
+            setError(err.message);
+        });
+    }, []);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
