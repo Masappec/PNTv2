@@ -50,7 +50,7 @@ interface Props {
 
 
 
-const meses = [
+/*const meses = [
   "",
   "Enero",
   "Febrero",
@@ -64,7 +64,7 @@ const meses = [
   "Octubre",
   "Noviembre",
   "Diciembre"
-];
+];*/
 const ActiveCreatePresenter = (props: Props) => {
 
 
@@ -85,7 +85,7 @@ const ActiveCreatePresenter = (props: Props) => {
   return (
     <>
       <h2 className='mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary'>
-        {props.type} | {meses[props.month]} {props.year}
+        {props.type} |  {/*meses[props.month]} {props.year*/}
 
       </h2>
       <section className='mb-8 flex flex-col items-center justify-center gap-8'>
