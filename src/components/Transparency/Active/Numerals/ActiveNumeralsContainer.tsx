@@ -22,7 +22,7 @@ const ActiveNumeralsContainer = (props: IProps) => {
 
 
     useEffect(() => {
-        props.usecase.getNumeralByUserInSession(new DatePnt().getYear(), month).then(_numerals => {
+        props.usecase.getNumeralByUserInSession(new DatePnt().getYearToUpload(), month).then(_numerals => {
             setNumerals(_numerals.sort((a, b) => parseInt(a.name.replace("Numeral", "")) - parseInt(b.name.replace("Numeral", ""))))
             setLoading(false)
         }).catch((e) => {
@@ -41,7 +41,7 @@ const ActiveNumeralsContainer = (props: IProps) => {
                     numeral: numeral,
                     childs: numerals.filter(x => x.parent == numeral.id),
                     month:month,
-                    year: new Date().getFullYear()
+                    year: new DatePnt().getYearToUpload()
                 } as INeedProps
             })
         } else {
@@ -50,7 +50,7 @@ const ActiveNumeralsContainer = (props: IProps) => {
                     numeral: numeral,
                     childs: numerals.filter(x => x.parent == numeral.id),
                     month: month,
-                    year: new Date().getFullYear()
+                    year: new DatePnt().getYearToUpload()
                 } as INeedProps
             })
 

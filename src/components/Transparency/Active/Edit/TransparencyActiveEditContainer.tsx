@@ -41,7 +41,7 @@ const ActiveEditContainer = (props: Props) => {
 
     const state = location.state as INeedProps;
 
-    const [year, setYear] = useState(new DatePnt().getYear())
+    const [year, setYear] = useState(new DatePnt().getYearToUpload())
     const [month, setMonth] = useState(new DatePnt().getMonthToUpload())
 
     const [numeral, setNumeral] = useState<NumeralEntity>();
