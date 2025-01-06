@@ -459,15 +459,12 @@ const menu = [
     visible_for_superadmin: false
 
   },
-
-  
-
   {
-    name: " Reportes anuales",
+    name: "Reportes anuales",
     path: "/admin/annualreports",
     visible: true,
     icon: <GrCompliance size={25} className="text-slate-500" />,
-    permission_required: "view_transparencyactive",
+    permission_required: "approve_numeral_ta",
     element: <AnnualReport />,
     visible_for_superadmin: false
 
@@ -478,7 +475,7 @@ const menu = [
     path: '/admin/annualreports/generate',
     visible: true,
     icon: <GrCompliance size={25} className="text-slate-500" />,
-    permission_required: 'view_transparencyactive',
+    permission_required: 'view_establishment',
     element: <GenerateAnualReport />,
     visible_for_superadmin:true
   }
