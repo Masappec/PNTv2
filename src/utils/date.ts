@@ -12,13 +12,14 @@ export class DatePnt extends Date{
 
     getMonthToUpload(){
         const mesApublicar = this.getMonthOneBased() -1 ;
+        
         if(mesApublicar==0){
-            return 1;
+            return 12;
         }
         return mesApublicar;
     }
 
-    getYear(){
+    getYearToUpload(){
         const mesApublicar = this.getMonthOneBased() - 1;
         if (mesApublicar == 0) {
             return super.getFullYear()-1;

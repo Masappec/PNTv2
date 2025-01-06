@@ -19,7 +19,7 @@ const AllTAContainer = (props: Props) => {
     const [isSearching, SetSearching] = useState<boolean>(false)
 
 
-    const [year, setYear] = useState<number>(new Date().getFullYear())
+    const [year, setYear] = useState<number>(new DatePnt().getYearToUpload())
     const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased())
 
     const [publications, setPublications] = useState<TransparencyActive[]>([])

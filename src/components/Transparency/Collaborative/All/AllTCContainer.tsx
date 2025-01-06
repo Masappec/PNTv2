@@ -19,8 +19,8 @@ const AllTCContainer = (props: Props) => {
     const [isSearching, SetSearching] = useState<boolean>(false)
 
 
-    const [year, setYear] = useState<number>(new Date().getFullYear())
-    const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased())
+    const [year, setYear] = useState<number>(new DatePnt().getYearToUpload())
+    const [month, setMonth] = useState<number>(new DatePnt().getMonthToUpload())
 
     const [publications, setPublications] = useState<TransparencyFocusEntity[]>([])
     const [error, setError] = useState<string>("")

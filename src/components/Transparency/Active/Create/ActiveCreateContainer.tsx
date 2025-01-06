@@ -43,8 +43,8 @@ const ActiveCreateContainer = (props: IProps) => {
 
   const state = location.state as INeedProps;
 
-  const [month, setMonth] = useState(new DatePnt().getMonthOneBased()-1)
-  const [year, setYear] = useState(new DatePnt().getYear())
+  const [month, setMonth] = useState(new DatePnt().getMonthOneBased())
+  const [year, setYear] = useState(new DatePnt().getYearToUpload())
 
   const [numeral, setNumeral] = useState<NumeralEntity>();
   const [detail, setDetail] = useState<NumeralDetail | null>(null)
