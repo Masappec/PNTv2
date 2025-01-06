@@ -15,8 +15,8 @@ const AllPublicationsContainer = (props:Props)=>{
 
 
 
-    const [year,setYear] = useState<number>(new Date().getFullYear())
-    const [month, setMonth] = useState<number>(new DatePnt().getMonthOneBased())
+    const [year, setYear] = useState<number>(new DatePnt().getYearToUpload())
+    const [month, setMonth] = useState<number>(new DatePnt().getMonthToUpload())
 
     const [publications, setPublications] = useState<TransparencyActive[]>([])
     const [error,setError] = useState<string>("")
