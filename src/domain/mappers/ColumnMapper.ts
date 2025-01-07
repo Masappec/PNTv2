@@ -5,8 +5,9 @@ import ColumnTemplate from "../entities/ColumTemplate";
 
 
 export class ColumnMapper {
-  static establishmentName: string = SessionService.getEstablishmentData()?.name||"";
+
   static toDomain(column: ColumnTemplateDto): ColumnTemplate {
+    const establishmentName = SessionService.getEstablishmentData()?.name||"";
     return {
       code: column.code,
       format: column.format,
@@ -14,7 +15,7 @@ export class ColumnMapper {
       name: column.name,
       regex: column.regex,
       type: column.type,
-      value: column.value.replace("{INSTITUCION}", ColumnMapper.establishmentName),
+      value: column.value.replace("{INSTITUCION}", establishmentName),
     };
   }
 
