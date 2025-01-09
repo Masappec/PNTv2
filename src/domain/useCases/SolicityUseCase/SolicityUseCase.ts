@@ -123,11 +123,10 @@ class SolicityUseCase {
 
 
   avaliableToProrroga(user: UserEntity, solicity: Solicity) {
-    const user_citizen_id = parseInt(solicity.user_created);
-    const user_session = user.id
+    const user_session = user.user_permissions?.find(x => x.codename === 'view_solicityresponse')
     if (solicity && user) {
       if (solicity.status == StatusSolicity.SEND.key) {
-        if (user_citizen_id !== user_session) {
+        if (user_session) {
           const expired_date = new Date(parseInt(solicity.expiry_date.substring(0,4)), parseInt(solicity.expiry_date.substring(5,7)) - 1, parseInt(solicity.expiry_date.substring(8,10)))
           const now = new Date()     
           if (now <= expired_date
@@ -172,8 +171,9 @@ class SolicityUseCase {
     return false
   }
 
-  getTextChangeStatus(solicity: Solicity, user_id: number) {
-    if (user_id != solicity.userCreated) {
+  getTextChangeStatus(solicity: Solicity, user: UserEntity) {
+    const user_session = user.user_permissions?.find(x => x.codename === 'view_solicityresponse')
+    if (user_session) {
       if (solicity.status == StatusSolicity.SEND.key) {
         return 'Activar Prórroga'
       }
