@@ -79,6 +79,7 @@ const SolicityResponseContainer = (props: Props) => {
     const [isAvaliableToInsistency, setIsAvaliableToInsistency] = useState<boolean>(false)
     const [isAvaliableToResponse, setIsAvaliableToResponse] = useState<boolean>(false)
     const [isAvaliableToComment,] = useState<boolean>(false)
+    const [isAvaliableToProrroga, setIsAvaliableToProrroga] = useState<boolean>(false)
     const [textDescription, setTextDescription] = useState<string>("");
     const [files, SetFiles] = useState<{
         file: File | string | null,
@@ -568,6 +569,7 @@ const SolicityResponseContainer = (props: Props) => {
                 new_status = StatusSolicity.INSISTENCY_PERIOD.key
             } else if (solicityToResponse.status == StatusSolicity.NO_RESPONSED.key) {
                 new_status = StatusSolicity.INSISTENCY_PERIOD.key
+                setIsAvaliableToInsistency(true)
             } else if (solicityToResponse.status == StatusSolicity.INSISTENCY_RESPONSED.key) {
                 new_status = StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
             } else if (solicityToResponse.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key) {
@@ -576,6 +578,7 @@ const SolicityResponseContainer = (props: Props) => {
         } else {
             if (solicityToResponse.status == StatusSolicity.SEND.key) {
                 new_status = StatusSolicity.PRORROGA.key
+                setIsAvaliableToProrroga(true)
             }
         }
         if (new_status == '') {
@@ -590,9 +593,8 @@ const SolicityResponseContainer = (props: Props) => {
         SetSolicity(res)
         setSolicityToResponse(res)
 
-        setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))
-        setIsAvaliableToInsistency(true)
-
+        setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))      
+        
     }
 
 
@@ -613,7 +615,7 @@ const SolicityResponseContainer = (props: Props) => {
         SetSolicity(res)
         setSolicityToResponse(res)
         setIsAvaliableToInsistency(false)
-
+        setIsAvaliableToProrroga(false)
         
     }
 
@@ -684,6 +686,7 @@ const SolicityResponseContainer = (props: Props) => {
                     isLoadingSend={loading}
                     attachs={attachs}
                     isAvaliableToInsistency={isAvaliableToInsistency}
+                    isAvaliableToProrroga={isAvaliableToProrroga}
                     timeline={timeline}
                     isAvaliableToComment={isAvaliableToComment}
                     ChangeStatus={() => { changeStatus() }}
