@@ -2,6 +2,7 @@ import { TaskEndAnualReportDto } from "../../../infrastructure/Api/AnualReport/i
 import { AnualReportService } from "../../../infrastructure/Services/AnualReportService";
 import { setAnualReports, setIsLoading, setMessage, setProgress, setTaskId,  } from "../../../infrastructure/Slice/AnualReportSlice";
 import { store } from "../../../infrastructure/Store";
+import { DatePnt } from "../../../utils/date";
 import { AnualReportEntity } from "../../entities/AnualReportEntity";
 
 export class AnualReportUseCase {
@@ -10,6 +11,7 @@ export class AnualReportUseCase {
   constructor(private readonly service: AnualReportService) {}
 
   async createAnualReport(data: AnualReportEntity) {
+    data.year = new DatePnt().getYearToUpload();
     const response = await this.service.createAnualReport(data);
     return response;
   }

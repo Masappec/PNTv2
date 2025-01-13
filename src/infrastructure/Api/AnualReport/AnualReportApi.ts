@@ -36,7 +36,7 @@ export class AnualReportApi {
 
   public async getSolicityStats(establisment_id: number) {
     try {
-      const res = await this.api.get<SolicityStatsAnualReportDto>(
+      const res = await this.api.get<SolicityStatsAnualReportDto[]>(
         TRANSPARENCY_PATH + "/anual-report/solicity/stats",
         {
           params: {

@@ -32,6 +32,7 @@ export interface AnualReportCreateDto {
   number_of_secret: number;
   number_of_secretism: number;
   information_classified: IndexInformationClassified[];
+  solicity_infor_anual_report: SolicityStatsAnualReportDto[];
   have_quality_problems: boolean;
   total_quality_problems: number;
   description_quality_problems: string;
@@ -51,6 +52,29 @@ export interface AnualReportCreateDto {
   total_activities: number;
   description_activities: string;
 }
+/*    month = models.IntegerField()
+    total = models.IntegerField()
+    total_response_to_10_days = models.IntegerField()
+    total_reponse_to_11_days = models.IntegerField()
+    total_response_plus_15_days = models.IntegerField()
+    total_no_response = models.IntegerField()
+    percent_response_to_10_days = models.DecimalField(max_digits=5, decimal_places=2)
+    percent_reponse_to_11_days = models.DecimalField(max_digits=5, decimal_places=2)
+    percent_response_plus_15_days = models.DecimalField(max_digits=5, decimal_places=2)
+    percent_no_response = models.DecimalField(max_digits=5, decimal_places=2)*/
+export interface SolicityStatsAnualReportDto {
+  month: number;
+  total: number;
+  total_response_to_10_days: number;
+  total_reponse_to_11_days: number;
+  total_response_plus_15_days: number;
+  total_no_response: number;
+  percent_response_to_10_days: number;
+  percent_reponse_to_11_days: number;
+  percent_response_plus_15_days: number;
+  percent_no_response: number;
+}
+
 
 export interface AnualReportResponseDto extends AnualReportCreateDto {
     id: number;
@@ -61,6 +85,7 @@ export interface AnualReportResponseDto extends AnualReportCreateDto {
 
 
 export interface SolicityStatsAnualReportDto {
+  month: number;
   percent_no_response: number;
   percent_reponse_to_11_days: number;
   percent_response_plus_15_days: number;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnualReportUseCase } from "../../../domain/useCases/AnualReportUseCase/AnualReportUseCase"
 import AnnualReportPresenter from "./AnnualReportPresenter"
-import { AnualReportEntity, IndexInformationClassifiedEntity } from "../../../domain/entities/AnualReportEntity";
+import { AnualReportEntity, IndexInformationClassifiedEntity, SolicityStatsAnualReportEntity } from "../../../domain/entities/AnualReportEntity";
 import SessionService from "../../../infrastructure/Services/SessionService";
 import EstablishmentUseCase from "../../../domain/useCases/Establishment/EstablishmentUseCase";
 import EstablishmentEntity from "../../../domain/entities/Establishment";
@@ -22,21 +22,13 @@ const AnnualReportContainer = (props: Props) => {
     const [form, setForm] = useState<AnualReportEntity>(AnualReportEntity.buildVoid())
     const [table, setTable] = useState<IndexInformationClassifiedEntity[]>([])
 
-    const [solicityStats, setSolicityStats] = useState<SolicityStatsAnualReportDto>({
-        percent_no_response:0,
-        percent_reponse_to_11_days:0,
-        percent_response_plus_15_days:0,
-        percent_response_to_10_days:0,
-        total:0,
-        total_no_response:0,
-        total_reponse_to_11_days:0,
-        total_response_plus_15_days:0,
-        total_response_to_10_days:0
-    })
+    const [solicityStats, setSolicityStats] = useState<SolicityStatsAnualReportDto[]>([])
 
     const [error, setError] = useState<string>("")
     const [success, setSuccess] = useState<string>("")
 
+
+    const [editedMeses, setEditedMeses] = useState<number[]>([])
     const [establishment, setEstablishment] = useState<EstablishmentEntity>(SessionService.getEstablishmentData())
 
     const [paginableTA, setPaginableTA] = useState<Pagination<TransparencyActivePublicResponse>>({
@@ -89,6 +81,10 @@ const AnnualReportContainer = (props: Props) => {
     useEffect(()=>{
         props.usecase.getSolicityStats(establishment.id||0).then(res=>{
             setSolicityStats(res)
+            setForm({
+                ...form,
+                solicity_infor_anual_report: res as SolicityStatsAnualReportEntity[]
+            })
         })
         props.usecase.getTAResume(establishment.id || 0, false, paginableTAE.current ||0,paginableTAE.limit).then(res=>{
             setPaginableTAE(res)
@@ -205,6 +201,35 @@ const AnnualReportContainer = (props: Props) => {
     }
 
 
+    const onEditRow = (mes:number) => {
+        if (editedMeses.includes(mes)) {
+            setEditedMeses(editedMeses.filter(x => x != mes))
+        } else {
+            setEditedMeses([...editedMeses, mes])
+        }
+    }
+
+    const isEdited = (mes:number) => {
+        return editedMeses.includes(mes)
+    }
+
+    const onChangeValue = (mes:number, name: keyof SolicityStatsAnualReportEntity, value: string) => {
+        const newSolicityStats = solicityStats.map((item) => {
+            if (item.month == mes) {
+                return {
+                    ...item,
+                    [name]: value
+                }
+            }
+            return item
+        })
+        setSolicityStats(newSolicityStats)
+        setForm({
+            ...form,
+            solicity_infor_anual_report: newSolicityStats
+        })
+    }
+
 
     return (
         <AnnualReportPresenter
@@ -230,6 +255,10 @@ const AnnualReportContainer = (props: Props) => {
             success={success}
             setError={setError}
             setSuccess={setSuccess}
+            form={form}
+            isEdit={isEdited}
+            onEdit={onEditRow}
+            onChangeValue={onChangeValue}
 
         />
 

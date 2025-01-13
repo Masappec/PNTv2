@@ -7,7 +7,7 @@ import { RootState } from "../../../infrastructure/Store";
 import { URL_API } from "../../../utils/constans";
 import { TRANSPARENCY_PATH } from "../../../infrastructure/Api";
 import { useDispatch } from "react-redux";
-import { setAnualReports } from "../../../infrastructure/Slice/AnualReportSlice";
+import { setAnualReports, setProgress } from "../../../infrastructure/Slice/AnualReportSlice";
 
 interface Props {
     usecase: AnualReportUseCase;
@@ -20,7 +20,7 @@ export const GenerateAnualReportContainer = (props: Props) => {
     const [isGenerated, setIsGenerated] = useState<boolean>(false);
     const _url_download_report = useSelector((state: RootState) => state.anualReport);
     const [url, setUrl] = useState<string | null>(null);
-    const [progress, setProgress] = useState<number>(0);
+    const [progress, _setProgress] = useState<number>(0);
     const [message, setMessage] = useState<string>("");
     const [isLoaingWorker, setIsLoadingWorker] = useState<boolean>(false);
     const _isLoaingWorker = useSelector((state: RootState) => state.anualReport.isLoading);
@@ -31,7 +31,7 @@ export const GenerateAnualReportContainer = (props: Props) => {
 
     useEffect(() => {
         if (_progress) {
-            setProgress(_progress);
+            _setProgress(_progress);
         }
     }, [_progress]);
 
@@ -71,6 +71,7 @@ export const GenerateAnualReportContainer = (props: Props) => {
 
 
         setIsLoading(true);
+        dispatch(setProgress(0));
          props.usecase.generateAnualReport(year).then(res => {
             dispatch(setAnualReports(""));
             setIsLoading(false);
