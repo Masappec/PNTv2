@@ -14,6 +14,19 @@ export class IndexInformationClassifiedEntity{
     ){}
 }
 
+export interface SolicityStatsAnualReportEntity {
+    month: number;
+    total: number;
+    total_response_to_10_days: number;
+    total_reponse_to_11_days: number;
+    total_response_plus_15_days: number;
+    total_no_response: number;
+    percent_response_to_10_days: number;
+    percent_reponse_to_11_days: number;
+    percent_response_plus_15_days: number;
+    percent_no_response: number;
+}
+
 export class AnualReportEntity{
     constructor(
         public establishment_id: number,
@@ -53,6 +66,7 @@ export class AnualReportEntity{
         public  have_activities: boolean,
         public total_activities: number,
         public description_activities: string,
+        public solicity_infor_anual_report: SolicityStatsAnualReportEntity[] = []
     ){}
 
 
@@ -94,7 +108,8 @@ export class AnualReportEntity{
             data.description_programs,
             data.have_activities,
             data.total_activities,
-            data.description_activities
+            data.description_activities,
+            data.solicity_infor_anual_report
 
 
         );
@@ -138,7 +153,8 @@ export class AnualReportEntity{
           "",
           true,
           0,
-          ""
+          "",
+          []
         );
     }
 }
