@@ -48,23 +48,6 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
 
 
 
-    useEffect(() => {
-        props.usecase.getEstablishments().then(res => {
-            const result = res.results.map((item) => item.data)
-            const final: EstablishmentEntity[] = []
-            result.map((item) => {
-                item.map((_item) => {
-                    final.push(_item)
-                })
-            })
-            dispatch(setEstablishments(final))
-
-        }).catch(() => {
-            console.log("Error")
-        })
-
-    }, [])
-
 
     return (
         <main className='relative min-h-screen bg-gray-50'>
