@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import PublicDataApi from "../../../../../infrastructure/Api/PublicDataApi";
 import { IndicatorResponse } from "../../../../../infrastructure/Api/PublicDataApi/interface";
 
-
 interface Props {
     usecase: PublicDataApi,
     establishment_id: number,
@@ -33,7 +32,6 @@ const IndicatorsEstablishment = (props: Props) => {
     {/*const date = new Date();*/}
     {/*const monthName = date.toLocaleString('es-ES', { month: 'long' });*/}
     console.log(res.total_score)
-
     const [line, setLine] = useState<ApexOptions>({
         chart: {
             id: "bar",
@@ -229,7 +227,6 @@ const IndicatorsEstablishment = (props: Props) => {
     return (
         <>
         {/* Esto es un comentario de Roberto Esteves 
-
             <section className='my-16 flex flex-col gap-y-4 md:flex-row md:items-end' id="indicadores">
                 <h2 className='text-balance text-2xl font-normal leading-tight md:text-[40px]'>
                     Indicadores
@@ -271,8 +268,7 @@ const IndicatorsEstablishment = (props: Props) => {
                                     {props.establishment_name}
                                 </p>
                                 <p className="text-sm text-primary font-bold">
-                                    Cumplimiento LOTAIP | -- comentar esto {monthName} {new Date().getFullYear()
-                                
+                                    Cumplimiento LOTAIP | 
                                 </p>
                                 <p className="text-cyan-800 text-sm  font-bold">
                                     {res.total_score}/100
