@@ -96,9 +96,6 @@ const EstablishmentEditContainer = ({
                 // Filtrar elementos que no son isDefault
                 const nonDefaultItems = resNumeral.filter((item) => !item.isDefault);
                 
-                // Filtrar elementos isDefault
-                const defaultItems = resNumeral.filter((item) => item.isDefault);
-                
                 // Manejar cambios en elementos no isDefault
                 const unchangedNonDefault = nonDefaultItems
                     .filter((item) => item.isSelected)
@@ -109,13 +106,9 @@ const EstablishmentEditContainer = ({
                     .filter((item) => !item.isSelected)
                     .map((item) => item.id);
                 
-                // Manejar cambios en elementos isDefault
-                const unchangedDefault = defaultItems
-                    .filter((item) => !item.isSelected)
-                    .map((item) => item.id);
-                
                 // Combinar los IDs que deben mantenerse
-                const extraNumerals = [...changedNonDefault, ...unchangedDefault].join(',');
+                const extraNumerals = [...changedNonDefault, ...unchangedNonDefault].join(',');
+                console.log("extraNumerals", extraNumerals)
     
                 // Actualizar el estado
                 setData({ ...es, extra_numerals: extraNumerals });
