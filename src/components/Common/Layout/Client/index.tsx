@@ -6,7 +6,9 @@ import TransparencyUseCase from "../../../../domain/useCases/Transparency/Transp
 import { useEffect } from "react";
 import EstablishmentEntity from "../../../../domain/entities/Establishment";
 import { useDispatch } from "react-redux";
-import { setEstablishments } from "../../../../infrastructure/Slice/EstablishmentSlice";
+import { setDateGet, setEstablishments } from "../../../../infrastructure/Slice/EstablishmentSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../infrastructure/Store";
 
 interface Props {
   usecase: PublicUseCase;
@@ -15,25 +17,29 @@ interface Props {
 const LayouClient = (props: Props) => {
   const dispatch = useDispatch()
 
-
+  const _date_get = useSelector((state: RootState) => state.establishment?.dateGet)
+  
 
   useEffect(() => {
-
-    props.usecase.getEstablishments().then(res => {
-      const result = res.results.map((item) => item.data)
-      const final: EstablishmentEntity[] = []
-      result.map((item) => {
-        item.map((_item) => {
-          final.push(_item)
+    const date = new Date(_date_get)
+    if (date === null || date?.toDateString() !== new Date().toDateString()) {
+      props.usecase.getEstablishments().then(res => {
+        const result = res.results.map((item) => item.data)
+        const final: EstablishmentEntity[] = []
+        result.map((item) => {
+          item.map((_item) => {
+            final.push(_item)
+          })
         })
+        dispatch(setEstablishments(final))
+        dispatch(setDateGet(new Date()))
+
+      }).catch(() => {
+        console.log("Error")
       })
-      dispatch(setEstablishments(final))
+    }
 
-    }).catch(() => {
-      console.log("Error")
-    })
-
-  }, [])
+  }, [_date_get])
 
   return (
     <>
