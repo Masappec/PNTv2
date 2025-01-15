@@ -3,9 +3,6 @@ import Sidebar from "../../SideBar";
 import { MenuItem } from "../../../../utils/menu";
 import { useEffect, useState } from "react";
 import HeaderPages from "../../HeaderPages";
-import EstablishmentEntity from "../../../../domain/entities/Establishment";
-import { useDispatch } from "react-redux";
-import { setEstablishments } from "../../../../infrastructure/Slice/EstablishmentSlice";
 import PublicUseCase from "../../../../domain/useCases/Public/PublicUseCase";
 import { ToastContainer } from "react-toastify";
 import Footer from "../../Footer";
@@ -44,26 +41,8 @@ const LayoutAdmin = ({ ...props }: LayoutAdminProps) => {
     }, [props.username, props.permissions, props.email, props.isSuperadmin])
 
 
-    const dispatch = useDispatch()
 
 
-
-    useEffect(() => {
-        props.usecase.getEstablishments().then(res => {
-            const result = res.results.map((item) => item.data)
-            const final: EstablishmentEntity[] = []
-            result.map((item) => {
-                item.map((_item) => {
-                    final.push(_item)
-                })
-            })
-            dispatch(setEstablishments(final))
-
-        }).catch(() => {
-            console.log("Error")
-        })
-
-    }, [])
 
 
     return (
