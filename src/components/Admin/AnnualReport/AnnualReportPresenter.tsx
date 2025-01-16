@@ -107,34 +107,93 @@ const AnnualReportPresenter = (props: Props) => {
           columns={[
             {
               render: (e) => <p className="text-left">{
-                e.month
-              }</p>,
-              title: "Mes",
-            },
-            {
-              render: (e) => <p className="text-left">{
                 e.numeral.name
               }</p>,
-              title: "Artículo ",
+              title: "Articulo",
             },
             {
               render: (e) => <p className="text-left">{
-                e.numeral.name.replace("Art", "")
+                props.resultTC.results.filter((_e) =>
+                  _e.numeral.id == e.id && _e.month == 1).length
               }</p>,
-              title: "Numeral",
+              title: "Enero"
             },
             {
               render: (e) => <p className="text-left">{
-                e.published ? "Sí" : "No"
+                props.resultTC.results.filter((_e) =>
+                 _e.month == 2).length
               }</p>,
-              title: "Publicado (Sí/No)",
+              title: "Febrero"
             },
-
             {
               render: (e) => <p className="text-left">{
-                e.published ? formatDate2(e.published_at) : "No Públicado"
+                props.resultTC.results.filter((_e) =>
+                  _e.month == 3).length
               }</p>,
-              title: "Fecha de publicación",
+              title: "Marzo"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTC.results.filter((_e) =>
+                  _e.month == 4).length
+              }</p>,
+              title: "Abril"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTC.results.filter((_e) =>
+                 _e.month == 5).length
+              }</p>,
+              title: "Mayo"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTC.results.filter((_e) =>
+                  _e.month == 6).length
+              }</p>,
+              title: "Junio"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTC.results.filter((_e) =>
+                   _e.month == 7).length
+              }</p>,
+              title: "Julio"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTC.results.filter((_e) =>
+                   _e.month == 8).length
+              }</p>,
+              title: "Agosto"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTC.results.filter((_e) =>
+                  _e.month == 9).length
+              }</p>,
+              title: "Septiembre"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTC.results.filter((_e) =>
+                 _e.month == 10).length
+              }</p>,
+              title: "Octubre"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTC.results.filter((_e) =>
+                   _e.month == 11).length
+              }</p>,
+              title: "Noviembre"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTC.results.filter((_e) =>
+                  _e.month == 12).length
+              }</p>,
+              title: "Diciembre"
             },
           ]}
           description={""}
@@ -159,34 +218,93 @@ const AnnualReportPresenter = (props: Props) => {
           columns={[
             {
               render: (e) => <p className="text-left">{
-                e.month
-              }</p>,
-              title: "Mes",
-            },
-            {
-              render: (e) => <p className="text-left">{
                 e.numeral.name
               }</p>,
-              title: "Artículo ",
+              title: "Articulo",
             },
             {
               render: (e) => <p className="text-left">{
-                e.numeral.name.replace("Art", "")
+                props.resultTF.results.filter((_e) =>
+                   _e.month == 1).length
               }</p>,
-              title: "Numeral",
+              title: "Enero"
             },
             {
               render: (e) => <p className="text-left">{
-                e.published ? "Sí" : "No"
+                props.resultTF.results.filter((_e) =>
+                   _e.month == 2).length
               }</p>,
-              title: "Publicado (Sí/No)",
+              title: "Febrero"
             },
-
             {
               render: (e) => <p className="text-left">{
-                e.published ? formatDate2(e.published_at) : "No Públicado"
+                props.resultTF.results.filter((_e) =>
+                   _e.month == 3).length
               }</p>,
-              title: "Fecha de publicación",
+              title: "Marzo"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTF.results.filter((_e) =>
+                 _e.month == 4).length
+              }</p>,
+              title: "Abril"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTF.results.filter((_e) =>
+                   _e.month == 5).length
+              }</p>,
+              title: "Mayo"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTF.results.filter((_e) =>
+                   _e.month == 6).length
+              }</p>,
+              title: "Junio"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTF.results.filter((_e) =>
+                 _e.month == 7).length
+              }</p>,
+              title: "Julio"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTF.results.filter((_e) =>
+                  _e.month == 8).length
+              }</p>,
+              title: "Agosto"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTF.results.filter((_e) =>
+                _e.month == 9).length
+              }</p>,
+              title: "Septiembre"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTF.results.filter((_e) =>
+                  _e.month == 10).length
+              }</p>,
+              title: "Octubre"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTF.results.filter((_e) =>
+                  _e.month == 11).length
+              }</p>,
+              title: "Noviembre"
+            },
+            {
+              render: (e) => <p className="text-left">{
+                props.resultTF.results.filter((_e) =>
+                   _e.month == 12).length
+              }</p>,
+              title: "Diciembre"
             },
           ]}
           description={""}
@@ -297,14 +415,14 @@ const AnnualReportPresenter = (props: Props) => {
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e)=>
-                    _e.numeral.id == e.id && _e.month==1).length
+                    _e.numeral.id == e.numeral.id && _e.month==1).length
                 }</p>,
                 title: "Enero"
               },
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e) =>
-                    _e.numeral.id == e.id && _e.month == 2).length
+                    _e.numeral.id == e.numeral.id && _e.month == 2).length
                 }</p>,
                 title: "Febrero"
               },
@@ -318,63 +436,63 @@ const AnnualReportPresenter = (props: Props) => {
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e) =>
-                    _e.numeral.id == e.id && _e.month == 4).length
+                    _e.numeral.id == e.numeral.id && _e.month == 4).length
                 }</p>,
                 title: "Abril"
               },
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e) =>
-                    _e.numeral.id == e.id && _e.month == 5).length
+                    _e.numeral.id == e.numeral.id && _e.month == 5).length
                 }</p>,
                 title: "Mayo"
               },
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e) =>
-                    _e.numeral.id == e.id && _e.month == 6).length
+                    _e.numeral.id == e.numeral.id && _e.month == 6).length
                 }</p>,
                 title: "Junio"
               },
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e) =>
-                    _e.numeral.id == e.id && _e.month == 7).length
+                    _e.numeral.id == e.numeral.id && _e.month == 7).length
                 }</p>,
                 title: "Julio"
               },
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e) =>
-                    _e.numeral.id == e.id && _e.month == 8).length
+                    _e.numeral.id == e.numeral.id && _e.month == 8).length
                 }</p>,
                 title: "Agosto"
               },
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e) =>
-                    _e.numeral.id == e.id && _e.month == 9).length
+                    _e.numeral.id == e.numeral.id && _e.month == 9).length
                 }</p>,
                 title: "Septiembre"
               },
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e) =>
-                    _e.numeral.id == e.id && _e.month == 10).length
+                    _e.numeral.id == e.numeral.id && _e.month == 10).length
                 }</p>,
                 title: "Octubre"
               },
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e) =>
-                    _e.numeral.id == e.id && _e.month ==11).length
+                    _e.numeral.id == e.numeral.id && _e.month ==11).length
                 }</p>,
                 title: "Noviembre"
               },
               {
                 render: (e) => <p className="text-left">{
                   props.resultsTA.results.filter((_e) =>
-                    _e.numeral.id == e.id && _e.month == 12).length
+                    _e.numeral.id == e.numeral.id && _e.month == 12).length
                 }</p>,
                 title: "Diciembre"
               },
@@ -395,36 +513,96 @@ const AnnualReportPresenter = (props: Props) => {
           <Table
             show={false}
             columns={[
-              {
-                render: (e) => <p className="text-left">{
-                  e.month
-                }</p>,
-                title: "Mes",
-              },
-              {
-                render: (e) => <p className="text-left">{
-                  e.numeral.name
-                }</p>,
-                title: "Artículo ",
-              },
+              
               {
                 render: (e) => <p className="text-left">{
                   e.numeral.name.replace("Art", "")
                 }</p>,
-                title: "Numeral",
+                title: "Articulo",
               },
               {
                 render: (e) => <p className="text-left">{
-                  e.published ? "Sí" : "No"
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 1).length
                 }</p>,
-                title: "Publicado (Sí/No)",
+                title: "Enero"
               },
-
               {
                 render: (e) => <p className="text-left">{
-                  e.published ? formatDate2(e.published_at) : "No Públicado"
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 2).length
                 }</p>,
-                title: "Fecha de publicación",
+                title: "Febrero"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 3).length
+                }</p>,
+                title: "Marzo"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 4).length
+                }</p>,
+                title: "Abril"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 5).length
+                }</p>,
+                title: "Mayo"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 6).length
+                }</p>,
+                title: "Junio"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 7).length
+                }</p>,
+                title: "Julio"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 8).length
+                }</p>,
+                title: "Agosto"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 9).length
+                }</p>,
+                title: "Septiembre"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 10).length
+                }</p>,
+                title: "Octubre"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 11).length
+                }</p>,
+                title: "Noviembre"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTAE.results.filter((_e) =>
+                    _e.numeral.id == e.numeral.id && _e.month == 12).length
+                }</p>,
+                title: "Diciembre"
               },
             ]}
             description={""}
