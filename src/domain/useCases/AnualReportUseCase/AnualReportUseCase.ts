@@ -12,6 +12,8 @@ export class AnualReportUseCase {
 
   async createAnualReport(data: AnualReportEntity) {
     data.year = new DatePnt().getYearToUpload();
+
+    
     const response = await this.service.createAnualReport(data);
     return response;
   }

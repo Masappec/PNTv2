@@ -460,7 +460,7 @@ const menu = [
 
   },
   {
-    name: "Reportes anuales",
+    name: "Informe anual",
     path: "/admin/annualreports",
     visible: true,
     icon: <GrCompliance size={25} className="text-slate-500" />,

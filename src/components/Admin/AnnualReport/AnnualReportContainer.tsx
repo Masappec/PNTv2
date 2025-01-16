@@ -145,7 +145,6 @@ const AnnualReportContainer = (props: Props) => {
     }
 
     const handleChageSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(e.target.value)
         setForm({
             ...form,
             [e.target.name]: e.target.selectedOptions[0].value == 'si' ? true : false
