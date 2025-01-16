@@ -36,7 +36,7 @@ const AnnualReportContainer = (props: Props) => {
         to:0,
         total:0,
         current:1,
-        limit:0,
+        limit:100,
         next:0,
         previous:0,
         results:[],
@@ -49,7 +49,7 @@ const AnnualReportContainer = (props: Props) => {
         to: 0,
         total: 0,
         current: 1,
-        limit: 0,
+        limit: 100,
         next: 0,
         previous: 0,
         results: [],
@@ -60,7 +60,7 @@ const AnnualReportContainer = (props: Props) => {
         to: 0,
         total: 0,
         current: 1,
-        limit: 0,
+        limit: 100,
         next: 0,
         previous: 0,
         results: [],
@@ -72,7 +72,7 @@ const AnnualReportContainer = (props: Props) => {
         to: 0,
         total: 0,
         current: 1,
-        limit: 0,
+        limit: 100,
         next: 0,
         previous: 0,
         results: [],
@@ -92,7 +92,19 @@ const AnnualReportContainer = (props: Props) => {
             setPaginableTAE(res)
         })
         props.usecase.getTAResume(establishment.id || 0, true, paginableTA.current || 0, paginableTA.limit).then(res => {
-            setPaginableTA(res)
+            const array = res.results.sort((a, b) => {
+                let c = a.numeral.name
+                c = c.replace("Numeral ", "")
+                let c_int = parseInt(c)
+                let d = b.numeral.name
+                d = d.replace("Numeral ", "")
+                let d_int = parseInt(d)
+                return c_int - d_int
+            })
+            setPaginableTA({
+                ...res,
+                results: array
+            })
         })
         props.usecase.getTFResume(establishment.id || 0, paginableTF.current || 0, paginableTF.limit).then(res => {
             setPaginableTF(res)
