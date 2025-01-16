@@ -281,12 +281,7 @@ const AnnualReportPresenter = (props: Props) => {
           <Table
             show={false}
             columns={[
-              {
-                render: (e) => <p className="text-left">{
-                  e.month
-                }</p>,
-                title: "Mes",
-              },
+              
               {
                 render: () => <p className="text-left">{
                   "19"
@@ -301,16 +296,87 @@ const AnnualReportPresenter = (props: Props) => {
               },
               {
                 render: (e) => <p className="text-left">{
-                  e.published ? "Sí" : "No"
+                  props.resultsTA.results.filter((_e)=>
+                    _e.numeral.id == e.id && _e.month==1).length
                 }</p>,
-                title: "Publicado (Sí/No)",
+                title: "Enero"
               },
-
               {
                 render: (e) => <p className="text-left">{
-                  e.published ? formatDate2(e.published_at) : "No Públicado"
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month == 2).length
                 }</p>,
-                title: "Fecha de publicación",
+                title: "Febrero"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month == 3).length
+                }</p>,
+                title: "Marzo"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month == 4).length
+                }</p>,
+                title: "Abril"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month == 5).length
+                }</p>,
+                title: "Mayo"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month == 6).length
+                }</p>,
+                title: "Junio"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month == 7).length
+                }</p>,
+                title: "Julio"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month == 8).length
+                }</p>,
+                title: "Agosto"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month == 9).length
+                }</p>,
+                title: "Septiembre"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month == 10).length
+                }</p>,
+                title: "Octubre"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month ==11).length
+                }</p>,
+                title: "Noviembre"
+              },
+              {
+                render: (e) => <p className="text-left">{
+                  props.resultsTA.results.filter((_e) =>
+                    _e.numeral.id == e.id && _e.month == 12).length
+                }</p>,
+                title: "Diciembre"
               },
             ]}
             description={""}
