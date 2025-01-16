@@ -24,6 +24,7 @@ export interface AnualReportCreateDto {
   total_saip_in_portal: number;
   total_saip_no_portal: number;
   description_rason_no_portal: string;
+  have_responded_solicities_no_portal: boolean;
   total_no_registered: number;
   comment_aclaration_no_registered: string;
   reserve_information: boolean;

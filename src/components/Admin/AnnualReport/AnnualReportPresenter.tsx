@@ -45,7 +45,7 @@ const AnnualReportPresenter = (props: Props) => {
   return (
     <>
       <h2 className="mb-4 text-balance border-b border-gray-300 pb-1 text-2xl font-bold text-primary">
-        {"Reporte de Informe Anual"}
+        {"Informe anual"}
       </h2>
       <form className="grid grid-cols-1 items-start justify-center gap-4 text-start "
         onSubmit={props.onSubmit}>
@@ -407,7 +407,7 @@ const AnnualReportPresenter = (props: Props) => {
             </div>
             <TextInput
               id="small"
-              type="number"
+              type="number" min={0}
               sizing="sm"
               name="total_quality_problems"
               onChange={props.OnChange}
@@ -429,7 +429,7 @@ const AnnualReportPresenter = (props: Props) => {
                 onChange={props.OnChange}
               />
             </div></>)}
-          
+
         </section>
         <section>
           <h2 className="text-xl font-semibold text-primary">
@@ -462,122 +462,122 @@ const AnnualReportPresenter = (props: Props) => {
           </div>
           {
             props.form.have_sanctions && (
-          
-          <table className="w-full divide-y divide-gray-200 mt-5 ">
-            <thead className="sticky top-0 z-10 w-full bg-gray-100 text-center">
-              <tr className="text-sm">
-                <th scope="col" className="rounded-tl-md">
-                  Ley
-                </th>
-                <th scope="col">Cantidad</th>
-                <th scope="col" className="rounded-tr-md">
-                  Descripción específica de la sanción administrativa
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              <tr>
-                <td>
-                  <span className="text-sm font-medium text-gray-400 flex justify-start">
-                    Ley Orgánica del Servicio Público
-                  </span>
-                </td>
-                <td>
-                  <TextInput
-                    id="small"
-                    type="number"
-                    sizing="sm"
-                    className="w-48"
-                    name="total_organic_law_public_service"
-                    onChange={props.OnChange}
-                  />
-                </td>
 
-                <td className="text-center">
-                  <textarea
-                    className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
-                    name="description_organic_law_public_service"
-                    onChange={props.onText}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text-sm text-gray-400 flex font-medium justify-start">
-                    Ley Orgánica de la Contraloría General del Estado
-                  </span>
-                </td>
-                <td>
-                  <TextInput
-                    id="small"
-                    type="number"
-                    sizing="sm"
-                    className="w-48"
-                    name="total_organic_law_contraloria"
-                    onChange={props.OnChange}
-                  />
-                </td>
+              <table className="w-full divide-y divide-gray-200 mt-5 ">
+                <thead className="sticky top-0 z-10 w-full bg-gray-100 text-center">
+                  <tr className="text-sm">
+                    <th scope="col" className="rounded-tl-md">
+                      Ley
+                    </th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col" className="rounded-tr-md">
+                      Descripción específica de la sanción administrativa
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  <tr>
+                    <td>
+                      <span className="text-sm font-medium text-gray-400 flex justify-start">
+                        Ley Orgánica del Servicio Público
+                      </span>
+                    </td>
+                    <td>
+                      <TextInput
+                        id="small"
+                        type="number" min={0}
+                        sizing="sm"
+                        className="w-48"
+                        name="total_organic_law_public_service"
+                        onChange={props.OnChange}
+                      />
+                    </td>
 
-                <td className="text-center">
-                  <textarea
-                    className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
-                    name="description_organic_law_contraloria"
-                    onChange={props.onText}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text-sm text-gray-400 flex font-medium justify-start">
-                    Ley Orgánica del Sistema Nacional de Contratación Pública
-                  </span>
-                </td>
-                <td>
-                  <TextInput
-                    id="small"
-                    type="number"
-                    sizing="sm"
-                    className="w-48"
-                    name="total_organic_law_national_system"
-                    onChange={props.OnChange}
-                  />
-                </td>
+                    <td className="text-center">
+                      <textarea
+                        className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
+                        name="description_organic_law_public_service"
+                        onChange={props.onText}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text-sm text-gray-400 flex font-medium justify-start">
+                        Ley Orgánica de la Contraloría General del Estado
+                      </span>
+                    </td>
+                    <td>
+                      <TextInput
+                        id="small"
+                        type="number" min={0}
+                        sizing="sm"
+                        className="w-48"
+                        name="total_organic_law_contraloria"
+                        onChange={props.OnChange}
+                      />
+                    </td>
 
-                <td className="text-center">
-                  <textarea
-                    className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
-                    name="description_organic_law_national_system"
-                    onChange={props.onText}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span className="text-sm font-medium text-gray-400 flex justify-start">
-                    Ley Orgánica de Participación Ciudadana
-                  </span>
-                </td>
-                <td>
-                  <TextInput
-                    id="small"
-                    type="number"
-                    sizing="sm"
-                    className="w-48"
-                    name="total_organic_law_citizen_participation"
-                    onChange={props.OnChange}
-                  />
-                </td>
+                    <td className="text-center">
+                      <textarea
+                        className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
+                        name="description_organic_law_contraloria"
+                        onChange={props.onText}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text-sm text-gray-400 flex font-medium justify-start">
+                        Ley Orgánica del Sistema Nacional de Contratación Pública
+                      </span>
+                    </td>
+                    <td>
+                      <TextInput
+                        id="small"
+                        type="number" min={0}
+                        sizing="sm"
+                        className="w-48"
+                        name="total_organic_law_national_system"
+                        onChange={props.OnChange}
+                      />
+                    </td>
 
-                <td className="text-center">
-                  <textarea
-                    className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
-                    name="description_organic_law_citizen_participation"
-                    onChange={props.onText}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>)}
+                    <td className="text-center">
+                      <textarea
+                        className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
+                        name="description_organic_law_national_system"
+                        onChange={props.onText}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span className="text-sm font-medium text-gray-400 flex justify-start">
+                        Ley Orgánica de Participación Ciudadana
+                      </span>
+                    </td>
+                    <td>
+                      <TextInput
+                        id="small"
+                        type="number" min={0}
+                        sizing="sm"
+                        className="w-48"
+                        name="total_organic_law_citizen_participation"
+                        onChange={props.OnChange}
+                      />
+                    </td>
+
+                    <td className="text-center">
+                      <textarea
+                        className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
+                        name="description_organic_law_citizen_participation"
+                        onChange={props.onText}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>)}
           <section className="lg:w-2/5">
             <h2 className="text-xl font-semibold text-primary mt-7">
               Disposición transitoria séptima
@@ -614,7 +614,7 @@ const AnnualReportPresenter = (props: Props) => {
               </div>
               <TextInput
                 id="small"
-                type="number"
+                type="number" min={0}
                 sizing="sm"
                 name="total_programs"
                 onChange={props.OnChange}
@@ -663,7 +663,8 @@ const AnnualReportPresenter = (props: Props) => {
                 >No</option>
               </Select>
             </div>
-
+            { props.form.have_activities && (
+              <>
             <div>
               <div className="mb-1 block mt-5">
                 <Label
@@ -675,7 +676,7 @@ const AnnualReportPresenter = (props: Props) => {
               </div>
               <TextInput
                 id="small"
-                type="number"
+                type="number" min={0}
                 sizing="sm"
                 name="total_activities"
                 onChange={props.OnChange}
@@ -699,6 +700,8 @@ const AnnualReportPresenter = (props: Props) => {
                 onChange={props.OnChange}
               />
             </div>
+              </>
+            )}
           </section>
 
         </section>
@@ -718,18 +721,18 @@ const AnnualReportPresenter = (props: Props) => {
                 title: "Mes",
               },
               {
-                render: (item) => !props.isEdit(item.month) ?<p className="text-center">{
+                render: (item) => !props.isEdit(item.month) ? <p className="text-center">{
                   item.total
-                }</p>: <TextInput 
-                id="small"
-                type="number"
-                sizing="sm"
-                className="w-20"
-                name="total"
-                onChange={(e) => {
-                  props.onChangeValue(item.month, "total", e.target.value)
-                }}
-                value={item.total}
+                }</p> : <TextInput
+                  id="small"
+                  type="number" min={0}
+                  sizing="sm"
+                  className="w-20"
+                  name="total"
+                  onChange={(e) => {
+                    props.onChangeValue(item.month, "total", e.target.value)
+                  }}
+                  value={item.total}
                 />,
                 title: "Total de SAIP recibidas"
               },
@@ -737,63 +740,63 @@ const AnnualReportPresenter = (props: Props) => {
                 render: (item) => !props.isEdit(item.month) ? <p className="text-center">{
                   item.total_response_to_10_days + " / " + item.percent_response_to_10_days + "%"
                 }</p> :
-                <div className="flex justify-center gap-5">
-                  <TextInput
-                    id="small"
-                      type="number"
-                    sizing="sm"
-                    className="w-20"
-                    name="total_response_to_10_days"
-                    onChange={(e) => {
-                      props.onChangeValue(item.month, "total_response_to_10_days", e.target.value)
-                    }}
-                    value={item.total_response_to_10_days}
+                  <div className="flex justify-center gap-5">
+                    <TextInput
+                      id="small"
+                      type="number" min={0}
+                      sizing="sm"
+                      className="w-20"
+                      name="total_response_to_10_days"
+                      onChange={(e) => {
+                        props.onChangeValue(item.month, "total_response_to_10_days", e.target.value)
+                      }}
+                      value={item.total_response_to_10_days}
                     />
                     <span className="text-gray-500  mt-2">/</span>
-                  <TextInput
-                    id="small"
-                      type="number"
-                    sizing="sm"
-                    className="w-20"
-                    name="percent_response_to_10_days"
-                    onChange={(e) => {
-                      props.onChangeValue(item.month, "percent_response_to_10_days", e.target.value)
-                    }}
-                    value={item.percent_response_to_10_days}
+                    <TextInput
+                      id="small"
+                      type="number" min={0}
+                      sizing="sm"
+                      className="w-20"
+                      name="percent_response_to_10_days"
+                      onChange={(e) => {
+                        props.onChangeValue(item.month, "percent_response_to_10_days", e.target.value)
+                      }}
+                      value={item.percent_response_to_10_days}
                     />
                     <span className="text-gray-500 mt-2">%</span>
-                
-                
-                </div>,
-                
+
+
+                  </div>,
+
                 title: "Respondidas en hasta 10 días Cantidad / Porcentaje",
               },
               {
-                render: (item) => !props.isEdit(item.month) ?<p className="text-center">{
-                 item.total_reponse_to_11_days + " / " +item.percent_reponse_to_11_days + "%"
+                render: (item) => !props.isEdit(item.month) ? <p className="text-center">{
+                  item.total_reponse_to_11_days + " / " + item.percent_reponse_to_11_days + "%"
                 }</p> : <div className="flex justify-center gap-5">
                   <TextInput
                     id="small"
-                      type="number"
+                    type="number" min={0}
                     sizing="sm"
                     className="w-20"
-                      name="total_reponse_to_11_days"
+                    name="total_reponse_to_11_days"
                     onChange={(e) => {
                       props.onChangeValue(item.month, "total_reponse_to_11_days", e.target.value)
                     }}
-                      value={item.total_reponse_to_11_days}
+                    value={item.total_reponse_to_11_days}
                   />
                   <span className="text-gray-500  mt-2">/</span>
                   <TextInput
                     id="small"
-                      type="number"
+                    type="number" min={0}
                     sizing="sm"
                     className="w-20"
-                      name="percent_reponse_to_11_days"
+                    name="percent_reponse_to_11_days"
                     onChange={(e) => {
                       props.onChangeValue(item.month, "percent_reponse_to_11_days", e.target.value)
                     }}
-                      value={item.percent_reponse_to_11_days}
+                    value={item.percent_reponse_to_11_days}
                   />
                   <span className="text-gray-500 mt-2">%</span>
 
@@ -802,31 +805,31 @@ const AnnualReportPresenter = (props: Props) => {
                 title: "Respondidas entre 11 y 15 días Cantidad / Porcentaje",
               },
               {
-                render: (item) => !props.isEdit(item.month)? <p className="text-center">{
-                 item.total_response_plus_15_days + " / " +item.percent_response_plus_15_days + "%"
+                render: (item) => !props.isEdit(item.month) ? <p className="text-center">{
+                  item.total_response_plus_15_days + " / " + item.percent_response_plus_15_days + "%"
                 }</p> : <div className="flex justify-center gap-5">
                   <TextInput
                     id="small"
-                      type="number"
+                    type="number" min={0}
                     sizing="sm"
                     className="w-20"
-                      name="total_response_plus_15_days"
+                    name="total_response_plus_15_days"
                     onChange={(e) => {
                       props.onChangeValue(item.month, "total_response_plus_15_days", e.target.value)
                     }}
-                      value={item.total_response_plus_15_days}
+                    value={item.total_response_plus_15_days}
                   />
                   <span className="text-gray-500  mt-2">/</span>
                   <TextInput
                     id="small"
-                      type="number"
+                    type="number" min={0}
                     sizing="sm"
                     className="w-20"
-                      name="percent_response_plus_15_days"
+                    name="percent_response_plus_15_days"
                     onChange={(e) => {
                       props.onChangeValue(item.month, "percent_response_plus_15_days", e.target.value)
                     }}
-                      value={item.percent_response_plus_15_days}
+                    value={item.percent_response_plus_15_days}
                   />
                   <span className="text-gray-500 mt-2">%</span>
 
@@ -835,13 +838,13 @@ const AnnualReportPresenter = (props: Props) => {
                 title: "Respondidas en más de 15 días Cantidad / Porcentaje",
               },
               {
-                render: (item) => !props.isEdit(item.month)? <p className="text-center">{
-                 item.total_no_response + " / " +item.percent_no_response + "%"
-                }</p>:
+                render: (item) => !props.isEdit(item.month) ? <p className="text-center">{
+                  item.total_no_response + " / " + item.percent_no_response + "%"
+                }</p> :
                   <div className="flex justify-center gap-5">
                     <TextInput
                       id="small"
-                      type="number"
+                      type="number" min={0}
                       sizing="sm"
                       className="w-20"
                       name="total_no_response"
@@ -853,7 +856,7 @@ const AnnualReportPresenter = (props: Props) => {
                     <span className="text-gray-500  mt-2">/</span>
                     <TextInput
                       id="small"
-                      type="number"
+                      type="number" min={0}
                       sizing="sm"
                       className="w-20"
                       name="percent_no_response"
@@ -868,28 +871,7 @@ const AnnualReportPresenter = (props: Props) => {
                   </div>,
                 title: "No respondidas Cantidad / Porcentaje",
               },
-              {
-                render: (item) => item.total == 0  ?
-                !props.isEdit(item.month) ?
-                <button className="bg-primary text-white p-2 rounded-md" onClick={() => {
-                  props.onEdit(item.month)
-                }}>
-                  <BiEdit />
-                </button> : 
-                <button className="bg-gray-300 text-gray-500 p-2 rounded-md" onClick={() => {
-                  props.onEdit(item.month)
-                }}>
-                  <BiCheck />
-                </button>
-                  : props.isEdit(item.month) ? <button className="bg-gray-300 text-gray-500 p-2 rounded-md" onClick={() => {
-                    props.onEdit(item.month)
-                  }}>
-                    <BiCheck />
-                  </button>:"",
-                
-               
-                title: ""
-              }
+              
             ]}
             description={""}
             length={0}
@@ -917,7 +899,7 @@ const AnnualReportPresenter = (props: Props) => {
               </div>
               <TextInput
                 id="small"
-                type="number"
+                type="number" min={0}
                 sizing="sm"
                 className="lg:w-2/5"
                 name="total_saip"
@@ -959,7 +941,7 @@ const AnnualReportPresenter = (props: Props) => {
                   </div>
                   <TextInput
                     id="small"
-                    type="number"
+                    type="number" min={0}
                     sizing="sm"
                     name="total_saip_in_portal"
                     onChange={props.OnChange}
@@ -975,7 +957,7 @@ const AnnualReportPresenter = (props: Props) => {
                   </div>
                   <TextInput
                     id="small"
-                    type="number"
+                    type="number" min={0}
                     sizing="sm"
                     name="total_saip_no_portal"
                     onChange={props.OnChange}
@@ -1003,6 +985,19 @@ const AnnualReportPresenter = (props: Props) => {
                   registradas en el Portal Nacional de Transparencia, fueron
                   respondidas?
                 </p>
+                <Select
+                  className="w-44 "
+                  required
+                  name="have_responded_solicities_no_portal"
+                  onChange={props.onSelected}
+                >
+                  <option
+                    value={"si"}
+                  >Si</option>
+                  <option
+                    value={"no"}
+                  >No</option>
+                </Select>
                 <div>
                   <div className="mb-1 block mt-5">
                     <Label
@@ -1013,7 +1008,7 @@ const AnnualReportPresenter = (props: Props) => {
                   </div>
                   <TextInput
                     id="small"
-                    type="number"
+                    type="number" min={0}
                     sizing="sm"
                     name="total_no_registered"
                     onChange={props.OnChange}
@@ -1067,74 +1062,74 @@ const AnnualReportPresenter = (props: Props) => {
               </Select>
             </div>
             {props.form.reserve_information && (<>
-            <p className="text-base font-medium text-gray-500">
-              En caso de seleccionar Sí, debe completar los siguientes campos:
-            </p>
-            <div>
-              <div className="mb-1 block mt-5">
-                <Label
-                  htmlFor="small"
-                  value="Número de temas clasificados como Reservados: "
-                  className="text-gray-500"
+              <p className="text-base font-medium text-gray-500">
+                En caso de seleccionar Sí, debe completar los siguientes campos:
+              </p>
+              <div>
+                <div className="mb-1 block mt-5">
+                  <Label
+                    htmlFor="small"
+                    value="Número de temas clasificados como Reservados: "
+                    className="text-gray-500"
+                  />
+                </div>
+                <TextInput
+                  id="small"
+                  type="number" min={0}
+                  sizing="sm"
+                  name="number_of_reserves"
+                  onChange={props.OnChange}
                 />
               </div>
-              <TextInput
-                id="small"
-                type="number"
-                sizing="sm"
-                name="number_of_reserves"
-                onChange={props.OnChange}
-              />
-            </div>
-            <div>
-              <div className="mb-1 block mt-5">
-                <Label
-                  htmlFor="small"
-                  value="Número de temas clasificados como Confidencial (Ley Orgánica de Empresas Públicas): "
-                  className="text-gray-500"
+              <div>
+                <div className="mb-1 block mt-5">
+                  <Label
+                    htmlFor="small"
+                    value="Número de temas clasificados como Confidencial (Ley Orgánica de Empresas Públicas): "
+                    className="text-gray-500"
+                  />
+                </div>
+                <TextInput
+                  id="small"
+                  type="number" min={0}
+                  sizing="sm"
+                  name=" number_of_confidential"
+                  onChange={props.OnChange}
                 />
               </div>
-              <TextInput
-                id="small"
-                type="number"
-                sizing="sm"
-                name=" number_of_confidential"
-                onChange={props.OnChange}
-              />
-            </div>
 
-            <div>
-              <div className="mb-2 block mt-5">
-                <Label
-                  htmlFor="small"
-                  value="Número de temas clasificados como Secreto: "
-                  className="text-gray-500"
+              <div>
+                <div className="mb-2 block mt-5">
+                  <Label
+                    htmlFor="small"
+                    value="Número de temas clasificados como Secreto: "
+                    className="text-gray-500"
+                  />
+                </div>
+                <TextInput
+                  id="small"
+                  type="number" min={0}
+                  sizing="sm"
+                  name="number_of_secret"
+                  onChange={props.OnChange}
                 />
               </div>
-              <TextInput
-                id="small"
-                type="number"
-                sizing="sm"
-                name="number_of_secret"
-                onChange={props.OnChange}
-              />
-            </div>
-            <div>
-              <div className="mb-1 block mt-5">
-                <Label
-                  htmlFor="small"
-                  value="Número de temas clasificados como Secretísimo:"
-                  className="text-gray-500"
+              <div>
+                <div className="mb-1 block mt-5">
+                  <Label
+                    htmlFor="small"
+                    value="Número de temas clasificados como Secretísimo:"
+                    className="text-gray-500"
+                  />
+                </div>
+                <TextInput
+                  id="small"
+                  type="number" min={0}
+                  sizing="sm"
+                  name="number_of_secretism"
+                  onChange={props.OnChange}
                 />
               </div>
-              <TextInput
-                id="small"
-                type="number"
-                sizing="sm"
-                name="number_of_secretism"
-                onChange={props.OnChange}
-              />
-            </div>
             </>
             )}
 
