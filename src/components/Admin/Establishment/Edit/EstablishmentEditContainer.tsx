@@ -92,33 +92,10 @@ const EstablishmentEditContainer = ({
     useEffect(() => {
         usecase.detail(id || "").then((res) => {
             const es = res;
-            numeralUsecase.getNumeralByEstablishment(parseInt(id || "0")).then((resNumeral) => {
-                // Filtrar elementos que no son isDefault
-                const nonDefaultItems = resNumeral.filter((item) => !item.isDefault);
-                
-                // Filtrar elementos isDefault
-                const defaultItems = resNumeral.filter((item) => item.isDefault);
-                
-                // Manejar cambios en elementos no isDefault
-                const unchangedNonDefault = nonDefaultItems
-                    .filter((item) => item.isSelected)
-                    .map((item) => item.id);
-                console.log(unchangedNonDefault)
-                
-                const changedNonDefault = nonDefaultItems
-                    .filter((item) => !item.isSelected)
-                    .map((item) => item.id);
-                
-                // Manejar cambios en elementos isDefault
-                const unchangedDefault = defaultItems
-                    .filter((item) => !item.isSelected)
-                    .map((item) => item.id);
-                
-                // Combinar los IDs que deben mantenerse
-                const extraNumerals = [...changedNonDefault, ...unchangedDefault].join(',');
-    
-                // Actualizar el estado
-                setData({ ...es, extra_numerals: extraNumerals });
+            numeralUsecase.getNumeralByEstablishment(parseInt(id || "0")).then((res) => {
+                const res_ = res.filter((item) => !item.isDefault).map((item) => item.id)
+                console.log("Numerales:", res_.join(','))
+                setData({ ...es, extra_numerals: res_.join(',') })
             }).catch((err) => {
                 console.log(err);
             });
@@ -133,7 +110,7 @@ const EstablishmentEditContainer = ({
         data.highest_authority = "NINGUNO"
         data.highest_committe = "NINGUNO" 
         data.extra_numerals = selectedExtraNumeral.join(',')
-
+        console.log(data.extra_numerals)
         if (data.name === "") {
             setError("Ingrese el nombre")
             setLoading(false)
@@ -312,16 +289,6 @@ const EstablishmentEditContainer = ({
             }
             return null
         }).filter((item) => item !== null) as MultiValue<{ value: string, label: string }>
-        for(const numeral of selected) {
-            //console.log("Add:",numeral.value)
-            if (numeral.value){
-                numeralUsecase.updateNumeralState(Number(numeral.value), {
-                    isSelected: false,
-                });
-            } else {
-                console.log("Nada por hacer")
-            }
-        }
         return selected
     }    
 
@@ -339,33 +306,43 @@ const EstablishmentEditContainer = ({
 
     const handleRemoveNumeral = async (numeralId: string) => {
         try {
-            // Convertir numeralId a número
+            // Verificar si el 'id' está presente y es un número válido
+            if (!id) {
+                throw new Error("ID no encontrado en los parámetros de la URL.");
+            }
+
+            const idAsNumber = parseInt(id, 10);
+            if (isNaN(idAsNumber)) {
+                throw new Error(`El ID "${id}" no es un número válido.`);
+            }
+
             const numeralIdAsNumber = parseInt(numeralId, 10);
             if (isNaN(numeralIdAsNumber)) {
                 throw new Error(`El numeralId "${numeralId}" no es un número válido.`);
             }
-    
-            // Llamada al backend para actualizar el estado
-            await numeralUsecase.updateNumeralState(numeralIdAsNumber, { isSelected: true });
-    
-            // Actualiza extra_numerals en el estado local
+
+            // Llamada al backend para eliminar el numeral
+            await numeralUsecase.updateNumeralState(numeralIdAsNumber, idAsNumber);
+
+            // Actualizar el estado local para extra_numerals
             setData((prevData) => {
                 const updatedExtraNumerals = (prevData.extra_numerals || "")
                     .split(",")
-                    .filter((id) => id !== numeralId) // Filtrar el ID eliminado
+                    .map((id) => id.trim())
+                    .filter((id) => id !== numeralId)
                     .join(",");
                 return { ...prevData, extra_numerals: updatedExtraNumerals };
             });
-    
-            // Eliminar el numeral del estado general numerals
-            setNumerals((prevNumerals) => 
+
+            setNumerals((prevNumerals) =>
                 prevNumerals.filter((numeral) => numeral.id !== numeralIdAsNumber)
             );
-    
+
         } catch (error) {
-            console.error("Error al eliminar el numeral:", error);
+            console.error(`Error al eliminar el numeral con ID ${numeralId}:`, error);
         }
-    };        
+    };
+
 
     const validateFields = (name: string) => {
         if (modified) {

@@ -70,23 +70,22 @@ class NumeralApi {
         }
     }
 
-    async updateNumeralState(id: number, data: { isSelected: boolean }) {
+    async deleteNumeral(id: number, establishment_id: number) {
         try {
-            const response = await this.api.patch(
-                `${TRANSPARENCY_PATH}/numerals/${id}/update-state/`,
-                data,
+            const response = await this.api.delete(
+                `${TRANSPARENCY_PATH}/numerals/${id}/delete-state/${establishment_id}/`,
             );
-            //console.log(response)
             return response.data;
         } catch (error) {
             if (error instanceof AxiosError) {
-                const message = error?.response?.data?.message || "Ocurrio un error al actualizar el estado del numeral";
+                const message = error?.response?.data?.message || "Ocurrió un error al eliminar el numeral";
                 throw new Error(message);
             } else {
-                throw new Error("Ocurrió un error al actualizar el estdo del numeral");
+                throw new Error("Ocurrió un error al eliminar el numeral");
             }
         }
     }
+    
 }
 
 export default NumeralApi;
