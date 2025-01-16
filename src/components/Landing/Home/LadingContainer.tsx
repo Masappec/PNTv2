@@ -6,15 +6,13 @@ import { useNavigate } from "react-router-dom";
 import EstablishmentEntity from "../../../domain/entities/Establishment";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../infrastructure/Store";
-import api from "../../../infrastructure/Api";
-import PublicApi from "../../../infrastructure/Api/Public/PublicApi";
 import { slugtext } from "../../../utils/functions";
 
 
 
 const LandingContainer = () => {
 
-    const _public = new PublicApi(api)
+    //const _public = new PublicApi(api)
     const [faq,] = useState<FrequencyAsked[]>([
         {
             question: "¿Qué puedo hacer en el portal?",
@@ -38,15 +36,15 @@ const LandingContainer = () => {
     const _establishments: EstablishmentEntity[] = useSelector((state: RootState) => state.establishment.establishments)
     const [selected, setSelected] = useState<ColourOption | null>(null)
     const [listEnt, setListEnt] = useState<EstablishmentEntity[]>([])
-    const [countFiles, setCountFiles] = useState<number>(0)
+    const [countFiles, ] = useState<number>(2800)
 
     useEffect(() => {
         setListEnt(_establishments)
-        _public.getCountFiles().then((data) => {
+        /*_public.getCountFiles().then((data) => {
             setCountFiles(data.count)
         }).catch((error) => {
             console.log('error', error)
-        })
+        })*/
     }, [_establishments])
 
 
