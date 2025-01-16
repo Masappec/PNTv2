@@ -87,6 +87,8 @@ const AnnualReportContainer = (props: Props) => {
             })
         })
         props.usecase.getTAResume(establishment.id || 0, false, paginableTAE.current ||0,paginableTAE.limit).then(res=>{
+           
+            
             setPaginableTAE(res)
         })
         props.usecase.getTAResume(establishment.id || 0, true, paginableTA.current || 0, paginableTA.limit).then(res => {
