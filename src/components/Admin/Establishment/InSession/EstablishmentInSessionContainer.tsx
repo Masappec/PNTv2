@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import EstablishmentEntity from "../../../../domain/entities/Establishment"
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
 import SessionService from "../../../../infrastructure/Services/SessionService"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import EstablishmentEditPresenter from "../Edit/EstablishmentEditPresenter"
 import { OptionsSelectCreate } from "../../../../infrastructure/Api/Establishment/interface"
 import NumeralUseCase from "../../../../domain/useCases/NumeralUseCase/NumeraUseCase"
@@ -21,6 +21,7 @@ const EstablishmentInSessionContainer = ({
 
 
     const navigation = useNavigate()
+    const { id } = useParams()
 
     const [error, setError] = useState<string>("")
     const [success, setSuccess] = useState<string>("")
@@ -90,26 +91,9 @@ const EstablishmentInSessionContainer = ({
     useEffect(() => {
         usecase.getByUserSession().then((res) => {
             const es = res;
-            numeralUsecase.getNumeralByEstablishment(es.id || 0).then((resNumeral) => {
-                // Filtrar elementos que no son isDefault
-                const nonDefaultItems = resNumeral.filter((item) => !item.isDefault);
-                
-                // Manejar cambios en elementos no isDefault
-                const unchangedNonDefault = nonDefaultItems
-                    .filter((item) => item.isSelected)
-                    .map((item) => item.id);
-                console.log(unchangedNonDefault)
-                
-                const changedNonDefault = nonDefaultItems
-                    .filter((item) => !item.isSelected)
-                    .map((item) => item.id);
-                
-                // Combinar los IDs que deben mantenerse
-                const extraNumerals = [...changedNonDefault, ...unchangedNonDefault].join(',');
-                console.log("extraNumerals", extraNumerals)
-    
-                // Actualizar el estado
-                setData({ ...es, extra_numerals: extraNumerals });
+            numeralUsecase.getNumeralByEstablishment(es.id || 0).then((res) => {
+                const res_ = res.filter((item) => !item.isDefault).map((item) => item.id)
+                setData({ ...es, extra_numerals: res_.join(',') })
             }).catch((err) => {
                 console.log(err);
             });
@@ -173,16 +157,6 @@ const EstablishmentInSessionContainer = ({
             }
             return null
         }).filter((item) => item !== null) as MultiValue<{ value: string, label: string }>
-        for(const numeral of selected) {
-            //console.log("Add:",numeral.value)
-            if (numeral.value){
-                numeralUsecase.updateNumeralState(Number(numeral.value), {
-                    isSelected: false,
-                });
-            } else {
-                console.log("Nada por hacer")
-            }
-        }
         return selected
     }
 
@@ -200,31 +174,40 @@ const EstablishmentInSessionContainer = ({
 
     const handleRemoveNumeral = async (numeralId: string) => {
         try {
-            // Convertir numeralId a número
+            // Verificar si el 'id' está presente y es un número válido
+            if (!id) {
+                throw new Error("ID no encontrado en los parámetros de la URL.");
+            }
+
+            const idAsNumber = parseInt(id, 10);
+            if (isNaN(idAsNumber)) {
+                throw new Error(`El ID "${id}" no es un número válido.`);
+            }
+
             const numeralIdAsNumber = parseInt(numeralId, 10);
             if (isNaN(numeralIdAsNumber)) {
                 throw new Error(`El numeralId "${numeralId}" no es un número válido.`);
             }
-    
-            // Llamada al backend para actualizar el estado
-            await numeralUsecase.updateNumeralState(numeralIdAsNumber, { isSelected: true });
-    
-            // Actualiza extra_numerals en el estado local
+
+            // Llamada al backend para eliminar el numeral
+            await numeralUsecase.updateNumeralState(numeralIdAsNumber, idAsNumber);
+
+            // Actualizar el estado local para extra_numerals
             setData((prevData) => {
                 const updatedExtraNumerals = (prevData.extra_numerals || "")
                     .split(",")
-                    .filter((id) => id !== numeralId) // Filtrar el ID eliminado
+                    .map((id) => id.trim())
+                    .filter((id) => id !== numeralId)
                     .join(",");
                 return { ...prevData, extra_numerals: updatedExtraNumerals };
             });
-    
-            // Eliminar el numeral del estado general numerals
-            setNumerals((prevNumerals) => 
+
+            setNumerals((prevNumerals) =>
                 prevNumerals.filter((numeral) => numeral.id !== numeralIdAsNumber)
             );
-    
+
         } catch (error) {
-            console.error("Error al eliminar el numeral:", error);
+            console.error(`Error al eliminar el numeral con ID ${numeralId}:`, error);
         }
     };
 
