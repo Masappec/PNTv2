@@ -7,9 +7,9 @@ import { Pagination } from "../../../infrastructure/Api";
 import { TransparencyActivePublicResponse } from "../../../infrastructure/Api/TansparencyActive/interface";
 import { TransparencyFocusListDto } from "../../../infrastructure/Api/TransparencyFocus/interface";
 import { TransparencyCollabListDto } from "../../../infrastructure/Api/TransparencyCollab/interface";
-import { formatDate2 } from "../../../utils/functions";
+{/* import { formatDate2 } from "../../../utils/functions";*/}
 import Alert from "../../Common/Alert";
-import { BiCheck, BiEdit } from "react-icons/bi";
+{/* import { BiCheck, BiEdit } from "react-icons/bi";*/}
 
 interface Props {
   OnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
