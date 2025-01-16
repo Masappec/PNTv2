@@ -7,9 +7,7 @@ import { Pagination } from "../../../infrastructure/Api";
 import { TransparencyActivePublicResponse } from "../../../infrastructure/Api/TansparencyActive/interface";
 import { TransparencyFocusListDto } from "../../../infrastructure/Api/TransparencyFocus/interface";
 import { TransparencyCollabListDto } from "../../../infrastructure/Api/TransparencyCollab/interface";
-import { formatDate2 } from "../../../utils/functions";
 import Alert from "../../Common/Alert";
-import { BiCheck, BiEdit } from "react-icons/bi";
 
 interface Props {
   OnChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -112,84 +110,84 @@ const AnnualReportPresenter = (props: Props) => {
               title: "Articulo",
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
-                  _e.numeral.id == e.id && _e.month == 1).length
+                   _e.month == 1).length
               }</p>,
               title: "Enero"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                  _e.month == 2).length
               }</p>,
               title: "Febrero"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                   _e.month == 3).length
               }</p>,
               title: "Marzo"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                   _e.month == 4).length
               }</p>,
               title: "Abril"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                  _e.month == 5).length
               }</p>,
               title: "Mayo"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                   _e.month == 6).length
               }</p>,
               title: "Junio"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                    _e.month == 7).length
               }</p>,
               title: "Julio"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                    _e.month == 8).length
               }</p>,
               title: "Agosto"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                   _e.month == 9).length
               }</p>,
               title: "Septiembre"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                  _e.month == 10).length
               }</p>,
               title: "Octubre"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                    _e.month == 11).length
               }</p>,
               title: "Noviembre"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTC.results.filter((_e) =>
                   _e.month == 12).length
               }</p>,
@@ -198,7 +196,9 @@ const AnnualReportPresenter = (props: Props) => {
           ]}
           description={""}
           length={props.resultTC.results.length}
-          data={props.resultTC.results}
+          data={props.resultTC.results.filter((item, index, array) =>
+                array.findIndex(other => other.numeral.id === item.numeral.id) === index
+          )}
           currentPage={props.resultTC.current}
           onChangePage={props.onPageTC}
           totalPages={props.resultTC.total_pages}
@@ -223,84 +223,84 @@ const AnnualReportPresenter = (props: Props) => {
               title: "Articulo",
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                    _e.month == 1).length
               }</p>,
               title: "Enero"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                    _e.month == 2).length
               }</p>,
               title: "Febrero"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                    _e.month == 3).length
               }</p>,
               title: "Marzo"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                  _e.month == 4).length
               }</p>,
               title: "Abril"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                    _e.month == 5).length
               }</p>,
               title: "Mayo"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                    _e.month == 6).length
               }</p>,
               title: "Junio"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                  _e.month == 7).length
               }</p>,
               title: "Julio"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                   _e.month == 8).length
               }</p>,
               title: "Agosto"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                 _e.month == 9).length
               }</p>,
               title: "Septiembre"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                   _e.month == 10).length
               }</p>,
               title: "Octubre"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                   _e.month == 11).length
               }</p>,
               title: "Noviembre"
             },
             {
-              render: (e) => <p className="text-left">{
+              render: () => <p className="text-left">{
                 props.resultTF.results.filter((_e) =>
                    _e.month == 12).length
               }</p>,
@@ -309,7 +309,9 @@ const AnnualReportPresenter = (props: Props) => {
           ]}
           description={""}
           length={props.resultTF.results.length}
-          data={props.resultTF.results}
+          data={props.resultTF.results.filter((item, index, array) =>
+            array.findIndex(other => other.numeral.id === item.numeral.id) === index
+          )}
           currentPage={props.resultTF.current}
           onChangePage={props.onPageTF}
           totalPages={props.resultTF.total_pages}
@@ -499,7 +501,9 @@ const AnnualReportPresenter = (props: Props) => {
             ]}
             description={""}
             length={props.resultsTA.total}
-            data={props.resultsTA.results}
+            data={props.resultsTA.results.filter((item, index, array) =>
+              array.findIndex(other => other.numeral.id === item.numeral.id) === index
+            )}
             currentPage={props.resultsTA.current}
             onChangePage={props.onPageTA}
             totalPages={props.resultsTA.total_pages}
@@ -607,7 +611,9 @@ const AnnualReportPresenter = (props: Props) => {
             ]}
             description={""}
             length={props.resultsTAE.results.length}
-            data={props.resultsTAE.results}
+            data={props.resultsTA.results.filter((item, index, array) =>
+              array.findIndex(other => other.numeral.id === item.numeral.id) === index
+            )}
             currentPage={props.resultsTAE.current}
             onChangePage={props.onPageTAE}
             totalPages={props.resultsTAE.total_pages}
