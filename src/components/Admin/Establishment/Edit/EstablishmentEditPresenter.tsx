@@ -330,31 +330,38 @@ const EstablishmentEditPresenter = (props: Props) => {
                             </h4>
 
                             <div className="flex items-center gap-x-3">
-                                <ReactSelect
-                                    placeholder="Seleccione los numerales"
-                                    options={props.numerals.map((numeral) => ({
-                                        value: numeral.id + "",
-                                        label: numeral.name
-                                    }))
-                                    }
-                                    className="w-full"
-                                    isMulti
-                                    isDisabled={props.userRole === "Supervisora PNT"}
-                                    onChange={(selectedOptions) => {
-                                        // Delegar la eliminacion si corresponde
-                                        const selectedIds = selectedOptions?.map((option) => option.value) || [];
-                                        const removeIds = props
-                                            .getSelectedExtraNumeral(props.data.extra_numerals || "")
-                                            .map((numeral) => numeral.value)
-                                            .filter((id) => !selectedIds.includes(id));
+                            <ReactSelect
+                                placeholder="Seleccione los numerales"
+                                options={props.numerals.map((numeral) => ({
+                                    value: numeral.id + "",
+                                    label: numeral.name
+                                }))}
+                                className="w-full"
+                                isMulti
+                                isDisabled={props.userRole === "Supervisora PNT"}
+                                onChange={(selectedOptions) => {
+                                    // Obtener los IDs de los numerales seleccionados actualmente
+                                    const selectedIds = selectedOptions?.map((option) => option.value) || [];
+                                    
+                                    // Obtener los IDs de los numerales previamente seleccionados
+                                    const previousIds = props
+                                        .getSelectedExtraNumeral(props.data.extra_numerals || "")
+                                        .map((numeral) => numeral.value);
+                                    
+                                    // Identificar los IDs que se han eliminado
+                                    const removedIds = previousIds.filter((id) => !selectedIds.includes(id));
+                                    
+                                    // Llamar a `handleRemoveNumeral` para cada ID eliminado
+                                    removedIds.forEach((id) => {
+                                        props.handleRemoveNumeral(id);
+                                    });
 
-                                        removeIds.forEach((id) => {
-                                            props.handleRemoveNumeral(id);
-                                        })
-                                        props.hangelChangeExtraNumeral(selectedOptions);
-                                    }}
-                                    value={props.getSelectedExtraNumeral(props.data.extra_numerals||"")}
-                                />
+                                    // Actualizar la lista de numerales seleccionados
+                                    props.hangelChangeExtraNumeral(selectedOptions);
+                                }}
+                                value={props.getSelectedExtraNumeral(props.data.extra_numerals || "")}
+                            />
+
                             </div>
                         </div>
                     </div>

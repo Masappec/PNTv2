@@ -34,15 +34,10 @@ class NumeralUseCase {
         return await this.service.getNumeralsAllowed()
     }
 
-    /**
-     * Actualiza el estado de un numeral (por ejemplo, isDefault)
-     * @param id - ID del numeral a actualizar
-     * @param data - Objeto con los campos a actualizar
-     * @returns - Respuesta del servicio
-    */
-    async updateNumeralState(id: number, data: { isSelected: boolean }) {
+    async updateNumeralState(id: number, establisment: number) {
+        
         try {
-            const response = await this.service.updateNumeralState(id, data);
+            const response = await this.service.updateNumeralState(id, establisment || 0);
             //console.info(response);
             return response;
         } catch (error) {

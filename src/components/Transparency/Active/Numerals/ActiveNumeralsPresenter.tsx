@@ -79,7 +79,7 @@ const ActiveNumeralsPresenter = (props: ActiveNumeralsPresenterProps) => {
           </h2>
           <section className="flex flex-col items-center justify-center gap-4">
             {props.numerals
-              .filter((x) => !x.isDefault && !x.isSelected)
+              .filter((x) => !x.isDefault)
               .map((numeral) => (
                 <Numeral
                   title={numeral.name}
