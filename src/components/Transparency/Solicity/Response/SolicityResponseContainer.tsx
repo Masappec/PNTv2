@@ -79,7 +79,9 @@ const SolicityResponseContainer = (props: Props) => {
     const [isAvaliableToInsistency, setIsAvaliableToInsistency] = useState<boolean>(false)
     const [isAvaliableToResponse, setIsAvaliableToResponse] = useState<boolean>(false)
     const [isAvaliableToComment,] = useState<boolean>(false)
+    const [isAvaliableToProrroga, setIsAvaliableToProrroga] = useState<boolean>(false)
     const [textDescription, setTextDescription] = useState<string>("");
+    const [expiry_date, setExpiryDate] = useState<Date>(new Date());
     const [files, SetFiles] = useState<{
         file: File | string | null,
         type: "table" | "file" | "url",
@@ -545,6 +547,7 @@ const SolicityResponseContainer = (props: Props) => {
 
 
     const isChangeStatus = () => {
+        console.log(expiry_date)
         const is_Est = userSession.user_permissions?.find(x => x.codename === 'view_solicityresponse')
         if (!is_Est) {
             return props.usecase.isAvaliableChangeStaus(solicityToResponse)
@@ -560,40 +563,49 @@ const SolicityResponseContainer = (props: Props) => {
 
 
     const changeStatus = () => {
-
         let new_status = '';
-        const is_Est = userSession.user_permissions?.find(x => x.codename === 'view_solicityresponse')
+        const is_Est = userSession.user_permissions?.find(x => x.codename === 'view_solicityresponse');
         if (!is_Est) {
             if (solicityToResponse.status == StatusSolicity.RESPONSED.key) {
-                new_status = StatusSolicity.INSISTENCY_PERIOD.key
+                new_status = StatusSolicity.INSISTENCY_PERIOD.key;
             } else if (solicityToResponse.status == StatusSolicity.NO_RESPONSED.key) {
-                new_status = StatusSolicity.INSISTENCY_PERIOD.key
+                new_status = StatusSolicity.INSISTENCY_PERIOD.key;
+                setIsAvaliableToInsistency(true);
             } else if (solicityToResponse.status == StatusSolicity.INSISTENCY_RESPONSED.key) {
-                new_status = StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
+                new_status = StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key;
             } else if (solicityToResponse.status == StatusSolicity.INSISTENCY_NO_RESPONSED.key) {
-                new_status = StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key
+                new_status = StatusSolicity.PERIOD_INFORMAL_MANAGEMENT.key;
             }
         } else {
             if (solicityToResponse.status == StatusSolicity.SEND.key) {
-                new_status = StatusSolicity.PRORROGA.key
+                new_status = StatusSolicity.PRORROGA.key;
+                setIsAvaliableToProrroga(true);
+    
+                // Modificar la fecha de expiración sumando 5 días
+                const currentExpiryDate = new Date(solicityToResponse.expiry_date);
+                const newExpiryDate = new Date(currentExpiryDate);
+                newExpiryDate.setDate(currentExpiryDate.getDate() + 5);
+    
+                setExpiryDate(newExpiryDate); // Actualizar el estado de la fecha de expiración
+                solicityToResponse.expiry_date = newExpiryDate.toISOString(); // Modificar en el objeto
             }
         }
         if (new_status == '') {
-            return
+            return;
         }
         const res = {
             ...solicityToResponse,
-            status: new_status
-        }
-        setTimeline(Solicity.ordernReponse(res))
-        setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res))
-        SetSolicity(res)
-        setSolicityToResponse(res)
-
-        setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id))
-        setIsAvaliableToInsistency(true)
-
-    }
+            status: new_status,
+        };
+        console.log('Res', res);
+        setTimeline(Solicity.ordernReponse(res));
+        setIsAvaliableToResponse(props.usecase.availableToResponse(userSession, res));
+        SetSolicity(res);
+        setSolicityToResponse(res);
+        setTextDescription(props.usecase.getDescriptionTextStatus(res, userSession.id));
+    };
+    
+    
 
 
     const handleonChangeTextResponse = (text: string) => {
@@ -613,7 +625,7 @@ const SolicityResponseContainer = (props: Props) => {
         SetSolicity(res)
         setSolicityToResponse(res)
         setIsAvaliableToInsistency(false)
-
+        setIsAvaliableToProrroga(false)
         
     }
 
@@ -684,6 +696,7 @@ const SolicityResponseContainer = (props: Props) => {
                     isLoadingSend={loading}
                     attachs={attachs}
                     isAvaliableToInsistency={isAvaliableToInsistency}
+                    isAvaliableToProrroga={isAvaliableToProrroga}
                     timeline={timeline}
                     isAvaliableToComment={isAvaliableToComment}
                     ChangeStatus={() => { changeStatus() }}
