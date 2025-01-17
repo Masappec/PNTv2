@@ -703,6 +703,7 @@ const SolicityResponseContainer = (props: Props) => {
                     isAvaliableForChangeStatus={IsChangeStatus}
                     textForChangeStatus={textChangeStatus()}
                     textForMotiveDescription={textDescription}
+                    isAvaliableToProrroga={props.usecase.avaliableToProrroga(userSession, solicityToResponse)}
                 /> : null
             }
         </SolicityDetailContainer >
