@@ -15,7 +15,7 @@ class TransparencyFocusApi {
 
     async TransparencyList(search?: string, page?: number) {
         try {
-            const response = await this.api.get<Pagination<TransparencyFocusListDto>>(TRANSPARENCY_PATH + "/transparency/focus/list ",
+            const response = await this.api.get<Pagination<TransparencyFocusListDto>>(TRANSPARENCY_PATH + "/transparency/focus/list",
                 {
                     params: {
                         search,
