@@ -52,6 +52,22 @@ const FocalizedListContainer = ({ usecase, transparencyUseCase
       })
   }, [])
 
+  const handlePage = (page: number) => {
+    usecase.getTransparencyCollabList("", page)
+        .then((response) => {
+            setTransparencyFocus(response.results)
+            setCurrentPage(response.current)
+            setFrom(response.from || 1)
+            setTo(response.to || 1)
+            setTotal(response.total)
+            setTotalPage(response.total_pages || 0)
+
+        })
+        .catch((error) => {
+            setError(error.message)
+        })
+}
+
   const approvePublication = (ta: TransparencyCollab) => {
     transparencyUseCase?.approvePublication({
       establishment_id: ta.establishment.id || 0,
@@ -122,7 +138,7 @@ const FocalizedListContainer = ({ usecase, transparencyUseCase
       onSearch={() => { }}
       page={currentPage}
       search=""
-      setPage={() => { }}
+      setPage={handlePage}
       setSeach={() => { }}
       setVisibleModal={setVisibleModal}
       visibleModal={visibleModal}
