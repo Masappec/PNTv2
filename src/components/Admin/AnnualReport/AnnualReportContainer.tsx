@@ -564,9 +564,9 @@ const AnnualReportContainer = (props: Props) => {
                     ...e,
                     total: e.month < 9? total:e.total,
                     total_response_to_10_days: e.month < 9? 
-                    (e.total ==0?0:100):e.total_response_to_10_days,
+                        (total ==0?0:100):e.total_response_to_10_days,
                     percent_response_to_10_days: e.month < 9?
-                    (e.total == 0 ? 0 : 100):e.percent_response_to_10_days,
+                        (total == 0 ? 0 : 100):e.percent_response_to_10_days,
                 }
             })
             return solicitiesmap
