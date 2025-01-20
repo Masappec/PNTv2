@@ -513,27 +513,67 @@ const AnnualReportContainer = (props: Props) => {
                     junio: rest?.junio ? 'Si' : 'No',
                     julio: rest?.julio ? 'Si' : 'No',
                     agosto: rest?.agosto ? 'Si' : 'No',
-                    septiembre: item.month == 9 ? 'Si' : 'No',
-                    octubre: item.month == 10 ? 'Si' : 'No',
-                    noviembre: item.month == 11 ? 'Si' : 'No',
-                    diciembre: item.month == 12 ? 'Si' : 'No'
+                    septiembre: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                        'Si' : 'No',
+                    octubre: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                        'Si' : 'No',
+                    noviembre: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                        'Si' : 'No',
+                    diciembre: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        'Si' : 'No'
                 }
                 return data
             }else{
                 return {
                     numeral: item.numeral.name,
-                    enero: item.month == 1 ? 'Si' : 'No',
-                    febrero: item.month == 2 ? 'Si' : 'No',
-                    marzo: item.month == 3 ? 'Si' : 'No',
-                    abril: item.month == 4 ? 'Si' : 'No',
-                    mayo: item.month == 5 ? 'Si' : 'No',
-                    junio: item.month == 6 ? 'Si' : 'No',
-                    julio: item.month == 7 ? 'Si' : 'No',
-                    agosto: item.month == 8 ? 'Si' : 'No',
-                    septiembre: item.month == 9 ? 'Si' : 'No',
-                    octubre: item.month == 10 ? 'Si' : 'No',
-                    noviembre: item.month == 11 ? 'Si' : 'No',
-                    diciembre: item.month == 12 ? 'Si' : 'No'
+                    enero: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 1) ?
+                        'Si' : 'No',
+                    febrero: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 2) ?
+                        'Si' : 'No',
+                    marzo: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 3) ?
+                        'Si' : 'No',
+
+                    abril: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 4) ?
+                        'Si' : 'No',
+
+                    mayo: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 5) ?
+                        'Si' : 'No',
+
+                    junio: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 6) ?
+                        'Si' : 'No',
+                    
+                    julio: paginableTA.results.find((_e) =>
+
+                        _e.numeral.id == item.numeral.id && _e.month == 7) ?
+                        'Si' : 'No',
+
+                    agosto: paginableTA.results.find((_e) =>
+
+                        _e.numeral.id == item.numeral.id && _e.month == 8) ?
+                        'Si' : 'No',
+
+                    septiembre: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                        'Si' : 'No',
+                    octubre: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                        'Si' : 'No',
+                    noviembre: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                        'Si' : 'No',
+                    diciembre: paginableTA.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        'Si' : 'No'
                 }
             }
         })
