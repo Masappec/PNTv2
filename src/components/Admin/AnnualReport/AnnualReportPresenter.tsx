@@ -5,8 +5,6 @@ import EstablishmentEntity from "../../../domain/entities/Establishment";
 import { SolicityStatsAnualReportDto } from "../../../infrastructure/Api/AnualReport/interface";
 import { Pagination } from "../../../infrastructure/Api";
 import { TransparencyActivePublicResponse } from "../../../infrastructure/Api/TansparencyActive/interface";
-import { TransparencyFocusListDto } from "../../../infrastructure/Api/TransparencyFocus/interface";
-import { TransparencyCollabListDto } from "../../../infrastructure/Api/TransparencyCollab/interface";
 {/* import { formatDate2 } from "../../../utils/functions";*/}
 import Alert from "../../Common/Alert";
 {/* import { BiCheck, BiEdit } from "react-icons/bi";*/}
@@ -28,9 +26,51 @@ interface Props {
   onPageTF: (page: number) => void
   onPageTC: (page: number) => void
   resultsTAE: Pagination<TransparencyActivePublicResponse>
-  resultsTA: Pagination<TransparencyActivePublicResponse>
-  resultTF: Pagination<TransparencyFocusListDto>
-  resultTC: Pagination<TransparencyCollabListDto>
+  resultsTA: {
+    numeral: string,
+    enero: string,
+    febrero: string,
+    marzo: string,
+    abril: string,
+    mayo: string,
+    junio: string,
+    julio: string,
+    agosto: string,
+    septiembre: string,
+    octubre: string,
+    noviembre: string,
+    diciembre: string,
+  }[],
+  resultTF: {
+    numeral:string,
+    enero: string,
+    febrero: string,
+    marzo: string,
+    abril: string,
+    mayo: string,
+    junio: string,
+    julio: string,
+    agosto: string,
+    septiembre: string,
+    octubre: string,
+    noviembre: string,
+    diciembre: string,
+  }[],
+  resultTC: {
+    numeral: string,
+    enero: string,
+    febrero: string,
+    marzo: string,
+    abril: string,
+    mayo: string,
+    junio: string,
+    julio: string,
+    agosto: string,
+    septiembre: string,
+    octubre: string,
+    noviembre: string,
+    diciembre: string,
+  }[],
   error: string;
   success: string;
   setError: (e: string) => void;
@@ -39,6 +79,7 @@ interface Props {
   onEdit: (index: number) => void;
   isEdit: (index: number) => boolean;
   onChangeValue: (mes: number, name: keyof SolicityStatsAnualReportDto, value: string) => void;
+  total_saip: number;
 }
 
 const AnnualReportPresenter = (props: Props) => {
@@ -107,112 +148,86 @@ const AnnualReportPresenter = (props: Props) => {
           columns={[
             {
               render: (e) => <p className="text-left">{
-                e.numeral.name
+                e.numeral
               }</p>,
               title: "Articulo",
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 1) ?
-                  'Si' : 'No'
+                e.enero
               }</p>,
               title: "Enero"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 2) ?
-                  'Si' : 'No'
+                e.febrero
               }</p>,
               title: "Febrero"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 3) ?
-                  'Si' : 'No'
+                e.marzo
               }</p>,
               title: "Marzo"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 4) ?
-                  'Si' : 'No'
+                e.abril
               }</p>,
               title: "Abril"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 5) ?
-                  'Si' : 'No'
+                e.mayo
               }</p>,
               title: "Mayo"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 6) ?
-                  'Si' : 'No'
+                e.junio
               }</p>,
               title: "Junio"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 7) ?
-                  'Si' : 'No'
+                e.julio
               }</p>,
               title: "Julio"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 8) ?
-                  'Si' : 'No'
+                e.agosto
               }</p>,
               title: "Agosto"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 9) ?
-                  'Si' : 'No'
+                e.septiembre
               }</p>,
               title: "Septiembre"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 10) ?
-                  'Si' : 'No'
+                e.octubre
               }</p>,
               title: "Octubre"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 11) ?
-                  'Si' : 'No'
+                e.noviembre
               }</p>,
               title: "Noviembre"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTC.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 12) ?
-                  'Si' : 'No'
+                e.diciembre
               }</p>,
               title: "Diciembre"
             },
           ]}
           description={""}
-          length={props.resultTC.results.length}
-          data={props.resultTC.results.filter((item, index, array) =>
-                array.findIndex(other => other.numeral.id === item.numeral.id) === index
-          )}
+          length={props.resultTC.length}
+          data={props.resultTC}
         />
         <p className="text-base font-medium text-primary">
           Artículo 4 de la LOTAIP: número 10:
@@ -226,112 +241,86 @@ const AnnualReportPresenter = (props: Props) => {
           columns={[
             {
               render: (e) => <p className="text-left">{
-                e.numeral.name
+                e.numeral
               }</p>,
               title: "Articulo",
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 1) ?
-                  'Si' : 'No'
+                e.enero
               }</p>,
               title: "Enero"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 2) ?
-                  'Si' : 'No'
+                e.febrero
               }</p>,
               title: "Febrero"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 3) ?
-                  'Si' : 'No'
+                e.marzo
               }</p>,
               title: "Marzo"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 4) ?
-                  'Si' : 'No'
+                e.abril
               }</p>,
               title: "Abril"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 5) ?
-                  'Si' : 'No'
+                e.mayo
               }</p>,
               title: "Mayo"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 6) ?
-                  'Si' : 'No'
+                e.junio
               }</p>,
               title: "Junio"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 7) ?
-                  'Si' : 'No'
+                e.julio
               }</p>,
               title: "Julio"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 8) ?
-                  'Si' : 'No'
+                e.agosto
               }</p>,
               title: "Agosto"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 9) ?
-                  'Si' : 'No'
+                e.septiembre
               }</p>,
               title: "Septiembre"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 10) ?
-                  'Si' : 'No'
+                e.octubre
               }</p>,
               title: "Octubre"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 11) ?
-                  'Si' : 'No'
+                e.noviembre
               }</p>,
               title: "Noviembre"
             },
             {
               render: (e) => <p className="text-left">{
-                props.resultTF.results.find((_e) =>
-                  _e.numeral.id == e.numeral.id && _e.month == 12) ?
-                  'Si' : 'No' 
+                e.diciembre
               }</p>,
               title: "Diciembre"
             },
           ]}
           description={""}
-          length={props.resultTF.results.length}
-          data={props.resultTF.results.filter((item, index, array) =>
-            array.findIndex(other => other.numeral.id === item.numeral.id) === index
-          )}
+          length={props.resultTF.length}
+          data={props.resultTF}
           
         />
         <section className="lg:lg:w-2/5">
@@ -416,121 +405,88 @@ const AnnualReportPresenter = (props: Props) => {
           <Table
             show={false}
             columns={[
-              
               {
-                render: () => <p className="text-left">{
-                  "19"
+                render: (e) => <p className="text-left">{
+                  e.numeral
                 }</p>,
-                title: "Artículo ",
+                title: "Articulo",
               },
               {
                 render: (e) => <p className="text-left">{
-                  e.numeral.name.replace("Numeral", "")
-                }</p>,
-                title: "Numeral",
-              },
-              {
-                render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e)=>
-                    _e.numeral.id == e.numeral.id && _e.month == 1) ?
-                    'Si' : 'No'
+                  e.enero
                 }</p>,
                 title: "Enero"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 2) ?
-                    'Si' : 'No'
+                  e.febrero
                 }</p>,
                 title: "Febrero"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 3) ?
-                    'Si' : 'No'
+                  e.marzo
                 }</p>,
                 title: "Marzo"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 4) ?
-                    'Si' : 'No'
+                  e.abril
                 }</p>,
                 title: "Abril"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 5) ?
-                    'Si' : 'No'
+                  e.mayo
                 }</p>,
                 title: "Mayo"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 6) ?
-                    'Si' : 'No'
+                  e.junio
                 }</p>,
                 title: "Junio"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 7) ?
-                    'Si' : 'No'
+                  e.julio
                 }</p>,
                 title: "Julio"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 8) ?
-                    'Si' : 'No'
+                  e.agosto
                 }</p>,
                 title: "Agosto"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 9) ?
-                    'Si' : 'No'
+                  e.septiembre
                 }</p>,
                 title: "Septiembre"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 10) ?
-                    'Si' : 'No'
+                  e.octubre
                 }</p>,
                 title: "Octubre"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 11) ?
-                    'Si' : 'No'
+                  e.noviembre
                 }</p>,
                 title: "Noviembre"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTA.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 12) ?
-                    'Si' : 'No'
+                  e.diciembre
                 }</p>,
                 title: "Diciembre"
               },
             ]}
             description={""}
-            length={props.resultsTA.total}
-            data={props.resultsTA.results.filter((item, index, array) =>
-              array.findIndex(other => other.numeral.id === item.numeral.id) === index
-            )}
+            length={props.resultsTA.length}
+            data={props.resultsTA}
             
           />
           <p className="font-semibold text-gray-500 my-3 text-sm">
@@ -769,6 +725,7 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-48"
                         name="total_organic_law_public_service"
                         onChange={props.OnChange}
+                        
                       />
                     </td>
 
@@ -1013,161 +970,41 @@ const AnnualReportPresenter = (props: Props) => {
                 title: "Mes",
               },
               {
-                render: (item) => !props.isEdit(item.month) ? <p className="text-center">{
+                render: (item) => <p className="text-center">{
                   item.total
-                }</p> : <TextInput
-                  id="small"
-                  type="number" min={0}
-                  sizing="sm"
-                  className="w-20"
-                  name="total"
-                  onChange={(e) => {
-                    props.onChangeValue(item.month, "total", e.target.value)
-                  }}
-                  value={item.total}
-                />,
+                }</p> ,
                 title: "Total de SAIP recibidas"
               },
               {
-                render: (item) => !props.isEdit(item.month) ? <p className="text-center">{
+                render: (item) => <p className="text-center">{
                   item.total_response_to_10_days + " / " + item.percent_response_to_10_days + "%"
-                }</p> :
-                  <div className="flex justify-center gap-5">
-                    <TextInput
-                      id="small"
-                      type="number" min={0}
-                      sizing="sm"
-                      className="w-20"
-                      name="total_response_to_10_days"
-                      onChange={(e) => {
-                        props.onChangeValue(item.month, "total_response_to_10_days", e.target.value)
-                      }}
-                      value={item.total_response_to_10_days}
-                    />
-                    <span className="text-gray-500  mt-2">/</span>
-                    <TextInput
-                      id="small"
-                      type="number" min={0}
-                      sizing="sm"
-                      className="w-20"
-                      name="percent_response_to_10_days"
-                      onChange={(e) => {
-                        props.onChangeValue(item.month, "percent_response_to_10_days", e.target.value)
-                      }}
-                      value={item.percent_response_to_10_days}
-                    />
-                    <span className="text-gray-500 mt-2">%</span>
-
-
-                  </div>,
+                }</p> ,
 
                 title: "Respondidas en hasta 10 días Cantidad / Porcentaje",
               },
               {
-                render: (item) => !props.isEdit(item.month) ? <p className="text-center">{
+                render: (item) => <p className="text-center">{
                   item.total_reponse_to_11_days + " / " + item.percent_reponse_to_11_days + "%"
-                }</p> : <div className="flex justify-center gap-5">
-                  <TextInput
-                    id="small"
-                    type="number" min={0}
-                    sizing="sm"
-                    className="w-20"
-                    name="total_reponse_to_11_days"
-                    onChange={(e) => {
-                      props.onChangeValue(item.month, "total_reponse_to_11_days", e.target.value)
-                    }}
-                    value={item.total_reponse_to_11_days}
-                  />
-                  <span className="text-gray-500  mt-2">/</span>
-                  <TextInput
-                    id="small"
-                    type="number" min={0}
-                    sizing="sm"
-                    className="w-20"
-                    name="percent_reponse_to_11_days"
-                    onChange={(e) => {
-                      props.onChangeValue(item.month, "percent_reponse_to_11_days", e.target.value)
-                    }}
-                    value={item.percent_reponse_to_11_days}
-                  />
-                  <span className="text-gray-500 mt-2">%</span>
-
-
-                </div>,
+                }</p>,
                 title: "Respondidas entre 11 y 15 días Cantidad / Porcentaje",
               },
               {
-                render: (item) => !props.isEdit(item.month) ? <p className="text-center">{
+                render: (item) => <p className="text-center">{
                   item.total_response_plus_15_days + " / " + item.percent_response_plus_15_days + "%"
-                }</p> : <div className="flex justify-center gap-5">
-                  <TextInput
-                    id="small"
-                    type="number" min={0}
-                    sizing="sm"
-                    className="w-20"
-                    name="total_response_plus_15_days"
-                    onChange={(e) => {
-                      props.onChangeValue(item.month, "total_response_plus_15_days", e.target.value)
-                    }}
-                    value={item.total_response_plus_15_days}
-                  />
-                  <span className="text-gray-500  mt-2">/</span>
-                  <TextInput
-                    id="small"
-                    type="number" min={0}
-                    sizing="sm"
-                    className="w-20"
-                    name="percent_response_plus_15_days"
-                    onChange={(e) => {
-                      props.onChangeValue(item.month, "percent_response_plus_15_days", e.target.value)
-                    }}
-                    value={item.percent_response_plus_15_days}
-                  />
-                  <span className="text-gray-500 mt-2">%</span>
-
-
-                </div>,
+                }</p> ,
                 title: "Respondidas en más de 15 días Cantidad / Porcentaje",
               },
               {
-                render: (item) => !props.isEdit(item.month) ? <p className="text-center">{
+                render: (item) => <p className="text-center">{
                   item.total_no_response + " / " + item.percent_no_response + "%"
-                }</p> :
-                  <div className="flex justify-center gap-5">
-                    <TextInput
-                      id="small"
-                      type="number" min={0}
-                      sizing="sm"
-                      className="w-20"
-                      name="total_no_response"
-                      onChange={(e) => {
-                        props.onChangeValue(item.month, "total_no_response", e.target.value)
-                      }}
-                      value={item.total_no_response}
-                    />
-                    <span className="text-gray-500  mt-2">/</span>
-                    <TextInput
-                      id="small"
-                      type="number" min={0}
-                      sizing="sm"
-                      className="w-20"
-                      name="percent_no_response"
-                      onChange={(e) => {
-                        props.onChangeValue(item.month, "percent_no_response", e.target.value)
-                      }}
-                      value={item.percent_no_response}
-                    />
-                    <span className="text-gray-500 mt-2">%</span>
-
-
-                  </div>,
+                }</p>,
                 title: "No respondidas Cantidad / Porcentaje",
               },
               
             ]}
             description={""}
             length={0}
-            data={props.form.solicity_infor_anual_report}
+            data={props.solicityStats}
             currentPage={0}
             onChangePage={() => { }}
             totalPages={0}
@@ -1195,7 +1032,8 @@ const AnnualReportPresenter = (props: Props) => {
                 sizing="sm"
                 className="lg:w-2/5"
                 name="total_saip"
-                onChange={props.OnChange}
+                value={props.total_saip}
+
               />
             </div>
             <div>
@@ -1480,6 +1318,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>
                       <td>
@@ -1492,6 +1331,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>
                       <td>
@@ -1508,6 +1348,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>
                       <td>
@@ -1522,6 +1363,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>
                       <td>
@@ -1532,7 +1374,9 @@ const AnnualReportPresenter = (props: Props) => {
                               e.target.value === "si"
 
                             )
-                          }}>
+                          }}
+                          disabled
+                          >
                           <option
                             value={"si"}
                           >Si</option>
@@ -1551,6 +1395,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>{" "}
                       <td>
@@ -1562,6 +1407,7 @@ const AnnualReportPresenter = (props: Props) => {
                           onChange={(e) => {
                             props.onTextTable(index, "ampliation_date", e.target.value)
                           }}
+                          disabled
                         />
                       </td>{" "}
                       <td>
@@ -1574,6 +1420,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>
                     </tr>
@@ -1583,26 +1430,7 @@ const AnnualReportPresenter = (props: Props) => {
 
             </tbody>
           </table>
-          <footer className="w-full bg-gray-100">
-            <section className="flex w-full items-end justify-center gap-2 p-2 text-sm">
-              <button
-                type="button"
-                onClick={props.addItemElements}
-                className="flex items-center gap-2 rounded-md border border-primary px-2 py-1 font-medium text-primary hover:bg-primary hover:text-white"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                  fill="currentColor"
-                >
-                  <path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"></path>
-                </svg>
-                <span>Añadir fila</span>
-              </button>
-            </section>
-          </footer>
+          
         </section>
 
         {props.error != "" && (

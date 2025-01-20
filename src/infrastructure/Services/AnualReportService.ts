@@ -53,4 +53,8 @@ export class AnualReportService {
   public async getTaskEndAnualReport(task_id: string) {
     return await this.anualReportApi.getTaskEndAnualReport(task_id);
   }
+  //getPublicAudiencias
+  public async getReservas(ruc: string,year: number) {
+    return await this.anualReportApi.getReservas(ruc,year);
+  }
 }
