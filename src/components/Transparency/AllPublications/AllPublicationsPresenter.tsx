@@ -72,10 +72,13 @@ const AllPublicationsPresenter = (props: Props) => {
 
 
     const onDownloadFile = async (url: string, name: string) => {
+        console.log("URL", url)
+        console.log("Name", name)
         try {
             const res = await axios.get(url, {
                 responseType: 'blob'
             })
+            console.log("Revisando", res)
             const blobUrl = window.URL.createObjectURL(new Blob([res.data]));
             const a = document.createElement("a");
             a.href = blobUrl;
@@ -83,22 +86,25 @@ const AllPublicationsPresenter = (props: Props) => {
             a.click();
             window.URL.revokeObjectURL(blobUrl);
         } catch (e) {
+            console.error("Error", e)
             console.log(e)
         }
     }
 
     const onDownLoadPdf = async (url: string, name: string) => {
+        console.log("URL", url)
         try {
             const res = await axios.get(url, {
                 responseType: 'blob'
             })
-
+            console.log("Revisando", res)
             const file = new File([res.data], name + '.csv', { type: 'text/csv' })
             TemplateUsecase.detectDelimiter(file, (delim, text) => {
                 console.log(delim)
                 Transform.fromCsvToPdfLandScape(text, name, props.establishment)
             })
         } catch (e) {
+            console.log("Error", e)
             console.log(e)
         }
 
@@ -106,11 +112,13 @@ const AllPublicationsPresenter = (props: Props) => {
     }
 
     const onDonwloadXlsx = async (url: string, name: string) => {
+        console.log("URL", url)
+        console.log("Name", name)
         try {
             const res = await axios.get(url, {
                 responseType: 'blob'
             })
-
+            console.log("Revisando", res)
             const file = new File([res.data], name + '.csv', { type: 'text/csv' })
             TemplateUsecase.detectDelimiter(file, (delim, text) => {
                 console.log(delim)
@@ -118,6 +126,7 @@ const AllPublicationsPresenter = (props: Props) => {
                 Transform.fromCsvToXlxs(text, name)
             })
         } catch (e) {
+            console.log("Error", e)
             console.log(e)
         }
     }
@@ -185,10 +194,10 @@ const AllPublicationsPresenter = (props: Props) => {
                                     key={i}
                                     className="flex flex-col items-center text-center space-y-4 p-4"
                                 >
-                                    <div className="flex space-x-6">
+                                    <div className="flex space-x-6" key={i}>
                                         {/* Ícono CSV */}
-                                        <a
-                                            href="#"
+                                        <a key={i}
+                                            href={"#"}
                                             onClick={() =>
                                                 onDownloadFile(
                                                     file.url_download as string,
@@ -200,8 +209,8 @@ const AllPublicationsPresenter = (props: Props) => {
                                             <FaFileCsv size={30} className="text-primary-500" />
                                         </a>
                                         {/* Ícono PDF */}
-                                        <a
-                                            href="#"
+                                        <a key="i"
+                                            href={"#"}
                                             onClick={() =>
                                                 onDownLoadPdf(
                                                     file.url_download as string,
@@ -213,14 +222,15 @@ const AllPublicationsPresenter = (props: Props) => {
                                             <FaFilePdf size={30} className="text-red-500" />
                                         </a>
                                         {/* Ícono XLS */}
-                                        <a
-                                            href="#"
+                                        <a key="i"
+                                            href={"#"}
                                             onClick={() =>
                                                 onDonwloadXlsx(
                                                     file.url_download as string,
                                                     `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
                                                 )
                                             }
+                                            target="_blank"
                                             className="text-green-500 hover:text-primary-600"
                                         >
                                             <FaFileExcel size={30} className="text-green-500" />
