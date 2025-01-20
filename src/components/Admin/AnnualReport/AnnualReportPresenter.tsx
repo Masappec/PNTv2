@@ -725,6 +725,7 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-48"
                         name="total_organic_law_public_service"
                         onChange={props.OnChange}
+                        disabled
                       />
                     </td>
 
@@ -1317,6 +1318,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>
                       <td>
@@ -1329,6 +1331,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>
                       <td>
@@ -1345,6 +1348,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>
                       <td>
@@ -1359,6 +1363,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>
                       <td>
@@ -1369,7 +1374,9 @@ const AnnualReportPresenter = (props: Props) => {
                               e.target.value === "si"
 
                             )
-                          }}>
+                          }}
+                          disabled
+                          >
                           <option
                             value={"si"}
                           >Si</option>
@@ -1388,6 +1395,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>{" "}
                       <td>
@@ -1399,6 +1407,7 @@ const AnnualReportPresenter = (props: Props) => {
                           onChange={(e) => {
                             props.onTextTable(index, "ampliation_date", e.target.value)
                           }}
+                          disabled
                         />
                       </td>{" "}
                       <td>
@@ -1411,6 +1420,7 @@ const AnnualReportPresenter = (props: Props) => {
 
                             )
                           }}
+                          disabled
                         />
                       </td>
                     </tr>
