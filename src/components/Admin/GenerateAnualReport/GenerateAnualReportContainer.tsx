@@ -76,11 +76,11 @@ export const GenerateAnualReportContainer = (props: Props) => {
             dispatch(setAnualReports(""));
             setIsLoading(false);
             if (res.task_status == "PENDING") {
-                setSuccess("El Reporte Anual se está generando, Podrás descargarlo cuando esté listo.");
+                setSuccess("El Informe Anual se está generando, Podrás descargarlo cuando esté listo.");
             } else if (res.task_status == "SUCCESS") {
-                setSuccess("El Reporte Anual se ha generado correctamente.");
+                setSuccess("El Informe Anual se ha generado correctamente.");
             } else if (res.task_status == "FAILURE") {
-                setError("Ocurrió un error al generar el reporte anual.");
+                setError("Ocurrió un error al generar el informe anual.");
             } else {
                 setError("Ocurrió un error inesperado.");
             }

@@ -471,7 +471,7 @@ const menu = [
   },
 
   {
-    name: 'Generar Reporte Anual',
+    name: 'Reporte Informe Anual',
     path: '/admin/annualreports/generate',
     visible: true,
     icon: <GrCompliance size={25} className="text-slate-500" />,
