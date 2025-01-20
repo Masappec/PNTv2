@@ -78,7 +78,7 @@ const AllPublicationsPresenter = (props: Props) => {
             const res = await axios.get(url, {
                 responseType: 'blob'
             })
-            console.log("Revisando", res)
+            console.log("Revisar", res)
             const blobUrl = window.URL.createObjectURL(new Blob([res.data]));
             const a = document.createElement("a");
             a.href = blobUrl;
@@ -93,18 +93,19 @@ const AllPublicationsPresenter = (props: Props) => {
 
     const onDownLoadPdf = async (url: string, name: string) => {
         console.log("URL", url)
+        console.log("Name", name)
         try {
             const res = await axios.get(url, {
                 responseType: 'blob'
             })
-            console.log("Revisando", res)
+            console.log("Revisar", res)
             const file = new File([res.data], name + '.csv', { type: 'text/csv' })
             TemplateUsecase.detectDelimiter(file, (delim, text) => {
                 console.log(delim)
                 Transform.fromCsvToPdfLandScape(text, name, props.establishment)
             })
         } catch (e) {
-            console.log("Error", e)
+            console.error("Error", e)
             console.log(e)
         }
 
@@ -118,7 +119,7 @@ const AllPublicationsPresenter = (props: Props) => {
             const res = await axios.get(url, {
                 responseType: 'blob'
             })
-            console.log("Revisando", res)
+            console.log("Revisar", res)
             const file = new File([res.data], name + '.csv', { type: 'text/csv' })
             TemplateUsecase.detectDelimiter(file, (delim, text) => {
                 console.log(delim)
@@ -194,10 +195,10 @@ const AllPublicationsPresenter = (props: Props) => {
                                     key={i}
                                     className="flex flex-col items-center text-center space-y-4 p-4"
                                 >
-                                    <div className="flex space-x-6" key={i}>
+                                    <div className="flex space-x-6">
                                         {/* Ícono CSV */}
-                                        <a key={i}
-                                            href={"#"}
+                                        <a
+                                            href="#"
                                             onClick={() =>
                                                 onDownloadFile(
                                                     file.url_download as string,
@@ -209,8 +210,8 @@ const AllPublicationsPresenter = (props: Props) => {
                                             <FaFileCsv size={30} className="text-primary-500" />
                                         </a>
                                         {/* Ícono PDF */}
-                                        <a key="i"
-                                            href={"#"}
+                                        <a
+                                            href="#"
                                             onClick={() =>
                                                 onDownLoadPdf(
                                                     file.url_download as string,
@@ -222,15 +223,14 @@ const AllPublicationsPresenter = (props: Props) => {
                                             <FaFilePdf size={30} className="text-red-500" />
                                         </a>
                                         {/* Ícono XLS */}
-                                        <a key="i"
-                                            href={"#"}
+                                        <a
+                                            href="#"
                                             onClick={() =>
                                                 onDonwloadXlsx(
                                                     file.url_download as string,
                                                     `${props.year}-${props.month}-${item.numeralPartial?.name}-${file.name}`
                                                 )
                                             }
-                                            target="_blank"
                                             className="text-green-500 hover:text-primary-600"
                                         >
                                             <FaFileExcel size={30} className="text-green-500" />
