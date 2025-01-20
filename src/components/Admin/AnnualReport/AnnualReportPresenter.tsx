@@ -725,7 +725,7 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-48"
                         name="total_organic_law_public_service"
                         onChange={props.OnChange}
-                        disabled
+                        
                       />
                     </td>
 
