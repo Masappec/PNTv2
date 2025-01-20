@@ -600,13 +600,16 @@ const AnnualReportContainer = (props: Props) => {
                     item.date.includes('/0' + e.month + '/') 
                 ).length
                 
+                const percent = (totalSaip+totalSaipPnt1) == 0 ? 0 : 
+                    (total / (totalSaip+totalSaipPnt1)) * 100
+
                 return {
                     ...e,
                     total: e.month < 9? total:e.total,
                     total_response_to_10_days: e.month < 9? 
-                        (total ==0?0:100):e.total_response_to_10_days,
+                        total :e.total_response_to_10_days,
                     percent_response_to_10_days: e.month < 9?
-                        (total == 0 ? 0 : 100):e.percent_response_to_10_days,
+                        (total == 0 ? 0 : percent):e.percent_response_to_10_days,
                 }
             })
             return solicitiesmap
