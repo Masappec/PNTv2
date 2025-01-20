@@ -120,3 +120,92 @@ export interface TaskEndAnualReportDto {
     };
   };
 }
+
+
+
+export interface Pnt1PasiveDto {
+  identification: string;
+  function: string;
+  type: string;
+  establishment_name: string;
+  saip: string;
+  name_solicitant: string;
+  date: string;
+  date_response: string;
+  state: string;
+}
+
+
+export interface Pnt1ActiveDto {
+  identification: string;
+  function: string;
+  type: string;
+  establishment_name: string;
+  art: string;
+  numeral: string;
+  enero: boolean;
+  febrero: boolean;
+  marzo: boolean;
+  abril: boolean;
+  mayo: boolean;
+  junio: boolean;
+  julio: boolean;
+  agosto: boolean;
+}
+
+export interface Pnt1ColabDto {
+  identification: string;
+  function: string;
+  type: string;
+  establishment_name: string;
+  art: string;
+  numeral: string;
+  enero: boolean;
+  febrero: boolean;
+  marzo: boolean;
+  abril: boolean;
+  mayo: boolean;
+  junio: boolean;
+  julio: boolean;
+  agosto: boolean;
+}
+
+export interface Pnt1FocalDto {
+  identification: string;
+  function: string;
+  type: string;
+  establishment_name: string;
+  art: string;
+  numeral: string;
+  enero: boolean;
+  febrero: boolean;
+  marzo: boolean;
+  abril: boolean;
+  mayo: boolean;
+  junio: boolean;
+  julio: boolean;
+  agosto: boolean;
+}
+
+export interface Pnt1ReservadaDto {
+  identification: string;
+  establishment_name: string;
+  classification: string;
+  theme: string;
+  base_legal: string;
+  date_classification: string;
+  period: string;
+  extension: string;
+  description: string;
+  date_extension: string;
+  period_extension: string;
+}
+
+export interface ReservasPnt2{
+  establishment_name: string;
+  theme: string;
+  resolution_number: string;
+  classification_date: string;
+  period_of_validity: string;
+  link: string;
+}

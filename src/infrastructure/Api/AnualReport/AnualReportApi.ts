@@ -1,8 +1,9 @@
 import { AxiosError, AxiosInstance } from "axios";
-import { Pagination, TRANSPARENCY_PATH } from "..";
+import { Pagination, PUBLIC_PATH, TRANSPARENCY_PATH } from "..";
 import {
   AnualReportCreateDto,
   AnualReportResponseDto,
+  ReservasPnt2,
   SolicityStatsAnualReportDto,
   TaskAnualReportDto,
   TaskEndAnualReportDto,
@@ -71,7 +72,7 @@ export class AnualReportApi {
       >(TRANSPARENCY_PATH + "/anual-report/ta/stats", {
         params: {
           establishment_id,
-          is_default: isDefault?1:0,
+          is_default: isDefault ? 1 : 0,
           page,
           limit,
         },
@@ -150,7 +151,6 @@ export class AnualReportApi {
     }
   }
 
-
   public async generateAnualReport(year: number) {
     try {
       const res = await this.api.get<TaskAnualReportDto>(
@@ -175,16 +175,14 @@ export class AnualReportApi {
     }
   }
 
-
   public async getTaskEndAnualReport(task_id: string) {
     try {
       const res = await this.api.get<TaskEndAnualReportDto>(
-        TRANSPARENCY_PATH + "/task/status/"+task_id,
-        
+        TRANSPARENCY_PATH + "/task/status/" + task_id
       );
       return res.data;
     } catch (err) {
-      console.log(err)
+      console.log(err);
       if (err instanceof AxiosError) {
         const error = err.response?.data;
         if (error) {
@@ -197,4 +195,17 @@ export class AnualReportApi {
     }
   }
 
+  //    //public/audiencias
+  async getReservas(ruc: string, year: number) {
+    const res = await this.api.get<ReservasPnt2[]>(
+      PUBLIC_PATH + "/public/numeral-16",
+      {
+        params: {
+          ruc,
+          year: year
+        },
+      }
+    );
+    return res.data;
+  }
 }

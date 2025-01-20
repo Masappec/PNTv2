@@ -3,6 +3,7 @@ import { AnualReportUseCase } from "../../../../domain/useCases/AnualReportUseCa
 import EstablishmentUseCase from "../../../../domain/useCases/Establishment/EstablishmentUseCase"
 import api from "../../../../infrastructure/Api"
 import { AnualReportApi } from "../../../../infrastructure/Api/AnualReport/AnualReportApi"
+import { Pnt1Api } from "../../../../infrastructure/Api/AnualReport/Pnt1Api"
 import EstablishmentApi from "../../../../infrastructure/Api/Establishment/EstablishmentApi"
 import { AnualReportService } from "../../../../infrastructure/Services/AnualReportService"
 import EstablishmentService from "../../../../infrastructure/Services/EstablishmentService"
@@ -15,6 +16,7 @@ const AnnualReport = () =>{
     return (
      <AnnualReportContainer usecase={useCase} 
             establishmentUsecase={Establishmentusecase}
+            api={new Pnt1Api(api)}
      />
 
     )
