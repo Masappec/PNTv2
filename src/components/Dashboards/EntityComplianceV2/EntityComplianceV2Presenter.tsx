@@ -1,9 +1,10 @@
 import { FaCalendarAlt } from "react-icons/fa";
 import Table from "../../Common/Table";
-import { CalendarMonth } from "../../Common/CalendarYear";
+import { CalendarMonth,  } from "../../Common/CalendarYear";
 import { useState } from "react";
 import { ComplianceEstablisment } from "../../../infrastructure/Api/PublicDataApi/interface";
 import { Pagination } from "../../../infrastructure/Api";
+
 
 
 
@@ -25,6 +26,7 @@ interface Props {
     onSelectedYear: (year: number) => void;
     year: number;
     onDetail: (data:ComplianceEstablisment,type:'TA'|'TF'|'TC')=>void
+
 
 }
 const EntityComplianceV2Presenter = (props: Props) => {
@@ -55,6 +57,8 @@ const EntityComplianceV2Presenter = (props: Props) => {
                 {"Cumplimiento de Entidades"}
 
             </h2>
+
+
             <section className='mb-4 flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-center mt-7'>
                 <div className='w-full max-w-md'>
                     <div className='group relative'>
@@ -171,6 +175,8 @@ const EntityComplianceV2Presenter = (props: Props) => {
 
                 />
             </section>
+
+            
 
         </>
     );

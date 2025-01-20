@@ -150,7 +150,7 @@ export class Solicity extends BaseEntity {
             //    undefined               // Fecha opcional
             //));
             list.push(new TimeLinePresenter(c.user, c.created_at, c.motive, c.files, [],
-                "COMMENT", "Motivo de Prórroga", 'Motivo de Prórroga'))
+                "COMMENT", "Motivo de Insistencia", 'Motivo de Prórroga'))
         })
 
 

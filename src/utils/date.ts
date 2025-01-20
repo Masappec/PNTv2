@@ -5,7 +5,7 @@ export class DatePnt extends Date{
 
     // Método personalizado: Mes en el rango de 1 a 12
     getMonthOneBased() {
-        let mes = this.getMonth() +1;
+        const mes = this.getMonth() +1;
         
         return mes;
     }
