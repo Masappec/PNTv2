@@ -502,7 +502,7 @@ const AnnualReportContainer = (props: Props) => {
         const mapfinal = diff.map((item) => {
             if (new DatePnt().getYearToUpload()==2024){
                 const rest = pnt1active.find((_e) =>
-                    "Numeral "+_e.numeral == item.numeral.name)
+                "Numeral "+_e.numeral.replace(" - ","-") == item.numeral.name)
                 const data = {
                     numeral: item.numeral.name,
                     enero: rest?.enero ? 'Si' : 'No',
@@ -600,9 +600,9 @@ const AnnualReportContainer = (props: Props) => {
                     item.date.includes('/0' + e.month + '/') 
                 ).length
                 
-                const percent = (totalSaip+totalSaipPnt1) == 0 ? 0 : 
+                let percent = (totalSaip+totalSaipPnt1) == 0 ? 0 : 
                     (total / (totalSaip+totalSaipPnt1)) * 100
-
+                percent = Math.round(percent * 100) / 100  
                 return {
                     ...e,
                     total: e.month < 9? total:e.total,
@@ -643,10 +643,10 @@ const AnnualReportContainer = (props: Props) => {
 
         reservas.forEach((item) => {
             lista_final.push(new IndexInformationClassifiedEntity(
-                item.theme,
-                item.resolution_number,
-                item.classification_date,
-                item.period_of_validity,
+                item.tema,
+                item.numero_resolucion,
+                item.fecha_clasificacion,
+                item.periodo_vigencia,
                 false,
                 "NO APLICA",
                 "NO APLICA",
