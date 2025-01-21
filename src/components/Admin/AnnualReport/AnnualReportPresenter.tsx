@@ -3,8 +3,6 @@ import Table from "../../Common/Table";
 import { AnualReportEntity, IndexInformationClassifiedEntity } from "../../../domain/entities/AnualReportEntity";
 import EstablishmentEntity from "../../../domain/entities/Establishment";
 import { SolicityStatsAnualReportDto } from "../../../infrastructure/Api/AnualReport/interface";
-{/* import { Pagination } from "../../../infrastructure/Api";*/}
-{/*import { TransparencyActivePublicResponse } from "../../../infrastructure/Api/TansparencyActive/interface";*/}
 {/* import { formatDate2 } from "../../../utils/functions";*/}
 import Alert from "../../Common/Alert";
 {/* import { BiCheck, BiEdit } from "react-icons/bi";*/}

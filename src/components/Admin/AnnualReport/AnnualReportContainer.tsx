@@ -313,9 +313,7 @@ const AnnualReportContainer = (props: Props) => {
     const buildFocal = ()=>{
 
 
-        const resultTf = paginableTF.results.filter((item, index, array) =>
-            array.findIndex(other => other.numeral.id === item.numeral.id) === index
-        )
+        const resultTf = paginableTF.results
 
 
         const mapfinal = resultTf.map((item) => {
@@ -397,7 +395,9 @@ const AnnualReportContainer = (props: Props) => {
      
         })
 
-        return mapfinal
+        return mapfinal.filter((item, index, array) =>
+            array.findIndex(other => other.numeral === item.numeral) === index
+        )
         
     }
 
@@ -405,9 +405,7 @@ const AnnualReportContainer = (props: Props) => {
 
 
     const buildColab = () =>{
-        const resultTf = paginableTC.results.filter((item, index, array) =>
-            array.findIndex(other => other.numeral.id === item.numeral.id) === index
-        )
+        const resultTf = paginableTC.results
 
         
 
@@ -432,16 +430,16 @@ const AnnualReportContainer = (props: Props) => {
                     julio: rest?.julio ? 'Si' : 'No',
                     agosto: rest?.agosto ? 'Si' : 'No',
                     septiembre: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                         _e.month == 9) ?
                         'Si' : 'No',
                     octubre: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                         _e.month == 10) ?
                         'Si' : 'No',
                     noviembre: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                         _e.month == 11) ?
                         'Si' : 'No',
                     diciembre: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                         _e.month == 12) ?
                         'Si' : 'No'
                 }
                 return data
@@ -450,47 +448,52 @@ const AnnualReportContainer = (props: Props) => {
                 return {
                     numeral: item.numeral.name,
                     enero: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 1) ?
+                         _e.month == 1) ?
                         'Si' : 'No',
                     febrero: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 2) ?
+                         _e.month == 2) ?
                         'Si' : 'No',
                     marzo: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 3) ?
+                      _e.month == 3) ?
                         'Si' : 'No',
                     abril: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 4) ?
+                        _e.month == 4) ?
                         'Si' : 'No',
                     mayo: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 5) ?
+                        _e.month == 5) ?
                         'Si' : 'No',
                     junio: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 6) ?
+                        _e.month == 6) ?
                         'Si' : 'No',
                     julio: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 7) ?
+                        _e.month == 7) ?
                         'Si' : 'No',
                     agosto: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 8) ?
+                         _e.month == 8) ?
                         'Si' : 'No',
                     septiembre: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                         _e.month == 9) ?
                         'Si' : 'No',
                     octubre: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                      _e.month == 10) ?
                         'Si' : 'No',
                     noviembre: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                         _e.month == 11) ?
                         'Si' : 'No',
                     diciembre: resultTf.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        _e.month == 12) ?
                         'Si' : 'No'
 
                 }
             }
 
         })
-        return mapfinal
+
+        //eliminar duplicados
+       
+        return mapfinal.filter((item, index, array) =>
+            array.findIndex(other => other.numeral === item.numeral) === index
+        )
     }
 
 
