@@ -598,18 +598,51 @@ const AnnualReportContainer = (props: Props) => {
                     item.date.includes('2024-0' + e.month + '-') ||
                     item.date.includes('/' + e.month + '/') ||
                     item.date.includes('/0' + e.month + '/') 
-                ).length
+                ).length + e.total
                 
                 let percent = (totalSaip+totalSaipPnt1) == 0 ? 0 : 
                     (total / (totalSaip+totalSaipPnt1)) * 100
                 percent = Math.round(percent * 100) / 100  
+
+                let percent_pnt2 = (totalSaip+totalSaipPnt1) == 0 ? 0 :
+                    (e.total_response_to_10_days / (totalSaip+totalSaipPnt1)) * 100
+                percent_pnt2 = Math.round(percent_pnt2 * 100) / 100
+                
+
+               
+
+
+                //total no respondodias
+                const total_no = pnt1pasive.filter((item) => item.date.includes('-' + e.month + '-') ||
+                    item.date.includes('2024-0' + e.month + '-') ||
+                    item.date.includes('/' + e.month + '/') ||
+                    item.date.includes('/0' + e.month + '/')
+                ).filter((item) => item.state.toLowerCase().includes('no respondida')).length + e.total_no_response
+                let percent_no = (totalSaip+totalSaipPnt1) == 0 ? 0 :
+                    (total_no / (totalSaip+totalSaipPnt1)) * 100
+                percent_no = Math.round(percent_no * 100) / 100
+
+
+
+                //total respondodias
+                const total_respondidas = pnt1pasive.filter((item) => item.date.includes('-' + e.month + '-') ||
+                    item.date.includes('2024-0' + e.month + '-') ||
+                    item.date.includes('/' + e.month + '/') ||
+                    item.date.includes('/0' + e.month + '/')
+                ).length + e.total_response_to_10_days - total_no
+
+                    let percent_respondidas = (totalSaip + totalSaipPnt1) == 0 ? 0 :
+                        (total_respondidas / (totalSaip + totalSaipPnt1)) * 100
+                percent_respondidas = Math.round(percent_respondidas * 100) / 100
+
                 return {
                     ...e,
-                    total: e.month < 9? total:e.total,
-                    total_response_to_10_days: e.month < 9? 
-                        total :e.total_response_to_10_days,
-                    percent_response_to_10_days: e.month < 9?
-                        (total == 0 ? 0 : percent):e.percent_response_to_10_days,
+                    total: total,
+                    total_response_to_10_days: total_respondidas,
+                    percent_response_to_10_days: percent_respondidas,
+                    month: e.month,
+                    total_no_response: total_no,
+                    percent_no_response: percent_no,
                 }
             })
             return solicitiesmap
