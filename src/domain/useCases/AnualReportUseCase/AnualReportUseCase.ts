@@ -1,6 +1,12 @@
 import { TaskEndAnualReportDto } from "../../../infrastructure/Api/AnualReport/interface";
 import { AnualReportService } from "../../../infrastructure/Services/AnualReportService";
-import { setAnualReports, setIsLoading, setMessage, setProgress, setTaskId,  } from "../../../infrastructure/Slice/AnualReportSlice";
+import {
+  setAnualReports,
+  setIsLoading,
+  setMessage,
+  setProgress,
+  setTaskId,
+} from "../../../infrastructure/Slice/AnualReportSlice";
 import { store } from "../../../infrastructure/Store";
 import { DatePnt } from "../../../utils/date";
 import { AnualReportEntity } from "../../entities/AnualReportEntity";
@@ -15,9 +21,7 @@ export class AnualReportUseCase {
 
     if (data.have_public_records) {
       if (data.norme_archive_utility.trim().length == 0) {
-        throw new Error(
-          "Norma archivística utilizada: no puede estar vacía"
-        );
+        throw new Error("Norma archivística utilizada: no puede estar vacía");
       }
       if (data.comment_aclaration.trim().length == 0) {
         throw new Error("Comentario aclaratorio no puede estar vacío");
@@ -41,50 +45,50 @@ export class AnualReportUseCase {
         throw new Error(
           "Cantidad de sanciones por la ley orgánica del servicio público no puede ser 0"
         );
+      } else {
+        if (data.description_organic_law_public_service.trim().length == 0) {
+          throw new Error(
+            "Descripción específica de sanciones por la ley orgánica del servicio público no puede estar vacía"
+          );
+        }
       }
 
-      if (data.description_organic_law_public_service.trim().length == 0) {
-        throw new Error(
-          "Descripción específica de sanciones por la ley orgánica del servicio público no puede estar vacía"
-        );
-      }
-
-      if (data.total_organic_law_contraloria  < 0) {
+      if (data.total_organic_law_contraloria < 0) {
         throw new Error(
           "Cantidad de sanciones por la ley orgánica de la contraloría no puede ser 0"
         );
-      }
-
-      if (data.description_organic_law_contraloria.trim().length == 0) {
-        throw new Error(
-          "Descripción específica de sanciones por la ley orgánica de la contraloría no puede estar vacía"
-        );
+      } else {
+        if (data.description_organic_law_contraloria.trim().length == 0) {
+          throw new Error(
+            "Descripción específica de sanciones por la ley orgánica de la contraloría no puede estar vacía"
+          );
+        }
       }
 
       if (data.total_organic_law_national_system < 0) {
         throw new Error(
           "Cantidad de sanciones por la ley orgánica del sistema nacional de control no puede ser 0"
         );
-      }
-
-      if (data.description_organic_law_national_system.trim().length == 0) {
-        throw new Error(
-          "Descripción específica de sanciones por la ley orgánica del sistema nacional de control no puede estar vacía"
-        );
+      } else {
+        if (data.description_organic_law_national_system.trim().length == 0) {
+          throw new Error(
+            "Descripción específica de sanciones por la ley orgánica del sistema nacional de control no puede estar vacía"
+          );
+        }
       }
 
       if (data.total_organic_law_citizen_participation < 0) {
         throw new Error(
           "Cantidad de sanciones por la ley orgánica de participación ciudadana no puede ser 0"
         );
-      }
-
-      if (
-        data.description_organic_law_citizen_participation.trim().length == 0
-      ) {
-        throw new Error(
-          "Descripción específica de sanciones por la ley orgánica de participación ciudadana no puede estar vacía"
-        );
+      } else {
+        if (
+          data.description_organic_law_citizen_participation.trim().length == 0
+        ) {
+          throw new Error(
+            "Descripción específica de sanciones por la ley orgánica de participación ciudadana no puede estar vacía"
+          );
+        }
       }
     }
     if (data.have_activities) {
@@ -237,7 +241,7 @@ export class AnualReportUseCase {
     return await this.service.getTaskEndAnualReport(task_id);
   }
   //getPublicAudiencias
-  public async getReservas(ruc: string,year: number) {
-    return await this.service.getReservas(ruc,year);
+  public async getReservas(ruc: string, year: number) {
+    return await this.service.getReservas(ruc, year);
   }
 }

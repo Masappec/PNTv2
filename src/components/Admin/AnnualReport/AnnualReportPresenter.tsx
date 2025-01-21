@@ -1028,11 +1028,13 @@ const AnnualReportPresenter = (props: Props) => {
               </div>
               <TextInput
                 id="small"
-                type="number" min={0}
+                type="number" 
+                min={0}
                 sizing="sm"
                 className="lg:w-2/5"
                 name="total_saip"
-                value={props.total_saip}
+                value={props.form.total_saip}
+                onChange={props.OnChange}
 
               />
             </div>
@@ -1128,6 +1130,9 @@ const AnnualReportPresenter = (props: Props) => {
                     value={"no"}
                   >No</option>
                 </Select>
+                {
+                  props.form.have_responded_solicities_no_portal && (
+                <>
                 <div>
                   <div className="mb-1 block mt-5">
                     <Label
@@ -1159,6 +1164,9 @@ const AnnualReportPresenter = (props: Props) => {
                     onChange={props.OnChange}
                   />
                 </div>
+                </>
+                  )
+                }
               </>
             )}
           </div>
