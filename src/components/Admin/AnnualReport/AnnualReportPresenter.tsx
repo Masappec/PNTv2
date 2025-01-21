@@ -1327,6 +1327,7 @@ const AnnualReportPresenter = (props: Props) => {
                             )
                           }}
                           disabled
+                          value={element.topic}
                         />
                       </td>
                       <td>
@@ -1340,12 +1341,13 @@ const AnnualReportPresenter = (props: Props) => {
                             )
                           }}
                           disabled
+                          value={element.legal_basis}
                         />
                       </td>
                       <td>
                         <TextInput
                           id="small"
-                          type="date"
+                          type="text"
                           sizing="sm"
                           className="w-28"
                           onChange={(e) => {
@@ -1357,6 +1359,7 @@ const AnnualReportPresenter = (props: Props) => {
                             )
                           }}
                           disabled
+                          value={element.classification_date}
                         />
                       </td>
                       <td>
@@ -1372,26 +1375,25 @@ const AnnualReportPresenter = (props: Props) => {
                             )
                           }}
                           disabled
+                          value={element.period_of_validity}
                         />
                       </td>
                       <td>
-                        <Select className="w-16 " required
+                        <TextInput
+                          id="small"
+                          type="text"
+                          sizing="sm"
+                          className="w-28"
                           onChange={(e) => {
-                            props.onBooleanTable(index,
-                              "amplation_effectuation" as keyof IndexInformationClassifiedEntity,
-                              e.target.value === "si"
+                            props.onTextTable(index,
+                              "ampliation" as keyof IndexInformationClassifiedEntity,
+                              e.target.value
 
                             )
                           }}
                           disabled
-                          >
-                          <option
-                            value={"si"}
-                          >Si</option>
-                          <option
-                            value={"no"}
-                          >No</option>
-                        </Select>
+                          value={element.amplation_effectuation?'Si':'No'}
+                        />
                       </td>
                       <td>
                         <textarea
@@ -1404,18 +1406,20 @@ const AnnualReportPresenter = (props: Props) => {
                             )
                           }}
                           disabled
+                          value={element.ampliation_description}
                         />
                       </td>{" "}
                       <td>
                         <TextInput
                           id="small"
-                          type="date"
+                          type="text"
                           sizing="sm"
                           className="w-32"
                           onChange={(e) => {
                             props.onTextTable(index, "ampliation_date", e.target.value)
                           }}
                           disabled
+                          value={element.ampliation_date}
                         />
                       </td>{" "}
                       <td>
@@ -1429,6 +1433,7 @@ const AnnualReportPresenter = (props: Props) => {
                             )
                           }}
                           disabled
+                          value={element.ampliation_period_of_validity}
                         />
                       </td>
                     </tr>

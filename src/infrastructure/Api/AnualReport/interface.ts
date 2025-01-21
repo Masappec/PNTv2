@@ -201,11 +201,12 @@ export interface Pnt1ReservadaDto {
   period_extension: string;
 }
 
+
 export interface ReservasPnt2{
-  establishment_name: string;
-  theme: string;
-  resolution_number: string;
-  classification_date: string;
-  period_of_validity: string;
-  link: string;
+  enlace: string;
+  fecha_clasificacion: string;
+  institucion: string;
+  numero_resolucion: string;
+  periodo_vigencia: string;
+  tema: string;
 }
