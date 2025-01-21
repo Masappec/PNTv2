@@ -502,7 +502,7 @@ const AnnualReportContainer = (props: Props) => {
         const mapfinal = diff.map((item) => {
             if (new DatePnt().getYearToUpload()==2024){
                 const rest = pnt1active.find((_e) =>
-                    "Numeral "+_e.numeral.replace(" - ","-") == item.numeral.name)
+                "Numeral "+_e.numeral.replace(" - ","-") == item.numeral.name)
                 const data = {
                     numeral: item.numeral.name,
                     enero: rest?.enero ? 'Si' : 'No',
