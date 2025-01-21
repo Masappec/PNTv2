@@ -25,7 +25,21 @@ interface Props {
   onPageTA: (page: number) => void
   onPageTF: (page: number) => void
   onPageTC: (page: number) => void
-  resultsTAE: Pagination<TransparencyActivePublicResponse>
+  resultsTAE: {
+    numeral: string,
+    enero: string,
+    febrero: string,
+    marzo: string,
+    abril: string,
+    mayo: string,
+    junio: string,
+    julio: string,
+    agosto: string,
+    septiembre: string,
+    octubre: string,
+    noviembre: string,
+    diciembre: string,
+  }[],
   resultsTA: {
     numeral: string,
     enero: string,
@@ -498,112 +512,86 @@ const AnnualReportPresenter = (props: Props) => {
               
               {
                 render: (e) => <p className="text-left">{
-                  e.numeral.name.replace("Art", "")
+                  e.numeral
                 }</p>,
                 title: "Articulo",
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 1) ?
-                    'Si' : 'No'
+                  e.enero
                 }</p>,
                 title: "Enero"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 2) ?
-                    'Si' : 'No'
+                  e.febrero
                 }</p>,
                 title: "Febrero"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 3) ?
-                    'Si' : 'No'
+                  e.marzo
                 }</p>,
                 title: "Marzo"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 4) ?
-                    'Si' : 'No'
+                  e.abril
                 }</p>,
                 title: "Abril"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 5) ?
-                    'Si' : 'No'
+                  e.mayo
                 }</p>,
                 title: "Mayo"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 6) ?
-                    'Si' : 'No'
+                  e.junio
                 }</p>,
                 title: "Junio"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 7) ?
-                    'Si' : 'No'
+                  e.julio
                 }</p>,
                 title: "Julio"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 8) ?
-                    'Si' : 'No'
+                  e.agosto
                 }</p>,
                 title: "Agosto"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 9) ?
-                    'Si' : 'No'
+                  e.septiembre
                 }</p>,
                 title: "Septiembre"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 10) ?
-                    'Si' : 'No'
+                  e.octubre
                 }</p>,
                 title: "Octubre"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 11) ?
-                    'Si' : 'No'
+                  e.noviembre
                 }</p>,
                 title: "Noviembre"
               },
               {
                 render: (e) => <p className="text-left">{
-                  props.resultsTAE.results.find((_e) =>
-                    _e.numeral.id == e.numeral.id && _e.month == 12) ?
-                  'Si': 'No'
+                  e.diciembre
                 }</p>,
                 title: "Diciembre"
               },
             ]}
             description={""}
-            length={props.resultsTAE.results.length}
-            data={props.resultsTAE.results.filter((item, index, array) =>
-              array.findIndex(other => other.numeral.id === item.numeral.id) === index
-            )}
+            length={props.resultsTAE.length}
+            data={props.resultsTAE}
             
           />
         </section>
