@@ -60,11 +60,11 @@ export class Transform {
             autoTable(doc, {
                 head: [headers],
                 body: data,
-                startY: doc.previousAutoTable?.finalY || 0 + 10,
+                startY: doc.previousAutoTable?.finalY ? doc.previousAutoTable.finalY + 10 : 20,
                 margin: { horizontal: 10 },
                 styles: {
-                    fontSize: 8,
-                    cellPadding: 1,
+                    fontSize: 7, // Reducir fuente
+                    cellPadding: 0.7, // Reducir relleno
                     overflow: "linebreak",
                     halign: "center",
                     valign: "middle"
@@ -77,10 +77,10 @@ export class Transform {
                 columnStyles: Array(headers.length)
                     .fill(0)
                     .reduce((acc, _, index) => {
-                        acc[index] = { columnWidth: "auto" };
+                        acc[index] = { columnWidth: "wrap" }; // Ajustar columnas
                         return acc;
                     }, {})
-            });
+            });            
 
             // Guardar el PDF
             doc.save(`${name}.pdf`);
