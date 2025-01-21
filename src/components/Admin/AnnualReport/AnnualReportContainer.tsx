@@ -324,8 +324,7 @@ const AnnualReportContainer = (props: Props) => {
 
             if(new DatePnt().getYearToUpload()==2024){
 
-                const rest = pnt1focal.find((_e) =>
-                    _e.numeral == item.numeral.name)  
+                const rest = pnt1focal ? pnt1focal[0]:undefined 
                 
 
                 const data = {
@@ -502,7 +501,9 @@ const AnnualReportContainer = (props: Props) => {
         const mapfinal = diff.map((item) => {
             if (new DatePnt().getYearToUpload()==2024){
                 const rest = pnt1active.find((_e) =>
-                "Numeral "+_e.numeral.replace(" - ","-") == item.numeral.name)
+                "Numeral "+_e.numeral.replace(" - ","-") == item.numeral.name 
+                && _e.art =="19"
+            )
                 const data = {
                     numeral: item.numeral.name,
                     enero: rest?.enero ? 'Si' : 'No',
@@ -582,6 +583,93 @@ const AnnualReportContainer = (props: Props) => {
         
     }
 
+    const buildActiveEs = () => {
+        const diff = paginableTAE.results.filter((item, index, array) =>
+            array.findIndex(other => other.numeral.id === item.numeral.id) === index
+        )
+        const mapfinal = diff.map((item) => {
+            if (new DatePnt().getYearToUpload() == 2024) {
+                const rest = pnt1active.find((_e) =>
+                    item.numeral.name.includes("Art. "+_e.art) && _e.art !== "19"
+                )
+                const data = {
+                    numeral: item.numeral.name,
+                    enero: rest?.enero ? 'Si' : 'No',
+                    febrero: rest?.febrero ? 'Si' : 'No',
+                    marzo: rest?.marzo ? 'Si' : 'No',
+                    abril: rest?.abril ? 'Si' : 'No',
+                    mayo: rest?.mayo ? 'Si' : 'No',
+                    junio: rest?.junio ? 'Si' : 'No',
+                    julio: rest?.julio ? 'Si' : 'No',
+                    agosto: rest?.agosto ? 'Si' : 'No',
+                    septiembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                        'Si' : 'No',
+                    octubre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                        'Si' : 'No',
+                    noviembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                        'Si' : 'No',
+                    diciembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        'Si' : 'No'
+                }
+                return data
+            } else {
+                return {
+                    numeral: item.numeral.name,
+                    enero: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 1) ?
+                        'Si' : 'No',
+                    febrero: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 2) ?
+                        'Si' : 'No',
+                    marzo: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 3) ?
+                        'Si' : 'No',
+
+                    abril: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 4) ?
+                        'Si' : 'No',
+
+                    mayo: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 5) ?
+                        'Si' : 'No',
+
+                    junio: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 6) ?
+                        'Si' : 'No',
+
+                    julio: paginableTAE.results.find((_e) =>
+
+                        _e.numeral.id == item.numeral.id && _e.month == 7) ?
+                        'Si' : 'No',
+
+                    agosto: paginableTAE.results.find((_e) =>
+
+                        _e.numeral.id == item.numeral.id && _e.month == 8) ?
+                        'Si' : 'No',
+
+                    septiembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                        'Si' : 'No',
+                    octubre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                        'Si' : 'No',
+                    noviembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                        'Si' : 'No',
+                    diciembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        'Si' : 'No'
+                }
+            }
+        })
+
+        return mapfinal
+
+    }
 
 
     const buildPasive = () => {
@@ -708,7 +796,7 @@ const AnnualReportContainer = (props: Props) => {
             onPageTA={handlePageTA}
             onPageTF={handlePageTF}
             onPageTC={handlePageTC}
-            resultsTAE={paginableTAE}
+            resultsTAE={buildActiveEs()}
             resultsTA={buildActive()}
             resultTF={buildFocal()}
             resultTC={buildColab()}
