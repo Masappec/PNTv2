@@ -182,17 +182,18 @@ const AnnualReportContainer = (props: Props) => {
 
     }, [])
 
+    
 
-    useEffect(() => {
-        const _total = totalSaip + totalSaipPnt1
-        if (_total > 0) {
-            console.log(_total)
-            setForm({
-                ...form,
-                total_saip: _total
-            })
-        }
-    }, [totalSaip,totalSaipPnt1])
+        useEffect(() => {
+            const _total = totalSaip + totalSaipPnt1;
+            console.log('total', _total);
+            if (_total > 0 && form.total_saip <= 0) {
+                setForm((prevForm) => ({
+                    ...prevForm,
+                    total_saip: _total,
+                }));
+            }
+        }, [totalSaip, totalSaipPnt1, form.total_saip]);
 
     const addItemsTable = () => {
         const newTable = [...table, new IndexInformationClassifiedEntity("", "", "", "", false, "", "", "",)]
@@ -205,7 +206,6 @@ const AnnualReportContainer = (props: Props) => {
         form.information_classified = table
         form.month = new DatePnt().getMonthOneBased();
         form.year = new DatePnt().getFullYear();
-        form.total_saip = totalSaip + totalSaipPnt1
         await props.usecase.createAnualReport(form).then(() => {
             setSuccess("Reporte anual creado con exito")
             setError("")
@@ -502,7 +502,7 @@ const AnnualReportContainer = (props: Props) => {
         const mapfinal = diff.map((item) => {
             if (new DatePnt().getYearToUpload()==2024){
                 const rest = pnt1active.find((_e) =>
-                    _e.numeral == item.numeral.name)
+                    "Numeral "+_e.numeral == item.numeral.name)
                 const data = {
                     numeral: item.numeral.name,
                     enero: rest?.enero ? 'Si' : 'No',
