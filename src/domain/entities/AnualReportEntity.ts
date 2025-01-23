@@ -7,7 +7,7 @@ export class IndexInformationClassifiedEntity{
         public legal_basis: string,
         public classification_date: string,
         public period_of_validity: string,
-        public amplation_effectuation: boolean,
+        public amplation_effectuation: string,
         public ampliation_description: string,
         public ampliation_date: string,
         public ampliation_period_of_validity: string,
