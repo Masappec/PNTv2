@@ -12,6 +12,7 @@ import { TransparencyFocusListDto } from "../../../infrastructure/Api/Transparen
 import { TransparencyCollabListDto } from "../../../infrastructure/Api/TransparencyCollab/interface";
 import { DatePnt } from "../../../utils/date";
 import { Pnt1Api } from "../../../infrastructure/Api/AnualReport/Pnt1Api";
+import { AnualReportMapper } from "../../../domain/mappers/AnualReportMapper";
 
 interface Props {
     usecase: AnualReportUseCase;
@@ -33,7 +34,7 @@ const AnnualReportContainer = (props: Props) => {
     const [error, setError] = useState<string>("")
     const [success, setSuccess] = useState<string>("")
     const [reservas, setReservas] = useState<ReservasPnt2[]>([])
-
+    const [saved, setSaved] = useState<boolean>(false)
     const [editedMeses, setEditedMeses] = useState<number[]>([])
     const [establishment, setEstablishment] = useState<EstablishmentEntity>(SessionService.getEstablishmentData())
     const [paginableTA, setPaginableTA] = useState<Pagination<TransparencyActivePublicResponse>>({
@@ -87,123 +88,138 @@ const AnnualReportContainer = (props: Props) => {
     const [totalSaipPnt1, setTotalSaipPnt1] = useState<number>(0)
     const [totalSaip, setTotalSaip] = useState<number>(0)
 
+    
 
 
-    useEffect(()=>{
+    const getDatafromPnt1 = ()=>{
 
-        if(new DatePnt().getYearToUpload()==2024){
-            console.log(establishment.identification,establishment.id)
-            props.api.getActive(establishment.identification).then(res=>{
+        if (new DatePnt().getYearToUpload() == 2024) {
+            console.log(establishment.identification, establishment.id)
+            props.api.getActive(establishment.identification).then(res => {
                 setPnt1Active(res)
             })
-            props.api.getColaborator(establishment.identification).then(res=>{
+            props.api.getColaborator(establishment.identification).then(res => {
                 setPnt1Colab(res)
             })
 
-            props.api.getFocal(establishment.identification).then(res=>{
+            props.api.getFocal(establishment.identification).then(res => {
                 setPnt1Focal(res)
             })
 
-            props.api.getReservada(establishment.identification).then(res=>{
+            props.api.getReservada(establishment.identification).then(res => {
                 setPnt1Reserved(res)
             })
 
-            props.api.getPasive(establishment.identification).then(res=>{
+            props.api.getPasive(establishment.identification).then(res => {
                 setPnt1Pasive(res)
-                
+
                 setTotalSaipPnt1(res.length)
             })
 
-            props.api.getReservada(establishment.identification).then(res=>{
+            props.api.getReservada(establishment.identification).then(res => {
                 setPnt1Reserved(res)
             })
-            
+
         }
-
-
-        props.usecase.getReservas(establishment.identification, new DatePnt().getYearToUpload()).then(res => {
-            setReservas(res)
-        })
-
-        props.usecase.getSolicityStats(establishment.id||0).then(res=>{
-            setSolicityStats(res)
-            const total = res.reduce((acc, item) => acc + item.total, 0)
-
-            setTotalSaip(total)
-
-            setForm({
-                ...form,
-                solicity_infor_anual_report: res as SolicityStatsAnualReportEntity[],
-
-            })
-        })
-        
-        props.usecase.getTAResume(establishment.id || 0, false, paginableTAE.current ||0,paginableTAE.limit).then(res=>{
-           
-            
-            setPaginableTAE(res)
-        })
-        props.usecase.getTAResume(establishment.id || 0, true, paginableTA.current || 0, paginableTA.limit).then(res => {
-            const array = res.results.sort((a, b) => {
-                let c = a.numeral.name
-                c = c.replace("Numeral ", "")
-                const c_int = parseInt(c)
-                let d = b.numeral.name
-                d = d.replace("Numeral ", "")
-                const d_int = parseInt(d)
-                return c_int - d_int
-            })
-            setPaginableTA({
-                ...res,
-                results: array
-            })
-        })
-        props.usecase.getTFResume(establishment.id || 0, paginableTF.current || 0, paginableTF.limit).then(res => {
-            setPaginableTF(res)
-        })
-        props.usecase.getTCResume(establishment.id || 0, paginableTC.current || 0, paginableTC.limit).then(res => {
-            setPaginableTC(res)
-        })
-    }, [paginableTAE.current, paginableTA.current, paginableTF.current, paginableTC.current,])
+    }
 
     useEffect(() => {
+        getDatafromPnt1();
 
-        props.establishmentUsecase.getOptions().then((res) => {
-            const _function_org = res.functions.find(x => x.id == parseInt(establishment.function_organization||""))
-            console.log(_function_org)
-            setEstablishment({
-                ...establishment,
-                function_organization: _function_org?.name
+        props.usecase.getAnualReport(establishment.id || 0, new DatePnt().getYearToUpload())
+            .then(res => {
+                setForm(prevForm => ({
+                    ...prevForm,
+                    ...AnualReportMapper.toDomain(res),
+                }));
+                setSaved(true);
             })
-        }
-        ).catch((err) => {
-            console.log(err)
-        })
+            .catch(() => {
+                setSaved(false);
+            });
 
-    }, [])
+        props.usecase.getReservas(establishment.identification, new DatePnt().getYearToUpload())
+            .then(res => {
+                setReservas(res);
+            });
+
+        props.usecase.getSolicityStats(establishment.id || 0)
+            .then(res => {
+                const total = res.reduce((acc, item) => acc + item.total, 0);
+                setSolicityStats(res);
+                setTotalSaip(total);
+
+                setForm(prevForm => ({
+                    ...prevForm,
+                    solicity_infor_anual_report: res as SolicityStatsAnualReportEntity[],
+                }));
+            });
+
+        props.usecase.getTAResume(establishment.id || 0, false, paginableTAE.current || 0, paginableTAE.limit)
+            .then(res => {
+                setPaginableTAE(res);
+            });
+
+        props.usecase.getTAResume(establishment.id || 0, true, paginableTA.current || 0, paginableTA.limit)
+            .then(res => {
+                const array = res.results.sort((a, b) => {
+                    let c = a.numeral.name.replace("Numeral ", "");
+                    let d = b.numeral.name.replace("Numeral ", "");
+                    return parseInt(c) - parseInt(d);
+                });
+                setPaginableTA(prev => ({
+                    ...prev,
+                    results: array,
+                }));
+            });
+
+        props.usecase.getTFResume(establishment.id || 0, paginableTF.current || 0, paginableTF.limit)
+            .then(res => {
+                setPaginableTF(res);
+            });
+
+        props.usecase.getTCResume(establishment.id || 0, paginableTC.current || 0, paginableTC.limit)
+            .then(res => {
+                setPaginableTC(res);
+            });
+
+        props.establishmentUsecase.getOptions()
+            .then(res => {
+                const _function_org = res.functions.find(x => x.id == parseInt(establishment.function_organization || ""));
+                setEstablishment(prevEstablishment => ({
+                    ...prevEstablishment,
+                    function_organization: _function_org?.name,
+                }));
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
 
     
 
-        useEffect(() => {
+        /*useEffect(() => {
             const _total = totalSaip + totalSaipPnt1;
             console.log('total', _total);
+            console.log('form', form)
             if (_total > 0 && form.total_saip <= 0) {
                 setForm((prevForm) => ({
                     ...prevForm,
                     total_saip: _total,
                 }));
             }
-        }, [totalSaip, totalSaipPnt1, form.total_saip]);
+        }, [totalSaip, totalSaipPnt1, form.total_saip]);*/
 
     const addItemsTable = () => {
-        const newTable = [...table, new IndexInformationClassifiedEntity("", "", "", "", false, "", "", "",)]
+        const newTable = [...table, new IndexInformationClassifiedEntity("", "", "", "", "", "", "", "",)]
         setTable(newTable)
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         form.establishment_id = establishment.id as number
-        form.information_classified = table
+        console.log(table)
+        form.information_classified = buildItems()
         form.month = new DatePnt().getMonthOneBased();
         form.year = new DatePnt().getFullYear();
         await props.usecase.createAnualReport(form).then(() => {
@@ -753,25 +769,25 @@ const AnnualReportContainer = (props: Props) => {
         if(new DatePnt().getYearToUpload()==2024){
             pnt1reserved.forEach((item) => {
                 lista_final.push(new IndexInformationClassifiedEntity(
-                    item.theme,
-                    item.base_legal,
-                    item.date_classification,
-                    item.period_extension,
-                    item.extension.toLowerCase() == 'si' ? true : false,
-                    item.description,
-                    item.date_extension,
-                    item.period_extension,
+                    item.theme.trim()==""?"NO APLICA":item.theme,
+                    item.base_legal.trim() ==""?"NO APLICA":item.base_legal,
+                    item.date_classification.trim() ==""?"NO APLICA":item.date_classification,
+                    item.period_extension.trim() ==""?"NO APLICA":item.period_extension,
+                    item.extension.trim() ==""?"NO APLICA":item.extension,
+                    item.description.trim() ==""?"NO APLICA":item.description,
+                    item.date_extension.trim() ==""?"NO APLICA":item.date_extension,
+                    item.period_extension.trim() ==""?"NO APLICA":item.period_extension,
                 ))
             })
         }
 
         reservas.forEach((item) => {
             lista_final.push(new IndexInformationClassifiedEntity(
-                item.tema,
-                item.numero_resolucion,
-                item.fecha_clasificacion,
-                item.periodo_vigencia,
-                false,
+                item.tema.trim() ==""?"NO APLICA":item.tema,
+                item.numero_resolucion.trim() ==""?"NO APLICA":item.numero_resolucion,
+                item.fecha_clasificacion.trim() ==""?"NO APLICA":item.fecha_clasificacion,
+                item.periodo_vigencia.trim() ==""?"NO APLICA":item.periodo_vigencia,
+                "NO APLICA",
                 "NO APLICA",
                 "NO APLICA",
                 "NO APLICA",
@@ -812,6 +828,7 @@ const AnnualReportContainer = (props: Props) => {
             onEdit={onEditRow}
             onChangeValue={onChangeValue}
             total_saip={totalSaip+totalSaipPnt1}
+            isSaved={saved}
 
         />
 

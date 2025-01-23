@@ -244,4 +244,8 @@ export class AnualReportUseCase {
   public async getReservas(ruc: string, year: number) {
     return await this.service.getReservas(ruc, year);
   }
+  //getAnualReport
+  public async getAnualReport(establishment_id: number, year: number) {
+    return await this.service.getAnualReport(establishment_id, year);
+  }
 }

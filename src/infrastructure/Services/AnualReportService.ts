@@ -57,4 +57,7 @@ export class AnualReportService {
   public async getReservas(ruc: string,year: number) {
     return await this.anualReportApi.getReservas(ruc,year);
   }
+  public async getAnualReport(establishment_id: number, year: number) {
+    return await this.anualReportApi.getAnualReport(establishment_id, year);
+  }
 }

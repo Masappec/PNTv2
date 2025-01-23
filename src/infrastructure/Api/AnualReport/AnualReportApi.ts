@@ -208,4 +208,18 @@ export class AnualReportApi {
     );
     return res.data;
   }
+
+  async getAnualReport(establishment_id: number, year: number) {
+    //anual-report
+    const res = await this.api.get<AnualReportResponseDto>(
+      TRANSPARENCY_PATH + "/anual-report",
+      {
+        params: {
+          establishment_id,
+          year,
+        },
+      }
+    );
+    return res.data;
+  }
 }
