@@ -7,10 +7,11 @@ export class AnualReportMapper{
     static toDomain(data: AnualReportCreateDto): AnualReportEntity{
         return AnualReportEntity.build(data);
     }
-
+    
     static toDto(data: AnualReportEntity): AnualReportCreateDto{
         return {
-            ...data
+            ...data,
+            information_classified: data.information_classified
         } as unknown as AnualReportCreateDto;
     }
 

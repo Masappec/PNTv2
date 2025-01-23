@@ -18,7 +18,7 @@ interface Props {
   onBooleanTable: (index: number, name: keyof IndexInformationClassifiedEntity, value: boolean) => void;
   establishment: EstablishmentEntity;
   solicityStats: SolicityStatsAnualReportDto[];
-
+  isSaved: boolean;
   onPageTAE: (page: number) => void
   onPageTA: (page: number) => void
   onPageTF: (page: number) => void
@@ -354,12 +354,15 @@ const AnnualReportPresenter = (props: Props) => {
               onChange={props.onSelected}
               name="have_public_records"
               required
+              disabled={props.isSaved}
             >
               <option
                 value={"si"}
+                selected={props.form.have_public_records}
               >Si</option>
               <option
                 value={"no"}
+                selected={!props.form.have_public_records}
               >No</option>
             </Select>
           </div>
@@ -380,7 +383,8 @@ const AnnualReportPresenter = (props: Props) => {
                     sizing="sm"
                     name="norme_archive_utility"
                     onChange={props.OnChange}
-
+                    disabled={props.isSaved}
+                    value={props.form.norme_archive_utility}
                   />
                 </div>
                 <div>
@@ -397,6 +401,8 @@ const AnnualReportPresenter = (props: Props) => {
                     sizing="sm"
                     name="comment_aclaration"
                     onChange={props.OnChange}
+                    disabled={props.isSaved}
+                    value={props.form.comment_aclaration}
                   />
                 </div>
               </>
@@ -609,11 +615,14 @@ const AnnualReportPresenter = (props: Props) => {
               name="have_quality_problems"
               onChange={props.onSelected}
               required
+              disabled={props.isSaved}
             >
               <option
                 value={"si"}
+                selected={props.form.have_quality_problems}
               >Si</option>
               <option
+                selected={!props.form.have_quality_problems}
                 value={"no"}
               >No</option>
             </Select>
@@ -632,6 +641,8 @@ const AnnualReportPresenter = (props: Props) => {
               sizing="sm"
               name="total_quality_problems"
               onChange={props.OnChange}
+              disabled={props.isSaved}
+              value={props.form.total_quality_problems}
             />
           </div>
             <div>
@@ -648,6 +659,8 @@ const AnnualReportPresenter = (props: Props) => {
                 sizing="sm"
                 name="description_quality_problems"
                 onChange={props.OnChange}
+                disabled={props.isSaved}
+                value={props.form.description_quality_problems}
               />
             </div></>)}
 
@@ -672,12 +685,15 @@ const AnnualReportPresenter = (props: Props) => {
               name="have_sanctions"
               onChange={props.onSelected}
               required
+              disabled={props.isSaved}
             >
               <option
                 value={"si"}
+                selected={props.form.have_sanctions}
               >Si</option>
               <option
                 value={"no"}
+                selected={!props.form.have_sanctions}
               >No</option>
             </Select>
           </div>
@@ -711,6 +727,8 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-48"
                         name="total_organic_law_public_service"
                         onChange={props.OnChange}
+                        disabled={props.isSaved}
+                        value={props.form.total_organic_law_public_service}
                         
                       />
                     </td>
@@ -720,6 +738,8 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
                         name="description_organic_law_public_service"
                         onChange={props.onText}
+                        disabled={props.isSaved}
+                        value={props.form.description_organic_law_public_service}
                       />
                     </td>
                   </tr>
@@ -737,6 +757,8 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-48"
                         name="total_organic_law_contraloria"
                         onChange={props.OnChange}
+                        disabled={props.isSaved}
+                        value={props.form.total_organic_law_contraloria}
                       />
                     </td>
 
@@ -745,6 +767,8 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
                         name="description_organic_law_contraloria"
                         onChange={props.onText}
+                        disabled={props.isSaved}
+                        value={props.form.description_organic_law_contraloria}
                       />
                     </td>
                   </tr>
@@ -762,6 +786,8 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-48"
                         name="total_organic_law_national_system"
                         onChange={props.OnChange}
+                        disabled={props.isSaved}
+                        value={props.form.total_organic_law_national_system}
                       />
                     </td>
 
@@ -770,6 +796,8 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
                         name="description_organic_law_national_system"
                         onChange={props.onText}
+                        disabled={props.isSaved}
+                        value={props.form.description_organic_law_national_system}
                       />
                     </td>
                   </tr>
@@ -787,6 +815,8 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-48"
                         name="total_organic_law_citizen_participation"
                         onChange={props.OnChange}
+                        disabled={props.isSaved}
+                        value={props.form.total_organic_law_citizen_participation}
                       />
                     </td>
 
@@ -795,6 +825,8 @@ const AnnualReportPresenter = (props: Props) => {
                         className="w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-80"
                         name="description_organic_law_citizen_participation"
                         onChange={props.onText}
+                        disabled={props.isSaved}
+                        value={props.form.description_organic_law_citizen_participation}
                       />
                     </td>
                   </tr>
@@ -817,12 +849,15 @@ const AnnualReportPresenter = (props: Props) => {
                 name="implemented_programs"
                 onChange={props.onSelected}
                 required
+                disabled={props.isSaved}
               >
                 <option
                   value={"si"}
+                  selected={props.form.implemented_programs}
                 >Si</option>
                 <option
                   value={"no"}
+                  selected={!props.form.implemented_programs}
                 >No</option>
               </Select>
             </div>
@@ -846,6 +881,8 @@ const AnnualReportPresenter = (props: Props) => {
                     sizing="sm"
                     name="total_programs"
                     onChange={props.OnChange}
+                    disabled={props.isSaved}
+                    value={props.form.total_programs}
                   />
                 </div>
             <div>
@@ -862,6 +899,8 @@ const AnnualReportPresenter = (props: Props) => {
                 sizing="sm"
                 name="description_programs"
                 onChange={props.OnChange}
+                disabled={props.isSaved}
+                value={props.form.description_programs}
               />
             </div>
                  </>
@@ -889,11 +928,14 @@ const AnnualReportPresenter = (props: Props) => {
                 name="have_activities"
                 onChange={props.onSelected}
                 required
+                disabled={props.isSaved}
               >
                 <option
                   value={"si"}
+                  selected={props.form.have_activities}
                 >Si</option>
                 <option
+                  selected={!props.form.have_activities}
                   value={"no"}
                 >No</option>
               </Select>
@@ -915,6 +957,8 @@ const AnnualReportPresenter = (props: Props) => {
                 sizing="sm"
                 name="total_activities"
                 onChange={props.OnChange}
+                disabled={props.isSaved}
+                value={props.form.total_activities}
               />
             </div>
 
@@ -933,6 +977,8 @@ const AnnualReportPresenter = (props: Props) => {
                 sizing="sm"
                 name="description_activities"
                 onChange={props.OnChange}
+                disabled={props.isSaved}
+                value={props.form.description_activities}
               />
             </div>
               </>
@@ -1021,6 +1067,8 @@ const AnnualReportPresenter = (props: Props) => {
                 name="total_saip"
                 value={props.form.total_saip}
                 onChange={props.OnChange}
+                disabled={props.isSaved}
+                
 
               />
             </div>
@@ -1037,11 +1085,14 @@ const AnnualReportPresenter = (props: Props) => {
                 required
                 name="did_you_entity_receive"
                 onChange={props.onSelected}
+                disabled={props.isSaved}
               >
                 <option
                   value={"si"}
+                  selected={props.form.did_you_entity_receive}
                 >Si</option>
                 <option
+                  selected={!props.form.did_you_entity_receive}
                   value={"no"}
                 >No</option>
               </Select>
@@ -1063,6 +1114,8 @@ const AnnualReportPresenter = (props: Props) => {
                     sizing="sm"
                     name="total_saip_in_portal"
                     onChange={props.OnChange}
+                    value={props.form.total_saip_in_portal}
+                    disabled={props.isSaved}
                   />
                 </div>
                 <div>
@@ -1079,6 +1132,8 @@ const AnnualReportPresenter = (props: Props) => {
                     sizing="sm"
                     name="total_saip_no_portal"
                     onChange={props.OnChange}
+                    disabled={props.isSaved}
+                    value={props.form.total_saip_no_portal}
                   />
                 </div>
 
@@ -1096,6 +1151,8 @@ const AnnualReportPresenter = (props: Props) => {
                     sizing="sm"
                     name="description_rason_no_portal"
                     onChange={props.OnChange}
+                    value={props.form.description_rason_no_portal}
+                    disabled={props.isSaved}
                   />
                 </div>
                 <p className="text-primary font-semibold  my-3">
@@ -1108,11 +1165,14 @@ const AnnualReportPresenter = (props: Props) => {
                   required
                   name="have_responded_solicities_no_portal"
                   onChange={props.onSelected}
+                  disabled={props.isSaved}
                 >
                   <option
                     value={"si"}
+                    selected={props.form.have_responded_solicities_no_portal}
                   >Si</option>
                   <option
+                    selected={!props.form.have_responded_solicities_no_portal}
                     value={"no"}
                   >No</option>
                 </Select>
@@ -1133,6 +1193,8 @@ const AnnualReportPresenter = (props: Props) => {
                     sizing="sm"
                     name="total_no_registered"
                     onChange={props.OnChange}
+                    value={props.form.total_no_registered}
+                    disabled={props.isSaved}
                   />
                 </div>
                 <div>
@@ -1148,6 +1210,8 @@ const AnnualReportPresenter = (props: Props) => {
                     sizing="sm"
                     name="comment_aclaration_no_registered"
                     onChange={props.OnChange}
+                    value={props.form.comment_aclaration_no_registered}
+                    disabled={props.isSaved}
                   />
                 </div>
                 </>
@@ -1176,11 +1240,14 @@ const AnnualReportPresenter = (props: Props) => {
                 name="reserve_information"
                 onChange={props.onSelected}
                 required
+                disabled={props.isSaved}
               >
                 <option
                   value={"si"}
+                  selected={props.form.reserve_information}
                 >Si</option>
                 <option
+                  selected={!props.form.reserve_information}
                   value={"no"}
                 >No</option>
               </Select>
@@ -1203,6 +1270,8 @@ const AnnualReportPresenter = (props: Props) => {
                   sizing="sm"
                   name="number_of_reserves"
                   onChange={props.OnChange}
+                  disabled={props.isSaved}
+                  value={props.form.number_of_reserves}
                 />
               </div>
               <div>
@@ -1219,6 +1288,8 @@ const AnnualReportPresenter = (props: Props) => {
                   sizing="sm"
                   name=" number_of_confidential"
                   onChange={props.OnChange}
+                  disabled={props.isSaved}
+                  value={props.form.number_of_confidential}
                 />
               </div>
 
@@ -1236,6 +1307,8 @@ const AnnualReportPresenter = (props: Props) => {
                   sizing="sm"
                   name="number_of_secret"
                   onChange={props.OnChange}
+                  disabled={props.isSaved}
+                  value={props.form.number_of_secret}
                 />
               </div>
               <div>
@@ -1252,6 +1325,8 @@ const AnnualReportPresenter = (props: Props) => {
                   sizing="sm"
                   name="number_of_secretism"
                   onChange={props.OnChange}
+                  disabled={props.isSaved}
+                  value={props.form.number_of_secretism}
                 />
               </div>
             </>
@@ -1299,7 +1374,6 @@ const AnnualReportPresenter = (props: Props) => {
             <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-800">
               {
                 props.Items.map((element, index) => {
-                  console.log(element)
                   return (
                     <tr>
                       <td>
@@ -1446,18 +1520,27 @@ const AnnualReportPresenter = (props: Props) => {
             onClose={() => props.setSuccess("")}
           />
         )}
-        <div className="flex w-full items-end justify-center gap-2 p-2 text-sm">
-          <button
-            type="submit"
-            className="items-center mt-5 rounded-lg bg-primary 
+        {
+          props.isSaved ? (
+            <Alert
+              message={"Informe Anual guardado para el año "+props.form.year}
+              type="success"
+              onClose={()=>{}}
+            />
+          ) : <div className="flex w-full items-end justify-center gap-2 p-2 text-sm">
+            <button
+              type="submit"
+              className="items-center mt-5 rounded-lg bg-primary 
                     py-2.5 text-sm
                     px-10
                     font-medium text-white hover:opacity-80 focus:outline-none 
                     focus:ring-4 focus:ring-blue-300"
-          >
-            <span >Guardar</span>
-          </button>
-        </div>
+            >
+              <span >Guardar</span>
+            </button>
+          </div>
+        }
+        
       </form>
     </>
   );

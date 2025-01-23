@@ -6,7 +6,7 @@ export interface IndexInformationClassified {
     legal_basis: string;
     classification_date: string;
     period_of_validity: string;
-    amplation_effectuation: boolean;
+  amplation_effectuation: string;
     ampliation_description: string;
     ampliation_date: string;
     ampliation_period_of_validity: string;
