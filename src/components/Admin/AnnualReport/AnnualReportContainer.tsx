@@ -38,15 +38,15 @@ const AnnualReportContainer = (props: Props) => {
     const [editedMeses, setEditedMeses] = useState<number[]>([])
     const [establishment, setEstablishment] = useState<EstablishmentEntity>(SessionService.getEstablishmentData())
     const [paginableTA, setPaginableTA] = useState<Pagination<TransparencyActivePublicResponse>>({
-        from:0,
-        to:0,
-        total:0,
-        current:1,
-        limit:1000,
-        next:0,
-        previous:0,
-        results:[],
-        total_pages:0
+        from: 0,
+        to: 0,
+        total: 0,
+        current: 1,
+        limit: 1000,
+        next: 0,
+        previous: 0,
+        results: [],
+        total_pages: 0
     })
 
 
@@ -88,10 +88,10 @@ const AnnualReportContainer = (props: Props) => {
     const [totalSaipPnt1, setTotalSaipPnt1] = useState<number>(0)
     const [totalSaip, setTotalSaip] = useState<number>(0)
 
-    
 
 
-    const getDatafromPnt1 = ()=>{
+
+    const getDatafromPnt1 = () => {
 
         if (new DatePnt().getYearToUpload() == 2024) {
             console.log(establishment.identification, establishment.id)
@@ -196,19 +196,19 @@ const AnnualReportContainer = (props: Props) => {
             });
     }, []);
 
-    
 
-        /*useEffect(() => {
-            const _total = totalSaip + totalSaipPnt1;
-            console.log('total', _total);
-            console.log('form', form)
-            if (_total > 0 && form.total_saip <= 0) {
-                setForm((prevForm) => ({
-                    ...prevForm,
-                    total_saip: _total,
-                }));
-            }
-        }, [totalSaip, totalSaipPnt1, form.total_saip]);*/
+
+    useEffect(() => {
+        const _total = totalSaip + totalSaipPnt1;
+        console.log('total', _total);
+        console.log('form', form)
+        if (_total > 0 && form.total_saip <= 0) {
+            setForm((prevForm) => ({
+                ...prevForm,
+                total_saip: _total,
+            }));
+        }
+    }, [totalSaip, totalSaipPnt1, form.total_saip]);
 
     const addItemsTable = () => {
         const newTable = [...table, new IndexInformationClassifiedEntity("", "", "", "", "", "", "", "",)]
@@ -268,10 +268,10 @@ const AnnualReportContainer = (props: Props) => {
         }
     }
 
-    const handlePageTAE = (page:number)=>{
+    const handlePageTAE = (page: number) => {
         setPaginableTAE({
             ...paginableTAE,
-            current: page 
+            current: page
         })
     }
     const handlePageTA = (page: number) => {
@@ -295,7 +295,7 @@ const AnnualReportContainer = (props: Props) => {
     }
 
 
-    const onEditRow = (mes:number) => {
+    const onEditRow = (mes: number) => {
         if (editedMeses.includes(mes)) {
             setEditedMeses(editedMeses.filter(x => x != mes))
         } else {
@@ -303,11 +303,11 @@ const AnnualReportContainer = (props: Props) => {
         }
     }
 
-    const isEdited = (mes:number) => {
+    const isEdited = (mes: number) => {
         return editedMeses.includes(mes)
     }
 
-    const onChangeValue = (mes:number, name: keyof SolicityStatsAnualReportEntity, value: string) => {
+    const onChangeValue = (mes: number, name: keyof SolicityStatsAnualReportEntity, value: string) => {
         const newSolicityStats = solicityStats.map((item) => {
             if (item.month == mes) {
                 return {
@@ -326,23 +326,54 @@ const AnnualReportContainer = (props: Props) => {
 
 
 
-    const buildFocal = ()=>{
+    const buildFocal = () => {
 
 
-        const resultTf = paginableTF.results
+        let resultTf = paginableTF.results.filter((item, index, array) =>
+            array.findIndex(other => other.numeral.id === item.numeral.id) === index
+        )
+        if (resultTf.length == 0) {
+            resultTf = [
+                {
+                    numeral: {
+                        id: 0,
+                        name: "Transparencia focalizada",
+                        description: "Transparencia focalizada"
+                    },
+                    establishment: establishment,
+                    files: [],
+                    id: 0,
+                    max_date_to_publish: "",
+                    published: false,
+                    published_at: "",
+                    slug: "",
+                    status: "",
+                    year: 0,
+                    created_at: "",
+                    deleted_at: "",
+                    updated_at: "",
+                    deleted: false,
+                    ip: "",
+                    user_created: "",
+                    user_deleted: "",
+                    user_updated: "",
+                    month: 0
+                }
+            ]
+        }
 
 
         const mapfinal = resultTf.map((item) => {
-            
-            
 
-            if(new DatePnt().getYearToUpload()==2024){
+
+
+            if (new DatePnt().getYearToUpload() == 2024) {
 
                 const rest = pnt1focal ? pnt1focal[0]:undefined 
                 
 
                 const data = {
-                    numeral:item.numeral.name,
+                    numeral: item.numeral.name,
                     enero: rest?.enero ? 'Si' : 'No',
                     febrero: rest?.febrero ? 'Si' : 'No',
                     marzo: rest?.marzo ? 'Si' : 'No',
@@ -366,7 +397,7 @@ const AnnualReportContainer = (props: Props) => {
                 }
                 return data
 
-            }else{
+            } else {
                 return {
                     numeral: item.numeral.name,
                     enero: resultTf.find((_e) =>
@@ -408,22 +439,50 @@ const AnnualReportContainer = (props: Props) => {
 
                 }
             }
-     
+
         })
 
-        return mapfinal.filter((item, index, array) =>
-            array.findIndex(other => other.numeral === item.numeral) === index
-        )
-        
+        return mapfinal
+
     }
 
 
 
 
-    const buildColab = () =>{
-        const resultTf = paginableTC.results
+    const buildColab = () => {
+        let resultTf = paginableTC.results.filter((item, index, array) =>
+            array.findIndex(other => other.numeral.id === item.numeral.id) === index
+        )
 
-        
+        if(resultTf.length == 0){
+            resultTf = [
+                {
+                    numeral: {
+                        id: 0,
+                        name: "Transparencia colaborativa",
+                        description: "Transparencia colaborativa"
+                    },
+                    establishment:establishment,
+                    files: [],
+                    id: 0,
+                    max_date_to_publish: "",
+                    published: false,
+                    published_at: "",
+                    slug: "",
+                    status: "",
+                    year: 0,
+                    created_at: "",
+                    deleted_at: "",
+                    updated_at: "",
+                    deleted: false,
+                    ip: "",
+                    user_created: "",
+                    user_deleted: "",
+                    user_updated: "",
+                    month: 0
+                }
+            ]
+        }
 
 
         const mapfinal = resultTf.map((item) => {
@@ -433,7 +492,7 @@ const AnnualReportContainer = (props: Props) => {
             if (new DatePnt().getYearToUpload() == 2024) {
                 /*pnt1focal.find((_e) =>
                         _e.enero)*/
-                const rest = pnt1colab.length > 0 ? pnt1colab[0]:undefined
+                const rest = pnt1colab.length > 0 ? pnt1colab[0] : undefined
 
                 const data = {
                     numeral: item.numeral.name,
@@ -513,12 +572,12 @@ const AnnualReportContainer = (props: Props) => {
     }
 
 
-    const buildActive = ()=>{
+    const buildActive = () => {
         const diff = paginableTA.results.filter((item, index, array) =>
             array.findIndex(other => other.numeral.id === item.numeral.id) === index
         )
         const mapfinal = diff.map((item) => {
-            if (new DatePnt().getYearToUpload()==2024){
+            if (new DatePnt().getYearToUpload() == 2024) {
                 const rest = pnt1active.find((_e) =>
                 "Numeral "+_e.numeral.replace(" - ","-") == item.numeral.name 
                 && _e.art =="19"
@@ -547,7 +606,7 @@ const AnnualReportContainer = (props: Props) => {
                         'Si' : 'No'
                 }
                 return data
-            }else{
+            } else {
                 return {
                     numeral: item.numeral.name,
                     enero: paginableTA.results.find((_e) =>
@@ -571,7 +630,7 @@ const AnnualReportContainer = (props: Props) => {
                     junio: paginableTA.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 6) ?
                         'Si' : 'No',
-                    
+
                     julio: paginableTA.results.find((_e) =>
 
                         _e.numeral.id == item.numeral.id && _e.month == 7) ?
@@ -599,7 +658,7 @@ const AnnualReportContainer = (props: Props) => {
         })
 
         return mapfinal
-        
+
     }
 
     const buildActiveEs = () => {
@@ -693,15 +752,15 @@ const AnnualReportContainer = (props: Props) => {
 
     const buildPasive = () => {
 
-        if(new DatePnt().getYearToUpload()==2024){
+        if (new DatePnt().getYearToUpload() == 2024) {
 
-            
-            
-            const solicitiesmap = solicityStats.map(e=>{
-                
-                
-                
-                const total = pnt1pasive.filter((item) => item.date.includes('-' + e.month +'-') ||
+
+
+            const solicitiesmap = solicityStats.map(e => {
+
+
+
+                const total = pnt1pasive.filter((item) => item.date.includes('-' + e.month + '-') ||
                     item.date.includes('2024-0' + e.month + '-') ||
                     item.date.includes('/' + e.month + '/') ||
                     item.date.includes('/0' + e.month + '/') 
@@ -753,40 +812,40 @@ const AnnualReportContainer = (props: Props) => {
                 }
             })
             return solicitiesmap
-        }else{
+        } else {
             return solicityStats
         }
 
 
 
-    
+
     }
 
 
-    const buildItems = ()=>{
+    const buildItems = () => {
 
         const lista_final: IndexInformationClassifiedEntity[] = []
-        if(new DatePnt().getYearToUpload()==2024){
+        if (new DatePnt().getYearToUpload() == 2024) {
             pnt1reserved.forEach((item) => {
                 lista_final.push(new IndexInformationClassifiedEntity(
-                    item.theme.trim()==""?"NO APLICA":item.theme,
-                    item.base_legal.trim() ==""?"NO APLICA":item.base_legal,
-                    item.date_classification.trim() ==""?"NO APLICA":item.date_classification,
-                    item.period_extension.trim() ==""?"NO APLICA":item.period_extension,
-                    item.extension.trim() ==""?"NO APLICA":item.extension,
-                    item.description.trim() ==""?"NO APLICA":item.description,
-                    item.date_extension.trim() ==""?"NO APLICA":item.date_extension,
-                    item.period_extension.trim() ==""?"NO APLICA":item.period_extension,
+                    item.theme.trim() == "" ? "NO APLICA" : item.theme,
+                    item.base_legal.trim() == "" ? "NO APLICA" : item.base_legal,
+                    item.date_classification.trim() == "" ? "NO APLICA" : item.date_classification,
+                    item.period_extension.trim() == "" ? "NO APLICA" : item.period_extension,
+                    item.extension.trim() == "" ? "NO APLICA" : item.extension,
+                    item.description.trim() == "" ? "NO APLICA" : item.description,
+                    item.date_extension.trim() == "" ? "NO APLICA" : item.date_extension,
+                    item.period_extension.trim() == "" ? "NO APLICA" : item.period_extension,
                 ))
             })
         }
 
         reservas.forEach((item) => {
             lista_final.push(new IndexInformationClassifiedEntity(
-                item.tema.trim() ==""?"NO APLICA":item.tema,
-                item.numero_resolucion.trim() ==""?"NO APLICA":item.numero_resolucion,
-                item.fecha_clasificacion.trim() ==""?"NO APLICA":item.fecha_clasificacion,
-                item.periodo_vigencia.trim() ==""?"NO APLICA":item.periodo_vigencia,
+                item.tema.trim() == "" ? "NO APLICA" : item.tema,
+                item.numero_resolucion.trim() == "" ? "NO APLICA" : item.numero_resolucion,
+                item.fecha_clasificacion.trim() == "" ? "NO APLICA" : item.fecha_clasificacion,
+                item.periodo_vigencia.trim() == "" ? "NO APLICA" : item.periodo_vigencia,
                 "NO APLICA",
                 "NO APLICA",
                 "NO APLICA",
@@ -797,7 +856,7 @@ const AnnualReportContainer = (props: Props) => {
 
         return lista_final
 
-    }   
+    }
 
     return (
         <AnnualReportPresenter
@@ -827,7 +886,7 @@ const AnnualReportContainer = (props: Props) => {
             isEdit={isEdited}
             onEdit={onEditRow}
             onChangeValue={onChangeValue}
-            total_saip={totalSaip+totalSaipPnt1}
+            total_saip={totalSaip + totalSaipPnt1}
             isSaved={saved}
 
         />
