@@ -369,29 +369,29 @@ const AnnualReportContainer = (props: Props) => {
 
             if (new DatePnt().getYearToUpload() == 2024) {
 
-                const rest = pnt1focal ? pnt1focal[0]:undefined 
+                const rest = pnt1focal
                 
 
                 const data = {
                     numeral: item.numeral.name,
-                    enero: rest?.enero ? 'Si' : 'No',
-                    febrero: rest?.febrero ? 'Si' : 'No',
-                    marzo: rest?.marzo ? 'Si' : 'No',
-                    abril: rest?.abril ? 'Si' : 'No',
-                    mayo: rest?.mayo ? 'Si' : 'No',
-                    junio: rest?.junio ? 'Si' : 'No',
-                    julio: rest?.julio ? 'Si' : 'No',
-                    agosto: rest?.agosto ? 'Si' : 'No',
-                    septiembre: resultTf.find((_e) =>
+                    enero: rest.filter((_e) => _e.enero).length > 0 ? 'Si' : 'No',
+                    febrero: rest.filter((_e) => _e.febrero).length > 0 ? 'Si' : 'No',
+                    marzo: rest.filter((_e) => _e.marzo).length > 0 ? 'Si' : 'No',
+                    abril: rest.filter((_e) => _e.abril).length > 0 ? 'Si' : 'No',
+                    mayo: rest.filter((_e) => _e.mayo).length > 0 ? 'Si' : 'No',
+                    junio: rest.filter((_e) => _e.junio).length > 0 ? 'Si' : 'No',
+                    julio: rest.filter((_e) => _e.julio).length > 0 ? 'Si' : 'No',
+                    agosto: rest.filter((_e) => _e.agosto).length > 0 ? 'Si' : 'No',
+                    septiembre: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 9) ?
                         'Si' : 'No',
-                    octubre: resultTf.find((_e) =>
+                    octubre: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 10) ?
                         'Si' : 'No',
-                    noviembre: resultTf.find((_e) =>
+                    noviembre: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 11) ?
                         'Si' : 'No',
-                    diciembre: resultTf.find((_e) =>
+                    diciembre: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 12) ?
                         'Si' : 'No'
                 }
@@ -400,40 +400,40 @@ const AnnualReportContainer = (props: Props) => {
             } else {
                 return {
                     numeral: item.numeral.name,
-                    enero: resultTf.find((_e) =>
+                    enero: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 1) ?
                         'Si' : 'No',
-                    febrero: resultTf.find((_e) =>
+                    febrero: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 2) ?
                         'Si' : 'No',
-                    marzo: resultTf.find((_e) =>
+                    marzo: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 3) ?
                         'Si' : 'No',
-                    abril: resultTf.find((_e) =>
+                    abril: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 4) ?
                         'Si' : 'No',
-                    mayo: resultTf.find((_e) =>
+                    mayo: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 5) ?
                         'Si' : 'No',
-                    junio: resultTf.find((_e) =>
+                    junio: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 6) ?
                         'Si' : 'No',
-                    julio: resultTf.find((_e) =>
+                    julio: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 7) ?
                         'Si' : 'No',
-                    agosto: resultTf.find((_e) =>
+                    agosto: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 8) ?
                         'Si' : 'No',
-                    septiembre: resultTf.find((_e) =>
+                    septiembre: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 9) ?
                         'Si' : 'No',
-                    octubre: resultTf.find((_e) =>
+                    octubre: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 10) ?
                         'Si' : 'No',
-                    noviembre: resultTf.find((_e) =>
+                    noviembre: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 11) ?
                         'Si' : 'No',
-                    diciembre: resultTf.find((_e) =>
+                    diciembre: paginableTF.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 12) ?
                         'Si' : 'No'
 
@@ -492,28 +492,28 @@ const AnnualReportContainer = (props: Props) => {
             if (new DatePnt().getYearToUpload() == 2024) {
                 /*pnt1focal.find((_e) =>
                         _e.enero)*/
-                const rest = pnt1colab.length > 0 ? pnt1colab[0] : undefined
+                const rest = pnt1colab
 
                 const data = {
                     numeral: item.numeral.name,
-                    enero: rest?.enero ? 'Si' : 'No',
-                    febrero: rest?.febrero ? 'Si' : 'No',
-                    marzo: rest?.marzo ? 'Si' : 'No',
-                    abril: rest?.abril ? 'Si' : 'No',
-                    mayo: rest?.mayo ? 'Si' : 'No',
-                    junio: rest?.junio ? 'Si' : 'No',
-                    julio: rest?.julio ? 'Si' : 'No',
-                    agosto: rest?.agosto ? 'Si' : 'No',
-                    septiembre: resultTf.find((_e) =>
+                    enero: rest.filter((_e) => _e.enero).length > 0 ? 'Si' : 'No',
+                    febrero: rest.filter((_e) => _e.febrero).length > 0 ? 'Si' : 'No',
+                    marzo: rest.filter((_e) => _e.marzo).length > 0 ? 'Si' : 'No',
+                    abril: rest.filter((_e) => _e.abril).length > 0 ? 'Si' : 'No',
+                    mayo: rest.filter((_e) => _e.mayo).length > 0 ? 'Si' : 'No',
+                    junio: rest.filter((_e) => _e.junio).length > 0 ? 'Si' : 'No',
+                    julio: rest.filter((_e) => _e.julio).length > 0 ? 'Si' : 'No',
+                    agosto: rest.filter((_e) => _e.agosto).length > 0 ? 'Si' : 'No',
+                    septiembre: paginableTC.results.find((_e) =>
                          _e.month == 9) ?
                         'Si' : 'No',
-                    octubre: resultTf.find((_e) =>
+                    octubre: paginableTC.results.find((_e) =>
                          _e.month == 10) ?
                         'Si' : 'No',
-                    noviembre: resultTf.find((_e) =>
+                    noviembre: paginableTC.results.find((_e) =>
                          _e.month == 11) ?
                         'Si' : 'No',
-                    diciembre: resultTf.find((_e) =>
+                    diciembre: paginableTC.results.find((_e) =>
                          _e.month == 12) ?
                         'Si' : 'No'
                 }
@@ -522,40 +522,40 @@ const AnnualReportContainer = (props: Props) => {
             } else {
                 return {
                     numeral: item.numeral.name,
-                    enero: resultTf.find((_e) =>
+                    enero: paginableTC.results.find((_e) =>
                          _e.month == 1) ?
                         'Si' : 'No',
-                    febrero: resultTf.find((_e) =>
+                    febrero: paginableTC.results.find((_e) =>
                          _e.month == 2) ?
                         'Si' : 'No',
-                    marzo: resultTf.find((_e) =>
+                    marzo: paginableTC.results.find((_e) =>
                       _e.month == 3) ?
                         'Si' : 'No',
-                    abril: resultTf.find((_e) =>
+                    abril: paginableTC.results.find((_e) =>
                         _e.month == 4) ?
                         'Si' : 'No',
-                    mayo: resultTf.find((_e) =>
+                    mayo: paginableTC.results.find((_e) =>
                         _e.month == 5) ?
                         'Si' : 'No',
-                    junio: resultTf.find((_e) =>
+                    junio: paginableTC.results.find((_e) =>
                         _e.month == 6) ?
                         'Si' : 'No',
-                    julio: resultTf.find((_e) =>
+                    julio: paginableTC.results.find((_e) =>
                         _e.month == 7) ?
                         'Si' : 'No',
-                    agosto: resultTf.find((_e) =>
+                    agosto: paginableTC.results.find((_e) =>
                          _e.month == 8) ?
                         'Si' : 'No',
-                    septiembre: resultTf.find((_e) =>
+                    septiembre: paginableTC.results.find((_e) =>
                          _e.month == 9) ?
                         'Si' : 'No',
-                    octubre: resultTf.find((_e) =>
+                    octubre: paginableTC.results.find((_e) =>
                       _e.month == 10) ?
                         'Si' : 'No',
-                    noviembre: resultTf.find((_e) =>
+                    noviembre: paginableTC.results.find((_e) =>
                          _e.month == 11) ?
                         'Si' : 'No',
-                    diciembre: resultTf.find((_e) =>
+                    diciembre: paginableTC.results.find((_e) =>
                         _e.month == 12) ?
                         'Si' : 'No'
 
@@ -578,20 +578,20 @@ const AnnualReportContainer = (props: Props) => {
         )
         const mapfinal = diff.map((item) => {
             if (new DatePnt().getYearToUpload() == 2024) {
-                const rest = pnt1active.find((_e) =>
+                const rest = pnt1active.filter((_e) =>
                 "Numeral "+_e.numeral.replace(" - ","-") == item.numeral.name 
                 && _e.art =="19"
             )
                 const data = {
                     numeral: item.numeral.name,
-                    enero: rest?.enero ? 'Si' : 'No',
-                    febrero: rest?.febrero ? 'Si' : 'No',
-                    marzo: rest?.marzo ? 'Si' : 'No',
-                    abril: rest?.abril ? 'Si' : 'No',
-                    mayo: rest?.mayo ? 'Si' : 'No',
-                    junio: rest?.junio ? 'Si' : 'No',
-                    julio: rest?.julio ? 'Si' : 'No',
-                    agosto: rest?.agosto ? 'Si' : 'No',
+                    enero: rest?.filter((_e) => _e.enero).length > 0 ? 'Si' : 'No',
+                    febrero: rest?.filter((_e) => _e.febrero).length > 0 ? 'Si' : 'No',
+                    marzo: rest?.filter((_e) => _e.marzo).length > 0 ? 'Si' : 'No',
+                    abril: rest?.filter((_e) => _e.abril).length > 0 ? 'Si' : 'No',
+                    mayo: rest?.filter((_e) => _e.mayo).length > 0 ? 'Si' : 'No',
+                    junio: rest?.filter((_e) => _e.junio).length > 0 ? 'Si' : 'No',
+                    julio: rest?.filter((_e) => _e.julio).length > 0 ? 'Si' : 'No',
+                    agosto: rest?.filter((_e) => _e.agosto).length > 0 ? 'Si' : 'No',
                     septiembre: paginableTA.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 9) ?
                         'Si' : 'No',
