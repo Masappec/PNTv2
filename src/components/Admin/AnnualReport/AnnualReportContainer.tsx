@@ -369,20 +369,19 @@ const AnnualReportContainer = (props: Props) => {
 
             if (new DatePnt().getYearToUpload() == 2024) {
 
-                const rest = pnt1focal.find((_e) =>
-                    _e.numeral == item.numeral.name)
-
+                const rest = pnt1focal
+                
 
                 const data = {
                     numeral: item.numeral.name,
-                    enero: rest?.enero ? 'Si' : 'No',
-                    febrero: rest?.febrero ? 'Si' : 'No',
-                    marzo: rest?.marzo ? 'Si' : 'No',
-                    abril: rest?.abril ? 'Si' : 'No',
-                    mayo: rest?.mayo ? 'Si' : 'No',
-                    junio: rest?.junio ? 'Si' : 'No',
-                    julio: rest?.julio ? 'Si' : 'No',
-                    agosto: rest?.agosto ? 'Si' : 'No',
+                    enero: rest.filter((_e) => _e.enero).length > 0 ? 'Si' : 'No',
+                    febrero: rest.filter((_e) => _e.febrero).length > 0 ? 'Si' : 'No',
+                    marzo: rest.filter((_e) => _e.marzo).length > 0 ? 'Si' : 'No',
+                    abril: rest.filter((_e) => _e.abril).length > 0 ? 'Si' : 'No',
+                    mayo: rest.filter((_e) => _e.mayo).length > 0 ? 'Si' : 'No',
+                    junio: rest.filter((_e) => _e.junio).length > 0 ? 'Si' : 'No',
+                    julio: rest.filter((_e) => _e.julio).length > 0 ? 'Si' : 'No',
+                    agosto: rest.filter((_e) => _e.agosto).length > 0 ? 'Si' : 'No',
                     septiembre: resultTf.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 9) ?
                         'Si' : 'No',
@@ -493,18 +492,18 @@ const AnnualReportContainer = (props: Props) => {
             if (new DatePnt().getYearToUpload() == 2024) {
                 /*pnt1focal.find((_e) =>
                         _e.enero)*/
-                const rest = pnt1colab.length > 0 ? pnt1colab[0] : undefined
+                const rest = pnt1colab
 
                 const data = {
                     numeral: item.numeral.name,
-                    enero: rest?.enero ? 'Si' : 'No',
-                    febrero: rest?.febrero ? 'Si' : 'No',
-                    marzo: rest?.marzo ? 'Si' : 'No',
-                    abril: rest?.abril ? 'Si' : 'No',
-                    mayo: rest?.mayo ? 'Si' : 'No',
-                    junio: rest?.junio ? 'Si' : 'No',
-                    julio: rest?.julio ? 'Si' : 'No',
-                    agosto: rest?.agosto ? 'Si' : 'No',
+                    enero: rest.filter((_e) => _e.enero).length > 0 ? 'Si' : 'No',
+                    febrero: rest.filter((_e) => _e.febrero).length > 0 ? 'Si' : 'No',
+                    marzo: rest.filter((_e) => _e.marzo).length > 0 ? 'Si' : 'No',
+                    abril: rest.filter((_e) => _e.abril).length > 0 ? 'Si' : 'No',
+                    mayo: rest.filter((_e) => _e.mayo).length > 0 ? 'Si' : 'No',
+                    junio: rest.filter((_e) => _e.junio).length > 0 ? 'Si' : 'No',
+                    julio: rest.filter((_e) => _e.julio).length > 0 ? 'Si' : 'No',
+                    agosto: rest.filter((_e) => _e.agosto).length > 0 ? 'Si' : 'No',
                     septiembre: resultTf.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 9) ?
                         'Si' : 'No',
@@ -574,18 +573,20 @@ const AnnualReportContainer = (props: Props) => {
         )
         const mapfinal = diff.map((item) => {
             if (new DatePnt().getYearToUpload() == 2024) {
-                const rest = pnt1active.find((_e) =>
-                    "Numeral " + _e.numeral.replace(" - ", "-") == item.numeral.name)
+                const rest = pnt1active.filter((_e) =>
+                "Numeral "+_e.numeral.replace(" - ","-") == item.numeral.name 
+                && _e.art =="19"
+            )
                 const data = {
                     numeral: item.numeral.name,
-                    enero: rest?.enero ? 'Si' : 'No',
-                    febrero: rest?.febrero ? 'Si' : 'No',
-                    marzo: rest?.marzo ? 'Si' : 'No',
-                    abril: rest?.abril ? 'Si' : 'No',
-                    mayo: rest?.mayo ? 'Si' : 'No',
-                    junio: rest?.junio ? 'Si' : 'No',
-                    julio: rest?.julio ? 'Si' : 'No',
-                    agosto: rest?.agosto ? 'Si' : 'No',
+                    enero: rest?.filter((_e) => _e.enero).length > 0 ? 'Si' : 'No',
+                    febrero: rest?.filter((_e) => _e.febrero).length > 0 ? 'Si' : 'No',
+                    marzo: rest?.filter((_e) => _e.marzo).length > 0 ? 'Si' : 'No',
+                    abril: rest?.filter((_e) => _e.abril).length > 0 ? 'Si' : 'No',
+                    mayo: rest?.filter((_e) => _e.mayo).length > 0 ? 'Si' : 'No',
+                    junio: rest?.filter((_e) => _e.junio).length > 0 ? 'Si' : 'No',
+                    julio: rest?.filter((_e) => _e.julio).length > 0 ? 'Si' : 'No',
+                    agosto: rest?.filter((_e) => _e.agosto).length > 0 ? 'Si' : 'No',
                     septiembre: paginableTA.results.find((_e) =>
                         _e.numeral.id == item.numeral.id && _e.month == 9) ?
                         'Si' : 'No',
