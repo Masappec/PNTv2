@@ -32,3 +32,26 @@ export interface PedagogyAreaPublicResponse {
 export interface Month{
     month: number;
 }
+
+
+export interface GenerateAnualReport{
+    establishment: number;
+    year: number;
+    file: string;
+    is_global: boolean;
+    created_at: string;
+    updated_at: string;
+    id: number;
+    deleted_at: string; 
+    deleted: boolean;
+}
+
+export interface GeneralAnualReport{
+    year: number;
+    file : string;
+}
+
+export interface ProfileAnualReport{ 
+    list : GenerateAnualReport[];
+    general: GeneralAnualReport[];
+}
