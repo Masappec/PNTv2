@@ -656,6 +656,93 @@ const AnnualReportContainer = (props: Props) => {
 
     }
 
+    const buildActiveEs = () => {
+        const diff = paginableTAE.results.filter((item, index, array) =>
+            array.findIndex(other => other.numeral.id === item.numeral.id) === index
+        )
+        const mapfinal = diff.map((item) => {
+            if (new DatePnt().getYearToUpload() == 2024) {
+                const rest = pnt1active.find((_e) =>
+                    item.numeral.name.includes("Art. "+_e.art) && _e.art !== "19"
+                )
+                const data = {
+                    numeral: item.numeral.name,
+                    enero: rest?.enero ? 'Si' : 'No',
+                    febrero: rest?.febrero ? 'Si' : 'No',
+                    marzo: rest?.marzo ? 'Si' : 'No',
+                    abril: rest?.abril ? 'Si' : 'No',
+                    mayo: rest?.mayo ? 'Si' : 'No',
+                    junio: rest?.junio ? 'Si' : 'No',
+                    julio: rest?.julio ? 'Si' : 'No',
+                    agosto: rest?.agosto ? 'Si' : 'No',
+                    septiembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                        'Si' : 'No',
+                    octubre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                        'Si' : 'No',
+                    noviembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                        'Si' : 'No',
+                    diciembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        'Si' : 'No'
+                }
+                return data
+            } else {
+                return {
+                    numeral: item.numeral.name,
+                    enero: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 1) ?
+                        'Si' : 'No',
+                    febrero: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 2) ?
+                        'Si' : 'No',
+                    marzo: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 3) ?
+                        'Si' : 'No',
+
+                    abril: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 4) ?
+                        'Si' : 'No',
+
+                    mayo: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 5) ?
+                        'Si' : 'No',
+
+                    junio: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 6) ?
+                        'Si' : 'No',
+
+                    julio: paginableTAE.results.find((_e) =>
+
+                        _e.numeral.id == item.numeral.id && _e.month == 7) ?
+                        'Si' : 'No',
+
+                    agosto: paginableTAE.results.find((_e) =>
+
+                        _e.numeral.id == item.numeral.id && _e.month == 8) ?
+                        'Si' : 'No',
+
+                    septiembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                        'Si' : 'No',
+                    octubre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                        'Si' : 'No',
+                    noviembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                        'Si' : 'No',
+                    diciembre: paginableTAE.results.find((_e) =>
+                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        'Si' : 'No'
+                }
+            }
+        })
+
+        return mapfinal
+
+    }
 
 
     const buildPasive = () => {
@@ -671,19 +758,52 @@ const AnnualReportContainer = (props: Props) => {
                 const total = pnt1pasive.filter((item) => item.date.includes('-' + e.month + '-') ||
                     item.date.includes('2024-0' + e.month + '-') ||
                     item.date.includes('/' + e.month + '/') ||
-                    item.date.includes('/0' + e.month + '/')
-                ).length
+                    item.date.includes('/0' + e.month + '/') 
+                ).length + e.total
+                
+                let percent = (totalSaip+totalSaipPnt1) == 0 ? 0 : 
+                    (total / (totalSaip+totalSaipPnt1)) * 100
+                percent = Math.round(percent * 100) / 100  
 
-                let percent = (totalSaip + totalSaipPnt1) == 0 ? 0 :
-                    (total / (totalSaip + totalSaipPnt1)) * 100
-                percent = Math.round(percent * 100) / 100
+                let percent_pnt2 = (totalSaip+totalSaipPnt1) == 0 ? 0 :
+                    (e.total_response_to_10_days / (totalSaip+totalSaipPnt1)) * 100
+                percent_pnt2 = Math.round(percent_pnt2 * 100) / 100
+                
+
+               
+
+
+                //total no respondodias
+                const total_no = pnt1pasive.filter((item) => item.date.includes('-' + e.month + '-') ||
+                    item.date.includes('2024-0' + e.month + '-') ||
+                    item.date.includes('/' + e.month + '/') ||
+                    item.date.includes('/0' + e.month + '/')
+                ).filter((item) => item.state.toLowerCase().includes('no respondida')).length + e.total_no_response
+                let percent_no = (totalSaip+totalSaipPnt1) == 0 ? 0 :
+                    (total_no / (totalSaip+totalSaipPnt1)) * 100
+                percent_no = Math.round(percent_no * 100) / 100
+
+
+
+                //total respondodias
+                const total_respondidas = pnt1pasive.filter((item) => item.date.includes('-' + e.month + '-') ||
+                    item.date.includes('2024-0' + e.month + '-') ||
+                    item.date.includes('/' + e.month + '/') ||
+                    item.date.includes('/0' + e.month + '/')
+                ).length + e.total_response_to_10_days - total_no
+
+                    let percent_respondidas = (totalSaip + totalSaipPnt1) == 0 ? 0 :
+                        (total_respondidas / (totalSaip + totalSaipPnt1)) * 100
+                percent_respondidas = Math.round(percent_respondidas * 100) / 100
+
                 return {
                     ...e,
-                    total: e.month < 9 ? total : e.total,
-                    total_response_to_10_days: e.month < 9 ?
-                        total : e.total_response_to_10_days,
-                    percent_response_to_10_days: e.month < 9 ?
-                        (total == 0 ? 0 : percent) : e.percent_response_to_10_days,
+                    total: total,
+                    total_response_to_10_days: total_respondidas,
+                    percent_response_to_10_days: percent_respondidas,
+                    month: e.month,
+                    total_no_response: total_no,
+                    percent_no_response: percent_no,
                 }
             })
             return solicitiesmap
@@ -749,7 +869,7 @@ const AnnualReportContainer = (props: Props) => {
             onPageTA={handlePageTA}
             onPageTF={handlePageTF}
             onPageTC={handlePageTC}
-            resultsTAE={paginableTAE}
+            resultsTAE={buildActiveEs()}
             resultsTA={buildActive()}
             resultTF={buildFocal()}
             resultTC={buildColab()}

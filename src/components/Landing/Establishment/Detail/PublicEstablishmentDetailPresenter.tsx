@@ -9,6 +9,7 @@ import InformationPresenter from "./Information/InformationPresenter";
 import IndicatorsEstablishment from "./Indicators/IndicatorsEstablishment";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
 import logo from '../../../../assets/placeholderPNT.png';
+import {  ProfileAnualReport } from "../../../../infrastructure/Api/Public/interface";
 
 interface Props {
   entity: EstablishmentEntity;
@@ -39,6 +40,8 @@ interface Props {
   handlePageSolicity: () => void;
   handlePageIndicators: () => void;
   qrUrl: string;
+  anualReports: ProfileAnualReport;
+  mensajeErrorAnualReport: string;
 }
 
 const PublicEstablishmentDetailPresenter = (props: Props) => {
@@ -174,6 +177,8 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
           selectedYearTF={props.selectedYearTF}
           mesesTC={props.mesesTC}
           mesesTF={props.mesesTF}
+          anualReports={props.anualReports}
+          mensajeErrorAnualReport={props.mensajeErrorAnualReport}
 
         />
 
