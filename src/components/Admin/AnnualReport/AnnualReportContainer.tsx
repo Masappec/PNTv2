@@ -795,10 +795,9 @@ const AnnualReportContainer = (props: Props) => {
                     item.date.includes('2024-0' + e.month + '-') ||
                     item.date.includes('/' + e.month + '/') ||
                     item.date.includes('/0' + e.month + '/')
-                ).length + e.total_response_to_10_days - total_no
+                ).filter((item) => !item.state.toLowerCase().includes('no respondida')).length + e.total_response_to_10_days
 
-                    let percent_respondidas = (totalSaip + totalSaipPnt1) == 0 ? 0 :
-                        (total_respondidas / (totalSaip + totalSaipPnt1)) * 100
+                let percent_respondidas = (totalSaip + totalSaipPnt1) == 0 ? 0 :(total_respondidas / (totalSaip + totalSaipPnt1)) * 100
                 percent_respondidas = Math.round(percent_respondidas * 100) / 100
 
                 return {
