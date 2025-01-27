@@ -93,7 +93,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         handleOpenTransparency('C', entity.id || 0)
         props.usecase.getAnualReports(entity.id||0).then((response) => {
             setAnualReports(response)
-        }).catch((error) => {
+        }).catch(() => {
             setErrorAnualReports("No se pudo cargar los reportes anuales")
         })
     }, [entity, year])
