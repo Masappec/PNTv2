@@ -10,6 +10,10 @@ import TransparencyFocusEntity from "../../../../../domain/entities/Transparency
 import TransparencyActive from "../../../../../domain/entities/TransparencyActive";
 import EstablishmentEntity from "../../../../../domain/entities/Establishment";
 import Alert from "../../../../Common/Alert";
+import Table from "../../../../Common/Table";
+import { GenerateAnualReport, ProfileAnualReport } from "../../../../../infrastructure/Api/Public/interface";
+import { FaFileExcel } from "react-icons/fa";
+import { formatDate2 } from "../../../../../utils/functions";
 
 interface Props {
     entity: EstablishmentEntity;
@@ -36,12 +40,19 @@ interface Props {
     selectedYearTF: number;
     onOpenMonthTF: (month: number) => void;
     publicationsTF: AcordionMonthYear<TransparencyFocusEntity>[];
-
+    anualReports: ProfileAnualReport;
+    mensajeErrorAnualReport: string;
 }
 
 const EstablishmentPublicationsPresenter = (props: Props) => {
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
+    const onDonwloadXlsx = (url: string, name: string) => {
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = name + '.xlsx';
+        a.click();
+    }
 
 
     return (
@@ -293,6 +304,109 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
 
                                     </Accordion>
                                 </div>
+                            </div>
+                        </>
+                    </Accordion.Content>
+                </Accordion.Panel>
+                <Accordion.Panel >
+                    <Accordion.Title>
+                        <p className="text-start text-[#F7941D]/80 text-lg font-medium">
+
+                            Informe Anual
+                        </p>
+                    </Accordion.Title>
+                    <Accordion.Content>
+                        <>
+                            <p className="text-start text-lg font-medium mt-14">
+                                Consulta la información anual recopilada por la institución
+                            </p>
+
+                            <h2 className="text-2xl font-semibold mt-4">
+                                {props.entity.name}
+                            </h2>
+                            <p className=" text-sm xl:w-full mt-8 font-medium mb-10">
+                                Consulta los archivos publicados anualmente por la institución en cumplimiento de la Ley 
+                            </p>
+                            
+
+                            <div>
+                            <Table
+                                show={false}
+                                text="La institución no ha publicado datos para este mes."
+                                columns={[
+                                    
+                                    {
+                                        render: (item) => {
+                                            return item.year
+                                        },
+                                        title: "Año"
+                                    },
+                                    {
+                                        render: (item) => {
+                                            return formatDate2(item.created_at)
+                                        },
+                                        title: "Publicado"
+                                    },
+                                    {
+                                        render: (item) => {
+                                            return (
+                                                <div className="flex flex-col space-y-2" key={item.id}>
+                                                    <div className="flex flex-row space-x-5 justify-center items-center">
+                                                        <a 
+                                                            href={"#"}
+                                                            onClick={() => onDonwloadXlsx(item.file,
+                                                                `informe-anual-${item.year}`
+                                                            )}
+                                                            target="_blank"
+                                                            className="text-primary-500
+                                               hover:text-primary-600 text-base"
+                                                        >
+                                                            <FaFileExcel className="text-green-500" size={30}
+                                                            />
+                                                            Informe Anual Entidad
+                                                        </a>
+                                                        {
+                                                            props.anualReports.general.find(x => x.year == item.year) && (
+                                                                <a
+                                                                    href={props.anualReports.general.find(x => x.year == item.year)?.file}
+                                                                    target="_blank"
+                                                                    className="text-primary-500 hover:text-primary-600 text-base"
+                                                                >
+                                                                    <FaFileExcel className="text-green-500" size={30}
+                                                                    />
+                                                                    Informe Anual General
+                                                                </a>
+
+                                                            )
+                                                        }
+
+                                                    </div>
+                                                   
+                                                </div>
+                                                 
+                                            )
+        
+                                        },
+                                        title: "Archivo Publicado"
+                                    },
+                                ]}
+                                data={props.anualReports.list}
+                                description="No se encontraron resultados"
+                                length={0}
+                                onFilter={() => { }}
+                                onSearch={() => { }}
+                                search=""
+                                title=""
+                                currentPage={1}
+                                from={1}
+                                isImport={false}
+                                key={0}
+                                onChangePage={() => { }}
+                                onImport={() => { }}
+                                to={0}
+                                total={0}
+                                totalPages={1}
+                               />
                             </div>
                         </>
                     </Accordion.Content>

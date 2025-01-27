@@ -6,10 +6,13 @@ import PublicApi from "../Api/Public/PublicApi";
 import jsPDF from "jspdf";
 import EstablishmentEntity from "../../domain/entities/Establishment";
 import { Transform } from "../../utils/transform";
-import { DELIMITER } from "../../utils/constans";
+import { DELIMITER, URL_API } from "../../utils/constans";
+import { TRANSPARENCY_PATH } from "../Api";
+import { GeneralAnualReport, GenerateAnualReport, ProfileAnualReport } from "../Api/Public/interface";
 
 
 class PublicService {
+   
 
     private api: PublicApi;
 
@@ -18,7 +21,23 @@ class PublicService {
         this.api = api;
     }
 
-
+    async getAnualReports(establishment_id: number) {
+        const res = await this.api.getAnualReports(establishment_id);
+        return {
+            list: res.list.map((report) => {
+                return {
+                    ...report,
+                    file: URL_API + TRANSPARENCY_PATH + report.file
+                } as GenerateAnualReport
+            }),
+            general: res.general.map((report) => {
+                return {
+                    ...report,
+                    file: URL_API + TRANSPARENCY_PATH + report.file
+                } as GeneralAnualReport
+            })
+        } as ProfileAnualReport
+    }
     async getEstablishments(search?: string, page?: number) {
 
         const response = await this.api.getEstablishments(search, page);

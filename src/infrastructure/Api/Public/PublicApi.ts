@@ -1,11 +1,12 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
-import { EstablishmentPublicListDto, Month } from "./interface";
+import { EstablishmentPublicListDto,  Month, ProfileAnualReport } from "./interface";
 import { ADMIN_PATH, PaginationLetter, TRANSPARENCY_PATH } from "..";
 import { PedagogyAreaResponse } from "../PedagogyArea/interface";
 import { URL_API } from "../../../utils/constans";
 
 
 class PublicApi {
+    
 
     private api: AxiosInstance;
 
@@ -13,7 +14,14 @@ class PublicApi {
         this.api = api;
     }
 
-
+    async getAnualReports(establishment_id: number) {
+        const res = await this.api.get<ProfileAnualReport>(TRANSPARENCY_PATH + "/anual-report/establishment", {
+            params: {
+                establishment_id
+            }
+        });
+        return res.data;
+    }
     async getEstablishments(search?: string, page?: number) {
         try {
             const response = await this.api.get<PaginationLetter<EstablishmentPublicListDto>>(ADMIN_PATH + '/public/establishment/list', {
