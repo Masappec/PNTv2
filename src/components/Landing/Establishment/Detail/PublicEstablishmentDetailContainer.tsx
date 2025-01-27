@@ -11,6 +11,7 @@ import TransparencyCollabUseCase from "../../../../domain/useCases/TransparencyC
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import TransparencyCollab from "../../../../domain/entities/TransparencyCollab";
 import { generarQR } from "../../../../utils/options";
+import { ProfileAnualReport } from "../../../../infrastructure/Api/Public/interface";
 
 interface Props {
     usecase: PublicUseCase;
@@ -54,8 +55,11 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     const [yearTC, setYearTC] = useState<number>(new Date().getFullYear())
     const [UrlQR, setUrlQR] = useState<string>("")
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-
-
+    const [anualReports, setAnualReports] = useState<ProfileAnualReport>({
+        general: [],
+        list: []
+    })
+    const [errorAnualReports, setErrorAnualReports] = useState<string>("")
     const [mesesTA, setMesesTA] = useState<string[]>([])
     const [mesesTF, setMesesTF] = useState<string[]>([])
     const [mesesTC, setMesesTC] = useState<string[]>([])
@@ -78,6 +82,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             setLoading(false)
         })
 
+        
 
     }, [])
 
@@ -86,6 +91,11 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         handleOpenTransparency('A', entity.id || 0)
         handleOpenTransparency('F', entity.id || 0)
         handleOpenTransparency('C', entity.id || 0)
+        props.usecase.getAnualReports(entity.id||0).then((response) => {
+            setAnualReports(response)
+        }).catch((error) => {
+            setErrorAnualReports("No se pudo cargar los reportes anuales")
+        })
     }, [entity, year])
 
     useEffect(() => {
@@ -370,6 +380,8 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             handlePageInfo={handlePageInfo}
             handlePageSolicity={handlePageSolicity}
             qrUrl={UrlQR}
+            anualReports={anualReports}
+            mensajeErrorAnualReport={errorAnualReports}
 
         />
     )
