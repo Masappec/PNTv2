@@ -11,7 +11,7 @@ import TransparencyActive from "../../../../../domain/entities/TransparencyActiv
 import EstablishmentEntity from "../../../../../domain/entities/Establishment";
 import Alert from "../../../../Common/Alert";
 import Table from "../../../../Common/Table";
-import { GenerateAnualReport, ProfileAnualReport } from "../../../../../infrastructure/Api/Public/interface";
+import { ProfileAnualReport } from "../../../../../infrastructure/Api/Public/interface";
 import { FaFileExcel } from "react-icons/fa";
 import { formatDate2 } from "../../../../../utils/functions";
 
