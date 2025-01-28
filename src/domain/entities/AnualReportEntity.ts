@@ -76,7 +76,7 @@ export class AnualReportEntity{
           data.establishment_id,
           data.year,
           data.month,
-          data.have_records,
+          data.have_public_records,
           data.norme_archive_utility,
           data.comment_aclaration,
           data.total_saip,
