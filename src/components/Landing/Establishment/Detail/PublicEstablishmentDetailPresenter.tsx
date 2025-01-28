@@ -182,8 +182,9 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
 
         />
 
-
+        {/* 
         <InformationPresenter />
+        */}        
 
         <IndicatorsEstablishment
           usecase={new PublicDataApi()}
