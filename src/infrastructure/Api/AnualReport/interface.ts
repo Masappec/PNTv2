@@ -16,7 +16,7 @@ export interface AnualReportCreateDto {
   establishment_id: number;
   year: number;
   month: number;
-  have_records: boolean;
+  have_public_records: boolean;
   norme_archive_utility: string;
   comment_aclaration: string;
   total_saip: number;
