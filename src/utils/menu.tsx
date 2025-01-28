@@ -243,7 +243,7 @@ const menu = [
     visible_for_superadmin: false
   },
   {
-    name: 'T.Activa',
+    name: 'Reportes T.Activa',
     path: '/admin/active/all',
     visible: true,
     icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
@@ -289,7 +289,7 @@ const menu = [
     visible_for_superadmin: false
   },
   {
-    name: 'T.Focalizada',
+    name: 'Reportes T.Focalizada',
     path: '/admin/focalized/all',
     visible: true,
     icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
@@ -335,7 +335,7 @@ const menu = [
     visible_for_superadmin: false
   },
   {
-    name: 'T.Colaborativa',
+    name: 'Reportes T.Colaborativa',
     path: '/admin/collaborative/all',
     visible: true,
     icon: <RiCheckFill size={25} className="text-slate-500" />,
@@ -363,7 +363,7 @@ const menu = [
   },
 
   {
-    name: 'Solicitudes',
+    name: 'Reportes T. Pasiva',
     path: '/admin/solicity/all',
     visible: true,
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
