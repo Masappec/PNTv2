@@ -8,7 +8,7 @@ const InformationPresenter = () => {
 
         <>
             <section className='my-16 flex flex-col gap-y-4 md:flex-row md:items-end' id="information">
-                <h2 className='text-balance text-2xl font-normal leading-tight md:text-[40px]'>
+                <h2 className='text-balance text-2xl font-normal leading-tight md:text-[25px]'>
                     Solicita información
                 </h2>
                 <div className='h-[1px] w-full bg-gray-400'>
