@@ -226,7 +226,7 @@ class SolicityUseCase {
     autotable(doc, {
       startY: 30,
       head: [['Nombre', 'Email', 'Teléfono', 'Identificación cultural', 'Género']],
-      body: [[data.first_name, data.email, data.phone, data.race_identification, data.gender]],
+      body: [[data.first_name+ ' '+data.last_name, data.email, data.phone, data.race_identification, data.gender]],
     });
 
     autotable(doc, {
