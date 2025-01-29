@@ -464,10 +464,9 @@ const menu = [
     path: "/admin/annualreports",
     visible: true,
     icon: <GrCompliance size={25} className="text-slate-500" />,
-    permission_required: "approve_numeral_ta",
+    permission_required: "add_anualreport",
     element: <AnnualReport />,
     visible_for_superadmin: false
-
   },
 
   {
