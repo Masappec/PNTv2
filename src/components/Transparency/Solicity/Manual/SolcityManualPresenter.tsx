@@ -290,10 +290,11 @@ const SolicityManualPresenter = (props: Props) => {
             <div>
 
               <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                Formato de entrega
+              Formato de entrega de la información:
               </label>
               <br />
-              <span className="text-xs  text-gray-500">Selecciona a continuación el formato en el que deseas recibir la información que solicitas.</span>
+              <span className="text-xs  text-gray-500">Seleccione el formato en el que desea recibir la información:
+              </span>
               <select
                 className='mt-2 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
                 onChange={(value) => {
@@ -320,8 +321,11 @@ const SolicityManualPresenter = (props: Props) => {
                 <div>
 
                   <label className='text-sm font-medium text-gray-900' data-testid='flowbite-label'>
-                    Formato de Envío
+                  Formato de recepción de la información solicitada:
                   </label>
+                  <br />
+              <span className="text-xs  text-gray-500">Seleccione el formato por el que ingresó la solicitud a la institución requerida:
+              </span>
                   <select
                     className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 outline-primary focus:border-cyan-500 focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50'
                     onChange={(value) => {
