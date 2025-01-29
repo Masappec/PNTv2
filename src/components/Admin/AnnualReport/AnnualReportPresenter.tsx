@@ -1446,13 +1446,13 @@ const AnnualReportPresenter = (props: Props) => {
                           className="w-28"
                           onChange={(e) => {
                             props.onTextTable(index,
-                              "ampliation" as keyof IndexInformationClassifiedEntity,
+                              "amplation_effectuation" as keyof IndexInformationClassifiedEntity,
                               e.target.value
 
                             )
                           }}
                           disabled
-                          value={element.amplation_effectuation?'Si':'No'}
+                          value={element.amplation_effectuation}
                         />
                       </td>
                       <td>
