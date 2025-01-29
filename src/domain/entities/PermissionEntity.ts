@@ -345,6 +345,17 @@ export const AllPermissions: { type: string, list: PermissionEntity[] }[] = [
         ]
     },
     {
+        type: 'Informe Anual (De la Entidad a la que pertenece)',
+        list:[
+            {
+                codename:'add_anualreport',
+                content_type: 'Informe Anual',
+                name: 'Crear Informe Anual',
+                id: 71
+            }
+        ]
+    },
+    {
         type:'Reportes (De la Entidad a la que pertenece)',
         list:[
             {
