@@ -11,9 +11,10 @@ import TransparencyActive from "../../../../../domain/entities/TransparencyActiv
 import EstablishmentEntity from "../../../../../domain/entities/Establishment";
 import Alert from "../../../../Common/Alert";
 import Table from "../../../../Common/Table";
-import { ProfileAnualReport } from "../../../../../infrastructure/Api/Public/interface";
+import {  ProfileAnualReport } from "../../../../../infrastructure/Api/Public/interface";
 import { FaFileExcel } from "react-icons/fa";
 import { formatDate2 } from "../../../../../utils/functions";
+import InformationPresenter from "../Information/InformationPresenter";
 
 interface Props {
     entity: EstablishmentEntity;
@@ -310,7 +311,18 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                 </Accordion.Panel>
                 <Accordion.Panel >
                     <Accordion.Title>
-                        <p className="text-start text-[#F7941D]/80 text-lg font-medium">
+                        <p className="text-start text-[#a5c330]/80 text-lg font-medium">
+
+                            Transparencia Pasiva
+                        </p>
+                    </Accordion.Title>
+                    <Accordion.Content>
+                        <InformationPresenter />
+                    </Accordion.Content>
+                </Accordion.Panel>
+                <Accordion.Panel >
+                    <Accordion.Title>
+                        <p className="text-start text-[#ed7db1]/80 text-lg font-medium">
 
                             Informe Anual
                         </p>
