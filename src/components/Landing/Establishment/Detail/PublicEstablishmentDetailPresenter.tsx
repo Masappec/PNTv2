@@ -5,7 +5,7 @@ import { AcordionMonthYear } from "../../../../utils/interface";
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import TransparencyCollab from "../../../../domain/entities/TransparencyCollab";
 import EstablishmentPublicationsPresenter from "./Publications/PublicationsPresenter";
-import InformationPresenter from "./Information/InformationPresenter";
+//import InformationPresenter from "./Information/InformationPresenter";
 import IndicatorsEstablishment from "./Indicators/IndicatorsEstablishment";
 import PublicDataApi from "../../../../infrastructure/Api/PublicDataApi";
 import logo from '../../../../assets/placeholderPNT.png';
@@ -182,8 +182,9 @@ const PublicEstablishmentDetailPresenter = (props: Props) => {
 
         />
 
-
+        {/* 
         <InformationPresenter />
+        */}        
 
         <IndicatorsEstablishment
           usecase={new PublicDataApi()}
