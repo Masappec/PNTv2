@@ -70,9 +70,9 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         props.usecase.getEstablishment(slug || "").then((response) => {
             setEntity(response)
 
-            handleOpenTransparency('A', response.id || 0)
-            handleOpenTransparency('F', response.id || 0)
-            handleOpenTransparency('C', response.id || 0)
+            handleOpenTransparency('A', response.id || 0, year)
+            handleOpenTransparency('F', response.id || 0, year)
+            handleOpenTransparency('C', response.id || 0, year)
             setLoading(false)
             const imgQR = generarQR(window.location.protocol + "//" + window.location.host + "/entidades/" + slug + "#indicadores")
             setUrlQR(imgQR)
@@ -88,15 +88,31 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
 
 
     useEffect(() => {
-        handleOpenTransparency('A', entity.id || 0)
-        handleOpenTransparency('F', entity.id || 0)
-        handleOpenTransparency('C', entity.id || 0)
+        handleOpenTransparency('A', entity.id || 0, year)
         props.usecase.getAnualReports(entity.id||0).then((response) => {
             setAnualReports(response)
         }).catch(() => {
             setErrorAnualReports("No se pudo cargar los reportes anuales")
         })
     }, [entity, year])
+
+    useEffect(() => {
+        handleOpenTransparency('F', entity.id || 0, yearTF)
+        props.usecase.getAnualReports(entity.id||0).then((response) => {
+            setAnualReports(response)
+        }).catch(() => {
+            setErrorAnualReports("No se pudo cargar los reportes anuales")
+        })
+    }, [entity, yearTF])
+
+    useEffect(() => {
+        handleOpenTransparency('C', entity.id || 0, yearTC)
+        props.usecase.getAnualReports(entity.id||0).then((response) => {
+            setAnualReports(response)
+        }).catch(() => {
+            setErrorAnualReports("No se pudo cargar los reportes anuales")
+        })
+    }, [entity, yearTC])
 
     useEffect(() => {
         const hash = location.hash;
@@ -193,7 +209,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     }
 
 
-    const handleOpenTransparency = (type: 'A' | 'F' | 'C', entity_id: number) => {
+    const handleOpenTransparency = (type: 'C' | 'F' | 'A', entity_id: number, year: number) => {
         props.usecase.getMonthsByTransparency(type, entity_id || 0, year).then((response) => {
 
             const numbers = response.map((item) => item.month)
