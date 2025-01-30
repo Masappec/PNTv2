@@ -13,17 +13,21 @@ import { TransparencyCollabListDto } from "../../../infrastructure/Api/Transpare
 import { DatePnt } from "../../../utils/date";
 import { Pnt1Api } from "../../../infrastructure/Api/AnualReport/Pnt1Api";
 import { AnualReportMapper } from "../../../domain/mappers/AnualReportMapper";
+import NumeralUseCase from "../../../domain/useCases/NumeralUseCase/NumeraUseCase";
+import NumeralEntity from "../../../domain/entities/NumeralEntity";
 
 interface Props {
     usecase: AnualReportUseCase;
     establishmentUsecase: EstablishmentUseCase
     api: Pnt1Api;
+    numeralSessionUsecase: NumeralUseCase,
 
 }
 const AnnualReportContainer = (props: Props) => {
 
     const [form, setForm] = useState<AnualReportEntity>(AnualReportEntity.buildVoid())
     const [table, setTable] = useState<IndexInformationClassifiedEntity[]>([])
+    const [numerals, setNumerals] = useState<NumeralEntity[]>([])
 
     const [solicityStats, setSolicityStats] = useState<SolicityStatsAnualReportDto[]>([])
     const [pnt1pasive, setPnt1Pasive] = useState<Pnt1PasiveDto[]>([])
@@ -89,7 +93,7 @@ const AnnualReportContainer = (props: Props) => {
     const [totalSaip, setTotalSaip] = useState<number>(0)
 
 
-
+    
 
     const getDatafromPnt1 = () => {
 
@@ -122,6 +126,15 @@ const AnnualReportContainer = (props: Props) => {
 
         }
     }
+
+    useEffect(() => {
+        props.numeralSessionUsecase.getNumeralByUserInSession(new DatePnt().getYearToUpload(), 
+        new DatePnt().getMonthToUpload()).then(_numerals => {
+            setNumerals(_numerals.sort((a, b) => parseInt(a.name.replace("Numeral", "")) - parseInt(b.name.replace("Numeral", ""))))
+        }).catch((e) => {
+            setError(e.message)
+        })
+    }, [])
 
     useEffect(() => {
         getDatafromPnt1();
@@ -573,17 +586,15 @@ const AnnualReportContainer = (props: Props) => {
 
 
     const buildActive = () => {
-        const diff = paginableTA.results.filter((item, index, array) =>
-            array.findIndex(other => other.numeral.id === item.numeral.id) === index
-        )
+        const diff = numerals.filter(x => x.isDefault)
         const mapfinal = diff.map((item) => {
             if (new DatePnt().getYearToUpload() == 2024) {
                 const rest = pnt1active.filter((_e) =>
-                "Numeral "+_e.numeral.replace(" - ","-") == item.numeral.name 
+                "Numeral "+_e.numeral.replace(" - ","-") == item.name 
                 && _e.art =="19"
             )
                 const data = {
-                    numeral: item.numeral.name,
+                    numeral: item.name,
                     enero: rest?.filter((_e) => _e.enero).length > 0 ? 'Si' : 'No',
                     febrero: rest?.filter((_e) => _e.febrero).length > 0 ? 'Si' : 'No',
                     marzo: rest?.filter((_e) => _e.marzo).length > 0 ? 'Si' : 'No',
@@ -593,65 +604,65 @@ const AnnualReportContainer = (props: Props) => {
                     julio: rest?.filter((_e) => _e.julio).length > 0 ? 'Si' : 'No',
                     agosto: rest?.filter((_e) => _e.agosto).length > 0 ? 'Si' : 'No',
                     septiembre: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                        _e.numeral.id == item.id && _e.month == 9) ?
                         'Si' : 'No',
                     octubre: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                        _e.numeral.id == item.id && _e.month == 10) ?
                         'Si' : 'No',
                     noviembre: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                        _e.numeral.id == item.id && _e.month == 11) ?
                         'Si' : 'No',
                     diciembre: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        _e.numeral.id == item.id && _e.month == 12) ?
                         'Si' : 'No'
                 }
                 return data
             } else {
                 return {
-                    numeral: item.numeral.name,
+                    numeral: item.name,
                     enero: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 1) ?
+                        _e.numeral.id == item.id && _e.month == 1) ?
                         'Si' : 'No',
                     febrero: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 2) ?
+                        _e.numeral.id == item.id && _e.month == 2) ?
                         'Si' : 'No',
                     marzo: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 3) ?
+                        _e.numeral.id == item.id && _e.month == 3) ?
                         'Si' : 'No',
 
                     abril: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 4) ?
+                        _e.numeral.id == item.id && _e.month == 4) ?
                         'Si' : 'No',
 
                     mayo: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 5) ?
+                        _e.numeral.id == item.id && _e.month == 5) ?
                         'Si' : 'No',
 
                     junio: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 6) ?
+                        _e.numeral.id == item.id && _e.month == 6) ?
                         'Si' : 'No',
 
                     julio: paginableTA.results.find((_e) =>
 
-                        _e.numeral.id == item.numeral.id && _e.month == 7) ?
+                        _e.numeral.id == item.id && _e.month == 7) ?
                         'Si' : 'No',
 
                     agosto: paginableTA.results.find((_e) =>
 
-                        _e.numeral.id == item.numeral.id && _e.month == 8) ?
+                        _e.numeral.id == item.id && _e.month == 8) ?
                         'Si' : 'No',
 
                     septiembre: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                        _e.numeral.id == item.id && _e.month == 9) ?
                         'Si' : 'No',
                     octubre: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                        _e.numeral.id == item.id && _e.month == 10) ?
                         'Si' : 'No',
                     noviembre: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                        _e.numeral.id == item.id && _e.month == 11) ?
                         'Si' : 'No',
                     diciembre: paginableTA.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        _e.numeral.id == item.id && _e.month == 12) ?
                         'Si' : 'No'
                 }
             }
@@ -662,16 +673,14 @@ const AnnualReportContainer = (props: Props) => {
     }
 
     const buildActiveEs = () => {
-        const diff = paginableTAE.results.filter((item, index, array) =>
-            array.findIndex(other => other.numeral.id === item.numeral.id) === index
-        )
+        const diff = numerals.filter(x => !x.isDefault)
         const mapfinal = diff.map((item) => {
             if (new DatePnt().getYearToUpload() == 2024) {
                 const rest = pnt1active.find((_e) =>
-                    item.numeral.name.includes("Art. "+_e.art) && _e.art !== "19"
+                    item.name.includes("Art. "+_e.art) && _e.art !== "19"
                 )
                 const data = {
-                    numeral: item.numeral.name,
+                    numeral: item.name,
                     enero: rest?.enero ? 'Si' : 'No',
                     febrero: rest?.febrero ? 'Si' : 'No',
                     marzo: rest?.marzo ? 'Si' : 'No',
@@ -681,65 +690,65 @@ const AnnualReportContainer = (props: Props) => {
                     julio: rest?.julio ? 'Si' : 'No',
                     agosto: rest?.agosto ? 'Si' : 'No',
                     septiembre: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                        _e.numeral.id == item.id && _e.month == 9) ?
                         'Si' : 'No',
                     octubre: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                        _e.numeral.id == item.id && _e.month == 10) ?
                         'Si' : 'No',
                     noviembre: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                        _e.numeral.id == item.id && _e.month == 11) ?
                         'Si' : 'No',
                     diciembre: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        _e.numeral.id == item.id && _e.month == 12) ?
                         'Si' : 'No'
                 }
                 return data
             } else {
                 return {
-                    numeral: item.numeral.name,
+                    numeral: item.name,
                     enero: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 1) ?
+                        _e.numeral.id == item.id && _e.month == 1) ?
                         'Si' : 'No',
                     febrero: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 2) ?
+                        _e.numeral.id == item.id && _e.month == 2) ?
                         'Si' : 'No',
                     marzo: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 3) ?
+                        _e.numeral.id == item.id && _e.month == 3) ?
                         'Si' : 'No',
 
                     abril: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 4) ?
+                        _e.numeral.id == item.id && _e.month == 4) ?
                         'Si' : 'No',
 
                     mayo: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 5) ?
+                        _e.numeral.id == item.id && _e.month == 5) ?
                         'Si' : 'No',
 
                     junio: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 6) ?
+                        _e.numeral.id == item.id && _e.month == 6) ?
                         'Si' : 'No',
 
                     julio: paginableTAE.results.find((_e) =>
 
-                        _e.numeral.id == item.numeral.id && _e.month == 7) ?
+                        _e.numeral.id == item.id && _e.month == 7) ?
                         'Si' : 'No',
 
                     agosto: paginableTAE.results.find((_e) =>
 
-                        _e.numeral.id == item.numeral.id && _e.month == 8) ?
+                        _e.numeral.id == item.id && _e.month == 8) ?
                         'Si' : 'No',
 
                     septiembre: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 9) ?
+                        _e.numeral.id == item.id && _e.month == 9) ?
                         'Si' : 'No',
                     octubre: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 10) ?
+                        _e.numeral.id == item.id && _e.month == 10) ?
                         'Si' : 'No',
                     noviembre: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 11) ?
+                        _e.numeral.id == item.id && _e.month == 11) ?
                         'Si' : 'No',
                     diciembre: paginableTAE.results.find((_e) =>
-                        _e.numeral.id == item.numeral.id && _e.month == 12) ?
+                        _e.numeral.id == item.id && _e.month == 12) ?
                         'Si' : 'No'
                 }
             }
