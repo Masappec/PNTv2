@@ -1286,7 +1286,7 @@ const AnnualReportPresenter = (props: Props) => {
                   id="small"
                   type="number" min={0}
                   sizing="sm"
-                  name=" number_of_confidential"
+                  name="number_of_confidential"
                   onChange={props.OnChange}
                   disabled={props.isSaved}
                   value={props.form.number_of_confidential}
