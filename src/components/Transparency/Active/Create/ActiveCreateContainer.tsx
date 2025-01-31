@@ -601,6 +601,11 @@ const ActiveCreateContainer = (props: IProps) => {
           key: column.id.toString(),
           value: column.name,
           is_header: true,
+        }, 
+        {
+          key: column.id.toString(),
+          value: column.value,
+          is_header: true,
         }
       ]
     })

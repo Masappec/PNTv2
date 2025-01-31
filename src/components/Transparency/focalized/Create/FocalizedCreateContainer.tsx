@@ -660,6 +660,11 @@ const FocalizedCreateContainer = (props: Props) => {
           key: column.id.toString(),
           value: column.name,
           is_header: true,
+        },
+        {
+          key: column.id.toString(),
+          value: column.value,
+          is_header: true,
         }
       ]
     })
