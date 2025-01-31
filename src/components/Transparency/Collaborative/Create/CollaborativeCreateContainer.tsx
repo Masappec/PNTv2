@@ -616,68 +616,36 @@ const CollabCreateContainer = (props: Props) => {
   const handleEdit = () => {
     navigate("/admin/active/previewdata")
   }
+  
   const downloadTemplate = (id: number) => {
+    // Buscar la plantilla correspondiente al ID
+    const data_template = templateTable.find((data) => data.id === id);
+    const name_template = templates.find((template) => template.id === id);
+    const template = numeral?.templates.find((template) => template.id === id);
 
-    //create csv file from template
-    const data_template = templateTable.find((data) => {
-      return data.id === id
-    })
+    const name = name_template?.name || "";
 
-    const name_template = templates.find((template) => {
-      return template.id === id
-    })
-
-    const template = numeral?.templates.find((template) => {
-      return template.id === id
-    })
-
-
-    const name = name_template?.name || ""
-
-
-    console.log(data_template, name_template)
-
-    if (!data_template) {
-      setError("No se ha encontrado el template")
-      return;
-    }
-    if (!name_template) {
-      setError("No se ha encontrado el nombre del template")
+    if (!data_template || !name_template || !template) {
+      setError("No se ha encontrado el template");
       return;
     }
 
+    // Extraer encabezados y valores
+    const headers = data_template.data[0].map((col) => col.value); // Primera fila (encabezados)
+    const values = data_template.data[1].map((col) => col.value); // Segunda fila (datos)
 
-    if (!template) {
-      setError("No se ha encontrado el template")
-      return
-    }
-    let content;
+    // Construir el CSV en formato vertical (A=Encabezados, B=Valores)
+    let csvContent = headers
+      .map((header, index) => `${header},${values[index] || ""}`) // Encabezado,Valor
+      .join("\n"); // Unir filas con saltos de línea
 
-    const Row_obj: Row[][] = template.columns.sort((a, b) => a.id - b.id).map((column) => {
-      return [
-        {
-          key: column.id.toString(),
-          value: column.name,
-          is_header: true,
-        }
-      ]
-    })
-
-
-    if (!template.verticalTemplate) {
-      content = props.fileUseCase.generateContentCsvVertical(Row_obj);
-    } else {
-      content = props.fileUseCase.generateContentCsv(Row_obj);
-    }
-
-
-    const a = document.createElement('a')
+    // Generar y descargar el archivo CSV
+    const a = document.createElement("a");
     a.download = name + ".csv";
-    a.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(content);
+    a.href = "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURIComponent(csvContent);
     a.click();
+  };
 
-
-  }
   const Download = (url: string) => {
 
 
