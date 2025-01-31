@@ -127,8 +127,10 @@ class SolicityUseCase {
     if (solicity && user) {
       if (solicity.status == StatusSolicity.SEND.key) {
         if (user_session) {
-          const expired_date = new Date(parseInt(solicity.expiry_date.substring(0,4)), parseInt(solicity.expiry_date.substring(5,7)) - 1, parseInt(solicity.expiry_date.substring(8,10)))
-          const now = new Date()     
+          const expired_date = new Date(solicity.expiry_date)
+          console.log("expired_date", expired_date)
+          const now = new Date()
+          console.log("now", now)     
           if (now <= expired_date
           ) {
             return true
