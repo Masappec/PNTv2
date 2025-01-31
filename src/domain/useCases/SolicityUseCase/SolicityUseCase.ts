@@ -125,12 +125,9 @@ class SolicityUseCase {
   avaliableToProrroga(user: UserEntity, solicity: Solicity) {
     const user_session = user.user_permissions?.find(x => x.codename === 'view_solicityresponse')
     if (solicity && user) {
-      console.log("Primera validacion")
       if (solicity.status == StatusSolicity.SEND.key) {
-        console.log("Segunda validacion")
         if (user_session) {
-          console.log("tercera validacion")
-          const expired_date = new Date(parseInt(solicity.expiry_date.substring(0,4)), parseInt(solicity.expiry_date.substring(5,7)) - 1, parseInt(solicity.expiry_date.substring(8,10)))
+          const expired_date = new Date(solicity.expiry_date)
           const now = new Date()  
           console.log("expiry_date", expired_date)
           console.log("now", now)   
@@ -142,7 +139,6 @@ class SolicityUseCase {
         }
       }
     }
-    console.log("no entra")
     return false;
   }
   
