@@ -97,7 +97,7 @@ const AnnualReportContainer = (props: Props) => {
 
     const getDatafromPnt1 = () => {
 
-        if (new DatePnt().getYearToUpload() == 2024) {
+        if (new DatePnt().getYearAnualReport() == 2024) {
             console.log(establishment.identification, establishment.id)
             props.api.getActive(establishment.identification).then(res => {
                 setPnt1Active(res)
@@ -128,7 +128,7 @@ const AnnualReportContainer = (props: Props) => {
     }
 
     useEffect(() => {
-        props.numeralSessionUsecase.getNumeralByUserInSession(new DatePnt().getYearToUpload(), 
+        props.numeralSessionUsecase.getNumeralByUserInSession(new DatePnt().getYearAnualReport(), 
         new DatePnt().getMonthToUpload()).then(_numerals => {
             setNumerals(_numerals.sort((a, b) => parseInt(a.name.replace("Numeral", "")) - parseInt(b.name.replace("Numeral", ""))))
         }).catch((e) => {
@@ -139,7 +139,7 @@ const AnnualReportContainer = (props: Props) => {
     useEffect(() => {
         getDatafromPnt1();
 
-        props.usecase.getAnualReport(establishment.id || 0, new DatePnt().getYearToUpload())
+        props.usecase.getAnualReport(establishment.id || 0, new DatePnt().getYearAnualReport())
             .then(res => {
                 setForm(prevForm => ({
                     ...prevForm,
@@ -151,7 +151,7 @@ const AnnualReportContainer = (props: Props) => {
                 setSaved(false);
             });
 
-        props.usecase.getReservas(establishment.identification, new DatePnt().getYearToUpload())
+        props.usecase.getReservas(establishment.identification, new DatePnt().getYearAnualReport())
             .then(res => {
                 setReservas(res);
             });
@@ -380,7 +380,7 @@ const AnnualReportContainer = (props: Props) => {
 
 
 
-            if (new DatePnt().getYearToUpload() == 2024) {
+            if (new DatePnt().getYearAnualReport() == 2024) {
 
                 const rest = pnt1focal
                 
@@ -502,7 +502,7 @@ const AnnualReportContainer = (props: Props) => {
 
 
 
-            if (new DatePnt().getYearToUpload() == 2024) {
+            if (new DatePnt().getYearAnualReport() == 2024) {
                 /*pnt1focal.find((_e) =>
                         _e.enero)*/
                 const rest = pnt1colab
@@ -588,7 +588,7 @@ const AnnualReportContainer = (props: Props) => {
     const buildActive = () => {
         const diff = numerals.filter(x => x.isDefault)
         const mapfinal = diff.map((item) => {
-            if (new DatePnt().getYearToUpload() == 2024) {
+            if (new DatePnt().getYearAnualReport() == 2024) {
                 const rest = pnt1active.filter((_e) =>
                 "Numeral "+_e.numeral.replace(" - ","-") == item.name 
                 && _e.art =="19"
@@ -675,7 +675,7 @@ const AnnualReportContainer = (props: Props) => {
     const buildActiveEs = () => {
         const diff = numerals.filter(x => !x.isDefault)
         const mapfinal = diff.map((item) => {
-            if (new DatePnt().getYearToUpload() == 2024) {
+            if (new DatePnt().getYearAnualReport() == 2024) {
                 const rest = pnt1active.find((_e) =>
                     item.name.includes("Art. "+_e.art) && _e.art !== "19"
                 )
@@ -761,7 +761,7 @@ const AnnualReportContainer = (props: Props) => {
 
     const buildPasive = () => {
 
-        if (new DatePnt().getYearToUpload() == 2024) {
+        if (new DatePnt().getYearAnualReport() == 2024) {
 
 
 
@@ -833,7 +833,7 @@ const AnnualReportContainer = (props: Props) => {
     const buildItems = () => {
 
         const lista_final: IndexInformationClassifiedEntity[] = []
-        if (new DatePnt().getYearToUpload() == 2024) {
+        if (new DatePnt().getYearAnualReport() == 2024) {
             pnt1reserved.forEach((item) => {
                 lista_final.push(new IndexInformationClassifiedEntity(
                     item.theme.trim() == "" ? "NO APLICA" : item.theme,
