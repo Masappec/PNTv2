@@ -31,4 +31,10 @@ export class DatePnt extends Date{
     getFormattedDate() {
         return `${this.getDate()}/${this.getMonthOneBased()}/${this.getFullYear()}`;
     }
+
+    getYearAnualReport(){
+        let year = this.getFullYear();
+        
+        return year -1;
+    }
 }
