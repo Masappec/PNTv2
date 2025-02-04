@@ -208,7 +208,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                                 const mesIndex = meses.findIndex(x => x == mes) + 1;
                                                 return (
                                                     <TF
-                                                        data={props.publicationsTF.find(x => x.month == mesIndex && x.year == props.selectedYear)?.data || []}
+                                                        data={props.publicationsTF.find(x => x.month == mesIndex && x.year == props.selectedYearTF)?.data || []}
                                                         month={
                                                             props.mesesTF.find(x => x == mes) ? mes : mes + " (No publicado)"
                                                         }
@@ -288,7 +288,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                                     return (
                                                         <TC
                                                             data={props.publicationsTC.find(x => x.month == mesIndex
-                                                                && x.year == props.selectedYear)?.data || []}
+                                                                && x.year == props.selectedYearTC)?.data || []}
                                                             month={
                                                                 props.mesesTC.find(x => x == mes) ? mes : mes + " (No publicado)"
                                                             }
