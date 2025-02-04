@@ -114,35 +114,39 @@ const AllTCPresenter = (props: Props) => {
             <section className="flex border-b border-gray-300">
 
                 <h2 className='mb-4 text-balance  pb-1 text-2xl font-bold text-primary'>
-                    Publicaciones T. Focalizada | {current}
+                    Publicaciones T. Colaborativa | {current}
 
                 </h2>
 
             </section>
-            <section className='mb-8 m-2 flex flex-col gap-4 sm:flex-row sm:items-center'>
+            <section className='mb-8 m-2 flex flex-col sm:flex-row sm:gap-4 sm:items-start'>
 
                 <div className='flex flex-row gap-2'>
 
 
-                    <div className='flex flex-col gap-2'>
-                        <label className='text-gray-500 text-sm'>
-                            Institución
-                        </label>
-                        <CustomInputSearch
-                            loadOptions={props.loadOptions}
-                            onSearch={props.onSearch}
-                            onSelect={(e) => props.onInstitutionChange(e.value)}
-                            NoVisibleLabel={true}
-                        />
-
+                    <div className='flex flex-row gap-4 items-center'>
+                        <div>
+                            <label className='text-gray-500 text-sm'>
+                                Institución
+                            </label>
+                            <CustomInputSearch
+                                loadOptions={props.loadOptions}
+                                onSearch={props.onSearch}
+                                onSelect={(e) => props.onInstitutionChange(e.value)}
+                                NoVisibleLabel={true}
+                            />
+                        </div>
                     </div>
-                    <div className='flex flex-col gap-2'>
-                        <label className='text-gray-500 text-sm'>
-                            Periodo
-                        </label>
-                        <MonthYearPicker
-                            onChangeDate={(date) => props.onChangeDate(date)} // Pasar el cambio al padre
-                        />
+                    <div className='flex flex-row gap-4 items-start ml-6'>
+                        <div className="flex flex-col gap-2 mb-2">
+                            <label className="text-sm invisible">.</label>
+                            <label className='text-gray-500 text-sm'>
+                                Periodo
+                            </label>
+                            <MonthYearPicker
+                                onChangeDate={(date) => props.onChangeDate(date)} // Pasar el cambio al padre
+                            />
+                        </div>
 
                     </div>
                 </div>

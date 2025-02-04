@@ -38,6 +38,12 @@ class PublicUseCase {
         return await this.service.donwloadCsv(establishments);
     }
 
+    async getAnualReports(establishment_id:number){
+
+
+        return await this.service.getAnualReports(establishment_id);
+    }
+
 }
 
 export default PublicUseCase;

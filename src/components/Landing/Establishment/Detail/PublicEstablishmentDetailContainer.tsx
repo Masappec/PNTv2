@@ -11,6 +11,7 @@ import TransparencyCollabUseCase from "../../../../domain/useCases/TransparencyC
 import TransparencyFocusEntity from "../../../../domain/entities/TransparencyFocus";
 import TransparencyCollab from "../../../../domain/entities/TransparencyCollab";
 import { generarQR } from "../../../../utils/options";
+import { ProfileAnualReport } from "../../../../infrastructure/Api/Public/interface";
 
 interface Props {
     usecase: PublicUseCase;
@@ -54,8 +55,11 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     const [yearTC, setYearTC] = useState<number>(new Date().getFullYear())
     const [UrlQR, setUrlQR] = useState<string>("")
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-
-
+    const [anualReports, setAnualReports] = useState<ProfileAnualReport>({
+        general: [],
+        list: []
+    })
+    const [errorAnualReports, setErrorAnualReports] = useState<string>("")
     const [mesesTA, setMesesTA] = useState<string[]>([])
     const [mesesTF, setMesesTF] = useState<string[]>([])
     const [mesesTC, setMesesTC] = useState<string[]>([])
@@ -66,9 +70,9 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
         props.usecase.getEstablishment(slug || "").then((response) => {
             setEntity(response)
 
-            handleOpenTransparency('A', response.id || 0)
-            handleOpenTransparency('F', response.id || 0)
-            handleOpenTransparency('C', response.id || 0)
+            handleOpenTransparency('A', response.id || 0, year)
+            handleOpenTransparency('F', response.id || 0, year)
+            handleOpenTransparency('C', response.id || 0, year)
             setLoading(false)
             const imgQR = generarQR(window.location.protocol + "//" + window.location.host + "/entidades/" + slug + "#indicadores")
             setUrlQR(imgQR)
@@ -78,15 +82,37 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             setLoading(false)
         })
 
+        
 
     }, [])
 
 
     useEffect(() => {
-        handleOpenTransparency('A', entity.id || 0)
-        handleOpenTransparency('F', entity.id || 0)
-        handleOpenTransparency('C', entity.id || 0)
+        handleOpenTransparency('A', entity.id || 0, year)
+        props.usecase.getAnualReports(entity.id||0).then((response) => {
+            setAnualReports(response)
+        }).catch(() => {
+            setErrorAnualReports("No se pudo cargar los reportes anuales")
+        })
     }, [entity, year])
+
+    useEffect(() => {
+        handleOpenTransparency('F', entity.id || 0, yearTF)
+        props.usecase.getAnualReports(entity.id||0).then((response) => {
+            setAnualReports(response)
+        }).catch(() => {
+            setErrorAnualReports("No se pudo cargar los reportes anuales")
+        })
+    }, [entity, yearTF])
+
+    useEffect(() => {
+        handleOpenTransparency('C', entity.id || 0, yearTC)
+        props.usecase.getAnualReports(entity.id||0).then((response) => {
+            setAnualReports(response)
+        }).catch(() => {
+            setErrorAnualReports("No se pudo cargar los reportes anuales")
+        })
+    }, [entity, yearTC])
 
     useEffect(() => {
         const hash = location.hash;
@@ -183,7 +209,7 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
     }
 
 
-    const handleOpenTransparency = (type: 'A' | 'F' | 'C', entity_id: number) => {
+    const handleOpenTransparency = (type: 'C' | 'F' | 'A', entity_id: number, year: number) => {
         props.usecase.getMonthsByTransparency(type, entity_id || 0, year).then((response) => {
 
             const numbers = response.map((item) => item.month)
@@ -370,6 +396,8 @@ const PublicEstablishmentDetailContainer = (props: Props) => {
             handlePageInfo={handlePageInfo}
             handlePageSolicity={handlePageSolicity}
             qrUrl={UrlQR}
+            anualReports={anualReports}
+            mensajeErrorAnualReport={errorAnualReports}
 
         />
     )

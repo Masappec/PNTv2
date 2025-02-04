@@ -226,12 +226,12 @@ const SolicityCreateContainer = (props: Props) => {
 
 
     const formart_send: ColourOption[] = [
-        { value: 'formato fisico: copia en papel', label: 'Formato físico: copia en papel', color: '#00B8D9' },
-        { value: 'formato fisico: cd', label: 'Formato físico: cd', color: '#00B8D9' },
-        { value: 'formato electronico: excel', label: 'Formato digital: Archivo de hoja de cálculo (MS Excel o similar)', color: '#00B8D9' },
-        { value: 'formato electronico: pdf', label: 'Formato digital. Archivo PDF', color: '#00B8D9' },
-        { value: 'formato electronico: word', label: 'Formato digital: Archivo de documento (MS Word o similar)', color: '#00B8D9' },
-        { value: 'formato electronico: csv', label: 'Formato digital: Archivo de datos abiertos (CSV o similar)', color: '#00B8D9' },
+        { value: 'formato fisico: copia en papel', label: 'Formato Físico: copia en papel', color: '#00B8D9' },
+        { value: 'formato fisico: cd', label: 'Formato Físico: cd', color: '#00B8D9' },
+        { value: 'formato electronico: excel', label: 'Formato Digital: Excel', color: '#00B8D9' },
+        { value: 'formato electronico: pdf', label: 'Formato Digital. PDF', color: '#00B8D9' },
+        { value: 'formato electronico: word', label: 'Formato Digital: Word', color: '#00B8D9' },
+        { value: 'formato electronico: csv', label: 'Formato Digital: CSV', color: '#00B8D9' },
 
     ]
 

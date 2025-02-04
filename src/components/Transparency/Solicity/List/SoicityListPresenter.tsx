@@ -259,6 +259,9 @@ const SolicityListPresenter = (props: Props) => {
                                         // Usar `updated_at` como fecha de fin en solicitudes respondidas
                                         endDate = solicity.updated_at;
                                         break;
+                                    case "INSISTENCY_RESPONSED":
+                                        endDate = solicity.updated_at
+                                        break;
                             
                                     case "PRORROGA":
                                     case "NO_RESPONSED":
