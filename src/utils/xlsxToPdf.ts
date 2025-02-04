@@ -44,7 +44,6 @@ export const fetchAndConvertToPdf = async (url: string, establishment_name: stri
                         // Verificar que hay suficientes filas antes de acceder a ellas
                         const mainBody = jsonData.slice(1, 107);
                         const secondBody = jsonData.length > 108 ? jsonData.slice(108) : [];
-                        console.log("secondBody", secondBody);
                         if (mainBody.length > 0) {
                             autoTable(doc, {
                                 head: [["", ""]], // Encabezado vacío
@@ -55,7 +54,6 @@ export const fetchAndConvertToPdf = async (url: string, establishment_name: stri
                         }
 
                         if (secondBody.length > 0) {
-                            const pageHeight = doc.internal.pageSize.height; // Altura de la página
                             let startY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : 25;
 
                             // Si startY está muy cerca del final de la página, agregar una nueva página
