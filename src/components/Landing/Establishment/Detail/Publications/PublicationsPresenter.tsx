@@ -12,9 +12,10 @@ import EstablishmentEntity from "../../../../../domain/entities/Establishment";
 import Alert from "../../../../Common/Alert";
 import Table from "../../../../Common/Table";
 import {  ProfileAnualReport } from "../../../../../infrastructure/Api/Public/interface";
-import { FaFileExcel } from "react-icons/fa";
+import { FaFileExcel, FaFilePdf } from "react-icons/fa";
 import { formatDate2 } from "../../../../../utils/functions";
 import InformationPresenter from "../Information/InformationPresenter";
+import { fetchAndConvertToPdf } from "../../../../../utils/xlsxToPdf";
 
 interface Props {
     entity: EstablishmentEntity;
@@ -369,11 +370,21 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                                             onClick={() => onDonwloadXlsx(item.file,
                                                                 `informe-anual-${item.year}`
                                                             )}
-                                                            target="_blank"
                                                             className="text-primary-500
                                                hover:text-primary-600 text-base"
                                                         >
                                                             <FaFileExcel className="text-green-500" size={30}
+                                                            />
+                                                            Informe Anual Entidad
+                                                        </a>
+                                                           
+                                                        <a
+                                                            href={"#"}
+                                                            onClick={() => fetchAndConvertToPdf(item.file, props.entity.name,item.year.toString())}
+                                                            className="text-primary-500
+                                                            hover:text-primary-600 text-base"
+                                                        >
+                                                            <FaFilePdf className="text-red-500" size={30}
                                                             />
                                                             Informe Anual Entidad
                                                         </a>
