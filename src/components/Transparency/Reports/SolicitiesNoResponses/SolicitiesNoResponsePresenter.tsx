@@ -112,15 +112,19 @@ const SolicitiesNoResponsePresenter = (props: Props) => {
                             key: "date",
                             render: (solicity) => {
                                 const calculateTimeDifference = (startDate: string | Date, endDate: string | Date) => {
-                                    const start = new Date(startDate);
-                                    const end = new Date(endDate);
+                                    let start = new Date(startDate);
+                                    let end = new Date(endDate);
                             
-                                    // Validar que ambas fechas sean válidas
                                     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
                                         console.error("Fechas inválidas:", { startDate, endDate });
                                         return { days: 0, hours: 0 };
                                     }
                             
+                                    // Intercambiar si la fecha de inicio es mayor a la de fin
+                                    if (start > end) {
+                                        [start, end] = [end, start];
+                                    }
+
                                     const diffInMilliseconds = end.getTime() - start.getTime();
                                     const days = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
                                     const hours = Math.floor((diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
