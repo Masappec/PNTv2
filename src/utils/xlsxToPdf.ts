@@ -2,7 +2,7 @@ import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 
-export const fetchAndConvertToPdf = async (url: string, establishment_name:string, year:string) => {
+export const fetchAndConvertToPdf = async (url: string, establishment_name: string, year: string) => {
     if (!url) {
         console.error("URL no válida");
         return;
@@ -24,6 +24,7 @@ export const fetchAndConvertToPdf = async (url: string, establishment_name:strin
                 const workbook = XLSX.read(data, { type: "binary" });
                 const doc = new jsPDF("landscape");
                 doc.text(`${establishment_name} - Informe Anual ${year}`, 20, 10);
+
                 workbook.SheetNames.forEach((sheetName, index) => {
                     const worksheet = workbook.Sheets[sheetName];
                     const jsonData: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
@@ -33,34 +34,69 @@ export const fetchAndConvertToPdf = async (url: string, establishment_name:strin
                     if (index > 0) {
                         doc.addPage(); // Nueva página para cada hoja extra
                     }
-
-                    
-                    
-
+                    if (sheetName == 'T.A-F-C'){
+                        sheetName = 'Transparencias Activa, Focalizada y Colaborativa'
+                    }
                     doc.text(sheetName, 20, 20);
+                   
 
-                    if(sheetName=='Informe Anual'){
-                        autoTable(doc, {
-                            head: [['','']],
-                            body: jsonData.slice(1,107), // El resto como cuerpo
-                            startY: 25,
-                        });
+                    if (sheetName === "Informe Anual") {
+                        // Verificar que hay suficientes filas antes de acceder a ellas
+                        const mainBody = jsonData.slice(1, 107);
+                        const secondBody = jsonData.length > 108 ? jsonData.slice(108) : [];
+                        console.log("secondBody", secondBody);
+                        if (mainBody.length > 0) {
+                            autoTable(doc, {
+                                head: [["", ""]], // Encabezado vacío
+                                body: mainBody,
+                                startY: 25,
+                                margin: { bottom: 15 },
+                            });
+                        }
 
-                        autoTable(doc, {
-                            head: [jsonData[108]], // La primera fila como encabezado
-                            body: jsonData.slice(109), // El resto como cuerpo
-                        });
+                        if (secondBody.length > 0) {
+                            const pageHeight = doc.internal.pageSize.height; // Altura de la página
+                            let startY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : 25;
 
-                    }else{
+                            // Si startY está muy cerca del final de la página, agregar una nueva página
+                            
+
+                            autoTable(doc, {
+                                head: [[
+                                    "Tema",
+                                    "Base Legal",
+                                    "Fecha de clasificación de la información reservada - semestral",
+                                    "Periodo de vigencia de la clasificación de la reserva",
+                                    "Se ha efectuado ampliación",
+                                    "Descripción de la ampliación",
+                                    "Fecha de la ampliación",
+                                    "Periodo de vigencia de la ampliación"
+                                ]],
+                                body: secondBody,
+                                startY: startY,
+                                margin: { bottom: 15 },
+                                styles: { fontSize: 8, cellWidth: 'wrap' }, // Reducir el tamaño del texto y permitir ajuste automático
+                                columnStyles: {
+                                    0: { cellWidth: 35 }, // Ajusta cada columna si es necesario
+                                    1: { cellWidth: 35 },
+                                    2: { cellWidth: 35 },
+                                    3: { cellWidth: 35 },
+                                    4: { cellWidth: 35 },
+                                    5: { cellWidth: 35 },
+                                    6: { cellWidth: 35 },
+                                    7: { cellWidth: 35 }
+                                },
+                                
+                            });
+                        }
+                    } else {
                         autoTable(doc, {
                             head: [jsonData[0]], // La primera fila como encabezado
                             body: jsonData.slice(1), // El resto como cuerpo
                             startY: 25,
+                            margin: { bottom: 15 },
                         });
                     }
-
-
-
                 });
 
                 doc.save(`${establishment_name} - Informe Anual ${year}.pdf`);
