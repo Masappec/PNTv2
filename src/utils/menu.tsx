@@ -295,7 +295,7 @@ const menu = [
     icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
     permission_required: 'view_all_transparencyfocal',
     element: <AllTF />,
-    visible_for_superadmin: false
+    visible_for_superadmin: true
   },
   {
     name: 'T.Focalizada',
@@ -341,7 +341,7 @@ const menu = [
     icon: <RiCheckFill size={25} className="text-slate-500" />,
     permission_required: 'view_all_transparencycollab',
     element: <AllTC />,
-    visible_for_superadmin: false
+    visible_for_superadmin: true
   },
   {
     name: 'T.Colaborativa',
@@ -369,7 +369,7 @@ const menu = [
     icon: <RiMailCheckLine size={25} className="text-slate-500" />,
     permission_required: 'view_all_solicities',
     element: <AllMonitorSolicities />,
-    visible_for_superadmin: false
+    visible_for_superadmin: true
   },
   {
     name: ' Crear Solicitudes',
