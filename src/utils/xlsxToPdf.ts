@@ -43,7 +43,7 @@ export const fetchAndConvertToPdf = async (url: string, establishment_name: stri
                     if (sheetName === "Informe Anual") {
                         // Verificar que hay suficientes filas antes de acceder a ellas
                         const mainBody = jsonData.slice(1, 107);
-                        const secondBody = jsonData.length > 108 ? jsonData.slice(108) : [];
+                        const secondBody = jsonData.length > 109 ? jsonData.slice(109) : [];
                         if (mainBody.length > 0) {
                             autoTable(doc, {
                                 head: [["", ""]], // Encabezado vacío
