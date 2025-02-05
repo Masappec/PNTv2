@@ -63,15 +63,48 @@ export interface MenuItem {
 const menu = [
 
 
-  {
-    name: 'Reportes T. Activa',
-    path: '/admin/reports/active',
+  // Ordenar menu
+  // T.Activa
+   {
+    name: ' T.Activa ',
+    path: '/admin/transparency/active',
     visible: true,
-    icon: <RiHome2Fill size={25} className="text-slate-500" />,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
     permission_required: 'view_transparencyactive',
-    element: <AllPublications />
+    element: <ActiveNumerals />,
+
+    visible_for_superadmin: false
   },
   {
+    name: 'Crear T.Activa',
+    path: '/admin/active/create',
+    visible: false,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: 'add_transparencyactive',
+    element: <ActiveCreate />,
+    visible_for_superadmin: false
+  },
+  {
+    name: 'Editar T.Activa',
+    path: '/admin/active/edit',
+    visible: false,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: 'change_transparencyactive',
+    element: <ActiveEdit />
+  },
+
+  {
+    name: 'Vista T.Activa',
+    path: '/admin/active/previewdata',
+    visible: false,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: 'view_transparencyactive',
+    element: <ActivePreviewData />,
+    visible_for_superadmin: false
+  },
+
+  // T. Pasiva 
+    {
     name: 'T. Pasiva',
     path: '/admin/reports',
     visible: true,
@@ -80,17 +113,114 @@ const menu = [
     element: <Reports />,
     visible_for_superadmin: false
   },
+  // T.Focalizada
   {
-    name: 'Indicadores',
-    path: '/admin',
-    visible: false,
-    icon: <BiPieChart size={25} className="text-slate-500" />,
-    permission_required: '',
-    element: <IndicatorsEst />,
-    hidden_for_citicen: true,
-
+    name: 'T.Focalizada',
+    path: '/admin/transparency/focalized',
+    visible: true,
+    icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
+    permission_required: 'view_transparencyfocal',
+    element: <FocalizedList />,
+    visible_for_superadmin: false
   },
   {
+    name: 'T.Focalizada',
+    path: '/admin/focalized/create',
+    visible: false,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: 'add_transparencyfocal',
+    element: <FocalizedCreate />,
+    visible_for_superadmin: false
+  },
+  {
+    name: 'T.Focalizada',
+    path: '/admin/focalized/Edit',
+    visible: false,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: 'change_transparencyfocal',
+    element: <FocalizedEdit />
+  },
+  // T.Colaborativa
+    {
+    name: 'T.Colaborativa',
+    path: '/admin/transparency/collaborative',
+    visible: true,
+    icon: <RiCheckFill size={25} className="text-slate-500" />,
+    permission_required: 'view_transparencycolab',
+    element: <CollaborativeList />,
+    visible_for_superadmin: false
+  },
+  {
+    name: 'T.Colaborativa',
+    path: '/admin/collaborative/create',
+    visible: false,
+    icon: <RiCheckFill size={25} className="text-slate-500" />,
+
+    permission_required: 'add_transparencycolab',
+
+    element: <CollaborativeCreate />,
+    visible_for_superadmin: false
+  },
+  {
+    name: 'T.Colaborativa',
+    path: '/admin/collaborative/Edit',
+    visible: false,
+    icon: <RiCheckFill size={25} className="text-slate-500" />,
+    permission_required: 'view_transparencyactive',
+    element: <CollaborativeEdit />
+  },
+
+  // Reportes T.Activa 
+  {
+    name: 'Reportes T.Activa',
+    path: '/admin/active/all',
+    visible: true,
+    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
+    permission_required: 'view_all_transparencyactive',
+    element: <AllTA />,
+    visible_for_superadmin: false
+  },
+    {
+      name: 'Reportes T. Activa',
+      path: '/admin/reports/active',
+      visible: true,
+      icon: <RiHome2Fill size={25} className="text-slate-500" />,
+      permission_required: 'view_transparencyactive',
+      element: <AllPublications />
+    },
+  // Reportes T. Pasiva
+  {
+    name: 'Reportes T. Pasiva',
+    path: '/admin/solicity/all',
+    visible: true,
+    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
+    permission_required: 'view_all_solicities',
+    element: <AllMonitorSolicities />,
+    visible_for_superadmin: true
+  },
+
+  // Reportes T.Focalizada
+  {
+    name: 'Reportes T.Focalizada',
+    path: '/admin/focalized/all',
+    visible: true,
+    icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
+    permission_required: 'view_all_transparencyfocal',
+    element: <AllTF />,
+    visible_for_superadmin: true
+  },
+  // Reportes T.Colaborativa
+  {
+    name: 'Reportes T.Colaborativa',
+    path: '/admin/collaborative/all',
+    visible: true,
+    icon: <RiCheckFill size={25} className="text-slate-500" />,
+    permission_required: 'view_all_transparencycollab',
+    element: <AllTC />,
+    visible_for_superadmin: true
+  },
+  // Indicadores por Entidad
+   {
     name: 'Indicadores Por Entidad',
     path: '/admin/indicators',
     visible: true,
@@ -98,6 +228,17 @@ const menu = [
     permission_required: 'view_monitoring_indicators',
     element: <IndicatorsMonitoring />
   },
+  // Institucion
+   {
+    name: 'Institución',
+    path: '/admin/entity/',
+    element: <EstablihsmentInSession />,
+    permission_required: 'view_establishment_internal',
+    icon: <RiBuilding4Line size={25} className="text-slate-500" />,
+    visible: true,
+    visible_for_superadmin: false
+  },
+  //
   {
     name: 'Usuarios',
     path: '/admin/users',
@@ -114,6 +255,18 @@ const menu = [
     icon: <RiUser3Line size={25} className="text-slate-500" />,
     element: <UserInSessionList />,
     visible_for_superadmin: false
+  },
+  // fin
+
+  {
+    name: 'Indicadores',
+    path: '/admin',
+    visible: false,
+    icon: <BiPieChart size={25} className="text-slate-500" />,
+    permission_required: '',
+    element: <IndicatorsEst />,
+    hidden_for_citicen: true,
+
   },
   {
     name: 'Crear Usuario',
@@ -208,15 +361,6 @@ const menu = [
     element: <EstablishmentEdit />
   },
   {
-    name: 'Institución',
-    path: '/admin/entity/',
-    element: <EstablihsmentInSession />,
-    permission_required: 'view_establishment_internal',
-    icon: <RiBuilding4Line size={25} className="text-slate-500" />,
-    visible: true,
-    visible_for_superadmin: false
-  },
-  {
     name: 'Área pedagógica',
     path: '/admin/pedagogy-area',
     visible: true,
@@ -232,125 +376,7 @@ const menu = [
     permission_required: 'view_configuration',
     element: <SmtpCreate />
   },
-  {
-    name: ' T.Activa ',
-    path: '/admin/transparency/active',
-    visible: true,
-    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: 'view_transparencyactive',
-    element: <ActiveNumerals />,
-
-    visible_for_superadmin: false
-  },
-  {
-    name: 'Reportes T.Activa',
-    path: '/admin/active/all',
-    visible: true,
-    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: 'view_all_transparencyactive',
-    element: <AllTA />,
-    visible_for_superadmin: false
-  },
-  {
-    name: 'Crear T.Activa',
-    path: '/admin/active/create',
-    visible: false,
-    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: 'add_transparencyactive',
-    element: <ActiveCreate />,
-    visible_for_superadmin: false
-  },
-  {
-    name: 'Editar T.Activa',
-    path: '/admin/active/edit',
-    visible: false,
-    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: 'change_transparencyactive',
-    element: <ActiveEdit />
-  },
-
-  {
-    name: 'Vista T.Activa',
-    path: '/admin/active/previewdata',
-    visible: false,
-    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: 'view_transparencyactive',
-    element: <ActivePreviewData />,
-    visible_for_superadmin: false
-  },
-
-  {
-    name: 'T.Focalizada',
-    path: '/admin/transparency/focalized',
-    visible: true,
-    icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
-    permission_required: 'view_transparencyfocal',
-    element: <FocalizedList />,
-    visible_for_superadmin: false
-  },
-  {
-    name: 'Reportes T.Focalizada',
-    path: '/admin/focalized/all',
-    visible: true,
-    icon: <RiCheckboxMultipleLine size={25} className="text-slate-500" />,
-    permission_required: 'view_all_transparencyfocal',
-    element: <AllTF />,
-    visible_for_superadmin: true
-  },
-  {
-    name: 'T.Focalizada',
-    path: '/admin/focalized/create',
-    visible: false,
-    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: 'add_transparencyfocal',
-    element: <FocalizedCreate />,
-    visible_for_superadmin: false
-  },
-  {
-    name: 'T.Focalizada',
-    path: '/admin/focalized/Edit',
-    visible: false,
-    icon: <HiOutlineChartSquareBar size={25} className="text-slate-500" />,
-    permission_required: 'change_transparencyfocal',
-    element: <FocalizedEdit />
-  },
-  {
-    name: 'T.Colaborativa',
-    path: '/admin/transparency/collaborative',
-    visible: true,
-    icon: <RiCheckFill size={25} className="text-slate-500" />,
-    permission_required: 'view_transparencycolab',
-    element: <CollaborativeList />,
-    visible_for_superadmin: false
-  },
-  {
-    name: 'T.Colaborativa',
-    path: '/admin/collaborative/create',
-    visible: false,
-    icon: <RiCheckFill size={25} className="text-slate-500" />,
-
-    permission_required: 'add_transparencycolab',
-
-    element: <CollaborativeCreate />,
-    visible_for_superadmin: false
-  },
-  {
-    name: 'Reportes T.Colaborativa',
-    path: '/admin/collaborative/all',
-    visible: true,
-    icon: <RiCheckFill size={25} className="text-slate-500" />,
-    permission_required: 'view_all_transparencycollab',
-    element: <AllTC />,
-    visible_for_superadmin: true
-  },
-  {
-    name: 'T.Colaborativa',
-    path: '/admin/collaborative/Edit',
-    visible: false,
-    icon: <RiCheckFill size={25} className="text-slate-500" />,
-    permission_required: 'view_transparencyactive',
-    element: <CollaborativeEdit />
-  },
+ 
 
   {
     name: 'Solicitudes',
@@ -362,15 +388,6 @@ const menu = [
     visible_for_superadmin: false
   },
 
-  {
-    name: 'Reportes T. Pasiva',
-    path: '/admin/solicity/all',
-    visible: true,
-    icon: <RiMailCheckLine size={25} className="text-slate-500" />,
-    permission_required: 'view_all_solicities',
-    element: <AllMonitorSolicities />,
-    visible_for_superadmin: true
-  },
   {
     name: ' Crear Solicitudes',
     path: '/admin/solicity/create',
