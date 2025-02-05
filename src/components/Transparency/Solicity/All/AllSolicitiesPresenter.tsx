@@ -79,7 +79,7 @@ const AllSolicitiesPresenter = (props: Props) => {
 
                 </div>
                 <div className='flex flex-col'>
-
+                    <div className='text-sm mt-3 invisible'>.</div>
                     <label className='text-gray-500 text-sm'>
                         Filtrar por estado
                     </label>
