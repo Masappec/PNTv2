@@ -1,13 +1,47 @@
 import { Link } from "react-router-dom";
 import { LogoDefensoria } from "../LogoDefensoria";
 import { useState } from "react";
+import PublicUseCase from "../../../domain/useCases/Public/PublicUseCase";
+
+interface Props {
+  usecase: PublicUseCase;
+}
 
 
-
-const Header = () => {
+const Header = (props: Props) => {
   const [visible, setVisible] = useState(false);
 
-
+  const handleDownload = async () => {
+    try {
+      // Obtener el informe anual (suponiendo que retorna un JSON con la URL del archivo)
+      const response = await props.usecase.getAnualReports(15);
+  
+      // Asegurar que la estructura contiene la URL del archivo
+      if (!response || !response.general || response.general.length === 0) {
+        throw new Error("No se encontró el informe anual.");
+      }
+  
+      // Obtener la URL del archivo
+      const fileUrl = response.general[0].file; 
+  
+      // Descargar el archivo desde la URL
+      const fileResponse = await fetch(fileUrl);
+      const blob = await fileResponse.blob();
+  
+      // Crear un enlace de descarga
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Informe_Anual.pdf'; // Nombre del archivo
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error descargando el informe:", error);
+    }
+  };
+  
 
   return (
     <header className='w-full border-b border-gray-300'>
@@ -97,6 +131,22 @@ const Header = () => {
                 </span>
               </Link>
             </li>*/}
+            <li className='m-0 w-max'>
+              <a
+                onClick={handleDownload}
+                className='group relative inline-block cursor-pointer rounded-t-md p-2 text-lg transition hover:bg-primary/20'>
+                <span className='text-pretty text-base font-medium'>Informe Anual</span>
+                <span
+                  className='absolute -bottom-1 left-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+                <span
+                  className='absolute -bottom-1 right-1/2 h-0.5 w-0 bg-primary transition-all group-hover:w-3/6'>
+                </span>
+              </a>
+            </li>
+
+
+             
             {/* Navigation Link */}
             <li className='m-0 w-max'>
               <Link
