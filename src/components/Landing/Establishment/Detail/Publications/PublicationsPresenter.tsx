@@ -11,10 +11,11 @@ import TransparencyActive from "../../../../../domain/entities/TransparencyActiv
 import EstablishmentEntity from "../../../../../domain/entities/Establishment";
 import Alert from "../../../../Common/Alert";
 import Table from "../../../../Common/Table";
-import {  ProfileAnualReport } from "../../../../../infrastructure/Api/Public/interface";
-import { FaFileExcel } from "react-icons/fa";
+import { ProfileAnualReport } from "../../../../../infrastructure/Api/Public/interface";
+import { FaFileCsv, FaFileExcel, FaFilePdf } from "react-icons/fa";
 import { formatDate2 } from "../../../../../utils/functions";
 import InformationPresenter from "../Information/InformationPresenter";
+import { downloadExcelAndCombineToCSV, fetchAndConvertToCsvAnualReport, fetchAndConvertToPdfAnualReport, fetchAndConvertToPdfAnualReportEstablishment } from "../../../../../utils/xlsxToPdf";
 
 interface Props {
     entity: EstablishmentEntity;
@@ -194,7 +195,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                             </Dropdown>
 
                             <div>
-                                <Accordion className="mt-14" key={"TF"}>
+                                <Accordion className="mt-14" key={"TA"}>
                                     <>
                                         {
                                             props.mesesTF.length == 0 && <Alert type="info"
@@ -273,7 +274,7 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
 
 
                                 <div>
-                                    <Accordion className="mt-14" key={"TC"}>
+                                    <Accordion className="mt-14" key={"TA"}>
                                         <>
                                             {
                                                 props.mesesTC.length == 0 && <Alert type="info"
@@ -337,88 +338,147 @@ const EstablishmentPublicationsPresenter = (props: Props) => {
                                 {props.entity.name}
                             </h2>
                             <p className=" text-sm xl:w-full mt-8 font-medium mb-10">
-                                Consulta los archivos publicados anualmente por la institución en cumplimiento de la Ley 
+                                Consulta los archivos publicados anualmente por la institución en cumplimiento de la Ley
                             </p>
-                            
+
 
                             <div>
-                            <Table
-                                show={false}
-                                text="La institución no ha publicado datos para este mes."
-                                columns={[
-                                    
-                                    {
-                                        render: (item) => {
-                                            return item.year
+                                <Table
+                                    show={false}
+                                    text="La institución no ha publicado datos para este mes."
+                                    columns={[
+
+                                        {
+                                            render: (item) => {
+                                                return item.year
+                                            },
+                                            title: "Año"
                                         },
-                                        title: "Año"
-                                    },
-                                    {
-                                        render: (item) => {
-                                            return formatDate2(item.created_at)
+                                        {
+                                            render: (item) => {
+                                                return formatDate2(item.created_at)
+                                            },
+                                            title: "Publicado"
                                         },
-                                        title: "Publicado"
-                                    },
-                                    {
-                                        render: (item) => {
-                                            return (
-                                                <div className="flex flex-col space-y-2" key={item.id}>
-                                                    <div className="flex flex-row space-x-5 justify-center items-center">
-                                                        <a 
-                                                            href={"#"}
-                                                            onClick={() => onDonwloadXlsx(item.file,
-                                                                `informe-anual-${item.year}`
-                                                            )}
-                                                            target="_blank"
-                                                            className="text-primary-500
-                                               hover:text-primary-600 text-base"
-                                                        >
-                                                            <FaFileExcel className="text-green-500" size={30}
-                                                            />
-                                                            Informe Anual Entidad
-                                                        </a>
-                                                        {
-                                                            props.anualReports.general.find(x => x.year == item.year) && (
+                                        {
+                                            render: (item) => {
+                                                return (
+                                                    <div className="flex flex-row gap-x-5 justify-center">
+                                                        <div className="flex flex-col space-y-2" key={item.id}>
+                                                            <div className="grid grid-cols-3 ">
                                                                 <a
-                                                                    href={props.anualReports.general.find(x => x.year == item.year)?.file}
-                                                                    target="_blank"
+                                                                    href={"#"}
+                                                                    onClick={() => downloadExcelAndCombineToCSV(item.file,
+                                                                        `informe-anual-${item.year}`
+                                                                    )}
+                                                                    className="text-primary-500 hover:text-primary-600 text-base"
+                                                                >
+                                                                    <FaFileCsv className="text-primary-500 hover:text-primary-600 text-base"
+                                                                        size={30}
+                                                                    />
+
+                                                                </a>
+                                                                <a
+                                                                    href={"#"}
+                                                                    onClick={() => onDonwloadXlsx(item.file,
+                                                                        `informe-anual-${item.year}`
+                                                                    )}
                                                                     className="text-primary-500 hover:text-primary-600 text-base"
                                                                 >
                                                                     <FaFileExcel className="text-green-500" size={30}
                                                                     />
-                                                                    Informe Anual General
                                                                 </a>
 
-                                                            )
-                                                        }
+                                                                <a
+                                                                    href={"#"}
+                                                                    onClick={() => fetchAndConvertToPdfAnualReportEstablishment(item.file, props.entity.name, item.year.toString())}
+                                                                    className="text-primary-500
+                                                            hover:text-primary-600 text-base"
+                                                                >
+                                                                    <FaFilePdf className="text-red-500" size={30}
+                                                                    />
+                                                                </a>
 
+                                                                <div className="col-span-3 text-primary-500 hover:text-primary-600 text-base">
+                                                                    Informe Anual Entidad
+
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div className="flex flex-col space-y-2" key={item.id}>
+                                                            <div className="grid grid-cols-3">
+                                                                {
+                                                                    props.anualReports.general.find(x => x.year == item.year) && (
+                                                                       <>
+                                                                            <a
+                                                                                href='#'
+                                                                                onClick={() => fetchAndConvertToCsvAnualReport(props.anualReports.general.find(x => x.year == item.year)?.file as string,
+                                                                                    `informe-anual-general-${item.year}`, item.year
+                                                                                )}
+                                                                                className="text-primary-500 hover:text-primary-600 text-base"
+                                                                            >
+                                                                                <FaFileCsv className="text-primary-500 hover:text-primary-600 text-base"
+                                                                                    size={30}
+                                                                                />
+                                                                            </a>
+                                                                            <a
+                                                                                href={props.anualReports.general.find(x => x.year == item.year)?.file}
+                                                                                className="text-primary-500 hover:text-primary-600 text-base"
+                                                                            >
+                                                                                <FaFileExcel className="text-green-500" size={30}
+                                                                                />
+                                                                            </a>
+                                                                            <a
+                                                                                href='#'
+                                                                                onClick={() => fetchAndConvertToPdfAnualReport(props.anualReports.general.find(x => x.year == item.year)?.file as string,
+                                                                                    `informe-anual-general-${item.year}`, item.year)}
+                                                                            
+                                                                                className="text-primary-500 hover:text-primary-600 text-base"
+                                                                            >
+                                                                                <FaFilePdf className="text-red-500" size={30}
+                                                                                />
+                                                                            </a>
+                                                                       
+                                                                       </>
+                                                                       
+                                                                       
+                                                                        
+
+                                                                    )
+                                                                }
+                                                                <div className="col-span-3 text-primary-500 hover:text-primary-600 text-base">
+                                                                    Informe Anual General
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                   
-                                                </div>
-                                                 
-                                            )
-        
+
+                                                )
+
+                                            },
+                                            title: "Archivo Publicado"
                                         },
-                                        title: "Archivo Publicado"
-                                    },
-                                ]}
-                                data={props.anualReports.list}
-                                description="No se encontraron resultados"
-                                length={0}
-                                onFilter={() => { }}
-                                onSearch={() => { }}
-                                search=""
-                                title=""
-                                currentPage={1}
-                                from={1}
-                                isImport={false}
-                                key={0}
-                                onChangePage={() => { }}
-                                onImport={() => { }}
-                                to={0}
-                                total={0}
-                                totalPages={1}
-                               />
+                                    ]}
+                                    data={props.anualReports.list}
+                                    description="No se encontraron resultados"
+                                    length={0}
+                                    onFilter={() => { }}
+                                    onSearch={() => { }}
+                                    search=""
+                                    title=""
+                                    currentPage={1}
+                                    from={1}
+                                    isImport={false}
+                                    key={0}
+                                    onChangePage={() => { }}
+                                    onImport={() => { }}
+                                    to={0}
+                                    total={0}
+                                    totalPages={1}
+                                />
                             </div>
                         </>
                     </Accordion.Content>
